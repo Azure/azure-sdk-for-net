@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    targetAddress = new Uri(prop.Value.GetString());
+                    targetAddress = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("endpointProfileType"u8))

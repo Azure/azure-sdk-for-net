@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         }
 
         /// <summary>
-        /// Create a ServiceResource
+        /// Update a ConnectedClusterService.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         }
 
         /// <summary>
-        /// Create a ServiceResource
+        /// Update a ConnectedClusterService.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

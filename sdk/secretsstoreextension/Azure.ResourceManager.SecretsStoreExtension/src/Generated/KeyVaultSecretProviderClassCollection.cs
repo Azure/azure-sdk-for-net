@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecretsStoreExtension
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.SecretsStoreExtension
     /// </summary>
     public partial class KeyVaultSecretProviderClassCollection : ArmCollection, IEnumerable<KeyVaultSecretProviderClassResource>, IAsyncEnumerable<KeyVaultSecretProviderClassResource>
     {
-        private readonly ClientDiagnostics _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics;
-        private readonly AzureKeyVaultSecretProviderClassesRestOperations _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient;
+        private readonly ClientDiagnostics _azureKeyVaultSecretProviderClassesClientDiagnostics;
+        private readonly AzureKeyVaultSecretProviderClasses _azureKeyVaultSecretProviderClassesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="KeyVaultSecretProviderClassCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of KeyVaultSecretProviderClassCollection for mocking. </summary>
         protected KeyVaultSecretProviderClassCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="KeyVaultSecretProviderClassCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretProviderClassCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KeyVaultSecretProviderClassCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", KeyVaultSecretProviderClassResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(KeyVaultSecretProviderClassResource.ResourceType, out string keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesApiVersion);
-            _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClassesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(KeyVaultSecretProviderClassResource.ResourceType, out string keyVaultSecretProviderClassApiVersion);
+            _azureKeyVaultSecretProviderClassesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", KeyVaultSecretProviderClassResource.ResourceType.Namespace, Diagnostics);
+            _azureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClasses(_azureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Endpoint, keyVaultSecretProviderClassApiVersion ?? "2024-08-21-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates, or updates, an AzureKeyVaultSecretProviderClass instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// <param name="azureKeyVaultSecretProviderClassName"> The name of the AzureKeyVaultSecretProviderClass. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureKeyVaultSecretProviderClassName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<KeyVaultSecretProviderClassResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureKeyVaultSecretProviderClassName, nameof(azureKeyVaultSecretProviderClassName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _azureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource>(new KeyVaultSecretProviderClassOperationSource(Client), _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource> operation = new SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource>(
+                    new KeyVaultSecretProviderClassOperationSource(Client),
+                    _azureKeyVaultSecretProviderClassesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Creates, or updates, an AzureKeyVaultSecretProviderClass instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// <param name="azureKeyVaultSecretProviderClassName"> The name of the AzureKeyVaultSecretProviderClass. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureKeyVaultSecretProviderClassName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<KeyVaultSecretProviderClassResource> CreateOrUpdate(WaitUntil waitUntil, string azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureKeyVaultSecretProviderClassName, nameof(azureKeyVaultSecretProviderClassName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _azureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, data, cancellationToken);
-                var operation = new SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource>(new KeyVaultSecretProviderClassOperationSource(Client), _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource> operation = new SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource>(
+                    new KeyVaultSecretProviderClassOperationSource(Client),
+                    _azureKeyVaultSecretProviderClassesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Gets the properties of an AzureKeyVaultSecretProviderClass instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureKeyVaultSecretProviderClassName"> The name of the AzureKeyVaultSecretProviderClass. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<KeyVaultSecretProviderClassResource>> GetAsync(string azureKeyVaultSecretProviderClassName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureKeyVaultSecretProviderClassName, nameof(azureKeyVaultSecretProviderClassName));
 
-            using var scope = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.Get");
+            using DiagnosticScope scope = _azureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.Get");
             scope.Start();
             try
             {
-                var response = await _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<KeyVaultSecretProviderClassData> response = Response.FromValue(KeyVaultSecretProviderClassData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KeyVaultSecretProviderClassResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Gets the properties of an AzureKeyVaultSecretProviderClass instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureKeyVaultSecretProviderClassName"> The name of the AzureKeyVaultSecretProviderClass. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<KeyVaultSecretProviderClassResource> Get(string azureKeyVaultSecretProviderClassName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureKeyVaultSecretProviderClassName, nameof(azureKeyVaultSecretProviderClassName));
 
-            using var scope = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.Get");
+            using DiagnosticScope scope = _azureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.Get");
             scope.Start();
             try
             {
-                var response = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<KeyVaultSecretProviderClassData> response = Response.FromValue(KeyVaultSecretProviderClassData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KeyVaultSecretProviderClassResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Lists the AzureKeyVaultSecretProviderClass instances within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KeyVaultSecretProviderClassResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KeyVaultSecretProviderClassResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KeyVaultSecretProviderClassResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretProviderClassResource(Client, KeyVaultSecretProviderClassData.DeserializeKeyVaultSecretProviderClassData(e)), _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, "KeyVaultSecretProviderClassCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new AzureKeyVaultSecretProviderClassesGetByResourceGroupAsyncCollectionResultOfT(_azureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new KeyVaultSecretProviderClassResource(Client, data));
         }
 
         /// <summary>
         /// Lists the AzureKeyVaultSecretProviderClass instances within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// <returns> A collection of <see cref="KeyVaultSecretProviderClassResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KeyVaultSecretProviderClassResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretProviderClassResource(Client, KeyVaultSecretProviderClassData.DeserializeKeyVaultSecretProviderClassData(e)), _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, "KeyVaultSecretProviderClassCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new AzureKeyVaultSecretProviderClassesGetByResourceGroupCollectionResultOfT(_azureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new KeyVaultSecretProviderClassResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureKeyVaultSecretProviderClassName"> The name of the AzureKeyVaultSecretProviderClass. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string azureKeyVaultSecretProviderClassName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureKeyVaultSecretProviderClassName, nameof(azureKeyVaultSecretProviderClassName));
 
-            using var scope = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.Exists");
+            using DiagnosticScope scope = _azureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KeyVaultSecretProviderClassData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KeyVaultSecretProviderClassData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KeyVaultSecretProviderClassData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureKeyVaultSecretProviderClassName"> The name of the AzureKeyVaultSecretProviderClass. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string azureKeyVaultSecretProviderClassName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureKeyVaultSecretProviderClassName, nameof(azureKeyVaultSecretProviderClassName));
 
-            using var scope = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.Exists");
+            using DiagnosticScope scope = _azureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.Exists");
             scope.Start();
             try
             {
-                var response = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KeyVaultSecretProviderClassData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KeyVaultSecretProviderClassData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KeyVaultSecretProviderClassData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureKeyVaultSecretProviderClassName"> The name of the AzureKeyVaultSecretProviderClass. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<KeyVaultSecretProviderClassResource>> GetIfExistsAsync(string azureKeyVaultSecretProviderClassName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureKeyVaultSecretProviderClassName, nameof(azureKeyVaultSecretProviderClassName));
 
-            using var scope = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.GetIfExists");
+            using DiagnosticScope scope = _azureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KeyVaultSecretProviderClassData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KeyVaultSecretProviderClassData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KeyVaultSecretProviderClassData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KeyVaultSecretProviderClassResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KeyVaultSecretProviderClassResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureKeyVaultSecretProviderClassName"> The name of the AzureKeyVaultSecretProviderClass. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<KeyVaultSecretProviderClassResource> GetIfExists(string azureKeyVaultSecretProviderClassName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureKeyVaultSecretProviderClassName, nameof(azureKeyVaultSecretProviderClassName));
 
-            using var scope = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.GetIfExists");
+            using DiagnosticScope scope = _azureKeyVaultSecretProviderClassesClientDiagnostics.CreateScope("KeyVaultSecretProviderClassCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KeyVaultSecretProviderClassData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KeyVaultSecretProviderClassData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KeyVaultSecretProviderClassData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KeyVaultSecretProviderClassResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KeyVaultSecretProviderClassResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<KeyVaultSecretProviderClassResource> IAsyncEnumerable<KeyVaultSecretProviderClassResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

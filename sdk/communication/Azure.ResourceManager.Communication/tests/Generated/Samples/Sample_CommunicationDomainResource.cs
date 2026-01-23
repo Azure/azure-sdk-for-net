@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDomainsResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/get.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/domains/get.json
             // this example is just showing the usage of "Domains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteDomainsResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/delete.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/domains/delete.json
             // this example is just showing the usage of "Domains_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateDomainsResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/update.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/domains/update.json
             // this example is just showing the usage of "Domains_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task InitiateVerification_InitiateVerification()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/initiateVerification.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/domains/initiateVerification.json
             // this example is just showing the usage of "Domains_InitiateVerification" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CancelVerification_CancelVerification()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/cancelVerification.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/domains/cancelVerification.json
             // this example is just showing the usage of "Domains_CancelVerification" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

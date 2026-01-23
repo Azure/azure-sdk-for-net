@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <Choose>
@@ -43,8 +42,8 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <VersionPrefix>2.7.0</VersionPrefix>
-        <VersionSuffix>beta.2</VersionSuffix>
+        <VersionPrefix>2.8.0</VersionPrefix>
+        <VersionSuffix>beta.1</VersionSuffix>
   </PropertyGroup>
     </Otherwise>
   </Choose>

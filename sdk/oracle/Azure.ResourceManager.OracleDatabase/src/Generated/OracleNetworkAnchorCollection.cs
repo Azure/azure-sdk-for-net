@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing a collection of <see cref="OracleNetworkAnchorResource"/> and their operations.
     /// Each <see cref="OracleNetworkAnchorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="OracleNetworkAnchorCollection"/> instance call the GetOracleNetworkAnchors method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="OracleNetworkAnchorCollection"/> instance call the GetOracleNetworkAnchors method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class OracleNetworkAnchorCollection : ArmCollection, IEnumerable<OracleNetworkAnchorResource>, IAsyncEnumerable<OracleNetworkAnchorResource>
     {
-        private readonly ClientDiagnostics _oracleNetworkAnchorNetworkAnchorsClientDiagnostics;
-        private readonly NetworkAnchorsRestOperations _oracleNetworkAnchorNetworkAnchorsRestClient;
+        private readonly ClientDiagnostics _networkAnchorsClientDiagnostics;
+        private readonly NetworkAnchors _networkAnchorsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="OracleNetworkAnchorCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OracleNetworkAnchorCollection for mocking. </summary>
         protected OracleNetworkAnchorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OracleNetworkAnchorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleNetworkAnchorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OracleNetworkAnchorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _oracleNetworkAnchorNetworkAnchorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleNetworkAnchorResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OracleNetworkAnchorResource.ResourceType, out string oracleNetworkAnchorNetworkAnchorsApiVersion);
-            _oracleNetworkAnchorNetworkAnchorsRestClient = new NetworkAnchorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleNetworkAnchorNetworkAnchorsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(OracleNetworkAnchorResource.ResourceType, out string oracleNetworkAnchorApiVersion);
+            _networkAnchorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleNetworkAnchorResource.ResourceType.Namespace, Diagnostics);
+            _networkAnchorsRestClient = new NetworkAnchors(_networkAnchorsClientDiagnostics, Pipeline, Endpoint, oracleNetworkAnchorApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a NetworkAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="networkAnchorName"> The name of the NetworkAnchor. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkAnchorName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<OracleNetworkAnchorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkAnchorName, OracleNetworkAnchorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkAnchorName, nameof(networkAnchorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _oracleNetworkAnchorNetworkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _oracleNetworkAnchorNetworkAnchorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkAnchorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation<OracleNetworkAnchorResource>(new OracleNetworkAnchorOperationSource(Client), _oracleNetworkAnchorNetworkAnchorsClientDiagnostics, Pipeline, _oracleNetworkAnchorNetworkAnchorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkAnchorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkAnchorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, OracleNetworkAnchorData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OracleDatabaseArmOperation<OracleNetworkAnchorResource> operation = new OracleDatabaseArmOperation<OracleNetworkAnchorResource>(
+                    new OracleNetworkAnchorOperationSource(Client),
+                    _networkAnchorsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Create a NetworkAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="networkAnchorName"> The name of the NetworkAnchor. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkAnchorName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<OracleNetworkAnchorResource> CreateOrUpdate(WaitUntil waitUntil, string networkAnchorName, OracleNetworkAnchorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkAnchorName, nameof(networkAnchorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _oracleNetworkAnchorNetworkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _oracleNetworkAnchorNetworkAnchorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkAnchorName, data, cancellationToken);
-                var operation = new OracleDatabaseArmOperation<OracleNetworkAnchorResource>(new OracleNetworkAnchorOperationSource(Client), _oracleNetworkAnchorNetworkAnchorsClientDiagnostics, Pipeline, _oracleNetworkAnchorNetworkAnchorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkAnchorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkAnchorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, OracleNetworkAnchorData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OracleDatabaseArmOperation<OracleNetworkAnchorResource> operation = new OracleDatabaseArmOperation<OracleNetworkAnchorResource>(
+                    new OracleNetworkAnchorOperationSource(Client),
+                    _networkAnchorsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a NetworkAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkAnchorName"> The name of the NetworkAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkAnchorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OracleNetworkAnchorResource>> GetAsync(string networkAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkAnchorName, nameof(networkAnchorName));
 
-            using var scope = _oracleNetworkAnchorNetworkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.Get");
+            using DiagnosticScope scope = _networkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.Get");
             scope.Start();
             try
             {
-                var response = await _oracleNetworkAnchorNetworkAnchorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkAnchorName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleNetworkAnchorData> response = Response.FromValue(OracleNetworkAnchorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleNetworkAnchorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a NetworkAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkAnchorName"> The name of the NetworkAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkAnchorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OracleNetworkAnchorResource> Get(string networkAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkAnchorName, nameof(networkAnchorName));
 
-            using var scope = _oracleNetworkAnchorNetworkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.Get");
+            using DiagnosticScope scope = _networkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.Get");
             scope.Start();
             try
             {
-                var response = _oracleNetworkAnchorNetworkAnchorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkAnchorName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleNetworkAnchorData> response = Response.FromValue(OracleNetworkAnchorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleNetworkAnchorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.OracleDatabase
         /// List NetworkAnchor resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OracleNetworkAnchorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OracleNetworkAnchorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OracleNetworkAnchorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleNetworkAnchorNetworkAnchorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleNetworkAnchorNetworkAnchorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleNetworkAnchorResource(Client, OracleNetworkAnchorData.DeserializeOracleNetworkAnchorData(e)), _oracleNetworkAnchorNetworkAnchorsClientDiagnostics, Pipeline, "OracleNetworkAnchorCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetByResourceGroupAsyncCollectionResultOfT(_networkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OracleNetworkAnchorResource(Client, data));
         }
 
         /// <summary>
         /// List NetworkAnchor resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> A collection of <see cref="OracleNetworkAnchorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OracleNetworkAnchorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleNetworkAnchorNetworkAnchorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleNetworkAnchorNetworkAnchorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleNetworkAnchorResource(Client, OracleNetworkAnchorData.DeserializeOracleNetworkAnchorData(e)), _oracleNetworkAnchorNetworkAnchorsClientDiagnostics, Pipeline, "OracleNetworkAnchorCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetByResourceGroupCollectionResultOfT(_networkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OracleNetworkAnchorResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkAnchorName"> The name of the NetworkAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkAnchorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkAnchorName, nameof(networkAnchorName));
 
-            using var scope = _oracleNetworkAnchorNetworkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.Exists");
+            using DiagnosticScope scope = _networkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _oracleNetworkAnchorNetworkAnchorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkAnchorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OracleNetworkAnchorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleNetworkAnchorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleNetworkAnchorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkAnchorName"> The name of the NetworkAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkAnchorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string networkAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkAnchorName, nameof(networkAnchorName));
 
-            using var scope = _oracleNetworkAnchorNetworkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.Exists");
+            using DiagnosticScope scope = _networkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.Exists");
             scope.Start();
             try
             {
-                var response = _oracleNetworkAnchorNetworkAnchorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkAnchorName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OracleNetworkAnchorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleNetworkAnchorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleNetworkAnchorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkAnchorName"> The name of the NetworkAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkAnchorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<OracleNetworkAnchorResource>> GetIfExistsAsync(string networkAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkAnchorName, nameof(networkAnchorName));
 
-            using var scope = _oracleNetworkAnchorNetworkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.GetIfExists");
+            using DiagnosticScope scope = _networkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _oracleNetworkAnchorNetworkAnchorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkAnchorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OracleNetworkAnchorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleNetworkAnchorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleNetworkAnchorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleNetworkAnchorResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleNetworkAnchorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkAnchorName"> The name of the NetworkAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkAnchorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<OracleNetworkAnchorResource> GetIfExists(string networkAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkAnchorName, nameof(networkAnchorName));
 
-            using var scope = _oracleNetworkAnchorNetworkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.GetIfExists");
+            using DiagnosticScope scope = _networkAnchorsClientDiagnostics.CreateScope("OracleNetworkAnchorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _oracleNetworkAnchorNetworkAnchorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkAnchorName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OracleNetworkAnchorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleNetworkAnchorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleNetworkAnchorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleNetworkAnchorResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleNetworkAnchorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OracleNetworkAnchorResource> IAsyncEnumerable<OracleNetworkAnchorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

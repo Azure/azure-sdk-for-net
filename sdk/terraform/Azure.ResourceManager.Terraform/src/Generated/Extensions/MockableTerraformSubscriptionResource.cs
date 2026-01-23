@@ -8,53 +8,52 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Terraform;
 using Azure.ResourceManager.Terraform.Models;
 
 namespace Azure.ResourceManager.Terraform.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableTerraformSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _terraformClientDiagnostics;
-        private TerraformRestOperations _terraformRestClient;
+        private ClientDiagnostics _terraformInterfaceClientDiagnostics;
+        private TerraformInterface _terraformInterfaceRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableTerraformSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableTerraformSubscriptionResource for mocking. </summary>
         protected MockableTerraformSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableTerraformSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableTerraformSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableTerraformSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics TerraformClientDiagnostics => _terraformClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Terraform", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private TerraformRestOperations TerraformRestClient => _terraformRestClient ??= new TerraformRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics TerraformInterfaceClientDiagnostics => _terraformInterfaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Terraform.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private TerraformInterface TerraformInterfaceRestClient => _terraformInterfaceRestClient ??= new TerraformInterface(TerraformInterfaceClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
         /// <summary>
         /// Exports the Terraform configuration of the specified resource(s).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureTerraform/exportTerraform</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureTerraform/exportTerraform. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Terraform_ExportTerraform</description>
+        /// <term> Operation Id. </term>
+        /// <description> Terraform_ExportTerraform. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,14 +65,27 @@ namespace Azure.ResourceManager.Terraform.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = TerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
+            using DiagnosticScope scope = TerraformInterfaceClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
             scope.Start();
             try
             {
-                var response = await TerraformRestClient.ExportTerraformAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
-                var operation = new TerraformArmOperation<TerraformOperationStatus>(new TerraformOperationStatusOperationSource(), TerraformClientDiagnostics, Pipeline, TerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TerraformInterfaceRestClient.CreateExportTerraformRequest(Guid.Parse(Id.SubscriptionId), CommonExportProperties.ToRequestContent(body), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                TerraformArmOperation<TerraformOperationStatus> operation = new TerraformArmOperation<TerraformOperationStatus>(
+                    new TerraformOperationStatusOperationSource(),
+                    TerraformInterfaceClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -87,16 +99,16 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// Exports the Terraform configuration of the specified resource(s).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureTerraform/exportTerraform</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureTerraform/exportTerraform. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Terraform_ExportTerraform</description>
+        /// <term> Operation Id. </term>
+        /// <description> Terraform_ExportTerraform. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,14 +120,27 @@ namespace Azure.ResourceManager.Terraform.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = TerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
+            using DiagnosticScope scope = TerraformInterfaceClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
             scope.Start();
             try
             {
-                var response = TerraformRestClient.ExportTerraform(Id.SubscriptionId, body, cancellationToken);
-                var operation = new TerraformArmOperation<TerraformOperationStatus>(new TerraformOperationStatusOperationSource(), TerraformClientDiagnostics, Pipeline, TerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TerraformInterfaceRestClient.CreateExportTerraformRequest(Guid.Parse(Id.SubscriptionId), CommonExportProperties.ToRequestContent(body), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                TerraformArmOperation<TerraformOperationStatus> operation = new TerraformArmOperation<TerraformOperationStatus>(
+                    new TerraformOperationStatusOperationSource(),
+                    TerraformInterfaceClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

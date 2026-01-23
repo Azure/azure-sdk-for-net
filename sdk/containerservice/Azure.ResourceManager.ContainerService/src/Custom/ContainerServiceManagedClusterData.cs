@@ -9,13 +9,18 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary> A class representing the ContainerServiceManagedCluster data model. </summary>
     public partial class ContainerServiceManagedClusterData
     {
+        /// <summary> (DEPRECATED) Whether to enable Kubernetes pod security policy (preview). PodSecurityPolicy was deprecated in Kubernetes v1.21, and removed from Kubernetes in v1.25. Learn more at https://aka.ms/k8s/psp and https://aka.ms/aks/psp. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.enablePodSecurityPolicy")]
+        public bool? EnablePodSecurityPolicy { get; set; }
+
         /// <summary> Azure Defender settings for the security profile. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

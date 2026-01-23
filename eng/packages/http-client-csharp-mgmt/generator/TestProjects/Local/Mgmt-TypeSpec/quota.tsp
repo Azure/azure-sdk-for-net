@@ -197,11 +197,15 @@ interface GroupQuotaLimitLists {
   @patch(#{ implicitOptionality: false })
   update is GroupQuotaLimitListsOps.CustomPatchAsync<
     GroupQuotaLimitList,
-    PatchModel = GroupQuotaLimitList,
+    PatchModel = GroupQuotaListPatch,
     OptionalRequestBody = true,
     Response = ArmResponse<GroupQuotaLimitList> | ArmAcceptedLroResponse<LroHeaders = ArmCombinedLroHeaders<FinalResult = GroupQuotaLimitList> &
       Azure.Core.Foundations.RetryAfterHeader>
   >;
+}
+
+model GroupQuotaListPatch {
+  name: string;
 }
 
 /**

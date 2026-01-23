@@ -13,104 +13,123 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    /// <summary>
-    /// A class representing the StorageSyncService data model.
-    /// Storage Sync Service object.
-    /// </summary>
+    /// <summary> Storage Sync Service object. </summary>
     public partial class StorageSyncServiceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncServiceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public StorageSyncServiceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<StorageSyncPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> managed identities for the Storage Sync service to interact with other Azure services without maintaining any secrets or credentials in code. </param>
-        /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
-        /// <param name="storageSyncServiceStatus"> Storage Sync service status. </param>
-        /// <param name="storageSyncServiceUid"> Storage Sync service Uid. </param>
-        /// <param name="provisioningState"> StorageSyncService Provisioning State. </param>
-        /// <param name="useIdentity"> Use Identity authorization when customer have finished setup RBAC permissions. </param>
-        /// <param name="lastWorkflowId"> StorageSyncService lastWorkflowId. </param>
-        /// <param name="lastOperationName"> Resource Last Operation Name. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage sync service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IncomingTrafficPolicy? incomingTrafficPolicy, int? storageSyncServiceStatus, Guid? storageSyncServiceUid, string provisioningState, bool? useIdentity, string lastWorkflowId, string lastOperationName, IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Storage Sync Service properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal StorageSyncServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageSyncServiceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            IncomingTrafficPolicy = incomingTrafficPolicy;
-            StorageSyncServiceStatus = storageSyncServiceStatus;
-            StorageSyncServiceUid = storageSyncServiceUid;
-            ProvisioningState = provisioningState;
-            UseIdentity = useIdentity;
-            LastWorkflowId = lastWorkflowId;
-            LastOperationName = lastOperationName;
-            PrivateEndpointConnections = privateEndpointConnections;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceData"/> for deserialization. </summary>
-        internal StorageSyncServiceData()
-        {
-        }
+        /// <summary> Storage Sync Service properties. </summary>
+        internal StorageSyncServiceProperties Properties { get; set; }
 
-        /// <summary> managed identities for the Storage Sync service to interact with other Azure services without maintaining any secrets or credentials in code. </summary>
+        /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Incoming Traffic Policy. </summary>
-        public IncomingTrafficPolicy? IncomingTrafficPolicy { get; set; }
+        public IncomingTrafficPolicy? IncomingTrafficPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IncomingTrafficPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageSyncServiceProperties();
+                }
+                Properties.IncomingTrafficPolicy = value.Value;
+            }
+        }
+
         /// <summary> Storage Sync service status. </summary>
-        public int? StorageSyncServiceStatus { get; }
+        public int? StorageSyncServiceStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageSyncServiceStatus;
+            }
+        }
+
         /// <summary> Storage Sync service Uid. </summary>
-        public Guid? StorageSyncServiceUid { get; }
+        public Guid? StorageSyncServiceUid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageSyncServiceUid;
+            }
+        }
+
         /// <summary> StorageSyncService Provisioning State. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Use Identity authorization when customer have finished setup RBAC permissions. </summary>
-        public bool? UseIdentity { get; }
+        public bool? UseIdentity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseIdentity;
+            }
+        }
+
         /// <summary> StorageSyncService lastWorkflowId. </summary>
-        public string LastWorkflowId { get; }
+        public string LastWorkflowId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastWorkflowId;
+            }
+        }
+
         /// <summary> Resource Last Operation Name. </summary>
-        public string LastOperationName { get; }
+        public string LastOperationName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastOperationName;
+            }
+        }
+
         /// <summary> List of private endpoint connection associated with the specified storage sync service. </summary>
-        public IReadOnlyList<StorageSyncPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<StorageSyncPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageSyncServiceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
     }
 }

@@ -17,8 +17,28 @@ Pre-requisites:
 # SDK generation steps
 
 ## Step: Generate SDKs
-**Goal**: Generate SDKs
-**Message to user**: "SDK generation will take approximately 15-20 minutes. Currently, SDKs are generated using the Azure DevOps pipeline. SDK generation is supported only from a merged API spec or from an API spec pull request in the https://github.com/Azure/azure-rest-api-specs repository."
+
+As a first step, you must prompt the user to understand the intention of SDK generation. Based on the user input, you can either run SDK generation locally or use SDK generation pipeline.
+
+Generate SDK locally in cases below:
+- If the user wants to walk through each SDK generation step locally. This approach requires user to have the setup for each language to generate SDK locally. User can create a pull request for each language after completing all the steps in SDK generation successfully to get the generated SDK reviewed and merged.
+- If SDK or client.tsp customizations are needed before creating a pull request.
+- If the user wants to add tests, samples or any customization to the generated SDK.
+
+Generate SDK using pipeline:
+- If the user wants to generate SDK and get a PR automatically created in Azure SDK language repositories. This approach can be followed if the user does not want to setup local environment for each language.
+
+### Generate SDK locally:
+
+**Condition**: If user chooses to generate SDK locally
+**Message to user**: "Generating SDKs locally requires you to have the development environment set up for each language. Prompt the user to create a pull request for each language after completing the following steps successfully: generation, validation, build, test and update of metadata, change log, and version."
+**Actions**:
+Follow the steps in #file:local-sdk-workflow.instructions.md to generate and build SDKs locally from TypeSpec project.
+
+### Generate SDK using pipeline:
+
+**Condition**: If user chooses to generate the SDK using pipeline or when generating SDK by GitHub coding agent
+**Message to user**: "SDK generation will take approximately 15-20 minutes. SDKs are generated using the Azure DevOps pipeline. SDK generation is supported only from a merged API spec or from an API spec pull request in the https://github.com/Azure/azure-rest-api-specs repository."
 **Actions**:
 1. Identify whether TypeSpec is for Management Plane or Data Plane based on project structure and files. tspconfig.yaml file contains `resource-manager` for management plane and `data-plane` for data plane as resource provider.
   - Execute the SDK generation pipeline with the following required parameters for all languages:
@@ -33,7 +53,8 @@ Pre-requisites:
 2. Monitor pipeline status after 15 minutes and provide updates. If pipeline is in progress, inform user that it may take additional time and check the status later.
 3. Display generated SDK PR links when available. If pipeline fails, inform user with error details and suggest to check pipeline logs for more information.
 4. If SDK pull request is available for all languages, ask user to review generated SDK pull request and mark them as ready for review when they are ready to get them reviewed and merged.
-5. If SDK pull request was created for test purposes, inform user to close the test SDK pull request.
+5. Inform the user that they can checkout generated SDK pull request locally and add more tests, samples or code customizations if needed using local SDK generation tools.
+6. If SDK pull request was created for test purposes, inform user to close the test SDK pull request.
 **Success Criteria**: SDK generation pipeline initiated and SDKs generated
 
 ## Step: SDK release plan

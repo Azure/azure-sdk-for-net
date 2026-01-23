@@ -81,7 +81,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
         Assert.That(modifiedAssistant.Id, Is.EqualTo(assistant.Id));
         AsyncCollectionResult<Assistant> recentAssistants = client.GetAssistantsAsync();
-        Assistant firstAssistant = await recentAssistants.FirstOrDefaultAsync();
+        Assistant firstAssistant = await recentAssistants.GetFirstOrDefaultAsync();
         Assert.That(firstAssistant, Is.Not.Null);
         Assert.That(firstAssistant.Metadata.TryGetValue("testkey", out string newMetadataValue) && newMetadataValue == "goodbye!");
     }
@@ -262,7 +262,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
         Assert.That(message.Metadata.TryGetValue("messageMetadata", out metadataValue) && metadataValue == "newValue");
 
-        var messagePage = await client.GetMessagesAsync(thread.Id).ToListAsync();
+        var messagePage = await client.GetMessagesAsync(thread.Id).ToFxListAsync();
         if (aoaiDeleteBugFixed)
         {
             Assert.That(messagePage.Count, Is.EqualTo(1));
@@ -299,7 +299,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         };
         AssistantThread thread = await client.CreateThreadAsync(options);
         Validate(thread);
-        List<ThreadMessage> messageList = await client.GetMessagesAsync(thread.Id, new() { Order = MessageCollectionOrder.Ascending }).ToListAsync();
+        List<ThreadMessage> messageList = await client.GetMessagesAsync(thread.Id, new() { Order = MessageCollectionOrder.Ascending }).ToFxListAsync();
         Assert.That(messageList.Count, Is.EqualTo(2));
         Assert.That(messageList[0].Role, Is.EqualTo(MessageRole.User));
         Assert.That(messageList[0].Content?.Count, Is.EqualTo(1));
@@ -317,7 +317,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Validate(assistant);
         AssistantThread thread = await client.CreateThreadAsync();
         Validate(thread);
-        List<ThreadRun> runPage = await client.GetRunsAsync(thread.Id).ToListAsync();
+        List<ThreadRun> runPage = await client.GetRunsAsync(thread.Id).ToFxListAsync();
         Assert.That(runPage.Count, Is.EqualTo(0));
         ThreadMessage message = await client.CreateMessageAsync(thread.Id, MessageRole.User, ["Hello, assistant!"]);
         Validate(message);
@@ -327,11 +327,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assert.That(run.CreatedAt, Is.GreaterThan(s_2024));
         ThreadRun retrievedRun = await client.GetRunAsync(thread.Id, run.Id);
         Assert.That(retrievedRun.Id, Is.EqualTo(run.Id));
-        runPage = await client.GetRunsAsync(thread.Id).ToListAsync();
+        runPage = await client.GetRunsAsync(thread.Id).ToFxListAsync();
         Assert.That(runPage.Count, Is.EqualTo(1));
         Assert.That(runPage.ElementAt(0).Id, Is.EqualTo(run.Id));
 
-        List<ThreadMessage> messages = await client.GetMessagesAsync(thread.Id).ToListAsync();
+        List<ThreadMessage> messages = await client.GetMessagesAsync(thread.Id).ToFxListAsync();
         Assert.That(messages.Count, Is.GreaterThanOrEqualTo(1));
 
         run = await WaitUntilReturnLast(
@@ -349,7 +349,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             Assert.That(run.FailedAt, Is.Null);
             Assert.That(run.IncompleteDetails, Is.Null);
         });
-        messages = await client.GetMessagesAsync(thread.Id).ToListAsync();
+        messages = await client.GetMessagesAsync(thread.Id).ToFxListAsync();
         Assert.That(messages.Count, Is.EqualTo(2));
 
         Assert.That(messages.ElementAt(0).Role, Is.EqualTo(MessageRole.Assistant));
@@ -385,7 +385,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
         Assert.That(run.Usage?.TotalTokenCount, Is.GreaterThan(0));
 
-        List<RunStep> runSteps = await client.GetRunStepsAsync(run.ThreadId, run.Id).ToListAsync();
+        List<RunStep> runSteps = await client.GetRunStepsAsync(run.ThreadId, run.Id).ToFxListAsync();
         Assert.That(runSteps.Count(), Is.GreaterThan(1));
         Assert.Multiple(() =>
         {
@@ -480,7 +480,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
 
         List<ThreadMessage> messages = await client.GetMessagesAsync(run.ThreadId, new() { Order = MessageCollectionOrder.Descending })
-            .ToListAsync();
+            .ToFxListAsync();
         Assert.That(messages.Count, Is.GreaterThan(1));
         Assert.That(messages.ElementAt(0).Role, Is.EqualTo(MessageRole.Assistant));
         Assert.That(messages.ElementAt(0).Content?[0], Is.Not.Null);

@@ -27,11 +27,11 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Initializes a new instance of <see cref="TranslationText"/>. </summary>
         /// <param name="language"> A string representing the language code of the target language. </param>
-        /// <param name="sourceCharacters"> An interger indicating the number of characters in the source text string. </param>
-        /// <param name="instructionTokens"> An interger indicating the number of tokens used in generating the translated text. </param>
-        /// <param name="sourceTokens"> An interger indicating the number of tokens used in the source sentence. </param>
-        /// <param name="responseTokens"> An interger indicating the number of tokens used in the translation response. </param>
-        /// <param name="targetTokens"> An interger indicating the number of tokens used in the target sentence. </param>
+        /// <param name="sourceCharacters"> An integer indicating the number of characters in the source text string. </param>
+        /// <param name="instructionTokens"> An integer indicating the number of tokens used in generating the translated text. </param>
+        /// <param name="sourceTokens"> An integer indicating the number of tokens used in the source sentence. </param>
+        /// <param name="responseTokens"> An integer indicating the number of tokens used in the translation response. </param>
+        /// <param name="targetTokens"> An integer indicating the number of tokens used in the target sentence. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal TranslationText(string language, int? sourceCharacters, int? instructionTokens, int? sourceTokens, int? responseTokens, int? targetTokens, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -49,19 +49,19 @@ namespace Azure.AI.Translation.Text
         /// <summary> A string representing the language code of the target language. </summary>
         public string Language { get; }
 
-        /// <summary> An interger indicating the number of characters in the source text string. </summary>
+        /// <summary> An integer indicating the number of characters in the source text string. </summary>
         public int? SourceCharacters { get; }
 
-        /// <summary> An interger indicating the number of tokens used in generating the translated text. </summary>
+        /// <summary> An integer indicating the number of tokens used in generating the translated text. </summary>
         public int? InstructionTokens { get; }
 
-        /// <summary> An interger indicating the number of tokens used in the source sentence. </summary>
+        /// <summary> An integer indicating the number of tokens used in the source sentence. </summary>
         public int? SourceTokens { get; }
 
-        /// <summary> An interger indicating the number of tokens used in the translation response. </summary>
+        /// <summary> An integer indicating the number of tokens used in the translation response. </summary>
         public int? ResponseTokens { get; }
 
-        /// <summary> An interger indicating the number of tokens used in the target sentence. </summary>
+        /// <summary> An integer indicating the number of tokens used in the target sentence. </summary>
         public int? TargetTokens { get; }
 
         /// <summary> A string giving the translated text. </summary>

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Request for getting all the linkable environments for a user. </summary>
-    [CodeGenSerialization(nameof(Region), SerializationValueHook = nameof(WriteRegion), DeserializationValueHook = nameof(ReadRegion))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Region), SerializationValueHook = nameof(WriteRegion), DeserializationValueHook = nameof(ReadRegion))]
     public partial class LinkableEnvironmentContent
     {
         /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentContent"/>. </summary>

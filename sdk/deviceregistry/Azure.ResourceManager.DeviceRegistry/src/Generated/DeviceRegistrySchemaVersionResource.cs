@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Create a SchemaVersion
+        /// Update a DeviceRegistrySchemaVersion.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Create a SchemaVersion
+        /// Update a DeviceRegistrySchemaVersion.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

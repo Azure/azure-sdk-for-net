@@ -14,31 +14,26 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public partial class DevOpsStateful : DevOpsPoolAgentProfile
     {
         /// <summary> Initializes a new instance of <see cref="DevOpsStateful"/>. </summary>
-        public DevOpsStateful()
+        public DevOpsStateful() : base("Stateful")
         {
-            Kind = "Stateful";
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsStateful"/>. </summary>
         /// <param name="kind"> Discriminator property for DevOpsPoolAgentProfile. </param>
         /// <param name="resourcePredictions"> Defines pool buffer/stand-by agents. </param>
-        /// <param name="resourcePredictionsProfile">
-        /// Defines how the pool buffer/stand-by agents is provided.
-        /// Please note <see cref="ResourcePredictionsProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomaticResourcePredictionsProfile"/> and <see cref="ManualResourcePredictionsProfile"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="resourcePredictionsProfile"> Defines how the pool buffer/stand-by agents is provided. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxAgentLifetime"> How long should stateful machines be kept around. The maximum is one week. </param>
         /// <param name="gracePeriodTimeSpan"> How long should the machine be kept around after it ran a workload when there are no stand-by agents. The maximum is one week. </param>
-        internal DevOpsStateful(string kind, ResourcePredictions resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, string maxAgentLifetime, string gracePeriodTimeSpan) : base(kind, resourcePredictions, resourcePredictionsProfile, serializedAdditionalRawData)
+        internal DevOpsStateful(string kind, ResourcePredictions resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, string maxAgentLifetime, string gracePeriodTimeSpan) : base(kind, resourcePredictions, resourcePredictionsProfile, additionalBinaryDataProperties)
         {
             MaxAgentLifetime = maxAgentLifetime;
             GracePeriodTimeSpan = gracePeriodTimeSpan;
-            Kind = kind ?? "Stateful";
         }
 
         /// <summary> How long should stateful machines be kept around. The maximum is one week. </summary>
         public string MaxAgentLifetime { get; set; }
+
         /// <summary> How long should the machine be kept around after it ran a workload when there are no stand-by agents. The maximum is one week. </summary>
         public string GracePeriodTimeSpan { get; set; }
     }

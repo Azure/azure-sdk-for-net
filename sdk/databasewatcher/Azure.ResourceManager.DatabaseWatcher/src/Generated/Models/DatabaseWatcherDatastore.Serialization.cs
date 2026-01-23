@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 }
                 if (prop.NameEquals("kustoClusterUri"u8))
                 {
-                    kustoClusterUri = new Uri(prop.Value.GetString());
+                    kustoClusterUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kustoDataIngestionUri"u8))
                 {
-                    kustoDataIngestionUri = new Uri(prop.Value.GetString());
+                    kustoDataIngestionUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kustoDatabaseName"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 }
                 if (prop.NameEquals("kustoManagementUrl"u8))
                 {
-                    kustoManagementUri = new Uri(prop.Value.GetString());
+                    kustoManagementUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kustoOfferingType"u8))

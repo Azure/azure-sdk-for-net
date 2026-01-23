@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.VirtualEnclaves
 {
-    internal class VirtualEnclaveCommunityOperationSource : IOperationSource<VirtualEnclaveCommunityResource>
+    /// <summary></summary>
+    internal partial class VirtualEnclaveCommunityOperationSource : IOperationSource<VirtualEnclaveCommunityResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal VirtualEnclaveCommunityOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         VirtualEnclaveCommunityResource IOperationSource<VirtualEnclaveCommunityResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualEnclaveCommunityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVirtualEnclavesContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            VirtualEnclaveCommunityData data = VirtualEnclaveCommunityData.DeserializeVirtualEnclaveCommunityData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new VirtualEnclaveCommunityResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<VirtualEnclaveCommunityResource> IOperationSource<VirtualEnclaveCommunityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualEnclaveCommunityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVirtualEnclavesContext.Default);
-            return await Task.FromResult(new VirtualEnclaveCommunityResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            VirtualEnclaveCommunityData data = VirtualEnclaveCommunityData.DeserializeVirtualEnclaveCommunityData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualEnclaveCommunityResource(_client, data);
         }
     }
 }

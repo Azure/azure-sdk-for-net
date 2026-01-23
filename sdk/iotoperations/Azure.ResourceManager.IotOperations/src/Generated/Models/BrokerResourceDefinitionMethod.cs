@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct BrokerResourceDefinitionMethod : IEquatable<BrokerResourceDefinitionMethod>
     {
         private readonly string _value;
+        /// <summary> Allowed Connecting to Broker. </summary>
+        private const string ConnectValue = "Connect";
+        /// <summary> Allowed Publishing to Broker. </summary>
+        private const string PublishValue = "Publish";
+        /// <summary> Allowed Subscribing to Broker. </summary>
+        private const string SubscribeValue = "Subscribe";
 
         /// <summary> Initializes a new instance of <see cref="BrokerResourceDefinitionMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BrokerResourceDefinitionMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ConnectValue = "Connect";
-        private const string PublishValue = "Publish";
-        private const string SubscribeValue = "Subscribe";
+            _value = value;
+        }
 
         /// <summary> Allowed Connecting to Broker. </summary>
         public static BrokerResourceDefinitionMethod Connect { get; } = new BrokerResourceDefinitionMethod(ConnectValue);
+
         /// <summary> Allowed Publishing to Broker. </summary>
         public static BrokerResourceDefinitionMethod Publish { get; } = new BrokerResourceDefinitionMethod(PublishValue);
+
         /// <summary> Allowed Subscribing to Broker. </summary>
         public static BrokerResourceDefinitionMethod Subscribe { get; } = new BrokerResourceDefinitionMethod(SubscribeValue);
+
         /// <summary> Determines if two <see cref="BrokerResourceDefinitionMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BrokerResourceDefinitionMethod left, BrokerResourceDefinitionMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BrokerResourceDefinitionMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BrokerResourceDefinitionMethod left, BrokerResourceDefinitionMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BrokerResourceDefinitionMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BrokerResourceDefinitionMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BrokerResourceDefinitionMethod(string value) => new BrokerResourceDefinitionMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BrokerResourceDefinitionMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BrokerResourceDefinitionMethod?(string value) => value == null ? null : new BrokerResourceDefinitionMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BrokerResourceDefinitionMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BrokerResourceDefinitionMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

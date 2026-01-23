@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> If not specified, the default is 'Free'. See [AKS Pricing Tier](https://learn.microsoft.com/azure/aks/free-standard-pricing-tiers) for more details. </summary>
+    /// <summary>
+    /// The tier of a managed cluster SKU. If not specified, the default is 'Free'. See [AKS Pricing Tier](https://learn.microsoft.com/azure/aks/free-standard-pricing-tiers) for more details.
+    /// Serialized Name: ManagedClusterSKUTier
+    /// </summary>
     public readonly partial struct ManagedClusterSkuTier : IEquatable<ManagedClusterSkuTier>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string StandardValue = "Standard";
         private const string FreeValue = "Free";
 
-        /// <summary> Cluster has premium capabilities in addition to all of the capabilities included in 'Standard'. Premium enables selection of LongTermSupport (aka.ms/aks/lts) for certain Kubernetes versions. </summary>
+        /// <summary>
+        /// Cluster has premium capabilities in addition to all of the capabilities included in 'Standard'. Premium enables selection of LongTermSupport (aka.ms/aks/lts) for certain Kubernetes versions.
+        /// Serialized Name: ManagedClusterSKUTier.Premium
+        /// </summary>
         public static ManagedClusterSkuTier Premium { get; } = new ManagedClusterSkuTier(PremiumValue);
-        /// <summary> Recommended for mission-critical and production workloads. Includes Kubernetes control plane autoscaling, workload-intensive testing, and up to 5,000 nodes per cluster. Guarantees 99.95% availability of the Kubernetes API server endpoint for clusters that use Availability Zones and 99.9% of availability for clusters that don't use Availability Zones. </summary>
+        /// <summary>
+        /// Recommended for mission-critical and production workloads. Includes Kubernetes control plane autoscaling, workload-intensive testing, and up to 5,000 nodes per cluster. Guarantees 99.95% availability of the Kubernetes API server endpoint for clusters that use Availability Zones and 99.9% of availability for clusters that don't use Availability Zones.
+        /// Serialized Name: ManagedClusterSKUTier.Standard
+        /// </summary>
         public static ManagedClusterSkuTier Standard { get; } = new ManagedClusterSkuTier(StandardValue);
-        /// <summary> The cluster management is free, but charged for VM, storage, and networking usage. Best for experimenting, learning, simple testing, or workloads with fewer than 10 nodes. Not recommended for production use cases. </summary>
+        /// <summary>
+        /// The cluster management is free, but charged for VM, storage, and networking usage. Best for experimenting, learning, simple testing, or workloads with fewer than 10 nodes. Not recommended for production use cases.
+        /// Serialized Name: ManagedClusterSKUTier.Free
+        /// </summary>
         public static ManagedClusterSkuTier Free { get; } = new ManagedClusterSkuTier(FreeValue);
         /// <summary> Determines if two <see cref="ManagedClusterSkuTier"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterSkuTier left, ManagedClusterSkuTier right) => left.Equals(right);

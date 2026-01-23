@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
     /// Describes the policy to be used for placement of a Service Fabric service where two replicas
     /// from the same partition should never be placed in the same fault or upgrade domain.
-    ///
+    /// 
     /// While this is not common it can expose the service to an increased risk of concurrent failures
     /// due to unplanned outages or other cases of subsequent/concurrent failures. As an example, consider
     /// a case where replicas are deployed across different data center, with one replica per location.
@@ -26,27 +27,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="ServicePlacementRequireDomainDistributionPolicy"/>. </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public ServicePlacementRequireDomainDistributionPolicy(string domainName)
+        public ServicePlacementRequireDomainDistributionPolicy(string domainName) : base(ServicePlacementPolicyType.RequiredDomainDistribution)
         {
             Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
-            Type = ServicePlacementPolicyType.RequiredDomainDistribution;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementRequireDomainDistributionPolicy"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        internal ServicePlacementRequireDomainDistributionPolicy(ServicePlacementPolicyType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(type, serializedAdditionalRawData)
+        internal ServicePlacementRequireDomainDistributionPolicy(ServicePlacementPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string domainName) : base(@type, additionalBinaryDataProperties)
         {
             DomainName = domainName;
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServicePlacementRequireDomainDistributionPolicy"/> for deserialization. </summary>
-        internal ServicePlacementRequireDomainDistributionPolicy()
-        {
         }
 
         /// <summary> The name of the domain that should used for placement as per this policy. </summary>

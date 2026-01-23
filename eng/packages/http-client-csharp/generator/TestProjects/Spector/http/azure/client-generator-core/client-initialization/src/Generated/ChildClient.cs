@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core.Pipeline;
 using Service;
 
-namespace Specs.Azure.ClientGeneratorCore.ClientInitialization._ParentClient
+namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._ParentClient
 {
     public partial class ChildClient
     {

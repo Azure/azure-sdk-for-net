@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> A domain name that AKS agent nodes are reaching at. </summary>
+    /// <summary>
+    /// A domain name that AKS agent nodes are reaching at.
+    /// Serialized Name: EndpointDependency
+    /// </summary>
     public partial class ContainerServiceEndpointDependency
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceEndpointDependency"/>. </summary>
-        /// <param name="domainName"> The domain name of the dependency. </param>
-        /// <param name="endpointDetails"> The Ports and Protocols used when connecting to domainName. </param>
+        /// <param name="domainName">
+        /// The domain name of the dependency.
+        /// Serialized Name: EndpointDependency.domainName
+        /// </param>
+        /// <param name="endpointDetails">
+        /// The Ports and Protocols used when connecting to domainName.
+        /// Serialized Name: EndpointDependency.endpointDetails
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceEndpointDependency(string domainName, IReadOnlyList<ContainerServiceEndpointDetail> endpointDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +71,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The domain name of the dependency. </summary>
+        /// <summary>
+        /// The domain name of the dependency.
+        /// Serialized Name: EndpointDependency.domainName
+        /// </summary>
         [WirePath("domainName")]
         public string DomainName { get; }
-        /// <summary> The Ports and Protocols used when connecting to domainName. </summary>
+        /// <summary>
+        /// The Ports and Protocols used when connecting to domainName.
+        /// Serialized Name: EndpointDependency.endpointDetails
+        /// </summary>
         [WirePath("endpointDetails")]
         public IReadOnlyList<ContainerServiceEndpointDetail> EndpointDetails { get; }
     }

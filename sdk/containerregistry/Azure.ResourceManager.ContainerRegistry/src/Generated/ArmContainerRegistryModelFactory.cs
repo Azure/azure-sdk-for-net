@@ -810,6 +810,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryAgentPoolQueueStatus(count, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SourceUploadDefinition"/>. </summary>
+        /// <param name="uploadUri"> The URL where the client can upload the source. </param>
+        /// <param name="relativePath"> The relative path to the source. This is used to submit the subsequent queue build request. </param>
+        /// <returns> A new <see cref="Models.SourceUploadDefinition"/> instance for mocking. </returns>
+        public static SourceUploadDefinition SourceUploadDefinition(Uri uploadUri = null, string relativePath = null)
+        {
+            return new SourceUploadDefinition(uploadUri, relativePath, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -871,15 +880,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 provisioningState,
                 isArchiveEnabled,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SourceUploadDefinition"/>. </summary>
-        /// <param name="uploadUri"> The URL where the client can upload the source. </param>
-        /// <param name="relativePath"> The relative path to the source. This is used to submit the subsequent queue build request. </param>
-        /// <returns> A new <see cref="Models.SourceUploadDefinition"/> instance for mocking. </returns>
-        public static SourceUploadDefinition SourceUploadDefinition(Uri uploadUri = null, string relativePath = null)
-        {
-            return new SourceUploadDefinition(uploadUri, relativePath, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryRunGetLogResult"/>. </summary>
@@ -1078,30 +1078,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 arguments?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryFileTaskStep"/>. </summary>
-        /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
-        /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
-        /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
-        /// <param name="taskFilePath"> The task template/definition file path relative to the source context. </param>
-        /// <param name="valuesFilePath"> The task values/parameters file path relative to the source context. </param>
-        /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryFileTaskStep"/> instance for mocking. </returns>
-        public static ContainerRegistryFileTaskStep ContainerRegistryFileTaskStep(IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, string taskFilePath = null, string valuesFilePath = null, IEnumerable<ContainerRegistryTaskOverridableValue> values = null)
-        {
-            baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
-            values ??= new List<ContainerRegistryTaskOverridableValue>();
-
-            return new ContainerRegistryFileTaskStep(
-                ContainerRegistryTaskStepType.FileTask,
-                baseImageDependencies?.ToList(),
-                contextPath,
-                contextAccessToken,
-                serializedAdditionalRawData: null,
-                taskFilePath,
-                valuesFilePath,
-                values?.ToList());
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryEncodedTaskStep"/>. </summary>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
@@ -1123,6 +1099,30 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 serializedAdditionalRawData: null,
                 encodedTaskContent,
                 encodedValuesContent,
+                values?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryFileTaskStep"/>. </summary>
+        /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
+        /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
+        /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
+        /// <param name="taskFilePath"> The task template/definition file path relative to the source context. </param>
+        /// <param name="valuesFilePath"> The task values/parameters file path relative to the source context. </param>
+        /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryFileTaskStep"/> instance for mocking. </returns>
+        public static ContainerRegistryFileTaskStep ContainerRegistryFileTaskStep(IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, string taskFilePath = null, string valuesFilePath = null, IEnumerable<ContainerRegistryTaskOverridableValue> values = null)
+        {
+            baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
+            values ??= new List<ContainerRegistryTaskOverridableValue>();
+
+            return new ContainerRegistryFileTaskStep(
+                ContainerRegistryTaskStepType.FileTask,
+                baseImageDependencies?.ToList(),
+                contextPath,
+                contextAccessToken,
+                serializedAdditionalRawData: null,
+                taskFilePath,
+                valuesFilePath,
                 values?.ToList());
         }
 

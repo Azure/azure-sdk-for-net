@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.VirtualEnclaves
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.VirtualEnclaves
     /// </summary>
     public partial class VirtualEnclaveEndpointCollection : ArmCollection, IEnumerable<VirtualEnclaveEndpointResource>, IAsyncEnumerable<VirtualEnclaveEndpointResource>
     {
-        private readonly ClientDiagnostics _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics;
-        private readonly EnclaveEndpointsRestOperations _virtualEnclaveEndpointEnclaveEndpointsRestClient;
+        private readonly ClientDiagnostics _enclaveEndpointsClientDiagnostics;
+        private readonly EnclaveEndpoints _enclaveEndpointsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveEndpointCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of VirtualEnclaveEndpointCollection for mocking. </summary>
         protected VirtualEnclaveEndpointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveEndpointCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveEndpointCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualEnclaveEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveEndpointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VirtualEnclaveEndpointResource.ResourceType, out string virtualEnclaveEndpointEnclaveEndpointsApiVersion);
-            _virtualEnclaveEndpointEnclaveEndpointsRestClient = new EnclaveEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveEndpointEnclaveEndpointsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(VirtualEnclaveEndpointResource.ResourceType, out string virtualEnclaveEndpointApiVersion);
+            _enclaveEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveEndpointResource.ResourceType.Namespace, Diagnostics);
+            _enclaveEndpointsRestClient = new EnclaveEndpoints(_enclaveEndpointsClientDiagnostics, Pipeline, Endpoint, virtualEnclaveEndpointApiVersion ?? "2025-05-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != VirtualEnclaveResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualEnclaveResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualEnclaveResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a EnclaveEndpointResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveEndpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<VirtualEnclaveEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string enclaveEndpointName, VirtualEnclaveEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _enclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualEnclaveEndpointEnclaveEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enclaveEndpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveEndpointResource>(new VirtualEnclaveEndpointOperationSource(Client), _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics, Pipeline, _virtualEnclaveEndpointEnclaveEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enclaveEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enclaveEndpointsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, enclaveEndpointName, VirtualEnclaveEndpointData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VirtualEnclavesArmOperation<VirtualEnclaveEndpointResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveEndpointResource>(
+                    new VirtualEnclaveEndpointOperationSource(Client),
+                    _enclaveEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Create a EnclaveEndpointResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveEndpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<VirtualEnclaveEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string enclaveEndpointName, VirtualEnclaveEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _enclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualEnclaveEndpointEnclaveEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enclaveEndpointName, data, cancellationToken);
-                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveEndpointResource>(new VirtualEnclaveEndpointOperationSource(Client), _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics, Pipeline, _virtualEnclaveEndpointEnclaveEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enclaveEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enclaveEndpointsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, enclaveEndpointName, VirtualEnclaveEndpointData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VirtualEnclavesArmOperation<VirtualEnclaveEndpointResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveEndpointResource>(
+                    new VirtualEnclaveEndpointOperationSource(Client),
+                    _enclaveEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Get a EnclaveEndpointResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<VirtualEnclaveEndpointResource>> GetAsync(string enclaveEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
 
-            using var scope = _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.Get");
+            using DiagnosticScope scope = _enclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualEnclaveEndpointEnclaveEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enclaveEndpointName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enclaveEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, enclaveEndpointName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VirtualEnclaveEndpointData> response = Response.FromValue(VirtualEnclaveEndpointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEnclaveEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Get a EnclaveEndpointResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<VirtualEnclaveEndpointResource> Get(string enclaveEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
 
-            using var scope = _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.Get");
+            using DiagnosticScope scope = _enclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = _virtualEnclaveEndpointEnclaveEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enclaveEndpointName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enclaveEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, enclaveEndpointName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VirtualEnclaveEndpointData> response = Response.FromValue(VirtualEnclaveEndpointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEnclaveEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// List EnclaveEndpointResource resources by EnclaveResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_ListByEnclaveResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_ListByEnclaveResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualEnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualEnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualEnclaveEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEnclaveEndpointEnclaveEndpointsRestClient.CreateListByEnclaveResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEnclaveEndpointEnclaveEndpointsRestClient.CreateListByEnclaveResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveEndpointResource(Client, VirtualEnclaveEndpointData.DeserializeVirtualEnclaveEndpointData(e)), _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics, Pipeline, "VirtualEnclaveEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualEnclaveEndpointData, VirtualEnclaveEndpointResource>(new EnclaveEndpointsGetByEnclaveResourceAsyncCollectionResultOfT(_enclaveEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new VirtualEnclaveEndpointResource(Client, data));
         }
 
         /// <summary>
         /// List EnclaveEndpointResource resources by EnclaveResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_ListByEnclaveResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_ListByEnclaveResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <returns> A collection of <see cref="VirtualEnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualEnclaveEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEnclaveEndpointEnclaveEndpointsRestClient.CreateListByEnclaveResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEnclaveEndpointEnclaveEndpointsRestClient.CreateListByEnclaveResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveEndpointResource(Client, VirtualEnclaveEndpointData.DeserializeVirtualEnclaveEndpointData(e)), _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics, Pipeline, "VirtualEnclaveEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualEnclaveEndpointData, VirtualEnclaveEndpointResource>(new EnclaveEndpointsGetByEnclaveResourceCollectionResultOfT(_enclaveEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new VirtualEnclaveEndpointResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string enclaveEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
 
-            using var scope = _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.Exists");
+            using DiagnosticScope scope = _enclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _virtualEnclaveEndpointEnclaveEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enclaveEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enclaveEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, enclaveEndpointName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VirtualEnclaveEndpointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEnclaveEndpointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEnclaveEndpointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +385,50 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string enclaveEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
 
-            using var scope = _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.Exists");
+            using DiagnosticScope scope = _enclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var response = _virtualEnclaveEndpointEnclaveEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enclaveEndpointName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enclaveEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, enclaveEndpointName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VirtualEnclaveEndpointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEnclaveEndpointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEnclaveEndpointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +442,54 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<VirtualEnclaveEndpointResource>> GetIfExistsAsync(string enclaveEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
 
-            using var scope = _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.GetIfExists");
+            using DiagnosticScope scope = _enclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _virtualEnclaveEndpointEnclaveEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enclaveEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enclaveEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, enclaveEndpointName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VirtualEnclaveEndpointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEnclaveEndpointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEnclaveEndpointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VirtualEnclaveEndpointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEnclaveEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +503,54 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<VirtualEnclaveEndpointResource> GetIfExists(string enclaveEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
 
-            using var scope = _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.GetIfExists");
+            using DiagnosticScope scope = _enclaveEndpointsClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _virtualEnclaveEndpointEnclaveEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enclaveEndpointName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enclaveEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, enclaveEndpointName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VirtualEnclaveEndpointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEnclaveEndpointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEnclaveEndpointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VirtualEnclaveEndpointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEnclaveEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<VirtualEnclaveEndpointResource> IAsyncEnumerable<VirtualEnclaveEndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core.Expressions.DataFactory;
 
 namespace BasicTypeSpec
 {
@@ -145,6 +146,17 @@ namespace BasicTypeSpec
         public static ReturnsAnonymousModelResponse ReturnsAnonymousModelResponse()
         {
             return new ReturnsAnonymousModelResponse(additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Model with DataFactoryElement properties. </summary>
+        /// <param name="stringProperty"> String property with DFE pattern. </param>
+        /// <param name="intProperty"> Int property with DFE pattern. </param>
+        /// <param name="boolProperty"> Bool property with DFE pattern. </param>
+        /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
+        /// <returns> A new <see cref="BasicTypeSpec.DataFactoryElementModel"/> instance for mocking. </returns>
+        public static DataFactoryElementModel DataFactoryElementModel(DataFactoryElement<string> stringProperty = default, DataFactoryElement<int> intProperty = default, DataFactoryElement<bool> boolProperty = default, DataFactoryElement<IList<string>> stringArrayProperty = default)
+        {
+            return new DataFactoryElementModel(stringProperty, intProperty, boolProperty, stringArrayProperty, additionalBinaryDataProperties: null);
         }
     }
 }

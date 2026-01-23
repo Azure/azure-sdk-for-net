@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
-    internal class HciVmVirtualHardDiskOperationSource : IOperationSource<HciVmVirtualHardDiskResource>
+    /// <summary></summary>
+    internal partial class HciVmVirtualHardDiskOperationSource : IOperationSource<HciVmVirtualHardDiskResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HciVmVirtualHardDiskOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HciVmVirtualHardDiskResource IOperationSource<HciVmVirtualHardDiskResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciVmVirtualHardDiskData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HciVmVirtualHardDiskData data = HciVmVirtualHardDiskData.DeserializeHciVmVirtualHardDiskData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HciVmVirtualHardDiskResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HciVmVirtualHardDiskResource> IOperationSource<HciVmVirtualHardDiskResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciVmVirtualHardDiskData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
-            return await Task.FromResult(new HciVmVirtualHardDiskResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HciVmVirtualHardDiskData data = HciVmVirtualHardDiskData.DeserializeHciVmVirtualHardDiskData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HciVmVirtualHardDiskResource(_client, data);
         }
     }
 }

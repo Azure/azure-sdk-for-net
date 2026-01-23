@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct GpuAssignmentType : IEquatable<GpuAssignmentType>
     {
         private readonly string _value;
+        /// <summary> Attach Graphics Processing Unit (GPU) using Discrete Device Assignment (DDA). </summary>
+        private const string GpuDdaValue = "GpuDDA";
+        /// <summary> Attach Graphics Processing Unit (GPU) using GPU Partitioning. </summary>
+        private const string GpuPValue = "GpuP";
 
         /// <summary> Initializes a new instance of <see cref="GpuAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GpuAssignmentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GpuDdaValue = "GpuDDA";
-        private const string GpuPValue = "GpuP";
+            _value = value;
+        }
 
         /// <summary> Attach Graphics Processing Unit (GPU) using Discrete Device Assignment (DDA). </summary>
         public static GpuAssignmentType GpuDda { get; } = new GpuAssignmentType(GpuDdaValue);
+
         /// <summary> Attach Graphics Processing Unit (GPU) using GPU Partitioning. </summary>
         public static GpuAssignmentType GpuP { get; } = new GpuAssignmentType(GpuPValue);
+
         /// <summary> Determines if two <see cref="GpuAssignmentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GpuAssignmentType left, GpuAssignmentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GpuAssignmentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GpuAssignmentType left, GpuAssignmentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GpuAssignmentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GpuAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GpuAssignmentType(string value) => new GpuAssignmentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GpuAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GpuAssignmentType?(string value) => value == null ? null : new GpuAssignmentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GpuAssignmentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GpuAssignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

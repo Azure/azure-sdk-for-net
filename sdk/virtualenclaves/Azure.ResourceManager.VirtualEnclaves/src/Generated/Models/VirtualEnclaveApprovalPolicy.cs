@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public readonly partial struct VirtualEnclaveApprovalPolicy : IEquatable<VirtualEnclaveApprovalPolicy>
     {
         private readonly string _value;
+        /// <summary> Approval will be required for the specified action. </summary>
+        private const string RequiredValue = "Required";
+        /// <summary> Approval will not be required for the specified action. </summary>
+        private const string NotRequiredValue = "NotRequired";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprovalPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualEnclaveApprovalPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RequiredValue = "Required";
-        private const string NotRequiredValue = "NotRequired";
+            _value = value;
+        }
 
         /// <summary> Approval will be required for the specified action. </summary>
         public static VirtualEnclaveApprovalPolicy Required { get; } = new VirtualEnclaveApprovalPolicy(RequiredValue);
+
         /// <summary> Approval will not be required for the specified action. </summary>
         public static VirtualEnclaveApprovalPolicy NotRequired { get; } = new VirtualEnclaveApprovalPolicy(NotRequiredValue);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveApprovalPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualEnclaveApprovalPolicy left, VirtualEnclaveApprovalPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveApprovalPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualEnclaveApprovalPolicy left, VirtualEnclaveApprovalPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualEnclaveApprovalPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveApprovalPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualEnclaveApprovalPolicy(string value) => new VirtualEnclaveApprovalPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveApprovalPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualEnclaveApprovalPolicy?(string value) => value == null ? null : new VirtualEnclaveApprovalPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualEnclaveApprovalPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualEnclaveApprovalPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

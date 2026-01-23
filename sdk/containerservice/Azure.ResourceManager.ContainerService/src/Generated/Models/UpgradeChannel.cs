@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> For more information see [setting the AKS cluster auto-upgrade channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel). </summary>
+    /// <summary>
+    /// The upgrade channel for auto upgrade. The default is 'none'. For more information see [setting the AKS cluster auto-upgrade channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel).
+    /// Serialized Name: UpgradeChannel
+    /// </summary>
     public readonly partial struct UpgradeChannel : IEquatable<UpgradeChannel>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string NodeImageValue = "node-image";
         private const string NoneValue = "none";
 
-        /// <summary> Automatically upgrade the cluster to the latest supported patch release on the latest supported minor version. In cases where the cluster is at a version of Kubernetes that is at an N-2 minor version where N is the latest supported minor version, the cluster first upgrades to the latest supported patch version on N-1 minor version. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster first is upgraded to 1.18.6, then is upgraded to 1.19.1. </summary>
+        /// <summary>
+        /// Automatically upgrade the cluster to the latest supported patch release on the latest supported minor version. In cases where the cluster is at a version of Kubernetes that is at an N-2 minor version where N is the latest supported minor version, the cluster first upgrades to the latest supported patch version on N-1 minor version. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster first is upgraded to 1.18.6, then is upgraded to 1.19.1.
+        /// Serialized Name: UpgradeChannel.rapid
+        /// </summary>
         public static UpgradeChannel Rapid { get; } = new UpgradeChannel(RapidValue);
-        /// <summary> Automatically upgrade the cluster to the latest supported patch release on minor version N-1, where N is the latest supported minor version. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster is upgraded to 1.18.6. </summary>
+        /// <summary>
+        /// Automatically upgrade the cluster to the latest supported patch release on minor version N-1, where N is the latest supported minor version. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster is upgraded to 1.18.6.
+        /// Serialized Name: UpgradeChannel.stable
+        /// </summary>
         public static UpgradeChannel Stable { get; } = new UpgradeChannel(StableValue);
-        /// <summary> Automatically upgrade the cluster to the latest supported patch version when it becomes available while keeping the minor version the same. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster is upgraded to 1.17.9. </summary>
+        /// <summary>
+        /// Automatically upgrade the cluster to the latest supported patch version when it becomes available while keeping the minor version the same. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster is upgraded to 1.17.9.
+        /// Serialized Name: UpgradeChannel.patch
+        /// </summary>
         public static UpgradeChannel Patch { get; } = new UpgradeChannel(PatchValue);
-        /// <summary> Automatically upgrade the node image to the latest version available. Consider using nodeOSUpgradeChannel instead as that allows you to configure node OS patching separate from Kubernetes version patching. </summary>
+        /// <summary>
+        /// Automatically upgrade the node image to the latest version available. Consider using nodeOSUpgradeChannel instead as that allows you to configure node OS patching separate from Kubernetes version patching
+        /// Serialized Name: UpgradeChannel.node-image
+        /// </summary>
         public static UpgradeChannel NodeImage { get; } = new UpgradeChannel(NodeImageValue);
-        /// <summary> Disables auto-upgrades and keeps the cluster at its current version of Kubernetes. </summary>
+        /// <summary>
+        /// Disables auto-upgrades and keeps the cluster at its current version of Kubernetes.
+        /// Serialized Name: UpgradeChannel.none
+        /// </summary>
         public static UpgradeChannel None { get; } = new UpgradeChannel(NoneValue);
         /// <summary> Determines if two <see cref="UpgradeChannel"/> values are the same. </summary>
         public static bool operator ==(UpgradeChannel left, UpgradeChannel right) => left.Equals(right);

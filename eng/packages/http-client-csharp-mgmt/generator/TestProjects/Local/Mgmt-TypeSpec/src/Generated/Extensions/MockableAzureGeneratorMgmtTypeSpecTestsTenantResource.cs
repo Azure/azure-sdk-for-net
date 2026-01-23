@@ -21,8 +21,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableAzureGeneratorMgmtTypeSpecTestsTenantResource : ArmResource
     {
-        private ClientDiagnostics _privateLinksClientDiagnostics;
-        private PrivateLinks _privateLinksRestClient;
         private ClientDiagnostics _networkProviderActionsClientDiagnostics;
         private NetworkProviderActions _networkProviderActionsRestClient;
 
@@ -38,87 +36,92 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
         }
 
-        private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
-
         private ClientDiagnostics NetworkProviderActionsClientDiagnostics => _networkProviderActionsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private NetworkProviderActions NetworkProviderActionsRestClient => _networkProviderActionsRestClient ??= new NetworkProviderActions(NetworkProviderActionsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
-        /// <summary>
-        /// Starts a failed runtime resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateLinks_StartFailedServerlessRuntime. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> StartFailedServerlessRuntimeAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of BestPractices in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of BestPractices and their operations over a BestPracticeResource. </returns>
+        public virtual BestPracticeCollection GetBestPractices()
         {
-            using DiagnosticScope scope = PrivateLinksClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.StartFailedServerlessRuntime");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PrivateLinksRestClient.CreateStartFailedServerlessRuntimeRequest(context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCachedClient(client => new BestPracticeCollection(client, Id));
         }
 
         /// <summary>
-        /// Starts a failed runtime resource
+        /// Get a BestPractice
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /. </description>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateLinks_StartFailedServerlessRuntime. </description>
+        /// <description> BestPractices_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response StartFailedServerlessRuntime(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BestPracticeResource>> GetBestPracticeAsync(string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = PrivateLinksClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.StartFailedServerlessRuntime");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PrivateLinksRestClient.CreateStartFailedServerlessRuntimeRequest(context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
+
+            return await GetBestPractices().GetAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a BestPractice
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BestPractices_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BestPracticeResource> GetBestPractice(string bestPracticeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
+
+            return GetBestPractices().Get(bestPracticeName, cancellationToken);
         }
 
         /// <summary>
         /// Query network sibling set - a provider-level async action.
         /// This is a non-resource LRO operation that returns NetworkSiblingSet.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{provider}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkProviderActions_QueryNetworkSiblingSet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
@@ -161,6 +164,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <summary>
         /// Query network sibling set - a provider-level async action.
         /// This is a non-resource LRO operation that returns NetworkSiblingSet.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{provider}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkProviderActions_QueryNetworkSiblingSet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>

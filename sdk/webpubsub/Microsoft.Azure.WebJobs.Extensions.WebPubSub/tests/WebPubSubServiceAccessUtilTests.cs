@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;
@@ -135,9 +134,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 .Build();
 
             var section = configuration.GetSection("TestConnection");
-            var mockFactory = new Mock<AzureComponentFactory>();
 
-            var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, mockFactory.Object, out var result);
+            var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, TestAzureComponentFactory.Instance, out var result);
 
             Assert.IsTrue(success);
             Assert.IsNotNull(result);
@@ -160,11 +158,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 .Build();
 
             var section = configuration.GetSection("TestConnection");
-            var mockFactory = new Mock<AzureComponentFactory>();
-            mockFactory.Setup(f => f.CreateTokenCredential(It.IsAny<IConfiguration>()))
-                .Returns(Mock.Of<TokenCredential>());
 
-            var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, mockFactory.Object, out var result);
+            var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, TestAzureComponentFactory.Instance, out var result);
 
             Assert.IsTrue(success);
             Assert.IsNotNull(result);
@@ -183,9 +178,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 .Build();
 
             var section = configuration.GetSection("TestConnection");
-            var mockFactory = new Mock<AzureComponentFactory>();
 
-            var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, mockFactory.Object, out var result);
+            var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, TestAzureComponentFactory.Instance, out var result);
 
             Assert.IsFalse(success);
             Assert.IsNull(result);
@@ -209,17 +203,69 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 .Build();
 
             var section = configuration.GetSection("TestConnection");
-            var mockFactory = new Mock<AzureComponentFactory>();
-            mockFactory.Setup(f => f.CreateTokenCredential(It.IsAny<IConfiguration>()))
-                .Returns(mockCredential.Object);
 
-            var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, mockFactory.Object, out var result);
+            var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, TestAzureComponentFactory.Instance, out var result);
 
             Assert.IsTrue(success);
             Assert.IsNotNull(result);
             // Connection string value should be used, not serviceUri
             Assert.AreEqual(new Uri(endpoint), result.ServiceEndpoint);
             Assert.IsInstanceOf<KeyCredential>(result.Credential);
+        }
+
+        [Test]
+        public void CanCreateFromIConfiguration_ReturnsTrue_WhenConnectionStringExists()
+        {
+            var connectionString = "Endpoint=https://test.webpubsub.azure.com;AccessKey=testkey";
+
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    { "TestConnection", connectionString }
+                })
+                .Build();
+
+            var section = configuration.GetSection("TestConnection");
+
+            var result = WebPubSubServiceAccessUtil.CanCreateFromIConfiguration(section);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void CanCreateFromIConfiguration_ReturnsTrue_WhenServiceUriExists()
+        {
+            var serviceUri = "https://test.webpubsub.azure.com";
+
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    { "TestConnection:serviceUri", serviceUri }
+                })
+                .Build();
+
+            var section = configuration.GetSection("TestConnection");
+
+            var result = WebPubSubServiceAccessUtil.CanCreateFromIConfiguration(section);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void CanCreateFromIConfiguration_ReturnsFalse_WhenNoConnectionInfoExists()
+        {
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    { "TestConnection:SomeOtherKey", "value" }
+                })
+                .Build();
+
+            var section = configuration.GetSection("TestConnection");
+
+            var result = WebPubSubServiceAccessUtil.CanCreateFromIConfiguration(section);
+
+            Assert.IsFalse(result);
         }
     }
 }

@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Unknown version of RegistryEndpointTrustedSigningKey. </summary>
     internal partial class UnknownRegistryEndpointTrustedSigningKey : RegistryEndpointTrustedSigningKey
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRegistryEndpointTrustedSigningKey"/>. </summary>
         /// <param name="type"> The trust type for the registry endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRegistryEndpointTrustedSigningKey(RegistryEndpointTrustedSigningKeyType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
-        {
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownRegistryEndpointTrustedSigningKey"/> for deserialization. </summary>
-        internal UnknownRegistryEndpointTrustedSigningKey()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRegistryEndpointTrustedSigningKey(RegistryEndpointTrustedSigningKeyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

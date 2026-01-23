@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.TrustedSigning
+namespace Microsoft.TypeSpec.Generator.Customizations
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Struct), AllowMultiple = true, Inherited = true)]
     internal partial class CodeGenSerializationAttribute : Attribute

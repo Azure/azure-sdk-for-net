@@ -79,5 +79,7 @@ namespace SpecialWords
         public static Yield Yield(string name = default) => throw null;
 
         public static SameAsModel SameAsModel(string sameAsModelProperty = default) => throw null;
+
+        public static DictMethods DictMethods(string keys = default, string items = default, string values = default, string popitem = default, string clear = default, string update = default, string setdefault = default, string pop = default, string @get = default, string copy = default) => throw null;
     }
 }

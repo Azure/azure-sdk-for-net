@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
                     {
                         continue;
                     }
-                    catalogUri = new Uri(prop.Value.GetString());
+                    catalogUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

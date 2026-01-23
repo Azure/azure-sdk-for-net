@@ -1,5 +1,13 @@
 # Release History
 
+## 2.8.0-beta.1 (2025-12-12)
+
+This update restores compatibility with the latest `2.8.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.8.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#280-2025-12-11).
+
+### Features Added
+
+- A substantial number of new features are carried forward from the `OpenAI` library. Please see [the full OpenAI 2.8.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#280-2025-12-11) for details.
+
 ## 2.7.0-beta.2 (2025-12-01)
 
 ### Bugs fixed
@@ -12,7 +20,7 @@ This update restores compatibility with the latest `2.7.0` release of `OpenAI` a
 
 ### Features Added
 
-- A substantial number of new features are carried forward from the `OpenAI` library. Please see [the full OpenAI 2.5.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#270-2025-11-13) for details.
+- A substantial number of new features are carried forward from the `OpenAI` library. Please see [the full OpenAI 2.7.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#270-2025-11-13) for details.
 
 ### Breaking Changes
 
@@ -88,11 +96,11 @@ The following are carried forward from changes in the 2.2.0 release of `OpenAI`.
 
 ## 2.2.0-beta.4 (2025-03-18)
 
-This update brings compatibility with the `2025-03-01-preview` service API version, including support for the new `/responses` API via `OpenAIResponseClient`.
+This update brings compatibility with the `2025-03-01-preview` service API version, including support for the new `/responses` API via `ResponsesClient`.
 
 ### Features Added
 
-- To use the new `/responses` endpoint, call `GetOpenAIResponseClient()` on an `AzureOpenAIClient` instance, following the same pattern as other operations. Using the overload without a deployment name will not be able to create new responses, only retrieve and list existing response data.
+- To use the new `/responses` endpoint, call `GetResponsesClient()` on an `AzureOpenAIClient` instance, following the same pattern as other operations. Using the overload without a deployment name will not be able to create new responses, only retrieve and list existing response data.
 
 In addition to the new features transitive via the `OpenAI` library:
 

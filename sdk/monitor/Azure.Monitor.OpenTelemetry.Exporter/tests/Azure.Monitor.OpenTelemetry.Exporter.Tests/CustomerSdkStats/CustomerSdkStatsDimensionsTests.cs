@@ -10,35 +10,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CustomerSdkStats;
 
 public class CustomerSdkStatsDimensionsTests
 {
-    [Theory]
-    [InlineData(SdkVersionType.Exporter, "dotnet-exp")]
-    [InlineData(SdkVersionType.Distro, "dotnet-distro")]
-    [InlineData(SdkVersionType.ShimBase, "dotnet-shim")]
-    [InlineData(SdkVersionType.ShimAspNetCore, "dotnet-core")]
-    [InlineData(SdkVersionType.ShimWorkerService, "dotnet-worker")]
-    [InlineData(SdkVersionType.ShimWeb, "dotnet-web")]
-    internal void GetBaseTags_SetsCorrectLanguageDimensionForEachSdkVersionType(SdkVersionType versionType, string expectedLanguage)
-    {
-        // Arrange
-        var originalVersionType = SdkVersionUtils.s_sdkVersionType;
-        SdkVersionUtils.VersionType = versionType;
-
-        try
-        {
-            // Act
-            var tags = CustomerSdkStatsDimensions.GetBaseTags("REQUEST");
-
-            // Assert
-            Assert.Contains(tags, tag => tag.Key == "language" && tag.Value?.Equals(expectedLanguage) == true);
-            Assert.Contains(tags, tag => tag.Key == "telemetry_type" && tag.Value?.Equals("REQUEST") == true);
-        }
-        finally
-        {
-            // Cleanup
-            SdkVersionUtils.s_sdkVersionType = originalVersionType;
-        }
-    }
-
     [Fact]
     public void GetBaseTags_IncludesAllRequiredDimensions()
     {

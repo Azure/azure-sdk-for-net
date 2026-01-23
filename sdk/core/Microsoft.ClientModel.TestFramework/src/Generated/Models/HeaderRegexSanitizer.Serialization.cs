@@ -14,7 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The HeaderRegexSanitizer. </summary>
-    public partial class HeaderRegexSanitizer : IJsonModel<HeaderRegexSanitizer>
+    public partial class HeaderRegexSanitizer : SanitizerAddition, IJsonModel<HeaderRegexSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="HeaderRegexSanitizer"/> for deserialization. </summary>
         internal HeaderRegexSanitizer()
@@ -120,7 +120,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeHeaderRegexSanitizer(document.RootElement, options);
                     }

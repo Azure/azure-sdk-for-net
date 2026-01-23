@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct IotOperationsExtendedLocationType : IEquatable<IotOperationsExtendedLocationType>
     {
         private readonly string _value;
+        /// <summary> CustomLocation type. </summary>
+        private const string CustomLocationValue = "CustomLocation";
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotOperationsExtendedLocationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CustomLocationValue = "CustomLocation";
+            _value = value;
+        }
 
         /// <summary> CustomLocation type. </summary>
         public static IotOperationsExtendedLocationType CustomLocation { get; } = new IotOperationsExtendedLocationType(CustomLocationValue);
+
         /// <summary> Determines if two <see cref="IotOperationsExtendedLocationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotOperationsExtendedLocationType left, IotOperationsExtendedLocationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotOperationsExtendedLocationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotOperationsExtendedLocationType left, IotOperationsExtendedLocationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotOperationsExtendedLocationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotOperationsExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotOperationsExtendedLocationType(string value) => new IotOperationsExtendedLocationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotOperationsExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotOperationsExtendedLocationType?(string value) => value == null ? null : new IotOperationsExtendedLocationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotOperationsExtendedLocationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotOperationsExtendedLocationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

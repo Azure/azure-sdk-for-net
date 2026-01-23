@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public partial class SkipFileShareConfiguration : FileShareConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="SkipFileShareConfiguration"/>. </summary>
-        public SkipFileShareConfiguration()
+        public SkipFileShareConfiguration() : base(FileShareConfigurationType.Skip)
         {
-            ConfigurationType = FileShareConfigurationType.Skip;
         }
 
         /// <summary> Initializes a new instance of <see cref="SkipFileShareConfiguration"/>. </summary>
         /// <param name="configurationType"> The type of file share config, eg: Mount/CreateAndMount/Skip. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SkipFileShareConfiguration(FileShareConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(configurationType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SkipFileShareConfiguration(FileShareConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(configurationType, additionalBinaryDataProperties)
         {
-            ConfigurationType = configurationType;
         }
     }
 }

@@ -54,7 +54,7 @@ namespace BasicTypeSpec
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage, response);
                 nextPage = result.NextToken;
-                if (nextPage == null)
+                if (string.IsNullOrEmpty(nextPage))
                 {
                     yield break;
                 }

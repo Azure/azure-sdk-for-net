@@ -14,7 +14,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The NestedFooModel. </summary>
-    public partial class NestedFooModel : IJsonModel<NestedFooModel>
+    internal partial class NestedFooModel : IJsonModel<NestedFooModel>
     {
         /// <summary> Initializes a new instance of <see cref="NestedFooModel"/> for deserialization. </summary>
         internal NestedFooModel()

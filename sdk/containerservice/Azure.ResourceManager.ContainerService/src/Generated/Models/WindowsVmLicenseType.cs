@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The license type to use for Windows VMs. See [Azure Hybrid User Benefits](https://azure.microsoft.com/pricing/hybrid-benefit/faq/) for more details. </summary>
+    /// <summary>
+    /// The license type to use for Windows VMs. See [Azure Hybrid User Benefits](https://azure.microsoft.com/pricing/hybrid-benefit/faq/) for more details.
+    /// Serialized Name: LicenseType
+    /// </summary>
     public readonly partial struct WindowsVmLicenseType : IEquatable<WindowsVmLicenseType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string NoneValue = "None";
         private const string WindowsServerValue = "Windows_Server";
 
-        /// <summary> No additional licensing is applied. </summary>
+        /// <summary>
+        /// No additional licensing is applied.
+        /// Serialized Name: LicenseType.None
+        /// </summary>
         public static WindowsVmLicenseType None { get; } = new WindowsVmLicenseType(NoneValue);
-        /// <summary> Enables Azure Hybrid User Benefits for Windows VMs. </summary>
+        /// <summary>
+        /// Enables Azure Hybrid User Benefits for Windows VMs.
+        /// Serialized Name: LicenseType.Windows_Server
+        /// </summary>
         public static WindowsVmLicenseType WindowsServer { get; } = new WindowsVmLicenseType(WindowsServerValue);
         /// <summary> Determines if two <see cref="WindowsVmLicenseType"/> values are the same. </summary>
         public static bool operator ==(WindowsVmLicenseType left, WindowsVmLicenseType right) => left.Equals(right);

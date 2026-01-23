@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Creates or updates the private endpoint connection for the Cloud Hsm Cluster.
+        /// Update a CloudHsmClusterPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Creates or updates the private endpoint connection for the Cloud Hsm Cluster.
+        /// Update a CloudHsmClusterPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

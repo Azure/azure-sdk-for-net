@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.IotOperations
 {
+    /// <summary></summary>
     public partial class IotOperationsBrokerAuthorizationResource : IJsonModel<IotOperationsBrokerAuthorizationData>
     {
-        private static IotOperationsBrokerAuthorizationData s_dataDeserializationInstance;
-        private static IotOperationsBrokerAuthorizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IotOperationsBrokerAuthorizationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IotOperationsBrokerAuthorizationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IotOperationsBrokerAuthorizationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotOperationsBrokerAuthorizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsBrokerAuthorizationData>)Data).Write(writer, options);
 
-        IotOperationsBrokerAuthorizationData IJsonModel<IotOperationsBrokerAuthorizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsBrokerAuthorizationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotOperationsBrokerAuthorizationData IJsonModel<IotOperationsBrokerAuthorizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IotOperationsBrokerAuthorizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotOperationsBrokerAuthorizationData>(Data, options, AzureResourceManagerIotOperationsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IotOperationsBrokerAuthorizationData IPersistableModel<IotOperationsBrokerAuthorizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotOperationsBrokerAuthorizationData>(data, options, AzureResourceManagerIotOperationsContext.Default);
 
-        string IPersistableModel<IotOperationsBrokerAuthorizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotOperationsBrokerAuthorizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotOperationsBrokerAuthorizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> Broker Advanced Settings. </summary>
     public partial class BrokerAdvancedSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BrokerAdvancedSettings"/>. </summary>
         public BrokerAdvancedSettings()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="clients"> Configurations related to All Clients. </param>
         /// <param name="encryptInternalTraffic"> The setting to enable or disable encryption of internal Traffic. </param>
         /// <param name="internalCerts"> Certificate rotation and private key configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerAdvancedSettings(BrokerClientConfig clients, IotOperationsOperationalMode? encryptInternalTraffic, CertManagerCertConfig internalCerts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BrokerAdvancedSettings(BrokerClientConfig clients, IotOperationsOperationalMode? encryptInternalTraffic, CertManagerCertConfig internalCerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Clients = clients;
             EncryptInternalTraffic = encryptInternalTraffic;
             InternalCerts = internalCerts;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Configurations related to All Clients. </summary>
         public BrokerClientConfig Clients { get; set; }
+
         /// <summary> The setting to enable or disable encryption of internal Traffic. </summary>
         public IotOperationsOperationalMode? EncryptInternalTraffic { get; set; }
+
         /// <summary> Certificate rotation and private key configuration. </summary>
         public CertManagerCertConfig InternalCerts { get; set; }
     }

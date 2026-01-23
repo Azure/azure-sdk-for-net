@@ -1,0 +1,608 @@
+{
+  "name": "Documentation",
+  "apiVersions": [],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "BulletPointsEnum",
+      "crossLanguageDefinitionId": "Documentation.Lists.BulletPointsEnum",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "Simple",
+          "value": "Simple",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Simple bullet point. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.\n- One: one. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.\n- Two: two. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.",
+          "decorators": []
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "Bold",
+          "value": "Bold",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Bullet point with **bold text**. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.\n- **One**: one. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.\n- **Two**: two. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.",
+          "decorators": []
+        },
+        {
+          "$id": "5",
+          "kind": "enumvalue",
+          "name": "Italic",
+          "value": "Italic",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Bullet point with *italic text*. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.\n- *One*: one. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.\n- *Two*: two. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.",
+          "decorators": []
+        }
+      ],
+      "namespace": "Documentation.Lists",
+      "doc": "This tests really long bullet points in enum documentation to see how wrapping and formatting are handled. This should wrap around correctly and maintain proper indentation for each line.\n- Simple bullet point. This bullet point is going to be very long to test how text wrapping is handled in bullet points within documentation comments. It should properly indent the wrapped lines.\n- Another bullet point with **bold text**. This bullet point is also intentionally long to see how the formatting is preserved when the text wraps onto multiple lines in the generated documentation.\n- Third bullet point with *italic text*. Similar to the previous points, this one is extended to ensure that the wrapping and formatting are correctly applied in the output.\n- Complex bullet point with **bold** and *italic* combined. This bullet point combines both bold and italic formatting and is long enough to test the wrapping behavior in such cases.\n- **Bold bullet point**: A bullet point that is entirely bolded. This point is also made lengthy to observe how the bold formatting is maintained across wrapped lines.\n- *Italic bullet point*: A bullet point that is entirely italicized. This final point is extended to verify that italic formatting is correctly applied even when the text spans multiple lines.",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "Input,Json",
+      "decorators": []
+    }
+  ],
+  "constants": [
+    {
+      "$id": "6",
+      "kind": "constant",
+      "name": "bulletPointsModelContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "7",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "8",
+      "kind": "model",
+      "name": "BulletPointsModel",
+      "namespace": "Documentation.Lists",
+      "crossLanguageDefinitionId": "Documentation.Lists.BulletPointsModel",
+      "usage": "Input,Json",
+      "doc": "This tests:\n- Simple bullet point. This bullet point is going to be very long to test how text wrapping is handled in bullet points within documentation comments. It should properly indent the wrapped lines.\n- Another bullet point with **bold text**. This bullet point is also intentionally long to see how the formatting is preserved when the text wraps onto multiple lines in the generated documentation.\n- Third bullet point with *italic text*. Similar to the previous points, this one is extended to ensure that the wrapping and formatting are correctly applied in the output.\n- Complex bullet point with **bold** and *italic* combined. This bullet point combines both bold and italic formatting and is long enough to test the wrapping behavior in such cases.\n- **Bold bullet point**: A bullet point that is entirely bolded. This point is also made lengthy to observe how the bold formatting is maintained across wrapped lines.\n- *Italic bullet point*: A bullet point that is entirely italicized. This final point is extended to verify that italic formatting is correctly applied even when the text spans multiple lines.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "9",
+          "kind": "property",
+          "name": "prop",
+          "serializedName": "prop",
+          "doc": "This property uses an enum with bullet point documentation. The enum documentation includes various formatting styles to test rendering. The styles are:\n- Simple bullet point. This bullet point is going to be very long to test how text wrapping is handled in bullet points within documentation comments. It should properly indent the wrapped lines.\n- Bullet point with **bold text**. This bullet point is also intentionally long to see how the formatting is preserved when the text wraps onto multiple\n- Bullet point with *italic text*. Similar to the previous points, this one is extended to ensure that the wrapping and formatting are correctly applied in the output.\n- Complex bullet point with **bold** and *italic* combined. This bullet point combines both bold and italic formatting and is long enough to test the wrapping behavior in such cases.\n- **Bold bullet point**\n- *Italic bullet point*",
+          "type": {
+            "$ref": "1"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Documentation.Lists.BulletPointsModel.prop",
+          "serializationOptions": {
+            "json": {
+              "name": "prop"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "10",
+      "kind": "model",
+      "name": "BulletPointsModelRequest",
+      "namespace": "Documentation.Lists",
+      "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.Request.anonymous",
+      "usage": "Spread,Json",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "11",
+          "kind": "property",
+          "name": "input",
+          "serializedName": "input",
+          "type": {
+            "$ref": "8"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.input",
+          "serializationOptions": {
+            "json": {
+              "name": "input"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "12",
+      "kind": "client",
+      "name": "DocumentationClient",
+      "namespace": "Documentation",
+      "doc": "Illustrates documentation generation and formatting features",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "13",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "14",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "15",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Documentation.endpoint"
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Documentation",
+      "apiVersions": [],
+      "children": [
+        {
+          "$id": "16",
+          "kind": "client",
+          "name": "Lists",
+          "namespace": "Documentation.Lists",
+          "methods": [
+            {
+              "$id": "17",
+              "kind": "basic",
+              "name": "bulletPointsOp",
+              "accessibility": "public",
+              "apiVersions": [],
+              "doc": "This tests:\n- Simple bullet point. This bullet point is going to be very long to test how text wrapping is handled in bullet points within documentation comments. It should properly indent the wrapped lines.\n- Another bullet point with **bold text**. This bullet point is also intentionally long to see how the formatting is preserved when the text wraps onto multiple lines in the generated documentation.\n- Third bullet point with *italic text*. Similar to the previous points, this one is extended to ensure that the wrapping and formatting are correctly applied in the output.\n- Complex bullet point with **bold** and *italic* combined. This bullet point combines both bold and italic formatting and is long enough to test the wrapping behavior in such cases.\n- **Bold bullet point**: A bullet point that is entirely bolded. This point is also made lengthy to observe how the bold formatting is maintained across wrapped lines.\n- *Italic bullet point*: A bullet point that is entirely italicized. This final point is extended to verify that italic formatting is correctly applied even when the text spans multiple lines.",
+              "operation": {
+                "$id": "18",
+                "name": "bulletPointsOp",
+                "resourceName": "Lists",
+                "doc": "This tests:\n- Simple bullet point. This bullet point is going to be very long to test how text wrapping is handled in bullet points within documentation comments. It should properly indent the wrapped lines.\n- Another bullet point with **bold text**. This bullet point is also intentionally long to see how the formatting is preserved when the text wraps onto multiple lines in the generated documentation.\n- Third bullet point with *italic text*. Similar to the previous points, this one is extended to ensure that the wrapping and formatting are correctly applied in the output.\n- Complex bullet point with **bold** and *italic* combined. This bullet point combines both bold and italic formatting and is long enough to test the wrapping behavior in such cases.\n- **Bold bullet point**: A bullet point that is entirely bolded. This point is also made lengthy to observe how the bold formatting is maintained across wrapped lines.\n- *Italic bullet point*: A bullet point that is entirely italicized. This final point is extended to verify that italic formatting is correctly applied even when the text spans multiple lines.",
+                "accessibility": "public",
+                "parameters": [],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/documentation/lists/bullet-points/op",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsOp",
+                "decorators": []
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsOp"
+            },
+            {
+              "$id": "19",
+              "kind": "basic",
+              "name": "bulletPointsModel",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "20",
+                "name": "bulletPointsModel",
+                "resourceName": "Lists",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "21",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "6"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.contentType"
+                  },
+                  {
+                    "$id": "22",
+                    "kind": "body",
+                    "name": "bulletPointsModelRequest",
+                    "serializedName": "bulletPointsModelRequest",
+                    "type": {
+                      "$ref": "10"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Spread",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.body"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/documentation/lists/bullet-points/model",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel",
+                "decorators": []
+              },
+              "parameters": [
+                {
+                  "$id": "23",
+                  "kind": "method",
+                  "name": "input",
+                  "serializedName": "input",
+                  "type": {
+                    "$ref": "8"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.input",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "24",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "6"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel"
+            },
+            {
+              "$id": "25",
+              "kind": "basic",
+              "name": "numbered",
+              "accessibility": "public",
+              "apiVersions": [],
+              "doc": "Steps to follow:\n1. First step with **important** note\n2. Second step with *emphasis*\n3. Third step combining **bold** and *italic*\n4. **Final step**: Review all steps for *accuracy*.",
+              "operation": {
+                "$id": "26",
+                "name": "numbered",
+                "resourceName": "Lists",
+                "doc": "Steps to follow:\n1. First step with **important** note\n2. Second step with *emphasis*\n3. Third step combining **bold** and *italic*\n4. **Final step**: Review all steps for *accuracy*.",
+                "accessibility": "public",
+                "parameters": [],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/documentation/lists/numbered",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Documentation.Lists.numbered",
+                "decorators": []
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Documentation.Lists.numbered"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "27",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "28",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "29",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Documentation.Lists.endpoint"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Documentation.Lists",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "12"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "30",
+          "kind": "client",
+          "name": "TextFormatting",
+          "namespace": "Documentation.TextFormatting",
+          "methods": [
+            {
+              "$id": "31",
+              "kind": "basic",
+              "name": "boldText",
+              "accessibility": "public",
+              "apiVersions": [],
+              "doc": "This is **bold text** in the middle of a sentence.\nThis is a sentence with **multiple bold** sections and **another bold** section.\n**This entire sentence is bold.**",
+              "operation": {
+                "$id": "32",
+                "name": "boldText",
+                "resourceName": "TextFormatting",
+                "doc": "This is **bold text** in the middle of a sentence.\nThis is a sentence with **multiple bold** sections and **another bold** section.\n**This entire sentence is bold.**",
+                "accessibility": "public",
+                "parameters": [],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/documentation/text-formatting/bold",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Documentation.TextFormatting.boldText",
+                "decorators": []
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Documentation.TextFormatting.boldText"
+            },
+            {
+              "$id": "33",
+              "kind": "basic",
+              "name": "italicText",
+              "accessibility": "public",
+              "apiVersions": [],
+              "doc": "This is *italic text* in the middle of a sentence.\nThis is a sentence with *multiple italic* sections and *another italic* section.\n*This entire sentence is italic.*",
+              "operation": {
+                "$id": "34",
+                "name": "italicText",
+                "resourceName": "TextFormatting",
+                "doc": "This is *italic text* in the middle of a sentence.\nThis is a sentence with *multiple italic* sections and *another italic* section.\n*This entire sentence is italic.*",
+                "accessibility": "public",
+                "parameters": [],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/documentation/text-formatting/italic",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Documentation.TextFormatting.italicText",
+                "decorators": []
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Documentation.TextFormatting.italicText"
+            },
+            {
+              "$id": "35",
+              "kind": "basic",
+              "name": "combinedFormatting",
+              "accessibility": "public",
+              "apiVersions": [],
+              "doc": "This sentence has **bold**, *italic*, and ***bold italic*** text.\nYou can also combine them like **bold with *italic inside* bold**.\nOr *italic with **bold inside** italic*.\nThis is a sentence with **bold**, *italic*, and ***bold italic*** text.",
+              "operation": {
+                "$id": "36",
+                "name": "combinedFormatting",
+                "resourceName": "TextFormatting",
+                "doc": "This sentence has **bold**, *italic*, and ***bold italic*** text.\nYou can also combine them like **bold with *italic inside* bold**.\nOr *italic with **bold inside** italic*.\nThis is a sentence with **bold**, *italic*, and ***bold italic*** text.",
+                "accessibility": "public",
+                "parameters": [],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/documentation/text-formatting/combined",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Documentation.TextFormatting.combinedFormatting",
+                "decorators": []
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Documentation.TextFormatting.combinedFormatting"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "37",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "38",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "39",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Documentation.TextFormatting.endpoint"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Documentation.TextFormatting",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "12"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": false
+    }
+  ]
+}

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.InformaticaDataManagement
+namespace Microsoft.TypeSpec.Generator.Customizations
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct))]
     internal partial class CodeGenTypeAttribute : Attribute

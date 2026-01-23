@@ -1867,7 +1867,9 @@
               ],
               "responseLocation": "Body"
             },
-            "pageSizeParameterSegments": []
+            "pageSizeParameterSegments": [
+              "maxpagesize"
+            ]
           }
         },
         {
@@ -2428,7 +2430,8 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

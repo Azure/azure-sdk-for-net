@@ -7,13 +7,13 @@
     <Version>1.0.0-beta.1</Version>
     <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
-    <LangVersion>12</LangVersion>
+    <IsTestSupportProject>true</IsTestSupportProject>
     <NoWarn>IDE0130;CS1591;CS1572;CS1587;$(NoWarn)</NoWarn> <!-- Ignore namespace not matching folder structure and XML comments -->
     <WarningsNotAsErrors>CS8600</WarningsNotAsErrors> <!-- Emitted as a warning before common properties were imported -->
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" VersionOverride="2.9.1"/>
+    <PackageReference Include="CommandLineParser" />
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 
@@ -46,6 +46,7 @@
     <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
     <PackageReference Include="Azure.ResourceManager.Network" />
     <PackageReference Include="Azure.ResourceManager.PostgreSql" />
+    <PackageReference Include="Azure.ResourceManager.PrivateDns" />
     <PackageReference Include="Azure.ResourceManager.Redis" />
     <PackageReference Include="Azure.ResourceManager.RedisEnterprise" />
     <PackageReference Include="Azure.ResourceManager.Search" />

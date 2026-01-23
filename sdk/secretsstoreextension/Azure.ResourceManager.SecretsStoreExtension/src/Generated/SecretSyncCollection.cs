@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecretsStoreExtension
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.SecretsStoreExtension
     /// </summary>
     public partial class SecretSyncCollection : ArmCollection, IEnumerable<SecretSyncResource>, IAsyncEnumerable<SecretSyncResource>
     {
-        private readonly ClientDiagnostics _secretSyncClientDiagnostics;
-        private readonly SecretSyncsRestOperations _secretSyncRestClient;
+        private readonly ClientDiagnostics _secretSyncsClientDiagnostics;
+        private readonly SecretSyncs _secretSyncsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecretSyncCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecretSyncCollection for mocking. </summary>
         protected SecretSyncCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecretSyncCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretSyncCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecretSyncCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _secretSyncClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", SecretSyncResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecretSyncResource.ResourceType, out string secretSyncApiVersion);
-            _secretSyncRestClient = new SecretSyncsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, secretSyncApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _secretSyncsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", SecretSyncResource.ResourceType.Namespace, Diagnostics);
+            _secretSyncsRestClient = new SecretSyncs(_secretSyncsClientDiagnostics, Pipeline, Endpoint, secretSyncApiVersion ?? "2024-08-21-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates new or updates a SecretSync instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// <param name="secretSyncName"> The name of the SecretSync. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSyncName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SecretSyncResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string secretSyncName, SecretSyncData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretSyncName, nameof(secretSyncName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _secretSyncClientDiagnostics.CreateScope("SecretSyncCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _secretSyncsClientDiagnostics.CreateScope("SecretSyncCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _secretSyncRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, secretSyncName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(new SecretSyncOperationSource(Client), _secretSyncClientDiagnostics, Pipeline, _secretSyncRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, secretSyncName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SecretsStoreExtensionArmOperation<SecretSyncResource> operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(
+                    new SecretSyncOperationSource(Client),
+                    _secretSyncsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Creates new or updates a SecretSync instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// <param name="secretSyncName"> The name of the SecretSync. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSyncName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SecretSyncResource> CreateOrUpdate(WaitUntil waitUntil, string secretSyncName, SecretSyncData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretSyncName, nameof(secretSyncName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _secretSyncClientDiagnostics.CreateScope("SecretSyncCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _secretSyncsClientDiagnostics.CreateScope("SecretSyncCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _secretSyncRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, secretSyncName, data, cancellationToken);
-                var operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(new SecretSyncOperationSource(Client), _secretSyncClientDiagnostics, Pipeline, _secretSyncRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, secretSyncName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SecretsStoreExtensionArmOperation<SecretSyncResource> operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(
+                    new SecretSyncOperationSource(Client),
+                    _secretSyncsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Gets the properties of a SecretSync instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretSyncName"> The name of the SecretSync. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSyncName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecretSyncResource>> GetAsync(string secretSyncName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretSyncName, nameof(secretSyncName));
 
-            using var scope = _secretSyncClientDiagnostics.CreateScope("SecretSyncCollection.Get");
+            using DiagnosticScope scope = _secretSyncsClientDiagnostics.CreateScope("SecretSyncCollection.Get");
             scope.Start();
             try
             {
-                var response = await _secretSyncRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, secretSyncName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecretSyncData> response = Response.FromValue(SecretSyncData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecretSyncResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Gets the properties of a SecretSync instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretSyncName"> The name of the SecretSync. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSyncName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecretSyncResource> Get(string secretSyncName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretSyncName, nameof(secretSyncName));
 
-            using var scope = _secretSyncClientDiagnostics.CreateScope("SecretSyncCollection.Get");
+            using DiagnosticScope scope = _secretSyncsClientDiagnostics.CreateScope("SecretSyncCollection.Get");
             scope.Start();
             try
             {
-                var response = _secretSyncRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, secretSyncName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecretSyncData> response = Response.FromValue(SecretSyncData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecretSyncResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Lists the SecretSync instances within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecretSyncResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecretSyncResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecretSyncResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _secretSyncRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secretSyncRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecretSyncResource(Client, SecretSyncData.DeserializeSecretSyncData(e)), _secretSyncClientDiagnostics, Pipeline, "SecretSyncCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetByResourceGroupAsyncCollectionResultOfT(_secretSyncsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SecretSyncResource(Client, data));
         }
 
         /// <summary>
         /// Lists the SecretSync instances within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// <returns> A collection of <see cref="SecretSyncResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecretSyncResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _secretSyncRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secretSyncRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecretSyncResource(Client, SecretSyncData.DeserializeSecretSyncData(e)), _secretSyncClientDiagnostics, Pipeline, "SecretSyncCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetByResourceGroupCollectionResultOfT(_secretSyncsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SecretSyncResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretSyncName"> The name of the SecretSync. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSyncName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string secretSyncName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretSyncName, nameof(secretSyncName));
 
-            using var scope = _secretSyncClientDiagnostics.CreateScope("SecretSyncCollection.Exists");
+            using DiagnosticScope scope = _secretSyncsClientDiagnostics.CreateScope("SecretSyncCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _secretSyncRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, secretSyncName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecretSyncData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecretSyncData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecretSyncData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretSyncName"> The name of the SecretSync. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSyncName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string secretSyncName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretSyncName, nameof(secretSyncName));
 
-            using var scope = _secretSyncClientDiagnostics.CreateScope("SecretSyncCollection.Exists");
+            using DiagnosticScope scope = _secretSyncsClientDiagnostics.CreateScope("SecretSyncCollection.Exists");
             scope.Start();
             try
             {
-                var response = _secretSyncRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, secretSyncName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecretSyncData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecretSyncData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecretSyncData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretSyncName"> The name of the SecretSync. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSyncName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecretSyncResource>> GetIfExistsAsync(string secretSyncName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretSyncName, nameof(secretSyncName));
 
-            using var scope = _secretSyncClientDiagnostics.CreateScope("SecretSyncCollection.GetIfExists");
+            using DiagnosticScope scope = _secretSyncsClientDiagnostics.CreateScope("SecretSyncCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _secretSyncRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, secretSyncName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecretSyncData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecretSyncData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecretSyncData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecretSyncResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecretSyncResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretSyncName"> The name of the SecretSync. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSyncName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecretSyncResource> GetIfExists(string secretSyncName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretSyncName, nameof(secretSyncName));
 
-            using var scope = _secretSyncClientDiagnostics.CreateScope("SecretSyncCollection.GetIfExists");
+            using DiagnosticScope scope = _secretSyncsClientDiagnostics.CreateScope("SecretSyncCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _secretSyncRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, secretSyncName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecretSyncData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecretSyncData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecretSyncData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecretSyncResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecretSyncResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecretSyncResource> IAsyncEnumerable<SecretSyncResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

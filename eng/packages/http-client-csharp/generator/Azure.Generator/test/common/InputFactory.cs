@@ -657,8 +657,9 @@ namespace Azure.Generator.Tests.Common
         /// <param name="parent"></param>
         /// <param name="decorators"></param>
         /// <param name="crossLanguageDefinitionId"></param>
+        /// <param name="isMultiServiceClient"></param>
         /// <returns></returns>
-        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null, bool isMultiServiceClient = false)
         {
             // when this client has parent, we add the constructed client into the `children` list of the parent
             var clientChildren = new List<InputClient>();
@@ -668,12 +669,12 @@ namespace Azure.Generator.Tests.Common
                 crossLanguageDefinitionId ?? $"{clientNamespace}.{name}",
                 string.Empty,
                 doc ?? $"{name} description",
+                isMultiServiceClient,
                 methods is null ? [] : [.. methods],
                 parameters is null ? [] : [.. parameters],
                 parent,
                 clientChildren,
-                []
-                );
+                []);
             _childClientsCache[client] = clientChildren;
             // when we have a parent, we need to find the children list of this parent client and update accordingly.
             if (parent != null && _childClientsCache.TryGetValue(parent, out var children))
@@ -702,6 +703,26 @@ namespace Azure.Generator.Tests.Common
         public static InputType Array(InputType elementType)
         {
             return new InputArrayType("list", "list", elementType);
+        }
+
+        /// <summary>
+        /// Construct input union type
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="variantTypes"></param>
+        /// <param name="externalTypeMetadata"></param>
+        /// <returns></returns>
+        public static InputUnionType Union(string name, InputType[] variantTypes, InputExternalTypeMetadata? externalTypeMetadata = null)
+        {
+            var union = new InputUnionType(name, variantTypes);
+            if (externalTypeMetadata != null)
+            {
+                var externalTypeMetadataProperty = typeof(InputUnionType).GetProperty(nameof(InputUnionType.External));
+                var setExternalTypeMetadataMethod = externalTypeMetadataProperty?.GetSetMethod(true);
+                setExternalTypeMetadataMethod!.Invoke(union, [externalTypeMetadata]);
+            }
+
+            return union;
         }
 
         public static InputPagingServiceMetadata NextLinkPagingMetadata(string itemPropertyName, string nextLinkName, InputResponseLocation nextLinkLocation, IReadOnlyList<InputParameter>? reinjectedParameters = null, IReadOnlyList<string>? pageSizeParameterSegments = null)

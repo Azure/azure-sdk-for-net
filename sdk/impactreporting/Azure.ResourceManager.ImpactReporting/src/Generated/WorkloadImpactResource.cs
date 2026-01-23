@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Create a WorkloadImpact
+        /// Update a WorkloadImpact.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Create a WorkloadImpact
+        /// Update a WorkloadImpact.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

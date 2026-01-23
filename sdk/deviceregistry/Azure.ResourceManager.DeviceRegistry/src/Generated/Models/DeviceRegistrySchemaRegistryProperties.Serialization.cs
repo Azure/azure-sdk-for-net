@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (prop.NameEquals("storageAccountContainerUrl"u8))
                 {
-                    storageAccountContainerUri = new Uri(prop.Value.GetString());
+                    storageAccountContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

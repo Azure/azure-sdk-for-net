@@ -1344,7 +1344,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Pageable.endpoint"
+              "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2759,7 +2759,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Payload.Pageable.endpoint"
+                  "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -2768,9 +2768,11 @@
               "apiVersions": [],
               "parent": {
                 "$ref": "81"
-              }
+              },
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         },
         {
           "$id": "199",
@@ -3033,7 +3035,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Pageable.endpoint"
+              "crossLanguageDefinitionId": "Payload.Pageable.PageSize.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3042,9 +3044,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "77"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

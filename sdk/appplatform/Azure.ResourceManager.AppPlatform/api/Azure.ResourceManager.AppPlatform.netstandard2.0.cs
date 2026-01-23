@@ -1318,9 +1318,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppBackendProtocol Default { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppBackendProtocol Grpc { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppBackendProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppBackendProtocol left, Azure.ResourceManager.AppPlatform.Models.AppBackendProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppBackendProtocol (string value) { throw null; }
@@ -1400,9 +1398,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType Http { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType Https { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType left, Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType (string value) { throw null; }
@@ -1550,9 +1546,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformApiPortalProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformApiPortalProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformApiPortalProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformApiPortalProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformApiPortalProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformApiPortalProvisioningState (string value) { throw null; }
@@ -1585,7 +1579,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public Azure.ResourceManager.AppPlatform.Models.AppPersistentDisk PersistentDisk { get { throw null; } set { } }
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformAppProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppPlatform.Models.AppTemporaryDisk TemporaryDisk { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("'Uri' is deprecated. Use 'UriString' instead.")]
         public System.Uri Uri { get { throw null; } }
         public string UriString { get { throw null; } }
@@ -1609,9 +1602,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformAppProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformAppProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformAppProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformAppProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformAppProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformAppProvisioningState (string value) { throw null; }
@@ -1672,9 +1663,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformBuilderProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformBuilderProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformBuilderProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformBuilderProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformBuilderProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformBuilderProvisioningState (string value) { throw null; }
@@ -1723,9 +1712,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildProvisioningState (string value) { throw null; }
@@ -1781,9 +1768,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildResultProvisioningState Queuing { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildResultProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildResultProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildResultProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildResultProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildResultProvisioningState (string value) { throw null; }
@@ -1838,9 +1823,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildServiceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildServiceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildServiceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildServiceProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildServiceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformBuildServiceProvisioningState (string value) { throw null; }
@@ -1901,9 +1884,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformCertificateProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformCertificateProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformCertificateProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformCertificateProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformCertificateProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformCertificateProvisioningState (string value) { throw null; }
@@ -1967,9 +1948,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigServerState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigServerState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigServerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigServerState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigServerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigServerState (string value) { throw null; }
@@ -2059,9 +2038,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigurationServiceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigurationServiceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigurationServiceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigurationServiceProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigurationServiceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformConfigurationServiceProvisioningState (string value) { throw null; }
@@ -2167,9 +2144,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformCustomDomainProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformCustomDomainProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformCustomDomainProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformCustomDomainProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformCustomDomainProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformCustomDomainProvisioningState (string value) { throw null; }
@@ -2242,9 +2217,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentProvisioningState (string value) { throw null; }
@@ -2290,9 +2263,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentStatus Running { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentStatus Stopped { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentStatus left, Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformDeploymentStatus (string value) { throw null; }
@@ -2430,9 +2401,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayProvisioningState (string value) { throw null; }
@@ -2475,9 +2444,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayRouteConfigProtocol Http { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayRouteConfigProtocol Https { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayRouteConfigProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayRouteConfigProtocol left, Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayRouteConfigProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformGatewayRouteConfigProtocol (string value) { throw null; }
@@ -2548,9 +2515,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformMonitoringSettingState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformMonitoringSettingState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformMonitoringSettingState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformMonitoringSettingState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformMonitoringSettingState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformMonitoringSettingState (string value) { throw null; }
@@ -2622,9 +2587,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformServicePowerState Running { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformServicePowerState Stopped { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformServicePowerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformServicePowerState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformServicePowerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformServicePowerState (string value) { throw null; }
@@ -2640,7 +2603,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformServicePowerState? PowerState { get { throw null; } }
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceProvisioningState? ProvisioningState { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("'ServiceId' is deprecated. Use 'ServiceInstanceId' instead.")]
         public System.Guid? ServiceId { get { throw null; } }
         public string ServiceInstanceId { get { throw null; } }
@@ -2670,9 +2632,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceProvisioningState (string value) { throw null; }
@@ -2716,9 +2676,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceRegistryProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceRegistryProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceRegistryProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceRegistryProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceRegistryProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceRegistryProvisioningState (string value) { throw null; }
@@ -2777,9 +2735,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTestKeyType Primary { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTestKeyType Secondary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTestKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTestKeyType left, Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTestKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTestKeyType (string value) { throw null; }
@@ -2795,9 +2751,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTrafficDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTrafficDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTrafficDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTrafficDirection left, Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTrafficDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceTrafficDirection (string value) { throw null; }
@@ -2891,9 +2845,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsReasonCode NotAvailableForSubscription { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsReasonCode QuotaId { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsReasonCode left, Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsReasonCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsReasonCode (string value) { throw null; }
@@ -2909,9 +2861,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsType Location { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsType Zone { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsType left, Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuRestrictionsType (string value) { throw null; }
@@ -2928,9 +2878,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuScaleType Manual { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuScaleType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuScaleType left, Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformSkuScaleType (string value) { throw null; }
@@ -2994,9 +2942,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimePlatform Java { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimePlatform NetCore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimePlatform other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimePlatform left, Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimePlatform right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimePlatform (string value) { throw null; }
@@ -3014,9 +2960,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimeValue Java8 { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimeValue NetCore31 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimeValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimeValue left, Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimeValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimeValue (string value) { throw null; }
@@ -3079,9 +3023,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.AppSessionAffinity Cookie { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.AppSessionAffinity None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppSessionAffinity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppSessionAffinity left, Azure.ResourceManager.AppPlatform.Models.AppSessionAffinity right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppSessionAffinity (string value) { throw null; }
@@ -3238,9 +3180,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.BuildpackBindingProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.BuildpackBindingProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.BuildpackBindingProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.BuildpackBindingProvisioningState left, Azure.ResourceManager.AppPlatform.Models.BuildpackBindingProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.BuildpackBindingProvisioningState (string value) { throw null; }
@@ -3260,9 +3200,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.BuildpackBindingType ElasticApm { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.BuildpackBindingType NewRelic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.BuildpackBindingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.BuildpackBindingType left, Azure.ResourceManager.AppPlatform.Models.BuildpackBindingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.BuildpackBindingType (string value) { throw null; }
@@ -3374,9 +3312,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static Azure.ResourceManager.AppPlatform.Models.KPackBuildStageProvisioningState Running { get { throw null; } }
         public static Azure.ResourceManager.AppPlatform.Models.KPackBuildStageProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.KPackBuildStageProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.KPackBuildStageProvisioningState left, Azure.ResourceManager.AppPlatform.Models.KPackBuildStageProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.KPackBuildStageProvisioningState (string value) { throw null; }

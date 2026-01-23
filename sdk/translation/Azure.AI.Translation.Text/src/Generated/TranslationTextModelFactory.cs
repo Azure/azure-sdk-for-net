@@ -233,11 +233,11 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Translation result. </summary>
         /// <param name="language"> A string representing the language code of the target language. </param>
-        /// <param name="sourceCharacters"> An interger indicating the number of characters in the source text string. </param>
-        /// <param name="instructionTokens"> An interger indicating the number of tokens used in generating the translated text. </param>
-        /// <param name="sourceTokens"> An interger indicating the number of tokens used in the source sentence. </param>
-        /// <param name="responseTokens"> An interger indicating the number of tokens used in the translation response. </param>
-        /// <param name="targetTokens"> An interger indicating the number of tokens used in the target sentence. </param>
+        /// <param name="sourceCharacters"> An integer indicating the number of characters in the source text string. </param>
+        /// <param name="instructionTokens"> An integer indicating the number of tokens used in generating the translated text. </param>
+        /// <param name="sourceTokens"> An integer indicating the number of tokens used in the source sentence. </param>
+        /// <param name="responseTokens"> An integer indicating the number of tokens used in the translation response. </param>
+        /// <param name="targetTokens"> An integer indicating the number of tokens used in the target sentence. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <returns> A new <see cref="Text.TranslationText"/> instance for mocking. </returns>
         public static TranslationText TranslationText(string language = default, int? sourceCharacters = default, int? instructionTokens = default, int? sourceTokens = default, int? responseTokens = default, int? targetTokens = default, string text = default)

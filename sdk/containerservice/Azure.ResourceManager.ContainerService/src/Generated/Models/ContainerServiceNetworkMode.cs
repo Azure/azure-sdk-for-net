@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> This cannot be specified if networkPlugin is anything other than 'azure'. </summary>
+    /// <summary>
+    /// The network mode Azure CNI is configured with. This cannot be specified if networkPlugin is anything other than 'azure'.
+    /// Serialized Name: NetworkMode
+    /// </summary>
     public readonly partial struct ContainerServiceNetworkMode : IEquatable<ContainerServiceNetworkMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string TransparentValue = "transparent";
         private const string BridgeValue = "bridge";
 
-        /// <summary> No bridge is created. Intra-VM Pod to Pod communication is through IP routes created by Azure CNI. See [Transparent Mode](https://docs.microsoft.com/azure/aks/faq#transparent-mode) for more information. </summary>
+        /// <summary>
+        /// No bridge is created. Intra-VM Pod to Pod communication is through IP routes created by Azure CNI. See [Transparent Mode](https://docs.microsoft.com/azure/aks/faq#transparent-mode) for more information.
+        /// Serialized Name: NetworkMode.transparent
+        /// </summary>
         public static ContainerServiceNetworkMode Transparent { get; } = new ContainerServiceNetworkMode(TransparentValue);
-        /// <summary> This is no longer supported. </summary>
+        /// <summary>
+        /// This is no longer supported
+        /// Serialized Name: NetworkMode.bridge
+        /// </summary>
         public static ContainerServiceNetworkMode Bridge { get; } = new ContainerServiceNetworkMode(BridgeValue);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkMode"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkMode left, ContainerServiceNetworkMode right) => left.Equals(right);

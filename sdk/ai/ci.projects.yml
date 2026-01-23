@@ -11,18 +11,6 @@ trigger:
     - sdk/ai/ci.projects.yml
     - sdk/ai/Azure.AI.Projects
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/ai/ci.projects.yml
-    - sdk/ai/Azure.AI.Projects
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

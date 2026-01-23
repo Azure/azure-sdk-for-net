@@ -22,7 +22,7 @@ namespace Azure.Generator.StubLibrary
         {
             if (!type.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) &&
                 !type.Name.StartsWith("Unknown", StringComparison.Ordinal) &&
-                !type.Name.Equals("MultiPartFormDataBinaryContent", StringComparison.Ordinal))
+                !type.Name.Equals("MultiPartFormDataRequestContent", StringComparison.Ordinal))
                 return null;
 
             type.Update(xmlDocs: _emptyDocs);

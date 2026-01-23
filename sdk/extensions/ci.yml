@@ -10,17 +10,6 @@ trigger:
     include:
     - sdk/extensions/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/extensions/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -43,7 +32,3 @@ extends:
       - sdk/keyvault/Azure.Security.KeyVault.Secrets/
     - name: Microsoft.Azure.WebJobs.Extensions.Clients
       safeName: MicrosoftAzureWebJobsExtensionsClients
-    CheckAOTCompat: false
-    AOTTestInputs:
-    - ArtifactName: Microsoft.Extensions.Azure
-      ExpectedWarningsFilepath: None

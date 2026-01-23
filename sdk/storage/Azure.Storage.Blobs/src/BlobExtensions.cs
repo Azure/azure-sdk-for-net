@@ -1786,6 +1786,18 @@ namespace Azure.Storage.Blobs
                 invalidList ??= new List<string>();
                 invalidList.Add(nameof(BlobRequestConditions.LeaseId));
             }
+            if ((invalidConditions & BlobRequestConditionProperty.AccessTierIfModifiedSince) == BlobRequestConditionProperty.AccessTierIfModifiedSince
+                && requestConditions.AccessTierIfModifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.AccessTierIfModifiedSince));
+            }
+            if ((invalidConditions & BlobRequestConditionProperty.AccessTierIfUnmodifiedSince) == BlobRequestConditionProperty.AccessTierIfUnmodifiedSince
+                && requestConditions.AccessTierIfUnmodifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.AccessTierIfUnmodifiedSince));
+            }
         }
         #endregion
     }

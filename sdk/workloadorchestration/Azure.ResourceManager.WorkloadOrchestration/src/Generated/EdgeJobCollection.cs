@@ -10,73 +10,78 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
     /// A class representing a collection of <see cref="EdgeJobResource"/> and their operations.
     /// Each <see cref="EdgeJobResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get an <see cref="EdgeJobCollection"/> instance call the GetEdgeJobs method from an instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="EdgeJobCollection"/> instance call the GetEdgeJobs method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class EdgeJobCollection : ArmCollection, IEnumerable<EdgeJobResource>, IAsyncEnumerable<EdgeJobResource>
     {
-        private readonly ClientDiagnostics _edgeJobJobsClientDiagnostics;
-        private readonly JobsRestOperations _edgeJobJobsRestClient;
+        private readonly ClientDiagnostics _jobsClientDiagnostics;
+        private readonly Jobs _jobsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeJobCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeJobCollection for mocking. </summary>
         protected EdgeJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeJobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeJobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EdgeJobResource.ResourceType, out string edgeJobJobsApiVersion);
-            _edgeJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeJobJobsApiVersion);
+            TryGetApiVersion(EdgeJobResource.ResourceType, out string edgeJobApiVersion);
+            _jobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeJobResource.ResourceType.Namespace, Diagnostics);
+            _jobsRestClient = new Jobs(_jobsClientDiagnostics, Pipeline, Endpoint, edgeJobApiVersion ?? "2025-06-01");
         }
 
         /// <summary>
         /// Get a Job resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<EdgeJobResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _edgeJobJobsClientDiagnostics.CreateScope("EdgeJobCollection.Get");
+            using DiagnosticScope scope = _jobsClientDiagnostics.CreateScope("EdgeJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _edgeJobJobsRestClient.GetAsync(Id, jobName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeJobData> response = Response.FromValue(EdgeJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -90,38 +95,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Job resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<EdgeJobResource> Get(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _edgeJobJobsClientDiagnostics.CreateScope("EdgeJobCollection.Get");
+            using DiagnosticScope scope = _jobsClientDiagnostics.CreateScope("EdgeJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _edgeJobJobsRestClient.Get(Id, jobName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeJobData> response = Response.FromValue(EdgeJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,50 +144,44 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// List Jobs by parent resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Edge/jobs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_ListByTarget</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_ListByTarget. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeJobResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeJobJobsRestClient.CreateListByTargetRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeJobJobsRestClient.CreateListByTargetNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeJobResource(Client, EdgeJobData.DeserializeEdgeJobData(e)), _edgeJobJobsClientDiagnostics, Pipeline, "EdgeJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeJobData, EdgeJobResource>(new JobsGetByTargetAsyncCollectionResultOfT(_jobsRestClient, Id, context), data => new EdgeJobResource(Client, data));
         }
 
         /// <summary>
         /// List Jobs by parent resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Edge/jobs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_ListByTarget</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_ListByTarget. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,45 +189,61 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeJobResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeJobJobsRestClient.CreateListByTargetRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeJobJobsRestClient.CreateListByTargetNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeJobResource(Client, EdgeJobData.DeserializeEdgeJobData(e)), _edgeJobJobsClientDiagnostics, Pipeline, "EdgeJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeJobData, EdgeJobResource>(new JobsGetByTargetCollectionResultOfT(_jobsRestClient, Id, context), data => new EdgeJobResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _edgeJobJobsClientDiagnostics.CreateScope("EdgeJobCollection.Exists");
+            using DiagnosticScope scope = _jobsClientDiagnostics.CreateScope("EdgeJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _edgeJobJobsRestClient.GetAsync(Id, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,36 +257,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _edgeJobJobsClientDiagnostics.CreateScope("EdgeJobCollection.Exists");
+            using DiagnosticScope scope = _jobsClientDiagnostics.CreateScope("EdgeJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = _edgeJobJobsRestClient.Get(Id, jobName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -281,38 +314,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<EdgeJobResource>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _edgeJobJobsClientDiagnostics.CreateScope("EdgeJobCollection.GetIfExists");
+            using DiagnosticScope scope = _jobsClientDiagnostics.CreateScope("EdgeJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _edgeJobJobsRestClient.GetAsync(Id, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeJobResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,38 +375,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<EdgeJobResource> GetIfExists(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _edgeJobJobsClientDiagnostics.CreateScope("EdgeJobCollection.GetIfExists");
+            using DiagnosticScope scope = _jobsClientDiagnostics.CreateScope("EdgeJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _edgeJobJobsRestClient.Get(Id, jobName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeJobResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -377,6 +442,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeJobResource> IAsyncEnumerable<EdgeJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -18,6 +18,19 @@ model Joo is TrackedResource<JooProperties, false> {
 
 model JooProperties {
   name: string;
+
+  @visibility(Lifecycle.Read)
+  prediction?: Prediction;
+}
+
+model Prediction {
+  @visibility(Lifecycle.Read)
+  predictionInput: PredictionInput;
+}
+
+model PredictionInput {
+  @visibility(Lifecycle.Read)
+  historicalData: int64[];
 }
 
 @armResourceOperations

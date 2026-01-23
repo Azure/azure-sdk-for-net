@@ -3,12 +3,10 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> The updatable properties of the Target. </summary>
-    [CodeGenModel("TargetUpdateProperties")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("TargetUpdateProperties")]
     public partial class EdgeTargetPatchProperties
     {
     }

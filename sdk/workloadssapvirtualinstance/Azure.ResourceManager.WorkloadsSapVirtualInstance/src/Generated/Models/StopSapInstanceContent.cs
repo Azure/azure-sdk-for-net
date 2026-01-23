@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     /// <summary> Stop SAP instance(s) request body. </summary>
     public partial class StopSapInstanceContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StopSapInstanceContent"/>. </summary>
         public StopSapInstanceContent()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> Initializes a new instance of <see cref="StopSapInstanceContent"/>. </summary>
         /// <param name="softStopTimeoutSeconds"> This parameter defines how long (in seconds) the soft shutdown waits until the RFC/HTTP clients no longer consider the server for calls with load balancing. Value 0 means that the kernel does not wait, but goes directly into the next shutdown state, i.e. hard stop. </param>
         /// <param name="deallocateVm"> The boolean value indicates whether to Stop and deallocate the virtual machines along with the SAP instances. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StopSapInstanceContent(long? softStopTimeoutSeconds, bool? deallocateVm, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StopSapInstanceContent(long? softStopTimeoutSeconds, bool? deallocateVm, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SoftStopTimeoutSeconds = softStopTimeoutSeconds;
             DeallocateVm = deallocateVm;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This parameter defines how long (in seconds) the soft shutdown waits until the RFC/HTTP clients no longer consider the server for calls with load balancing. Value 0 means that the kernel does not wait, but goes directly into the next shutdown state, i.e. hard stop. </summary>
         public long? SoftStopTimeoutSeconds { get; set; }
+
         /// <summary> The boolean value indicates whether to Stop and deallocate the virtual machines along with the SAP instances. </summary>
         public bool? DeallocateVm { get; set; }
     }

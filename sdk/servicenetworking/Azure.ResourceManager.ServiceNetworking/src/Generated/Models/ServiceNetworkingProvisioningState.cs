@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     public readonly partial struct ServiceNetworkingProvisioningState : IEquatable<ServiceNetworkingProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource in Provisioning State. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Resource in Updating State. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Resource in Deleting State. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Resource in Accepted State. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Resource in Succeeded State. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource in Failed State. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource in Canceled State. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="ServiceNetworkingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceNetworkingProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Resource in Provisioning State. </summary>
         public static ServiceNetworkingProvisioningState Provisioning { get; } = new ServiceNetworkingProvisioningState(ProvisioningValue);
+
         /// <summary> Resource in Updating State. </summary>
         public static ServiceNetworkingProvisioningState Updating { get; } = new ServiceNetworkingProvisioningState(UpdatingValue);
+
         /// <summary> Resource in Deleting State. </summary>
         public static ServiceNetworkingProvisioningState Deleting { get; } = new ServiceNetworkingProvisioningState(DeletingValue);
+
         /// <summary> Resource in Accepted State. </summary>
         public static ServiceNetworkingProvisioningState Accepted { get; } = new ServiceNetworkingProvisioningState(AcceptedValue);
+
         /// <summary> Resource in Succeeded State. </summary>
         public static ServiceNetworkingProvisioningState Succeeded { get; } = new ServiceNetworkingProvisioningState(SucceededValue);
+
         /// <summary> Resource in Failed State. </summary>
         public static ServiceNetworkingProvisioningState Failed { get; } = new ServiceNetworkingProvisioningState(FailedValue);
+
         /// <summary> Resource in Canceled State. </summary>
         public static ServiceNetworkingProvisioningState Canceled { get; } = new ServiceNetworkingProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="ServiceNetworkingProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceNetworkingProvisioningState left, ServiceNetworkingProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceNetworkingProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceNetworkingProvisioningState left, ServiceNetworkingProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceNetworkingProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceNetworkingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceNetworkingProvisioningState(string value) => new ServiceNetworkingProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceNetworkingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceNetworkingProvisioningState?(string value) => value == null ? null : new ServiceNetworkingProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceNetworkingProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceNetworkingProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

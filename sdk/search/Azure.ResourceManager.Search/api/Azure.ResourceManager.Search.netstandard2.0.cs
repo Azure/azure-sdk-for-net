@@ -99,7 +99,6 @@ namespace Azure.ResourceManager.Search
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceHostingMode? HostingMode { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchServiceIPRule> IPRules { get { throw null; } }
         public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? IsUpgradeAvailable { get { throw null; } set { } }
@@ -108,14 +107,12 @@ namespace Azure.ResourceManager.Search
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess? PublicInternetAccess { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Search.Models.SearchServicePublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public int? ReplicaCount { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceSkuName? SearchSkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchSemanticSearch? SemanticSearch { get { throw null; } set { } }
         public System.DateTimeOffset? ServiceUpgradedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> SharedPrivateLinkResources { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Search.Models.SearchSkuName? SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceStatus? Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
@@ -307,7 +304,6 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties SearchPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType> shareablePrivateLinkResourceTypes = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceAdminKeyResult SearchServiceAdminKeyResult(string primaryKey = null, string secondaryKey = null) { throw null; }
         public static Azure.ResourceManager.Search.SearchServiceData SearchServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Search.Models.SearchServiceSkuName? searchSkuName = default(Azure.ResourceManager.Search.Models.SearchServiceSkuName?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, int? replicaCount = default(int?), int? partitionCount = default(int?), System.Uri endpoint = null, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode = default(Azure.ResourceManager.Search.Models.SearchServiceHostingMode?), Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType = default(Azure.ResourceManager.Search.Models.SearchServiceComputeType?), Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess? publicInternetAccess = default(Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess?), Azure.ResourceManager.Search.Models.SearchServiceStatus? status = default(Azure.ResourceManager.Search.Models.SearchServiceStatus?), string statusDetails = null, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState = default(Azure.ResourceManager.Search.Models.SearchServiceProvisioningState?), Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet networkRuleSet = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections = null, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = default(bool?), Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions = null, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch = default(Azure.ResourceManager.Search.Models.SearchSemanticSearch?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? isUpgradeAvailable = default(Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable?), System.DateTimeOffset? serviceUpgradedOn = default(System.DateTimeOffset?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Search.SearchServiceData SearchServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Search.Models.SearchSkuName? skuName, Azure.ResourceManager.Models.ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode, Azure.ResourceManager.Search.Models.SearchServicePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Search.Models.SearchServiceStatus? status, string statusDetails, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceIPRule> ipRules, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources) { throw null; }
         public static Azure.ResourceManager.Search.SearchServiceData SearchServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Search.Models.SearchSkuName? skuName, Azure.ResourceManager.Models.ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, System.Uri endpoint, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode, Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType, Azure.ResourceManager.Search.Models.SearchServicePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Search.Models.SearchServiceStatus? status, string statusDetails, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceIPRule> ipRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, bool? upgradeAvailable, System.DateTimeOffset? serviceUpgradeOn) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name = null, Azure.ResourceManager.Search.Models.SearchServiceResourceType resourceType = default(Azure.ResourceManager.Search.Models.SearchServiceResourceType)) { throw null; }
@@ -317,7 +313,6 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue SearchServiceNetworkSecurityPerimeterProvisioningIssue(string name = null, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType? issueType = default(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType?), Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? severity = default(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRule> suggestedAccessRules = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServicePatch SearchServicePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Search.Models.SearchServiceSkuName? searchSkuName = default(Azure.ResourceManager.Search.Models.SearchServiceSkuName?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, int? replicaCount = default(int?), int? partitionCount = default(int?), System.Uri endpoint = null, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode = default(Azure.ResourceManager.Search.Models.SearchServiceHostingMode?), Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType = default(Azure.ResourceManager.Search.Models.SearchServiceComputeType?), Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess? publicInternetAccess = default(Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess?), Azure.ResourceManager.Search.Models.SearchServiceStatus? status = default(Azure.ResourceManager.Search.Models.SearchServiceStatus?), string statusDetails = null, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState = default(Azure.ResourceManager.Search.Models.SearchServiceProvisioningState?), Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet networkRuleSet = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections = null, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = default(bool?), Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions = null, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch = default(Azure.ResourceManager.Search.Models.SearchSemanticSearch?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? isUpgradeAvailable = default(Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable?), System.DateTimeOffset? serviceUpgradedOn = default(System.DateTimeOffset?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Search.Models.SearchServicePatch SearchServicePatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Search.Models.SearchSkuName? skuName, Azure.ResourceManager.Models.ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode, Azure.ResourceManager.Search.Models.SearchServicePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Search.Models.SearchServiceStatus? status, string statusDetails, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceIPRule> ipRules, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServicePatch SearchServicePatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Search.Models.SearchSkuName? skuName, Azure.ResourceManager.Models.ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, System.Uri endpoint, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode, Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType, Azure.ResourceManager.Search.Models.SearchServicePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Search.Models.SearchServiceStatus? status, string statusDetails, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceIPRule> ipRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, bool? upgradeAvailable, System.DateTimeOffset? serviceUpgradeOn) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceQueryKey SearchServiceQueryKey(string name = null, string key = null) { throw null; }
@@ -378,9 +373,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchBypass AzureServices { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchBypass None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchBypass other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchBypass left, Azure.ResourceManager.Search.Models.SearchBypass right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchBypass (string value) { throw null; }
@@ -395,9 +388,7 @@ namespace Azure.ResourceManager.Search.Models
         public SearchDataExfiltrationProtection(string value) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection BlockAll { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection left, Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection (string value) { throw null; }
@@ -485,9 +476,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState left, Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState (string value) { throw null; }
@@ -504,9 +493,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchSemanticSearch Free { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchSemanticSearch Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchSemanticSearch other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchSemanticSearch left, Azure.ResourceManager.Search.Models.SearchSemanticSearch right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchSemanticSearch (string value) { throw null; }
@@ -539,9 +526,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceComputeType Confidential { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceComputeType Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceComputeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceComputeType left, Azure.ResourceManager.Search.Models.SearchServiceComputeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceComputeType (string value) { throw null; }
@@ -598,9 +583,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason left, Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason (string value) { throw null; }
@@ -653,9 +636,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection (string value) { throw null; }
@@ -708,9 +689,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState (string value) { throw null; }
@@ -753,9 +732,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity Error { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity (string value) { throw null; }
@@ -773,9 +750,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType MissingPerimeterConfiguration { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType (string value) { throw null; }
@@ -804,9 +779,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode Enforced { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode Learning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode (string value) { throw null; }
@@ -824,7 +797,6 @@ namespace Azure.ResourceManager.Search.Models
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceHostingMode? HostingMode { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchServiceIPRule> IPRules { get { throw null; } }
         public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? IsUpgradeAvailable { get { throw null; } set { } }
@@ -833,14 +805,12 @@ namespace Azure.ResourceManager.Search.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess? PublicInternetAccess { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Search.Models.SearchServicePublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public int? ReplicaCount { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceSkuName? SearchSkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchSemanticSearch? SemanticSearch { get { throw null; } set { } }
         public System.DateTimeOffset? ServiceUpgradedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> SharedPrivateLinkResources { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Search.Models.SearchSkuName? SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceStatus? Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
@@ -901,16 +871,13 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess Enabled { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess left, Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess left, Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum SearchServicePublicNetworkAccess
     {
         Enabled = 0,
@@ -936,9 +903,7 @@ namespace Azure.ResourceManager.Search.Models
         public SearchServiceResourceType(string value) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceResourceType SearchServices { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceResourceType left, Azure.ResourceManager.Search.Models.SearchServiceResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceResourceType (string value) { throw null; }
@@ -957,9 +922,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState left, Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState (string value) { throw null; }
@@ -977,9 +940,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus left, Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus (string value) { throw null; }
@@ -1000,9 +961,7 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceSkuName StorageOptimizedL1 { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceSkuName StorageOptimizedL2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceSkuName left, Azure.ResourceManager.Search.Models.SearchServiceSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceSkuName (string value) { throw null; }
@@ -1027,16 +986,13 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable Available { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable NotAvailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable left, Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable left, Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum SearchSkuName
     {
         Free = 0,
@@ -1077,13 +1033,11 @@ namespace Azure.ResourceManager.Search.Models
         public SharedSearchServicePrivateLinkResourceProperties() { }
         public string GroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateLinkResourceId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string RequestMessage { get { throw null; } set { } }
         public Azure.Core.AzureLocation? ResourceRegion { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState? SharedPrivateLinkResourceProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus? SharedPrivateLinkResourceStatus { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceStatus? Status { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1092,7 +1046,6 @@ namespace Azure.ResourceManager.Search.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum SharedSearchServicePrivateLinkResourceProvisioningState
     {
         Updating = 0,
@@ -1101,7 +1054,6 @@ namespace Azure.ResourceManager.Search.Models
         Succeeded = 3,
         Incomplete = 4,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum SharedSearchServicePrivateLinkResourceStatus
     {
         Pending = 0,

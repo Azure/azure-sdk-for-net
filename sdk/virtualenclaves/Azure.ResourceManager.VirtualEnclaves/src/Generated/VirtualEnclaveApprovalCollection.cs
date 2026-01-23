@@ -10,9 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.VirtualEnclaves
 {
@@ -23,42 +24,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
     /// </summary>
     public partial class VirtualEnclaveApprovalCollection : ArmCollection, IEnumerable<VirtualEnclaveApprovalResource>, IAsyncEnumerable<VirtualEnclaveApprovalResource>
     {
-        private readonly ClientDiagnostics _virtualEnclaveApprovalApprovalClientDiagnostics;
-        private readonly ApprovalRestOperations _virtualEnclaveApprovalApprovalRestClient;
+        private readonly ClientDiagnostics _approvalClientDiagnostics;
+        private readonly Approval _approvalRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveApprovalCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of VirtualEnclaveApprovalCollection for mocking. </summary>
         protected VirtualEnclaveApprovalCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveApprovalCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprovalCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualEnclaveApprovalCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualEnclaveApprovalApprovalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveApprovalResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VirtualEnclaveApprovalResource.ResourceType, out string virtualEnclaveApprovalApprovalApiVersion);
-            _virtualEnclaveApprovalApprovalRestClient = new ApprovalRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveApprovalApprovalApiVersion);
+            TryGetApiVersion(VirtualEnclaveApprovalResource.ResourceType, out string virtualEnclaveApprovalApiVersion);
+            _approvalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveApprovalResource.ResourceType.Namespace, Diagnostics);
+            _approvalRestClient = new Approval(_approvalClientDiagnostics, Pipeline, Endpoint, virtualEnclaveApprovalApiVersion ?? "2025-05-01-preview");
         }
 
         /// <summary>
         /// Create a ApprovalResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,21 +63,34 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="approvalName"> The name of the approvals resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="approvalName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<VirtualEnclaveApprovalResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string approvalName, VirtualEnclaveApprovalData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualEnclaveApprovalApprovalRestClient.CreateOrUpdateAsync(Id, approvalName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource>(new VirtualEnclaveApprovalOperationSource(Client), _virtualEnclaveApprovalApprovalClientDiagnostics, Pipeline, _virtualEnclaveApprovalApprovalRestClient.CreateCreateOrUpdateRequest(Id, approvalName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _approvalRestClient.CreateCreateOrUpdateRequest(Id, approvalName, VirtualEnclaveApprovalData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource>(
+                    new VirtualEnclaveApprovalOperationSource(Client),
+                    _approvalClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -94,20 +104,16 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Create a ApprovalResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,21 +121,34 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="approvalName"> The name of the approvals resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="approvalName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<VirtualEnclaveApprovalResource> CreateOrUpdate(WaitUntil waitUntil, string approvalName, VirtualEnclaveApprovalData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualEnclaveApprovalApprovalRestClient.CreateOrUpdate(Id, approvalName, data, cancellationToken);
-                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource>(new VirtualEnclaveApprovalOperationSource(Client), _virtualEnclaveApprovalApprovalClientDiagnostics, Pipeline, _virtualEnclaveApprovalApprovalRestClient.CreateCreateOrUpdateRequest(Id, approvalName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _approvalRestClient.CreateCreateOrUpdateRequest(Id, approvalName, VirtualEnclaveApprovalData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource>(
+                    new VirtualEnclaveApprovalOperationSource(Client),
+                    _approvalClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -143,38 +162,42 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Get a ApprovalResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="approvalName"> The name of the approvals resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="approvalName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<VirtualEnclaveApprovalResource>> GetAsync(string approvalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
 
-            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.Get");
+            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualEnclaveApprovalApprovalRestClient.GetAsync(Id, approvalName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _approvalRestClient.CreateGetRequest(Id, approvalName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VirtualEnclaveApprovalData> response = Response.FromValue(VirtualEnclaveApprovalData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEnclaveApprovalResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -188,38 +211,42 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Get a ApprovalResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="approvalName"> The name of the approvals resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="approvalName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<VirtualEnclaveApprovalResource> Get(string approvalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
 
-            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.Get");
+            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.Get");
             scope.Start();
             try
             {
-                var response = _virtualEnclaveApprovalApprovalRestClient.Get(Id, approvalName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _approvalRestClient.CreateGetRequest(Id, approvalName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VirtualEnclaveApprovalData> response = Response.FromValue(VirtualEnclaveApprovalData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEnclaveApprovalResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -233,50 +260,44 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// List ApprovalResource resources by parent
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_ListByParent</description>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_ListByParent. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualEnclaveApprovalResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualEnclaveApprovalResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualEnclaveApprovalResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEnclaveApprovalApprovalRestClient.CreateListByParentRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEnclaveApprovalApprovalRestClient.CreateListByParentNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveApprovalResource(Client, VirtualEnclaveApprovalData.DeserializeVirtualEnclaveApprovalData(e)), _virtualEnclaveApprovalApprovalClientDiagnostics, Pipeline, "VirtualEnclaveApprovalCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualEnclaveApprovalData, VirtualEnclaveApprovalResource>(new ApprovalGetByParentAsyncCollectionResultOfT(_approvalRestClient, Id, context), data => new VirtualEnclaveApprovalResource(Client, data));
         }
 
         /// <summary>
         /// List ApprovalResource resources by parent
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_ListByParent</description>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_ListByParent. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,45 +305,61 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <returns> A collection of <see cref="VirtualEnclaveApprovalResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualEnclaveApprovalResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEnclaveApprovalApprovalRestClient.CreateListByParentRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEnclaveApprovalApprovalRestClient.CreateListByParentNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveApprovalResource(Client, VirtualEnclaveApprovalData.DeserializeVirtualEnclaveApprovalData(e)), _virtualEnclaveApprovalApprovalClientDiagnostics, Pipeline, "VirtualEnclaveApprovalCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualEnclaveApprovalData, VirtualEnclaveApprovalResource>(new ApprovalGetByParentCollectionResultOfT(_approvalRestClient, Id, context), data => new VirtualEnclaveApprovalResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="approvalName"> The name of the approvals resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="approvalName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string approvalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
 
-            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.Exists");
+            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _virtualEnclaveApprovalApprovalRestClient.GetAsync(Id, approvalName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _approvalRestClient.CreateGetRequest(Id, approvalName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VirtualEnclaveApprovalData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEnclaveApprovalData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEnclaveApprovalData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,36 +373,50 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="approvalName"> The name of the approvals resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="approvalName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string approvalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
 
-            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.Exists");
+            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.Exists");
             scope.Start();
             try
             {
-                var response = _virtualEnclaveApprovalApprovalRestClient.Get(Id, approvalName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _approvalRestClient.CreateGetRequest(Id, approvalName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VirtualEnclaveApprovalData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEnclaveApprovalData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEnclaveApprovalData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -379,38 +430,54 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="approvalName"> The name of the approvals resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="approvalName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<VirtualEnclaveApprovalResource>> GetIfExistsAsync(string approvalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
 
-            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.GetIfExists");
+            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _virtualEnclaveApprovalApprovalRestClient.GetAsync(Id, approvalName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _approvalRestClient.CreateGetRequest(Id, approvalName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VirtualEnclaveApprovalData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEnclaveApprovalData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEnclaveApprovalData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VirtualEnclaveApprovalResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEnclaveApprovalResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -424,38 +491,54 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="approvalName"> The name of the approvals resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="approvalName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<VirtualEnclaveApprovalResource> GetIfExists(string approvalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
 
-            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.GetIfExists");
+            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _virtualEnclaveApprovalApprovalRestClient.Get(Id, approvalName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _approvalRestClient.CreateGetRequest(Id, approvalName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VirtualEnclaveApprovalData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEnclaveApprovalData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEnclaveApprovalData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VirtualEnclaveApprovalResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEnclaveApprovalResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -475,6 +558,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<VirtualEnclaveApprovalResource> IAsyncEnumerable<VirtualEnclaveApprovalResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

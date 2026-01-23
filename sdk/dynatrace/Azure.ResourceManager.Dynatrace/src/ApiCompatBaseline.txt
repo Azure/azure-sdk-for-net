@@ -1,0 +1,2 @@
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Dynatrace.CodeGenSerializationAttribute' exists on 'Azure.ResourceManager.Dynatrace.DynatraceMonitorData' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Dynatrace.CodeGenSerializationAttribute' exists on 'Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent' in the contract but not the implementation.

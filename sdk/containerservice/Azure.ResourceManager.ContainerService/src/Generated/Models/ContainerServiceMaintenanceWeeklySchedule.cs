@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'. </summary>
+    /// <summary>
+    /// For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'.
+    /// Serialized Name: WeeklySchedule
+    /// </summary>
     public partial class ContainerServiceMaintenanceWeeklySchedule
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceWeeklySchedule"/>. </summary>
-        /// <param name="intervalWeeks"> Specifies the number of weeks between each set of occurrences. </param>
-        /// <param name="dayOfWeek"> Specifies on which day of the week the maintenance occurs. </param>
+        /// <param name="intervalWeeks">
+        /// Specifies the number of weeks between each set of occurrences.
+        /// Serialized Name: WeeklySchedule.intervalWeeks
+        /// </param>
+        /// <param name="dayOfWeek">
+        /// Specifies on which day of the week the maintenance occurs.
+        /// Serialized Name: WeeklySchedule.dayOfWeek
+        /// </param>
         public ContainerServiceMaintenanceWeeklySchedule(int intervalWeeks, ContainerServiceWeekDay dayOfWeek)
         {
             IntervalWeeks = intervalWeeks;
@@ -55,8 +64,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceWeeklySchedule"/>. </summary>
-        /// <param name="intervalWeeks"> Specifies the number of weeks between each set of occurrences. </param>
-        /// <param name="dayOfWeek"> Specifies on which day of the week the maintenance occurs. </param>
+        /// <param name="intervalWeeks">
+        /// Specifies the number of weeks between each set of occurrences.
+        /// Serialized Name: WeeklySchedule.intervalWeeks
+        /// </param>
+        /// <param name="dayOfWeek">
+        /// Specifies on which day of the week the maintenance occurs.
+        /// Serialized Name: WeeklySchedule.dayOfWeek
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceMaintenanceWeeklySchedule(int intervalWeeks, ContainerServiceWeekDay dayOfWeek, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,10 +85,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> Specifies the number of weeks between each set of occurrences. </summary>
+        /// <summary>
+        /// Specifies the number of weeks between each set of occurrences.
+        /// Serialized Name: WeeklySchedule.intervalWeeks
+        /// </summary>
         [WirePath("intervalWeeks")]
         public int IntervalWeeks { get; set; }
-        /// <summary> Specifies on which day of the week the maintenance occurs. </summary>
+        /// <summary>
+        /// Specifies on which day of the week the maintenance occurs.
+        /// Serialized Name: WeeklySchedule.dayOfWeek
+        /// </summary>
         [WirePath("dayOfWeek")]
         public ContainerServiceWeekDay DayOfWeek { get; set; }
     }

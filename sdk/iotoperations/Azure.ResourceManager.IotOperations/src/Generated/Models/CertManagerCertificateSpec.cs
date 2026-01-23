@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Automatic TLS server certificate management with cert-manager. </summary>
     public partial class CertManagerCertificateSpec
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CertManagerCertificateSpec"/>. </summary>
         /// <param name="issuerRef"> cert-manager issuerRef. </param>
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="issuerRef"> cert-manager issuerRef. </param>
         /// <param name="privateKey"> Type of certificate private key. </param>
         /// <param name="san"> Additional Subject Alternative Names (SANs) to include in the certificate. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertManagerCertificateSpec(string duration, string secretName, string renewBefore, CertManagerIssuerRef issuerRef, CertManagerPrivateKey privateKey, SanForCert san, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CertManagerCertificateSpec(string duration, string secretName, string renewBefore, CertManagerIssuerRef issuerRef, CertManagerPrivateKey privateKey, SanForCert san, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Duration = duration;
             SecretName = secretName;
@@ -71,24 +43,24 @@ namespace Azure.ResourceManager.IotOperations.Models
             IssuerRef = issuerRef;
             PrivateKey = privateKey;
             San = san;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CertManagerCertificateSpec"/> for deserialization. </summary>
-        internal CertManagerCertificateSpec()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Lifetime of certificate. Must be specified using a Go time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes. </summary>
         public string Duration { get; set; }
+
         /// <summary> Secret for storing server certificate. Any existing data will be overwritten. This is a reference to the secret through an identifying name, not the secret itself. </summary>
         public string SecretName { get; set; }
+
         /// <summary> When to begin renewing certificate. Must be specified using a Go time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes. </summary>
         public string RenewBefore { get; set; }
+
         /// <summary> cert-manager issuerRef. </summary>
         public CertManagerIssuerRef IssuerRef { get; set; }
+
         /// <summary> Type of certificate private key. </summary>
         public CertManagerPrivateKey PrivateKey { get; set; }
+
         /// <summary> Additional Subject Alternative Names (SANs) to include in the certificate. </summary>
         public SanForCert San { get; set; }
     }

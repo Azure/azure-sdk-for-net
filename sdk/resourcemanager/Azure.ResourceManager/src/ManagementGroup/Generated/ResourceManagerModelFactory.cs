@@ -17,6 +17,55 @@ namespace Azure.ResourceManager.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ResourceManagerModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/>. </summary>
+        /// <param name="nameAvailable"> Required. True indicates name is valid and available. False indicates the name is invalid, unavailable, or both. </param>
+        /// <param name="reason"> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider's naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </param>
+        /// <param name="message"> Required if nameAvailable == false. Localized. If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that is already in use, and direct them to select a different name. </param>
+        /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/> instance for mocking. </returns>
+        public static ManagementGroupNameAvailabilityResult ManagementGroupNameAvailabilityResult(bool? nameAvailable = null, ManagementGroupNameUnavailableReason? reason = null, string message = null)
+        {
+            return new ManagementGroupNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.EntityData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tenantId"> The AAD Tenant ID associated with the entity. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="displayName"> The friendly name of the management group. </param>
+        /// <param name="parentId"> (Optional) The ID of the parent management group. </param>
+        /// <param name="permissions"> The users specific permissions to this item. </param>
+        /// <param name="inheritedPermissions"> The users specific permissions to this item. </param>
+        /// <param name="numberOfDescendants"> Number of Descendants. </param>
+        /// <param name="numberOfChildren"> Number of children is the number of Groups and Subscriptions that are exactly one level underneath the current Group. </param>
+        /// <param name="numberOfChildGroups"> Number of children is the number of Groups that are exactly one level underneath the current Group. </param>
+        /// <param name="parentDisplayNameChain"> The parent display name chain from the root group to the immediate parent. </param>
+        /// <param name="parentNameChain"> The parent name chain from the root group to the immediate parent. </param>
+        /// <returns> A new <see cref="ManagementGroups.Models.EntityData"/> instance for mocking. </returns>
+        public static EntityData EntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, string displayName = null, ResourceIdentifier parentId = null, EntityPermission? permissions = null, EntityPermission? inheritedPermissions = null, int? numberOfDescendants = null, int? numberOfChildren = null, int? numberOfChildGroups = null, IEnumerable<string> parentDisplayNameChain = null, IEnumerable<string> parentNameChain = null)
+        {
+            parentDisplayNameChain ??= new List<string>();
+            parentNameChain ??= new List<string>();
+
+            return new EntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tenantId,
+                displayName,
+                parentId != null ? ResourceManagerModelFactory.SubResource(parentId) : null,
+                permissions,
+                inheritedPermissions,
+                numberOfDescendants,
+                numberOfChildren,
+                numberOfChildGroups,
+                parentDisplayNameChain?.ToList(),
+                parentNameChain?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.ManagementGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -214,55 +263,6 @@ namespace Azure.ResourceManager.Models
                 displayName,
                 parentId != null ? new DescendantParentGroupInfo(parentId, serializedAdditionalRawData: null) : null,
                 state,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Required. True indicates name is valid and available. False indicates the name is invalid, unavailable, or both. </param>
-        /// <param name="reason"> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider's naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </param>
-        /// <param name="message"> Required if nameAvailable == false. Localized. If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that is already in use, and direct them to select a different name. </param>
-        /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/> instance for mocking. </returns>
-        public static ManagementGroupNameAvailabilityResult ManagementGroupNameAvailabilityResult(bool? nameAvailable = null, ManagementGroupNameUnavailableReason? reason = null, string message = null)
-        {
-            return new ManagementGroupNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.EntityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tenantId"> The AAD Tenant ID associated with the entity. For example, 00000000-0000-0000-0000-000000000000. </param>
-        /// <param name="displayName"> The friendly name of the management group. </param>
-        /// <param name="parentId"> (Optional) The ID of the parent management group. </param>
-        /// <param name="permissions"> The users specific permissions to this item. </param>
-        /// <param name="inheritedPermissions"> The users specific permissions to this item. </param>
-        /// <param name="numberOfDescendants"> Number of Descendants. </param>
-        /// <param name="numberOfChildren"> Number of children is the number of Groups and Subscriptions that are exactly one level underneath the current Group. </param>
-        /// <param name="numberOfChildGroups"> Number of children is the number of Groups that are exactly one level underneath the current Group. </param>
-        /// <param name="parentDisplayNameChain"> The parent display name chain from the root group to the immediate parent. </param>
-        /// <param name="parentNameChain"> The parent name chain from the root group to the immediate parent. </param>
-        /// <returns> A new <see cref="ManagementGroups.Models.EntityData"/> instance for mocking. </returns>
-        public static EntityData EntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, string displayName = null, ResourceIdentifier parentId = null, EntityPermission? permissions = null, EntityPermission? inheritedPermissions = null, int? numberOfDescendants = null, int? numberOfChildren = null, int? numberOfChildGroups = null, IEnumerable<string> parentDisplayNameChain = null, IEnumerable<string> parentNameChain = null)
-        {
-            parentDisplayNameChain ??= new List<string>();
-            parentNameChain ??= new List<string>();
-
-            return new EntityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tenantId,
-                displayName,
-                parentId != null ? ResourceManagerModelFactory.SubResource(parentId) : null,
-                permissions,
-                inheritedPermissions,
-                numberOfDescendants,
-                numberOfChildren,
-                numberOfChildGroups,
-                parentDisplayNameChain?.ToList(),
-                parentNameChain?.ToList(),
                 serializedAdditionalRawData: null);
         }
     }

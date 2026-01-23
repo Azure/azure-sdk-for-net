@@ -434,7 +434,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     return CreateOKMockResponse($$""" { "id": "{{FakeThreadId}}" } """);
                 }
                 // Sent by client.Runs.SubmitToolOutputsToStreamAsync(...) method
-                else if (request.Method == RequestMethod.Post && request.Uri.Path == $"/threads//runs/{FakeRunId}/submit_tool_outputs")
+                else if (request.Method == RequestMethod.Post && request.Uri.Path == $"/threads/{FakeThreadId}/runs/{FakeRunId}/submit_tool_outputs")
                 {
                     return CreateOKMockResponse($$""" { "data": [{ "id": "{{FakeRunId}}" }] } """);
                 }
@@ -449,6 +449,161 @@ namespace Azure.AI.Agents.Persistent.Tests
             await nonThrowingChatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Get Mike's favourite word"));
 
             Assert.IsTrue(expectedCancelRunInvoked == cancelRunInvoked);
+        }
+
+        [RecordedTest]
+        public async Task TestMeaiUserAgentHeaderIsPresent_OnAgentThreadAndRunRequests()
+        {
+            bool sawGetAgent = false;
+            bool sawCreateThread = false;
+            bool sawCreateRunStreaming = false;
+
+            var mockTransport = new MockTransport((request) =>
+            {
+                AssertMeaiUserAgentHeaderPresent(request);
+
+                if (request.Method == RequestMethod.Get && request.Uri.Path == $"/assistants/{FakeAgentId}")
+                {
+                    sawGetAgent = true;
+                    return CreateOKMockResponse($$"""{ "id": "{{FakeAgentId}}" }""");
+                }
+
+                if (request.Method == RequestMethod.Post && request.Uri.Path == "/threads")
+                {
+                    sawCreateThread = true;
+                    return CreateOKMockResponse($$"""{ "id": "{{FakeThreadId}}" }""");
+                }
+
+                if (request.Method == RequestMethod.Post && request.Uri.Path == $"/threads/{FakeThreadId}/runs")
+                {
+                    sawCreateRunStreaming = true;
+                    return CreateOKMockResponse(
+                    $$$"""
+                    event: thread.run.completed
+                    data: { "id":"{{{FakeRunId}}}","object":"thread.run","created_at":1764170243,"assistant_id":"asst_fake","thread_id":"{{{FakeThreadId}}}","status":"completed","started_at":1764170244,"expires_at":null,"cancelled_at":null,"failed_at":1764170244,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4o","instructions":"","metadata":{ },"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{ "type":"auto","last_messages":null},"incomplete_details":null,"usage":{ "prompt_tokens":0,"completion_tokens":0,"total_tokens":0,"prompt_token_details":{ "cached_tokens":0} },"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}
+
+                    event: done
+                    data: [DONE]
+                    """
+                    );
+                }
+
+                throw new InvalidOperationException("Unexpected request");
+            });
+
+            PersistentAgentsClient client = GetClient(mockTransport);
+            IChatClient chatClient = client.AsIChatClient(FakeAgentId);
+
+            await foreach (ChatResponseUpdate _ in chatClient.GetStreamingResponseAsync(new ChatMessage(ChatRole.User, "hi")))
+            {
+                // Drain the stream to force all requests.
+            }
+
+            Assert.IsTrue(sawGetAgent, "Expected agent GET request.");
+            Assert.IsTrue(sawCreateThread, "Expected thread create request.");
+            Assert.IsTrue(sawCreateRunStreaming, "Expected run create streaming request.");
+        }
+
+        [RecordedTest]
+        public async Task TestMeaiUserAgentHeaderIsPresent_WhenSubmittingToolOutputs()
+        {
+            bool sawGetAgent = false;
+            bool sawGetRuns = false;
+            bool sawSubmitToolOutputs = false;
+
+            var mockTransport = new MockTransport((request) =>
+            {
+                AssertMeaiUserAgentHeaderPresent(request);
+
+                if (request.Method == RequestMethod.Get && request.Uri.Path == $"/assistants/{FakeAgentId}")
+                {
+                    sawGetAgent = true;
+                    return CreateOKMockResponse($$"""{ "id": "{{FakeAgentId}}" }""");
+                }
+
+                if (request.Method == RequestMethod.Get && request.Uri.Path == $"/threads/{FakeThreadId}/runs")
+                {
+                    sawGetRuns = true;
+                    return CreateOKMockResponse($$"""
+                    {
+                      "data": [
+                        {
+                          "id": "{{FakeRunId}}",
+                          "thread_id": "{{FakeThreadId}}",
+                          "status": "requires_action",
+                          "started_at": 1764170244,
+                          "expires_at": null,
+                          "cancelled_at": null,
+                          "failed_at": null,
+                          "completed_at": null,
+                          "required_action": null,
+                          "last_error": null,
+                          "model": "gpt-4o",
+                          "instructions": "",
+                          "metadata": { },
+                          "temperature": 1.0,
+                          "top_p": 1.0,
+                          "max_completion_tokens": null,
+                          "max_prompt_tokens": null,
+                          "truncation_strategy": { "type": "auto", "last_messages": null },
+                          "incomplete_details": null,
+                          "usage": { "prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0, "prompt_token_details": { "cached_tokens": 0 } },
+                          "response_format": "auto",
+                          "tool_choice": "auto",
+                          "parallel_tool_calls": true
+                        }
+                      ]
+                    }
+                    """);
+                }
+
+                if (request.Method == RequestMethod.Post && request.Uri.Path == $"/threads/{FakeThreadId}/runs/{FakeRunId}/submit_tool_outputs")
+                {
+                    sawSubmitToolOutputs = true;
+                    return CreateOKMockResponse(
+                    $$$"""
+                    event: thread.run.failed
+                    data: { "id":"{{{FakeRunId}}}","object":"thread.run","created_at":1764170243,"assistant_id":"asst_fake","thread_id":"{{{FakeThreadId}}}","status":"completed","started_at":1764170244,"expires_at":null,"cancelled_at":null,"failed_at":1764170244,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4o","instructions":"","metadata":{ },"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{ "type":"auto","last_messages":null},"incomplete_details":null,"usage":{ "prompt_tokens":0,"completion_tokens":0,"total_tokens":0,"prompt_token_details":{ "cached_tokens":0} },"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}
+
+                    event: done
+                    data: [DONE]
+                    """
+                    );
+                }
+
+                throw new InvalidOperationException("Unexpected request");
+            });
+
+            PersistentAgentsClient client = GetClient(mockTransport);
+            IChatClient chatClient = client.AsIChatClient(FakeAgentId, FakeThreadId);
+
+            string[] callIds = [FakeRunId, "call-id"];
+            List<ChatMessage> messages =
+            [
+                new ChatMessage(ChatRole.Tool, [new FunctionResultContent(JsonSerializer.Serialize(callIds), "ok")])
+            ];
+
+            await foreach (ChatResponseUpdate _ in chatClient.GetStreamingResponseAsync(messages))
+            {
+                // Drain the stream.
+            }
+
+            Assert.IsTrue(sawGetAgent, "Expected agent GET request.");
+            Assert.IsTrue(sawGetRuns, "Expected runs list request.");
+            Assert.IsTrue(sawSubmitToolOutputs, "Expected submit tool outputs request.");
+        }
+
+        private static void AssertMeaiUserAgentHeaderPresent(MockRequest request)
+        {
+            bool hasHeader = request.Headers.TryGetValues("User-Agent", out IEnumerable<string> userAgents);
+            if (!hasHeader)
+            {
+                hasHeader = request.Headers.TryGetValue("User-Agent", out string singleUserAgent);
+                userAgents = hasHeader ? new[] { singleUserAgent } : Array.Empty<string>();
+            }
+
+            Assert.IsTrue(hasHeader, "Expected User-Agent header.");
+            Assert.IsTrue(userAgents.Any(ua => ua?.Contains("MEAI", StringComparison.Ordinal) is true), "Expected User-Agent to contain 'MEAI'.");
         }
 
         #region Helpers
@@ -637,7 +792,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 """);
             }
             // Sent by client.Runs.SubmitToolOutputsToStreamAsync(...) method
-            else if (request.Method == RequestMethod.Post && request.Uri.Path == $"/threads//runs/{FakeRunId}/submit_tool_outputs")
+            else if (request.Method == RequestMethod.Post && request.Uri.Path == $"/threads/{FakeThreadId}/runs/{FakeRunId}/submit_tool_outputs")
             {
                 return CreateOKMockResponse($$"""
                     {

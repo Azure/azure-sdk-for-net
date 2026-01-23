@@ -23,6 +23,7 @@ namespace Azure.AI.VoiceLive
 
             Name = name;
             Model = model;
+            PreferLocales = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzurePersonalVoice"/>. </summary>
@@ -31,11 +32,25 @@ namespace Azure.AI.VoiceLive
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
         /// <param name="model"> Underlying neural model to use for personal voice. </param>
-        internal AzurePersonalVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, PersonalVoiceModels model) : base(@type, additionalBinaryDataProperties)
+        /// <param name="customLexiconUrl"></param>
+        /// <param name="preferLocales"></param>
+        /// <param name="locale"></param>
+        /// <param name="style"></param>
+        /// <param name="pitch"></param>
+        /// <param name="rate"></param>
+        /// <param name="volume"></param>
+        internal AzurePersonalVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, PersonalVoiceModels model, string customLexiconUrl, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Temperature = temperature;
             Model = model;
+            CustomLexiconUrl = customLexiconUrl;
+            PreferLocales = preferLocales;
+            Locale = locale;
+            Style = style;
+            Pitch = pitch;
+            Rate = rate;
+            Volume = volume;
         }
 
         /// <summary> Voice name cannot be empty. </summary>
@@ -46,5 +61,26 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Underlying neural model to use for personal voice. </summary>
         public PersonalVoiceModels Model { get; set; }
+
+        /// <summary> Gets or sets the CustomLexiconUrl. </summary>
+        public string CustomLexiconUrl { get; set; }
+
+        /// <summary> Gets the PreferLocales. </summary>
+        public IList<string> PreferLocales { get; }
+
+        /// <summary> Gets or sets the Locale. </summary>
+        public string Locale { get; set; }
+
+        /// <summary> Gets or sets the Style. </summary>
+        public string Style { get; set; }
+
+        /// <summary> Gets or sets the Pitch. </summary>
+        public string Pitch { get; set; }
+
+        /// <summary> Gets or sets the Rate. </summary>
+        public string Rate { get; set; }
+
+        /// <summary> Gets or sets the Volume. </summary>
+        public string Volume { get; set; }
     }
 }

@@ -14,7 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The UriSubscriptionIdSanitizer. </summary>
-    public partial class UriSubscriptionIdSanitizer : IJsonModel<UriSubscriptionIdSanitizer>
+    public partial class UriSubscriptionIdSanitizer : SanitizerAddition, IJsonModel<UriSubscriptionIdSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="UriSubscriptionIdSanitizer"/> for deserialization. </summary>
         internal UriSubscriptionIdSanitizer()
@@ -120,7 +120,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeUriSubscriptionIdSanitizer(document.RootElement, options);
                     }

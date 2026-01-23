@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 if (prop.NameEquals("azureStorageBlobContainerUri"u8))
                 {
-                    azureStorageBlobContainerUri = new Uri(prop.Value.GetString());
+                    azureStorageBlobContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("token"u8))

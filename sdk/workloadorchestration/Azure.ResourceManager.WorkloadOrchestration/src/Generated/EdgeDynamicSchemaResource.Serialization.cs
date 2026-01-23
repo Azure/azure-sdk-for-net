@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
+    /// <summary></summary>
     public partial class EdgeDynamicSchemaResource : IJsonModel<EdgeDynamicSchemaData>
     {
-        private static EdgeDynamicSchemaData s_dataDeserializationInstance;
-        private static EdgeDynamicSchemaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EdgeDynamicSchemaData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EdgeDynamicSchemaData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EdgeDynamicSchemaData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeDynamicSchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EdgeDynamicSchemaData>)Data).Write(writer, options);
 
-        EdgeDynamicSchemaData IJsonModel<EdgeDynamicSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EdgeDynamicSchemaData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeDynamicSchemaData IJsonModel<EdgeDynamicSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EdgeDynamicSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EdgeDynamicSchemaData>(Data, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EdgeDynamicSchemaData IPersistableModel<EdgeDynamicSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeDynamicSchemaData>(data, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
 
-        string IPersistableModel<EdgeDynamicSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EdgeDynamicSchemaData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EdgeDynamicSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    internal class TrafficControllerOperationSource : IOperationSource<TrafficControllerResource>
+    /// <summary></summary>
+    internal partial class TrafficControllerOperationSource : IOperationSource<TrafficControllerResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal TrafficControllerOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         TrafficControllerResource IOperationSource<TrafficControllerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TrafficControllerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            TrafficControllerData data = TrafficControllerData.DeserializeTrafficControllerData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new TrafficControllerResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<TrafficControllerResource> IOperationSource<TrafficControllerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TrafficControllerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
-            return await Task.FromResult(new TrafficControllerResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            TrafficControllerData data = TrafficControllerData.DeserializeTrafficControllerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new TrafficControllerResource(_client, data);
         }
     }
 }

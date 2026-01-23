@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceData"/>. </summary>
-        internal ContainerRegistryPrivateLinkResourceData()
+        public ContainerRegistryPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
@@ -80,8 +80,5 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The private link resource required member names. </summary>
         [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary> The private link resource private link DNS zone name. </summary>
-        [WirePath("properties.requiredZoneNames")]
-        public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

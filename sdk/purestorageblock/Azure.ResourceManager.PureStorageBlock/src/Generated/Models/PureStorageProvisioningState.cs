@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     public readonly partial struct PureStorageProvisioningState : IEquatable<PureStorageProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Deletion in progress. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Change accepted for processing. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="PureStorageProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PureStorageProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static PureStorageProvisioningState Succeeded { get; } = new PureStorageProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static PureStorageProvisioningState Failed { get; } = new PureStorageProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static PureStorageProvisioningState Canceled { get; } = new PureStorageProvisioningState(CanceledValue);
+
         /// <summary> Deletion in progress. </summary>
         public static PureStorageProvisioningState Deleting { get; } = new PureStorageProvisioningState(DeletingValue);
+
         /// <summary> Change accepted for processing. </summary>
         public static PureStorageProvisioningState Accepted { get; } = new PureStorageProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="PureStorageProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PureStorageProvisioningState left, PureStorageProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PureStorageProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PureStorageProvisioningState left, PureStorageProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PureStorageProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PureStorageProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PureStorageProvisioningState(string value) => new PureStorageProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PureStorageProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PureStorageProvisioningState?(string value) => value == null ? null : new PureStorageProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PureStorageProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PureStorageProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

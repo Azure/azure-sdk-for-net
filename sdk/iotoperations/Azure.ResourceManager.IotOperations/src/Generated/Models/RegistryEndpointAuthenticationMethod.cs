@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.IotOperations.Models
     internal readonly partial struct RegistryEndpointAuthenticationMethod : IEquatable<RegistryEndpointAuthenticationMethod>
     {
         private readonly string _value;
+        /// <summary> SystemAssignedManagedIdentity type. </summary>
+        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
+        /// <summary> UserAssignedManagedIdentity type. </summary>
+        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
+        /// <summary> Anonymous Option. </summary>
+        private const string AnonymousValue = "Anonymous";
+        /// <summary> Artifact Pull Secret authentication. </summary>
+        private const string ArtifactPullSecretValue = "ArtifactPullSecret";
 
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RegistryEndpointAuthenticationMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
-        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
-        private const string AnonymousValue = "Anonymous";
-        private const string ArtifactPullSecretValue = "ArtifactPullSecret";
+            _value = value;
+        }
 
         /// <summary> SystemAssignedManagedIdentity type. </summary>
         public static RegistryEndpointAuthenticationMethod SystemAssignedManagedIdentity { get; } = new RegistryEndpointAuthenticationMethod(SystemAssignedManagedIdentityValue);
+
         /// <summary> UserAssignedManagedIdentity type. </summary>
         public static RegistryEndpointAuthenticationMethod UserAssignedManagedIdentity { get; } = new RegistryEndpointAuthenticationMethod(UserAssignedManagedIdentityValue);
+
         /// <summary> Anonymous Option. </summary>
         public static RegistryEndpointAuthenticationMethod Anonymous { get; } = new RegistryEndpointAuthenticationMethod(AnonymousValue);
+
         /// <summary> Artifact Pull Secret authentication. </summary>
         public static RegistryEndpointAuthenticationMethod ArtifactPullSecret { get; } = new RegistryEndpointAuthenticationMethod(ArtifactPullSecretValue);
+
         /// <summary> Determines if two <see cref="RegistryEndpointAuthenticationMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RegistryEndpointAuthenticationMethod left, RegistryEndpointAuthenticationMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RegistryEndpointAuthenticationMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RegistryEndpointAuthenticationMethod left, RegistryEndpointAuthenticationMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RegistryEndpointAuthenticationMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RegistryEndpointAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RegistryEndpointAuthenticationMethod(string value) => new RegistryEndpointAuthenticationMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RegistryEndpointAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RegistryEndpointAuthenticationMethod?(string value) => value == null ? null : new RegistryEndpointAuthenticationMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RegistryEndpointAuthenticationMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RegistryEndpointAuthenticationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

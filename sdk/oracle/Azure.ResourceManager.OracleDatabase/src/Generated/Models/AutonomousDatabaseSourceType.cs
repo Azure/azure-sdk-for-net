@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct AutonomousDatabaseSourceType : IEquatable<AutonomousDatabaseSourceType>
     {
         private readonly string _value;
+        /// <summary> None source. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Database source. </summary>
+        private const string DatabaseValue = "Database";
+        /// <summary> Backup from ID source. </summary>
+        private const string BackupFromIdValue = "BackupFromId";
+        /// <summary> Backup from timestamp source. </summary>
+        private const string BackupFromTimestampValue = "BackupFromTimestamp";
+        /// <summary> Clone to refreshable source. </summary>
+        private const string CloneToRefreshableValue = "CloneToRefreshable";
+        /// <summary> Cross region dataguard source. </summary>
+        private const string CrossRegionDataguardValue = "CrossRegionDataguard";
+        /// <summary> cross region disaster recovery source. </summary>
+        private const string CrossRegionDisasterRecoveryValue = "CrossRegionDisasterRecovery";
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutonomousDatabaseSourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string DatabaseValue = "Database";
-        private const string BackupFromIdValue = "BackupFromId";
-        private const string BackupFromTimestampValue = "BackupFromTimestamp";
-        private const string CloneToRefreshableValue = "CloneToRefreshable";
-        private const string CrossRegionDataguardValue = "CrossRegionDataguard";
-        private const string CrossRegionDisasterRecoveryValue = "CrossRegionDisasterRecovery";
+            _value = value;
+        }
 
         /// <summary> None source. </summary>
         public static AutonomousDatabaseSourceType None { get; } = new AutonomousDatabaseSourceType(NoneValue);
+
         /// <summary> Database source. </summary>
         public static AutonomousDatabaseSourceType Database { get; } = new AutonomousDatabaseSourceType(DatabaseValue);
+
         /// <summary> Backup from ID source. </summary>
         public static AutonomousDatabaseSourceType BackupFromId { get; } = new AutonomousDatabaseSourceType(BackupFromIdValue);
+
         /// <summary> Backup from timestamp source. </summary>
         public static AutonomousDatabaseSourceType BackupFromTimestamp { get; } = new AutonomousDatabaseSourceType(BackupFromTimestampValue);
+
         /// <summary> Clone to refreshable source. </summary>
         public static AutonomousDatabaseSourceType CloneToRefreshable { get; } = new AutonomousDatabaseSourceType(CloneToRefreshableValue);
+
         /// <summary> Cross region dataguard source. </summary>
         public static AutonomousDatabaseSourceType CrossRegionDataguard { get; } = new AutonomousDatabaseSourceType(CrossRegionDataguardValue);
+
         /// <summary> cross region disaster recovery source. </summary>
         public static AutonomousDatabaseSourceType CrossRegionDisasterRecovery { get; } = new AutonomousDatabaseSourceType(CrossRegionDisasterRecoveryValue);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseSourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutonomousDatabaseSourceType left, AutonomousDatabaseSourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseSourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutonomousDatabaseSourceType left, AutonomousDatabaseSourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabaseSourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutonomousDatabaseSourceType(string value) => new AutonomousDatabaseSourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutonomousDatabaseSourceType?(string value) => value == null ? null : new AutonomousDatabaseSourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutonomousDatabaseSourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutonomousDatabaseSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

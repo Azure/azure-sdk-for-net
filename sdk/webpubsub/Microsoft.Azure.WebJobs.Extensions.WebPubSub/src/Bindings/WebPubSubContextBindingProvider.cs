@@ -14,13 +14,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private readonly INameResolver _nameResolver;
         private readonly IConfiguration _configuration;
-        private readonly WebPubSubFunctionsOptions _options;
+        private readonly WebPubSubServiceAccessOptions _options;
+        private readonly WebPubSubServiceAccessFactory _accessFactory;
 
-        public WebPubSubContextBindingProvider(INameResolver nameResolver, IConfiguration configuration, WebPubSubFunctionsOptions options)
+        public WebPubSubContextBindingProvider(INameResolver nameResolver, IConfiguration configuration, WebPubSubServiceAccessOptions options, WebPubSubServiceAccessFactory accessFactory)
         {
             _nameResolver = nameResolver;
             _configuration = configuration;
             _options = options;
+            _accessFactory = accessFactory;
         }
 
         public Task<IBinding> TryCreateAsync(BindingProviderContext context)
@@ -37,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 return Task.FromResult<IBinding>(null);
             }
 
-            return Task.FromResult<IBinding>(new WebPubSubContextBinding(context, _configuration, _nameResolver, _options));
+            return Task.FromResult<IBinding>(new WebPubSubContextBinding(context, _configuration, _nameResolver, _options, _accessFactory));
         }
     }
 }

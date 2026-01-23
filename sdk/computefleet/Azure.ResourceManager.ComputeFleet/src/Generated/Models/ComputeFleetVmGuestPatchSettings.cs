@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// <summary> Specifies settings related to VM Guest Patching on Windows. </summary>
     public partial class ComputeFleetVmGuestPatchSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmGuestPatchSettings"/>. </summary>
         public ComputeFleetVmGuestPatchSettings()
@@ -80,14 +51,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies additional settings for patch mode AutomaticByPlatform in VM Guest
         /// Patching on Windows.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmGuestPatchSettings(ComputeFleetWindowsVmGuestPatchMode? patchMode, bool? isHotPatchingEnabled, ComputeFleetWindowsPatchAssessmentMode? assessmentMode, ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmGuestPatchSettings(ComputeFleetWindowsVmGuestPatchMode? patchMode, bool? isHotPatchingEnabled, ComputeFleetWindowsPatchAssessmentMode? assessmentMode, ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchMode = patchMode;
             IsHotPatchingEnabled = isHotPatchingEnabled;
             AssessmentMode = assessmentMode;
             AutomaticByPlatformSettings = automaticByPlatformSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -104,12 +75,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// WindowsConfiguration.enableAutomaticUpdates must be true
         /// </summary>
         public ComputeFleetWindowsVmGuestPatchMode? PatchMode { get; set; }
+
         /// <summary>
         /// Enables customers to patch their Azure VMs without requiring a reboot. For
         /// enableHotpatching, the 'provisionVMAgent' must be set to true and 'patchMode'
         /// must be set to 'AutomaticByPlatform'.
         /// </summary>
         public bool? IsHotPatchingEnabled { get; set; }
+
         /// <summary>
         /// Specifies the mode of VM Guest patch assessment for the IaaS virtual
         /// machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **ImageDefault** - You
@@ -118,6 +91,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// The property provisionVMAgent must be true.
         /// </summary>
         public ComputeFleetWindowsPatchAssessmentMode? AssessmentMode { get; set; }
+
         /// <summary>
         /// Specifies additional settings for patch mode AutomaticByPlatform in VM Guest
         /// Patching on Windows.

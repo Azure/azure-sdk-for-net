@@ -57,6 +57,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
+            if (Optional.IsDefined(Plan))
+            {
+                writer.WritePropertyName("plan"u8);
+                ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -94,6 +99,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             FooProperties properties = default;
             ExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
+            ArmPlan plan = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -177,6 +183,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("plan"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    plan = ModelReaderWriter.Read<ArmPlan>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -192,7 +207,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 location,
                 properties,
                 extendedLocation,
-                identity);
+                identity,
+                plan);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

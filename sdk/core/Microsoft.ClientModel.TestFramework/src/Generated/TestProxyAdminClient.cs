@@ -87,7 +87,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult SetMatcher(MatcherType matcherType, CustomDefaultMatcher matcher = default, CancellationToken cancellationToken = default)
         {
-            return SetMatcher(matcherType.ToSerialString(), matcher, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return SetMatcher(matcherType.ToSerialString(), matcher, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual async Task<ClientResult> SetMatcherAsync(MatcherType matcherType, CustomDefaultMatcher matcher = default, CancellationToken cancellationToken = default)
         {
-            return await SetMatcherAsync(matcherType.ToSerialString(), matcher, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await SetMatcherAsync(matcherType.ToSerialString(), matcher, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             Argument.AssertNotNull(sanitizers, nameof(sanitizers));
 
             using BinaryContent content = BinaryContentHelper.FromEnumerable(sanitizers);
-            return AddSanitizers(content, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return AddSanitizers(content, recordingId, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             Argument.AssertNotNull(sanitizers, nameof(sanitizers));
 
             using BinaryContent content = BinaryContentHelper.FromEnumerable(sanitizers);
-            return await AddSanitizersAsync(content, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await AddSanitizersAsync(content, recordingId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         {
             Argument.AssertNotNull(sanitizers, nameof(sanitizers));
 
-            ClientResult result = RemoveSanitizers(sanitizers, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = RemoveSanitizers(sanitizers, recordingId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((RemovedSanitizers)result, result.GetRawResponse());
         }
 
@@ -259,7 +259,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         {
             Argument.AssertNotNull(sanitizers, nameof(sanitizers));
 
-            ClientResult result = await RemoveSanitizersAsync(sanitizers, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await RemoveSanitizersAsync(sanitizers, recordingId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((RemovedSanitizers)result, result.GetRawResponse());
         }
 
@@ -322,7 +322,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return SetRecordingOptions(body, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return SetRecordingOptions(body, recordingId, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return await SetRecordingOptionsAsync(body, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await SetRecordingOptionsAsync(body, recordingId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }
 }

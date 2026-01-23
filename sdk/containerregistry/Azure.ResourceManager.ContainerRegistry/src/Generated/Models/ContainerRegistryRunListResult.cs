@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> Collection of runs. </summary>
+    /// <summary> The collection of runs. </summary>
     internal partial class ContainerRegistryRunListResult
     {
         /// <summary>

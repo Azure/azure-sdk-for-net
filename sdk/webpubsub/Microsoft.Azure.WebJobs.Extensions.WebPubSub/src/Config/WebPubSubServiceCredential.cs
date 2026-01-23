@@ -5,23 +5,21 @@ using Azure.Core;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub;
 
+#nullable enable
+
 /// <summary>
-/// Can be key-based credential, identity-based connection, or null (A connection string without access key provided to Web PubSub trigger)
+/// Can be key-based credential or identity-based credential.
 /// </summary>
 internal abstract class WebPubSubServiceCredential
 {
-    public abstract bool CanValidateSignature { get; }
 }
 
-internal class KeyCredential(string accessKey) : WebPubSubServiceCredential
+internal class KeyCredential(string? accessKey) : WebPubSubServiceCredential
 {
-    public override bool CanValidateSignature => !string.IsNullOrEmpty(AccessKey);
-    public string AccessKey { get; } = accessKey;
+    public string? AccessKey { get; } = accessKey;
 }
 
 internal class IdentityCredential(TokenCredential tokenCredential) : WebPubSubServiceCredential
 {
-    public override bool CanValidateSignature => false;
-
     public TokenCredential TokenCredential { get; } = tokenCredential;
 }

@@ -5,88 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DisconnectedOperations;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableDisconnectedOperationsSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _disconnectedOperationClientDiagnostics;
-        private DisconnectedRestOperations _disconnectedOperationRestClient;
+        private ClientDiagnostics _disconnectedClientDiagnostics;
+        private Disconnected _disconnectedRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDisconnectedOperationsSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDisconnectedOperationsSubscriptionResource for mocking. </summary>
         protected MockableDisconnectedOperationsSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDisconnectedOperationsSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDisconnectedOperationsSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDisconnectedOperationsSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DisconnectedOperationClientDiagnostics => _disconnectedOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationResource.ResourceType.Namespace, Diagnostics);
-        private DisconnectedRestOperations DisconnectedOperationRestClient => _disconnectedOperationRestClient ??= new DisconnectedRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DisconnectedOperationResource.ResourceType));
+        private ClientDiagnostics DisconnectedClientDiagnostics => _disconnectedClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Disconnected DisconnectedRestClient => _disconnectedRestClient ??= new Disconnected(DisconnectedClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
 
         /// <summary>
         /// List DisconnectedOperation resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/disconnectedOperations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/disconnectedOperations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DisconnectedOperationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DisconnectedOperationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DisconnectedOperationResource> GetDisconnectedOperationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DisconnectedOperationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DisconnectedOperationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DisconnectedOperationResource(Client, DisconnectedOperationData.DeserializeDisconnectedOperationData(e)), DisconnectedOperationClientDiagnostics, Pipeline, "MockableDisconnectedOperationsSubscriptionResource.GetDisconnectedOperations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetBySubscriptionAsyncCollectionResultOfT(DisconnectedRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DisconnectedOperationResource(Client, data));
         }
 
         /// <summary>
         /// List DisconnectedOperation resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/disconnectedOperations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/disconnectedOperations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +87,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         /// <returns> A collection of <see cref="DisconnectedOperationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DisconnectedOperationResource> GetDisconnectedOperations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DisconnectedOperationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DisconnectedOperationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DisconnectedOperationResource(Client, DisconnectedOperationData.DeserializeDisconnectedOperationData(e)), DisconnectedOperationClientDiagnostics, Pipeline, "MockableDisconnectedOperationsSubscriptionResource.GetDisconnectedOperations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetBySubscriptionCollectionResultOfT(DisconnectedRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DisconnectedOperationResource(Client, data));
         }
     }
 }

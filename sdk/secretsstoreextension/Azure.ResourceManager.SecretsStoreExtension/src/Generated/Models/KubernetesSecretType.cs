@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecretsStoreExtension;
 
 namespace Azure.ResourceManager.SecretsStoreExtension.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     public readonly partial struct KubernetesSecretType : IEquatable<KubernetesSecretType>
     {
         private readonly string _value;
+        /// <summary> Opaque is the default secret type. </summary>
+        private const string OpaqueValue = "Opaque";
+        /// <summary> The kubernetes.io/tls secret type is for storing a certificate and its associated key that are typically used for TLS. </summary>
+        private const string TlsValue = "kubernetes.io/tls";
 
         /// <summary> Initializes a new instance of <see cref="KubernetesSecretType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KubernetesSecretType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OpaqueValue = "Opaque";
-        private const string TlsValue = "kubernetes.io/tls";
+            _value = value;
+        }
 
         /// <summary> Opaque is the default secret type. </summary>
         public static KubernetesSecretType Opaque { get; } = new KubernetesSecretType(OpaqueValue);
+
         /// <summary> The kubernetes.io/tls secret type is for storing a certificate and its associated key that are typically used for TLS. </summary>
         public static KubernetesSecretType Tls { get; } = new KubernetesSecretType(TlsValue);
+
         /// <summary> Determines if two <see cref="KubernetesSecretType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KubernetesSecretType left, KubernetesSecretType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KubernetesSecretType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KubernetesSecretType left, KubernetesSecretType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesSecretType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KubernetesSecretType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KubernetesSecretType(string value) => new KubernetesSecretType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KubernetesSecretType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KubernetesSecretType?(string value) => value == null ? null : new KubernetesSecretType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KubernetesSecretType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KubernetesSecretType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1477,7 +1477,8 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

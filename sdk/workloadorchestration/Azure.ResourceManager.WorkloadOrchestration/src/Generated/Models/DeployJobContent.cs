@@ -15,27 +15,29 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public partial class DeployJobContent : EdgeJobContent
     {
         /// <summary> Initializes a new instance of <see cref="DeployJobContent"/>. </summary>
-        internal DeployJobContent()
+        internal DeployJobContent() : base(EdgeJobType.Deploy)
         {
-            JobType = EdgeJobType.Deploy;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeployJobContent"/>. </summary>
         /// <param name="jobType"> Job type discriminator value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameter"></param>
-        internal DeployJobContent(EdgeJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, InstallSolutionContent parameter) : base(jobType, serializedAdditionalRawData)
+        internal DeployJobContent(EdgeJobType jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties, InstallSolutionContent parameter) : base(jobType, additionalBinaryDataProperties)
         {
             Parameter = parameter;
-            JobType = jobType;
         }
 
-        /// <summary> Gets the parameter. </summary>
+        /// <summary> Gets the Parameter. </summary>
         internal InstallSolutionContent Parameter { get; }
+
         /// <summary> Solution Version ARM Id. </summary>
         public ResourceIdentifier ParameterSolutionVersionId
         {
-            get => Parameter?.SolutionVersionId;
+            get
+            {
+                return Parameter.SolutionVersionId;
+            }
         }
     }
 }

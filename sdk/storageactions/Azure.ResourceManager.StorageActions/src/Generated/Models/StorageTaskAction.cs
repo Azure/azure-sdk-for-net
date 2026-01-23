@@ -43,18 +43,5 @@ namespace Azure.ResourceManager.StorageActions.Models
 
         /// <summary> The else block of storage task operation. </summary>
         internal StorageTaskElseCondition Else { get; set; }
-
-        /// <summary> List of operations to execute in the else block. </summary>
-        public IList<StorageTaskOperationInfo> ElseOperations
-        {
-            get
-            {
-                return Else is null ? default : Else.Operations;
-            }
-            set
-            {
-                Else = new StorageTaskElseCondition(value);
-            }
-        }
     }
 }

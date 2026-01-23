@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A Class representing a ScriptCmdlet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptCmdletResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetScriptCmdletResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ScriptPackageResource"/> using the GetScriptCmdlet method.
+    /// A class representing a ScriptCmdlet along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptCmdletResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ScriptPackageResource"/> using the GetScriptCmdlets method.
     /// </summary>
     public partial class ScriptCmdletResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ScriptCmdletResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="privateCloudName"> The privateCloudName. </param>
-        /// <param name="scriptPackageName"> The scriptPackageName. </param>
-        /// <param name="scriptCmdletName"> The scriptCmdletName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, string scriptCmdletName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}/scriptCmdlets/{scriptCmdletName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _scriptCmdletClientDiagnostics;
-        private readonly ScriptCmdletsRestOperations _scriptCmdletRestClient;
+        private readonly ClientDiagnostics _scriptCmdletsClientDiagnostics;
+        private readonly ScriptCmdlets _scriptCmdletsRestClient;
         private readonly ScriptCmdletData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets";
 
-        /// <summary> Initializes a new instance of the <see cref="ScriptCmdletResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ScriptCmdletResource for mocking. </summary>
         protected ScriptCmdletResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ScriptCmdletResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptCmdletResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScriptCmdletResource(ArmClient client, ScriptCmdletData data) : this(client, data.Id)
@@ -55,71 +43,94 @@ namespace Azure.ResourceManager.Avs
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ScriptCmdletResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptCmdletResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScriptCmdletResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _scriptCmdletClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string scriptCmdletApiVersion);
-            _scriptCmdletRestClient = new ScriptCmdletsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scriptCmdletApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _scriptCmdletsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            _scriptCmdletsRestClient = new ScriptCmdlets(_scriptCmdletsClientDiagnostics, Pipeline, Endpoint, scriptCmdletApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ScriptCmdletData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="scriptPackageName"> The scriptPackageName. </param>
+        /// <param name="scriptCmdletName"> The scriptCmdletName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, string scriptCmdletName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}/scriptCmdlets/{scriptCmdletName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a ScriptCmdlet
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}/scriptCmdlets/{scriptCmdletName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}/scriptCmdlets/{scriptCmdletName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScriptCmdlet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScriptCmdlets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScriptCmdletResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScriptCmdletResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ScriptCmdletResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _scriptCmdletClientDiagnostics.CreateScope("ScriptCmdletResource.Get");
+            using DiagnosticScope scope = _scriptCmdletsClientDiagnostics.CreateScope("ScriptCmdletResource.Get");
             scope.Start();
             try
             {
-                var response = await _scriptCmdletRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScriptCmdletData> response = Response.FromValue(ScriptCmdletData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScriptCmdletResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.Avs
         /// Get a ScriptCmdlet
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}/scriptCmdlets/{scriptCmdletName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}/scriptCmdlets/{scriptCmdletName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScriptCmdlet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScriptCmdlets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScriptCmdletResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScriptCmdletResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ScriptCmdletResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _scriptCmdletClientDiagnostics.CreateScope("ScriptCmdletResource.Get");
+            using DiagnosticScope scope = _scriptCmdletsClientDiagnostics.CreateScope("ScriptCmdletResource.Get");
             scope.Start();
             try
             {
-                var response = _scriptCmdletRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScriptCmdletData> response = Response.FromValue(ScriptCmdletData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScriptCmdletResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

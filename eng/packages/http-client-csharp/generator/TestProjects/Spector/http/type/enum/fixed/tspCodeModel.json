@@ -623,7 +623,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Enum.Fixed.endpoint"
+              "crossLanguageDefinitionId": "Type.Enum.Fixed.String.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -632,9 +632,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "22"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

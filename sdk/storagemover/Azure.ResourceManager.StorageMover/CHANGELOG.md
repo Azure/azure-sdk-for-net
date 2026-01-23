@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Upgraded to API version 2025-08-01.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -14,11 +16,8 @@
 
 ### Features Added
 
-- Added new endpoint type `AzureStorageNFSFileShare` for NFS V3 Support.
-
-### Other Changes
-
 - Upgraded to API version 2025-07-01.
+    - Added new endpoint type `AzureStorageNFSFileShare` for NFS V3 Support.
 
 ## 1.2.1 (2025-03-11)
 

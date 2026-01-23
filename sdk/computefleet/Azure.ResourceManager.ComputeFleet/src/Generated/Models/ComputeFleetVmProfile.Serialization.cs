@@ -8,17 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class ComputeFleetVmProfile : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmProfile>
+    /// <summary> Describes the base virtual machine profile for fleet. </summary>
+    public partial class ComputeFleetVmProfile : IJsonModel<ComputeFleetVmProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetVmProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +29,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
@@ -99,7 +97,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(ServiceArtifactReference))
             {
                 writer.WritePropertyName("serviceArtifactReference"u8);
-                ((IJsonModel<WritableSubResource>)ServiceArtifactReference).Write(writer, options);
+                writer.WriteObjectValue(ServiceArtifactReference, options);
             }
             if (Optional.IsDefined(SecurityPostureReference))
             {
@@ -111,15 +109,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -128,22 +126,27 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetVmProfile IJsonModel<ComputeFleetVmProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVmProfile IJsonModel<ComputeFleetVmProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVmProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeFleetVmProfile(document.RootElement, options);
         }
 
-        internal static ComputeFleetVmProfile DeserializeComputeFleetVmProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ComputeFleetVmProfile DeserializeComputeFleetVmProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -160,146 +163,144 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             CapacityReservationProfile capacityReservation = default;
             ComputeFleetApplicationProfile applicationProfile = default;
             ComputeFleetVmssHardwareProfile hardwareProfile = default;
-            WritableSubResource serviceArtifactReference = default;
+            ServiceArtifactReference serviceArtifactReference = default;
             ComputeFleetSecurityPostureReference securityPostureReference = default;
-            DateTimeOffset? timeCreated = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? createdOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("osProfile"u8))
+                if (prop.NameEquals("osProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osProfile = ComputeFleetVmssOSProfile.DeserializeComputeFleetVmssOSProfile(property.Value, options);
+                    osProfile = ComputeFleetVmssOSProfile.DeserializeComputeFleetVmssOSProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storageProfile"u8))
+                if (prop.NameEquals("storageProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageProfile = ComputeFleetVmssStorageProfile.DeserializeComputeFleetVmssStorageProfile(property.Value, options);
+                    storageProfile = ComputeFleetVmssStorageProfile.DeserializeComputeFleetVmssStorageProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("networkProfile"u8))
+                if (prop.NameEquals("networkProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkProfile = ComputeFleetVmssNetworkProfile.DeserializeComputeFleetVmssNetworkProfile(property.Value, options);
+                    networkProfile = ComputeFleetVmssNetworkProfile.DeserializeComputeFleetVmssNetworkProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("securityProfile"u8))
+                if (prop.NameEquals("securityProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securityProfile = ComputeFleetSecurityProfile.DeserializeComputeFleetSecurityProfile(property.Value, options);
+                    securityProfile = ComputeFleetSecurityProfile.DeserializeComputeFleetSecurityProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("diagnosticsProfile"u8))
+                if (prop.NameEquals("diagnosticsProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diagnosticsProfile = ComputeFleetDiagnosticsProfile.DeserializeComputeFleetDiagnosticsProfile(property.Value, options);
+                    diagnosticsProfile = ComputeFleetDiagnosticsProfile.DeserializeComputeFleetDiagnosticsProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("extensionProfile"u8))
+                if (prop.NameEquals("extensionProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extensionProfile = ComputeFleetVmssExtensionProfile.DeserializeComputeFleetVmssExtensionProfile(property.Value, options);
+                    extensionProfile = ComputeFleetVmssExtensionProfile.DeserializeComputeFleetVmssExtensionProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("licenseType"u8))
+                if (prop.NameEquals("licenseType"u8))
                 {
-                    licenseType = property.Value.GetString();
+                    licenseType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scheduledEventsProfile"u8))
+                if (prop.NameEquals("scheduledEventsProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scheduledEventsProfile = ComputeFleetScheduledEventsProfile.DeserializeComputeFleetScheduledEventsProfile(property.Value, options);
+                    scheduledEventsProfile = ComputeFleetScheduledEventsProfile.DeserializeComputeFleetScheduledEventsProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("userData"u8))
+                if (prop.NameEquals("userData"u8))
                 {
-                    userData = property.Value.GetString();
+                    userData = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacityReservation"u8))
+                if (prop.NameEquals("capacityReservation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(property.Value, options);
+                    capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("applicationProfile"u8))
+                if (prop.NameEquals("applicationProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    applicationProfile = ComputeFleetApplicationProfile.DeserializeComputeFleetApplicationProfile(property.Value, options);
+                    applicationProfile = ComputeFleetApplicationProfile.DeserializeComputeFleetApplicationProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("hardwareProfile"u8))
+                if (prop.NameEquals("hardwareProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hardwareProfile = ComputeFleetVmssHardwareProfile.DeserializeComputeFleetVmssHardwareProfile(property.Value, options);
+                    hardwareProfile = ComputeFleetVmssHardwareProfile.DeserializeComputeFleetVmssHardwareProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("serviceArtifactReference"u8))
+                if (prop.NameEquals("serviceArtifactReference"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    serviceArtifactReference = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default);
+                    serviceArtifactReference = ServiceArtifactReference.DeserializeServiceArtifactReference(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("securityPostureReference"u8))
+                if (prop.NameEquals("securityPostureReference"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securityPostureReference = ComputeFleetSecurityPostureReference.DeserializeComputeFleetSecurityPostureReference(property.Value, options);
+                    securityPostureReference = ComputeFleetSecurityPostureReference.DeserializeComputeFleetSecurityPostureReference(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("timeCreated"u8))
+                if (prop.NameEquals("timeCreated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeCreated = property.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ComputeFleetVmProfile(
                 osProfile,
                 storageProfile,
@@ -315,14 +316,17 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 hardwareProfile,
                 serviceArtifactReference,
                 securityPostureReference,
-                timeCreated,
-                serializedAdditionalRawData);
+                createdOn,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ComputeFleetVmProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeFleetVmProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -332,15 +336,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetVmProfile IPersistableModel<ComputeFleetVmProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVmProfile IPersistableModel<ComputeFleetVmProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVmProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeComputeFleetVmProfile(document.RootElement, options);
                     }
                 default:
@@ -348,6 +357,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeFleetVmProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

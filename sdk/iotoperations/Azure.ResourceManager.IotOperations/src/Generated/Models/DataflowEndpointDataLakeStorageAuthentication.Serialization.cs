@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class DataflowEndpointDataLakeStorageAuthentication : IUtf8JsonSerializable, IJsonModel<DataflowEndpointDataLakeStorageAuthentication>
+    /// <summary> Azure Data Lake endpoint Authentication properties.  NOTE Enum - Only one method is supported for one entry. </summary>
+    public partial class DataflowEndpointDataLakeStorageAuthentication : IJsonModel<DataflowEndpointDataLakeStorageAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowEndpointDataLakeStorageAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataflowEndpointDataLakeStorageAuthentication"/> for deserialization. </summary>
+        internal DataflowEndpointDataLakeStorageAuthentication()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowEndpointDataLakeStorageAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowEndpointDataLakeStorageAuthentication)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             if (Optional.IsDefined(AccessTokenSettings))
@@ -51,15 +56,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("userAssignedManagedIdentitySettings"u8);
                 writer.WriteObjectValue(UserAssignedManagedIdentitySettings, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,79 +73,85 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowEndpointDataLakeStorageAuthentication IJsonModel<DataflowEndpointDataLakeStorageAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowEndpointDataLakeStorageAuthentication IJsonModel<DataflowEndpointDataLakeStorageAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowEndpointDataLakeStorageAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowEndpointDataLakeStorageAuthentication)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataflowEndpointDataLakeStorageAuthentication(document.RootElement, options);
         }
 
-        internal static DataflowEndpointDataLakeStorageAuthentication DeserializeDataflowEndpointDataLakeStorageAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataflowEndpointDataLakeStorageAuthentication DeserializeDataflowEndpointDataLakeStorageAuthentication(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataLakeStorageAuthMethod method = default;
+            DataLakeStorageAuthMethod @method = default;
             DataflowEndpointAuthenticationAccessToken accessTokenSettings = default;
             DataflowEndpointAuthenticationSystemAssignedManagedIdentity systemAssignedManagedIdentitySettings = default;
             DataflowEndpointAuthenticationUserAssignedManagedIdentity userAssignedManagedIdentitySettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("method"u8))
+                if (prop.NameEquals("method"u8))
                 {
-                    method = new DataLakeStorageAuthMethod(property.Value.GetString());
+                    @method = new DataLakeStorageAuthMethod(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accessTokenSettings"u8))
+                if (prop.NameEquals("accessTokenSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accessTokenSettings = DataflowEndpointAuthenticationAccessToken.DeserializeDataflowEndpointAuthenticationAccessToken(property.Value, options);
+                    accessTokenSettings = DataflowEndpointAuthenticationAccessToken.DeserializeDataflowEndpointAuthenticationAccessToken(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("systemAssignedManagedIdentitySettings"u8))
+                if (prop.NameEquals("systemAssignedManagedIdentitySettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemAssignedManagedIdentitySettings = DataflowEndpointAuthenticationSystemAssignedManagedIdentity.DeserializeDataflowEndpointAuthenticationSystemAssignedManagedIdentity(property.Value, options);
+                    systemAssignedManagedIdentitySettings = DataflowEndpointAuthenticationSystemAssignedManagedIdentity.DeserializeDataflowEndpointAuthenticationSystemAssignedManagedIdentity(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("userAssignedManagedIdentitySettings"u8))
+                if (prop.NameEquals("userAssignedManagedIdentitySettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userAssignedManagedIdentitySettings = DataflowEndpointAuthenticationUserAssignedManagedIdentity.DeserializeDataflowEndpointAuthenticationUserAssignedManagedIdentity(property.Value, options);
+                    userAssignedManagedIdentitySettings = DataflowEndpointAuthenticationUserAssignedManagedIdentity.DeserializeDataflowEndpointAuthenticationUserAssignedManagedIdentity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataflowEndpointDataLakeStorageAuthentication(method, accessTokenSettings, systemAssignedManagedIdentitySettings, userAssignedManagedIdentitySettings, serializedAdditionalRawData);
+            return new DataflowEndpointDataLakeStorageAuthentication(@method, accessTokenSettings, systemAssignedManagedIdentitySettings, userAssignedManagedIdentitySettings, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -150,15 +161,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowEndpointDataLakeStorageAuthentication IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowEndpointDataLakeStorageAuthentication IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowEndpointDataLakeStorageAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataflowEndpointDataLakeStorageAuthentication(document.RootElement, options);
                     }
                 default:
@@ -166,6 +182,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataflowEndpointDataLakeStorageAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

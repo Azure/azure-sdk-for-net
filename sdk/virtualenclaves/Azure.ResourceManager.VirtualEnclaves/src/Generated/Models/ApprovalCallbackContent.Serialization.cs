@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    public partial class ApprovalCallbackContent : IUtf8JsonSerializable, IJsonModel<ApprovalCallbackContent>
+    /// <summary> Request body for calling post-action. </summary>
+    public partial class ApprovalCallbackContent : IJsonModel<ApprovalCallbackContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApprovalCallbackContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ApprovalCallbackContent"/> for deserialization. </summary>
+        internal ApprovalCallbackContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApprovalCallbackContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApprovalCallbackContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApprovalCallbackContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApprovalCallbackContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("resourceRequestAction"u8);
             writer.WriteStringValue(ResourceRequestAction.ToString());
             writer.WritePropertyName("approvalStatus"u8);
@@ -43,15 +49,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("approvalCallbackPayload"u8);
                 writer.WriteStringValue(ApprovalCallbackPayload);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -60,61 +66,67 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
-        ApprovalCallbackContent IJsonModel<ApprovalCallbackContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApprovalCallbackContent IJsonModel<ApprovalCallbackContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApprovalCallbackContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApprovalCallbackContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApprovalCallbackContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApprovalCallbackContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApprovalCallbackContent(document.RootElement, options);
         }
 
-        internal static ApprovalCallbackContent DeserializeApprovalCallbackContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApprovalCallbackContent DeserializeApprovalCallbackContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PostActionResourceRequestAction resourceRequestAction = default;
+            PostActionResourceActionType resourceRequestAction = default;
             PostActionCallbackApprovalStatus approvalStatus = default;
             string approvalCallbackPayload = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceRequestAction"u8))
+                if (prop.NameEquals("resourceRequestAction"u8))
                 {
-                    resourceRequestAction = new PostActionResourceRequestAction(property.Value.GetString());
+                    resourceRequestAction = new PostActionResourceActionType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("approvalStatus"u8))
+                if (prop.NameEquals("approvalStatus"u8))
                 {
-                    approvalStatus = new PostActionCallbackApprovalStatus(property.Value.GetString());
+                    approvalStatus = new PostActionCallbackApprovalStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("approvalCallbackPayload"u8))
+                if (prop.NameEquals("approvalCallbackPayload"u8))
                 {
-                    approvalCallbackPayload = property.Value.GetString();
+                    approvalCallbackPayload = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ApprovalCallbackContent(resourceRequestAction, approvalStatus, approvalCallbackPayload, serializedAdditionalRawData);
+            return new ApprovalCallbackContent(resourceRequestAction, approvalStatus, approvalCallbackPayload, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ApprovalCallbackContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApprovalCallbackContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApprovalCallbackContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApprovalCallbackContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -124,15 +136,20 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
-        ApprovalCallbackContent IPersistableModel<ApprovalCallbackContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApprovalCallbackContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApprovalCallbackContent IPersistableModel<ApprovalCallbackContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApprovalCallbackContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApprovalCallbackContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApprovalCallbackContent(document.RootElement, options);
                     }
                 default:
@@ -140,6 +157,19 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ApprovalCallbackContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="approvalCallbackContent"> The <see cref="ApprovalCallbackContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApprovalCallbackContent approvalCallbackContent)
+        {
+            if (approvalCallbackContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(approvalCallbackContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

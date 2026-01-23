@@ -10,14 +10,21 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    public partial class EdgeSolutionVersionProperties : IUtf8JsonSerializable, IJsonModel<EdgeSolutionVersionProperties>
+    /// <summary> Solution Version Properties. </summary>
+    public partial class EdgeSolutionVersionProperties : IJsonModel<EdgeSolutionVersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeSolutionVersionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="EdgeSolutionVersionProperties"/> for deserialization. </summary>
+        internal EdgeSolutionVersionProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeSolutionVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +36,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeSolutionVersionProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(SolutionTemplateVersionId))
             {
                 writer.WritePropertyName("solutionTemplateVersionId"u8);
@@ -71,9 +77,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     continue;
                 }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -104,7 +110,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 writer.WritePropertyName("solutionDependencies"u8);
                 writer.WriteStartArray();
-                foreach (var item in SolutionDependencies)
+                foreach (EdgeSolutionDependency item in SolutionDependencies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -130,15 +136,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -147,22 +153,27 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        EdgeSolutionVersionProperties IJsonModel<EdgeSolutionVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeSolutionVersionProperties IJsonModel<EdgeSolutionVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeSolutionVersionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeSolutionVersionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEdgeSolutionVersionProperties(document.RootElement, options);
         }
 
-        internal static EdgeSolutionVersionProperties DeserializeEdgeSolutionVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EdgeSolutionVersionProperties DeserializeEdgeSolutionVersionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -182,132 +193,130 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             string latestActionTrackingUri = default;
             EdgeJobType? actionType = default;
             WorkloadOrchestrationProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("solutionTemplateVersionId"u8))
+                if (prop.NameEquals("solutionTemplateVersionId"u8))
                 {
-                    solutionTemplateVersionId = property.Value.GetString();
+                    solutionTemplateVersionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("revision"u8))
+                if (prop.NameEquals("revision"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    revision = property.Value.GetInt32();
+                    revision = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targetDisplayName"u8))
+                if (prop.NameEquals("targetDisplayName"u8))
                 {
-                    targetDisplayName = property.Value.GetString();
+                    targetDisplayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configuration"u8))
+                if (prop.NameEquals("configuration"u8))
                 {
-                    configuration = property.Value.GetString();
+                    configuration = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetLevelConfiguration"u8))
+                if (prop.NameEquals("targetLevelConfiguration"u8))
                 {
-                    targetLevelConfiguration = property.Value.GetString();
+                    targetLevelConfiguration = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("specification"u8))
+                if (prop.NameEquals("specification"u8))
                 {
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     specification = dictionary;
                     continue;
                 }
-                if (property.NameEquals("reviewId"u8))
+                if (prop.NameEquals("reviewId"u8))
                 {
-                    reviewId = property.Value.GetString();
+                    reviewId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("externalValidationId"u8))
+                if (prop.NameEquals("externalValidationId"u8))
                 {
-                    externalValidationId = property.Value.GetString();
+                    externalValidationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new SolutionInstanceState(property.Value.GetString());
+                    state = new SolutionInstanceState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("solutionInstanceName"u8))
+                if (prop.NameEquals("solutionInstanceName"u8))
                 {
-                    solutionInstanceName = property.Value.GetString();
+                    solutionInstanceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("solutionDependencies"u8))
+                if (prop.NameEquals("solutionDependencies"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EdgeSolutionDependency> array = new List<EdgeSolutionDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(EdgeSolutionDependency.DeserializeEdgeSolutionDependency(item, options));
                     }
                     solutionDependencies = array;
                     continue;
                 }
-                if (property.NameEquals("errorDetails"u8))
+                if (prop.NameEquals("errorDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    errorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerWorkloadOrchestrationContext.Default);
+                    errorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerWorkloadOrchestrationContext.Default);
                     continue;
                 }
-                if (property.NameEquals("latestActionTrackingUri"u8))
+                if (prop.NameEquals("latestActionTrackingUri"u8))
                 {
-                    latestActionTrackingUri = property.Value.GetString();
+                    latestActionTrackingUri = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionType"u8))
+                if (prop.NameEquals("actionType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    actionType = new EdgeJobType(property.Value.GetString());
+                    actionType = new EdgeJobType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new WorkloadOrchestrationProvisioningState(property.Value.GetString());
+                    provisioningState = new WorkloadOrchestrationProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeSolutionVersionProperties(
                 solutionTemplateVersionId,
                 revision,
@@ -324,13 +333,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 latestActionTrackingUri,
                 actionType,
                 provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<EdgeSolutionVersionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EdgeSolutionVersionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -340,15 +352,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        EdgeSolutionVersionProperties IPersistableModel<EdgeSolutionVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeSolutionVersionProperties IPersistableModel<EdgeSolutionVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeSolutionVersionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEdgeSolutionVersionProperties(document.RootElement, options);
                     }
                 default:
@@ -356,6 +373,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeSolutionVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

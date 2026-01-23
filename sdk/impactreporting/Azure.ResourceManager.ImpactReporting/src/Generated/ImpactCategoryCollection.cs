@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Get a ImpactCategory
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Get a ImpactCategory
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Get a ImpactCategory
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Get a ImpactCategory
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

@@ -71,9 +71,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.AzureOpenAIAudience AzureGovernment { get { throw null; } }
         public static Azure.AI.OpenAI.AzureOpenAIAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.AzureOpenAIAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.AzureOpenAIAudience left, Azure.AI.OpenAI.AzureOpenAIAudience right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.AzureOpenAIAudience (string value) { throw null; }
@@ -92,25 +90,19 @@ namespace Azure.AI.OpenAI
         public override OpenAI.Audio.AudioClient GetAudioClient(string deploymentName) { throw null; }
         public override OpenAI.Batch.BatchClient GetBatchClient() { throw null; }
         public override OpenAI.Chat.ChatClient GetChatClient(string deploymentName) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Containers.ContainerClient GetContainerClient() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Conversations.ConversationClient GetConversationClient() { throw null; }
         public override OpenAI.Embeddings.EmbeddingClient GetEmbeddingClient(string deploymentName) { throw null; }
         public override OpenAI.Evals.EvaluationClient GetEvaluationClient() { throw null; }
         public override OpenAI.FineTuning.FineTuningClient GetFineTuningClient() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Graders.GraderClient GetGraderClient() { throw null; }
         public override OpenAI.Images.ImageClient GetImageClient(string deploymentName) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Moderations.ModerationClient GetModerationClient(string _) { throw null; }
         public override OpenAI.Files.OpenAIFileClient GetOpenAIFileClient() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Models.OpenAIModelClient GetOpenAIModelClient() { throw null; }
-        public override OpenAI.Responses.OpenAIResponseClient GetOpenAIResponseClient(string deploymentName) { throw null; }
         public override OpenAI.Realtime.RealtimeClient GetRealtimeClient() { throw null; }
+        public override OpenAI.Responses.ResponsesClient GetResponsesClient(string deploymentName) { throw null; }
         public override OpenAI.VectorStores.VectorStoreClient GetVectorStoreClient() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Videos.VideoClient GetVideoClient() { throw null; }
     }
     public partial class AzureOpenAIClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
@@ -211,9 +203,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.ContentFilterSeverity Medium { get { throw null; } }
         public static Azure.AI.OpenAI.ContentFilterSeverity Safe { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.ContentFilterSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.ContentFilterSeverity left, Azure.AI.OpenAI.ContentFilterSeverity right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.ContentFilterSeverity (string value) { throw null; }
@@ -457,9 +447,7 @@ namespace Azure.AI.OpenAI.Chat
         public static Azure.AI.OpenAI.Chat.ChatDocumentFilterReason Rerank { get { throw null; } }
         public static Azure.AI.OpenAI.Chat.ChatDocumentFilterReason Score { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.Chat.ChatDocumentFilterReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Chat.ChatDocumentFilterReason left, Azure.AI.OpenAI.Chat.ChatDocumentFilterReason right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.Chat.ChatDocumentFilterReason (string value) { throw null; }
@@ -590,9 +578,7 @@ namespace Azure.AI.OpenAI.Chat
         public static Azure.AI.OpenAI.Chat.DataSourceQueryType VectorSemanticHybrid { get { throw null; } }
         public static Azure.AI.OpenAI.Chat.DataSourceQueryType VectorSimpleHybrid { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.Chat.DataSourceQueryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Chat.DataSourceQueryType left, Azure.AI.OpenAI.Chat.DataSourceQueryType right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.Chat.DataSourceQueryType (string value) { throw null; }
@@ -701,9 +687,7 @@ namespace Azure.AI.OpenAI.Files
         public AzureFileExpirationAnchor(string value) { throw null; }
         public static Azure.AI.OpenAI.Files.AzureFileExpirationAnchor CreatedAt { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.Files.AzureFileExpirationAnchor other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Files.AzureFileExpirationAnchor left, Azure.AI.OpenAI.Files.AzureFileExpirationAnchor right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.Files.AzureFileExpirationAnchor (string value) { throw null; }

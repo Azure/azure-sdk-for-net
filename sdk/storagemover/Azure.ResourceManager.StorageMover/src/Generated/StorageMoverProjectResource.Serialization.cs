@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StorageMover
 {
+    /// <summary></summary>
     public partial class StorageMoverProjectResource : IJsonModel<StorageMoverProjectData>
     {
-        private static StorageMoverProjectData s_dataDeserializationInstance;
-        private static StorageMoverProjectData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageMoverProjectData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageMoverProjectData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageMoverProjectData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageMoverProjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverProjectData>)Data).Write(writer, options);
 
-        StorageMoverProjectData IJsonModel<StorageMoverProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverProjectData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageMoverProjectData IJsonModel<StorageMoverProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageMoverProjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageMoverProjectData>(Data, options, AzureResourceManagerStorageMoverContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageMoverProjectData IPersistableModel<StorageMoverProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageMoverProjectData>(data, options, AzureResourceManagerStorageMoverContext.Default);
 
-        string IPersistableModel<StorageMoverProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageMoverProjectData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageMoverProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

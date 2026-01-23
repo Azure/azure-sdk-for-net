@@ -760,7 +760,8 @@
         "v1",
         "v2preview",
         "v2"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

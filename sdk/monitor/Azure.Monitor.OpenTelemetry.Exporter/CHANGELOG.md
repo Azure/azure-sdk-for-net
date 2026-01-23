@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.2 (Unreleased)
+## 1.6.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0-beta.2 (2026-01-12)
+
+### Breaking Changes
+* **Default Sampler Changed** ([#54942](https://github.com/Azure/azure-sdk-for-net/pull/54942)): The default sampling behavior has been changed from
+  `ApplicationInsightsSampler` with 100% sampling (all traces sampled) to
+  `RateLimitedSampler` with 5.0 traces per second. This change significantly
+  reduces telemetry volume for high-traffic applications and provides better
+  cost optimization out of the box.
+  **Impact**: Applications with more than 5 requests per second will see fewer
+  traces exported by default.
+  **Migration**: To maintain the previous behavior (100% sampling), explicitly
+  configure the sampler:
+  ```csharp
+  // Option 1: Set SamplingRatio and clear TracesPerSecond
+  builder.Services.AddOpenTelemetry()
+      .UseAzureMonitorExporter(options =>
+      {
+          options.SamplingRatio = 1.0f;
+          options.TracesPerSecond = null;
+      });
+  // Option 2: Use environment variables
+  // OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
+  // OTEL_TRACES_SAMPLER_ARG=1.0
+  ```
+
+### Bugs Fixed
+
+* Fixed performance counter metrics not using configured resource attributes
+  (cloud_RoleName and cloud_RoleInstance), which previously showed
+  "unknown_service:appName" instead of the configured values.
+  ([#54944](https://github.com/Azure/azure-sdk-for-net/pull/54944))
 
 ## 1.6.0-beta.1 (2025-12-03)
 
