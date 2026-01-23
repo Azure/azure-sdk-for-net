@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.NeonPostgres
         private readonly Branches _branchesRestClient;
         private readonly ClientDiagnostics _computesClientDiagnostics;
         private readonly Computes _computesRestClient;
+        private readonly ClientDiagnostics _endpointsClientDiagnostics;
+        private readonly Endpoints _endpointsRestClient;
         private readonly ClientDiagnostics _neonDatabasesClientDiagnostics;
         private readonly NeonDatabases _neonDatabasesRestClient;
         private readonly ClientDiagnostics _neonRolesClientDiagnostics;
         private readonly NeonRoles _neonRolesRestClient;
-        private readonly ClientDiagnostics _endpointsClientDiagnostics;
-        private readonly Endpoints _endpointsRestClient;
 
         /// <summary> Initializes a new instance of NeonBranchCollection for mocking. </summary>
         protected NeonBranchCollection()
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.NeonPostgres
             _branchesRestClient = new Branches(_branchesClientDiagnostics, Pipeline, Endpoint, neonBranchApiVersion ?? "2025-06-23-preview");
             _computesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", NeonBranchResource.ResourceType.Namespace, Diagnostics);
             _computesRestClient = new Computes(_computesClientDiagnostics, Pipeline, Endpoint, neonBranchApiVersion ?? "2025-06-23-preview");
+            _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", NeonBranchResource.ResourceType.Namespace, Diagnostics);
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, neonBranchApiVersion ?? "2025-06-23-preview");
             _neonDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", NeonBranchResource.ResourceType.Namespace, Diagnostics);
             _neonDatabasesRestClient = new NeonDatabases(_neonDatabasesClientDiagnostics, Pipeline, Endpoint, neonBranchApiVersion ?? "2025-06-23-preview");
             _neonRolesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", NeonBranchResource.ResourceType.Namespace, Diagnostics);
             _neonRolesRestClient = new NeonRoles(_neonRolesClientDiagnostics, Pipeline, Endpoint, neonBranchApiVersion ?? "2025-06-23-preview");
-            _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", NeonBranchResource.ResourceType.Namespace, Diagnostics);
-            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, neonBranchApiVersion ?? "2025-06-23-preview");
             ValidateResourceId(id);
         }
 
