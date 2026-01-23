@@ -15,7 +15,7 @@ using Azure.ResourceManager.ElasticSan;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> A list of private link resources. </summary>
-    public partial class ElasticSanPrivateLinkResourceListResult : IJsonModel<ElasticSanPrivateLinkResourceListResult>
+    internal partial class ElasticSanPrivateLinkResourceListResult : IJsonModel<ElasticSanPrivateLinkResourceListResult>
     {
         /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkResourceListResult"/> for deserialization. </summary>
         internal ElasticSanPrivateLinkResourceListResult()

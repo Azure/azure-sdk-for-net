@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> A list of private link resources. </summary>
-    public partial class ElasticSanPrivateLinkResourceListResult
+    internal partial class ElasticSanPrivateLinkResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

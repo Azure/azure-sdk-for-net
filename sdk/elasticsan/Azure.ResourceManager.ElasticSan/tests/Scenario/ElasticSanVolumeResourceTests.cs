@@ -2,15 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ElasticSan.Models;
-using Azure.ResourceManager.Resources;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
@@ -53,7 +47,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanVolumeResource volume3 = (await volume1.UpdateAsync(WaitUntil.Completed, patch)).Value;
             Assert.AreEqual(200, volume3.Data.SizeGiB);
 
-            await volume1.DeleteAsync(WaitUntil.Completed, ElasticSanDeleteSnapshotsUnderVolume.True, ElasticSanForceDeleteVolume.True);
+            await volume1.DeleteAsync(WaitUntil.Completed, ElasticSanDeleteSnapshotsUnderVolume.True, ElasticSanForceDeleteVolume.True, cancellationToken: default);
         }
 
         [Test]
@@ -78,11 +72,11 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanVolumeData data = new ElasticSanVolumeData(100);
             ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data)).Value;
 
-            await volume1.DeleteAsync(WaitUntil.Completed);
+            await volume1.DeleteAsync(WaitUntil.Completed, ElasticSanDeleteSnapshotsUnderVolume.True, ElasticSanForceDeleteVolume.True, cancellationToken: default);
 
             ElasticSanVolumeResource softdeletedVolume = null;
             int count = 0;
-            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(ElasticSanAccessSoftDeletedVolume.True))
+            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(cancellationToken: default))
             {
                 softdeletedVolume = _;
                 count++;
@@ -101,9 +95,9 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             }
             Assert.IsTrue(foundVolume);
 
-            await volume1.DeleteAsync(WaitUntil.Completed);
+            await volume1.DeleteAsync(WaitUntil.Completed, ElasticSanDeleteSnapshotsUnderVolume.True, ElasticSanForceDeleteVolume.True, cancellationToken: default);
             count = 0;
-            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(ElasticSanAccessSoftDeletedVolume.True))
+            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(cancellationToken: default))
             {
                 softdeletedVolume = _;
                 count++;
@@ -112,7 +106,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             await softdeletedVolume.DeleteAsync(WaitUntil.Completed, deleteType: ElasticSanDeleteType.Permanent);
 
             count = 0;
-            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(ElasticSanAccessSoftDeletedVolume.True))
+            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(cancellationToken: default))
             {
                 count++;
             }

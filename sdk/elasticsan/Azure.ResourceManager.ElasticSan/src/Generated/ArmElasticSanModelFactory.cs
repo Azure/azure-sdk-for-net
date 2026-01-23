@@ -148,17 +148,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A list of private link resources. </summary>
-        /// <param name="value"> Array of private link resources. </param>
-        /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
-        /// <returns> A new <see cref="Models.ElasticSanPrivateLinkResourceListResult"/> instance for mocking. </returns>
-        public static ElasticSanPrivateLinkResourceListResult ElasticSanPrivateLinkResourceListResult(IEnumerable<ElasticSanPrivateLinkResource> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<ElasticSanPrivateLinkResource>();
-
-            return new ElasticSanPrivateLinkResourceListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -342,25 +331,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanVolumeGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="provisioningState"> State of the operation on the resource. </param>
-        /// <param name="protocolType"> Type of storage target. </param>
-        /// <param name="encryption"> Type of encryption. </param>
-        /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
-        /// <param name="virtualNetworkRules"> A collection of rules governing the accessibility from specific network locations. </param>
-        /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
-        /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeGroupData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticSanVolumeGroupData ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections)
-        {
-            return ElasticSanVolumeGroupData(id, name, resourceType, systemData, identity, provisioningState, protocolType, encryption, encryptionProperties, privateEndpointConnections, enforceDataIntegrityCheckForIscsi: defaul);
         }
     }
 }
