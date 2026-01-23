@@ -13919,10 +13919,13 @@ namespace Azure.ResourceManager.Network.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public FirewallPolicyIntrusionDetectionProfileType(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Advanced { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Basic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Core { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Emerging { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Extended { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Off { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
