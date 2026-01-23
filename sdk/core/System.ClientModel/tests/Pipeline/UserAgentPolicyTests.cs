@@ -362,4 +362,113 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         string expectedUserAgent = $"{applicationId} {assemblyName}/{version} ({mockRuntimeInfo.FrameworkDescriptionMock}; {mockRuntimeInfo.OSDescriptionMock})";
         Assert.AreEqual(expectedUserAgent, userAgent);
     }
+
+    [Test]
+    public void UserAgentPolicyWithCustomMaxLength()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        int customMaxLength = 50;
+        UserAgentPolicy userAgentPolicy = new(assembly, null, customMaxLength);
+
+        Assert.AreEqual(customMaxLength, userAgentPolicy.MaxUserAgentLength);
+        Assert.LessOrEqual(userAgentPolicy.UserAgentValue.Length, customMaxLength);
+    }
+
+    [Test]
+    public void UserAgentPolicyDefaultMaxLength()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        UserAgentPolicy userAgentPolicy = new(assembly);
+
+        // Default max length should be 300
+        Assert.AreEqual(300, userAgentPolicy.MaxUserAgentLength);
+    }
+
+    [Test]
+    public void UserAgentPolicyTruncatesLongUserAgent()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        int maxLength = 30;
+        UserAgentPolicy userAgentPolicy = new(assembly, null, maxLength);
+
+        string userAgent = userAgentPolicy.UserAgentValue;
+        Assert.AreEqual(maxLength, userAgent.Length);
+    }
+
+    [Test]
+    public void UserAgentPolicyDoesNotTruncateShortUserAgent()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        int maxLength = 1000; // Very long max length
+        UserAgentPolicy userAgentPolicy = new(assembly, null, maxLength);
+
+        string userAgent = userAgentPolicy.UserAgentValue;
+        // Should be less than max length since the actual user agent is shorter
+        Assert.Less(userAgent.Length, maxLength);
+    }
+
+    [Test]
+    public void UserAgentPolicyThrowsForZeroMaxLength()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        Assert.Throws<ArgumentOutOfRangeException>(() => new UserAgentPolicy(assembly, null, 0));
+    }
+
+    [Test]
+    public void UserAgentPolicyThrowsForNegativeMaxLength()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        Assert.Throws<ArgumentOutOfRangeException>(() => new UserAgentPolicy(assembly, null, -1));
+    }
+
+    [Test]
+    public async Task UserAgentPolicyWithCustomMaxLengthAddsCorrectHeader()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        int customMaxLength = 50;
+        UserAgentPolicy userAgentPolicy = new(assembly, null, customMaxLength);
+
+        MockPipelineTransport transport = new("Transport", 200);
+        PipelineRequest? capturedRequest = null;
+
+        transport.OnSendingRequest = (message) =>
+        {
+            capturedRequest = message.Request;
+        };
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = transport
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(
+            options,
+            perCallPolicies: new[] { userAgentPolicy },
+            perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = new Uri("https://example.com");
+        message.Request.Method = "GET";
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        Assert.IsNotNull(capturedRequest);
+        Assert.IsTrue(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent));
+        Assert.IsNotNull(userAgent);
+        Assert.LessOrEqual(userAgent!.Length, customMaxLength);
+        Assert.AreEqual(customMaxLength, userAgent.Length); // Should be truncated to exactly max length
+    }
+
+    [Test]
+    public void UserAgentPolicyWithApplicationIdAndMaxLength()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        string applicationId = "TestApp/1.0";
+        int maxLength = 40;
+        UserAgentPolicy userAgentPolicy = new(assembly, applicationId, maxLength);
+
+        Assert.AreEqual(applicationId, userAgentPolicy.ApplicationId);
+        Assert.AreEqual(maxLength, userAgentPolicy.MaxUserAgentLength);
+        Assert.LessOrEqual(userAgentPolicy.UserAgentValue.Length, maxLength);
+    }
 }
