@@ -162,11 +162,23 @@ namespace Azure.Generator
         private static CSharpType CreateExternalType(InputExternalTypeMetadata external)
         {
             // Parse the fully qualified type name into namespace and type name
+            // Note: This assumes simple types (namespace.TypeName) and does not handle:
+            // - Nested types (OuterClass+InnerClass)
+            // - Generic types (Type<T>)
+            // - Types with special characters
+            // For alternate types, these are typically simple class references like NetTopologySuite.IO.GeoJSON.Feature
             var lastDotIndex = external.Identity.LastIndexOf('.');
             var ns = lastDotIndex > 0 ? external.Identity.Substring(0, lastDotIndex) : string.Empty;
             var typeName = lastDotIndex > 0 ? external.Identity.Substring(lastDotIndex + 1) : external.Identity;
 
             // Use reflection to call the internal CSharpType constructor
+            // This is necessary because external types are not available at generation time
+            // and CSharpType doesn't provide a public factory method for creating unbound type references.
+            // 
+            // IMPORTANT: This approach is tightly coupled to the internal implementation of CSharpType.
+            // If the constructor signature changes in Microsoft.TypeSpec.Generator, this code will break.
+            // Consider requesting a public factory method in the base generator for creating external type references.
+            //
             // internal CSharpType(string name, string ns, bool isValueType, bool isNullable,
             //     CSharpType? declaringType, IReadOnlyList<CSharpType> args, bool isPublic, bool isStruct,
             //     CSharpType? baseType = null, Type? underlyingEnumType = null)

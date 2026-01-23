@@ -61,15 +61,20 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     private IReadOnlyList<InputExternalTypeMetadata> BuildExternalTypes()
     {
         var externalTypes = new List<InputExternalTypeMetadata>();
+        var addedPackages = new HashSet<string>(); // Track packages to avoid duplicates
+
         foreach (var model in InputLibrary.InputNamespace.Models)
         {
-            if (model.External != null && !string.IsNullOrEmpty(model.External.Package))
+            if (model.External != null && !string.IsNullOrEmpty(model.External.Package) &&
+                addedPackages.Add(model.External.Package))
             {
                 externalTypes.Add(model.External);
             }
+
             foreach (var property in model.Properties)
             {
-                if (property.Type.External != null && !string.IsNullOrEmpty(property.Type.External.Package))
+                if (property.Type.External != null && !string.IsNullOrEmpty(property.Type.External.Package) &&
+                    addedPackages.Add(property.Type.External.Package))
                 {
                     externalTypes.Add(property.Type.External);
                 }
