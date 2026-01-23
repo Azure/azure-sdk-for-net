@@ -164,7 +164,7 @@ public class AuthenticationPolicyCreateTests
             })
             .Build();
         settings.Bind(config.GetSection("TestClient"));
-        settings.CredentialObject = new TestTokenProvider("provider-api-key");
+        settings.CredentialProvider = new TestTokenProvider("provider-api-key");
 
         AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
 
@@ -190,7 +190,7 @@ public class AuthenticationPolicyCreateTests
             })
             .Build();
         settings.Bind(config.GetSection("TestClient"));
-        settings.CredentialObject = new TestTokenProvider("api-key");
+        settings.CredentialProvider = new TestTokenProvider("api-key");
 
         // Debug: Verify scope is actually in AdditionalProperties
         Assert.That(settings.Credential, Is.Not.Null);
@@ -217,7 +217,7 @@ public class AuthenticationPolicyCreateTests
             })
             .Build();
         settings.Bind(config.GetSection("TestClient"));
-        settings.CredentialObject = new TestTokenProvider("test-token");
+        settings.CredentialProvider = new TestTokenProvider("test-token");
 
         InvalidOperationException? ex = Assert.Throws<InvalidOperationException>(() =>
             AuthenticationPolicy.Create(settings));
@@ -258,7 +258,7 @@ public class AuthenticationPolicyCreateTests
             })
             .Build();
         settings.Bind(config.GetSection("TestClient"));
-        settings.CredentialObject = new TestTokenProvider("test-token");
+        settings.CredentialProvider = new TestTokenProvider("test-token");
 
         AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
 
@@ -283,7 +283,7 @@ public class AuthenticationPolicyCreateTests
             })
             .Build();
         settings.Bind(config.GetSection("TestClient"));
-        settings.CredentialObject = new TestTokenProvider("test-token");
+        settings.CredentialProvider = new TestTokenProvider("test-token");
 
         AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
 
@@ -311,7 +311,7 @@ public class AuthenticationPolicyCreateTests
 
         // When CredentialObject is a TokenProvider, it should take precedence
         TestTokenProvider provider = new("provider-key");
-        settings.CredentialObject = provider;
+        settings.CredentialProvider = provider;
 
         AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
 

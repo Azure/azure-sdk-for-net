@@ -87,7 +87,7 @@ public class ConfigurationAndDISamples
 
         HostApplicationBuilder builder = Host.CreateApplicationBuilder();
         builder.AddClient<MyClient, MyClientSettings>("MyClient")
-            .PostConfigure(settings => settings.CredentialObject = new MyTokenProvider());
+            .PostConfigure(settings => settings.CredentialProvider = new MyTokenProvider());
 
         IServiceProvider provider = builder.Services.BuildServiceProvider();
 

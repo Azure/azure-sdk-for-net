@@ -161,7 +161,7 @@ Override credentials from configuration programmatically using the `PostConfigur
 ```C# Snippet:OverridingCredentialsExample
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.AddClient<MyClient, MyClientSettings>("MyClient")
-    .PostConfigure(settings => settings.CredentialObject = new MyTokenProvider());
+    .PostConfigure(settings => settings.CredentialProvider = new MyTokenProvider());
 
 IServiceProvider provider = builder.Services.BuildServiceProvider();
 
