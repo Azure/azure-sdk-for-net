@@ -152,7 +152,6 @@ public class EvaluationsTest : ProjectsClientTestBase
     public async Task TestEvaluatorsCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
         EvaluatorVersion eval = GetCustomEvaluatorVersion(CustomEvaluatorType.PromptBased);
         //Create
         EvaluatorVersion promptEvaluator = await projectClient.Evaluators.CreateVersionAsync(
@@ -162,21 +161,29 @@ public class EvaluationsTest : ProjectsClientTestBase
         Assert.That(string.IsNullOrEmpty(promptEvaluator.Id), Is.False);
         string id = promptEvaluator.Id;
         // Update
-        // The update returns 400 Error when parsing request; unable to deserialize request body
-        //promptEvaluator.Description = "New updated description";
-        //using var stream = new MemoryStream();
-        //using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions());
-        //((IJsonModel<EvaluatorVersion>)promptEvaluator).Write(writer, ModelReaderWriterOptions.Json);
-        //writer.Flush();
-        //stream.Position = 0;
-        //BinaryContent content = BinaryContent.Create(BinaryData.FromStream(stream));
-        //ClientResult result = await projectClient.Evaluators.UpdateVersionAsync(name: promptEvaluator.Name, version: promptEvaluator.Version, content: content);
-        //promptEvaluator = ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
-        //Assert.That(promptEvaluator.Description, Is.EqualTo(eval.Description));
+        BinaryData evalustorVersionUpdate = BinaryData.FromObjectAsJson(
+            new
+            {
+                categories = new[] { EvaluatorCategory.Quality.ToString() },
+                display_name = "my_custom_evaluator_updated",
+                description = "Custom evaluator description changed"
+            }
+        );
+        using BinaryContent evalustorVersionUpdateContent = BinaryContent.Create(evalustorVersionUpdate);
+        ClientResult response = await projectClient.Evaluators.UpdateVersionAsync(
+            name: promptEvaluator.Name,
+            version: promptEvaluator.Version,
+            content: evalustorVersionUpdateContent
+        );
+        EvaluatorVersion updatedEvaluator = ClientResult.FromValue((EvaluatorVersion)response, response.GetRawResponse());
+        Assert.That(updatedEvaluator.Id, Is.EqualTo(id));
+        Assert.That(updatedEvaluator.Description, Is.EqualTo("Custom evaluator description changed"));
+        Assert.That(updatedEvaluator.DisplayName, Is.EqualTo("my_custom_evaluator_updated"));
         // Get
         promptEvaluator = await projectClient.Evaluators.GetVersionAsync(name: promptEvaluator.Name, version: promptEvaluator.Version);
         Assert.That(promptEvaluator.Id, Is.EqualTo(id));
         // List
+        // List all
         bool found = false;
         await foreach (EvaluatorVersion ver in projectClient.Evaluators.GetVersionsAsync(name: promptEvaluator.Name))
         {
@@ -187,16 +194,11 @@ public class EvaluationsTest : ProjectsClientTestBase
             }
         }
         Assert.That(found, Is.True);
-        found = false;
-        await foreach (EvaluatorVersion ver in projectClient.Evaluators.GetLatestVersionsAsync())
-        {
-            found = ver.Id == id;
-            if (found)
-            {
-                break;
-            }
-        }
+        await ValidateLatestList(projectClient, id, true, $"The {id} was not found in All evaluator list.");
+        await ValidateLatestList(projectClient, id, true, $"The {id} was not found in custom evaluator list.", ListVersionsRequestType.Custom);
+        await ValidateLatestList(projectClient, id, false, $"The {id} was unexpectedly found in built-in evaluator list.", ListVersionsRequestType.BuiltIn);
         Assert.That(found, Is.True);
+        // List custom
         // Delete
         await projectClient.Evaluators.DeleteVersionAsync(name: promptEvaluator.Name, version: promptEvaluator.Version);
         found = false;
@@ -209,6 +211,35 @@ public class EvaluationsTest : ProjectsClientTestBase
             }
         }
         Assert.That(found, Is.False);
+    }
+
+    private async Task ValidateLatestList(AIProjectClient projectClient, string id, bool mustPresent, string errorText, ListVersionsRequestType? type=null)
+    {
+        bool found = false;
+        await foreach (EvaluatorVersion ver in projectClient.Evaluators.GetLatestVersionsAsync(type: type))
+        {
+            found = ver.Id == id;
+            if (found)
+            {
+                break;
+            }
+        }
+        if (mustPresent)
+        {
+            Assert.That(found, Is.True, errorText);
+        }
+        else
+        {
+            Assert.That(found, Is.False, errorText);
+        }
+    }
+
+    [RecordedTest]
+    public async Task TestBuiltInEvaluators()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        IList<EvaluatorVersion> builtInEvaluators = await projectClient.Evaluators.GetLatestVersionsAsync(type: ListVersionsRequestType.BuiltIn).ToListAsync();
+        Assert.That(builtInEvaluators.Count, Is.GreaterThan(0), "No built-in evaluators were found.");
     }
 
     [RecordedTest]
@@ -611,6 +642,7 @@ public class EvaluationsTest : ProjectsClientTestBase
                                 if (evaluation.NameEquals("id"u8))
                                 {
                                     await evalClient.DeleteEvaluationAsync(evaluationId: evaluation.Value.GetString(), options: new());
+                                    break;
                                 }
                             }
                         }
