@@ -131,7 +131,7 @@ namespace Azure.Core
             get => _applicationId;
             set
             {
-                if (value != null && MaxApplicationIdLength > 0 && value.Length > MaxApplicationIdLength)
+                if (value != null && value.Length > MaxApplicationIdLength)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(ApplicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
                 }
