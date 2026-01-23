@@ -14,7 +14,7 @@ using Azure.ResourceManager.FileShares;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> File shares usage result. </summary>
-    public partial class FileShareUsageDataProperties : IJsonModel<FileShareUsageDataProperties>
+    internal partial class FileShareUsageDataProperties : IJsonModel<FileShareUsageDataProperties>
     {
         /// <summary> Initializes a new instance of <see cref="FileShareUsageDataProperties"/> for deserialization. </summary>
         internal FileShareUsageDataProperties()

@@ -115,9 +115,7 @@ namespace Azure.AI.Personalizer
         public static Azure.AI.Personalizer.PersonalizerEvaluationJobStatus Pending { get { throw null; } }
         public static Azure.AI.Personalizer.PersonalizerEvaluationJobStatus Timeout { get { throw null; } }
         public bool Equals(Azure.AI.Personalizer.PersonalizerEvaluationJobStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Personalizer.PersonalizerEvaluationJobStatus left, Azure.AI.Personalizer.PersonalizerEvaluationJobStatus right) { throw null; }
         public static implicit operator Azure.AI.Personalizer.PersonalizerEvaluationJobStatus (string value) { throw null; }
@@ -142,9 +140,7 @@ namespace Azure.AI.Personalizer
         public static Azure.AI.Personalizer.PersonalizerEvaluationType Auto { get { throw null; } }
         public static Azure.AI.Personalizer.PersonalizerEvaluationType Manual { get { throw null; } }
         public bool Equals(Azure.AI.Personalizer.PersonalizerEvaluationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Personalizer.PersonalizerEvaluationType left, Azure.AI.Personalizer.PersonalizerEvaluationType right) { throw null; }
         public static implicit operator Azure.AI.Personalizer.PersonalizerEvaluationType (string value) { throw null; }
@@ -161,9 +157,7 @@ namespace Azure.AI.Personalizer
         public static Azure.AI.Personalizer.PersonalizerLearningMode LoggingOnly { get { throw null; } }
         public static Azure.AI.Personalizer.PersonalizerLearningMode Online { get { throw null; } }
         public bool Equals(Azure.AI.Personalizer.PersonalizerLearningMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Personalizer.PersonalizerLearningMode left, Azure.AI.Personalizer.PersonalizerLearningMode right) { throw null; }
         public static implicit operator Azure.AI.Personalizer.PersonalizerLearningMode (string value) { throw null; }
@@ -245,9 +239,7 @@ namespace Azure.AI.Personalizer
         public static Azure.AI.Personalizer.PersonalizerPolicySource Online { get { throw null; } }
         public static Azure.AI.Personalizer.PersonalizerPolicySource Random { get { throw null; } }
         public bool Equals(Azure.AI.Personalizer.PersonalizerPolicySource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Personalizer.PersonalizerPolicySource left, Azure.AI.Personalizer.PersonalizerPolicySource right) { throw null; }
         public static implicit operator Azure.AI.Personalizer.PersonalizerPolicySource (string value) { throw null; }

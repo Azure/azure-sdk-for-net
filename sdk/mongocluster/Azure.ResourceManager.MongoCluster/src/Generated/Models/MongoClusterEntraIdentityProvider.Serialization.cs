@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class MongoClusterEntraIdentityProvider : IUtf8JsonSerializable, IJsonModel<MongoClusterEntraIdentityProvider>
+    /// <summary> Defines a Microsoft Entra ID Mongo user. </summary>
+    public partial class MongoClusterEntraIdentityProvider : MongoClusterIdentityProvider, IJsonModel<MongoClusterEntraIdentityProvider>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterEntraIdentityProvider>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProvider"/> for deserialization. </summary>
+        internal MongoClusterEntraIdentityProvider()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoClusterEntraIdentityProvider>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,66 +34,71 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterEntraIdentityProvider>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterEntraIdentityProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MongoClusterEntraIdentityProvider)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
         }
 
-        MongoClusterEntraIdentityProvider IJsonModel<MongoClusterEntraIdentityProvider>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MongoClusterEntraIdentityProvider IJsonModel<MongoClusterEntraIdentityProvider>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MongoClusterEntraIdentityProvider)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MongoClusterIdentityProvider JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterEntraIdentityProvider>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterEntraIdentityProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MongoClusterEntraIdentityProvider)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMongoClusterEntraIdentityProvider(document.RootElement, options);
         }
 
-        internal static MongoClusterEntraIdentityProvider DeserializeMongoClusterEntraIdentityProvider(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MongoClusterEntraIdentityProvider DeserializeMongoClusterEntraIdentityProvider(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            IdentityProviderType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MongoClusterEntraIdentityProviderProperties properties = default;
-            IdentityProviderType type = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    properties = MongoClusterEntraIdentityProviderProperties.DeserializeMongoClusterEntraIdentityProviderProperties(property.Value, options);
+                    @type = new IdentityProviderType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    type = new IdentityProviderType(property.Value.GetString());
+                    properties = MongoClusterEntraIdentityProviderProperties.DeserializeMongoClusterEntraIdentityProviderProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MongoClusterEntraIdentityProvider(type, serializedAdditionalRawData, properties);
+            return new MongoClusterEntraIdentityProvider(@type, additionalBinaryDataProperties, properties);
         }
 
-        BinaryData IPersistableModel<MongoClusterEntraIdentityProvider>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterEntraIdentityProvider>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MongoClusterEntraIdentityProvider>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterEntraIdentityProvider>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -97,15 +108,20 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
         }
 
-        MongoClusterEntraIdentityProvider IPersistableModel<MongoClusterEntraIdentityProvider>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterEntraIdentityProvider>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MongoClusterEntraIdentityProvider IPersistableModel<MongoClusterEntraIdentityProvider>.Create(BinaryData data, ModelReaderWriterOptions options) => (MongoClusterEntraIdentityProvider)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MongoClusterIdentityProvider PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterEntraIdentityProvider>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMongoClusterEntraIdentityProvider(document.RootElement, options);
                     }
                 default:
@@ -113,6 +129,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MongoClusterEntraIdentityProvider>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

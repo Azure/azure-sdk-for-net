@@ -16,9 +16,7 @@ namespace Azure.Monitor.Query.Logs
         public static Azure.Monitor.Query.Logs.LogsQueryAudience AzureGovernment { get { throw null; } }
         public static Azure.Monitor.Query.Logs.LogsQueryAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.Monitor.Query.Logs.LogsQueryAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Monitor.Query.Logs.LogsQueryAudience left, Azure.Monitor.Query.Logs.LogsQueryAudience right) { throw null; }
         public static implicit operator Azure.Monitor.Query.Logs.LogsQueryAudience (string value) { throw null; }
@@ -128,9 +126,7 @@ namespace Azure.Monitor.Query.Logs.Models
         public static Azure.Monitor.Query.Logs.Models.LogsColumnType String { get { throw null; } }
         public static Azure.Monitor.Query.Logs.Models.LogsColumnType Timespan { get { throw null; } }
         public bool Equals(Azure.Monitor.Query.Logs.Models.LogsColumnType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Monitor.Query.Logs.Models.LogsColumnType left, Azure.Monitor.Query.Logs.Models.LogsColumnType right) { throw null; }
         public static implicit operator Azure.Monitor.Query.Logs.Models.LogsColumnType (string value) { throw null; }

@@ -20,11 +20,8 @@ namespace Azure.Provisioning.SignalR
         public static Azure.Provisioning.SignalR.SignalRBuiltInRole SignalRRestApiReader { get { throw null; } }
         public static Azure.Provisioning.SignalR.SignalRBuiltInRole SignalRServiceOwner { get { throw null; } }
         public bool Equals(Azure.Provisioning.SignalR.SignalRBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.SignalR.SignalRBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.SignalR.SignalRBuiltInRole left, Azure.Provisioning.SignalR.SignalRBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.SignalR.SignalRBuiltInRole (string value) { throw null; }
@@ -254,7 +251,6 @@ namespace Azure.Provisioning.SignalR
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SignalR.SignalRService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.SignalR.SignalRKeys GetKeys() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {

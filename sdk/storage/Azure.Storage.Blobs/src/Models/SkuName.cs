@@ -37,6 +37,24 @@ namespace Azure.Storage.Blobs.Models
         /// Premium_LRS
         /// </summary>
         [CodeGenMember("PremiumLRS")]
-        PremiumLrs
+        PremiumLrs,
+
+        /// <summary>
+        /// Standard_GZRS
+        /// </summary>
+        [CodeGenMember("StandardGZRS")]
+        StandardGzrs,
+
+        /// <summary>
+        /// Premium_ZRS
+        /// </summary>
+        [CodeGenMember("PremiumZRS")]
+        PremiumZrs,
+
+        /// <summary>
+        /// Standard_RAGZRS
+        /// </summary>
+        [CodeGenMember("StandardRAGZRS")]
+        StandardRagzrs,
     }
 }

@@ -114,9 +114,7 @@ namespace Azure.ResourceManager.Terraform.Models
         public static Azure.ResourceManager.Terraform.Models.TargetTerraformProvider AzApi { get { throw null; } }
         public static Azure.ResourceManager.Terraform.Models.TargetTerraformProvider AzureRM { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider left, Azure.ResourceManager.Terraform.Models.TargetTerraformProvider right) { throw null; }
         public static implicit operator Azure.ResourceManager.Terraform.Models.TargetTerraformProvider (string value) { throw null; }
@@ -135,9 +133,7 @@ namespace Azure.ResourceManager.Terraform.Models
         public static Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter AtScopeAndBelow { get { throw null; } }
         public static Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter AtScopeExact { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter left, Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter right) { throw null; }
         public static implicit operator Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter (string value) { throw null; }
@@ -193,9 +189,7 @@ namespace Azure.ResourceManager.Terraform.Models
         public static Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState left, Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState (string value) { throw null; }

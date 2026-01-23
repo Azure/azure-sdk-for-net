@@ -395,9 +395,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatusLevel Information { get { throw null; } }
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatusLevel Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatusLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatusLevel left, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatusLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatusLevel (string value) { throw null; }
@@ -416,9 +414,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStateType Noncompliant { get { throw null; } }
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStateType Pending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStateType left, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStateType (string value) { throw null; }
@@ -449,9 +445,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationMesageLevel Information { get { throw null; } }
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationMesageLevel Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationMesageLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationMesageLevel left, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationMesageLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationMesageLevel (string value) { throw null; }
@@ -471,9 +465,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningState left, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningState (string value) { throw null; }
@@ -492,9 +484,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningStateType Running { get { throw null; } }
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningStateType Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningStateType left, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningStateType (string value) { throw null; }
@@ -510,9 +500,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationScope Cluster { get { throw null; } }
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationScope Namespace { get { throw null; } }
         public bool Equals(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationScope left, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationScope (string value) { throw null; }
@@ -529,9 +517,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationSourceKind Bucket { get { throw null; } }
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationSourceKind GitRepository { get { throw null; } }
         public bool Equals(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationSourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationSourceKind left, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationSourceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationSourceKind (string value) { throw null; }
@@ -550,9 +536,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxComplianceState Suspended { get { throw null; } }
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxComplianceState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxComplianceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxComplianceState left, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxComplianceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxComplianceState (string value) { throw null; }
@@ -678,9 +662,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public KubernetesOperator(string value) { throw null; }
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesOperator Flux { get { throw null; } }
         public bool Equals(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesOperator left, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesOperator (string value) { throw null; }
@@ -696,9 +678,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesOperatorScope Cluster { get { throw null; } }
         public static Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesOperatorScope Namespace { get { throw null; } }
         public bool Equals(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesOperatorScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesOperatorScope left, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesOperatorScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesOperatorScope (string value) { throw null; }

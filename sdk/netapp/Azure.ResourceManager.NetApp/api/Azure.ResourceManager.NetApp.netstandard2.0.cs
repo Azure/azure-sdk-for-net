@@ -581,7 +581,6 @@ namespace Azure.ResourceManager.NetApp
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.ElasticVolumeResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.ElasticVolumePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.ElasticVolumeResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.ElasticVolumePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NetAppAccountBackupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetApp.NetAppAccountBackupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.NetAppAccountBackupResource>, System.Collections.IEnumerable
     {
         protected NetAppAccountBackupCollection() { }
@@ -597,7 +596,6 @@ namespace Azure.ResourceManager.NetApp
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetApp.NetAppAccountBackupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.NetAppAccountBackupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NetAppAccountBackupResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -646,7 +644,6 @@ namespace Azure.ResourceManager.NetApp
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NetAppAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppAccountData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -668,9 +665,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatusResult> GetChangeKeyVaultInformation(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatusResult>> GetChangeKeyVaultInformationAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppAccountBackupResource> GetNetAppAccountBackup(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppAccountBackupResource>> GetNetAppAccountBackupAsync(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.NetApp.NetAppAccountBackupCollection GetNetAppAccountBackups() { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppBackupPolicyCollection GetNetAppBackupPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppBackupPolicyResource> GetNetAppBackupPolicy(string backupPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -688,9 +683,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Azure.ResourceManager.NetApp.SnapshotPolicyCollection GetSnapshotPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.SnapshotPolicyResource> GetSnapshotPolicy(string snapshotPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.SnapshotPolicyResource>> GetSnapshotPolicyAsync(string snapshotPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppVault> GetVaults(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.Models.NetAppVault> GetVaultsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupResult> GetVolumeGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupResult> GetVolumeGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -712,7 +705,6 @@ namespace Azure.ResourceManager.NetApp
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppAccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppAccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NetAppBackupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppBackupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppBackupData>
     {
         public NetAppBackupData(Azure.Core.AzureLocation location) { }
@@ -1039,7 +1031,6 @@ namespace Azure.ResourceManager.NetApp
         public static Azure.ResourceManager.NetApp.ElasticVolumeResource GetElasticVolumeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.NetApp.NetAppAccountResource> GetNetAppAccount(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppAccountResource>> GetNetAppAccountAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppAccountBackupResource GetNetAppAccountBackupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppAccountResource GetNetAppAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppAccountCollection GetNetAppAccounts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -1059,7 +1050,6 @@ namespace Azure.ResourceManager.NetApp
         public static Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppUsageResult> GetNetAppResourceUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.NetApp.Models.NetAppUsageResult> GetNetAppResourceUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppVolumeBackupResource GetNetAppVolumeBackupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppVolumeGroupResource GetNetAppVolumeGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppVolumeQuotaRuleResource GetNetAppVolumeQuotaRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1130,7 +1120,6 @@ namespace Azure.ResourceManager.NetApp
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppSubvolumeInfoPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppSubvolumeInfoPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NetAppVolumeBackupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource>, System.Collections.IEnumerable
     {
         protected NetAppVolumeBackupCollection() { }
@@ -1148,31 +1137,20 @@ namespace Azure.ResourceManager.NetApp
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NetAppVolumeBackupResource : Azure.ResourceManager.ArmResource
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NetAppVolumeBackupResource() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.NetApp.NetAppBackupData Data { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation RestoreFiles(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupBackupRestoreFilesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestoreFilesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupBackupRestoreFilesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetAppVolumeCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetApp.NetAppVolumeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.NetAppVolumeResource>, System.Collections.IEnumerable
@@ -1226,7 +1204,7 @@ namespace Azure.ResourceManager.NetApp
         public bool? IsKerberosEnabled { get { throw null; } set { } }
         public bool? IsLargeVolume { get { throw null; } set { } }
         public bool? IsLdapEnabled { get { throw null; } set { } }
-        public bool? IsRestoring { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
+        public bool? IsRestoring { get { throw null; } set { } }
         public bool? IsSmbContinuouslyAvailable { get { throw null; } set { } }
         public bool? IsSmbEncryptionEnabled { get { throw null; } set { } }
         public bool? IsSnapshotDirectoryVisible { get { throw null; } set { } }
@@ -1394,9 +1372,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FinalizeRelocationAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus> GetBackupStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus>> GetBackupStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserResult> GetGetGroupIdListForLdapUser(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserResult>> GetGetGroupIdListForLdapUserAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1408,11 +1384,8 @@ namespace Azure.ResourceManager.NetApp
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource> GetNetAppSubvolumeInfo(string subvolumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource>> GetNetAppSubvolumeInfoAsync(string subvolumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppSubvolumeInfoCollection GetNetAppSubvolumeInfos() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource> GetNetAppVolumeBackup(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeBackupResource>> GetNetAppVolumeBackupAsync(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.NetApp.NetAppVolumeBackupCollection GetNetAppVolumeBackups() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeQuotaRuleResource> GetNetAppVolumeQuotaRule(string volumeQuotaRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeQuotaRuleResource>> GetNetAppVolumeQuotaRuleAsync(string volumeQuotaRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1426,10 +1399,8 @@ namespace Azure.ResourceManager.NetApp
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.RansomwareReportResource>> GetRansomwareReportAsync(string ransomwareReportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetApp.RansomwareReportCollection GetRansomwareReports() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeReplication> GetReplications(Azure.ResourceManager.NetApp.Models.ListReplicationsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeReplication> GetReplications(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeReplication> GetReplicationsAsync(Azure.ResourceManager.NetApp.Models.ListReplicationsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeReplication> GetReplicationsAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppVolumeReplicationStatus> GetReplicationStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppVolumeReplicationStatus>> GetReplicationStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1689,7 +1660,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         public virtual Azure.ResourceManager.NetApp.ElasticSnapshotPolicyResource GetElasticSnapshotPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.ElasticSnapshotResource GetElasticSnapshotResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.ElasticVolumeResource GetElasticVolumeResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.NetApp.NetAppAccountBackupResource GetNetAppAccountBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppAccountResource GetNetAppAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppBackupPolicyResource GetNetAppBackupPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1698,7 +1668,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         public virtual Azure.ResourceManager.NetApp.NetAppBucketResource GetNetAppBucketResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppCacheResource GetNetAppCacheResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.NetApp.NetAppVolumeBackupResource GetNetAppVolumeBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppVolumeGroupResource GetNetAppVolumeGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppVolumeQuotaRuleResource GetNetAppVolumeQuotaRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1766,9 +1735,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit Accepted { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit Declined { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit left, Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit (string value) { throw null; }
@@ -1841,9 +1808,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ActualRansomwareProtectionState Learning { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ActualRansomwareProtectionState Paused { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ActualRansomwareProtectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ActualRansomwareProtectionState left, Azure.ResourceManager.NetApp.Models.ActualRansomwareProtectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ActualRansomwareProtectionState (string value) { throw null; }
@@ -1854,14 +1819,11 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         public static Azure.ResourceManager.NetApp.ActiveDirectoryConfigData ActiveDirectoryConfigData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetApp.Models.ActiveDirectoryConfigProperties properties = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.ActiveDirectoryConfigProperties ActiveDirectoryConfigProperties(string userName = null, System.Collections.Generic.IEnumerable<string> dns = null, string smbServerName = null, string organizationalUnit = null, string site = null, System.Collections.Generic.IEnumerable<string> backupOperators = null, System.Collections.Generic.IEnumerable<string> administrators = null, System.Collections.Generic.IEnumerable<string> securityOperators = null, Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus? activeDirectoryStatus = default(Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus?), Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), string domain = null, Azure.ResourceManager.NetApp.Models.SecretPassword secretPassword = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.AvailabilityZoneMapping AvailabilityZoneMapping(string availabilityZone = null, bool? isAvailable = default(bool?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.CacheMountTargetProperties CacheMountTargetProperties(string mountTargetId = null, string ipAddress = null, string smbServerFqdn = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.CapacityPoolData CapacityPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, System.Guid? poolId, long size, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType? encryptionType) { throw null; }
         public static Azure.ResourceManager.NetApp.CapacityPoolData CapacityPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), System.Guid? poolId = default(System.Guid?), long size = (long)0, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel serviceLevel = default(Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel), string provisioningState = null, float? totalThroughputMibps = default(float?), float? utilizedThroughputMibps = default(float?), int? customThroughputMibpsInt = default(int?), Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? qosType = default(Azure.ResourceManager.NetApp.Models.CapacityPoolQosType?), bool? isCoolAccessEnabled = default(bool?), Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType? encryptionType = default(Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType?)) { throw null; }
         public static Azure.ResourceManager.NetApp.CapacityPoolData CapacityPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), System.Guid? poolId = default(System.Guid?), long size = (long)0, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel serviceLevel = default(Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel), string provisioningState = null, float? totalThroughputMibps = default(float?), float? utilizedThroughputMibps = default(float?), float? customThroughputMibps = default(float?), Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? qosType = default(Azure.ResourceManager.NetApp.Models.CapacityPoolQosType?), bool? isCoolAccessEnabled = default(bool?), Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType? encryptionType = default(Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.CapacityPoolPatch CapacityPoolPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, long? size, Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? qosType, bool? isCoolAccessEnabled) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.CapacityPoolPatch CapacityPoolPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), long? size = default(long?), Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? qosType = default(Azure.ResourceManager.NetApp.Models.CapacityPoolQosType?), bool? isCoolAccessEnabled = default(bool?), int? customThroughputMibpsInt = default(int?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.CapacityPoolPatch CapacityPoolPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), long? size = default(long?), Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? qosType = default(Azure.ResourceManager.NetApp.Models.CapacityPoolQosType?), bool? isCoolAccessEnabled = default(bool?), float? customThroughputMibps = default(float?)) { throw null; }
@@ -1887,22 +1849,15 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticVolumeProperties ElasticVolumeProperties(string filePath = null, long size = (long)0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.ElasticExportPolicyRule> exportRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.ElasticProtocolType> protocolTypes = null, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), Azure.ResourceManager.NetApp.Models.ElasticResourceAvailabilityStatus? availabilityStatus = default(Azure.ResourceManager.NetApp.Models.ElasticResourceAvailabilityStatus?), Azure.Core.ResourceIdentifier snapshotResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.ElasticMountTargetProperties> mountTargets = null, Azure.ResourceManager.NetApp.Models.ElasticVolumeDataProtectionProperties dataProtection = null, Azure.ResourceManager.NetApp.Models.SnapshotDirectoryVisibility? snapshotDirectoryVisibility = default(Azure.ResourceManager.NetApp.Models.SnapshotDirectoryVisibility?), Azure.ResourceManager.NetApp.Models.ElasticSmbEncryption? smbEncryption = default(Azure.ResourceManager.NetApp.Models.ElasticSmbEncryption?), Azure.Core.ResourceIdentifier backupResourceId = null, Azure.ResourceManager.NetApp.Models.ElasticVolumeRestorationState? restorationState = default(Azure.ResourceManager.NetApp.Models.ElasticVolumeRestorationState?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserResult GetGroupIdListForLdapUserResult(System.Collections.Generic.IEnumerable<string> groupIdsForLdapUser = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory NetAppAccountActiveDirectory(string activeDirectoryId = null, string username = null, string password = null, string domain = null, string dns = null, Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus? status = default(Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus?), string statusDetails = null, string smbServerName = null, string organizationalUnit = null, string site = null, System.Collections.Generic.IEnumerable<string> backupOperators = null, System.Collections.Generic.IEnumerable<string> administrators = null, System.Net.IPAddress kdcIP = null, string adName = null, string serverRootCACertificate = null, bool? isAesEncryptionEnabled = default(bool?), bool? isLdapSigningEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> securityOperators = null, bool? isLdapOverTlsEnabled = default(bool?), bool? allowLocalNfsUsersWithLdap = default(bool?), bool? encryptDCConnections = default(bool?), Azure.ResourceManager.NetApp.Models.NetAppLdapSearchScopeConfiguration ldapSearchScope = null, string preferredServersForLdapClient = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppAccountData NetAppAccountData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory> activeDirectories, Azure.ResourceManager.NetApp.Models.NetAppAccountEncryption encryption, bool? disableShowmount) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppAccountData NetAppAccountData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory> activeDirectories, Azure.ResourceManager.NetApp.Models.NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, Azure.ResourceManager.NetApp.Models.MultiAdStatus? multiAdStatus) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppAccountData NetAppAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory> activeDirectories = null, Azure.ResourceManager.NetApp.Models.NetAppAccountEncryption encryption = null, bool? disableShowmount = default(bool?), string nfsV4IdDomain = null, Azure.ResourceManager.NetApp.Models.MultiAdStatus? multiAdStatus = default(Azure.ResourceManager.NetApp.Models.MultiAdStatus?), Azure.ResourceManager.NetApp.Models.LdapConfiguration ldapConfiguration = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppAccountPatch NetAppAccountPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory> activeDirectories, Azure.ResourceManager.NetApp.Models.NetAppAccountEncryption encryption, bool? disableShowmount) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppAccountPatch NetAppAccountPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory> activeDirectories, Azure.ResourceManager.NetApp.Models.NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, Azure.ResourceManager.NetApp.Models.MultiAdStatus? multiAdStatus) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppAccountPatch NetAppAccountPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory> activeDirectories = null, Azure.ResourceManager.NetApp.Models.NetAppAccountEncryption encryption = null, bool? disableShowmount = default(bool?), string nfsV4IdDomain = null, Azure.ResourceManager.NetApp.Models.MultiAdStatus? multiAdStatus = default(Azure.ResourceManager.NetApp.Models.MultiAdStatus?), Azure.ResourceManager.NetApp.Models.LdapConfiguration ldapConfiguration = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppBackupData NetAppBackupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.AzureLocation location, string backupId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, long? size = default(long?), string label = null, Azure.ResourceManager.NetApp.Models.NetAppBackupType? backupType = default(Azure.ResourceManager.NetApp.Models.NetAppBackupType?), string failureReason = null, string volumeName = null, bool? useExistingSnapshot = default(bool?)) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppBackupData NetAppBackupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string backupId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? snapshotCreationOn = default(System.DateTimeOffset?), System.DateTimeOffset? completionOn = default(System.DateTimeOffset?), string provisioningState = null, long? size = default(long?), string label = null, Azure.ResourceManager.NetApp.Models.NetAppBackupType? backupType = default(Azure.ResourceManager.NetApp.Models.NetAppBackupType?), string failureReason = null, Azure.Core.ResourceIdentifier volumeResourceId = null, bool? useExistingSnapshot = default(bool?), string snapshotName = null, Azure.Core.ResourceIdentifier backupPolicyArmResourceId = null, bool? isLargeVolume = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppBackupData NetAppBackupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string backupId, System.DateTimeOffset? createdOn, string provisioningState, long? size, string label, Azure.ResourceManager.NetApp.Models.NetAppBackupType? backupType, string failureReason, Azure.Core.ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, Azure.Core.ResourceIdentifier backupPolicyArmResourceId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppBackupData NetAppBackupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string backupId, System.DateTimeOffset? createdOn, string provisioningState = null, long? size = default(long?), string label = null, Azure.ResourceManager.NetApp.Models.NetAppBackupType? backupType = default(Azure.ResourceManager.NetApp.Models.NetAppBackupType?), string failureReason = null, Azure.Core.ResourceIdentifier volumeResourceId = null, bool? useExistingSnapshot = default(bool?), string snapshotName = null, string backupPolicyResourceId = null) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppBackupPolicyData NetAppBackupPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier backupPolicyId = null, string provisioningState = null, int? dailyBackupsToKeep = default(int?), int? weeklyBackupsToKeep = default(int?), int? monthlyBackupsToKeep = default(int?), int? volumesAssigned = default(int?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail> volumeBackups = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppBackupPolicyPatch NetAppBackupPolicyPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier backupPolicyId = null, string provisioningState = null, int? dailyBackupsToKeep = default(int?), int? weeklyBackupsToKeep = default(int?), int? monthlyBackupsToKeep = default(int?), int? volumesAssigned = default(int?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail> volumeBackups = null) { throw null; }
@@ -1916,7 +1871,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppChangeKeyVault NetAppChangeKeyVault(System.Uri keyVaultUri = null, string keyName = null, Azure.Core.ResourceIdentifier keyVaultResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppCheckAvailabilityResult NetAppCheckAvailabilityResult(bool? isAvailable = default(bool?), Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason? reason = default(Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication NetAppDestinationReplication(Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.NetApp.Models.NetAppReplicationType? replicationType = default(Azure.ResourceManager.NetApp.Models.NetAppReplicationType?), string region = null, string zone = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppEncryptionIdentity NetAppEncryptionIdentity(string principalId, string userAssignedIdentity) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppEncryptionIdentity NetAppEncryptionIdentity(string principalId = null, string userAssignedIdentity = null, string federatedClientId = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppFilePathAvailabilityContent NetAppFilePathAvailabilityContent(string name = null, Azure.Core.ResourceIdentifier subnetId = null, string availabilityZone = null) { throw null; }
@@ -1924,16 +1878,12 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppKeyVaultProperties NetAppKeyVaultProperties(string keyVaultId, System.Uri keyVaultUri, string keyName, string keyVaultResourceId, Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus? status = default(Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatusResult NetAppKeyVaultStatusResult(System.Uri keyVaultUri = null, string keyName = null, Azure.Core.ResourceIdentifier keyVaultResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppRegionInfo NetAppRegionInfo(Azure.ResourceManager.NetApp.Models.RegionStorageToNetworkProximity? storageToNetworkProximity = default(Azure.ResourceManager.NetApp.Models.RegionStorageToNetworkProximity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.AvailabilityZoneMapping> availabilityZoneMappings = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppReplicationObject NetAppReplicationObject(string replicationId, Azure.ResourceManager.NetApp.Models.NetAppEndpointType? endpointType, Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule? replicationSchedule, Azure.Core.ResourceIdentifier remoteVolumeResourceId, Azure.ResourceManager.NetApp.Models.RemotePath remotePath, string remoteVolumeRegion) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppReplicationObject NetAppReplicationObject(string replicationId, Azure.ResourceManager.NetApp.Models.NetAppEndpointType? endpointType, Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule? replicationSchedule, Azure.Core.ResourceIdentifier remoteVolumeResourceId, Azure.ResourceManager.NetApp.Models.RemotePath remotePath, string remoteVolumeRegion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication> destinationReplications) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppReplicationObject NetAppReplicationObject(string replicationId = null, Azure.ResourceManager.NetApp.Models.NetAppEndpointType? endpointType = default(Azure.ResourceManager.NetApp.Models.NetAppEndpointType?), Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule? replicationSchedule = default(Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule?), Azure.Core.ResourceIdentifier remoteVolumeResourceId = null, Azure.ResourceManager.NetApp.Models.RemotePath remotePath = null, string remoteVolumeRegion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication> destinationReplications = null, Azure.ResourceManager.NetApp.Models.ExternalReplicationSetupStatus? externalReplicationSetupStatus = default(Azure.ResourceManager.NetApp.Models.ExternalReplicationSetupStatus?), string externalReplicationSetupInfo = null, Azure.ResourceManager.NetApp.Models.NetAppMirrorState? mirrorState = default(Azure.ResourceManager.NetApp.Models.NetAppMirrorState?), Azure.ResourceManager.NetApp.Models.VolumeReplicationRelationshipStatus? relationshipStatus = default(Azure.ResourceManager.NetApp.Models.VolumeReplicationRelationshipStatus?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppReplicationObject NetAppReplicationObject(string replicationId, Azure.ResourceManager.NetApp.Models.NetAppEndpointType? endpointType, Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule? replicationSchedule, Azure.Core.ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = default(bool?), Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus? relationshipStatus = default(Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus?), Azure.ResourceManager.NetApp.Models.NetAppMirrorState? mirrorState = default(Azure.ResourceManager.NetApp.Models.NetAppMirrorState?), string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = default(long?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = default(bool?), Azure.ResourceManager.NetApp.Models.VolumeRestoreRelationshipStatus? volumeRestoreRelationshipStatus = default(Azure.ResourceManager.NetApp.Models.VolumeRestoreRelationshipStatus?), Azure.ResourceManager.NetApp.Models.NetAppMirrorState? mirrorState = default(Azure.ResourceManager.NetApp.Models.NetAppMirrorState?), string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = default(long?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, int? current, int? @default) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? current = default(int?), int? @default = default(int?), int? usage = default(int?)) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppSubvolumeInfoData NetAppSubvolumeInfoData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string path = null, long? size = default(long?), string parentPath = null, string provisioningState = null) { throw null; }
@@ -1942,53 +1892,36 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppUsageResult NetAppUsageResult(string id = null, Azure.ResourceManager.NetApp.Models.NetAppUsageName name = null, int? currentValue = default(int?), int? limit = default(int?), string unit = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupBackupRestoreFilesContent NetAppVolumeBackupBackupRestoreFilesContent(System.Collections.Generic.IEnumerable<string> fileList = null, string restoreFilePath = null, Azure.Core.ResourceIdentifier destinationVolumeId = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail NetAppVolumeBackupDetail(string volumeName = null, Azure.Core.ResourceIdentifier volumeResourceId = null, int? backupsCount = default(int?), bool? isPolicyEnabled = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail NetAppVolumeBackupDetail(string volumeName, int? backupsCount, bool? isPolicyEnabled) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy, Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus? relationshipStatus, Azure.ResourceManager.NetApp.Models.NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = default(bool?), Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus? relationshipStatus = default(Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus?), Azure.ResourceManager.NetApp.Models.NetAppMirrorState? mirrorState = default(Azure.ResourceManager.NetApp.Models.NetAppMirrorState?), string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = default(long?), string lastTransferType = null, long? totalTransferBytes = default(long?), long? transferProgressBytes = default(long?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = default(bool?), Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus? volumeBackupRelationshipStatus = default(Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus?), Azure.ResourceManager.NetApp.Models.NetAppMirrorState? mirrorState = default(Azure.ResourceManager.NetApp.Models.NetAppMirrorState?), string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = default(long?), string lastTransferType = null, long? totalTransferBytes = default(long?), long? transferProgressBytes = default(long?)) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppVolumeData NetAppVolumeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null, System.Guid? fileSystemId = default(System.Guid?), string creationToken = null, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel = default(Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel?), long usageThreshold = (long)0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules = null, System.Collections.Generic.IEnumerable<string> protocolTypes = null, string provisioningState = null, string snapshotId = null, bool? deleteBaseSnapshot = default(bool?), string backupId = null, string baremetalTenantId = null, Azure.Core.ResourceIdentifier subnetId = null, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures = default(Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature?), Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? effectiveNetworkFeatures = default(Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature?), System.Guid? networkSiblingSetId = default(System.Guid?), Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default(Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets = null, string volumeType = null, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection = null, Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default(Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit?), bool? isRestoring = default(bool?), bool? isSnapshotDirectoryVisible = default(bool?), bool? isKerberosEnabled = default(bool?), Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle = default(Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle?), bool? isSmbEncryptionEnabled = default(bool?), Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default(Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration?), Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable = default(Azure.ResourceManager.NetApp.Models.SmbNonBrowsable?), bool? isSmbContinuouslyAvailable = default(bool?), float? throughputMibps = default(float?), float? actualThroughputMibps = default(float?), Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource = default(Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource?), Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId = null, bool? isLdapEnabled = default(bool?), Azure.ResourceManager.NetApp.Models.LdapServerType? ldapServerType = default(Azure.ResourceManager.NetApp.Models.LdapServerType?), bool? isCoolAccessEnabled = default(bool?), int? coolnessPeriod = default(int?), Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default(Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy?), Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy? coolAccessTieringPolicy = default(Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy?), string unixPermissions = null, int? cloneProgress = default(int?), Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs = default(Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog?), Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore = default(Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId = null, bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), long? maximumNumberOfFiles = default(long?), string volumeGroupName = null, Azure.Core.ResourceIdentifier capacityPoolResourceId = null, Azure.Core.ResourceIdentifier proximityPlacementGroupId = null, string t2Network = null, string volumeSpecName = null, bool? isEncrypted = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules = null, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes = default(Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume?), string provisionedAvailabilityZone = null, bool? isLargeVolume = default(bool?), Azure.ResourceManager.NetApp.Models.LargeVolumeType? largeVolumeType = default(Azure.ResourceManager.NetApp.Models.LargeVolumeType?), Azure.Core.ResourceIdentifier originatingResourceId = null, long? inheritedSizeInBytes = default(long?), Azure.ResourceManager.NetApp.Models.NetAppVolumeLanguage? language = default(Azure.ResourceManager.NetApp.Models.NetAppVolumeLanguage?), Azure.ResourceManager.NetApp.Models.BreakthroughMode? breakthroughMode = default(Azure.ResourceManager.NetApp.Models.BreakthroughMode?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppVolumeData NetAppVolumeData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> zones, System.Guid? fileSystemId, string creationToken, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, System.Collections.Generic.IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? effectiveNetworkFeatures, System.Guid? networkSiblingSetId, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets, string volumeType, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection, Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource, Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs, Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, Azure.Core.ResourceIdentifier capacityPoolResourceId, Azure.Core.ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, Azure.Core.ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppVolumeData NetAppVolumeData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> zones, System.Guid? fileSystemId, string creationToken, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, System.Collections.Generic.IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? effectiveNetworkFeatures, System.Guid? networkSiblingSetId, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets, string volumeType, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource, Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs, Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, Azure.Core.ResourceIdentifier capacityPoolResourceId, Azure.Core.ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, Azure.Core.ResourceIdentifier originatingResourceId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppVolumeData NetAppVolumeData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> zones, System.Guid? fileSystemId, string creationToken, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, System.Collections.Generic.IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? effectiveNetworkFeatures, System.Guid? networkSiblingSetId, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets, string volumeType, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource, Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, string unixPermissions, int? cloneProgress, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs, Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, Azure.Core.ResourceIdentifier capacityPoolResourceId, Azure.Core.ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, Azure.Core.ResourceIdentifier originatingResourceId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppVolumeData NetAppVolumeData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> zones, System.Guid? fileSystemId, string creationToken, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, System.Collections.Generic.IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures, System.Guid? networkSiblingSetId, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets, string volumeType, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource, Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, string unixPermissions, int? cloneProgress, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs, Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, Azure.Core.ResourceIdentifier capacityPoolResourceId, Azure.Core.ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, Azure.Core.ResourceIdentifier originatingResourceId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.NetAppVolumeData NetAppVolumeData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> zones, System.Guid? fileSystemId, string creationToken, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, System.Collections.Generic.IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures, System.Guid? networkSiblingSetId, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets, string volumeType, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource, Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs, Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, Azure.Core.ResourceIdentifier capacityPoolResourceId, Azure.Core.ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, Azure.Core.ResourceIdentifier originatingResourceId) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppVolumeGroupData NetAppVolumeGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string provisioningState = null, Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupMetadata groupMetaData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupVolume> volumes = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupMetadata NetAppVolumeGroupMetadata(string groupDescription = null, Azure.ResourceManager.NetApp.Models.NetAppApplicationType? applicationType = default(Azure.ResourceManager.NetApp.Models.NetAppApplicationType?), string applicationIdentifier = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> globalPlacementRules = null, long? volumesCount = default(long?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupMetadata NetAppVolumeGroupMetadata(string groupDescription, Azure.ResourceManager.NetApp.Models.NetAppApplicationType? applicationType, string applicationIdentifier, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> globalPlacementRules, string deploymentSpecId, long? volumesCount) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupResult NetAppVolumeGroupResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string provisioningState = null, Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupMetadata groupMetaData = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupVolume NetAppVolumeGroupVolume(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> zones = null, System.Guid? fileSystemId = default(System.Guid?), string creationToken = null, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel = default(Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel?), long usageThreshold = (long)0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules = null, System.Collections.Generic.IEnumerable<string> protocolTypes = null, string provisioningState = null, string snapshotId = null, bool? deleteBaseSnapshot = default(bool?), string backupId = null, string baremetalTenantId = null, Azure.Core.ResourceIdentifier subnetId = null, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures = default(Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature?), Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? effectiveNetworkFeatures = default(Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature?), System.Guid? networkSiblingSetId = default(System.Guid?), Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default(Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets = null, string volumeType = null, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection = null, Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default(Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit?), bool? isRestoring = default(bool?), bool? isSnapshotDirectoryVisible = default(bool?), bool? isKerberosEnabled = default(bool?), Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle = default(Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle?), bool? isSmbEncryptionEnabled = default(bool?), Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default(Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration?), Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable = default(Azure.ResourceManager.NetApp.Models.SmbNonBrowsable?), bool? isSmbContinuouslyAvailable = default(bool?), float? throughputMibps = default(float?), float? actualThroughputMibps = default(float?), Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource = default(Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource?), Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId = null, bool? isLdapEnabled = default(bool?), Azure.ResourceManager.NetApp.Models.LdapServerType? ldapServerType = default(Azure.ResourceManager.NetApp.Models.LdapServerType?), bool? isCoolAccessEnabled = default(bool?), int? coolnessPeriod = default(int?), Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default(Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy?), Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy? coolAccessTieringPolicy = default(Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy?), string unixPermissions = null, int? cloneProgress = default(int?), Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs = default(Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog?), Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore = default(Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId = null, bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), long? maximumNumberOfFiles = default(long?), string volumeGroupName = null, Azure.Core.ResourceIdentifier capacityPoolResourceId = null, Azure.Core.ResourceIdentifier proximityPlacementGroupId = null, string t2Network = null, string volumeSpecName = null, bool? isEncrypted = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules = null, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes = default(Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume?), string provisionedAvailabilityZone = null, bool? isLargeVolume = default(bool?), Azure.ResourceManager.NetApp.Models.LargeVolumeType? largeVolumeType = default(Azure.ResourceManager.NetApp.Models.LargeVolumeType?), Azure.Core.ResourceIdentifier originatingResourceId = null, long? inheritedSizeInBytes = default(long?), Azure.ResourceManager.NetApp.Models.NetAppVolumeLanguage? language = default(Azure.ResourceManager.NetApp.Models.NetAppVolumeLanguage?), Azure.ResourceManager.NetApp.Models.BreakthroughMode? breakthroughMode = default(Azure.ResourceManager.NetApp.Models.BreakthroughMode?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupVolume NetAppVolumeGroupVolume(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, System.Collections.Generic.IDictionary<string, string> tags, System.Collections.Generic.IEnumerable<string> zones, System.Guid? fileSystemId, string creationToken, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, System.Collections.Generic.IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? effectiveNetworkFeatures, System.Guid? networkSiblingSetId, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets, string volumeType, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection, Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource, Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs, Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, Azure.Core.ResourceIdentifier capacityPoolResourceId, Azure.Core.ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, Azure.Core.ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupVolume NetAppVolumeGroupVolume(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, System.Collections.Generic.IDictionary<string, string> tags, System.Collections.Generic.IEnumerable<string> zones, System.Guid? fileSystemId, string creationToken, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, System.Collections.Generic.IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? effectiveNetworkFeatures, System.Guid? networkSiblingSetId, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets, string volumeType, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource, Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs, Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, Azure.Core.ResourceIdentifier capacityPoolResourceId, Azure.Core.ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, Azure.Core.ResourceIdentifier originatingResourceId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupVolume NetAppVolumeGroupVolume(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, System.Collections.Generic.IDictionary<string, string> tags, System.Collections.Generic.IEnumerable<string> zones, System.Guid? fileSystemId, string creationToken, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, System.Collections.Generic.IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? effectiveNetworkFeatures, System.Guid? networkSiblingSetId, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets, string volumeType, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource, Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, string unixPermissions, int? cloneProgress, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs, Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, Azure.Core.ResourceIdentifier capacityPoolResourceId, Azure.Core.ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, Azure.Core.ResourceIdentifier originatingResourceId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupVolume NetAppVolumeGroupVolume(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, System.Collections.Generic.IDictionary<string, string> tags, System.Collections.Generic.IEnumerable<string> zones, System.Guid? fileSystemId, string creationToken, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, System.Collections.Generic.IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures, System.Guid? networkSiblingSetId, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets, string volumeType, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource, Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, string unixPermissions, int? cloneProgress, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs, Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, Azure.Core.ResourceIdentifier capacityPoolResourceId, Azure.Core.ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, Azure.Core.ResourceIdentifier originatingResourceId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupVolume NetAppVolumeGroupVolume(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, System.Collections.Generic.IDictionary<string, string> tags, System.Guid? fileSystemId, string creationToken, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, System.Collections.Generic.IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? networkFeatures, System.Guid? networkSiblingSetId, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> mountTargets, string volumeType, Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? encryptionKeySource, Azure.Core.ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? fileAccessLogs, Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? avsDataStore, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, Azure.Core.ResourceIdentifier capacityPoolResourceId, Azure.Core.ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> placementRules, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, Azure.Core.ResourceIdentifier originatingResourceId) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget NetAppVolumeMountTarget(System.Guid? mountTargetId = default(System.Guid?), System.Guid fileSystemId = default(System.Guid), System.Net.IPAddress ipAddress = null, string smbServerFqdn = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumePatch NetAppVolumePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel = default(Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel?), long? usageThreshold = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules = null, System.Collections.Generic.IEnumerable<string> protocolTypes = null, float? throughputMibps = default(float?), Azure.ResourceManager.NetApp.Models.NetAppVolumePatchDataProtection dataProtection = null, bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), string unixPermissions = null, bool? isCoolAccessEnabled = default(bool?), int? coolnessPeriod = default(int?), Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default(Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy?), Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy? coolAccessTieringPolicy = default(Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy?), bool? isSnapshotDirectoryVisible = default(bool?), Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default(Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration?), Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable = default(Azure.ResourceManager.NetApp.Models.SmbNonBrowsable?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumePatch NetAppVolumePatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long? usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, System.Collections.Generic.IEnumerable<string> protocolTypes, float? throughputMibps, Azure.ResourceManager.NetApp.Models.NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, bool? isSnapshotDirectoryVisible, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumePatch NetAppVolumePatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? serviceLevel, long? usageThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> exportRules, float? throughputMibps, Azure.Core.ResourceIdentifier snapshotPolicyId = null, bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), string unixPermissions = null, bool? isCoolAccessEnabled = default(bool?), int? coolnessPeriod = default(int?), Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default(Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy?), bool? isSnapshotDirectoryVisible = default(bool?), Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default(Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration?), Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? smbNonBrowsable = default(Azure.ResourceManager.NetApp.Models.SmbNonBrowsable?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaReport NetAppVolumeQuotaReport(Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType? quotaType = default(Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType?), string quotaTarget = null, long? quotaLimitUsedInKiBs = default(long?), long? quotaLimitTotalInKiBs = default(long?), float? percentageUsed = default(float?), bool? isDerivedQuota = default(bool?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaReportListResult NetAppVolumeQuotaReportListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaReport> value = null) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), long? quotaSizeInKiBs = default(long?), Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType? quotaType = default(Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType?), string quotaTarget = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), long? quotaSizeInKiBs = default(long?), Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType? quotaType = default(Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType?), string quotaTarget = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeRelocationProperties NetAppVolumeRelocationProperties(bool? isRelocationRequested = default(bool?), bool? isReadyToBeFinalized = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeReplication NetAppVolumeReplication(Azure.ResourceManager.NetApp.Models.NetAppEndpointType? endpointType, Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule? replicationSchedule, Azure.Core.ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeReplication NetAppVolumeReplication(string replicationId, Azure.ResourceManager.NetApp.Models.NetAppEndpointType? endpointType, Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule? replicationSchedule, Azure.Core.ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeReplication NetAppVolumeReplication(string replicationId = null, Azure.ResourceManager.NetApp.Models.NetAppEndpointType? endpointType = default(Azure.ResourceManager.NetApp.Models.NetAppEndpointType?), Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule? replicationSchedule = default(Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule?), Azure.Core.ResourceIdentifier remoteVolumeResourceId = null, string remoteVolumeRegion = null, Azure.ResourceManager.NetApp.Models.ReplicationMirrorState? mirrorState = default(Azure.ResourceManager.NetApp.Models.ReplicationMirrorState?), System.DateTimeOffset? replicationCreationOn = default(System.DateTimeOffset?), System.DateTimeOffset? replicationDeletionOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy, Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus? relationshipStatus, Azure.ResourceManager.NetApp.Models.NetAppMirrorState? mirrorState = default(Azure.ResourceManager.NetApp.Models.NetAppMirrorState?), string totalProgress = null, string errorMessage = null) { throw null; }
@@ -2052,9 +1985,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.BreakthroughMode Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.BreakthroughMode Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.BreakthroughMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.BreakthroughMode left, Azure.ResourceManager.NetApp.Models.BreakthroughMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.BreakthroughMode (string value) { throw null; }
@@ -2073,9 +2004,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.CacheLifeCycleState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.CacheLifeCycleState VserverPeeringOfferSent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.CacheLifeCycleState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.CacheLifeCycleState left, Azure.ResourceManager.NetApp.Models.CacheLifeCycleState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.CacheLifeCycleState (string value) { throw null; }
@@ -2108,9 +2037,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.CacheProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.CacheProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.CacheProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.CacheProvisioningState left, Azure.ResourceManager.NetApp.Models.CacheProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.CacheProvisioningState (string value) { throw null; }
@@ -2126,9 +2053,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType Double { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType Single { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType left, Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType (string value) { throw null; }
@@ -2159,9 +2084,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.CapacityPoolQosType Auto { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.CapacityPoolQosType Manual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.CapacityPoolQosType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.CapacityPoolQosType left, Azure.ResourceManager.NetApp.Models.CapacityPoolQosType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.CapacityPoolQosType (string value) { throw null; }
@@ -2188,9 +2111,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityReason left, Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityReason (string value) { throw null; }
@@ -2219,9 +2140,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityStatus False { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityStatus True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityStatus left, Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.CheckElasticResourceAvailabilityStatus (string value) { throw null; }
@@ -2248,9 +2167,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.CifsChangeNotifyState Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.CifsChangeNotifyState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.CifsChangeNotifyState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.CifsChangeNotifyState left, Azure.ResourceManager.NetApp.Models.CifsChangeNotifyState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.CifsChangeNotifyState (string value) { throw null; }
@@ -2278,9 +2195,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy Never { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy OnRead { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy left, Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy (string value) { throw null; }
@@ -2296,9 +2211,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy Auto { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy SnapshotOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy left, Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy (string value) { throw null; }
@@ -2319,9 +2232,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.DayOfWeek Tuesday { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.DayOfWeek Wednesday { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.DayOfWeek other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.DayOfWeek left, Azure.ResourceManager.NetApp.Models.DayOfWeek right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.DayOfWeek (string value) { throw null; }
@@ -2337,9 +2248,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.DesiredRansomwareProtectionState Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.DesiredRansomwareProtectionState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.DesiredRansomwareProtectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.DesiredRansomwareProtectionState left, Azure.ResourceManager.NetApp.Models.DesiredRansomwareProtectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.DesiredRansomwareProtectionState (string value) { throw null; }
@@ -2419,9 +2328,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticBackupPolicyState Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticBackupPolicyState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticBackupPolicyState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticBackupPolicyState left, Azure.ResourceManager.NetApp.Models.ElasticBackupPolicyState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticBackupPolicyState (string value) { throw null; }
@@ -2474,9 +2381,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticBackupType Manual { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticBackupType Scheduled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticBackupType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticBackupType left, Azure.ResourceManager.NetApp.Models.ElasticBackupType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticBackupType (string value) { throw null; }
@@ -2629,9 +2534,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticKeyVaultStatus InUse { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticKeyVaultStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticKeyVaultStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticKeyVaultStatus left, Azure.ResourceManager.NetApp.Models.ElasticKeyVaultStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticKeyVaultStatus (string value) { throw null; }
@@ -2659,9 +2562,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticNfsv3Access Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticNfsv3Access Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticNfsv3Access other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticNfsv3Access left, Azure.ResourceManager.NetApp.Models.ElasticNfsv3Access right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticNfsv3Access (string value) { throw null; }
@@ -2677,9 +2578,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticNfsv4Access Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticNfsv4Access Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticNfsv4Access other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticNfsv4Access left, Azure.ResourceManager.NetApp.Models.ElasticNfsv4Access right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticNfsv4Access (string value) { throw null; }
@@ -2695,9 +2594,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticPoolEncryptionKeySource KeyVault { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticPoolEncryptionKeySource NetApp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticPoolEncryptionKeySource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticPoolEncryptionKeySource left, Azure.ResourceManager.NetApp.Models.ElasticPoolEncryptionKeySource right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticPoolEncryptionKeySource (string value) { throw null; }
@@ -2714,9 +2611,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticProtocolType NFSv4 { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticProtocolType SMB { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticProtocolType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticProtocolType left, Azure.ResourceManager.NetApp.Models.ElasticProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticProtocolType (string value) { throw null; }
@@ -2732,9 +2627,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticResourceAvailabilityStatus Offline { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticResourceAvailabilityStatus Online { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticResourceAvailabilityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticResourceAvailabilityStatus left, Azure.ResourceManager.NetApp.Models.ElasticResourceAvailabilityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticResourceAvailabilityStatus (string value) { throw null; }
@@ -2750,9 +2643,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticRootAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticRootAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticRootAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticRootAccess left, Azure.ResourceManager.NetApp.Models.ElasticRootAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticRootAccess (string value) { throw null; }
@@ -2767,9 +2658,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public ElasticServiceLevel(string value) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.ElasticServiceLevel ZoneRedundant { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticServiceLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticServiceLevel left, Azure.ResourceManager.NetApp.Models.ElasticServiceLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticServiceLevel (string value) { throw null; }
@@ -2785,9 +2674,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticSmbEncryption Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticSmbEncryption Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticSmbEncryption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticSmbEncryption left, Azure.ResourceManager.NetApp.Models.ElasticSmbEncryption right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticSmbEncryption (string value) { throw null; }
@@ -2900,9 +2787,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticUnixAccessRule ReadOnly { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticUnixAccessRule ReadWrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticUnixAccessRule other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticUnixAccessRule left, Azure.ResourceManager.NetApp.Models.ElasticUnixAccessRule right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticUnixAccessRule (string value) { throw null; }
@@ -2967,9 +2852,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticVolumePolicyEnforcement Enforced { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticVolumePolicyEnforcement NotEnforced { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticVolumePolicyEnforcement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticVolumePolicyEnforcement left, Azure.ResourceManager.NetApp.Models.ElasticVolumePolicyEnforcement right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticVolumePolicyEnforcement (string value) { throw null; }
@@ -3009,9 +2892,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ElasticVolumeRestorationState Restored { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticVolumeRestorationState Restoring { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticVolumeRestorationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ElasticVolumeRestorationState left, Azure.ResourceManager.NetApp.Models.ElasticVolumeRestorationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ElasticVolumeRestorationState (string value) { throw null; }
@@ -3053,9 +2934,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume left, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume (string value) { throw null; }
@@ -3071,9 +2950,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.EnableWriteBackState Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.EnableWriteBackState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.EnableWriteBackState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.EnableWriteBackState left, Azure.ResourceManager.NetApp.Models.EnableWriteBackState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.EnableWriteBackState (string value) { throw null; }
@@ -3089,9 +2966,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.EncryptionState Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.EncryptionState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.EncryptionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.EncryptionState left, Azure.ResourceManager.NetApp.Models.EncryptionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.EncryptionState (string value) { throw null; }
@@ -3107,9 +2982,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter Deleted { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter left, Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter (string value) { throw null; }
@@ -3128,9 +3001,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ExternalReplicationSetupStatus ReplicationCreateRequired { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ExternalReplicationSetupStatus VServerPeerRequired { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ExternalReplicationSetupStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ExternalReplicationSetupStatus left, Azure.ResourceManager.NetApp.Models.ExternalReplicationSetupStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ExternalReplicationSetupStatus (string value) { throw null; }
@@ -3168,9 +3039,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.GlobalFileLockingState Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.GlobalFileLockingState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.GlobalFileLockingState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.GlobalFileLockingState left, Azure.ResourceManager.NetApp.Models.GlobalFileLockingState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.GlobalFileLockingState (string value) { throw null; }
@@ -3186,9 +3055,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.KerberosState Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.KerberosState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.KerberosState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.KerberosState left, Azure.ResourceManager.NetApp.Models.KerberosState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.KerberosState (string value) { throw null; }
@@ -3204,9 +3071,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.LargeVolumeType ExtraLargeVolume7Dot2PiB { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.LargeVolumeType LargeVolume { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.LargeVolumeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.LargeVolumeType left, Azure.ResourceManager.NetApp.Models.LargeVolumeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.LargeVolumeType (string value) { throw null; }
@@ -3237,9 +3102,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.LdapServerType ActiveDirectory { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.LdapServerType OpenLdap { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.LdapServerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.LdapServerType left, Azure.ResourceManager.NetApp.Models.LdapServerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.LdapServerType (string value) { throw null; }
@@ -3255,9 +3118,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.LdapState Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.LdapState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.LdapState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.LdapState left, Azure.ResourceManager.NetApp.Models.LdapState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.LdapState (string value) { throw null; }
@@ -3286,9 +3147,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ManagedServiceIdentityType SystemAssignedUserAssigned { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ManagedServiceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ManagedServiceIdentityType left, Azure.ResourceManager.NetApp.Models.ManagedServiceIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ManagedServiceIdentityType (string value) { throw null; }
@@ -3304,9 +3163,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.MultiAdStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.MultiAdStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.MultiAdStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.MultiAdStatus left, Azure.ResourceManager.NetApp.Models.MultiAdStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.MultiAdStatus (string value) { throw null; }
@@ -3358,9 +3215,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus InUse { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus left, Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus (string value) { throw null; }
@@ -3407,9 +3262,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppApplicationType Oracle { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppApplicationType SapHana { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppApplicationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppApplicationType left, Azure.ResourceManager.NetApp.Models.NetAppApplicationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppApplicationType (string value) { throw null; }
@@ -3425,9 +3278,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore left, Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore (string value) { throw null; }
@@ -3452,7 +3303,6 @@ namespace Azure.ResourceManager.NetApp.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBackupPolicyPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBackupPolicyPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetAppBackupType : System.IEquatable<Azure.ResourceManager.NetApp.Models.NetAppBackupType>
     {
@@ -3462,9 +3312,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppBackupType Manual { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppBackupType Scheduled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppBackupType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppBackupType left, Azure.ResourceManager.NetApp.Models.NetAppBackupType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppBackupType (string value) { throw null; }
@@ -3514,9 +3362,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus CredentialsExpired { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus NoCredentialsSet { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus left, Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus (string value) { throw null; }
@@ -3584,9 +3430,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission ReadOnly { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission ReadWrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission left, Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission (string value) { throw null; }
@@ -3602,9 +3446,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppBucketPermission ReadOnly { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppBucketPermission ReadWrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppBucketPermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppBucketPermission left, Azure.ResourceManager.NetApp.Models.NetAppBucketPermission right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppBucketPermission (string value) { throw null; }
@@ -3738,9 +3580,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppChownMode Restricted { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppChownMode Unrestricted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppChownMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppChownMode left, Azure.ResourceManager.NetApp.Models.NetAppChownMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppChownMode (string value) { throw null; }
@@ -3783,9 +3623,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource MicrosoftKeyVault { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource MicrosoftNetApp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource left, Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource (string value) { throw null; }
@@ -3813,9 +3651,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppEndpointType Destination { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppEndpointType Source { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppEndpointType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppEndpointType left, Azure.ResourceManager.NetApp.Models.NetAppEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppEndpointType (string value) { throw null; }
@@ -3831,9 +3667,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog left, Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog (string value) { throw null; }
@@ -3865,9 +3699,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel StandardZrs { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel Ultra { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel left, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel (string value) { throw null; }
@@ -3883,9 +3715,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppKeySource MicrosoftKeyVault { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppKeySource MicrosoftNetApp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppKeySource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppKeySource left, Azure.ResourceManager.NetApp.Models.NetAppKeySource right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppKeySource (string value) { throw null; }
@@ -3907,12 +3737,10 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppKeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppKeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppKeyVaultProperties>
     {
         public NetAppKeyVaultProperties(System.Uri keyVaultUri, string keyName) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NetAppKeyVaultProperties(System.Uri keyVaultUri, string keyName, string keyVaultResourceId) { }
         public string KeyName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier KeyVaultArmResourceId { get { throw null; } set { } }
         public string KeyVaultId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string KeyVaultResourceId { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus? Status { get { throw null; } }
@@ -3935,9 +3763,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus InUse { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus left, Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus (string value) { throw null; }
@@ -3981,9 +3807,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppMirrorState Mirrored { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppMirrorState Uninitialized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppMirrorState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppMirrorState left, Azure.ResourceManager.NetApp.Models.NetAppMirrorState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppMirrorState (string value) { throw null; }
@@ -4016,9 +3840,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppNameAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesBackups { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppNameAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshots { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppNameAvailabilityResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppNameAvailabilityResourceType left, Azure.ResourceManager.NetApp.Models.NetAppNameAvailabilityResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppNameAvailabilityResourceType (string value) { throw null; }
@@ -4034,9 +3856,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason left, Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason (string value) { throw null; }
@@ -4054,9 +3874,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature Standard { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature StandardBasic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature left, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature (string value) { throw null; }
@@ -4102,9 +3920,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesBackups { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshots { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityResourceType left, Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityResourceType (string value) { throw null; }
@@ -4134,9 +3950,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus Transferring { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus left, Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus (string value) { throw null; }
@@ -4146,10 +3960,9 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppReplicationObject : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppReplicationObject>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppReplicationObject>
     {
         public NetAppReplicationObject() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NetAppReplicationObject(Azure.Core.ResourceIdentifier remoteVolumeResourceId) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication> DestinationReplications { get { throw null; } }
-        public Azure.ResourceManager.NetApp.Models.NetAppEndpointType? EndpointType { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppEndpointType? EndpointType { get { throw null; } set { } }
         public string ExternalReplicationSetupInfo { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.ExternalReplicationSetupStatus? ExternalReplicationSetupStatus { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppMirrorState? MirrorState { get { throw null; } }
@@ -4157,7 +3970,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public Azure.ResourceManager.NetApp.Models.RemotePath RemotePath { get { throw null; } set { } }
         public string RemoteVolumeRegion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RemoteVolumeResourceId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ReplicationId { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule? ReplicationSchedule { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4177,9 +3989,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule Hourly { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule TenMinutely { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule left, Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule (string value) { throw null; }
@@ -4195,9 +4005,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppReplicationType CrossRegionReplication { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppReplicationType CrossZoneReplication { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppReplicationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppReplicationType left, Azure.ResourceManager.NetApp.Models.NetAppReplicationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppReplicationType (string value) { throw null; }
@@ -4293,7 +4101,6 @@ namespace Azure.ResourceManager.NetApp.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppUsageResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppUsageResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NetAppVault : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppVault>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppVault>
     {
         internal NetAppVault() { }
@@ -4315,7 +4122,6 @@ namespace Azure.ResourceManager.NetApp.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeAuthorizeReplicationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeAuthorizeReplicationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NetAppVolumeBackupBackupRestoreFilesContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupBackupRestoreFilesContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupBackupRestoreFilesContent>
     {
         public NetAppVolumeBackupBackupRestoreFilesContent(System.Collections.Generic.IEnumerable<string> fileList, Azure.Core.ResourceIdentifier destinationVolumeId) { }
@@ -4331,14 +4137,11 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class NetAppVolumeBackupConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NetAppVolumeBackupConfiguration() { }
         public Azure.Core.ResourceIdentifier BackupPolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier BackupVaultId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? IsBackupEnabled { get { throw null; } set { } }
         public bool? IsPolicyEnforced { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier VaultId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4361,7 +4164,6 @@ namespace Azure.ResourceManager.NetApp.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NetAppVolumeBackupPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupPatch>
     {
         public NetAppVolumeBackupPatch() { }
@@ -4470,7 +4272,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppVolumeGroupMetadata() { }
         public string ApplicationIdentifier { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppApplicationType? ApplicationType { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string DeploymentSpecId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> GlobalPlacementRules { get { throw null; } }
         public string GroupDescription { get { throw null; } set { } }
@@ -4529,7 +4330,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsKerberosEnabled { get { throw null; } set { } }
         public bool? IsLargeVolume { get { throw null; } set { } }
         public bool? IsLdapEnabled { get { throw null; } set { } }
-        public bool? IsRestoring { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
+        public bool? IsRestoring { get { throw null; } set { } }
         public bool? IsSmbContinuouslyAvailable { get { throw null; } set { } }
         public bool? IsSmbEncryptionEnabled { get { throw null; } set { } }
         public bool? IsSnapshotDirectoryVisible { get { throw null; } set { } }
@@ -4648,9 +4449,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeLanguage ZhTwUtf8 { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeLanguage ZhUtf8 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppVolumeLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppVolumeLanguage left, Azure.ResourceManager.NetApp.Models.NetAppVolumeLanguage right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppVolumeLanguage (string value) { throw null; }
@@ -4688,7 +4487,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? ServiceLevel { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? SmbNonBrowsable { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier SnapshotPolicyId { get { throw null; } set { } }
         public float? ThroughputMibps { get { throw null; } set { } }
         public string UnixPermissions { get { throw null; } set { } }
@@ -4789,9 +4587,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType IndividualGroupQuota { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType IndividualUserQuota { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType left, Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaType (string value) { throw null; }
@@ -4845,7 +4641,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public string ErrorMessage { get { throw null; } }
         public bool? IsHealthy { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppMirrorState? MirrorState { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus? RelationshipStatus { get { throw null; } }
         public string TotalProgress { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.VolumeReplicationRelationshipStatus? VolumeReplicationRelationshipStatus { get { throw null; } }
@@ -4876,9 +4671,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle Ntfs { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle Unix { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle left, Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle (string value) { throw null; }
@@ -4908,9 +4701,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity T1 { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity T2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity left, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity (string value) { throw null; }
@@ -4944,9 +4735,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetworkSiblingSetProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetworkSiblingSetProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetworkSiblingSetProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetworkSiblingSetProvisioningState left, Azure.ResourceManager.NetApp.Models.NetworkSiblingSetProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetworkSiblingSetProvisioningState (string value) { throw null; }
@@ -5012,9 +4801,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.PolicyStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.PolicyStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.PolicyStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.PolicyStatus left, Azure.ResourceManager.NetApp.Models.PolicyStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.PolicyStatus (string value) { throw null; }
@@ -5031,9 +4818,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ProtocolType NFSv4 { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ProtocolType SMB { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ProtocolType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ProtocolType left, Azure.ResourceManager.NetApp.Models.ProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ProtocolType (string value) { throw null; }
@@ -5092,9 +4877,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.RansomwareReportSeverity Moderate { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.RansomwareReportSeverity None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.RansomwareReportSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.RansomwareReportSeverity left, Azure.ResourceManager.NetApp.Models.RansomwareReportSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.RansomwareReportSeverity (string value) { throw null; }
@@ -5110,9 +4893,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.RansomwareReportState Active { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.RansomwareReportState Resolved { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.RansomwareReportState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.RansomwareReportState left, Azure.ResourceManager.NetApp.Models.RansomwareReportState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.RansomwareReportState (string value) { throw null; }
@@ -5128,9 +4909,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.RansomwareSuspectResolution FalsePositive { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.RansomwareSuspectResolution PotentialThreat { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.RansomwareSuspectResolution other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.RansomwareSuspectResolution left, Azure.ResourceManager.NetApp.Models.RansomwareSuspectResolution right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.RansomwareSuspectResolution (string value) { throw null; }
@@ -5178,9 +4957,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.RegionStorageToNetworkProximity T2 { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.RegionStorageToNetworkProximity T2AndAcrossT2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.RegionStorageToNetworkProximity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.RegionStorageToNetworkProximity left, Azure.ResourceManager.NetApp.Models.RegionStorageToNetworkProximity right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.RegionStorageToNetworkProximity (string value) { throw null; }
@@ -5221,9 +4998,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.ReplicationMirrorState Mirrored { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ReplicationMirrorState Uninitialized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ReplicationMirrorState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.ReplicationMirrorState left, Azure.ResourceManager.NetApp.Models.ReplicationMirrorState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ReplicationMirrorState (string value) { throw null; }
@@ -5299,9 +5074,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration left, Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration (string value) { throw null; }
@@ -5317,9 +5090,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.SmbEncryptionState Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.SmbEncryptionState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.SmbEncryptionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.SmbEncryptionState left, Azure.ResourceManager.NetApp.Models.SmbEncryptionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.SmbEncryptionState (string value) { throw null; }
@@ -5335,9 +5106,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.SmbNonBrowsable Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.SmbNonBrowsable Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.SmbNonBrowsable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.SmbNonBrowsable left, Azure.ResourceManager.NetApp.Models.SmbNonBrowsable right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.SmbNonBrowsable (string value) { throw null; }
@@ -5366,9 +5135,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.SnapshotDirectoryVisibility Hidden { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.SnapshotDirectoryVisibility Visible { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.SnapshotDirectoryVisibility other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.SnapshotDirectoryVisibility left, Azure.ResourceManager.NetApp.Models.SnapshotDirectoryVisibility right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.SnapshotDirectoryVisibility (string value) { throw null; }
@@ -5457,9 +5224,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.SnapshotUsage CreateNewSnapshot { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.SnapshotUsage UseExistingSnapshot { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.SnapshotUsage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.SnapshotUsage left, Azure.ResourceManager.NetApp.Models.SnapshotUsage right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.SnapshotUsage (string value) { throw null; }
@@ -5514,9 +5279,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus Transferring { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus left, Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus (string value) { throw null; }
@@ -5532,9 +5295,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.VolumeReplicationRelationshipStatus Idle { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.VolumeReplicationRelationshipStatus Transferring { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.VolumeReplicationRelationshipStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.VolumeReplicationRelationshipStatus left, Azure.ResourceManager.NetApp.Models.VolumeReplicationRelationshipStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.VolumeReplicationRelationshipStatus (string value) { throw null; }
@@ -5552,9 +5313,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.VolumeRestoreRelationshipStatus Transferring { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.VolumeRestoreRelationshipStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.VolumeRestoreRelationshipStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.VolumeRestoreRelationshipStatus left, Azure.ResourceManager.NetApp.Models.VolumeRestoreRelationshipStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.VolumeRestoreRelationshipStatus (string value) { throw null; }
@@ -5570,9 +5329,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.VolumeSize Large { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.VolumeSize Regular { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.VolumeSize other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetApp.Models.VolumeSize left, Azure.ResourceManager.NetApp.Models.VolumeSize right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.VolumeSize (string value) { throw null; }

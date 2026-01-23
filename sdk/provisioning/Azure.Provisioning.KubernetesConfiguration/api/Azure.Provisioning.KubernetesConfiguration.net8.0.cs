@@ -113,11 +113,8 @@ namespace Azure.Provisioning.KubernetesConfiguration
         public static Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole AzureContainerStorageOwner { get { throw null; } }
         public static Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole KubernetesExtensionContributor { get { throw null; } }
         public bool Equals(Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole left, Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole (string value) { throw null; }

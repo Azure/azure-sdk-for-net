@@ -175,7 +175,6 @@ namespace Azure.ResourceManager.Fabric.Models
     public partial class FabricCapacityPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacityPatch>
     {
         public FabricCapacityPatch() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<string> AdministrationMembers { get { throw null; } }
         public Azure.ResourceManager.Fabric.Models.FabricCapacityUpdateProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Fabric.Models.FabricSku Sku { get { throw null; } set { } }
@@ -260,9 +259,7 @@ namespace Azure.ResourceManager.Fabric.Models
         public static Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason left, Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason (string value) { throw null; }
@@ -283,9 +280,7 @@ namespace Azure.ResourceManager.Fabric.Models
         public static Azure.ResourceManager.Fabric.Models.FabricProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Fabric.Models.FabricProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Fabric.Models.FabricProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Fabric.Models.FabricProvisioningState left, Azure.ResourceManager.Fabric.Models.FabricProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Fabric.Models.FabricProvisioningState (string value) { throw null; }
@@ -312,9 +307,7 @@ namespace Azure.ResourceManager.Fabric.Models
         public static Azure.ResourceManager.Fabric.Models.FabricResourceState Suspending { get { throw null; } }
         public static Azure.ResourceManager.Fabric.Models.FabricResourceState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Fabric.Models.FabricResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Fabric.Models.FabricResourceState left, Azure.ResourceManager.Fabric.Models.FabricResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Fabric.Models.FabricResourceState (string value) { throw null; }
@@ -376,9 +369,7 @@ namespace Azure.ResourceManager.Fabric.Models
         public FabricSkuTier(string value) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricSkuTier Fabric { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Fabric.Models.FabricSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Fabric.Models.FabricSkuTier left, Azure.ResourceManager.Fabric.Models.FabricSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Fabric.Models.FabricSkuTier (string value) { throw null; }

@@ -250,9 +250,7 @@ namespace Azure.ResourceManager.MixedReality.Models
         public static Azure.ResourceManager.MixedReality.Models.MixedRealityNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.MixedReality.Models.MixedRealityNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MixedReality.Models.MixedRealityNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MixedReality.Models.MixedRealityNameUnavailableReason left, Azure.ResourceManager.MixedReality.Models.MixedRealityNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.MixedReality.Models.MixedRealityNameUnavailableReason (string value) { throw null; }

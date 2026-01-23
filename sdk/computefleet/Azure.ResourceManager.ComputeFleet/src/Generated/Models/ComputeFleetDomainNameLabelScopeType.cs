@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -19,44 +20,67 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetDomainNameLabelScopeType : IEquatable<ComputeFleetDomainNameLabelScopeType>
     {
         private readonly string _value;
+        /// <summary> TenantReuse type. </summary>
+        private const string TenantReuseValue = "TenantReuse";
+        /// <summary> SubscriptionReuse type. </summary>
+        private const string SubscriptionReuseValue = "SubscriptionReuse";
+        /// <summary> ResourceGroupReuse type. </summary>
+        private const string ResourceGroupReuseValue = "ResourceGroupReuse";
+        /// <summary> NoReuse type. </summary>
+        private const string NoReuseValue = "NoReuse";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetDomainNameLabelScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetDomainNameLabelScopeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TenantReuseValue = "TenantReuse";
-        private const string SubscriptionReuseValue = "SubscriptionReuse";
-        private const string ResourceGroupReuseValue = "ResourceGroupReuse";
-        private const string NoReuseValue = "NoReuse";
+            _value = value;
+        }
 
         /// <summary> TenantReuse type. </summary>
         public static ComputeFleetDomainNameLabelScopeType TenantReuse { get; } = new ComputeFleetDomainNameLabelScopeType(TenantReuseValue);
+
         /// <summary> SubscriptionReuse type. </summary>
         public static ComputeFleetDomainNameLabelScopeType SubscriptionReuse { get; } = new ComputeFleetDomainNameLabelScopeType(SubscriptionReuseValue);
+
         /// <summary> ResourceGroupReuse type. </summary>
         public static ComputeFleetDomainNameLabelScopeType ResourceGroupReuse { get; } = new ComputeFleetDomainNameLabelScopeType(ResourceGroupReuseValue);
+
         /// <summary> NoReuse type. </summary>
         public static ComputeFleetDomainNameLabelScopeType NoReuse { get; } = new ComputeFleetDomainNameLabelScopeType(NoReuseValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetDomainNameLabelScopeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetDomainNameLabelScopeType left, ComputeFleetDomainNameLabelScopeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetDomainNameLabelScopeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetDomainNameLabelScopeType left, ComputeFleetDomainNameLabelScopeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetDomainNameLabelScopeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetDomainNameLabelScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetDomainNameLabelScopeType(string value) => new ComputeFleetDomainNameLabelScopeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetDomainNameLabelScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetDomainNameLabelScopeType?(string value) => value == null ? null : new ComputeFleetDomainNameLabelScopeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetDomainNameLabelScopeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetDomainNameLabelScopeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

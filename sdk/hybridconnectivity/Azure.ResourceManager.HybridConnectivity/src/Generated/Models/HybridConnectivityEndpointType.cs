@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     public readonly partial struct HybridConnectivityEndpointType : IEquatable<HybridConnectivityEndpointType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="HybridConnectivityEndpointType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HybridConnectivityEndpointType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DefaultValue = "default";
         private const string CustomValue = "custom";
 
-        /// <summary> default. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectivityEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public HybridConnectivityEndpointType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Default. </summary>
         public static HybridConnectivityEndpointType Default { get; } = new HybridConnectivityEndpointType(DefaultValue);
-        /// <summary> custom. </summary>
+
+        /// <summary> Gets the Custom. </summary>
         public static HybridConnectivityEndpointType Custom { get; } = new HybridConnectivityEndpointType(CustomValue);
+
         /// <summary> Determines if two <see cref="HybridConnectivityEndpointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridConnectivityEndpointType left, HybridConnectivityEndpointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridConnectivityEndpointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridConnectivityEndpointType left, HybridConnectivityEndpointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridConnectivityEndpointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridConnectivityEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridConnectivityEndpointType(string value) => new HybridConnectivityEndpointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridConnectivityEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridConnectivityEndpointType?(string value) => value == null ? null : new HybridConnectivityEndpointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridConnectivityEndpointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridConnectivityEndpointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

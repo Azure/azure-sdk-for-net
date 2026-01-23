@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Astro;
 
 namespace Azure.ResourceManager.Astro.Models
 {
     /// <summary> Properties specific to Partner's organization. </summary>
     public partial class AstroPartnerOrganizationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AstroPartnerOrganizationProperties"/>. </summary>
         /// <param name="organizationName"> Organization name in partner's system. </param>
@@ -61,30 +33,29 @@ namespace Azure.ResourceManager.Astro.Models
         /// <param name="organizationName"> Organization name in partner's system. </param>
         /// <param name="workspaceName"> Workspace name in partner's system. </param>
         /// <param name="singleSignOnProperties"> Single Sign On properties for the organization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AstroPartnerOrganizationProperties(string organizationId, string workspaceId, string organizationName, string workspaceName, AstroSingleSignOnProperties singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AstroPartnerOrganizationProperties(string organizationId, string workspaceId, string organizationName, string workspaceName, AstroSingleSignOnProperties singleSignOnProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OrganizationId = organizationId;
             WorkspaceId = workspaceId;
             OrganizationName = organizationName;
             WorkspaceName = workspaceName;
             SingleSignOnProperties = singleSignOnProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AstroPartnerOrganizationProperties"/> for deserialization. </summary>
-        internal AstroPartnerOrganizationProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Organization Id in partner's system. </summary>
         public string OrganizationId { get; set; }
+
         /// <summary> Workspace Id in partner's system. </summary>
         public string WorkspaceId { get; set; }
+
         /// <summary> Organization name in partner's system. </summary>
         public string OrganizationName { get; set; }
+
         /// <summary> Workspace name in partner's system. </summary>
         public string WorkspaceName { get; set; }
+
         /// <summary> Single Sign On properties for the organization. </summary>
         public AstroSingleSignOnProperties SingleSignOnProperties { get; set; }
     }

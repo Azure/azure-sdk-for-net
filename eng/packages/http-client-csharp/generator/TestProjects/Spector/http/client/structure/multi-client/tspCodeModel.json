@@ -253,7 +253,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     },
     {
       "$id": "18",
@@ -417,7 +418,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

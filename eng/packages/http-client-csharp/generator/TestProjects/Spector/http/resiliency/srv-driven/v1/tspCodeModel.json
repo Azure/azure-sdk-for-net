@@ -345,7 +345,8 @@
       "crossLanguageDefinitionId": "Resiliency.ServiceDriven",
       "apiVersions": [
         "v1"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

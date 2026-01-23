@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ComputeFleet
 {
+    /// <summary></summary>
     public partial class ComputeFleetResource : IJsonModel<ComputeFleetData>
     {
-        private static ComputeFleetData s_dataDeserializationInstance;
-        private static ComputeFleetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ComputeFleetData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ComputeFleetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ComputeFleetData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ComputeFleetData>)Data).Write(writer, options);
 
-        ComputeFleetData IJsonModel<ComputeFleetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComputeFleetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetData IJsonModel<ComputeFleetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ComputeFleetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComputeFleetData>(Data, options, AzureResourceManagerComputeFleetContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ComputeFleetData IPersistableModel<ComputeFleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputeFleetData>(data, options, AzureResourceManagerComputeFleetContext.Default);
 
-        string IPersistableModel<ComputeFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComputeFleetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ComputeFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

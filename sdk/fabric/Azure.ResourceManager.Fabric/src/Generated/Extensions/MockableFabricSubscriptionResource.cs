@@ -96,7 +96,23 @@ namespace Azure.ResourceManager.Fabric.Mocking
             return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetBySubscriptionCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FabricCapacityResource(Client, data));
         }
 
-        /// <summary> Implements local CheckNameAvailability operations. </summary>
+        /// <summary>
+        /// Implements local CheckNameAvailability operations
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Fabric/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FabricCapacities_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,7 +145,23 @@ namespace Azure.ResourceManager.Fabric.Mocking
             }
         }
 
-        /// <summary> Implements local CheckNameAvailability operations. </summary>
+        /// <summary>
+        /// Implements local CheckNameAvailability operations
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Fabric/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FabricCapacities_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -163,7 +163,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.ApiKey",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ],
   "auth": {

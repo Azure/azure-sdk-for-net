@@ -16,25 +16,6 @@ trigger:
     - eng/packages/
     - eng/scripts/typespec/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/core/
-    - sdk/testcommon/
-    - eng/
-    - samples/
-    exclude:
-    - eng/mgmt/
-    - eng/common/
-    - eng/packages/
-    - eng/scripts/typespec/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -70,11 +51,6 @@ extends:
     - name: Microsoft.ClientModel.TestFramework
       safeName: MicrosoftClientModelTestFramework
       skipReleaseStage: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Core
-      ExpectedWarningsFilepath: /Azure.Core/tests/compatibility/ExpectedAotWarnings.txt
-    - ArtifactName: Azure.Core.Expressions.DataFactory
-      ExpectedWarningsFilepath: /Azure.Core.Expressions.DataFactory/tests/compatibility/ExpectedAotWarnings.txt
 
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

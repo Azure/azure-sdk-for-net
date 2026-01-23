@@ -56,11 +56,14 @@ model ValidationResponse {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify non-resource methods
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
 
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
@@ -145,7 +148,10 @@ model GlobalSettings {
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
@@ -336,7 +342,10 @@ model MigrationResponse {
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
@@ -417,7 +426,10 @@ model WorkspaceValidationResponse {
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
@@ -500,7 +512,10 @@ model SearchResult {
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
@@ -565,7 +580,10 @@ model FooPreviewAction {
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,

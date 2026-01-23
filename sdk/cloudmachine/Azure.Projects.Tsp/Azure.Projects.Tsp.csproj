@@ -9,6 +9,7 @@
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <SupportsNetStandard20>false</SupportsNetStandard20>
     <Nullable>enable</Nullable>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>

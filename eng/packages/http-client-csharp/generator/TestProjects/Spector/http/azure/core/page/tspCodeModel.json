@@ -2224,9 +2224,11 @@
           ],
           "parent": {
             "$ref": "93"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }
