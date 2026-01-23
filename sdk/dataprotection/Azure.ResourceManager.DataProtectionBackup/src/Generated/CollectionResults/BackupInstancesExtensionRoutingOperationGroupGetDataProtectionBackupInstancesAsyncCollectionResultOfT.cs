@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
     internal partial class BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesAsyncCollectionResultOfT : AsyncPageable<DataProtectionBackupInstanceData>
     {
         private readonly BackupInstancesExtensionRoutingOperationGroup _client;
-        private readonly string _resourceId;
+        private readonly ResourceIdentifier _resourceId;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BackupInstancesExtensionRoutingOperationGroup client used to send requests. </param>
         /// <param name="resourceId"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesAsyncCollectionResultOfT(BackupInstancesExtensionRoutingOperationGroup client, string resourceId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesAsyncCollectionResultOfT(BackupInstancesExtensionRoutingOperationGroup client, ResourceIdentifier resourceId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceId = resourceId;

@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateFindRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateFindRestorableTimeRangeRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

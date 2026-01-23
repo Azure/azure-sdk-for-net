@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Source region and
     /// BI ARM path
     /// </summary>
-    public partial class FetchSecondaryRPsContent
+    public partial class FetchSecondaryRPsRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FetchSecondaryRPsContent"/>. </summary>
-        public FetchSecondaryRPsContent()
+        /// <summary> Initializes a new instance of <see cref="FetchSecondaryRPsRequestContent"/>. </summary>
+        public FetchSecondaryRPsRequestContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FetchSecondaryRPsContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FetchSecondaryRPsRequestContent"/>. </summary>
         /// <param name="sourceRegion"> Source region in which BackupInstance is located. </param>
         /// <param name="sourceBackupInstanceId"> ARM Path of BackupInstance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FetchSecondaryRPsContent(AzureLocation? sourceRegion, ResourceIdentifier sourceBackupInstanceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FetchSecondaryRPsRequestContent(AzureLocation? sourceRegion, ResourceIdentifier sourceBackupInstanceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceRegion = sourceRegion;
             SourceBackupInstanceId = sourceBackupInstanceId;

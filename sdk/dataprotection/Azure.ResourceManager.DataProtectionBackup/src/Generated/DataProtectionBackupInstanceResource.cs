@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Find
+        /// FindRestorableTimeRange
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -433,14 +433,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupFindRestorableTimeRangeContent"> Request body for operation. </param>
+        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupFindRestorableTimeRangeContent"/> is null. </exception>
-        public virtual async Task<Response<BackupFindRestorableTimeRangeResult>> FindAsync(BackupFindRestorableTimeRangeContent backupFindRestorableTimeRangeContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<BackupFindRestorableTimeRangeResult>> FindRestorableTimeRangeAsync(BackupFindRestorableTimeRangeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backupFindRestorableTimeRangeContent, nameof(backupFindRestorableTimeRangeContent));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.Find");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.FindRestorableTimeRange");
             scope.Start();
             try
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateFindRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupFindRestorableTimeRangeContent.ToRequestContent(backupFindRestorableTimeRangeContent), context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateFindRestorableTimeRangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupFindRestorableTimeRangeContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupFindRestorableTimeRangeResult> response = Response.FromValue(BackupFindRestorableTimeRangeResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Find
+        /// FindRestorableTimeRange
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -485,14 +485,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupFindRestorableTimeRangeContent"> Request body for operation. </param>
+        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupFindRestorableTimeRangeContent"/> is null. </exception>
-        public virtual Response<BackupFindRestorableTimeRangeResult> Find(BackupFindRestorableTimeRangeContent backupFindRestorableTimeRangeContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<BackupFindRestorableTimeRangeResult> FindRestorableTimeRange(BackupFindRestorableTimeRangeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backupFindRestorableTimeRangeContent, nameof(backupFindRestorableTimeRangeContent));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.Find");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.FindRestorableTimeRange");
             scope.Start();
             try
             {
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateFindRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupFindRestorableTimeRangeContent.ToRequestContent(backupFindRestorableTimeRangeContent), context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateFindRestorableTimeRangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupFindRestorableTimeRangeContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupFindRestorableTimeRangeResult> response = Response.FromValue(BackupFindRestorableTimeRangeResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -735,9 +735,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="xMsAuthorizationAuxiliary"></param>
-        /// <param name="stopProtectionContent"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StopProtectionAsync(WaitUntil waitUntil, string xMsAuthorizationAuxiliary = default, StopProtectionContent stopProtectionContent = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StopProtectionAsync(WaitUntil waitUntil, string xMsAuthorizationAuxiliary = default, StopProtectionContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.StopProtection");
             scope.Start();
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateStopProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopProtectionContent.ToRequestContent(stopProtectionContent), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateStopProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopProtectionContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -786,9 +786,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="xMsAuthorizationAuxiliary"></param>
-        /// <param name="stopProtectionContent"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation StopProtection(WaitUntil waitUntil, string xMsAuthorizationAuxiliary = default, StopProtectionContent stopProtectionContent = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation StopProtection(WaitUntil waitUntil, string xMsAuthorizationAuxiliary = default, StopProtectionContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.StopProtection");
             scope.Start();
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateStopProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopProtectionContent.ToRequestContent(stopProtectionContent), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateStopProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopProtectionContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

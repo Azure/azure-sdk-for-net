@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
             => Delete(waitUntil, null, cancellationToken);
 
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> StopProtectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => await StopProtectionAsync(waitUntil, null, null, cancellationToken).ConfigureAwait(false);
+            => await StopProtectionAsync(waitUntil, xMsAuthorizationAuxiliary : null, content : null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This operation will stop protection of a backup instance and data will be held forever
@@ -122,7 +121,63 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation StopProtection(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => StopProtection(waitUntil, null, null, cancellationToken);
+            => StopProtection(waitUntil, xMsAuthorizationAuxiliary : null, content : null, cancellationToken);
+
+        /// <summary>
+        /// This operation will stop protection of a backup instance and data will be held forever
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/stopProtection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstanceResources_StopProtection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataProtectionBackupInstanceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> StopProtectionAsync(WaitUntil waitUntil, StopProtectionContent content, string xMsAuthorizationAuxiliary, CancellationToken cancellationToken)
+            => await StopProtectionAsync(waitUntil, xMsAuthorizationAuxiliary, content, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This operation will stop protection of a backup instance and data will be held forever
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/stopProtection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstanceResources_StopProtection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataProtectionBackupInstanceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation StopProtection(WaitUntil waitUntil, StopProtectionContent content, string xMsAuthorizationAuxiliary, CancellationToken cancellationToken)
+            => StopProtection(waitUntil, xMsAuthorizationAuxiliary, content, cancellationToken);
 
         /// <summary>
         /// This operation will stop backup for a backup instance and retains the backup data as per the policy (except latest Recovery point, which will be retained forever)

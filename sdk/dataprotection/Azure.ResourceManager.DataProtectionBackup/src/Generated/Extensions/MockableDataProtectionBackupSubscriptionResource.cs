@@ -249,14 +249,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(string location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = DataProtectionOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport");
@@ -300,14 +298,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(string location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = DataProtectionOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport");

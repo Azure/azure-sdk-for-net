@@ -1560,7 +1560,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPointsAsync(AzureLocation location, FetchSecondaryRPsContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPointsAsync(AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1573,7 +1573,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 location,
-                FetchSecondaryRPsContent.ToRequestContent(content),
+                FetchSecondaryRPsRequestContent.ToRequestContent(content),
                 filter,
                 skipToken,
                 context), data => new DataProtectionBackupRecoveryPointResource(Client, data));
@@ -1603,7 +1603,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPoints(AzureLocation location, FetchSecondaryRPsContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPoints(AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1616,7 +1616,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 location,
-                FetchSecondaryRPsContent.ToRequestContent(content),
+                FetchSecondaryRPsRequestContent.ToRequestContent(content),
                 filter,
                 skipToken,
                 context), data => new DataProtectionBackupRecoveryPointResource(Client, data));

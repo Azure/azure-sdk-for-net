@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetDataProtectionBackupInstancesRequest(string resourceId, RequestContext context)
+        internal HttpMessage CreateGetDataProtectionBackupInstancesRequest(ResourceIdentifier resourceId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(resourceId, false);
+            uri.AppendPath(resourceId.ToString(), false);
             uri.AppendPath("/providers/Microsoft.DataProtection/backupInstances", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateNextGetDataProtectionBackupInstancesRequest(Uri nextPage, string resourceId, RequestContext context)
+        internal HttpMessage CreateNextGetDataProtectionBackupInstancesRequest(Uri nextPage, ResourceIdentifier resourceId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Returns a list of Secondary Recovery Points for a DataSource in a vault, that can be used for Cross Region Restore.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPointsAsync(AzureLocation, FetchSecondaryRPsContent, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPointsAsync(AzureLocation, FetchSecondaryRPsRequestContent, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPointsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, FetchSecondaryRPsContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPointsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Returns a list of Secondary Recovery Points for a DataSource in a vault, that can be used for Cross Region Restore.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPoints(AzureLocation, FetchSecondaryRPsContent, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPoints(AzureLocation, FetchSecondaryRPsRequestContent, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPoints(this ResourceGroupResource resourceGroupResource, AzureLocation location, FetchSecondaryRPsContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public static Pageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPoints(this ResourceGroupResource resourceGroupResource, AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1148,15 +1148,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Validates if a feature is supported
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupportAsync(string, BackupFeatureValidationContentBase, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupportAsync(AzureLocation, BackupFeatureValidationContentBase, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(this SubscriptionResource subscriptionResource, string location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
+        public static async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(this SubscriptionResource subscriptionResource, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1167,15 +1167,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Validates if a feature is supported
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport(string, BackupFeatureValidationContentBase, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport(AzureLocation, BackupFeatureValidationContentBase, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(this SubscriptionResource subscriptionResource, string location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
+        public static Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(this SubscriptionResource subscriptionResource, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1186,7 +1186,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Gets a list of backup instances associated with a tracked resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupTenantResource.GetDataProtectionBackupInstancesAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupTenantResource.GetDataProtectionBackupInstancesAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstancesAsync(this TenantResource tenantResource, string resourceId, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstancesAsync(this TenantResource tenantResource, ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Gets a list of backup instances associated with a tracked resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupTenantResource.GetDataProtectionBackupInstances(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupTenantResource.GetDataProtectionBackupInstances(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1213,7 +1213,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstances(this TenantResource tenantResource, string resourceId, CancellationToken cancellationToken = default)
+        public static Pageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstances(this TenantResource tenantResource, ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

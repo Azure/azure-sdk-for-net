@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstancesAsync(string resourceId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstancesAsync(ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstances(string resourceId, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstances(ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
