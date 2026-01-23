@@ -8,7 +8,7 @@ description: 'Identify languages configured in the TypeSpec project and add it t
    - For Java and Python, use `emitter-output-dir` for package name if it exists. Otherwise use `package-dir` to get the package name as fallback approach.
    - For .NET, use namespace property to get package name.
    - For JavaScript, use `packagedetails:name` property to get package name.
-   - For Go, use module name and remove `github.com/Azure/azure-sdk-for-go/` to get package name
+   - For Go, use module name and remove `github.com/Azure/azure-sdk-for-go/` to get package name. If the Go package name doesn't start with `sdk/`, automatically normalize it to the format `sdk/resourcemanager/<service>/<packagename>`.
 3. Map the language name in emitter to one of the following in Pascal case(except .NET):
    - .NET
    - Java
