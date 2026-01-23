@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
-    internal class EdgeSiteReferenceOperationSource : IOperationSource<EdgeSiteReferenceResource>
+    /// <summary></summary>
+    internal partial class EdgeSiteReferenceOperationSource : IOperationSource<EdgeSiteReferenceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal EdgeSiteReferenceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         EdgeSiteReferenceResource IOperationSource<EdgeSiteReferenceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeSiteReferenceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            EdgeSiteReferenceData data = EdgeSiteReferenceData.DeserializeEdgeSiteReferenceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new EdgeSiteReferenceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<EdgeSiteReferenceResource> IOperationSource<EdgeSiteReferenceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeSiteReferenceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
-            return await Task.FromResult(new EdgeSiteReferenceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            EdgeSiteReferenceData data = EdgeSiteReferenceData.DeserializeEdgeSiteReferenceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EdgeSiteReferenceResource(_client, data);
         }
     }
 }

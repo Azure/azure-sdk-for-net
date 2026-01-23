@@ -11,19 +11,6 @@ trigger:
     - sdk/agrifood/service.projects
     - sdk/agrifood/Azure.Verticals.AgriFood.Farming
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/agrifood/ci.yml
-    - sdk/agrifood/service.projects
-    - sdk/agrifood/Azure.Verticals.AgriFood.Farming
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

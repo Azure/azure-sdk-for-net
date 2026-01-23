@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal class CloudAccountDetailsOperationSource : IOperationSource<CloudAccountDetails>
+    /// <summary></summary>
+    internal partial class CloudAccountDetailsOperationSource : IOperationSource<CloudAccountDetails>
     {
-        CloudAccountDetails IOperationSource<CloudAccountDetails>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal CloudAccountDetailsOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return CloudAccountDetails.DeserializeCloudAccountDetails(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        CloudAccountDetails IOperationSource<CloudAccountDetails>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            CloudAccountDetails result = CloudAccountDetails.DeserializeCloudAccountDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<CloudAccountDetails> IOperationSource<CloudAccountDetails>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return CloudAccountDetails.DeserializeCloudAccountDetails(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            CloudAccountDetails result = CloudAccountDetails.DeserializeCloudAccountDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

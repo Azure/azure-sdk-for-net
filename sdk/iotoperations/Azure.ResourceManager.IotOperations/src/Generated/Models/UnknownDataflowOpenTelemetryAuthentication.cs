@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Unknown version of DataflowOpenTelemetryAuthentication. </summary>
     internal partial class UnknownDataflowOpenTelemetryAuthentication : DataflowOpenTelemetryAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataflowOpenTelemetryAuthentication"/>. </summary>
         /// <param name="method"> The authentication method. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataflowOpenTelemetryAuthentication(DataflowOpenTelemetryAuthenticationMethod method, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(method, serializedAdditionalRawData)
-        {
-            Method = method;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDataflowOpenTelemetryAuthentication"/> for deserialization. </summary>
-        internal UnknownDataflowOpenTelemetryAuthentication()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataflowOpenTelemetryAuthentication(DataflowOpenTelemetryAuthenticationMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@method != default ? @method : "unknown", additionalBinaryDataProperties)
         {
         }
     }

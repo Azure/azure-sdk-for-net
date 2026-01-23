@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Parameters for fetching the health of an application. </summary>
     public partial class ApplicationFetchHealthContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationFetchHealthContent"/>. </summary>
         public ApplicationFetchHealthContent()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="servicesHealthStateFilter"> Allows filtering of the services health state objects returned in the result of services health query based on their health state. </param>
         /// <param name="excludeHealthStatistics"> Indicates whether the health statistics should be returned as part of the query result. False by default. The statistics show the number of children entities in health state Ok, Warning, and Error. </param>
         /// <param name="timeoutInSeconds"> Request timeout for the health query in seconds. The default value is 60 seconds. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationFetchHealthContent(ApplicationFetchHealthFilter? eventsHealthStateFilter, ApplicationFetchHealthFilter? deployedApplicationsHealthStateFilter, ApplicationFetchHealthFilter? servicesHealthStateFilter, bool? excludeHealthStatistics, long? timeoutInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationFetchHealthContent(ApplicationFetchHealthFilter? eventsHealthStateFilter, ApplicationFetchHealthFilter? deployedApplicationsHealthStateFilter, ApplicationFetchHealthFilter? servicesHealthStateFilter, bool? excludeHealthStatistics, long? timeoutInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventsHealthStateFilter = eventsHealthStateFilter;
             DeployedApplicationsHealthStateFilter = deployedApplicationsHealthStateFilter;
             ServicesHealthStateFilter = servicesHealthStateFilter;
             ExcludeHealthStatistics = excludeHealthStatistics;
             TimeoutInSeconds = timeoutInSeconds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Allows filtering of the health events returned in the response based on health state. </summary>
         public ApplicationFetchHealthFilter? EventsHealthStateFilter { get; set; }
+
         /// <summary> Allows filtering of the deployed applications health state objects returned in the result of application health query based on their health state. </summary>
         public ApplicationFetchHealthFilter? DeployedApplicationsHealthStateFilter { get; set; }
+
         /// <summary> Allows filtering of the services health state objects returned in the result of services health query based on their health state. </summary>
         public ApplicationFetchHealthFilter? ServicesHealthStateFilter { get; set; }
+
         /// <summary> Indicates whether the health statistics should be returned as part of the query result. False by default. The statistics show the number of children entities in health state Ok, Warning, and Error. </summary>
         public bool? ExcludeHealthStatistics { get; set; }
+
         /// <summary> Request timeout for the health query in seconds. The default value is 60 seconds. </summary>
         public long? TimeoutInSeconds { get; set; }
     }

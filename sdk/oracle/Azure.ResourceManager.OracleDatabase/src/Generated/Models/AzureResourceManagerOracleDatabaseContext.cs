@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OracleDatabase.Models;
 
@@ -13,9 +14,8 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseActionContent))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseBackupData))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseBackupListResult))]
@@ -141,7 +141,6 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(OracleDBSystemShapeData))]
     [ModelReaderWriterBuildable(typeof(OracleDBSystemShapeProperties))]
     [ModelReaderWriterBuildable(typeof(OracleDBSystemShapeResource))]
-    [ModelReaderWriterBuildable(typeof(OracleDBVersionCollectionGetAllOptions))]
     [ModelReaderWriterBuildable(typeof(OracleDBVersionData))]
     [ModelReaderWriterBuildable(typeof(OracleDBVersionProperties))]
     [ModelReaderWriterBuildable(typeof(OracleDBVersionResource))]
@@ -169,7 +168,6 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(OracleResourceAnchorProperties))]
     [ModelReaderWriterBuildable(typeof(OracleResourceAnchorResource))]
     [ModelReaderWriterBuildable(typeof(OracleSubscriptionData))]
-    [ModelReaderWriterBuildable(typeof(OracleSubscriptionListResult))]
     [ModelReaderWriterBuildable(typeof(OracleSubscriptionPatch))]
     [ModelReaderWriterBuildable(typeof(OracleSubscriptionProperties))]
     [ModelReaderWriterBuildable(typeof(OracleSubscriptionResource))]

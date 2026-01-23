@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Profile of the managed cluster load balancer. </summary>
+    /// <summary>
+    /// Profile of the managed cluster load balancer.
+    /// Serialized Name: ManagedClusterLoadBalancerProfile
+    /// </summary>
     public partial class ManagedClusterLoadBalancerProfile
     {
         /// <summary>
@@ -53,14 +56,38 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfile"/>. </summary>
-        /// <param name="managedOutboundIPs"> Desired managed outbound IPs for the cluster load balancer. </param>
-        /// <param name="outboundIPPrefixes"> Desired outbound IP Prefix resources for the cluster load balancer. </param>
-        /// <param name="outboundIPs"> Desired outbound IP resources for the cluster load balancer. </param>
-        /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster load balancer. </param>
-        /// <param name="allocatedOutboundPorts"> The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports. </param>
-        /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 30 minutes. </param>
-        /// <param name="enableMultipleStandardLoadBalancers"> Enable multiple standard load balancers per AKS cluster or not. </param>
-        /// <param name="backendPoolType"> The type of the managed inbound Load Balancer BackendPool. </param>
+        /// <param name="managedOutboundIPs">
+        /// Desired managed outbound IPs for the cluster load balancer.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.managedOutboundIPs
+        /// </param>
+        /// <param name="outboundIPPrefixes">
+        /// Desired outbound IP Prefix resources for the cluster load balancer.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.outboundIPPrefixes
+        /// </param>
+        /// <param name="outboundIPs">
+        /// Desired outbound IP resources for the cluster load balancer.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.outboundIPs
+        /// </param>
+        /// <param name="effectiveOutboundIPs">
+        /// The effective outbound IP resources of the cluster load balancer.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.effectiveOutboundIPs
+        /// </param>
+        /// <param name="allocatedOutboundPorts">
+        /// The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.allocatedOutboundPorts
+        /// </param>
+        /// <param name="idleTimeoutInMinutes">
+        /// Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 30 minutes.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.idleTimeoutInMinutes
+        /// </param>
+        /// <param name="enableMultipleStandardLoadBalancers">
+        /// Enable multiple standard load balancers per AKS cluster or not.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.enableMultipleStandardLoadBalancers
+        /// </param>
+        /// <param name="backendPoolType">
+        /// The type of the managed inbound Load Balancer BackendPool.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.backendPoolType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers, ManagedClusterLoadBalancerBackendPoolType? backendPoolType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,12 +102,21 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Desired managed outbound IPs for the cluster load balancer. </summary>
+        /// <summary>
+        /// Desired managed outbound IPs for the cluster load balancer.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.managedOutboundIPs
+        /// </summary>
         [WirePath("managedOutboundIPs")]
         public ManagedClusterLoadBalancerProfileManagedOutboundIPs ManagedOutboundIPs { get; set; }
-        /// <summary> Desired outbound IP Prefix resources for the cluster load balancer. </summary>
+        /// <summary>
+        /// Desired outbound IP Prefix resources for the cluster load balancer.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.outboundIPPrefixes
+        /// </summary>
         internal ManagedClusterLoadBalancerProfileOutboundIPPrefixes OutboundIPPrefixes { get; set; }
-        /// <summary> A list of public IP prefix resources. </summary>
+        /// <summary>
+        /// A list of public IP prefix resources.
+        /// Serialized Name: ManagedClusterLoadBalancerProfileOutboundIPPrefixes.publicIPPrefixes
+        /// </summary>
         [WirePath("outboundIPPrefixes.publicIPPrefixes")]
         public IList<WritableSubResource> OutboundPublicIPPrefixes
         {
@@ -92,9 +128,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary> Desired outbound IP resources for the cluster load balancer. </summary>
+        /// <summary>
+        /// Desired outbound IP resources for the cluster load balancer.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.outboundIPs
+        /// </summary>
         internal ManagedClusterLoadBalancerProfileOutboundIPs OutboundIPs { get; set; }
-        /// <summary> A list of public IP resources. </summary>
+        /// <summary>
+        /// A list of public IP resources.
+        /// Serialized Name: ManagedClusterLoadBalancerProfileOutboundIPs.publicIPs
+        /// </summary>
         [WirePath("outboundIPs.publicIPs")]
         public IList<WritableSubResource> OutboundPublicIPs
         {
@@ -105,20 +147,28 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return OutboundIPs.PublicIPs;
             }
         }
-
-        /// <summary> The effective outbound IP resources of the cluster load balancer. </summary>
-        [WirePath("effectiveOutboundIPs")]
-        public IList<WritableSubResource> EffectiveOutboundIPs { get; }
-        /// <summary> The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports. </summary>
+        /// <summary>
+        /// The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.allocatedOutboundPorts
+        /// </summary>
         [WirePath("allocatedOutboundPorts")]
         public int? AllocatedOutboundPorts { get; set; }
-        /// <summary> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 30 minutes. </summary>
+        /// <summary>
+        /// Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 30 minutes.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.idleTimeoutInMinutes
+        /// </summary>
         [WirePath("idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
-        /// <summary> Enable multiple standard load balancers per AKS cluster or not. </summary>
+        /// <summary>
+        /// Enable multiple standard load balancers per AKS cluster or not.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.enableMultipleStandardLoadBalancers
+        /// </summary>
         [WirePath("enableMultipleStandardLoadBalancers")]
         public bool? EnableMultipleStandardLoadBalancers { get; set; }
-        /// <summary> The type of the managed inbound Load Balancer BackendPool. </summary>
+        /// <summary>
+        /// The type of the managed inbound Load Balancer BackendPool.
+        /// Serialized Name: ManagedClusterLoadBalancerProfile.backendPoolType
+        /// </summary>
         [WirePath("backendPoolType")]
         public ManagedClusterLoadBalancerBackendPoolType? BackendPoolType { get; set; }
     }

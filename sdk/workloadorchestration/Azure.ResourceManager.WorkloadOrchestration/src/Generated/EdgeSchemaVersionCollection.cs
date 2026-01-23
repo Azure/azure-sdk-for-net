@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
     /// A class representing a collection of <see cref="EdgeSchemaVersionResource"/> and their operations.
     /// Each <see cref="EdgeSchemaVersionResource"/> in the collection will belong to the same instance of <see cref="EdgeSchemaResource"/>.
-    /// To get an <see cref="EdgeSchemaVersionCollection"/> instance call the GetEdgeSchemaVersions method from an instance of <see cref="EdgeSchemaResource"/>.
+    /// To get a <see cref="EdgeSchemaVersionCollection"/> instance call the GetEdgeSchemaVersions method from an instance of <see cref="EdgeSchemaResource"/>.
     /// </summary>
     public partial class EdgeSchemaVersionCollection : ArmCollection, IEnumerable<EdgeSchemaVersionResource>, IAsyncEnumerable<EdgeSchemaVersionResource>
     {
-        private readonly ClientDiagnostics _edgeSchemaVersionSchemaVersionsClientDiagnostics;
-        private readonly SchemaVersionsRestOperations _edgeSchemaVersionSchemaVersionsRestClient;
+        private readonly ClientDiagnostics _schemaVersionsClientDiagnostics;
+        private readonly SchemaVersions _schemaVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeSchemaVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeSchemaVersionCollection for mocking. </summary>
         protected EdgeSchemaVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeSchemaVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeSchemaVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeSchemaVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeSchemaVersionSchemaVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSchemaVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EdgeSchemaVersionResource.ResourceType, out string edgeSchemaVersionSchemaVersionsApiVersion);
-            _edgeSchemaVersionSchemaVersionsRestClient = new SchemaVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSchemaVersionSchemaVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(EdgeSchemaVersionResource.ResourceType, out string edgeSchemaVersionApiVersion);
+            _schemaVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSchemaVersionResource.ResourceType.Namespace, Diagnostics);
+            _schemaVersionsRestClient = new SchemaVersions(_schemaVersionsClientDiagnostics, Pipeline, Endpoint, edgeSchemaVersionApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != EdgeSchemaResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EdgeSchemaResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSchemaResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update a Schema Version Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="schemaVersionName"> The name of the SchemaVersion. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaVersionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<EdgeSchemaVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string schemaVersionName, EdgeSchemaVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaVersionName, nameof(schemaVersionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeSchemaVersionSchemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _edgeSchemaVersionSchemaVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaVersionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(new EdgeSchemaVersionOperationSource(Client), _edgeSchemaVersionSchemaVersionsClientDiagnostics, Pipeline, _edgeSchemaVersionSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, EdgeSchemaVersionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(
+                    new EdgeSchemaVersionOperationSource(Client),
+                    _schemaVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Create or update a Schema Version Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="schemaVersionName"> The name of the SchemaVersion. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaVersionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<EdgeSchemaVersionResource> CreateOrUpdate(WaitUntil waitUntil, string schemaVersionName, EdgeSchemaVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaVersionName, nameof(schemaVersionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeSchemaVersionSchemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _edgeSchemaVersionSchemaVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaVersionName, data, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(new EdgeSchemaVersionOperationSource(Client), _edgeSchemaVersionSchemaVersionsClientDiagnostics, Pipeline, _edgeSchemaVersionSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, EdgeSchemaVersionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(
+                    new EdgeSchemaVersionOperationSource(Client),
+                    _schemaVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Schema Version Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaVersionName"> The name of the SchemaVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<EdgeSchemaVersionResource>> GetAsync(string schemaVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaVersionName, nameof(schemaVersionName));
 
-            using var scope = _edgeSchemaVersionSchemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.Get");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _edgeSchemaVersionSchemaVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaVersionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeSchemaVersionData> response = Response.FromValue(EdgeSchemaVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Schema Version Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaVersionName"> The name of the SchemaVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<EdgeSchemaVersionResource> Get(string schemaVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaVersionName, nameof(schemaVersionName));
 
-            using var scope = _edgeSchemaVersionSchemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.Get");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _edgeSchemaVersionSchemaVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaVersionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeSchemaVersionData> response = Response.FromValue(EdgeSchemaVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// List by specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_ListBySchema</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_ListBySchema. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeSchemaVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeSchemaVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeSchemaVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeSchemaVersionSchemaVersionsRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeSchemaVersionSchemaVersionsRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeSchemaVersionResource(Client, EdgeSchemaVersionData.DeserializeEdgeSchemaVersionData(e)), _edgeSchemaVersionSchemaVersionsClientDiagnostics, Pipeline, "EdgeSchemaVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeSchemaVersionData, EdgeSchemaVersionResource>(new SchemaVersionsGetBySchemaAsyncCollectionResultOfT(_schemaVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSchemaVersionResource(Client, data));
         }
 
         /// <summary>
         /// List by specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_ListBySchema</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_ListBySchema. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeSchemaVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeSchemaVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeSchemaVersionSchemaVersionsRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeSchemaVersionSchemaVersionsRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeSchemaVersionResource(Client, EdgeSchemaVersionData.DeserializeEdgeSchemaVersionData(e)), _edgeSchemaVersionSchemaVersionsClientDiagnostics, Pipeline, "EdgeSchemaVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeSchemaVersionData, EdgeSchemaVersionResource>(new SchemaVersionsGetBySchemaCollectionResultOfT(_schemaVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSchemaVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaVersionName"> The name of the SchemaVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string schemaVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaVersionName, nameof(schemaVersionName));
 
-            using var scope = _edgeSchemaVersionSchemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.Exists");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _edgeSchemaVersionSchemaVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeSchemaVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSchemaVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSchemaVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +385,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaVersionName"> The name of the SchemaVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string schemaVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaVersionName, nameof(schemaVersionName));
 
-            using var scope = _edgeSchemaVersionSchemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.Exists");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _edgeSchemaVersionSchemaVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaVersionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeSchemaVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSchemaVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSchemaVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +442,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaVersionName"> The name of the SchemaVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<EdgeSchemaVersionResource>> GetIfExistsAsync(string schemaVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaVersionName, nameof(schemaVersionName));
 
-            using var scope = _edgeSchemaVersionSchemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _edgeSchemaVersionSchemaVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeSchemaVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSchemaVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSchemaVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeSchemaVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +503,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/versions/{schemaVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaVersionName"> The name of the SchemaVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<EdgeSchemaVersionResource> GetIfExists(string schemaVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaVersionName, nameof(schemaVersionName));
 
-            using var scope = _edgeSchemaVersionSchemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _edgeSchemaVersionSchemaVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaVersionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeSchemaVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSchemaVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSchemaVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeSchemaVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeSchemaVersionResource> IAsyncEnumerable<EdgeSchemaVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

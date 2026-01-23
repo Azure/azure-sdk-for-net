@@ -22,6 +22,7 @@ namespace SpecialWords
     [ModelReaderWriterBuildable(typeof(Continue))]
     [ModelReaderWriterBuildable(typeof(Def))]
     [ModelReaderWriterBuildable(typeof(Del))]
+    [ModelReaderWriterBuildable(typeof(DictMethods))]
     [ModelReaderWriterBuildable(typeof(Elif))]
     [ModelReaderWriterBuildable(typeof(Else))]
     [ModelReaderWriterBuildable(typeof(Except))]

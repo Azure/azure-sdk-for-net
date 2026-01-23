@@ -53,7 +53,7 @@ namespace Azure.Analytics.Defender.Easm
                 DeltaPageResult result = (DeltaPageResult)response;
                 yield return Page<DeltaResult>.FromValues((IReadOnlyList<DeltaResult>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }

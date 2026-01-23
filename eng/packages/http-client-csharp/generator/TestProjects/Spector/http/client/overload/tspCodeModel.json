@@ -383,7 +383,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Overload",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

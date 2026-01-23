@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         internal TrafficControllerAssociationPatch ToTrafficControllerAssociationPatch()
         {
-            return new TrafficControllerAssociationPatch(Tags, AssociationType.ToString(), Subnet, _serializedAdditionalRawData);
+            return new TrafficControllerAssociationPatch(Tags, new AssociationUpdateProperties(AssociationType.ToString(), new AssociationSubnetUpdate { Id = SubnetId }, _serializedAdditionalRawData), _serializedAdditionalRawData);
         }
 
         /// <summary> Resource tags. </summary>

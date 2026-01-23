@@ -3,12 +3,10 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> The updatable properties of the SolutionTemplate. </summary>
-    [CodeGenModel("SolutionTemplateUpdateProperties")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("SolutionTemplateUpdateProperties")]
     public partial class EdgeSolutionTemplatePatchProperties
     {
     }

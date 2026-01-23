@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct AvsCloudLinkStatus : IEquatable<AvsCloudLinkStatus>
     {
         private readonly string _value;
+        /// <summary> is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> is building. </summary>
+        private const string BuildingValue = "Building";
+        /// <summary> is deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> is failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> is disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
 
         /// <summary> Initializes a new instance of <see cref="AvsCloudLinkStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvsCloudLinkStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string BuildingValue = "Building";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
-        private const string DisconnectedValue = "Disconnected";
+            _value = value;
+        }
 
         /// <summary> is active. </summary>
         public static AvsCloudLinkStatus Active { get; } = new AvsCloudLinkStatus(ActiveValue);
+
         /// <summary> is building. </summary>
         public static AvsCloudLinkStatus Building { get; } = new AvsCloudLinkStatus(BuildingValue);
+
         /// <summary> is deleting. </summary>
         public static AvsCloudLinkStatus Deleting { get; } = new AvsCloudLinkStatus(DeletingValue);
+
         /// <summary> is failed. </summary>
         public static AvsCloudLinkStatus Failed { get; } = new AvsCloudLinkStatus(FailedValue);
+
         /// <summary> is disconnected. </summary>
         public static AvsCloudLinkStatus Disconnected { get; } = new AvsCloudLinkStatus(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="AvsCloudLinkStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvsCloudLinkStatus left, AvsCloudLinkStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvsCloudLinkStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvsCloudLinkStatus left, AvsCloudLinkStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsCloudLinkStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvsCloudLinkStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvsCloudLinkStatus(string value) => new AvsCloudLinkStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvsCloudLinkStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvsCloudLinkStatus?(string value) => value == null ? null : new AvsCloudLinkStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvsCloudLinkStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvsCloudLinkStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

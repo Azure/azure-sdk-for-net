@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public readonly partial struct ScheduledActionResourceOperationStatus : IEquatable<ScheduledActionResourceOperationStatus>
     {
         private readonly string _value;
+        /// <summary> The resource operation was successful. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The resource operation has failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceOperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduledActionResourceOperationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> The resource operation was successful. </summary>
         public static ScheduledActionResourceOperationStatus Succeeded { get; } = new ScheduledActionResourceOperationStatus(SucceededValue);
+
         /// <summary> The resource operation has failed. </summary>
         public static ScheduledActionResourceOperationStatus Failed { get; } = new ScheduledActionResourceOperationStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="ScheduledActionResourceOperationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionResourceOperationStatus left, ScheduledActionResourceOperationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduledActionResourceOperationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionResourceOperationStatus left, ScheduledActionResourceOperationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionResourceOperationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduledActionResourceOperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduledActionResourceOperationStatus(string value) => new ScheduledActionResourceOperationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScheduledActionResourceOperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScheduledActionResourceOperationStatus?(string value) => value == null ? null : new ScheduledActionResourceOperationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionResourceOperationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduledActionResourceOperationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

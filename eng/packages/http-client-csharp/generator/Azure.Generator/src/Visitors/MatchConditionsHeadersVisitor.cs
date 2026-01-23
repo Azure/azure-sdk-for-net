@@ -31,6 +31,7 @@ namespace Azure.Generator.Visitors
         private const string IfNoneMatch = "If-None-Match";
         private const string IfModifiedSince = "If-Modified-Since";
         private const string IfUnmodifiedSince = "If-Unmodified-Since";
+        private readonly HashSet<ScmMethodProvider> _visited = [];
 
         private static readonly HashSet<string> _conditionalHeaders = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -53,14 +54,56 @@ namespace Azure.Generator.Visitors
             { RequestConditionHeaders.IfUnmodifiedSince, IfUnmodifiedSince }
         };
 
-        /// <summary>
-        /// Visits a method and modifies it to handle request condition headers.
-        /// </summary>
+        protected override ScmMethodProvider? VisitCreateRequestMethod(
+            InputServiceMethod serviceMethod,
+            RestClientProvider enclosingType,
+            ScmMethodProvider? createRequestMethodProvider)
+        {
+            if (createRequestMethodProvider != null && _visited.Add(createRequestMethodProvider))
+            {
+                UpdateMethod(createRequestMethodProvider);
+            }
+
+            return createRequestMethodProvider;
+        }
+
+        protected override ScmMethodProviderCollection? Visit(
+            InputServiceMethod serviceMethod,
+            ClientProvider enclosingType,
+            ScmMethodProviderCollection? methodProviderCollection)
+        {
+            if (methodProviderCollection != null)
+            {
+                foreach (var method in methodProviderCollection)
+                {
+                    if (_visited.Add(method))
+                    {
+                        UpdateMethod(method);
+                    }
+                }
+            }
+
+            return methodProviderCollection;
+        }
+
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
+        {
+            if (_visited.Add(method))
+            {
+                UpdateMethod(method);
+            }
+
+            return method;
+        }
+
+        /// <summary>
+        /// Modifies a method to handle request condition headers.
+        /// </summary>
+        private void UpdateMethod(ScmMethodProvider method)
         {
             if (!TryGetMethodRequestConditionInfo(method, out var headerFlags, out var matchConditionParams))
             {
-                return base.VisitMethod(method);
+                return;
             }
 
             // Update method parameters
@@ -75,8 +118,6 @@ namespace Azure.Generator.Visitors
             {
                 UpdateClientMethodBody(method, headerFlags, matchConditionParams);
             }
-
-            return method;
         }
 
         protected override TypeProvider? VisitType(TypeProvider type)
@@ -300,7 +341,8 @@ namespace Azure.Generator.Visitors
                 {
                     if (!headerFlags.HasFlag(flag))
                     {
-                        var validationStatement = new IfStatement(requestConditionsParameter.Property(propertyName).NotEqual(Null))
+                        var validationStatement = new IfStatement(
+                            Snippet.NullConditional(requestConditionsParameter).Property(propertyName).NotEqual(Null))
                         {
                             Throw(New.Instance(new CSharpType(typeof(ArgumentException)),
                                 Literal($"Service does not support the {_requestConditionsFlagMap[flag]} header for this operation.")))
@@ -358,6 +400,9 @@ namespace Azure.Generator.Visitors
                     expr.Update(expression: keyword);
                     break;
                 case ExpressionStatement { Expression: AssignmentExpression { Value: ClientResponseApi { Original: InvokeMethodExpression invoke } } }:
+                    UpdateInvokeMethodArguments(invoke, replacementParameter);
+                    break;
+                case ExpressionStatement { Expression: AssignmentExpression { Value: InvokeMethodExpression invoke } }:
                     UpdateInvokeMethodArguments(invoke, replacementParameter);
                     break;
                 case ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } keyword } expr:

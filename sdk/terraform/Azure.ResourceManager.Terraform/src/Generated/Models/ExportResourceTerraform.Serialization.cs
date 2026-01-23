@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Terraform;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
-    public partial class ExportResourceTerraform : IUtf8JsonSerializable, IJsonModel<ExportResourceTerraform>
+    /// <summary> Specified resources to be exported by their ids. </summary>
+    public partial class ExportResourceTerraform : CommonExportProperties, IJsonModel<ExportResourceTerraform>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportResourceTerraform>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ExportResourceTerraform"/> for deserialization. </summary>
+        internal ExportResourceTerraform()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportResourceTerraform>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,16 +35,15 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExportResourceTerraform)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("resourceIds"u8);
             writer.WriteStartArray();
-            foreach (var item in ResourceIds)
+            foreach (ResourceIdentifier item in ResourceIds)
             {
                 if (item == null)
                 {
@@ -74,48 +80,144 @@ namespace Azure.ResourceManager.Terraform.Models
             }
         }
 
-        ExportResourceTerraform IJsonModel<ExportResourceTerraform>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExportResourceTerraform IJsonModel<ExportResourceTerraform>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExportResourceTerraform)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CommonExportProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExportResourceTerraform)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExportResourceTerraform(document.RootElement, options);
         }
 
-        internal static ExportResourceTerraform DeserializeExportResourceTerraform(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExportResourceTerraform DeserializeExportResourceTerraform(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            CommonExportType @type = default;
+            TargetTerraformProvider? targetProvider = default;
+            bool? isOutputFullPropertiesEnabled = default;
+            bool? isMaskSensitiveEnabled = default;
+            bool? includeRoleAssignment = default;
+            bool? includeManagedResource = default;
+            IList<string> azureResourcesToExclude = default;
+            IList<string> terraformResourcesToExclude = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<ResourceIdentifier> resourceIds = default;
             string resourceName = default;
             string resourceType = default;
             string namePattern = default;
             bool? recursive = default;
             bool? includeResourceGroup = default;
-            CommonExportType type = default;
-            TargetTerraformProvider? targetProvider = default;
-            bool? fullProperties = default;
-            bool? maskSensitive = default;
-            bool? includeRoleAssignment = default;
-            bool? includeManagedResource = default;
-            IList<string> excludeAzureResource = default;
-            IList<string> excludeTerraformResource = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceIds"u8))
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new CommonExportType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("targetProvider"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetProvider = new TargetTerraformProvider(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("fullProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isOutputFullPropertiesEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("maskSensitive"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isMaskSensitiveEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("includeRoleAssignment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeRoleAssignment = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("includeManagedResource"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeManagedResource = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("excludeAzureResource"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    azureResourcesToExclude = array;
+                    continue;
+                }
+                if (prop.NameEquals("excludeTerraformResource"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    terraformResourcesToExclude = array;
+                    continue;
+                }
+                if (prop.NameEquals("resourceIds"u8))
                 {
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -129,133 +231,54 @@ namespace Azure.ResourceManager.Terraform.Models
                     resourceIds = array;
                     continue;
                 }
-                if (property.NameEquals("resourceName"u8))
+                if (prop.NameEquals("resourceName"u8))
                 {
-                    resourceName = property.Value.GetString();
+                    resourceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"u8))
+                if (prop.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namePattern"u8))
+                if (prop.NameEquals("namePattern"u8))
                 {
-                    namePattern = property.Value.GetString();
+                    namePattern = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recursive"u8))
+                if (prop.NameEquals("recursive"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recursive = property.Value.GetBoolean();
+                    recursive = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("includeResourceGroup"u8))
+                if (prop.NameEquals("includeResourceGroup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    includeResourceGroup = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new CommonExportType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("targetProvider"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetProvider = new TargetTerraformProvider(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("fullProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fullProperties = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("maskSensitive"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maskSensitive = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("includeRoleAssignment"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeRoleAssignment = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("includeManagedResource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeManagedResource = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("excludeAzureResource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    excludeAzureResource = array;
-                    continue;
-                }
-                if (property.NameEquals("excludeTerraformResource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    excludeTerraformResource = array;
+                    includeResourceGroup = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExportResourceTerraform(
-                type,
+                @type,
                 targetProvider,
-                fullProperties,
-                maskSensitive,
+                isOutputFullPropertiesEnabled,
+                isMaskSensitiveEnabled,
                 includeRoleAssignment,
                 includeManagedResource,
-                excludeAzureResource ?? new ChangeTrackingList<string>(),
-                excludeTerraformResource ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData,
+                azureResourcesToExclude ?? new ChangeTrackingList<string>(),
+                terraformResourcesToExclude ?? new ChangeTrackingList<string>(),
+                additionalBinaryDataProperties,
                 resourceIds,
                 resourceName,
                 resourceType,
@@ -264,10 +287,13 @@ namespace Azure.ResourceManager.Terraform.Models
                 includeResourceGroup);
         }
 
-        BinaryData IPersistableModel<ExportResourceTerraform>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExportResourceTerraform>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -277,15 +303,20 @@ namespace Azure.ResourceManager.Terraform.Models
             }
         }
 
-        ExportResourceTerraform IPersistableModel<ExportResourceTerraform>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExportResourceTerraform IPersistableModel<ExportResourceTerraform>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExportResourceTerraform)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CommonExportProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExportResourceTerraform(document.RootElement, options);
                     }
                 default:
@@ -293,6 +324,7 @@ namespace Azure.ResourceManager.Terraform.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExportResourceTerraform>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct OracleDatabaseDayOfWeekName : IEquatable<OracleDatabaseDayOfWeekName>
     {
         private readonly string _value;
+        /// <summary> Monday value. </summary>
+        private const string MondayValue = "Monday";
+        /// <summary> Tuesday value. </summary>
+        private const string TuesdayValue = "Tuesday";
+        /// <summary> Wednesday value. </summary>
+        private const string WednesdayValue = "Wednesday";
+        /// <summary> Thursday value. </summary>
+        private const string ThursdayValue = "Thursday";
+        /// <summary> Friday value. </summary>
+        private const string FridayValue = "Friday";
+        /// <summary> Saturday value. </summary>
+        private const string SaturdayValue = "Saturday";
+        /// <summary> Sunday value. </summary>
+        private const string SundayValue = "Sunday";
 
         /// <summary> Initializes a new instance of <see cref="OracleDatabaseDayOfWeekName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OracleDatabaseDayOfWeekName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MondayValue = "Monday";
-        private const string TuesdayValue = "Tuesday";
-        private const string WednesdayValue = "Wednesday";
-        private const string ThursdayValue = "Thursday";
-        private const string FridayValue = "Friday";
-        private const string SaturdayValue = "Saturday";
-        private const string SundayValue = "Sunday";
+            _value = value;
+        }
 
         /// <summary> Monday value. </summary>
         public static OracleDatabaseDayOfWeekName Monday { get; } = new OracleDatabaseDayOfWeekName(MondayValue);
+
         /// <summary> Tuesday value. </summary>
         public static OracleDatabaseDayOfWeekName Tuesday { get; } = new OracleDatabaseDayOfWeekName(TuesdayValue);
+
         /// <summary> Wednesday value. </summary>
         public static OracleDatabaseDayOfWeekName Wednesday { get; } = new OracleDatabaseDayOfWeekName(WednesdayValue);
+
         /// <summary> Thursday value. </summary>
         public static OracleDatabaseDayOfWeekName Thursday { get; } = new OracleDatabaseDayOfWeekName(ThursdayValue);
+
         /// <summary> Friday value. </summary>
         public static OracleDatabaseDayOfWeekName Friday { get; } = new OracleDatabaseDayOfWeekName(FridayValue);
+
         /// <summary> Saturday value. </summary>
         public static OracleDatabaseDayOfWeekName Saturday { get; } = new OracleDatabaseDayOfWeekName(SaturdayValue);
+
         /// <summary> Sunday value. </summary>
         public static OracleDatabaseDayOfWeekName Sunday { get; } = new OracleDatabaseDayOfWeekName(SundayValue);
+
         /// <summary> Determines if two <see cref="OracleDatabaseDayOfWeekName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OracleDatabaseDayOfWeekName left, OracleDatabaseDayOfWeekName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OracleDatabaseDayOfWeekName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OracleDatabaseDayOfWeekName left, OracleDatabaseDayOfWeekName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleDatabaseDayOfWeekName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OracleDatabaseDayOfWeekName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OracleDatabaseDayOfWeekName(string value) => new OracleDatabaseDayOfWeekName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OracleDatabaseDayOfWeekName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OracleDatabaseDayOfWeekName?(string value) => value == null ? null : new OracleDatabaseDayOfWeekName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OracleDatabaseDayOfWeekName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OracleDatabaseDayOfWeekName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

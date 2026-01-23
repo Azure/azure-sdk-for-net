@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Create or update a management group.
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Create or update a management group.
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -124,7 +122,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -163,7 +161,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Get the details of the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -175,7 +172,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -213,7 +210,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Get the details of the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -225,7 +221,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -262,80 +258,6 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary>
-        /// List management groups for the authenticated user.
-        ///
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroups_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
-        /// <param name="skipToken">
-        /// Page continuation token is only used if a previous operation returned a partial result.
-        /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagementGroupResource> GetAllAsync(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "@nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List management groups for the authenticated user.
-        ///
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroups_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
-        /// <param name="skipToken">
-        /// Page continuation token is only used if a previous operation returned a partial result.
-        /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagementGroupResource> GetAll(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "@nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Checks if the specified management group name is valid and unique
         /// <list type="bullet">
         /// <item>
@@ -348,7 +270,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +278,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Management group name availability check parameters. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ManagementGroupNameAvailabilityResult>> CheckNameAvailabilityAsync(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -390,7 +312,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +320,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Management group name availability check parameters. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ManagementGroupNameAvailabilityResult> CheckNameAvailability(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -420,8 +342,77 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary>
+        /// List management groups for the authenticated user.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
+        /// <param name="skipToken">
+        /// Page continuation token is only used if a previous operation returned a partial result.
+        /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagementGroupResource> GetAllAsync(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "@nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List management groups for the authenticated user.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
+        /// <param name="skipToken">
+        /// Page continuation token is only used if a previous operation returned a partial result.
+        /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagementGroupResource> GetAll(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "@nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// List all entities (Management Groups, Subscriptions, etc.) for the authenticated user.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -433,7 +424,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,7 +442,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// List all entities (Management Groups, Subscriptions, etc.) for the authenticated user.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -463,7 +453,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -492,7 +482,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -539,7 +529,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -586,7 +576,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -635,7 +625,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

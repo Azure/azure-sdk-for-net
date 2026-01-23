@@ -9,7 +9,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
@@ -25,7 +25,6 @@ To delete a project, call DeleteProject on the `ConversationAuthoringProject` cl
 ```C# Snippet:Sample5_ConversationsAuthoring_DeleteProject
 string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
 Operation operation = projectClient.DeleteProject(
     waitUntil: WaitUntil.Completed
 );
@@ -44,7 +43,6 @@ To delete a project, call DeleteProjectAsync on the `ConversationAuthoringProjec
 ```C# Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
 string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
 Operation operation = await projectClient.DeleteProjectAsync(
     waitUntil: WaitUntil.Completed
 );

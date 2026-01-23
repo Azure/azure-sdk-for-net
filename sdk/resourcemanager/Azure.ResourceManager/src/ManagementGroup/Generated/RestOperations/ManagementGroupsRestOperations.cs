@@ -32,8 +32,84 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-04-01";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(ManagementGroupNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCheckNameAvailabilityRequest(ManagementGroupNameAvailabilityContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Checks if the specified management group name is valid and unique. </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response<ManagementGroupNameAvailabilityResult>> CheckNameAvailabilityAsync(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCheckNameAvailabilityRequest(content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagementGroupNameAvailabilityResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ManagementGroupNameAvailabilityResult.DeserializeManagementGroupNameAvailabilityResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Checks if the specified management group name is valid and unique. </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response<ManagementGroupNameAvailabilityResult> CheckNameAvailability(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCheckNameAvailabilityRequest(content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagementGroupNameAvailabilityResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ManagementGroupNameAvailabilityResult.DeserializeManagementGroupNameAvailabilityResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateListRequestUri(string cacheControl, string skipToken)
@@ -72,15 +148,11 @@ namespace Azure.ResourceManager.ManagementGroups
             return message;
         }
 
-        /// <summary>
-        /// List management groups for the authenticated user.
-        ///
-        /// </summary>
+        /// <summary> List management groups for the authenticated user. </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ManagementGroupListResult>> ListAsync(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
@@ -101,15 +173,11 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        /// <summary>
-        /// List management groups for the authenticated user.
-        ///
-        /// </summary>
+        /// <summary> List management groups for the authenticated user. </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ManagementGroupListResult> List(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
@@ -184,10 +252,7 @@ namespace Azure.ResourceManager.ManagementGroups
             return message;
         }
 
-        /// <summary>
-        /// Get the details of the management group.
-        ///
-        /// </summary>
+        /// <summary> Get the details of the management group. </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
         /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
@@ -218,10 +283,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        /// <summary>
-        /// Get the details of the management group.
-        ///
-        /// </summary>
+        /// <summary> Get the details of the management group. </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
         /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
@@ -289,7 +351,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Create or update a management group.
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
-        ///
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="content"> Management group creation parameters. </param>
@@ -317,7 +378,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Create or update a management group.
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
-        ///
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="content"> Management group creation parameters. </param>
@@ -376,10 +436,7 @@ namespace Azure.ResourceManager.ManagementGroups
             return message;
         }
 
-        /// <summary>
-        /// Update a management group.
-        ///
-        /// </summary>
+        /// <summary> Update a management group. </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="patch"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
@@ -407,10 +464,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        /// <summary>
-        /// Update a management group.
-        ///
-        /// </summary>
+        /// <summary> Update a management group. </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="patch"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
@@ -471,7 +525,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Delete management group.
         /// If a management group contains child resources, the request will fail.
-        ///
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
@@ -497,7 +550,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Delete management group.
         /// If a management group contains child resources, the request will fail.
-        ///
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
@@ -564,15 +616,11 @@ namespace Azure.ResourceManager.ManagementGroups
             return message;
         }
 
-        /// <summary>
-        /// List all entities that descend from a management group.
-        ///
-        /// </summary>
+        /// <summary> List all entities that descend from a management group. </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -598,15 +646,11 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        /// <summary>
-        /// List all entities that descend from a management group.
-        ///
-        /// </summary>
+        /// <summary> List all entities that descend from a management group. </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -625,82 +669,6 @@ namespace Azure.ResourceManager.ManagementGroups
                         DescendantListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DescendantListResult.DeserializeDescendantListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(ManagementGroupNameAvailabilityContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/checkNameAvailability", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCheckNameAvailabilityRequest(ManagementGroupNameAvailabilityContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/checkNameAvailability", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Checks if the specified management group name is valid and unique. </summary>
-        /// <param name="content"> Management group name availability check parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response<ManagementGroupNameAvailabilityResult>> CheckNameAvailabilityAsync(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCheckNameAvailabilityRequest(content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagementGroupNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ManagementGroupNameAvailabilityResult.DeserializeManagementGroupNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Checks if the specified management group name is valid and unique. </summary>
-        /// <param name="content"> Management group name availability check parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response<ManagementGroupNameAvailabilityResult> CheckNameAvailability(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCheckNameAvailabilityRequest(content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagementGroupNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ManagementGroupNameAvailabilityResult.DeserializeManagementGroupNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -734,16 +702,12 @@ namespace Azure.ResourceManager.ManagementGroups
             return message;
         }
 
-        /// <summary>
-        /// List management groups for the authenticated user.
-        ///
-        /// </summary>
+        /// <summary> List management groups for the authenticated user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -767,16 +731,12 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        /// <summary>
-        /// List management groups for the authenticated user.
-        ///
-        /// </summary>
+        /// <summary> List management groups for the authenticated user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -822,16 +782,12 @@ namespace Azure.ResourceManager.ManagementGroups
             return message;
         }
 
-        /// <summary>
-        /// List all entities that descend from a management group.
-        ///
-        /// </summary>
+        /// <summary> List all entities that descend from a management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -858,16 +814,12 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        /// <summary>
-        /// List all entities that descend from a management group.
-        ///
-        /// </summary>
+        /// <summary> List all entities that descend from a management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -1047,7 +1047,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/added/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Added.endpoint"
+              "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.endpoint"
             },
             {
               "$id": "77",
@@ -1074,7 +1074,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/added/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Added.version"
+              "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.version"
             }
           ],
           "initializedBy": 0,
@@ -1085,9 +1085,11 @@
           ],
           "parent": {
             "$ref": "41"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

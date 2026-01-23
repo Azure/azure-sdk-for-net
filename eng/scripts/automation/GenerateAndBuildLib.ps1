@@ -762,7 +762,7 @@ function GeneratePackage()
         }
     }
 
-    if ($isGenerateSuccess) {
+    if ($isGenerateSuccess -and $serviceType -eq "data-plane") {
         # Get the version from csproj before building
         $projectFile = Join-Path $srcPath "$packageName.csproj"
         $csproj = new-object xml
@@ -962,6 +962,7 @@ function GetSDKProjectFolder()
     $service = $null
     $namespace = $null
     $packageDir = $null
+    $packageName = $null
     $emitterOutputDir = $null
 
     if ($yml) {
@@ -990,8 +991,13 @@ function GetSDKProjectFolder()
                 $namespace = $csharpOpts["namespace"]
             }
 
+            # TODO: This is should be removed once all package-dir usages are removed in spec repo
             if ($csharpOpts["package-dir"]) {
                 $packageDir = $csharpOpts["package-dir"]
+            }
+
+            if ($csharpOpts["package-name"]) {
+                $packageName = $csharpOpts["package-name"]
             }
 
             if ($csharpOpts["service-dir"]) {
@@ -1031,6 +1037,14 @@ function GetSDKProjectFolder()
                     $resolvedSegments += ($normalizedNamespace | Where-Object { $_ })
                     continue
                 }
+                "{package-name}" {
+                    if ([string]::IsNullOrWhiteSpace($packageName)) {
+                        throw "[ERROR] 'package-name' must be provided when '{package-name}' is used in 'emitter-output-dir'."
+                    }
+                    $normalizedPackageName = ($packageName -replace "\\", "/") -split "/"
+                    $resolvedSegments += ($normalizedPackageName | Where-Object { $_ })
+                    continue
+                }
                 default {
                     if (![string]::IsNullOrWhiteSpace($segment)) {
                         $resolvedSegments += $segment
@@ -1052,7 +1066,13 @@ function GetSDKProjectFolder()
     }
 
     if ([string]::IsNullOrWhiteSpace($packageDir)) {
-        $packageDir = $namespace
+        if (![string]::IsNullOrWhiteSpace($packageName)) {
+            Write-Host "Package directory is reset by package name: $packageName"
+            $packageDir = $packageName
+        } else {
+            Write-Host "Package directory is reset by namespace: $namespace"
+            $packageDir = $namespace
+        }
     }
 
     if ([string]::IsNullOrWhiteSpace($service) -or [string]::IsNullOrWhiteSpace($namespace)) {

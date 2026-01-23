@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Describes the properties of an Transit Hub. </summary>
     public partial class VirtualEnclaveTransitHubProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveTransitHubProperties"/>. </summary>
         public VirtualEnclaveTransitHubProperties()
@@ -57,22 +29,25 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="state"> The state of the transitHub. </param>
         /// <param name="transitOption"> The TransitOption of the transitHub. </param>
         /// <param name="resourceCollection"> List of resource ids modified by transitHubs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveTransitHubProperties(VirtualEnclaveProvisioningState? provisioningState, TransitHubState? state, VirtualEnclaveTransitOptionProperties transitOption, IReadOnlyList<ResourceIdentifier> resourceCollection, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualEnclaveTransitHubProperties(VirtualEnclaveProvisioningState? provisioningState, TransitHubState? state, VirtualEnclaveTransitOptionProperties transitOption, IReadOnlyList<ResourceIdentifier> resourceCollection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             State = state;
             TransitOption = transitOption;
             ResourceCollection = resourceCollection;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the last operation. </summary>
         public VirtualEnclaveProvisioningState? ProvisioningState { get; }
+
         /// <summary> The state of the transitHub. </summary>
         public TransitHubState? State { get; set; }
+
         /// <summary> The TransitOption of the transitHub. </summary>
         public VirtualEnclaveTransitOptionProperties TransitOption { get; set; }
+
         /// <summary> List of resource ids modified by transitHubs. </summary>
         public IReadOnlyList<ResourceIdentifier> ResourceCollection { get; }
     }

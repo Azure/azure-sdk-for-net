@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationEventCollection : ArmCollection, IEnumerable<DataReplicationEventResource>, IAsyncEnumerable<DataReplicationEventResource>
     {
-        private readonly ClientDiagnostics _dataReplicationEventEventClientDiagnostics;
-        private readonly EventRestOperations _dataReplicationEventEventRestClient;
+        private readonly ClientDiagnostics _eventClientDiagnostics;
+        private readonly Event _eventRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataReplicationEventCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataReplicationEventCollection for mocking. </summary>
         protected DataReplicationEventCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataReplicationEventCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEventCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataReplicationEventCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataReplicationEventEventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationEventResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataReplicationEventResource.ResourceType, out string dataReplicationEventEventApiVersion);
-            _dataReplicationEventEventRestClient = new EventRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationEventEventApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataReplicationEventResource.ResourceType, out string dataReplicationEventApiVersion);
+            _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationEventResource.ResourceType.Namespace, Diagnostics);
+            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Endpoint, dataReplicationEventApiVersion ?? "2024-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataReplicationVaultResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the details of the event.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventModel_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Event_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DataReplicationEventResource>> GetAsync(string eventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
-            using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.Get");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("DataReplicationEventCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataReplicationEventEventRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationEventData> response = Response.FromValue(DataReplicationEventData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Gets the details of the event.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventModel_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Event_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DataReplicationEventResource> Get(string eventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
-            using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.Get");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("DataReplicationEventCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataReplicationEventEventRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationEventData> response = Response.FromValue(DataReplicationEventData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,53 +156,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Gets the list of events in the given vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventModel_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Event_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationEventResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="odataOptions"> OData options. </param>
-        /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="pageSize"> Page size. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationEventResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataReplicationEventResource> GetAllAsync(string odataOptions = null, string continuationToken = null, int? pageSize = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationEventEventRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationEventEventRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationEventResource(Client, DataReplicationEventData.DeserializeDataReplicationEventData(e)), _dataReplicationEventEventClientDiagnostics, Pipeline, "DataReplicationEventCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of events in the given vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventModel_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,47 +174,110 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="pageSize"> Page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataReplicationEventResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataReplicationEventResource> GetAll(string odataOptions = null, string continuationToken = null, int? pageSize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataReplicationEventResource> GetAllAsync(string odataOptions = default, string continuationToken = default, int? pageSize = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationEventEventRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationEventEventRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationEventResource(Client, DataReplicationEventData.DeserializeDataReplicationEventData(e)), _dataReplicationEventEventClientDiagnostics, Pipeline, "DataReplicationEventCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataReplicationEventData, DataReplicationEventResource>(new EventGetAllAsyncCollectionResultOfT(
+                _eventRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                odataOptions,
+                continuationToken,
+                pageSize,
+                context), data => new DataReplicationEventResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets the list of events in the given vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Event_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="odataOptions"> OData options. </param>
+        /// <param name="continuationToken"> Continuation token. </param>
+        /// <param name="pageSize"> Page size. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataReplicationEventResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataReplicationEventResource> GetAll(string odataOptions = default, string continuationToken = default, int? pageSize = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataReplicationEventData, DataReplicationEventResource>(new EventGetAllCollectionResultOfT(
+                _eventRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                odataOptions,
+                continuationToken,
+                pageSize,
+                context), data => new DataReplicationEventResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventModel_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Event_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string eventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
-            using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.Exists");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("DataReplicationEventCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataReplicationEventEventRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataReplicationEventData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataReplicationEventData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataReplicationEventData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,36 +291,50 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventModel_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Event_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string eventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
-            using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.Exists");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("DataReplicationEventCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataReplicationEventEventRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataReplicationEventData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataReplicationEventData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataReplicationEventData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -297,38 +348,54 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventModel_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Event_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DataReplicationEventResource>> GetIfExistsAsync(string eventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
-            using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.GetIfExists");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("DataReplicationEventCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataReplicationEventEventRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataReplicationEventData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataReplicationEventData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataReplicationEventData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataReplicationEventResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -342,38 +409,54 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventModel_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Event_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DataReplicationEventResource> GetIfExists(string eventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
-            using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.GetIfExists");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("DataReplicationEventCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataReplicationEventEventRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataReplicationEventData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataReplicationEventData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataReplicationEventData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataReplicationEventResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,6 +476,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataReplicationEventResource> IAsyncEnumerable<DataReplicationEventResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

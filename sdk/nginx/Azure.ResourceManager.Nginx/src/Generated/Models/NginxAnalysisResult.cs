@@ -13,67 +13,31 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The response body for an analysis request. Contains the status of the analysis and any errors. </summary>
     public partial class NginxAnalysisResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxAnalysisResult"/>. </summary>
         /// <param name="status"> The status of the analysis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal NginxAnalysisResult(string status)
         {
-            Argument.AssertNotNull(status, nameof(status));
-
             Status = status;
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxAnalysisResult"/>. </summary>
         /// <param name="status"> The status of the analysis. </param>
         /// <param name="data"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxAnalysisResult(string status, NginxAnalysisResultDetails data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NginxAnalysisResult(string status, NginxAnalysisResultDetails data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Data = data;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NginxAnalysisResult"/> for deserialization. </summary>
-        internal NginxAnalysisResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the analysis. </summary>
         public string Status { get; }
-        /// <summary> Gets the data. </summary>
+
+        /// <summary> Gets the Data. </summary>
         public NginxAnalysisResultDetails Data { get; }
     }
 }

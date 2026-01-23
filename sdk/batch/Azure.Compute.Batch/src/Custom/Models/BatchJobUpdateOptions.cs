@@ -7,11 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
     /// <summary> Parameters for updating an Azure Batch Job. </summary>
     public partial class BatchJobUpdateOptions
     {
+        /// <param name="batchJobUpdateOptions"> The <see cref="BatchJobUpdateOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BatchJobUpdateOptions batchJobUpdateOptions)
+        {
+            if (batchJobUpdateOptions == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(batchJobUpdateOptions, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

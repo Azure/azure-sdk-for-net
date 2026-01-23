@@ -12,13 +12,12 @@
     <NoWarn>OPENAI001</NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
- 
+
   <ItemGroup>
     <PackageReference Include="Azure.AI.OpenAI" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
     <PackageReference Include="Microsoft.Bcl.Numerics" />
-    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
+    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
   <ItemGroup>

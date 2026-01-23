@@ -7,51 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> RegistryEndpoint properties. </summary>
     public partial class IotOperationsRegistryEndpointProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsRegistryEndpointProperties"/>. </summary>
         /// <param name="host"> The Container Registry endpoint hostname. </param>
-        /// <param name="authentication">
-        /// The authentication settings for the Azure Container Registry.
-        /// Please note <see cref="RegistryEndpointAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RegistryEndpointAnonymousAuthentication"/>, <see cref="RegistryEndpointArtifactPullSecretAuthentication"/>, <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/> and <see cref="RegistryEndpointUserAssignedIdentityAuthentication"/>.
-        /// </param>
+        /// <param name="authentication"> The authentication settings for the Azure Container Registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="authentication"/> is null. </exception>
         public IotOperationsRegistryEndpointProperties(string host, RegistryEndpointAuthentication authentication)
         {
@@ -60,53 +28,39 @@ namespace Azure.ResourceManager.IotOperations.Models
 
             Host = host;
             Authentication = authentication;
+            CodeSigningCas = new ChangeTrackingList<RegistryEndpointTrustedSigningKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsRegistryEndpointProperties"/>. </summary>
         /// <param name="host"> The Container Registry endpoint hostname. </param>
-        /// <param name="authentication">
-        /// The authentication settings for the Azure Container Registry.
-        /// Please note <see cref="RegistryEndpointAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RegistryEndpointAnonymousAuthentication"/>, <see cref="RegistryEndpointArtifactPullSecretAuthentication"/>, <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/> and <see cref="RegistryEndpointUserAssignedIdentityAuthentication"/>.
-        /// </param>
+        /// <param name="authentication"> The authentication settings for the Azure Container Registry. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="trustSettings"> Trust settings for the registry endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsRegistryEndpointProperties(string host, RegistryEndpointAuthentication authentication, IotOperationsProvisioningState? provisioningState, RegistryEndpointTrustedSettings trustSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="healthState"> The health state of the resource. </param>
+        /// <param name="codeSigningCas"> The signing certificate authorities used by artifacts in the registry endpoint. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotOperationsRegistryEndpointProperties(string host, RegistryEndpointAuthentication authentication, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState, IList<RegistryEndpointTrustedSigningKey> codeSigningCas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Authentication = authentication;
             ProvisioningState = provisioningState;
-            TrustSettings = trustSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotOperationsRegistryEndpointProperties"/> for deserialization. </summary>
-        internal IotOperationsRegistryEndpointProperties()
-        {
+            HealthState = healthState;
+            CodeSigningCas = codeSigningCas;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Container Registry endpoint hostname. </summary>
         public string Host { get; set; }
-        /// <summary>
-        /// The authentication settings for the Azure Container Registry.
-        /// Please note <see cref="RegistryEndpointAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RegistryEndpointAnonymousAuthentication"/>, <see cref="RegistryEndpointArtifactPullSecretAuthentication"/>, <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/> and <see cref="RegistryEndpointUserAssignedIdentityAuthentication"/>.
-        /// </summary>
+
+        /// <summary> The authentication settings for the Azure Container Registry. </summary>
         public RegistryEndpointAuthentication Authentication { get; set; }
+
         /// <summary> The status of the last operation. </summary>
         public IotOperationsProvisioningState? ProvisioningState { get; }
-        /// <summary> Trust settings for the registry endpoint. </summary>
-        internal RegistryEndpointTrustedSettings TrustSettings { get; set; }
-        /// <summary>
-        /// The trust properties for the registry endpoint.
-        /// Please note <see cref="RegistryEndpointTrustedSigningKey"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RegistryEndpointTrustedSigningKeyConfigMap"/> and <see cref="RegistryEndpointTrustedSigningKeySecret"/>.
-        /// </summary>
-        public RegistryEndpointTrustedSigningKey TrustTrustedSigningKeys
-        {
-            get => TrustSettings is null ? default : TrustSettings.TrustedSigningKeys;
-            set => TrustSettings = new RegistryEndpointTrustedSettings(value);
-        }
+
+        /// <summary> The health state of the resource. </summary>
+        public ResourceHealthState? HealthState { get; }
+
+        /// <summary> The signing certificate authorities used by artifacts in the registry endpoint. </summary>
+        public IList<RegistryEndpointTrustedSigningKey> CodeSigningCas { get; }
     }
 }

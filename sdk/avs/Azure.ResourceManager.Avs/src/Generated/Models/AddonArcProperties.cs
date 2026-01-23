@@ -14,20 +14,18 @@ namespace Azure.ResourceManager.Avs.Models
     public partial class AddonArcProperties : AvsPrivateCloudAddonProperties
     {
         /// <summary> Initializes a new instance of <see cref="AddonArcProperties"/>. </summary>
-        public AddonArcProperties()
+        public AddonArcProperties() : base(AddonType.Arc)
         {
-            AddonType = AddonType.Arc;
         }
 
         /// <summary> Initializes a new instance of <see cref="AddonArcProperties"/>. </summary>
         /// <param name="addonType"> Addon type. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vCenter"> The VMware vCenter resource ID. </param>
-        internal AddonArcProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, string vCenter) : base(addonType, provisioningState, serializedAdditionalRawData)
+        internal AddonArcProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string vCenter) : base(addonType, provisioningState, additionalBinaryDataProperties)
         {
             VCenter = vCenter;
-            AddonType = addonType;
         }
 
         /// <summary> The VMware vCenter resource ID. </summary>

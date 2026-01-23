@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Grafana
 {
-    internal class ManagedDashboardOperationSource : IOperationSource<ManagedDashboardResource>
+    /// <summary></summary>
+    internal partial class ManagedDashboardOperationSource : IOperationSource<ManagedDashboardResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ManagedDashboardOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ManagedDashboardResource IOperationSource<ManagedDashboardResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedDashboardData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ManagedDashboardData data = ManagedDashboardData.DeserializeManagedDashboardData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedDashboardResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ManagedDashboardResource> IOperationSource<ManagedDashboardResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedDashboardData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
-            return await Task.FromResult(new ManagedDashboardResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ManagedDashboardData data = ManagedDashboardData.DeserializeManagedDashboardData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedDashboardResource(_client, data);
         }
     }
 }

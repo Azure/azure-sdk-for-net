@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.StorageMover.Models
     public readonly partial struct JobType : IEquatable<JobType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="JobType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public JobType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string OnPremToCloudValue = "OnPremToCloud";
         private const string CloudToCloudValue = "CloudToCloud";
 
-        /// <summary> OnPremToCloud. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public JobType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the OnPremToCloud. </summary>
         public static JobType OnPremToCloud { get; } = new JobType(OnPremToCloudValue);
-        /// <summary> CloudToCloud. </summary>
+
+        /// <summary> Gets the CloudToCloud. </summary>
         public static JobType CloudToCloud { get; } = new JobType(CloudToCloudValue);
+
         /// <summary> Determines if two <see cref="JobType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobType left, JobType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JobType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobType left, JobType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JobType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JobType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JobType(string value) => new JobType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JobType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JobType?(string value) => value == null ? null : new JobType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JobType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JobType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

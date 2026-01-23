@@ -5,6 +5,7 @@
     <!-- Signal that samples are building in the repo as opposed to a standalone download from Samples Browser -->
     <IsClientLibrary>true</IsClientLibrary>
     <IsPackable>true</IsPackable>
+    <IsSamplesProject>true</IsSamplesProject>
     <IsSample>true</IsSample>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <NoWarn>

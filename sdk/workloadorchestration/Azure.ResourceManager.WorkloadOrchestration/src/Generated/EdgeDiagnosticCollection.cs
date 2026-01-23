@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     /// <summary>
     /// A class representing a collection of <see cref="EdgeDiagnosticResource"/> and their operations.
     /// Each <see cref="EdgeDiagnosticResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="EdgeDiagnosticCollection"/> instance call the GetEdgeDiagnostics method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="EdgeDiagnosticCollection"/> instance call the GetEdgeDiagnostics method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class EdgeDiagnosticCollection : ArmCollection, IEnumerable<EdgeDiagnosticResource>, IAsyncEnumerable<EdgeDiagnosticResource>
     {
-        private readonly ClientDiagnostics _edgeDiagnosticDiagnosticsClientDiagnostics;
-        private readonly DiagnosticsRestOperations _edgeDiagnosticDiagnosticsRestClient;
+        private readonly ClientDiagnostics _diagnosticsClientDiagnostics;
+        private readonly Diagnostics _diagnosticsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeDiagnosticCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeDiagnosticCollection for mocking. </summary>
         protected EdgeDiagnosticCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeDiagnosticCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeDiagnosticCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeDiagnosticCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeDiagnosticDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDiagnosticResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EdgeDiagnosticResource.ResourceType, out string edgeDiagnosticDiagnosticsApiVersion);
-            _edgeDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDiagnosticDiagnosticsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(EdgeDiagnosticResource.ResourceType, out string edgeDiagnosticApiVersion);
+            _diagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDiagnosticResource.ResourceType.Namespace, Diagnostics);
+            _diagnosticsRestClient = new Diagnostics(_diagnosticsClientDiagnostics, Pipeline, Endpoint, edgeDiagnosticApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates new or updates existing Diagnostic resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostics_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="diagnosticName"> Name of Diagnostic. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<EdgeDiagnosticResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diagnosticName, EdgeDiagnosticData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeDiagnosticDiagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _diagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _edgeDiagnosticDiagnosticsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diagnosticName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(new EdgeDiagnosticOperationSource(Client), _edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, _edgeDiagnosticDiagnosticsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diagnosticName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, EdgeDiagnosticData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadOrchestrationArmOperation<EdgeDiagnosticResource> operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(
+                    new EdgeDiagnosticOperationSource(Client),
+                    _diagnosticsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Creates new or updates existing Diagnostic resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostics_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="diagnosticName"> Name of Diagnostic. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<EdgeDiagnosticResource> CreateOrUpdate(WaitUntil waitUntil, string diagnosticName, EdgeDiagnosticData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeDiagnosticDiagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _diagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _edgeDiagnosticDiagnosticsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diagnosticName, data, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(new EdgeDiagnosticOperationSource(Client), _edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, _edgeDiagnosticDiagnosticsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diagnosticName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, EdgeDiagnosticData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadOrchestrationArmOperation<EdgeDiagnosticResource> operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(
+                    new EdgeDiagnosticOperationSource(Client),
+                    _diagnosticsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Returns details of specified Diagnostic resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticName"> Name of Diagnostic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<EdgeDiagnosticResource>> GetAsync(string diagnosticName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
 
-            using var scope = _edgeDiagnosticDiagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.Get");
+            using DiagnosticScope scope = _diagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.Get");
             scope.Start();
             try
             {
-                var response = await _edgeDiagnosticDiagnosticsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diagnosticName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeDiagnosticData> response = Response.FromValue(EdgeDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Returns details of specified Diagnostic resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticName"> Name of Diagnostic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<EdgeDiagnosticResource> Get(string diagnosticName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
 
-            using var scope = _edgeDiagnosticDiagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.Get");
+            using DiagnosticScope scope = _diagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.Get");
             scope.Start();
             try
             {
-                var response = _edgeDiagnosticDiagnosticsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diagnosticName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeDiagnosticData> response = Response.FromValue(EdgeDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Returns a collection of Diagnostic resources within the resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostics_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeDiagnosticResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeDiagnosticDiagnosticsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeDiagnosticDiagnosticsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeDiagnosticResource(Client, EdgeDiagnosticData.DeserializeEdgeDiagnosticData(e)), _edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, "EdgeDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupAsyncCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeDiagnosticResource(Client, data));
         }
 
         /// <summary>
         /// Returns a collection of Diagnostic resources within the resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostics_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeDiagnosticResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeDiagnosticDiagnosticsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeDiagnosticDiagnosticsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeDiagnosticResource(Client, EdgeDiagnosticData.DeserializeEdgeDiagnosticData(e)), _edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, "EdgeDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeDiagnosticResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticName"> Name of Diagnostic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string diagnosticName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
 
-            using var scope = _edgeDiagnosticDiagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.Exists");
+            using DiagnosticScope scope = _diagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _edgeDiagnosticDiagnosticsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diagnosticName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeDiagnosticData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeDiagnosticData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeDiagnosticData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticName"> Name of Diagnostic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string diagnosticName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
 
-            using var scope = _edgeDiagnosticDiagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.Exists");
+            using DiagnosticScope scope = _diagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.Exists");
             scope.Start();
             try
             {
-                var response = _edgeDiagnosticDiagnosticsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diagnosticName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeDiagnosticData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeDiagnosticData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeDiagnosticData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticName"> Name of Diagnostic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<EdgeDiagnosticResource>> GetIfExistsAsync(string diagnosticName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
 
-            using var scope = _edgeDiagnosticDiagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.GetIfExists");
+            using DiagnosticScope scope = _diagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _edgeDiagnosticDiagnosticsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diagnosticName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeDiagnosticData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeDiagnosticData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeDiagnosticData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeDiagnosticResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticName"> Name of Diagnostic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<EdgeDiagnosticResource> GetIfExists(string diagnosticName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
 
-            using var scope = _edgeDiagnosticDiagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.GetIfExists");
+            using DiagnosticScope scope = _diagnosticsClientDiagnostics.CreateScope("EdgeDiagnosticCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _edgeDiagnosticDiagnosticsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diagnosticName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeDiagnosticData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeDiagnosticData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeDiagnosticData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeDiagnosticResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeDiagnosticResource> IAsyncEnumerable<EdgeDiagnosticResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

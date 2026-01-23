@@ -121,10 +121,11 @@ Write-Host ""
 # Generate version string with timestamp and hash
 # Used for both npm and NuGet packages to ensure consistency
 function Get-LocalPackageVersion {
-    $timestamp = Get-Date -Format "yyyyMMdd"
-    $hash = (git -C $packageRoot rev-parse --short HEAD 2>$null) ?? "local"
-    return "1.0.0-alpha.$timestamp.$hash"
+    $timestamp = Get-Date -Format "yyyyMMddHHmmss"
+    $hash = (git -C $packageRoot rev-parse --short=7 HEAD 2>$null) ?? "local"
+    return "1.0.0-alpha-$timestamp.$hash"
 }
+
 
 # Run npm pack and return the package file path
 function Invoke-NpmPack {

@@ -14,7 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The BodyStringSanitizer. </summary>
-    public partial class BodyStringSanitizer : IJsonModel<BodyStringSanitizer>
+    public partial class BodyStringSanitizer : SanitizerAddition, IJsonModel<BodyStringSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="BodyStringSanitizer"/> for deserialization. </summary>
         internal BodyStringSanitizer()
@@ -120,7 +120,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeBodyStringSanitizer(document.RootElement, options);
                     }

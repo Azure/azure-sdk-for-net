@@ -22,14 +22,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private readonly ParameterInfo _parameterInfo;
         private readonly WebPubSubTriggerAttribute _attribute;
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
-        private readonly WebPubSubFunctionsOptions _options;
+        private readonly WebPubSubServiceAccessOptions _options;
+        private readonly WebPubSubServiceAccessFactory _accessFactory;
 
-        public WebPubSubTriggerBinding(ParameterInfo parameterInfo, WebPubSubTriggerAttribute attribute, WebPubSubFunctionsOptions options, IWebPubSubTriggerDispatcher dispatcher)
+        public WebPubSubTriggerBinding(ParameterInfo parameterInfo, WebPubSubTriggerAttribute attribute, WebPubSubServiceAccessOptions options, IWebPubSubTriggerDispatcher dispatcher, WebPubSubServiceAccessFactory accessFactory)
         {
             _parameterInfo = parameterInfo ?? throw new ArgumentNullException(nameof(parameterInfo));
             _attribute = attribute ?? throw new ArgumentNullException(nameof(attribute));
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
             _options = options ?? throw new ArgumentNullException(nameof(options));
+            _accessFactory = accessFactory ?? throw new ArgumentNullException(nameof(accessFactory));
 
             BindingDataContract = CreateBindingContract(parameterInfo);
         }
@@ -71,11 +73,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             var attributeName = Utilities.GetFunctionKey(hub, _attribute.EventType, _attribute.EventName, _attribute.ClientProtocols);
             var listernerKey = attributeName;
 
-            var validationOptions = _attribute.Connections != null ?
-                new WebPubSubValidationOptions(_attribute.Connections) :
-                new WebPubSubValidationOptions(_options.ConnectionString);
+            WebPubSubServiceAccess[]? accesses = null;
+            if (_attribute.Connections != null)
+            {
+                var resolved = new List<WebPubSubServiceAccess>(_attribute.Connections.Length);
+                foreach (var sectionName in _attribute.Connections)
+                {
+                    if (string.IsNullOrEmpty(sectionName))
+                    {
+                        throw new InvalidOperationException("Web PubSub connection section name cannot be null or empty.");
+                    }
+                    if (!_accessFactory.TryCreateFromSectionName(sectionName, out var access) && access != null)
+                    {
+                        throw new InvalidOperationException($"Unable to resolve Web PubSub connection from configuration section '{sectionName}'.");
+                    }
+                    resolved.Add(access);
+                }
+                accesses = [.. resolved];
+            }
 
-            return Task.FromResult<IListener>(new WebPubSubListener(context.Executor, listernerKey, _dispatcher, validationOptions));
+            accesses ??= _options.WebPubSubAccess != null ? [_options.WebPubSubAccess] : null;
+            var validator = new RequestValidator(accesses);
+
+            return Task.FromResult<IListener>(new WebPubSubListener(context.Executor, listernerKey, _dispatcher, validator));
         }
 
         public ParameterDescriptor ToParameterDescriptor()

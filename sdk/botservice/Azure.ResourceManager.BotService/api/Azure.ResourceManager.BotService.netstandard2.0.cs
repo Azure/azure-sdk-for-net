@@ -434,9 +434,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.Models.BotChannelName TelephonyChannel { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName WebChatChannel { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BotService.Models.BotChannelName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotChannelName left, Azure.ResourceManager.BotService.Models.BotChannelName right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotChannelName (string value) { throw null; }
@@ -570,9 +568,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.Models.BotMsaAppType SingleTenant { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotMsaAppType UserAssignedMSI { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BotService.Models.BotMsaAppType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotMsaAppType left, Azure.ResourceManager.BotService.Models.BotMsaAppType right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotMsaAppType (string value) { throw null; }
@@ -659,9 +655,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.Models.BotServiceKind Function { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotServiceKind Sdk { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BotService.Models.BotServiceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServiceKind left, Azure.ResourceManager.BotService.Models.BotServiceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceKind (string value) { throw null; }
@@ -704,9 +698,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -723,9 +715,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -811,9 +801,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess left, Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess (string value) { throw null; }
@@ -841,9 +829,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.Models.BotServiceSkuName F0 { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotServiceSkuName S1 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BotService.Models.BotServiceSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServiceSkuName left, Azure.ResourceManager.BotService.Models.BotServiceSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceSkuName (string value) { throw null; }
@@ -859,9 +845,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.Models.BotServiceSkuTier Free { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotServiceSkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BotService.Models.BotServiceSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServiceSkuTier left, Azure.ResourceManager.BotService.Models.BotServiceSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceSkuTier (string value) { throw null; }

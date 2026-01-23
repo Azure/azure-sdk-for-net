@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.StorageSync.Models
     public readonly partial struct CloudEndpointChangeEnumerationActivityState : IEquatable<CloudEndpointChangeEnumerationActivityState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CloudEndpointChangeEnumerationActivityState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CloudEndpointChangeEnumerationActivityState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InitialEnumerationInProgressValue = "InitialEnumerationInProgress";
         private const string EnumerationInProgressValue = "EnumerationInProgress";
 
-        /// <summary> InitialEnumerationInProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointChangeEnumerationActivityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CloudEndpointChangeEnumerationActivityState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the InitialEnumerationInProgress. </summary>
         public static CloudEndpointChangeEnumerationActivityState InitialEnumerationInProgress { get; } = new CloudEndpointChangeEnumerationActivityState(InitialEnumerationInProgressValue);
-        /// <summary> EnumerationInProgress. </summary>
+
+        /// <summary> Gets the EnumerationInProgress. </summary>
         public static CloudEndpointChangeEnumerationActivityState EnumerationInProgress { get; } = new CloudEndpointChangeEnumerationActivityState(EnumerationInProgressValue);
+
         /// <summary> Determines if two <see cref="CloudEndpointChangeEnumerationActivityState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CloudEndpointChangeEnumerationActivityState left, CloudEndpointChangeEnumerationActivityState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CloudEndpointChangeEnumerationActivityState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CloudEndpointChangeEnumerationActivityState left, CloudEndpointChangeEnumerationActivityState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudEndpointChangeEnumerationActivityState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CloudEndpointChangeEnumerationActivityState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CloudEndpointChangeEnumerationActivityState(string value) => new CloudEndpointChangeEnumerationActivityState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CloudEndpointChangeEnumerationActivityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CloudEndpointChangeEnumerationActivityState?(string value) => value == null ? null : new CloudEndpointChangeEnumerationActivityState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CloudEndpointChangeEnumerationActivityState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CloudEndpointChangeEnumerationActivityState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

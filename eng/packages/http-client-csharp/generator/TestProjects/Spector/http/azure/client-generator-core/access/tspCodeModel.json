@@ -936,7 +936,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.PublicOperation.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -945,7 +945,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "54"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "78",
@@ -1352,7 +1353,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.InternalOperation.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1361,7 +1362,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "54"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "106",
@@ -1645,7 +1647,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.SharedModelInOperation.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1654,7 +1656,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "54"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "126",
@@ -1942,7 +1945,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.RelativeModelInOperation.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1951,9 +1954,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "54"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

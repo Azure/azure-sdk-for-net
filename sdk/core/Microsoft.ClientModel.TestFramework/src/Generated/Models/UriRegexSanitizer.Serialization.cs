@@ -14,7 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The UriRegexSanitizer. </summary>
-    public partial class UriRegexSanitizer : IJsonModel<UriRegexSanitizer>
+    public partial class UriRegexSanitizer : SanitizerAddition, IJsonModel<UriRegexSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="UriRegexSanitizer"/> for deserialization. </summary>
         internal UriRegexSanitizer()
@@ -120,7 +120,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeUriRegexSanitizer(document.RootElement, options);
                     }

@@ -281,7 +281,9 @@
               ],
               "responseLocation": "Body"
             },
-            "pageSizeParameterSegments": []
+            "pageSizeParameterSegments": [
+              "maxpagesize"
+            ]
           }
         }
       ],
@@ -320,7 +322,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

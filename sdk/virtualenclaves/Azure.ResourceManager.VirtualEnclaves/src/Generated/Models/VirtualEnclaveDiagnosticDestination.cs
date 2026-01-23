@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public readonly partial struct VirtualEnclaveDiagnosticDestination : IEquatable<VirtualEnclaveDiagnosticDestination>
     {
         private readonly string _value;
+        /// <summary> DiagnosticDestination Type CommunityOnly. </summary>
+        private const string CommunityOnlyValue = "CommunityOnly";
+        /// <summary> DiagnosticDestination Type EnclaveOnly. </summary>
+        private const string EnclaveOnlyValue = "EnclaveOnly";
+        /// <summary> DiagnosticDestination Type Both. </summary>
+        private const string BothValue = "Both";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveDiagnosticDestination"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualEnclaveDiagnosticDestination(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CommunityOnlyValue = "CommunityOnly";
-        private const string EnclaveOnlyValue = "EnclaveOnly";
-        private const string BothValue = "Both";
+            _value = value;
+        }
 
         /// <summary> DiagnosticDestination Type CommunityOnly. </summary>
         public static VirtualEnclaveDiagnosticDestination CommunityOnly { get; } = new VirtualEnclaveDiagnosticDestination(CommunityOnlyValue);
+
         /// <summary> DiagnosticDestination Type EnclaveOnly. </summary>
         public static VirtualEnclaveDiagnosticDestination EnclaveOnly { get; } = new VirtualEnclaveDiagnosticDestination(EnclaveOnlyValue);
+
         /// <summary> DiagnosticDestination Type Both. </summary>
         public static VirtualEnclaveDiagnosticDestination Both { get; } = new VirtualEnclaveDiagnosticDestination(BothValue);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveDiagnosticDestination"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualEnclaveDiagnosticDestination left, VirtualEnclaveDiagnosticDestination right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveDiagnosticDestination"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualEnclaveDiagnosticDestination left, VirtualEnclaveDiagnosticDestination right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualEnclaveDiagnosticDestination"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveDiagnosticDestination"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualEnclaveDiagnosticDestination(string value) => new VirtualEnclaveDiagnosticDestination(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveDiagnosticDestination"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualEnclaveDiagnosticDestination?(string value) => value == null ? null : new VirtualEnclaveDiagnosticDestination(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualEnclaveDiagnosticDestination other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualEnclaveDiagnosticDestination other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

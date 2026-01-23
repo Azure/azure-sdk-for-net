@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public readonly partial struct DataReplicationVaultType : IEquatable<DataReplicationVaultType>
     {
         private readonly string _value;
+        /// <summary> Disaster recovery vault. </summary>
+        private const string DisasterRecoveryValue = "DisasterRecovery";
+        /// <summary> Migrate vault. </summary>
+        private const string MigrateValue = "Migrate";
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationVaultType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataReplicationVaultType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisasterRecoveryValue = "DisasterRecovery";
-        private const string MigrateValue = "Migrate";
+            _value = value;
+        }
 
         /// <summary> Disaster recovery vault. </summary>
         public static DataReplicationVaultType DisasterRecovery { get; } = new DataReplicationVaultType(DisasterRecoveryValue);
+
         /// <summary> Migrate vault. </summary>
         public static DataReplicationVaultType Migrate { get; } = new DataReplicationVaultType(MigrateValue);
+
         /// <summary> Determines if two <see cref="DataReplicationVaultType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataReplicationVaultType left, DataReplicationVaultType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataReplicationVaultType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataReplicationVaultType left, DataReplicationVaultType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationVaultType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataReplicationVaultType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataReplicationVaultType(string value) => new DataReplicationVaultType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataReplicationVaultType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataReplicationVaultType?(string value) => value == null ? null : new DataReplicationVaultType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataReplicationVaultType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataReplicationVaultType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

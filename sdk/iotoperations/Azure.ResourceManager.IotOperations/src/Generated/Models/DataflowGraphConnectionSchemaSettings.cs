@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> DataflowGraph connection node output schema settings. </summary>
     public partial class DataflowGraphConnectionSchemaSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataflowGraphConnectionSchemaSettings"/>. </summary>
         public DataflowGraphConnectionSchemaSettings()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="DataflowGraphConnectionSchemaSettings"/>. </summary>
         /// <param name="serializationFormat"> Output serialization format. </param>
         /// <param name="schemaRef"> Reference to the schema that describes the output of the transformation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowGraphConnectionSchemaSettings(DataflowGraphConnectionSchemaSerializationFormat? serializationFormat, string schemaRef, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataflowGraphConnectionSchemaSettings(DataflowGraphConnectionSchemaSerializationFormat? serializationFormat, string schemaRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SerializationFormat = serializationFormat;
             SchemaRef = schemaRef;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Output serialization format. </summary>
         public DataflowGraphConnectionSchemaSerializationFormat? SerializationFormat { get; set; }
+
         /// <summary> Reference to the schema that describes the output of the transformation. </summary>
         public string SchemaRef { get; set; }
     }

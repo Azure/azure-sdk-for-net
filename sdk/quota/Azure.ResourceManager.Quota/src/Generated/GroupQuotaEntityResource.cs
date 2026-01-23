@@ -577,39 +577,6 @@ namespace Azure.ResourceManager.Quota
                 context);
         }
 
-        /// <summary> Gets a collection of GroupQuotaRequestStatuses in the <see cref="GroupQuotaEntityResource"/>. </summary>
-        /// <returns> An object representing collection of GroupQuotaRequestStatuses and their operations over a GroupQuotaRequestStatusResource. </returns>
-        public virtual GroupQuotaRequestStatusCollection GetGroupQuotaRequestStatuses()
-        {
-            return GetCachedClient(client => new GroupQuotaRequestStatusCollection(client, Id));
-        }
-
-        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
-        /// <param name="requestId"> Request Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GroupQuotaRequestStatusResource>> GetGroupQuotaRequestStatusAsync(string requestId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
-
-            return await GetGroupQuotaRequestStatuses().GetAsync(requestId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
-        /// <param name="requestId"> Request Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GroupQuotaRequestStatusResource> GetGroupQuotaRequestStatus(string requestId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
-
-            return GetGroupQuotaRequestStatuses().Get(requestId, cancellationToken);
-        }
-
         /// <summary> Gets a collection of GroupQuotaSubscriptions in the <see cref="GroupQuotaEntityResource"/>. </summary>
         /// <returns> An object representing collection of GroupQuotaSubscriptions and their operations over a GroupQuotaSubscriptionResource. </returns>
         public virtual GroupQuotaSubscriptionCollection GetGroupQuotaSubscriptions()
@@ -709,6 +676,39 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
             return GetGroupQuotaLimitLists().Get(resourceProviderName, location, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GroupQuotaRequestStatuses in the <see cref="GroupQuotaEntityResource"/>. </summary>
+        /// <returns> An object representing collection of GroupQuotaRequestStatuses and their operations over a GroupQuotaRequestStatusResource. </returns>
+        public virtual GroupQuotaRequestStatusCollection GetGroupQuotaRequestStatuses()
+        {
+            return GetCachedClient(client => new GroupQuotaRequestStatusCollection(client, Id));
+        }
+
+        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
+        /// <param name="requestId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GroupQuotaRequestStatusResource>> GetGroupQuotaRequestStatusAsync(string requestId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
+
+            return await GetGroupQuotaRequestStatuses().GetAsync(requestId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
+        /// <param name="requestId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GroupQuotaRequestStatusResource> GetGroupQuotaRequestStatus(string requestId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
+
+            return GetGroupQuotaRequestStatuses().Get(requestId, cancellationToken);
         }
 
         /// <summary> Gets a collection of GroupQuotasEnforcementStatuses in the <see cref="GroupQuotaEntityResource"/>. </summary>

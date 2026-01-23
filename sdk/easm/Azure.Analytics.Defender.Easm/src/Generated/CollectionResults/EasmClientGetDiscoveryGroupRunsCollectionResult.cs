@@ -62,7 +62,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
@@ -75,7 +75,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDiscoveryGroupRunsRequest(nextLink, _groupName, _filter, _skip, _maxpagesize, _context) : _client.CreateGetDiscoveryGroupRunsRequest(_groupName, _filter, _skip, _maxpagesize, _context);
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            HttpMessage message = nextLink != null ? _client.CreateNextGetDiscoveryGroupRunsRequest(nextLink, pageSize, _context) : _client.CreateGetDiscoveryGroupRunsRequest(_groupName, _filter, _skip, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryGroupRuns");
             scope.Start();
             try

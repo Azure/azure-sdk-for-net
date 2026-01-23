@@ -6,6 +6,5 @@
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>azure;management;arm;resource manager;purestorageblock</PackageTags>
     <PackageId>Azure.ResourceManager.PureStorageBlock</PackageId>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

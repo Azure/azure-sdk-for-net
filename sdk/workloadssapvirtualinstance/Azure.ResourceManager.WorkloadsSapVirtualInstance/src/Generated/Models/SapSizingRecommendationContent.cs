@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     /// <summary> The SAP Sizing Recommendation request. </summary>
     public partial class SapSizingRecommendationContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the resource is to be created. </param>
@@ -75,8 +46,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="databaseType"> The database type. </param>
         /// <param name="dbScaleMethod"> The DB scale method. </param>
         /// <param name="highAvailabilityType"> The high availability type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapSizingRecommendationContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType, SapDatabaseScaleMethod? dbScaleMethod, SapHighAvailabilityType? highAvailabilityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SapSizingRecommendationContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType, SapDatabaseScaleMethod? dbScaleMethod, SapHighAvailabilityType? highAvailabilityType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppLocation = appLocation;
             Environment = environment;
@@ -87,30 +58,33 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             DatabaseType = databaseType;
             DBScaleMethod = dbScaleMethod;
             HighAvailabilityType = highAvailabilityType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationContent"/> for deserialization. </summary>
-        internal SapSizingRecommendationContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The geo-location where the resource is to be created. </summary>
         public AzureLocation AppLocation { get; }
+
         /// <summary> Defines the environment type - Production/Non Production. </summary>
         public SapEnvironmentType Environment { get; }
+
         /// <summary> Defines the SAP Product type. </summary>
         public SapProductType SapProduct { get; }
+
         /// <summary> The deployment type. Eg: SingleServer/ThreeTier. </summary>
         public SapDeploymentType DeploymentType { get; }
+
         /// <summary> The SAP Application Performance Standard measurement. </summary>
         public long Saps { get; }
+
         /// <summary> The database memory configuration. </summary>
         public long DBMemory { get; }
+
         /// <summary> The database type. </summary>
         public SapDatabaseType DatabaseType { get; }
+
         /// <summary> The DB scale method. </summary>
         public SapDatabaseScaleMethod? DBScaleMethod { get; set; }
+
         /// <summary> The high availability type. </summary>
         public SapHighAvailabilityType? HighAvailabilityType { get; set; }
     }

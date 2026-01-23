@@ -5,8 +5,8 @@ using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Service;
-using Specs.Azure.ClientGeneratorCore.ClientInitialization;
-using Specs.Azure.ClientGeneratorCore.ClientInitialization._ParentClient;
+using Specs.Azure.ClientGenerator.Core.ClientInitialization;
+using Specs.Azure.ClientGenerator.Core.ClientInitialization._ParentClient;
 
 namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitialization
 {

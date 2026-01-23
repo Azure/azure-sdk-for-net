@@ -53,7 +53,7 @@ namespace Samples
                     items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage, response);
-                if (response.Headers.TryGetValue("nextPage", out string value))
+                if ((response.Headers.TryGetValue("nextPage", out string value) && !string.IsNullOrEmpty(value)))
                 {
                     nextPage = value;
                 }

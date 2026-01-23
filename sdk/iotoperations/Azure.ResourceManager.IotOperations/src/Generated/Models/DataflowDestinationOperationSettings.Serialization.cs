@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class DataflowDestinationOperationSettings : IUtf8JsonSerializable, IJsonModel<DataflowDestinationOperationSettings>
+    /// <summary> Dataflow Destination Operation properties. </summary>
+    public partial class DataflowDestinationOperationSettings : IJsonModel<DataflowDestinationOperationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowDestinationOperationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataflowDestinationOperationSettings"/> for deserialization. </summary>
+        internal DataflowDestinationOperationSettings()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowDestinationOperationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,25 +34,34 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationOperationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationOperationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowDestinationOperationSettings)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("endpointRef"u8);
             writer.WriteStringValue(EndpointRef);
             writer.WritePropertyName("dataDestination"u8);
             writer.WriteStringValue(DataDestination);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(Headers))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("headers"u8);
+                writer.WriteStartArray();
+                foreach (DataflowDestinationHeaderAction item in Headers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -55,55 +70,76 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowDestinationOperationSettings IJsonModel<DataflowDestinationOperationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowDestinationOperationSettings IJsonModel<DataflowDestinationOperationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowDestinationOperationSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationOperationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationOperationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowDestinationOperationSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataflowDestinationOperationSettings(document.RootElement, options);
         }
 
-        internal static DataflowDestinationOperationSettings DeserializeDataflowDestinationOperationSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataflowDestinationOperationSettings DeserializeDataflowDestinationOperationSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string endpointRef = default;
             string dataDestination = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<DataflowDestinationHeaderAction> headers = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointRef"u8))
+                if (prop.NameEquals("endpointRef"u8))
                 {
-                    endpointRef = property.Value.GetString();
+                    endpointRef = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataDestination"u8))
+                if (prop.NameEquals("dataDestination"u8))
                 {
-                    dataDestination = property.Value.GetString();
+                    dataDestination = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("headers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataflowDestinationHeaderAction> array = new List<DataflowDestinationHeaderAction>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DataflowDestinationHeaderAction.DeserializeDataflowDestinationHeaderAction(item, options));
+                    }
+                    headers = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataflowDestinationOperationSettings(endpointRef, dataDestination, serializedAdditionalRawData);
+            return new DataflowDestinationOperationSettings(endpointRef, dataDestination, headers ?? new ChangeTrackingList<DataflowDestinationHeaderAction>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataflowDestinationOperationSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationOperationSettings>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataflowDestinationOperationSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationOperationSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -113,15 +149,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowDestinationOperationSettings IPersistableModel<DataflowDestinationOperationSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationOperationSettings>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowDestinationOperationSettings IPersistableModel<DataflowDestinationOperationSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowDestinationOperationSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationOperationSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataflowDestinationOperationSettings(document.RootElement, options);
                     }
                 default:
@@ -129,6 +170,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataflowDestinationOperationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

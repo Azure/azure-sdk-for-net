@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> HTTP Proxy configuration for the VM. </summary>
     public partial class HciVmHttpProxyConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmHttpProxyConfiguration"/>. </summary>
         public HciVmHttpProxyConfiguration()
@@ -56,22 +28,25 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
         /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
         /// <param name="trustedCa"> Alternative CA cert to use for connecting to proxy servers. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmHttpProxyConfiguration(string httpProxy, string httpsProxy, IList<string> noProxy, string trustedCa, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmHttpProxyConfiguration(string httpProxy, string httpsProxy, IList<string> noProxy, string trustedCa, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HttpProxy = httpProxy;
             HttpsProxy = httpsProxy;
             NoProxy = noProxy;
             TrustedCa = trustedCa;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The HTTP proxy server endpoint to use. </summary>
         public string HttpProxy { get; set; }
+
         /// <summary> The HTTPS proxy server endpoint to use. </summary>
         public string HttpsProxy { get; set; }
+
         /// <summary> The endpoints that should not go through proxy. </summary>
         public IList<string> NoProxy { get; }
+
         /// <summary> Alternative CA cert to use for connecting to proxy servers. </summary>
         public string TrustedCa { get; set; }
     }
