@@ -91,7 +91,7 @@ namespace Azure.Core.Tests
                 version = version.Substring(0, hashSeparator);
             }
 
-            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, mockRuntimeInformation);
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, default, mockRuntimeInformation);
 
             Assert.AreEqual(
                     $"azsdk-net-Core.Tests/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})",
@@ -115,7 +115,7 @@ namespace Azure.Core.Tests
                 version = version.Substring(0, hashSeparator);
             }
 
-            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, mockRuntimeInformation);
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, default, mockRuntimeInformation);
 
             Assert.AreEqual(
                     $"azsdk-net-Core.Tests/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})",
@@ -137,7 +137,7 @@ namespace Azure.Core.Tests
                 version = version.Substring(0, hashSeparator);
             }
 
-            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, mockRuntimeInformation);
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, default, mockRuntimeInformation);
 
             Assert.AreEqual(
                     $"azsdk-net-Core.Tests/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})",
