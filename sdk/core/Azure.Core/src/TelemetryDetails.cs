@@ -34,14 +34,13 @@ namespace Azure.Core
         /// <param name="applicationId">An optional value to be prepended to the <see cref="TelemetryDetails"/>.
         /// This value overrides the behavior of the <see cref="DiagnosticsOptions.ApplicationId"/> property for the <see cref="HttpMessage"/> it is applied to.</param>
         public TelemetryDetails(Assembly assembly, string? applicationId = null)
-            : this(assembly, applicationId, maxApplicationIdLength: 24, new RuntimeInformationWrapper())
+            : this(assembly, applicationId, new RuntimeInformationWrapper(), maxApplicationIdLength: 24)
         { }
 
-        internal TelemetryDetails(Assembly assembly, string? applicationId, int maxApplicationIdLength, RuntimeInformationWrapper? runtimeInformation = default)
+        internal TelemetryDetails(Assembly assembly, string? applicationId, RuntimeInformationWrapper? runtimeInformation, int maxApplicationIdLength = 24)
         {
             Argument.AssertNotNull(assembly, nameof(assembly));
-
-            if (applicationId != null && applicationId.Length > maxApplicationIdLength)
+            if (applicationId != null && maxApplicationIdLength > 0 && applicationId.Length > maxApplicationIdLength)
             {
                 throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {maxApplicationIdLength + 1} characters");
             }

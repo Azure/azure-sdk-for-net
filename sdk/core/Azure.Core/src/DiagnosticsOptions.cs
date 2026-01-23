@@ -12,18 +12,12 @@ namespace Azure.Core
     /// </summary>
     public class DiagnosticsOptions
     {
-        /// <summary>
-        /// Default maximum length for ApplicationId when not specified by ClientOptions.
-        /// </summary>
-        private const int DefaultMaxApplicationIdLength = 24;
-
         private string? _applicationId;
 
         /// <summary>
-        /// Gets the maximum length allowed for <see cref="ApplicationId"/>.
-        /// This value is set from <see cref="ClientOptions.MaxApplicationIdLength"/>.
+        /// Gets or sets the maximum allowed length for <see cref="ApplicationId"/>. Defaults to 24.
         /// </summary>
-        internal int MaxApplicationIdLength { get; private set; } = DefaultMaxApplicationIdLength;
+        internal int MaxApplicationIdLength { get; set; } = 24;
 
         /// <summary>
         /// Creates a new instance of <see cref="DiagnosticsOptions"/> with default values.
@@ -39,6 +33,7 @@ namespace Azure.Core
         {
             if (diagnosticsOptions != null)
             {
+                MaxApplicationIdLength = diagnosticsOptions.MaxApplicationIdLength;
                 ApplicationId = diagnosticsOptions.ApplicationId;
                 IsLoggingEnabled = diagnosticsOptions.IsLoggingEnabled;
                 IsTelemetryEnabled = diagnosticsOptions.IsTelemetryEnabled;
@@ -137,16 +132,6 @@ namespace Azure.Core
                 }
                 _applicationId = value;
             }
-        }
-
-        /// <summary>
-        /// Sets the maximum length allowed for <see cref="ApplicationId"/>.
-        /// This is called by <see cref="ClientOptions"/> after construction.
-        /// </summary>
-        /// <param name="maxLength">The maximum length, or 0 to disable validation.</param>
-        internal void SetMaxApplicationIdLength(int maxLength)
-        {
-            MaxApplicationIdLength = maxLength;
         }
 
         /// <summary>
