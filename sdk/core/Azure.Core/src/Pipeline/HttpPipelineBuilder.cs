@@ -218,7 +218,7 @@ namespace Azure.Core.Pipeline
         internal static TelemetryPolicy CreateTelemetryPolicy(ClientOptions options)
         {
             var type = options.GetType();
-            var userAgentValue = new TelemetryDetails(type.Assembly, options.Diagnostics.ApplicationId);
+            var userAgentValue = new TelemetryDetails(type.Assembly, options.Diagnostics.ApplicationId, options.MaxApplicationIdLength, null);
             return new TelemetryPolicy(userAgentValue);
         }
     }

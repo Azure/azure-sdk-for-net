@@ -66,8 +66,6 @@ namespace Azure.Core
                 Diagnostics = new DiagnosticsOptions(null);
                 Retry = new RetryOptions(null);
             }
-            // Note: We cannot call MaxApplicationIdLength here because it's virtual and we're in a constructor.
-            // Instead, we set it lazily when the property is first accessed or use a post-construction initialization.
         }
 
         /// <summary>
@@ -89,20 +87,19 @@ namespace Azure.Core
         public DiagnosticsOptions Diagnostics { get; }
 
         /// <summary>
+        /// Gets the maximum length of the <see cref="DiagnosticsOptions.ApplicationId"/> property.
+        /// SDK authors can override this property to allow longer application IDs.
+        /// </summary>
+        /// <remarks>
+        /// The default value is 24 characters for consistency with other Azure SDKs.
+        /// Override this property in your client options class to allow longer application IDs.
+        /// </remarks>
+        protected internal virtual int MaxApplicationIdLength => 24;
+
+        /// <summary>
         /// Gets the client retry options.
         /// </summary>
         public RetryOptions Retry { get; }
-
-        /// <summary>
-        /// Gets the maximum length of the <see cref="DiagnosticsOptions.ApplicationId"/> value allowed for this client.
-        /// The default value is 24 characters. Client library authors can override this property to allow longer application IDs
-        /// for their specific service requirements.
-        /// </summary>
-        /// <remarks>
-        /// This property is intended for use by SDK library authors, not end users. To opt-in to a higher limit,
-        /// create a custom <see cref="ClientOptions"/> derived class and override this property.
-        /// </remarks>
-        protected internal virtual int MaxApplicationIdLength => 24;
 
         /// <summary>
         /// Gets or sets the policy to use for retries. If a policy is specified, it will be used in place of the <see cref="Retry"/> property.
