@@ -39,24 +39,13 @@ steps:
       workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
 - ${{ else }}:
   - ${{ each artifact in parameters.Artifacts }}:
-    - ${{ if artifact.directoryName }}:
-      - task: Powershell@2
-        displayName: Check for AOT compatibility regressions in ${{ artifact.name }}
-        inputs:
-          targetType: filepath
-          filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility.ps1
-          arguments: >-
-            -ServiceDirectory ${{ parameters.ServiceDirectory }}
-            -PackageName ${{ artifact.name }}
-            -DirectoryName ${{ artifact.directoryName }}
-          workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
-    - ${{ else }}:
-      - task: Powershell@2
-        displayName: Check for AOT compatibility regressions in ${{ artifact.name }}
-        inputs:
-          targetType: filepath
-          filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility.ps1
-          arguments: >-
-            -ServiceDirectory ${{ parameters.ServiceDirectory }}
-            -PackageName ${{ artifact.name }}
-          workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
+    - task: Powershell@2
+      displayName: Check for AOT compatibility regressions in ${{ artifact.name }}
+      inputs:
+        targetType: filepath
+        filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility.ps1
+        arguments: >-
+          -ServiceDirectory ${{ parameters.ServiceDirectory }}
+          -PackageName ${{ artifact.name }}
+          -DirectoryName ${{ coalesce(artifact.directoryName, artifact.name) }}
+        workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
