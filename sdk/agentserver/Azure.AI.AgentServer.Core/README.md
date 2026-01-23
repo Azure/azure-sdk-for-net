@@ -1,4 +1,5 @@
 # Azure AI.AgentServer.Core client library for .NET
+
 With hosted agents developers can deploy existing agents — whether built with supported agent
 frameworks or custom code — into Microsoft AI Foundry with minimal effort.
 
@@ -15,7 +16,6 @@ dotnet add package Azure.AI.AgentServer.Core --prerelease
 This is the core package for Azure AI Agent server. It hosts your agent as a container on the cloud.
 
 You can talk to your agent using Azure.AI.Projects sdk.
-
 
 ## Examples
 
@@ -157,7 +157,6 @@ First run your agent with Azure.AI.AgentServer locally.
 
 If it works on local by failed on cloud. Check your logs in the application insight connected to your Azure AI Foundry Project.
 
-
 ### Reporting issues
 
 To report an issue with the client library, or request additional features, please open a GitHub issue [here](https://github.com/Azure/azure-sdk-for-net/issues). Mention the package name "Azure.AI.AgentServer" in the title or content.
@@ -173,6 +172,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
 <!-- LINKS -->
+
 [RequestFailedException]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
 [samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects/tests/Samples
 [api_ref_docs]: https://learn.microsoft.com/dotnet/api/azure.ai.projects?view=azure-dotnet-preview
@@ -187,3 +187,14 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
 
+## Unit Tests
+
+```shell
+  # x64 architecture
+  dotnet test Azure.AI.AgentServer.Core/tests/Unit.Tests/Azure.AI.AgentServer.Core.Unit.Tests.csproj
+```
+
+```shell
+  # arm64 architecture
+  dotnet test Azure.AI.AgentServer.Core/tests/Unit.Tests/Azure.AI.AgentServer.Core.Unit.Tests.csproj --settings Azure.AI.AgentServer.Core/tests/Unit.Tests/test.runsettings
+```
