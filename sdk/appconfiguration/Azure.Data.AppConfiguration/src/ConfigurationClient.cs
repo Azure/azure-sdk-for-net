@@ -807,7 +807,7 @@ namespace Azure.Data.AppConfiguration
                 return message;
             }
 
-            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
+            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseCheckConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
         }
 
         /// <summary>
@@ -1547,10 +1547,9 @@ namespace Azure.Data.AppConfiguration
             var values = new List<ConfigurationSetting>();
             string nextLink = null;
 
-            // Only parse body if status is 200 and there is content (HEAD requests return no body)
-            if (response.Status == 200 && response.ContentStream != null && response.ContentStream.Length > 0)
+            if (response.Status == 200)
             {
-                var document = JsonDocument.Parse(response.ContentStream);
+                var document = response.ContentStream != null ? JsonDocument.Parse(response.ContentStream) : JsonDocument.Parse(response.Content);
 
                 if (document.RootElement.TryGetProperty("items", out var itemsValue))
                 {
@@ -1570,6 +1569,22 @@ namespace Azure.Data.AppConfiguration
             // The "Link" header is formatted as:
             // <nextLink>; rel="next"
             if (nextLink == null && response.Headers.TryGetValue("Link", out string linkHeader))
+            {
+                int nextLinkEndIndex = linkHeader.IndexOf('>');
+                nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
+            }
+
+            return (values, nextLink);
+        }
+
+        private (List<ConfigurationSetting> Values, string NextLink) ParseCheckConfigurationSettingsResponse(Response response)
+        {
+            var values = new List<ConfigurationSetting>();
+            string nextLink = null;
+
+            // The "Link" header is formatted as:
+            // <nextLink>; rel="next"
+            if (response.Headers.TryGetValue("Link", out string linkHeader))
             {
                 int nextLinkEndIndex = linkHeader.IndexOf('>');
                 nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
