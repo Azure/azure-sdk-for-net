@@ -2066,7 +2066,7 @@
                     "namespace": "Azure.ResourceManager.Chaos",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay",
                     "usage": "Output,Json",
-                    "doc": "Localized display information for and operation.",
+                    "doc": "Localized display information for an operation.",
                     "decorators": [
                       {
                         "name": "Azure.ResourceManager.@armProviderNamespace",
@@ -6859,16 +6859,16 @@
                 "methods": [
                   {
                     "$id": "507",
-                    "methodId": "Microsoft.Chaos.Capabilities.get",
-                    "kind": "Read",
+                    "methodId": "Microsoft.Chaos.Capabilities.createOrUpdate",
+                    "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}"
                   },
                   {
                     "$id": "508",
-                    "methodId": "Microsoft.Chaos.Capabilities.createOrUpdate",
-                    "kind": "Create",
+                    "methodId": "Microsoft.Chaos.Capabilities.get",
+                    "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}"
@@ -6901,16 +6901,16 @@
                 "methods": [
                   {
                     "$id": "511",
-                    "methodId": "Microsoft.Chaos.Targets.get",
-                    "kind": "Read",
+                    "methodId": "Microsoft.Chaos.Targets.createOrUpdate",
+                    "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}"
                   },
                   {
                     "$id": "512",
-                    "methodId": "Microsoft.Chaos.Targets.createOrUpdate",
-                    "kind": "Create",
+                    "methodId": "Microsoft.Chaos.Targets.get",
+                    "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}"
@@ -6967,16 +6967,16 @@
                 "methods": [
                   {
                     "$id": "517",
-                    "methodId": "Microsoft.Chaos.Experiments.get",
-                    "kind": "Read",
+                    "methodId": "Microsoft.Chaos.Experiments.createOrUpdate",
+                    "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}"
                   },
                   {
                     "$id": "518",
-                    "methodId": "Microsoft.Chaos.Experiments.createOrUpdate",
-                    "kind": "Create",
+                    "methodId": "Microsoft.Chaos.Experiments.get",
+                    "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}"
@@ -9954,7 +9954,8 @@
           ],
           "parent": {
             "$ref": "497"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "763",
@@ -10167,7 +10168,8 @@
           ],
           "parent": {
             "$ref": "497"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "777",
@@ -12738,7 +12740,8 @@
           ],
           "parent": {
             "$ref": "497"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "983",
@@ -14042,7 +14045,8 @@
           ],
           "parent": {
             "$ref": "497"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1103",
@@ -19009,7 +19013,8 @@
           ],
           "parent": {
             "$ref": "497"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1550",
@@ -19966,7 +19971,8 @@
           ],
           "parent": {
             "$ref": "497"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1622",
@@ -20968,9 +20974,11 @@
           ],
           "parent": {
             "$ref": "497"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ],
   "auth": {

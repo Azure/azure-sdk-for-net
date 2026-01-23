@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            return await GetChaosExperimentExecutions().GetExecutionAsync(executionId, cancellationToken).ConfigureAwait(false);
+            return await GetChaosExperimentExecutions().GetAsync(executionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get an execution of an Experiment resource. </summary>
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            return GetChaosExperimentExecutions().GetExecution(executionId, cancellationToken);
+            return GetChaosExperimentExecutions().Get(executionId, cancellationToken);
         }
     }
 }

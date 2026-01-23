@@ -115,14 +115,9 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parentResourceType"> The parent resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentResourceType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentResourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ChaosTargetResource>> GetAsync(string parentResourceType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosTargetResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
-
             using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetResource.Get");
             scope.Start();
             try
@@ -131,7 +126,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, parentResourceType, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,14 +163,9 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parentResourceType"> The parent resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentResourceType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentResourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ChaosTargetResource> Get(string parentResourceType, CancellationToken cancellationToken = default)
+        public virtual Response<ChaosTargetResource> Get(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
-
             using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetResource.Get");
             scope.Start();
             try
@@ -184,7 +174,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, parentResourceType, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,14 +212,9 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parentResourceType"> The parent resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentResourceType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentResourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string parentResourceType, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
-
             using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetResource.Delete");
             scope.Start();
             try
@@ -238,7 +223,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, parentResourceType, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _targetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -278,14 +263,9 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parentResourceType"> The parent resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentResourceType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentResourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string parentResourceType, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
-
             using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetResource.Delete");
             scope.Start();
             try
@@ -294,7 +274,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, parentResourceType, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _targetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -334,14 +314,11 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parentResourceType"> The parent resource type. </param>
         /// <param name="data"> Target resource to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentResourceType"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentResourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ChaosTargetResource>> UpdateAsync(WaitUntil waitUntil, string parentResourceType, ChaosTargetData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ChaosTargetResource>> UpdateAsync(WaitUntil waitUntil, ChaosTargetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetResource.Update");
@@ -352,7 +329,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, parentResourceType, Id.Parent.Name, Id.Name, ChaosTargetData.ToRequestContent(data), context);
+                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, ChaosTargetData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -393,14 +370,11 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parentResourceType"> The parent resource type. </param>
         /// <param name="data"> Target resource to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentResourceType"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentResourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ChaosTargetResource> Update(WaitUntil waitUntil, string parentResourceType, ChaosTargetData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ChaosTargetResource> Update(WaitUntil waitUntil, ChaosTargetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetResource.Update");
@@ -411,7 +385,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, parentResourceType, Id.Parent.Name, Id.Name, ChaosTargetData.ToRequestContent(data), context);
+                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, ChaosTargetData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -438,33 +412,29 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary> Get a Capability resource that extends a Target resource. </summary>
-        /// <param name="parentResourceType"> The parent resource type. </param>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentResourceType"/> or <paramref name="capabilityName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentResourceType"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ChaosCapabilityResource>> GetChaosCapabilityAsync(string parentResourceType, string capabilityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosCapabilityResource>> GetChaosCapabilityAsync(string capabilityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
-            return await GetChaosCapabilities().GetAsync(parentResourceType, capabilityName, cancellationToken).ConfigureAwait(false);
+            return await GetChaosCapabilities().GetAsync(capabilityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Capability resource that extends a Target resource. </summary>
-        /// <param name="parentResourceType"> The parent resource type. </param>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentResourceType"/> or <paramref name="capabilityName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentResourceType"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ChaosCapabilityResource> GetChaosCapability(string parentResourceType, string capabilityName, CancellationToken cancellationToken = default)
+        public virtual Response<ChaosCapabilityResource> GetChaosCapability(string capabilityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
-            return GetChaosCapabilities().Get(parentResourceType, capabilityName, cancellationToken);
+            return GetChaosCapabilities().Get(capabilityName, cancellationToken);
         }
     }
 }
