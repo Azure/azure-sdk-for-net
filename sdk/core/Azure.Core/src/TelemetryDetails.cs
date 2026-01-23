@@ -40,7 +40,7 @@ namespace Azure.Core
         internal TelemetryDetails(Assembly assembly, string? applicationId, RuntimeInformationWrapper? runtimeInformation, int maxApplicationIdLength = 24)
         {
             Argument.AssertNotNull(assembly, nameof(assembly));
-            if (applicationId != null && maxApplicationIdLength > 0 && applicationId.Length > maxApplicationIdLength)
+            if (applicationId != null && applicationId.Length > maxApplicationIdLength)
             {
                 throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {maxApplicationIdLength + 1} characters");
             }
