@@ -2,7 +2,7 @@
 
 ## 1.0.0-beta.6 (2026-01-20)
 
-### Other
+### Other Changes
 
 - Package version alignment only. No functional changes.
 
