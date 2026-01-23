@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
@@ -12,10 +13,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerVersion : IEquatable<MySqlFlexibleServerVersion>
     {
         /// <summary> 5.7. </summary>
-        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("Five7")]
+        [CodeGenMember("Five7")]
         public static MySqlFlexibleServerVersion Ver5_7 { get; } = new MySqlFlexibleServerVersion(Five7Value);
         /// <summary> 8.0.21. </summary>
-        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("Eight021")]
+        [CodeGenMember("Eight021")]
         public static MySqlFlexibleServerVersion Ver8_0_21 { get; } = new MySqlFlexibleServerVersion(Eight021Value);
     }
 }
