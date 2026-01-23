@@ -2463,6 +2463,86 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        public async Task CanAddAndGetSnapshotReference()
+        {
+            ConfigurationClient service = GetClient();
+            var testSetting = new SnapshotReferenceConfigurationSetting(GenerateKeyId("snapshot-ref"), "my-snapshot");
+
+            try
+            {
+                var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
+                var setting = settingResponse.Value;
+
+                Assert.IsInstanceOf<SnapshotReferenceConfigurationSetting>(setting);
+                Assert.AreEqual(testSetting.Key, setting.Key);
+                Assert.AreEqual(testSetting.Value, setting.Value);
+                Assert.AreEqual("my-snapshot", ((SnapshotReferenceConfigurationSetting)setting).SnapshotName);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
+        }
+
+        [RecordedTest]
+        public async Task CanAddAndUpdateSnapshotReference()
+        {
+            ConfigurationClient service = GetClient();
+            var testSetting = new SnapshotReferenceConfigurationSetting(GenerateKeyId("snapshot-ref"), "snapshot-v1");
+
+            try
+            {
+                var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
+
+                var setting = (SnapshotReferenceConfigurationSetting)settingResponse.Value;
+                setting.SnapshotName = "snapshot-v2";
+
+                await service.SetConfigurationSettingAsync(setting);
+
+                settingResponse = await service.GetConfigurationSettingAsync(setting.Key);
+                setting = (SnapshotReferenceConfigurationSetting)settingResponse.Value;
+
+                Assert.IsInstanceOf<SnapshotReferenceConfigurationSetting>(settingResponse.Value);
+                Assert.AreEqual("snapshot-v2", setting.SnapshotName);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
+        }
+
+        [RecordedTest]
+        public async Task CanAddAndGetMultipleSnapshotReferences()
+        {
+            ConfigurationClient service = GetClient();
+
+            var testSetting1 = new SnapshotReferenceConfigurationSetting(GenerateKeyId("snapshot-ref 1-1"), "snapshot1");
+            var testSetting2 = new SnapshotReferenceConfigurationSetting(GenerateKeyId("snapshot-ref 1-2"), "snapshot2");
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting1);
+                await service.AddConfigurationSettingAsync(testSetting2);
+
+                var selectedSettings = await service.GetConfigurationSettingsAsync(
+                    new SettingSelector() { KeyFilter = "snapshot-ref 1-*" })
+                    .ToEnumerableAsync();
+
+                Assert.AreEqual(2, selectedSettings.Count);
+                foreach (var setting in selectedSettings)
+                {
+                    SnapshotReferenceConfigurationSetting snapshotRef = (SnapshotReferenceConfigurationSetting)setting;
+                    StringAssert.StartsWith("snapshot", snapshotRef.SnapshotName);
+                }
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting1));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting2));
+            }
+        }
+
+        [RecordedTest]
         public async Task CanModifyTheFilterParameterValues()
         {
             ConfigurationClient service = GetClient();
