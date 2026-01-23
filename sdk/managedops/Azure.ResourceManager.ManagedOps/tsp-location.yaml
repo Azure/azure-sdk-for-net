@@ -1,0 +1,6 @@
+directory: specification/managedoperations/ManagedOps.Management
+commit: 83408dfe4894a9b5a5d3989023647bce792efc5f
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/legacy-emitter-package.json
