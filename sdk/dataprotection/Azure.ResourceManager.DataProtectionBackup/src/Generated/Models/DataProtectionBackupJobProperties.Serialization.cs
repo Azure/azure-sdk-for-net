@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup;
 
@@ -76,9 +78,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
-                foreach (UserFacingError item in ErrorDetails)
+                foreach (ResponseError item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<ResponseError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +115,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(ProgressUri))
             {
                 writer.WritePropertyName("progressUrl"u8);
-                writer.WriteStringValue(ProgressUri);
+                writer.WriteStringValue(ProgressUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(RehydrationPriority))
             {
@@ -147,7 +154,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(SourceDataStoreName))
             {
@@ -211,7 +218,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string dataSourceType = default;
             TimeSpan? duration = default;
             DateTimeOffset? endOn = default;
-            IReadOnlyList<UserFacingError> errorDetails = default;
+            IReadOnlyList<ResponseError> errorDetails = default;
             BackupJobExtendedInfo extendedInfo = default;
             bool isUserTriggered = default;
             string operation = default;
@@ -219,7 +226,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceIdentifier policyId = default;
             string policyName = default;
             bool isProgressEnabled = default;
-            string progressUri = default;
+            Uri progressUri = default;
             string rehydrationPriority = default;
             string restoreType = default;
             string sourceResourceGroup = default;
@@ -229,7 +236,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string subscriptionId = default;
             IList<string> supportedActions = default;
             string vaultName = default;
-            string eTag = default;
+            ETag? eTag = default;
             string sourceDataStoreName = default;
             string destinationDataStoreName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -303,10 +310,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    List<UserFacingError> array = new List<UserFacingError>();
+                    List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UserFacingError.DeserializeUserFacingError(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataProtectionBackupContext.Default));
+                        }
                     }
                     errorDetails = array;
                     continue;
@@ -356,7 +370,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("progressUrl"u8))
                 {
-                    progressUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    progressUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rehydrationPriority"u8))
@@ -418,7 +436,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceDataStoreName"u8))
@@ -447,7 +469,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceType,
                 duration,
                 endOn,
-                errorDetails ?? new ChangeTrackingList<UserFacingError>(),
+                errorDetails ?? new ChangeTrackingList<ResponseError>(),
                 extendedInfo,
                 isUserTriggered,
                 operation,

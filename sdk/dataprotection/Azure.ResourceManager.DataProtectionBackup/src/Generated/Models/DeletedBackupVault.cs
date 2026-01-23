@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             StorageSettings = storageSettings.ToList();
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
+            ReplicatedRegions = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeletedBackupVault"/>. </summary>
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="originalBackupVaultResourcePath"> Resource path of the original backup vault. </param>
         /// <param name="resourceDeletionInfo"> Deletion info for the tracked resource (Backup Vault). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedBackupVault(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, AzureLocation? replicatedRegions, string originalBackupVaultId, string originalBackupVaultName, string originalBackupVaultResourcePath, ResourceDeletionInfo resourceDeletionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedBackupVault(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, string originalBackupVaultId, string originalBackupVaultName, string originalBackupVaultResourcePath, ResourceDeletionInfo resourceDeletionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public IList<string> ResourceGuardOperationRequests { get; }
 
         /// <summary> List of replicated regions for Backup Vault. </summary>
-        public AzureLocation? ReplicatedRegions { get; }
+        public IList<AzureLocation> ReplicatedRegions { get; }
 
         /// <summary> Resource Id of the original backup vault. </summary>
         public string OriginalBackupVaultId { get; }

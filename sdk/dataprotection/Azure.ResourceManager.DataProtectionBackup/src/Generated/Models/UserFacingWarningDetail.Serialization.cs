@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(ResourceName);
             }
             writer.WritePropertyName("warning"u8);
-            writer.WriteObjectValue(Warning, options);
+            ((IJsonModel<ResponseError>)Warning).Write(writer, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -89,7 +91,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             string resourceName = default;
-            UserFacingError warning = default;
+            ResponseError warning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("warning"u8))
                 {
-                    warning = UserFacingError.DeserializeUserFacingError(prop.Value, options);
+                    warning = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataProtectionBackupContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System;
-using System.Collections.Generic;
+
 using System.ComponentModel;
 
 #nullable disable
-/*
+
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Backup Vault. </summary>
@@ -30,4 +30,3 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
     }
 }
-*/

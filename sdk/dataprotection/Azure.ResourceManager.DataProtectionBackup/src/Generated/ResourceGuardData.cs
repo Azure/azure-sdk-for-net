@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 using Azure.ResourceManager.Models;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> ResourceGuardResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        internal ResourceGuardData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProperties properties, string eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal ResourceGuardData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -46,6 +47,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public ResourceGuardProperties Properties { get; set; }
 
         /// <summary> Optional ETag. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
     }
 }

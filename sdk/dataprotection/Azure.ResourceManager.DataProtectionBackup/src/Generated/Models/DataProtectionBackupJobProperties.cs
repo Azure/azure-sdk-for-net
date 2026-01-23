@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup;
 
@@ -37,15 +38,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="subscriptionId"> Subscription Id of the corresponding backup vault. </param>
         /// <param name="supportedActions"> List of supported actions. </param>
         /// <param name="vaultName"> Name of the vault. </param>
-        internal DataProtectionBackupJobProperties(string activityID, string backupInstanceFriendlyName, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceType, bool isUserTriggered, string operation, string operationCategory, bool isProgressEnabled, string sourceResourceGroup, string sourceSubscriptionID, DateTimeOffset startOn, string status, string subscriptionId, IEnumerable<string> supportedActions, string vaultName)
+        /// <exception cref="ArgumentNullException"> <paramref name="activityID"/>, <paramref name="backupInstanceFriendlyName"/>, <paramref name="dataSourceId"/>, <paramref name="dataSourceName"/>, <paramref name="dataSourceType"/>, <paramref name="operation"/>, <paramref name="operationCategory"/>, <paramref name="sourceResourceGroup"/>, <paramref name="sourceSubscriptionID"/>, <paramref name="status"/>, <paramref name="subscriptionId"/>, <paramref name="supportedActions"/> or <paramref name="vaultName"/> is null. </exception>
+        public DataProtectionBackupJobProperties(string activityID, string backupInstanceFriendlyName, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceType, bool isUserTriggered, string operation, string operationCategory, bool isProgressEnabled, string sourceResourceGroup, string sourceSubscriptionID, DateTimeOffset startOn, string status, string subscriptionId, IEnumerable<string> supportedActions, string vaultName)
         {
+            Argument.AssertNotNull(activityID, nameof(activityID));
+            Argument.AssertNotNull(backupInstanceFriendlyName, nameof(backupInstanceFriendlyName));
+            Argument.AssertNotNull(dataSourceId, nameof(dataSourceId));
+            Argument.AssertNotNull(dataSourceName, nameof(dataSourceName));
+            Argument.AssertNotNull(dataSourceType, nameof(dataSourceType));
+            Argument.AssertNotNull(operation, nameof(operation));
+            Argument.AssertNotNull(operationCategory, nameof(operationCategory));
+            Argument.AssertNotNull(sourceResourceGroup, nameof(sourceResourceGroup));
+            Argument.AssertNotNull(sourceSubscriptionID, nameof(sourceSubscriptionID));
+            Argument.AssertNotNull(status, nameof(status));
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(supportedActions, nameof(supportedActions));
+            Argument.AssertNotNull(vaultName, nameof(vaultName));
+
             ActivityID = activityID;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
             DataSourceId = dataSourceId;
             DataSourceLocation = dataSourceLocation;
             DataSourceName = dataSourceName;
             DataSourceType = dataSourceType;
-            ErrorDetails = new ChangeTrackingList<UserFacingError>();
+            ErrorDetails = new ChangeTrackingList<ResponseError>();
             IsUserTriggered = isUserTriggered;
             Operation = operation;
             OperationCategory = operationCategory;
@@ -92,7 +108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupJobProperties(string activityID, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<UserFacingError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, string progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionID, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, string eTag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupJobProperties(string activityID, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionID, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActivityID = activityID;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
@@ -129,49 +145,46 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Job Activity Id. </summary>
-        public string ActivityID { get; }
+        public string ActivityID { get; set; }
 
         /// <summary> Name of the Backup Instance. </summary>
-        public string BackupInstanceFriendlyName { get; }
+        public string BackupInstanceFriendlyName { get; set; }
 
         /// <summary> ARM ID of the Backup Instance. </summary>
         public ResourceIdentifier BackupInstanceId { get; }
 
         /// <summary> ARM ID of the DataSource. </summary>
-        public ResourceIdentifier DataSourceId { get; }
+        public ResourceIdentifier DataSourceId { get; set; }
 
         /// <summary> Location of the DataSource. </summary>
-        public AzureLocation DataSourceLocation { get; }
+        public AzureLocation DataSourceLocation { get; set; }
 
         /// <summary> User Friendly Name of the DataSource. </summary>
-        public string DataSourceName { get; }
+        public string DataSourceName { get; set; }
 
         /// <summary> Data Source Set Name of the DataSource. </summary>
-        public string DataSourceSetName { get; }
+        public string DataSourceSetName { get; set; }
 
         /// <summary> Type of DataSource. </summary>
-        public string DataSourceType { get; }
+        public string DataSourceType { get; set; }
 
         /// <summary> Total run time of the job. ISO 8601 format. </summary>
-        public TimeSpan? Duration { get; }
+        public TimeSpan? Duration { get; set; }
 
         /// <summary> EndTime of the job(in UTC). </summary>
         public DateTimeOffset? EndOn { get; }
-
-        /// <summary> A List, detailing the errors related to the job. </summary>
-        public IReadOnlyList<UserFacingError> ErrorDetails { get; }
 
         /// <summary> Extended Information about the job. </summary>
         public BackupJobExtendedInfo ExtendedInfo { get; }
 
         /// <summary> Indicated that whether the job is adhoc(true) or scheduled(false). </summary>
-        public bool IsUserTriggered { get; }
+        public bool IsUserTriggered { get; set; }
 
         /// <summary> It indicates the type of Job i.e. Backup:full/log/diff ;Restore:ALR/OLR; Tiering:Backup/Archive ; Management:ConfigureProtection/UnConfigure. </summary>
-        public string Operation { get; }
+        public string Operation { get; set; }
 
         /// <summary> It indicates the type of Job i.e. Backup/Restore/Tiering/Management. </summary>
-        public string OperationCategory { get; }
+        public string OperationCategory { get; set; }
 
         /// <summary> ARM ID of the policy. </summary>
         public ResourceIdentifier PolicyId { get; }
@@ -180,10 +193,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string PolicyName { get; }
 
         /// <summary> Indicated whether progress is enabled for the job. </summary>
-        public bool IsProgressEnabled { get; }
+        public bool IsProgressEnabled { get; set; }
 
         /// <summary> Url which contains job's progress. </summary>
-        public string ProgressUri { get; }
+        public Uri ProgressUri { get; }
 
         /// <summary> Priority to be used for rehydration. </summary>
         public string RehydrationPriority { get; }
@@ -192,33 +205,33 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string RestoreType { get; }
 
         /// <summary> Resource Group Name of the Datasource. </summary>
-        public string SourceResourceGroup { get; }
+        public string SourceResourceGroup { get; set; }
 
         /// <summary> SubscriptionId corresponding to the DataSource. </summary>
-        public string SourceSubscriptionID { get; }
+        public string SourceSubscriptionID { get; set; }
 
         /// <summary> StartTime of the job(in UTC). </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartOn { get; set; }
 
         /// <summary> Status of the job like InProgress/Completed/Failed/Cancelled/CompletedWithWarnings/Cancelling/Paused. </summary>
-        public string Status { get; }
+        public string Status { get; set; }
 
         /// <summary> Subscription Id of the corresponding backup vault. </summary>
-        public string SubscriptionId { get; }
+        public string SubscriptionId { get; set; }
 
         /// <summary> List of supported actions. </summary>
         public IList<string> SupportedActions { get; }
 
         /// <summary> Name of the vault. </summary>
-        public string VaultName { get; }
+        public string VaultName { get; set; }
 
-        /// <summary> Gets the ETag. </summary>
-        public string ETag { get; }
+        /// <summary> Gets or sets the ETag. </summary>
+        public ETag? ETag { get; set; }
 
-        /// <summary> Gets the SourceDataStoreName. </summary>
-        public string SourceDataStoreName { get; }
+        /// <summary> Gets or sets the SourceDataStoreName. </summary>
+        public string SourceDataStoreName { get; set; }
 
-        /// <summary> Gets the DestinationDataStoreName. </summary>
-        public string DestinationDataStoreName { get; }
+        /// <summary> Gets or sets the DestinationDataStoreName. </summary>
+        public string DestinationDataStoreName { get; set; }
     }
 }

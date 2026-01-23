@@ -1190,15 +1190,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="resourceId"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
+        /// <param name="scope"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstancesAsync(this TenantResource tenantResource, ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstancesAsync(this TenantResource tenantResource, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableDataProtectionBackupTenantResource(tenantResource).GetDataProtectionBackupInstancesAsync(resourceId, cancellationToken);
+            return GetMockableDataProtectionBackupTenantResource(tenantResource).GetDataProtectionBackupInstancesAsync(scope, cancellationToken);
         }
 
         /// <summary>
@@ -1209,15 +1209,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="resourceId"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
+        /// <param name="scope"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstances(this TenantResource tenantResource, ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
+        public static Pageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstances(this TenantResource tenantResource, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableDataProtectionBackupTenantResource(tenantResource).GetDataProtectionBackupInstances(resourceId, cancellationToken);
+            return GetMockableDataProtectionBackupTenantResource(tenantResource).GetDataProtectionBackupInstances(scope, cancellationToken);
         }
     }
 }

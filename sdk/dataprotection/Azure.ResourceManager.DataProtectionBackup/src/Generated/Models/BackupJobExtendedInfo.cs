@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupJobExtendedInfo"/>. </summary>
-        internal BackupJobExtendedInfo()
+        public BackupJobExtendedInfo()
         {
             AdditionalDetails = new ChangeTrackingDictionary<string, string>();
             SubTasks = new ChangeTrackingList<BackupJobSubTask>();

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 using Azure.ResourceManager.Models;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="properties"> BackupVaultResource properties. </param>
         /// <param name="identity"> Input Managed Identity Details. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        internal DataProtectionBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DataProtectionBackupVaultProperties properties, ManagedServiceIdentity identity, string eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal DataProtectionBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DataProtectionBackupVaultProperties properties, ManagedServiceIdentity identity, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -56,6 +57,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Optional ETag. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
     }
 }

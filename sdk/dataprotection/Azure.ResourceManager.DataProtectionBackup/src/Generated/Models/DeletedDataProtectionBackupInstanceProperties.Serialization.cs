@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -79,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IList<string> resourceGuardOperationRequests = default;
             BackupInstanceProtectionStatusDetails protectionStatus = default;
             CurrentProtectionState? currentProtectionState = default;
-            UserFacingError protectionErrorDetails = default;
+            ResponseError protectionErrorDetails = default;
             string provisioningState = default;
             DataProtectionBackupAuthCredentials dataSourceAuthCredentials = default;
             BackupValidationType? validationType = default;
@@ -158,7 +160,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    protectionErrorDetails = UserFacingError.DeserializeUserFacingError(prop.Value, options);
+                    protectionErrorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataProtectionBackupContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceGuardProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -161,7 +161,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

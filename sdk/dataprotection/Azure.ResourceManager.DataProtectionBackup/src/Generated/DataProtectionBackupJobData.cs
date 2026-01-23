@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobData"/>. </summary>
-        internal DataProtectionBackupJobData()
+        public DataProtectionBackupJobData()
         {
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> AzureBackupJobResource properties. </summary>
-        public DataProtectionBackupJobProperties Properties { get; }
+        public DataProtectionBackupJobProperties Properties { get; set; }
     }
 }

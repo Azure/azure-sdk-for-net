@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             StorageSettings = storageSettings.ToList();
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
+            ReplicatedRegions = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, AzureLocation? replicatedRegions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -79,9 +80,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Storage Settings. </summary>
         public IList<DataProtectionBackupStorageSetting> StorageSettings { get; }
 
-        /// <summary> Is vault protected by resource guard. </summary>
-        public bool? IsVaultProtectedByResourceGuard { get; }
-
         /// <summary> Feature Settings. </summary>
         public BackupVaultFeatureSettings FeatureSettings { get; set; }
 
@@ -95,7 +93,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public IList<string> ResourceGuardOperationRequests { get; }
 
         /// <summary> List of replicated regions for Backup Vault. </summary>
-        public AzureLocation? ReplicatedRegions { get; set; }
+        public IList<AzureLocation> ReplicatedRegions { get; }
 
         /// <summary> Gets or sets the AlertSettingsForAllJobFailures. </summary>
         public AzureMonitorAlertsState? MonitoringAlertSettingsForAllJobFailures

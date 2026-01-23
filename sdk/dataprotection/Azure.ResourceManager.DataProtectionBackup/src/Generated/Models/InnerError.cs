@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
-        internal InnerError()
+        public InnerError()
         {
             AdditionalInfo = new ChangeTrackingDictionary<string, string>();
         }
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public IDictionary<string, string> AdditionalInfo { get; }
 
         /// <summary> Unique code for this error. </summary>
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary> Child Inner Error, to allow Nesting. </summary>
-        public InnerError EmbeddedInnerError { get; }
+        public InnerError EmbeddedInnerError { get; set; }
     }
 }

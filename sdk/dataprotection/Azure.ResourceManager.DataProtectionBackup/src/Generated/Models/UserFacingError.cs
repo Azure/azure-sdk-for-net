@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserFacingError"/>. </summary>
-        internal UserFacingError()
+        public UserFacingError()
         {
             Details = new ChangeTrackingList<UserFacingError>();
             Properties = new ChangeTrackingDictionary<string, string>();
@@ -51,30 +51,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Unique code for this error. </summary>
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary> Additional related Errors. </summary>
         public IList<UserFacingError> Details { get; }
 
         /// <summary> Inner Error. </summary>
-        public InnerError InnerError { get; }
+        public InnerError InnerError { get; set; }
 
         /// <summary> Whether the operation will be retryable or not. </summary>
-        public bool? IsRetryable { get; }
+        public bool? IsRetryable { get; set; }
 
         /// <summary> Whether the operation is due to a user error or service error. </summary>
-        public bool? IsUserError { get; }
+        public bool? IsUserError { get; set; }
 
         /// <summary> Any key value pairs that can be injected inside error object. </summary>
         public IDictionary<string, string> Properties { get; }
 
-        /// <summary> Gets the Message. </summary>
-        public string Message { get; }
+        /// <summary> Gets or sets the Message. </summary>
+        public string Message { get; set; }
 
         /// <summary> RecommendedAction � localized. </summary>
         public IList<string> RecommendedAction { get; }
 
         /// <summary> Target of the error. </summary>
-        public string Target { get; }
+        public string Target { get; set; }
     }
 }

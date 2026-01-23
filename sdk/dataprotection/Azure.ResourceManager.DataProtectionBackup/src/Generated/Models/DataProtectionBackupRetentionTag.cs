@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="id"> Retention Tag version. </param>
         /// <param name="tagName"> Retention Tag Name to relate it to retention rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupRetentionTag(string eTag, string id, string tagName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupRetentionTag(ETag? eTag, string id, string tagName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             Id = id;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Retention Tag version. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Retention Tag version. </summary>
         public string Id { get; }

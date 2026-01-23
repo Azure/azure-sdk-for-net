@@ -107,10 +107,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReplicatedRegions))
+            if (Optional.IsCollectionDefined(ReplicatedRegions))
             {
                 writer.WritePropertyName("replicatedRegions"u8);
-                writer.WriteStringValue(ReplicatedRegions.Value);
+                writer.WriteStartArray();
+                foreach (AzureLocation item in ReplicatedRegions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -165,7 +170,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             BackupVaultSecureScoreLevel? secureScore = default;
             BcdrSecurityLevel? bcdrSecurityLevel = default;
             IList<string> resourceGuardOperationRequests = default;
-            AzureLocation? replicatedRegions = default;
+            IList<AzureLocation> replicatedRegions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -287,7 +292,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    replicatedRegions = new AzureLocation(prop.Value.GetString());
+                    List<AzureLocation> array = new List<AzureLocation>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new AzureLocation(item.GetString()));
+                    }
+                    replicatedRegions = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -307,7 +317,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 secureScore,
                 bcdrSecurityLevel,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
-                replicatedRegions,
+                replicatedRegions ?? new ChangeTrackingList<AzureLocation>(),
                 additionalBinaryDataProperties);
         }
 
