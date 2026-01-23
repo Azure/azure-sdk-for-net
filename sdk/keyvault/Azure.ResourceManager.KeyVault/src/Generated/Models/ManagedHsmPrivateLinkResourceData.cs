@@ -42,16 +42,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         [WirePath("properties")]
         internal MhsmPrivateLinkResourceProperties Properties { get; }
 
-        /// <summary> The provisioned state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public ManagedHsmProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties.ProvisioningState;
-            }
-        }
-
         /// <summary> Group identifier of private link resource. </summary>
         [WirePath("properties.groupId")]
         public string GroupId

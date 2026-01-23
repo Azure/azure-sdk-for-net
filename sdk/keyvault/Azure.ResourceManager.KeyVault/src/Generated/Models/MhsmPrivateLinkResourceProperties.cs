@@ -25,23 +25,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MhsmPrivateLinkResourceProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MhsmPrivateLinkResourceProperties(ManagedHsmProvisioningState? provisioningState, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MhsmPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProvisioningState = provisioningState;
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The provisioned state of the resource. </summary>
-        [WirePath("provisioningState")]
-        public ManagedHsmProvisioningState? ProvisioningState { get; }
 
         /// <summary> Group identifier of private link resource. </summary>
         [WirePath("groupId")]

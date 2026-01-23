@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkResourceData"/> instance for mocking. </returns>
         public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null)
         {
-            return ManagedHsmPrivateLinkResourceData(id, name, resourceType, systemData, tags, location, provisioningState: default, groupId, requiredMembers, requiredZoneNames, sku, identity);
+            return ManagedHsmPrivateLinkResourceData(id, name, resourceType, systemData, tags, location, groupId, requiredMembers, requiredZoneNames, sku, identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/>. </summary>
