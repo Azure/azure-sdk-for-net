@@ -62,7 +62,8 @@ namespace Azure.Identity
         {
             AuthenticationResult result;
 
-            var miBuilder = ManagedIdentityApplicationBuilder.Create(_msalManagedIdentityClient.ManagedIdentityId);
+            var miBuilder = ManagedIdentityApplicationBuilder.Create(_msalManagedIdentityClient.ManagedIdentityId)
+                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline, Pipeline.ClientOptions), false);
 
             ManagedIdentityApplication mi = miBuilder.Build() as ManagedIdentityApplication;
 
