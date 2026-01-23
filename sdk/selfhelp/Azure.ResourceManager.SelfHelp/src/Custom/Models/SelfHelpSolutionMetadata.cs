@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
@@ -12,37 +13,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
     {
         /// <summary> Solution Id. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string SolutionId { get; set; }
+        public string SolutionId
+        {
+            get => throw new NotSupportedException("SolutionId property is not supported.");
+            set => throw new NotSupportedException("SolutionId property is not supported.");
+        }
 
         /// <summary> Solution Type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string SolutionType { get; set; }
+        public string SolutionType
+        {
+            get => throw new NotSupportedException("SolutionType property is not supported.");
+            set => throw new NotSupportedException("SolutionType property is not supported.");
+        }
 
         /// <summary> A detailed description of solution. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string Description { get; set; }
+        public string Description
+        {
+            get => throw new NotSupportedException("Description property is not supported.");
+            set => throw new NotSupportedException("Description property is not supported.");
+        }
 
         /// <summary> Required parameters for invoking this particular solution. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IList<IList<string>> RequiredParameterSets { get; }
-
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutionId"> Solution Id. </param>
-        /// <param name="solutionType"> Solution Type. </param>
-        /// <param name="description"> A detailed description of solution. </param>
-        /// <param name="requiredParameterSets"> Required parameters for invoking this particular solution. </param>
-        /// <param name="solutions"> List of metadata. </param>
-        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string solutionId, string solutionType, string description, IList<IList<string>> requiredParameterSets, IList<SolutionMetadataProperties> solutions) : base(id, name, resourceType, systemData)
-        {
-            SolutionId = solutionId;
-            SolutionType = solutionType;
-            Description = description;
-            RequiredParameterSets = requiredParameterSets;
-            // Solutions = solutions;
-        }
+        public IList<IList<string>> RequiredParameterSets => throw new NotSupportedException("RequiredParameterSets property is not supported.");
     }
 }
