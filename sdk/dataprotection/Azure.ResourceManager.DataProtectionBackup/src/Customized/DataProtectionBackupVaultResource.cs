@@ -9,16 +9,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup.Models;
-using Azure.ResourceManager.Resources;
-/*
+
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    /// <summary>
-    /// A Class representing a DataProtectionBackupVault along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataProtectionBackupVaultResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataProtectionBackupVaultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataProtectionBackupVault method.
-    /// </summary>
     public partial class DataProtectionBackupVaultResource
     {
         /// <summary>
@@ -116,9 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken)
-        {
-            return await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
-        }
+            => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Updates a BackupVault resource belonging to a resource group. For example, updating tags for a resource.
@@ -147,9 +139,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DataProtectionBackupVaultResource> Update(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken)
-        {
-            return Update(waitUntil, patch, null, cancellationToken);
-        }
+            => Update(waitUntil, patch, null, cancellationToken);
     }
 }
-*/
