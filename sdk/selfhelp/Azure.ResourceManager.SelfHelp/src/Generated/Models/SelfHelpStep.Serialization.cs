@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string executionStatusDescription = default;
             SelfHelpType? stepType = default;
             bool? isLastStep = default;
-            IList<TroubleshooterStepInput> inputs = default;
+            IReadOnlyList<TroubleshooterStepInput> inputs = default;
             AutomatedCheckResult automatedCheckResults = default;
-            IList<SelfHelpDiagnosticInsight> insights = default;
+            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

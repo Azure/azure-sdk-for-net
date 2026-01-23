@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
         /// <param name="searchResults"> AzureKB search results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KBWebResult(string replacementKey, IList<KBSearchResult> searchResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KBWebResult(string replacementKey, IReadOnlyList<KBSearchResult> searchResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReplacementKey = replacementKey;
             SearchResults = searchResults;
@@ -36,8 +36,5 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Place holder used in HTML Content replace control with the content. </summary>
         public string ReplacementKey { get; }
-
-        /// <summary> AzureKB search results. </summary>
-        public IList<KBSearchResult> SearchResults { get; }
     }
 }

@@ -11,7 +11,6 @@ using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Filter group. </summary>
     internal partial class ChartFilterGroup
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -26,13 +25,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of <see cref="ChartFilterGroup"/>. </summary>
         /// <param name="filter"> List of filters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChartFilterGroup(IList<SelfHelpFilter> filter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChartFilterGroup(IReadOnlyList<SelfHelpFilter> filter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Filter = filter;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> List of filters. </summary>
-        public IList<SelfHelpFilter> Filter { get; }
     }
 }

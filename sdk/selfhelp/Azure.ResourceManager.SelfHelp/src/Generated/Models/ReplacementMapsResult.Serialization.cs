@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            IList<KBWebResult> webResults = default;
-            IList<SelfHelpVideo> videos = default;
-            IList<VideoGroupDetail> videoGroups = default;
+            IReadOnlyList<KBWebResult> webResults = default;
+            IReadOnlyList<SelfHelpVideo> videos = default;
+            IReadOnlyList<VideoGroupDetail> videoGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
