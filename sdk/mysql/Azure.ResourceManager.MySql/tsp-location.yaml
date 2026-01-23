@@ -1,4 +1,4 @@
 directory: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers
-commit: 702c1440ec85420ba504a0b172ae0a764d7acd08
+commit: c02354293a7cf1e39f145ce0f9aabd5bcade2739
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
