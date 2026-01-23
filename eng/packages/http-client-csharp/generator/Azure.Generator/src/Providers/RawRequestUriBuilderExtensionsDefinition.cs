@@ -25,7 +25,7 @@ namespace Azure.Generator.Providers
 
         protected override MethodProvider[] BuildMethods()
         {
-            return [BuildAppendQueryDelimitedMethod()];
+            return new[] { BuildAppendQueryDelimitedMethod(), BuildUpdateQueryMethod() };
         }
 
         private MethodProvider BuildAppendQueryDelimitedMethod()
@@ -75,6 +75,70 @@ namespace Azure.Generator.Providers
                         .Terminate()
             };
             return new(signature, body, this, XmlDocProvider.Empty);
+        }
+
+        private MethodProvider BuildUpdateQueryMethod()
+        {
+            var uriBuilder = new ParameterProvider("builder", "The request URI builder instance.", typeof(RawRequestUriBuilder));
+            var nameParameter = new ParameterProvider("name", "The name of the query parameter.", typeof(string));
+            var valueParameter = new ParameterProvider("value", "The value of the query parameter.", typeof(string));
+
+            var parameters = new[] { uriBuilder, nameParameter, valueParameter };
+            var modifiers = MethodSignatureModifiers.Public | MethodSignatureModifiers.Static | MethodSignatureModifiers.Extension;
+
+            var signature = new MethodSignature(
+                Name: "UpdateQuery",
+                Modifiers: modifiers,
+                Parameters: parameters,
+                ReturnType: null,
+                Description: "Updates an existing query parameter or adds a new one if it doesn't exist.",
+                ReturnDescription: null);
+
+            // Get the current query string
+            var currentQuery = uriBuilder.Property("Query");
+            var searchPattern = nameParameter.Invoke("Concat", Literal("="));
+            
+            var methodBody = new MethodBodyStatement[]
+            {
+                // string currentQuery = builder.Query;
+                Declare("currentQuery", typeof(string), currentQuery, out var currentQueryVar),
+                
+                // Check if parameter exists in query
+                new IfStatement(currentQueryVar.Invoke("Contains", searchPattern))
+                {
+                    // Parameter exists - update its value
+                    Declare("paramIndex", typeof(int), currentQueryVar.Invoke("IndexOf", searchPattern), out var paramIndexVar),
+                    Declare("valueStartIndex", typeof(int), paramIndexVar.Add(searchPattern.Property("Length")), out var valueStartIndexVar),
+                    Declare("valueEndIndex", typeof(int), currentQueryVar.Invoke("IndexOf", [Literal('&'), valueStartIndexVar]), out var valueEndIndexVar),
+                    
+                    // If valueEndIndex is -1, set it to the length of the query
+                    new IfStatement(valueEndIndexVar.Equal(Int(-1)))
+                    {
+                        valueEndIndexVar.Assign(currentQueryVar.Property("Length")).Terminate()
+                    },
+                    
+                    // Build the new query string
+                    Declare("newQuery", typeof(string), 
+                        currentQueryVar.Invoke("Substring", [Int(0), valueStartIndexVar])
+                            .Invoke("Concat", valueParameter)
+                            .Invoke("Concat", currentQueryVar.Invoke("Substring", valueEndIndexVar)), 
+                        out var newQueryVar),
+                    
+                    // Update the builder's query
+                    uriBuilder.Property("Query").Assign(newQueryVar).Terminate()
+                },
+                new ElseStatement
+                {
+                    // Parameter doesn't exist - append it
+                    new InvokeMethodExpression(
+                        uriBuilder, 
+                        nameof(RawRequestUriBuilder.AppendQuery), 
+                        [nameParameter, valueParameter, Bool(true)]
+                    ).Terminate()
+                }
+            };
+
+            return new MethodProvider(signature, methodBody, this, XmlDocProvider.Empty);
         }
     }
 }
