@@ -7,6 +7,7 @@ global using System.ComponentModel;
 global using Microsoft.TypeSpec.Generator.Customizations;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Azure.AI.Projects.OpenAI;
 
@@ -23,6 +24,7 @@ namespace Azure.AI.Projects
         private static readonly string[] AuthorizationScopes = ["https://ai.azure.com/.default"];
         private ProjectOpenAIClient _cachedOpenAIClient;
         private readonly TelemetryDetails _telemetryDetails;
+        private static readonly Regex _projectPattern = new(@"https://[^.]+[.]services[.]ai[.]azure[.]com/api/projects/[^/]+$");
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
         protected AIProjectClient()
@@ -48,6 +50,11 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
+
+            if (!_projectPattern.IsMatch(endpoint.AbsoluteUri))
+            {
+                throw new InvalidOperationException($"The Uri {endpoint.AbsoluteUri} is not a valid Azure Foundry roject ");
+            }
 
             options ??= new AIProjectClientOptions();
 

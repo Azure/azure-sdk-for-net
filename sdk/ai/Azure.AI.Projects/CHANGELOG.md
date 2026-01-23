@@ -2,6 +2,10 @@
 
 ## 1.2.0-beta.6 (Unreleased)
 
+### Bugs Fixed
+
+- Added validation of Project uri.
+
 ### Features Added
 
 - Updated for full `net10` framework compatibility, including removal of `<EnablePreviewFeatures>` flagging.
