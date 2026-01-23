@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <NUnit>
+    <ConsoleOut>0</ConsoleOut>
+  </NUnit>
+  <RunConfiguration>
+    <!-- Use current architecture instead of forcing x64 -->
+    <TargetPlatform>ARM64</TargetPlatform>
+  </RunConfiguration>
+</RunSettings>
