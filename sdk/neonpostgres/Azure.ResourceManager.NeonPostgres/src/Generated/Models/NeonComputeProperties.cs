@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
     /// <summary> Properties specific to Compute. </summary>
     public partial class NeonComputeProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NeonComputeProperties"/>. </summary>
         internal NeonComputeProperties()
@@ -61,8 +33,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="cpuCores"> Number of allocated CPU cores. </param>
         /// <param name="memory"> Memory allocated in GB. </param>
         /// <param name="status"> Current status of the compute instance. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonComputeProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IReadOnlyList<Attributes> attributes, string region, int? cpuCores, int? memory, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NeonComputeProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IReadOnlyList<Attributes> attributes, string region, int? cpuCores, int? memory, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityId = entityId;
             EntityName = entityName;
@@ -73,25 +45,33 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             CpuCores = cpuCores;
             Memory = memory;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique identifier for the entity. </summary>
         public string EntityId { get; }
+
         /// <summary> Name of the resource. </summary>
         public string EntityName { get; }
+
         /// <summary> Timestamp indicating when the entity was created. </summary>
         public string CreatedAt { get; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public NeonResourceProvisioningState? ProvisioningState { get; }
+
         /// <summary> Additional attributes for the entity. </summary>
         public IReadOnlyList<Attributes> Attributes { get; }
+
         /// <summary> Region where the compute instance is located. </summary>
         public string Region { get; }
+
         /// <summary> Number of allocated CPU cores. </summary>
         public int? CpuCores { get; }
+
         /// <summary> Memory allocated in GB. </summary>
         public int? Memory { get; }
+
         /// <summary> Current status of the compute instance. </summary>
         public string Status { get; }
     }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
     /// <summary> Properties specific to Single Sign On Resource. </summary>
     public partial class NeonSingleSignOnProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NeonSingleSignOnProperties"/>. </summary>
         public NeonSingleSignOnProperties()
@@ -56,22 +28,25 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
         /// <param name="singleSignOnUri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonSingleSignOnProperties(NeonSingleSignOnState? singleSignOnState, string enterpriseAppId, string singleSignOnUri, IList<string> aadDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NeonSingleSignOnProperties(NeonSingleSignOnState? singleSignOnState, string enterpriseAppId, string singleSignOnUri, IList<string> aadDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SingleSignOnState = singleSignOnState;
             EnterpriseAppId = enterpriseAppId;
             SingleSignOnUri = singleSignOnUri;
             AadDomains = aadDomains;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> State of the Single Sign On for the organization. </summary>
         public NeonSingleSignOnState? SingleSignOnState { get; set; }
+
         /// <summary> AAD enterprise application Id used to setup SSO. </summary>
         public string EnterpriseAppId { get; set; }
+
         /// <summary> URL for SSO to be used by the partner to redirect the user to their system. </summary>
         public string SingleSignOnUri { get; set; }
+
         /// <summary> List of AAD domains fetched from Microsoft Graph for user. </summary>
         public IList<string> AadDomains { get; }
     }
