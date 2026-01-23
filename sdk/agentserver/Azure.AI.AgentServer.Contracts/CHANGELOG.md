@@ -1,10 +1,16 @@
 # Release History
 
+## 1.0.0-beta.6 (2026-01-20)
+
+### Other
+
+- Package version alignment only. No functional changes.
+
 ## 1.0.0-beta.5 (2025-12-05)
 
 ### Features Added
 
--   Add support for populating created_by on all ItemResource types in both streaming and non-streaming flows
+- Add support for populating created_by on all ItemResource types in both streaming and non-streaming flows
 
 ### Bugs Fixed
 
@@ -14,23 +20,23 @@
 
 ### Bugs Fixed
 
--   Id generation issue
+- Id generation issue
 
 ## 1.0.0-beta.3 (2025-11-10)
 
 ### Features Added
 
--   Fixed AgentId serialization
--   Fixed NPE when usage data is missing
+- Fixed AgentId serialization
+- Fixed NPE when usage data is missing
 
 ## 1.0.0-beta.2 (2025-11-10)
 
 ### Features Added
 
--   Fixed minor bugs in the initial release
+- Fixed minor bugs in the initial release
 
 ## 1.0.0-beta.1 (2025-11-07)
 
 ### Features Added
 
--   Initial release
+- Initial release
