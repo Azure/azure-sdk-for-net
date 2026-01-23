@@ -54,9 +54,9 @@ public class ConfigurationAndDISamples
         HostApplicationBuilder builder = Host.CreateApplicationBuilder();
         builder.AddClient<MyClient, MyClientSettings>("MyClient");
 
-        IHost host = builder.Build();
+        IServiceProvider provider = builder.Services.BuildServiceProvider();
 
-        MyClient client = host.Services.GetRequiredService<MyClient>();
+        MyClient client = provider.GetRequiredService<MyClient>();
 
         #endregion
     }
@@ -71,10 +71,10 @@ public class ConfigurationAndDISamples
         builder.AddKeyedClient<MyClient, MyClientSettings>("client1", "Client1");
         builder.AddKeyedClient<MyClient, MyClientSettings>("client2", "Client2");
 
-        IHost host = builder.Build();
+        IServiceProvider provider = builder.Services.BuildServiceProvider();
 
-        MyClient client1 = host.Services.GetRequiredKeyedService<MyClient>("client1");
-        MyClient client2 = host.Services.GetRequiredKeyedService<MyClient>("client2");
+        MyClient client1 = provider.GetRequiredKeyedService<MyClient>("client1");
+        MyClient client2 = provider.GetRequiredKeyedService<MyClient>("client2");
 
         #endregion
     }
@@ -89,9 +89,9 @@ public class ConfigurationAndDISamples
         builder.AddClient<MyClient, MyClientSettings>("MyClient")
             .PostConfigure(settings => settings.CredentialObject = new MyTokenProvider());
 
-        IHost host = builder.Build();
+        IServiceProvider provider = builder.Services.BuildServiceProvider();
 
-        MyClient client = host.Services.GetRequiredService<MyClient>();
+        MyClient client = provider.GetRequiredService<MyClient>();
 
         #endregion
     }
@@ -106,10 +106,10 @@ public class ConfigurationAndDISamples
         builder.AddKeyedClient<MyClient, MyClientSettings>("client1", "Client1");
         builder.AddKeyedClient<MyClient, MyClientSettings>("client2", "Client2");
 
-        IHost host = builder.Build();
+        IServiceProvider provider = builder.Services.BuildServiceProvider();
 
-        MyClient client1 = host.Services.GetRequiredKeyedService<MyClient>("client1");
-        MyClient client2 = host.Services.GetRequiredKeyedService<MyClient>("client2");
+        MyClient client1 = provider.GetRequiredKeyedService<MyClient>("client1");
+        MyClient client2 = provider.GetRequiredKeyedService<MyClient>("client2");
 
         #endregion
     }

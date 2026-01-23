@@ -13,7 +13,9 @@ This document demonstrates how to use the configuration and dependency injection
 
 ## Simple Configuration Example
 
-The simplest way to configure a client is to use the `GetClientSettings<T>` extension method with your application's configuration.
+The simplest way to configure a client is to use the `GetClientSettings<T>` extension
+method with your application's configuration.  The sample here will load a configuration
+file named `appsettings.json` and also load the API key from an environment variable.
 
 **appsettings.json:**
 ```json
@@ -22,7 +24,7 @@ The simplest way to configure a client is to use the `GetClientSettings<T>` exte
     "Endpoint": "https://api.example.com",
     "Credential": {
       "CredentialSource": "ApiKey",
-      "Key": "your-api-key-here"
+      // "Key" is loaded from environment variable MyClient__Credential__Key
     }
   }
 }
@@ -38,7 +40,9 @@ MyClient client = new(settings);
 
 ## Advanced Configuration Example
 
-This example shows more advanced configuration options including pipeline options, retry settings, and logging. It also demonstrates loading the API key from an environment variable.
+This example shows more advanced configuration options including pipeline options,
+retry settings, and logging.  Any public properties on the settings class can be set
+via configuration as long as the name and location match.
 
 **appsettings.json:**
 ```json
@@ -50,12 +54,11 @@ This example shows more advanced configuration options including pipeline option
       // "Key" is loaded from environment variable MyClient__Credential__Key
     },
     "Options": {
-      "RetryPolicy": {
-        "MaxRetries": 5,
-        "NetworkTimeout": "00:01:30"
-      },
+      "NetworkTimeout": "00:00:30",
+      "EnableDistributedTracing": true",
       "ClientLoggingOptions": {
-        "EnableLogging": true
+        "EnableLogging": true,
+        "MessageContentSizeLimit": 2048
       }
     }
   }
@@ -92,9 +95,9 @@ Use the `AddClient` extension method to register your client with the dependency
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.AddClient<MyClient, MyClientSettings>("MyClient");
 
-IHost host = builder.Build();
+IServiceProvider provider = builder.Services.BuildServiceProvider();
 
-MyClient client = host.Services.GetRequiredService<MyClient>();
+MyClient client = provider.GetRequiredService<MyClient>();
 ```
 
 ## Keyed Services Example
@@ -126,10 +129,10 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.AddKeyedClient<MyClient, MyClientSettings>("client1", "Client1");
 builder.AddKeyedClient<MyClient, MyClientSettings>("client2", "Client2");
 
-IHost host = builder.Build();
+IServiceProvider provider = builder.Services.BuildServiceProvider();
 
-MyClient client1 = host.Services.GetRequiredKeyedService<MyClient>("client1");
-MyClient client2 = host.Services.GetRequiredKeyedService<MyClient>("client2");
+MyClient client1 = provider.GetRequiredKeyedService<MyClient>("client1");
+MyClient client2 = provider.GetRequiredKeyedService<MyClient>("client2");
 ```
 
 ## Overriding Credentials Example
@@ -156,9 +159,9 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.AddClient<MyClient, MyClientSettings>("MyClient")
     .PostConfigure(settings => settings.CredentialObject = new MyTokenProvider());
 
-IHost host = builder.Build();
+IServiceProvider provider = builder.Services.BuildServiceProvider();
 
-MyClient client = host.Services.GetRequiredService<MyClient>();
+MyClient client = provider.GetRequiredService<MyClient>();
 ```
 
 In this example, the credential provider from configuration can be overridden programmatically using `PostConfigure`.
@@ -192,10 +195,10 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.AddKeyedClient<MyClient, MyClientSettings>("client1", "Client1");
 builder.AddKeyedClient<MyClient, MyClientSettings>("client2", "Client2");
 
-IHost host = builder.Build();
+IServiceProvider provider = builder.Services.BuildServiceProvider();
 
-MyClient client1 = host.Services.GetRequiredKeyedService<MyClient>("client1");
-MyClient client2 = host.Services.GetRequiredKeyedService<MyClient>("client2");
+MyClient client1 = provider.GetRequiredKeyedService<MyClient>("client1");
+MyClient client2 = provider.GetRequiredKeyedService<MyClient>("client2");
 ```
 
 In this example, both clients share the same credential configuration without duplicating the values. This makes it easier to maintain and update shared settings in one place.
