@@ -23,7 +23,7 @@ namespace BasicTypeSpec
         public static void UpdateQuery(this RawRequestUriBuilder builder, string name, string value)
         {
             string currentQuery = builder.Query;
-            string searchPattern = name + "=";
+            string searchPattern = string.Concat(name, "=");
             int paramStartIndex = -1;
             if (currentQuery.StartsWith(searchPattern))
             {
