@@ -8,41 +8,40 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.NeonPostgres;
 using Azure.ResourceManager.NeonPostgres.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NeonPostgres.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableNeonPostgresResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _neonOrganizationOrganizationsClientDiagnostics;
-        private OrganizationsRestOperations _neonOrganizationOrganizationsRestClient;
+        private ClientDiagnostics _organizationsClientDiagnostics;
+        private Organizations _organizationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNeonPostgresResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNeonPostgresResourceGroupResource for mocking. </summary>
         protected MockableNeonPostgresResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNeonPostgresResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNeonPostgresResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNeonPostgresResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics NeonOrganizationOrganizationsClientDiagnostics => _neonOrganizationOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", NeonOrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationsRestOperations NeonOrganizationOrganizationsRestClient => _neonOrganizationOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NeonOrganizationResource.ResourceType));
+        private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2025-06-23-preview");
 
-        /// <summary> Gets a collection of NeonOrganizationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NeonOrganizationResources and their operations over a NeonOrganizationResource. </returns>
+        /// <summary> Gets a collection of NeonOrganizations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NeonOrganizations and their operations over a NeonOrganizationResource. </returns>
         public virtual NeonOrganizationCollection GetNeonOrganizations()
         {
             return GetCachedClient(client => new NeonOrganizationCollection(client, Id));
@@ -52,20 +51,16 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-23-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,6 +71,8 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NeonOrganizationResource>> GetNeonOrganizationAsync(string organizationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
             return await GetNeonOrganizations().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -83,20 +80,16 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-23-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +100,8 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         [ForwardsClientCalls]
         public virtual Response<NeonOrganizationResource> GetNeonOrganization(string organizationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
             return GetNeonOrganizations().Get(organizationName, cancellationToken);
         }
 
@@ -114,32 +109,38 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// Action to retrieve the PostgreSQL versions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/getPostgresVersions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/getPostgresVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_GetPostgresVersions</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_GetPostgresVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-23-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PgVersionsResult>> GetPostgresVersionsOrganizationAsync(PgVersion pgVersion = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PgVersionsResult>> GetPostgresVersionsOrganizationAsync(PgVersion pgVersion = default, CancellationToken cancellationToken = default)
         {
-            using var scope = NeonOrganizationOrganizationsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization");
+            using DiagnosticScope scope = OrganizationsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization");
             scope.Start();
             try
             {
-                var response = await NeonOrganizationOrganizationsRestClient.GetPostgresVersionsAsync(Id.SubscriptionId, Id.ResourceGroupName, pgVersion, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrganizationsRestClient.CreateGetPostgresVersionsOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, PgVersion.ToRequestContent(pgVersion), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PgVersionsResult> response = Response.FromValue(PgVersionsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -153,32 +154,38 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// Action to retrieve the PostgreSQL versions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/getPostgresVersions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/getPostgresVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_GetPostgresVersions</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_GetPostgresVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-23-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PgVersionsResult> GetPostgresVersionsOrganization(PgVersion pgVersion = null, CancellationToken cancellationToken = default)
+        public virtual Response<PgVersionsResult> GetPostgresVersionsOrganization(PgVersion pgVersion = default, CancellationToken cancellationToken = default)
         {
-            using var scope = NeonOrganizationOrganizationsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization");
+            using DiagnosticScope scope = OrganizationsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization");
             scope.Start();
             try
             {
-                var response = NeonOrganizationOrganizationsRestClient.GetPostgresVersions(Id.SubscriptionId, Id.ResourceGroupName, pgVersion, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrganizationsRestClient.CreateGetPostgresVersionsOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, PgVersion.ToRequestContent(pgVersion), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PgVersionsResult> response = Response.FromValue(PgVersionsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
