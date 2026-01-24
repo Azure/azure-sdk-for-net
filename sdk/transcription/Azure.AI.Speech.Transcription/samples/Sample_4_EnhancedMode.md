@@ -1,16 +1,14 @@
 # Enhanced Mode for Transcription
 
-This sample demonstrates how to use LLM-powered Enhanced Mode for speech transcription and translation.
+Enhanced Mode uses LLM-powered speech recognition to provide improved transcription accuracy, real-time translation, prompt-based customization, and multilingual support with GPU acceleration.
 
-## What is Enhanced Mode?
+### Supported Tasks
 
-Enhanced Mode uses a large language model to provide:
+| Task | Description |
+|------|-------------|
+| `transcribe` | Transcribe audio in the input language (auto-detected or specified) |
+| `translate` | Translate audio to a specified target language |
 
-- **Advanced transcription**: Improved quality with deep contextual understanding
-- **Translation**: Translate speech to another language in one step
-- **Prompt tuning**: Guide output style and improve recognition of specific terms
-
-Enhanced mode is **automatically enabled** when you create an `EnhancedModeProperties` object.
 
 ## Transcribe with Enhanced Mode
 
@@ -38,19 +36,19 @@ var channelPhrases = result.PhrasesByChannel.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
-## Translate Speech to Another Language
+## Translate an Audio File with Enhanced Mode
 
-Translate speech during transcription:
+Translate speech to a target language during transcription. Specify the target language using the language code (e.g., `en` for English, `ko` for Korean, `es` for Spanish).
 
-```C# Snippet:TranscribeWithTranslation
-string audioFilePath = "path/to/spanish-audio.wav";
+```C# Snippet:TranslateWithEnhancedMode
+string audioFilePath = "path/to/chinese-audio.wav";
 using FileStream audioStream = File.OpenRead(audioFilePath);
 
-// Translate Spanish speech to English
+// Translate Chinese speech to Korean
 EnhancedModeProperties enhancedMode = new EnhancedModeProperties
 {
     Task = "translate",
-    TargetLanguage = "en"  // Translate to English
+    TargetLanguage = "ko"  // Translate to Korean
 };
 
 TranscriptionOptions options = new TranscriptionOptions(audioStream)
@@ -61,28 +59,26 @@ TranscriptionOptions options = new TranscriptionOptions(audioStream)
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
-Console.WriteLine("Translated to English:");
+Console.WriteLine("Translated to Korean:");
 var channelPhrases = result.PhrasesByChannel.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
-## Use Prompts to Guide Output
+## Enhanced Mode with Prompt Tuning
 
-Provide prompts to improve recognition or control output format:
+Provide prompts to improve recognition or control output format. Prompts are optional text that guides the output style for `transcribe` or `translate` tasks.
 
-```C# Snippet:TranscribeWithEnhancedPrompts
+
+```C# Snippet:EnhancedModeWithPrompts
 string audioFilePath = "path/to/audio.wav";
 using FileStream audioStream = File.OpenRead(audioFilePath);
 
+// Guide output formatting using prompts
 EnhancedModeProperties enhancedMode = new EnhancedModeProperties
 {
-    Task = "transcribe"
+    Task = "transcribe",
+    Prompt = { "Output must be in lexical format." }
 };
-
-// Guide output formatting
-enhancedMode.Prompt.Add("Output must be in lexical format.");
-// Or improve recognition of specific terms
-enhancedMode.Prompt.Add("Pay attention to Azure, OpenAI, Kubernetes.");
 
 TranscriptionOptions options = new TranscriptionOptions(audioStream)
 {
@@ -96,19 +92,21 @@ var channelPhrases = result.PhrasesByChannel.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
-## Combine with Other Options
+## Combine Enhanced Mode with Other Options
 
-Enhanced mode works with diarization and profanity filtering:
+Enhanced Mode can be combined with other transcription options like `diarization`, `profanityFilterMode`, and `channels` for comprehensive transcription scenarios such as meeting transcription.
 
-```C# Snippet:TranscribeWithEnhancedAndDiarization
+> **Note:** Diarization is only supported for the `transcribe` task, not for `translate`.
+
+```C# Snippet:EnhancedModeWithDiarization
 string audioFilePath = "path/to/meeting.wav";
 using FileStream audioStream = File.OpenRead(audioFilePath);
 
 EnhancedModeProperties enhancedMode = new EnhancedModeProperties
 {
-    Task = "transcribe"
+    Task = "transcribe",
+    Prompt = { "Output must be in lexical format." }
 };
-enhancedMode.Prompt.Add("Output must be in lexical format.");
 
 TranscriptionOptions options = new TranscriptionOptions(audioStream)
 {
@@ -130,18 +128,16 @@ foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
 }
 ```
 
-## Supported Languages
+## Limitations
 
-Enhanced Mode supports: English, Chinese, German, French, Italian, Japanese, Spanish, Portuguese, and Korean.
+- `confidence` is not available and always returns `0`
+- Word-level timing (`offsetMilliseconds`, `durationMilliseconds`) is not supported for the `translate` task
+- Diarization is not supported for the `translate` task (only `speaker1` label is returned)
+- `locales` and `phraseLists` options are not required or applicable with Enhanced Mode
 
-## Prompt Best Practices
+## Related Resources
 
-- Maximum length: 4,096 characters
-- Write prompts in English for best results
-- Use `"Output must be in lexical format."` to control formatting
-- Use `"Pay attention to phrase1, phrase2."` to improve recognition
-- Limit the number of phrases per prompt
+- [LLM speech for speech transcription and translation (preview)](https://learn.microsoft.com/azure/ai-services/speech-service/llm-speech)
+- [Fast transcription](https://learn.microsoft.com/azure/ai-services/speech-service/fast-transcription-create)
+```
 
-## See Also
-
-- [LLM Speech Documentation](https://learn.microsoft.com/azure/ai-services/speech-service/llm-speech)

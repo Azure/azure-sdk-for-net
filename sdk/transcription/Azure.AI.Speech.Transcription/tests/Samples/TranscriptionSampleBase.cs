@@ -2,39 +2,36 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
+using System.ClientModel;
+using Azure.AI.Speech.Transcription.Tests;
 
 namespace Azure.AI.Speech.Transcription.Samples
 {
     /// <summary>
     /// Base class for transcription samples, providing helper methods for client creation.
     /// </summary>
-    public class TranscriptionSampleBase : SamplesBase<TranscriptionClientTestEnvironment>
+    public class TranscriptionSampleBase
     {
         /// <summary>
         /// Creates an authenticated TranscriptionClient using API key authentication.
         /// </summary>
         protected TranscriptionClient CreateTranscriptionClient()
         {
+#if SNIPPET
             #region Snippet:CreateTranscriptionClientAuth
             string endpoint = Environment.GetEnvironmentVariable("TRANSCRIPTION_ENDPOINT");
             string key = Environment.GetEnvironmentVariable("TRANSCRIPTION_API_KEY");
 
-#if !SNIPPET
-            endpoint = TestEnvironment.Endpoint.ToString();
-            key = TestEnvironment.Credential.Key;
-#endif
-
             // Create a Transcription client
             TranscriptionClient client = new TranscriptionClient(
                 new Uri(endpoint),
-                new AzureKeyCredential(key));
-
+                new ApiKeyCredential(key));
             #endregion Snippet:CreateTranscriptionClientAuth
-
             return client;
+#else
+            // Use TestConfiguration for actual test execution
+            return TestConfiguration.CreateClient();
+#endif
         }
 
         /// <summary>
@@ -42,10 +39,15 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// </summary>
         protected TranscriptionClient CreateTranscriptionClient(TranscriptionClientOptions options)
         {
-            string endpoint = TestEnvironment.Endpoint.ToString();
-            string key = TestEnvironment.Credential.Key;
+            return TestConfiguration.CreateClient(options);
+        }
 
-            return new TranscriptionClient(new Uri(endpoint), new AzureKeyCredential(key), options);
+        /// <summary>
+        /// Gets the path to the sample audio file for testing.
+        /// </summary>
+        protected string GetSampleAudioFilePath()
+        {
+            return TestConfiguration.SampleAudioFilePath;
         }
     }
 }

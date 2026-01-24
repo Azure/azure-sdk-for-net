@@ -1,0 +1,5 @@
+# Test configuration files with secrets
+.env
+
+# Session recordings (not used - SDK uses System.ClientModel, not Azure.Core)
+SessionRecords/

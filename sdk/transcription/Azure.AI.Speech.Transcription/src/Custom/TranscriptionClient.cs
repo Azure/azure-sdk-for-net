@@ -48,22 +48,19 @@ namespace Azure.AI.Speech.Transcription
 
         private static (BinaryContent Content, string ContentType) CreateRequestContent(TranscriptionOptions options)
         {
+            // Always use multipart/form-data as per API spec.
+            // The audio part is optional when audioUrl is provided in the definition.
+            MultiPartFormDataBinaryContent multipart = new MultiPartFormDataBinaryContent();
+
+            BinaryData optionsJson = ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAISpeechTranscriptionContext.Default);
+            multipart.Add(optionsJson.ToString(), DefinitionPartName, contentType: MultipartDefinitionPartContentType);
+
             if (options.AudioStream != null)
             {
-                // Closest equivalent to the old emitter's behavior:
-                // send the options and raw audio stream as multipart/form-data.
-                MultiPartFormDataBinaryContent multipart = new MultiPartFormDataBinaryContent();
-
-                BinaryData optionsJson = ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAISpeechTranscriptionContext.Default);
-                multipart.Add(optionsJson.ToString(), DefinitionPartName, contentType: MultipartDefinitionPartContentType);
                 multipart.Add(options.AudioStream, AudioPartName, filename: DefaultAudioFileName);
-
-                return (multipart, multipart.ContentType);
             }
 
-            // AudioUri-only (or options-only) scenario: send JSON body.
-            TranscriptionContent body = new TranscriptionContent(options);
-            return (body, JsonContentType);
+            return (multipart, multipart.ContentType);
         }
     }
 }

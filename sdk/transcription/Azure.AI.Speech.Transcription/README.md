@@ -92,7 +92,7 @@ For example,
 ```C# Snippet:CreateTranscriptionClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
 ApiKeyCredential credential = new("your apikey");
-TranscriptionClientOptions options = new TranscriptionClientOptions(TranscriptionClientOptions.ServiceVersion.V2025_10_15);
+TranscriptionClientOptions options = new TranscriptionClientOptions(TranscriptionClientOptions.ServiceVersion.V20251015);
 TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
 ```
 
@@ -159,7 +159,6 @@ Transcribe audio from a local file using the synchronous API:
 
 ```C# Snippet:TranscribeLocalFileSync
 string filePath = "path/to/audio.wav";
-TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions(fileStream);
@@ -177,7 +176,6 @@ Or use the asynchronous API:
 
 ```C# Snippet:TranscribeLocalFileAsync
 string filePath = "path/to/audio.wav";
-TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions(fileStream);
@@ -188,46 +186,6 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     {
         Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
     }
-}
-```
-
-### Transcribe with options
-
-Configure transcription options like locale, profanity filtering, and speaker diarization:
-
-```C# Snippet:TranscribeWithMultipleOptions
-string audioFilePath = "path/to/meeting.wav";
-using FileStream audioStream = File.OpenRead(audioFilePath);
-
-// Combine multiple options for a complete transcription solution
-TranscriptionOptions options = new TranscriptionOptions(audioStream)
-{
-    ProfanityFilterMode = ProfanityFilterMode.Masked,
-    DiarizationOptions = new TranscriptionDiarizationOptions
-    {
-        // Enabled is automatically set to true when MaxSpeakers is specified
-        MaxSpeakers = 5
-    },
-    PhraseList = new PhraseListProperties
-    {
-        BiasingWeight = 3.0f
-    }
-};
-
-// Add locale and custom phrases
-options.Locales.Add("en-US");
-options.PhraseList.Phrases.Add("quarterly report");
-options.PhraseList.Phrases.Add("action items");
-options.PhraseList.Phrases.Add("stakeholders");
-
-ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
-TranscriptionResult result = response.Value;
-
-Console.WriteLine($"Meeting transcription ({result.Duration}):");
-var channelPhrases = result.PhrasesByChannel.First();
-foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
-{
-    Console.WriteLine($"[Speaker {phrase.Speaker}] {phrase.Text}");
 }
 ```
 
@@ -253,19 +211,56 @@ var channelPhrases = result.PhrasesByChannel.First();
 Console.WriteLine($"\nTranscription:\n{channelPhrases.Text}");
 ```
 
+### Transcribe with options
+
+Configure transcription options like locale, profanity filtering, and speaker diarization:
+
+```C# Snippet:TranscribeWithMultipleOptions
+string audioFilePath = "path/to/meeting.wav";
+using FileStream audioStream = File.OpenRead(audioFilePath);
+
+// Create TranscriptionOptions with audio stream
+TranscriptionOptions options = new TranscriptionOptions(audioStream);
+
+// Enable speaker diarization to identify different speakers
+options.DiarizationOptions = new TranscriptionDiarizationOptions
+{
+    MaxSpeakers = 5 // Enabled is automatically set to true
+};
+
+// Mask profanity in the transcription
+options.ProfanityFilterMode = ProfanityFilterMode.Masked;
+
+// Add custom phrases to improve recognition of domain-specific terms
+// These phrases help the service correctly recognize words that might be misheard
+options.PhraseList = new PhraseListProperties();
+options.PhraseList.Phrases.Add("action items");
+options.PhraseList.Phrases.Add("Q4");
+options.PhraseList.Phrases.Add("KPIs");
+
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+TranscriptionResult result = response.Value;
+
+// Display results
+Console.WriteLine($"Duration: {result.DurationMilliseconds / 1000.0:F1}s | Speakers: {result.PhrasesByChannel.First().Phrases.Select(p => p.Speaker).Distinct().Count()}");
+Console.WriteLine();
+Console.WriteLine("Full Transcript:");
+Console.WriteLine(result.CombinedPhrases.First().Text);
+```
+
 ### Enhanced Mode with Translation
 
 Use LLM-powered Enhanced Mode to translate speech during transcription. Enhanced mode is automatically enabled when you create an `EnhancedModeProperties` object:
 
-```C# Snippet:TranscribeWithTranslation
-string audioFilePath = "path/to/spanish-audio.wav";
+```C# Snippet:TranslateWithEnhancedMode
+string audioFilePath = "path/to/chinese-audio.wav";
 using FileStream audioStream = File.OpenRead(audioFilePath);
 
-// Translate Spanish speech to English
+// Translate Chinese speech to Korean
 EnhancedModeProperties enhancedMode = new EnhancedModeProperties
 {
     Task = "translate",
-    TargetLanguage = "en"  // Translate to English
+    TargetLanguage = "ko"  // Translate to Korean
 };
 
 TranscriptionOptions options = new TranscriptionOptions(audioStream)
@@ -276,7 +271,7 @@ TranscriptionOptions options = new TranscriptionOptions(audioStream)
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
-Console.WriteLine("Translated to English:");
+Console.WriteLine("Translated to Korean:");
 var channelPhrases = result.PhrasesByChannel.First();
 Console.WriteLine(channelPhrases.Text);
 ```

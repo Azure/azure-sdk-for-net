@@ -5,10 +5,8 @@ using System;
 using System.ClientModel;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.TestFramework;
+using Azure.AI.Speech.Transcription.Tests;
 using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Samples
@@ -16,21 +14,31 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class SampleSnippets : SamplesBase<TranscriptionClientTestEnvironment>
+    public partial class SampleSnippets
     {
+#if !SNIPPET
+        private TranscriptionClient _client;
+
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            _client = TestConfiguration.CreateClient();
+        }
+#endif
+
         [Test]
         public void CreateClientForSpecificApiVersion()
         {
 #if !SNIPPET
-            var endpoint = TestEnvironment.Endpoint;
-            var credential = TestEnvironment.Credential;
+            var endpoint = TestConfiguration.Endpoint;
+            var credential = TestConfiguration.Credential;
 #endif
             #region Snippet:CreateTranscriptionClientForSpecificApiVersion
 #if SNIPPET
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new("your apikey");
 #endif
-            TranscriptionClientOptions options = new TranscriptionClientOptions(TranscriptionClientOptions.ServiceVersion.V2025_10_15);
+            TranscriptionClientOptions options = new TranscriptionClientOptions(TranscriptionClientOptions.ServiceVersion.V20251015);
             TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
             #endregion Snippet:CreateTranscriptionClientForSpecificApiVersion
         }
@@ -41,10 +49,9 @@ namespace Azure.AI.Speech.Transcription.Samples
             #region Snippet:TranscribeLocalFileSync
 #if SNIPPET
             string filePath = "path/to/audio.wav";
-            TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
 #else
-            string filePath = "path/to/audio.wav";
-            var client = CreateTestClient();
+            string filePath = TestConfiguration.SampleAudioFilePath;
+            var client = _client;
 #endif
             using (FileStream fileStream = File.Open(filePath, FileMode.Open))
             {
@@ -66,10 +73,9 @@ namespace Azure.AI.Speech.Transcription.Samples
             #region Snippet:TranscribeLocalFileAsync
 #if SNIPPET
             string filePath = "path/to/audio.wav";
-            TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
 #else
-            string filePath = "path/to/audio.wav";
-            var client = CreateTestClient();
+            string filePath = TestConfiguration.SampleAudioFilePath;
+            var client = _client;
 #endif
             using (FileStream fileStream = File.Open(filePath, FileMode.Open))
             {
@@ -86,19 +92,21 @@ namespace Azure.AI.Speech.Transcription.Samples
         }
 
         [Test]
-        public void TranscribeRemoteFileSync()
+        public void TranscribeFromUrlSync()
         {
-            #region Snippet:TranscribeRemoteFileSync
+            if (!TestConfiguration.HasSampleAudioUrl)
+                Assert.Ignore("TRANSCRIPTION_SAMPLE_AUDIO_URL not configured");
+
+            #region Snippet:TranscribeFromUrlSync
 #if SNIPPET
             TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
+            Uri audioUrl = new Uri("https://your-domain.com/your-file.wav");
 #else
-            var client = CreateTestClient();
+            var client = _client;
+            Uri audioUrl = new Uri(TestConfiguration.SampleAudioUrl);
 #endif
-            using HttpClient httpClient = new HttpClient();
-            using HttpResponseMessage httpResponse = httpClient.GetAsync("https://your-domain.com/your-file.mp3").Result;
-            using Stream stream = httpResponse.Content.ReadAsStreamAsync().Result;
-
-            var options = new TranscriptionOptions(stream);
+            // Transcribe directly from URL - the service fetches the audio
+            var options = new TranscriptionOptions(audioUrl);
             var response = client.Transcribe(options);
 
             Console.WriteLine($"File Duration: {response.Value.Duration}");
@@ -106,23 +114,25 @@ namespace Azure.AI.Speech.Transcription.Samples
             {
                 Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
             }
-            #endregion Snippet:TranscribeRemoteFileSync
+            #endregion Snippet:TranscribeFromUrlSync
         }
 
         [Test]
-        public async Task TranscribeRemoteFileAsync()
+        public async Task TranscribeFromUrlAsync()
         {
-            #region Snippet:TranscribeRemoteFileAsync
+            if (!TestConfiguration.HasSampleAudioUrl)
+                Assert.Ignore("TRANSCRIPTION_SAMPLE_AUDIO_URL not configured");
+
+            #region Snippet:TranscribeFromUrlAsync
 #if SNIPPET
             TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
+            Uri audioUrl = new Uri("https://your-domain.com/your-file.wav");
 #else
-            var client = CreateTestClient();
+            var client = _client;
+            Uri audioUrl = new Uri(TestConfiguration.SampleAudioUrl);
 #endif
-            using HttpClient httpClient = new HttpClient();
-            using HttpResponseMessage httpResponse = await httpClient.GetAsync("https://your-domain.com/your-file.mp3");
-            using Stream stream = await httpResponse.Content.ReadAsStreamAsync();
-
-            var options = new TranscriptionOptions(stream);
+            // Transcribe directly from URL - the service fetches the audio
+            var options = new TranscriptionOptions(audioUrl);
             var response = await client.TranscribeAsync(options);
 
             Console.WriteLine($"File Duration: {response.Value.Duration}");
@@ -130,115 +140,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             {
                 Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
             }
-            #endregion Snippet:TranscribeRemoteFileAsync
-        }
-
-        [Test]
-        public async Task TranscribeWithLocales()
-        {
-            #region Snippet:TranscribeWithLocales
-#if SNIPPET
-            string filePath = "path/to/audio.wav";
-            TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
-#else
-            string filePath = "path/to/audio.wav";
-            var client = CreateTestClient();
-#endif
-            using (FileStream fileStream = File.Open(filePath, FileMode.Open))
-            {
-                var options = new TranscriptionOptions(fileStream);
-                options.Locales.Add("en-US");
-
-                var response = await client.TranscribeAsync(options);
-
-                Console.WriteLine($"File Duration: {response.Value.Duration}");
-                foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
-                {
-                    Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
-                }
-            }
-            #endregion Snippet:TranscribeWithLocales
-        }
-
-        [Test]
-        public async Task TranscribeWithModels()
-        {
-            #region Snippet:TranscribeWithModels
-#if SNIPPET
-            string filePath = "path/to/audio.wav";
-            TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
-#else
-            string filePath = "path/to/audio.wav";
-            var client = CreateTestClient();
-#endif
-            using (FileStream fileStream = File.Open(filePath, FileMode.Open))
-            {
-                var options = new TranscriptionOptions(fileStream);
-                options.Models.Add("en-US", new Uri("https://myaccount.api.cognitive.microsoft.com/speechtotext/models/your-model-uuid"));
-
-                var response = await client.TranscribeAsync(options);
-
-                Console.WriteLine($"File Duration: {response.Value.Duration}");
-                foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
-                {
-                    Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
-                }
-            }
-            #endregion Snippet:TranscribeWithModels
-        }
-
-        [Test]
-        public async Task TranscribeWithProfanityFilter()
-        {
-            #region Snippet:TranscribeWithProfanityFilterOption
-#if SNIPPET
-            string filePath = "path/to/audio.wav";
-            TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
-#else
-            string filePath = "path/to/audio.wav";
-            var client = CreateTestClient();
-#endif
-            using (FileStream fileStream = File.Open(filePath, FileMode.Open))
-            {
-                var options = new TranscriptionOptions(fileStream);
-                options.ProfanityFilterMode = ProfanityFilterMode.Masked;
-
-                var response = await client.TranscribeAsync(options);
-
-                Console.WriteLine($"File Duration: {response.Value.Duration}");
-                foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
-                {
-                    Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
-                }
-            }
-            #endregion Snippet:TranscribeWithProfanityFilterOption
-        }
-
-        [Test]
-        public async Task TranscribeWithActiveChannels()
-        {
-            #region Snippet:TranscribeWithActiveChannels
-#if SNIPPET
-            string filePath = "path/to/audio.wav";
-            TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
-#else
-            string filePath = "path/to/audio.wav";
-            var client = CreateTestClient();
-#endif
-            using (FileStream fileStream = File.Open(filePath, FileMode.Open))
-            {
-                var options = new TranscriptionOptions(fileStream);
-                options.ActiveChannels.Add(0);
-
-                var response = await client.TranscribeAsync(options);
-
-                Console.WriteLine($"File Duration: {response.Value.Duration}");
-                foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
-                {
-                    Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
-                }
-            }
-            #endregion Snippet:TranscribeWithActiveChannels
+            #endregion Snippet:TranscribeFromUrlAsync
         }
 
         [Test]
@@ -249,8 +151,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             string filePath = "path/to/audio.wav";
             TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
 #else
-            string filePath = "path/to/audio.wav";
-            var client = CreateTestClient();
+            string filePath = TestConfiguration.SampleAudioFilePath;
+            var client = _client;
 #endif
             using (FileStream fileStream = File.Open(filePath, FileMode.Open))
             {
@@ -273,12 +175,5 @@ namespace Azure.AI.Speech.Transcription.Samples
             }
             #endregion Snippet:TranscribeWithDiarization
         }
-
-#if !SNIPPET
-        private TranscriptionClient CreateTestClient()
-        {
-            return new TranscriptionClient(TestEnvironment.Endpoint, TestEnvironment.Credential);
-        }
-#endif
     }
 }

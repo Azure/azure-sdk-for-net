@@ -3,10 +3,12 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.AI.Speech.Transcription.Tests;
 using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Samples
@@ -16,17 +18,31 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// </summary>
     public partial class Sample01_BasicTranscription : TranscriptionSampleBase
     {
+#if !SNIPPET
+        private TranscriptionClient _client;
+
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            _client = TestConfiguration.CreateClient();
+        }
+#endif
+
         /// <summary>
         /// Creates a new TranscriptionClient using an API key credential.
         /// </summary>
         [Test]
-        [Ignore("Only validating compilation of examples")]
         public new void CreateTranscriptionClient()
         {
             #region Snippet:CreateTranscriptionClient
             // Get the endpoint and API key from your Speech resource in the Azure portal
+#if SNIPPET
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
+#else
+            Uri endpoint = TestConfiguration.Endpoint;
+            ApiKeyCredential credential = TestConfiguration.Credential;
+#endif
 
             // Create the TranscriptionClient
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
@@ -37,16 +53,20 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// Creates a TranscriptionClient with custom client options.
         /// </summary>
         [Test]
-        [Ignore("Only validating compilation of examples")]
         public void CreateTranscriptionClientWithOptions()
         {
             #region Snippet:CreateTranscriptionClientWithOptions
+#if SNIPPET
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
+#else
+            Uri endpoint = TestConfiguration.Endpoint;
+            ApiKeyCredential credential = TestConfiguration.Credential;
+#endif
 
             // Configure client options
             TranscriptionClientOptions options = new TranscriptionClientOptions(
-                TranscriptionClientOptions.ServiceVersion.V2025_10_15);
+                TranscriptionClientOptions.ServiceVersion.V20251015);
 
             TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
             #endregion Snippet:CreateTranscriptionClientWithOptions
@@ -56,16 +76,23 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// Transcribes a local audio file synchronously.
         /// </summary>
         [Test]
-        [Ignore("Only validating compilation of examples")]
         public void TranscribeLocalFile()
         {
+#if !SNIPPET
+            var client = _client;
+#else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
+#endif
 
             #region Snippet:TranscribeLocalFile
             // Path to your local audio file
+#if SNIPPET
             string audioFilePath = "path/to/audio.wav";
+#else
+            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+#endif
 
             // Open the audio file as a stream
             using FileStream audioStream = File.OpenRead(audioFilePath);
@@ -95,15 +122,19 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// Transcribes a local audio file asynchronously.
         /// </summary>
         [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task TranscribeLocalFileAsync()
         {
+#if !SNIPPET
+            var client = _client;
+            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+#else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
             // Path to your local audio file
-            string audioFilePath = "path/to/audio.wav";
+            string audioFilePath = "path/to/audio/file.wav";
+#endif
 
             // Open the audio file as a stream
             using FileStream audioStream = File.OpenRead(audioFilePath);
@@ -132,13 +163,17 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// Demonstrates accessing individual words within transcribed phrases.
         /// </summary>
         [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task AccessTranscribedWords()
         {
+#if !SNIPPET
+            var client = _client;
+            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+#else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
             string audioFilePath = "path/to/audio.wav";
+#endif
 
             #region Snippet:AccessTranscribedWords
             using FileStream audioStream = File.OpenRead(audioFilePath);
@@ -167,13 +202,17 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// Demonstrates accessing the combined text for a channel.
         /// </summary>
         [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task AccessCombinedText()
         {
+#if !SNIPPET
+            var client = _client;
+            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+#else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
             string audioFilePath = "path/to/audio.wav";
+#endif
 
             #region Snippet:AccessCombinedText
             using FileStream audioStream = File.OpenRead(audioFilePath);
@@ -194,97 +233,119 @@ namespace Azure.AI.Speech.Transcription.Samples
         }
 
         /// <summary>
-        /// Demonstrates configuring logging and diagnostics for troubleshooting.
+        /// Demonstrates configuring logging using a custom pipeline policy.
+        /// System.ClientModel supports custom PipelinePolicy for logging HTTP requests/responses.
         /// </summary>
         [Test]
-        [Ignore("Only validating compilation of examples")]
         public void ConfigureLogging()
         {
             #region Snippet:ConfigureLogging
-            // Enable Azure Core diagnostics for console logging
-            using Azure.Core.Diagnostics.AzureEventSourceListener listener =
-                Azure.Core.Diagnostics.AzureEventSourceListener.CreateConsoleLogger();
-
+#if SNIPPET
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
+#else
+            Uri endpoint = TestConfiguration.Endpoint;
+            ApiKeyCredential credential = TestConfiguration.Credential;
+#endif
 
-            // Configure diagnostics options
-            TranscriptionClientOptions options = new TranscriptionClientOptions
-            {
-                Diagnostics =
-                {
-                    IsLoggingEnabled = true,
-                    IsLoggingContentEnabled = true, // Log request/response content
-                    IsTelemetryEnabled = true,
-                    ApplicationId = "MyApp/1.0.0" // Custom application identifier
-                }
-            };
+            // Create client options and add a custom logging policy
+            TranscriptionClientOptions options = new TranscriptionClientOptions();
+
+            // Add a logging policy that runs per-call (before retries)
+            options.AddPolicy(new LoggingPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
 
             TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
-
-            // Logs will now be written to the console showing:
-            // - HTTP requests and responses
-            // - Request/response headers
-            // - Request/response content (when IsLoggingContentEnabled = true)
-            // - Client pipeline events
             #endregion Snippet:ConfigureLogging
         }
 
         /// <summary>
         /// Demonstrates configuring custom retry policy for resilience.
+        /// System.ClientModel uses ClientRetryPolicy for retry configuration.
         /// </summary>
         [Test]
-        [Ignore("Only validating compilation of examples")]
         public void ConfigureRetryPolicy()
         {
             #region Snippet:ConfigureRetryPolicy
+#if SNIPPET
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
+#else
+            Uri endpoint = TestConfiguration.Endpoint;
+            ApiKeyCredential credential = TestConfiguration.Credential;
+#endif
 
-            // Configure retry policy
+            // Configure retry policy with custom max retries
             TranscriptionClientOptions options = new TranscriptionClientOptions
             {
-                Retry =
-                {
-                    MaxRetries = 5,                    // Maximum number of retry attempts
-                    Delay = TimeSpan.FromSeconds(1),   // Initial delay between retries
-                    MaxDelay = TimeSpan.FromSeconds(30), // Maximum delay between retries
-                    Mode = RetryMode.Exponential       // Use exponential backoff
-                }
+                RetryPolicy = new System.ClientModel.Primitives.ClientRetryPolicy(maxRetries: 5)
             };
 
             TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
-
-            // The client will now automatically retry failed requests
-            // using exponential backoff strategy
             #endregion Snippet:ConfigureRetryPolicy
         }
 
         /// <summary>
         /// Demonstrates configuring custom timeout for transcription operations.
+        /// System.ClientModel uses NetworkTimeout property on ClientPipelineOptions.
         /// </summary>
         [Test]
-        [Ignore("Only validating compilation of examples")]
         public void ConfigureTimeout()
         {
             #region Snippet:ConfigureTimeout
+#if SNIPPET
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
+#else
+            Uri endpoint = TestConfiguration.Endpoint;
+            ApiKeyCredential credential = TestConfiguration.Credential;
+#endif
 
-            // Configure network timeout
+            // Configure a custom network timeout (default is 100 seconds)
             TranscriptionClientOptions options = new TranscriptionClientOptions
             {
-                Retry =
-                {
-                    NetworkTimeout = TimeSpan.FromMinutes(5) // 5 minute timeout for network operations
-                }
+                NetworkTimeout = TimeSpan.FromMinutes(5)
             };
 
             TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
-
-            // All transcription operations will use the configured timeout
-            // This is useful for large audio files that take longer to process
             #endregion Snippet:ConfigureTimeout
         }
+
+        #region Snippet:LoggingPolicy
+        /// <summary>
+        /// Custom pipeline policy that logs HTTP requests and responses.
+        /// </summary>
+        private class LoggingPolicy : PipelinePolicy
+        {
+            public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+            {
+                // Log request
+                Console.WriteLine($"Request: {message.Request.Method} {message.Request.Uri}");
+
+                // Continue the pipeline
+                ProcessNext(message, pipeline, currentIndex);
+
+                // Log response
+                if (message.Response != null)
+                {
+                    Console.WriteLine($"Response: {message.Response.Status} {message.Response.ReasonPhrase}");
+                }
+            }
+
+            public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+            {
+                // Log request
+                Console.WriteLine($"Request: {message.Request.Method} {message.Request.Uri}");
+
+                // Continue the pipeline
+                await ProcessNextAsync(message, pipeline, currentIndex);
+
+                // Log response
+                if (message.Response != null)
+                {
+                    Console.WriteLine($"Response: {message.Response.Status} {message.Response.ReasonPhrase}");
+                }
+            }
+        }
+        #endregion
     }
 }
