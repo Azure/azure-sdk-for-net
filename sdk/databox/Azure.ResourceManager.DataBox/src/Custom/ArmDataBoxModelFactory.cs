@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -212,5 +213,40 @@ namespace Azure.ResourceManager.DataBox.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScheduleAvailabilityContent ScheduleAvailabilityContent(AzureLocation storageLocation, string country, DeviceModelName? model)
             => ScheduleAvailabilityContent(storageLocation, skuName: null, country, model);
+
+        /// <summary> Initializes a new instance of <see cref="DataBox.DataBoxJobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="transferType"> Type of the data transfer. </param>
+        /// <param name="isCancellable"> Describes whether the job is cancellable or not. </param>
+        /// <param name="isDeletable"> Describes whether the job is deletable or not. </param>
+        /// <param name="isShippingAddressEditable"> Describes whether the shipping address is editable or not. </param>
+        /// <param name="reverseShippingDetailsUpdate"> The Editable status for Reverse Shipping Address and Contact Info. </param>
+        /// <param name="reverseTransportPreferenceUpdate"> The Editable status for Reverse Transport preferences. </param>
+        /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
+        /// <param name="status"> Name of the stage which is in progress. </param>
+        /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
+        /// <param name="error"> Top level error for the job. </param>
+        /// <param name="details">
+        /// Details of a job run. This field will only be sent for expand details filter.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , ,  and .
+        /// </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="deliveryType"> Delivery type of Job. </param>
+        /// <param name="deliveryInfoScheduledOn"> Delivery Info of Job. </param>
+        /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
+        /// <param name="sku"> The sku type. </param>
+        /// <param name="identity"> Msi identity of the resource. </param>
+        /// <returns> A new <see cref="DataBox.DataBoxJobData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataBoxJobData DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, DateTimeOffset? deliveryInfoScheduledOn, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity)
+        {
+            return DataBoxJobData(id, name, resourceType, systemData, tags, location, transferType, isCancellable, isDeletable, isShippingAddressEditable, reverseShippingDetailsUpdate, reverseTransportPreferenceUpdate, isPrepareToShipEnabled, status, delayedStage:null, startOn, error, details, cancellationReason, deliveryType, deliveryInfoScheduledOn, isCancellableWithoutFee, areAllDevicesLost:null, sku, identity);
+        }
     }
 }
