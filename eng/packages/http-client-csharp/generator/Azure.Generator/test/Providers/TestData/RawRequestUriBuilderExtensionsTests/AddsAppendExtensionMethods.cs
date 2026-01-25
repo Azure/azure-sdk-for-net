@@ -23,7 +23,7 @@ namespace Samples
         public static void UpdateQuery(this global::Azure.Core.RawRequestUriBuilder builder, string name, string value)
         {
             string currentQuery = builder.Query;
-            string searchPattern = (name + "=");
+            string searchPattern = string.Concat(name, "=");
             int paramStartIndex = -1;
             if (currentQuery.StartsWith(searchPattern))
             {
@@ -31,7 +31,7 @@ namespace Samples
             }
             if ((paramStartIndex == -1))
             {
-                string prefixedPattern = ("&" + searchPattern);
+                string prefixedPattern = string.Concat("&", searchPattern);
                 int prefixedIndex = currentQuery.IndexOf(prefixedPattern);
                 if ((prefixedIndex >= 0))
                 {
@@ -48,7 +48,7 @@ namespace Samples
                 }
                 string beforeParam = currentQuery.Substring(0, valueStartIndex);
                 string afterParam = currentQuery.Substring(valueEndIndex);
-                string newQuery = ((beforeParam + value) + afterParam);
+                string newQuery = string.Concat(beforeParam, value, afterParam);
                 builder.Query = newQuery;
             }
             else
