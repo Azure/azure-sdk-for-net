@@ -16,14 +16,9 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Datacenter address for given storage location.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataCenterAddressResult))]
+    [PersistableModelProxy(typeof(UnknownDataCenterAddressResponse))]
     public abstract partial class DataCenterAddressResult : IJsonModel<DataCenterAddressResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DataCenterAddressResult"/> for deserialization. </summary>
-        internal DataCenterAddressResult()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataCenterAddressResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -116,7 +111,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DataCenterAddressLocationResult.DeserializeDataCenterAddressLocationResult(element, options);
                 }
             }
-            return UnknownDataCenterAddressResult.DeserializeUnknownDataCenterAddressResult(element, options);
+            return UnknownDataCenterAddressResponse.DeserializeUnknownDataCenterAddressResponse(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

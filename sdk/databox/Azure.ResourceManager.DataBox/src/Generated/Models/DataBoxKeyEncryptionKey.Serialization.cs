@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KekVaultResourceID))
+            if (Optional.IsDefined(KekVaultResourceId))
             {
                 writer.WritePropertyName("kekVaultResourceID"u8);
-                writer.WriteStringValue(KekVaultResourceID);
+                writer.WriteStringValue(KekVaultResourceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxKeyEncryptionKeyType kekType = default;
             DataBoxManagedIdentity managedIdentity = default;
             Uri kekUri = default;
-            ResourceIdentifier kekVaultResourceID = default;
+            ResourceIdentifier kekVaultResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    kekVaultResourceID = new ResourceIdentifier(prop.Value.GetString());
+                    kekVaultResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataBoxKeyEncryptionKey(kekType, managedIdentity, kekUri, kekVaultResourceID, additionalBinaryDataProperties);
+            return new DataBoxKeyEncryptionKey(kekType, managedIdentity, kekUri, kekVaultResourceId, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.DataBox.Models
     [PersistableModelProxy(typeof(UnknownJobSecrets))]
     public abstract partial class JobSecrets : IJsonModel<JobSecrets>
     {
-        /// <summary> Initializes a new instance of <see cref="JobSecrets"/> for deserialization. </summary>
-        internal JobSecrets()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JobSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

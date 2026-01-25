@@ -17,14 +17,9 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Minimum properties that should be present in each individual validation response.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AddressValidationResult"/>, <see cref="CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="DataTransferDetailsValidationResult"/>, <see cref="PreferencesValidationResult"/>, <see cref="SkuAvailabilityValidationResult"/>, and <see cref="SubscriptionIsAllowedToCreateJobValidationResult"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataBoxValidationInputResult))]
+    [PersistableModelProxy(typeof(UnknownValidationInputResponse))]
     public abstract partial class DataBoxValidationInputResult : IJsonModel<DataBoxValidationInputResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DataBoxValidationInputResult"/> for deserialization. </summary>
-        internal DataBoxValidationInputResult()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxValidationInputResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -110,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return SubscriptionIsAllowedToCreateJobValidationResult.DeserializeSubscriptionIsAllowedToCreateJobValidationResult(element, options);
                 }
             }
-            return UnknownDataBoxValidationInputResult.DeserializeUnknownDataBoxValidationInputResult(element, options);
+            return UnknownValidationInputResponse.DeserializeUnknownValidationInputResponse(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="properties"> Properties of a job. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
-        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, JobProperties properties, DataBoxSku sku, ResourceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, JobProperties properties, DataBoxSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox
         public DataBoxSku Sku { get; set; }
 
         /// <summary> Msi identity of the resource. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Type of the data transfer. </summary>
         public DataBoxJobTransferType TransferType

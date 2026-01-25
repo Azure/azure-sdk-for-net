@@ -35,11 +35,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 throw new FormatException($"The model {nameof(MitigateJobContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CustomerResolutionCode))
-            {
-                writer.WritePropertyName("customerResolutionCode"u8);
-                writer.WriteStringValue(CustomerResolutionCode.Value.ToSerialString());
-            }
+            writer.WritePropertyName("customerResolutionCode"u8);
+            writer.WriteStringValue(CustomerResolutionCode.ToSerialString());
             if (Optional.IsCollectionDefined(SerialNumberCustomerResolutionMap))
             {
                 writer.WritePropertyName("serialNumberCustomerResolutionMap"u8);
@@ -93,7 +90,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            CustomerResolutionCode? customerResolutionCode = default;
+            CustomerResolutionCode customerResolutionCode = default;
             IDictionary<string, CustomerResolutionCode> serialNumberCustomerResolutionMap = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Request body to get the availability for scheduling orders.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataBoxScheduleAvailabilityContent"/>, <see cref="DiskScheduleAvailabilityContent"/>, and <see cref="HeavyScheduleAvailabilityContent"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownScheduleAvailabilityContent))]
+    [PersistableModelProxy(typeof(UnknownScheduleAvailabilityRequest))]
     public abstract partial class ScheduleAvailabilityContent : IJsonModel<ScheduleAvailabilityContent>
     {
         /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityContent"/> for deserialization. </summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return HeavyScheduleAvailabilityContent.DeserializeHeavyScheduleAvailabilityContent(element, options);
                 }
             }
-            return UnknownScheduleAvailabilityContent.DeserializeUnknownScheduleAvailabilityContent(element, options);
+            return UnknownScheduleAvailabilityRequest.DeserializeUnknownScheduleAvailabilityRequest(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

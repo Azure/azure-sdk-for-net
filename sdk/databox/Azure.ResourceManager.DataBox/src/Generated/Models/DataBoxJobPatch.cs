@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.DataBox;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="tags"> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxJobPatch(UpdateJobProperties properties, IDictionary<string, string> tags, ResourceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataBoxJobPatch(UpdateJobProperties properties, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Msi identity of the resource. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Details of a job to be updated. </summary>
         public UpdateJobDetails Details

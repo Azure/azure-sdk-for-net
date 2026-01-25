@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataBoxValidationInputContent : DataBoxValidationInputContent
+    internal partial class UnknownValidationInputRequest : DataBoxValidationInputContent
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataBoxValidationInputContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownValidationInputRequest"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataBoxValidationInputContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(validationType, additionalBinaryDataProperties)
+        internal UnknownValidationInputRequest(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(validationType, additionalBinaryDataProperties)
         {
         }
     }

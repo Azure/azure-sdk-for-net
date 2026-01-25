@@ -1,0 +1,19 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Generated/Models/UnknownJobDetails.Serialization.cs(19,18): error CS1729: 'DataBoxBasicJobDetails' does not contain a constructor that takes 0 arguments [/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Azure.ResourceManager.DataBox.csproj::TargetFramework=net8.0]
+/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Generated/Models/DataBoxCustomerDiskJobDetails.Serialization.cs(20,18): error CS1729: 'DataBoxBasicJobDetails' does not contain a constructor that takes 0 arguments [/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Azure.ResourceManager.DataBox.csproj::TargetFramework=net8.0]
+/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Generated/Models/DataBoxDiskJobDetails.Serialization.cs(20,18): error CS1729: 'DataBoxBasicJobDetails' does not contain a constructor that takes 0 arguments [/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Azure.ResourceManager.DataBox.csproj::TargetFramework=net8.0]
+/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Generated/Models/DataBoxHeavyJobDetails.Serialization.cs(20,18): error CS1729: 'DataBoxBasicJobDetails' does not contain a constructor that takes 0 arguments [/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Azure.ResourceManager.DataBox.csproj::TargetFramework=net8.0]
+/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Generated/Models/DataBoxJobDetails.Serialization.cs(20,18): error CS1729: 'DataBoxBasicJobDetails' does not contain a constructor that takes 0 arguments [/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Azure.ResourceManager.DataBox.csproj::TargetFramework=net8.0]
+
+Build FAILED.
+
+/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Generated/Models/UnknownJobDetails.Serialization.cs(19,18): error CS1729: 'DataBoxBasicJobDetails' does not contain a constructor that takes 0 arguments [/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Azure.ResourceManager.DataBox.csproj::TargetFramework=net8.0]
+/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Generated/Models/DataBoxCustomerDiskJobDetails.Serialization.cs(20,18): error CS1729: 'DataBoxBasicJobDetails' does not contain a constructor that takes 0 arguments [/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Azure.ResourceManager.DataBox.csproj::TargetFramework=net8.0]
+/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Generated/Models/DataBoxDiskJobDetails.Serialization.cs(20,18): error CS1729: 'DataBoxBasicJobDetails' does not contain a constructor that takes 0 arguments [/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Azure.ResourceManager.DataBox.csproj::TargetFramework=net8.0]
+/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Generated/Models/DataBoxHeavyJobDetails.Serialization.cs(20,18): error CS1729: 'DataBoxBasicJobDetails' does not contain a constructor that takes 0 arguments [/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Azure.ResourceManager.DataBox.csproj::TargetFramework=net8.0]
+/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Generated/Models/DataBoxJobDetails.Serialization.cs(20,18): error CS1729: 'DataBoxBasicJobDetails' does not contain a constructor that takes 0 arguments [/home/vscode/code/sdk/sdk/databox/Azure.ResourceManager.DataBox/src/Azure.ResourceManager.DataBox.csproj::TargetFramework=net8.0]
+    0 Warning(s)
+    5 Error(s)
+
+Time Elapsed 00:00:01.35

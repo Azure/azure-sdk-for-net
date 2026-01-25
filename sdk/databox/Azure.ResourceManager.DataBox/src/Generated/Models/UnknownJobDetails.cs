@@ -10,9 +10,9 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataBoxBasicJobDetails : DataBoxBasicJobDetails
+    internal partial class UnknownJobDetails : DataBoxBasicJobDetails
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataBoxBasicJobDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownJobDetails"/>. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dataCenterAddress"> Datacenter address to ship to, for the given sku and storage location. </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataBoxBasicJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, reverseShippingDetails, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, additionalBinaryDataProperties)
+        internal UnknownJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, reverseShippingDetails, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, additionalBinaryDataProperties)
         {
         }
     }

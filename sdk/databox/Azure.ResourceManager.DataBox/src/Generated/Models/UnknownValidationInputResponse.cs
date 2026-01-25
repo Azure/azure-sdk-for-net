@@ -11,13 +11,13 @@ using Azure;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataBoxValidationInputResult : DataBoxValidationInputResult
+    internal partial class UnknownValidationInputResponse : DataBoxValidationInputResult
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataBoxValidationInputResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownValidationInputResponse"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataBoxValidationInputResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(validationType, error, additionalBinaryDataProperties)
+        internal UnknownValidationInputResponse(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(validationType, error, additionalBinaryDataProperties)
         {
         }
     }

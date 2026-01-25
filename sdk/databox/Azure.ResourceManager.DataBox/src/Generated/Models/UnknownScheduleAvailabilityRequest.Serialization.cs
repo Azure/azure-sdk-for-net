@@ -14,10 +14,10 @@ using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownScheduleAvailabilityContent : ScheduleAvailabilityContent, IJsonModel<ScheduleAvailabilityContent>
+    internal partial class UnknownScheduleAvailabilityRequest : ScheduleAvailabilityContent, IJsonModel<ScheduleAvailabilityContent>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownScheduleAvailabilityContent"/> for deserialization. </summary>
-        internal UnknownScheduleAvailabilityContent()
+        /// <summary> Initializes a new instance of <see cref="UnknownScheduleAvailabilityRequest"/> for deserialization. </summary>
+        internal UnknownScheduleAvailabilityRequest()
         {
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownScheduleAvailabilityContent DeserializeUnknownScheduleAvailabilityContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownScheduleAvailabilityRequest DeserializeUnknownScheduleAvailabilityRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownScheduleAvailabilityContent(storageLocation, skuName, country, model, additionalBinaryDataProperties);
+            return new UnknownScheduleAvailabilityRequest(storageLocation, skuName, country, model, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

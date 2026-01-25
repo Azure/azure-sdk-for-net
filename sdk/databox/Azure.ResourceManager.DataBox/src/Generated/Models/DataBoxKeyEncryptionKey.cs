@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="kekType"> Type of encryption key used for key encryption. </param>
         /// <param name="managedIdentity"> Managed identity properties used for key encryption. </param>
         /// <param name="kekUri"> Key encryption key. It is required in case of Customer managed KekType. </param>
-        /// <param name="kekVaultResourceID"> Kek vault resource id. It is required in case of Customer managed KekType. </param>
+        /// <param name="kekVaultResourceId"> Kek vault resource id. It is required in case of Customer managed KekType. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxKeyEncryptionKey(DataBoxKeyEncryptionKeyType kekType, DataBoxManagedIdentity managedIdentity, Uri kekUri, ResourceIdentifier kekVaultResourceID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataBoxKeyEncryptionKey(DataBoxKeyEncryptionKeyType kekType, DataBoxManagedIdentity managedIdentity, Uri kekUri, ResourceIdentifier kekVaultResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KekType = kekType;
             ManagedIdentity = managedIdentity;
             KekUri = kekUri;
-            KekVaultResourceID = kekVaultResourceID;
+            KekVaultResourceId = kekVaultResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.DataBox.Models
         public Uri KekUri { get; set; }
 
         /// <summary> Kek vault resource id. It is required in case of Customer managed KekType. </summary>
-        public ResourceIdentifier KekVaultResourceID { get; set; }
+        public ResourceIdentifier KekVaultResourceId { get; set; }
     }
 }

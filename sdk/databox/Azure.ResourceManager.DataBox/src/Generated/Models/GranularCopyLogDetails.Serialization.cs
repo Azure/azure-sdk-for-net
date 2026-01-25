@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataBox.Models
     [PersistableModelProxy(typeof(UnknownGranularCopyLogDetails))]
     public abstract partial class GranularCopyLogDetails : IJsonModel<GranularCopyLogDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="GranularCopyLogDetails"/> for deserialization. </summary>
-        internal GranularCopyLogDetails()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GranularCopyLogDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

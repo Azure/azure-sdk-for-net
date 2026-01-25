@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Job details.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataBoxCustomerDiskJobDetails"/>, <see cref="DataBoxDiskJobDetails"/>, <see cref="DataBoxHeavyJobDetails"/>, and <see cref="DataBoxJobDetails"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataBoxBasicJobDetails))]
+    [PersistableModelProxy(typeof(UnknownJobDetails))]
     public abstract partial class DataBoxBasicJobDetails : IJsonModel<DataBoxBasicJobDetails>
     {
         /// <summary> Initializes a new instance of <see cref="DataBoxBasicJobDetails"/> for deserialization. </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DataBoxJobDetails.DeserializeDataBoxJobDetails(element, options);
                 }
             }
-            return UnknownDataBoxBasicJobDetails.DeserializeUnknownDataBoxBasicJobDetails(element, options);
+            return UnknownJobDetails.DeserializeUnknownJobDetails(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

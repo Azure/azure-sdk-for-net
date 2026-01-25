@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataBox.Models
     [PersistableModelProxy(typeof(UnknownDataAccountDetails))]
     public abstract partial class DataAccountDetails : IJsonModel<DataAccountDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="DataAccountDetails"/> for deserialization. </summary>
-        internal DataAccountDetails()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataAccountDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

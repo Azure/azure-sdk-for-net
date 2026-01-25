@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataCenterAddressResult : DataCenterAddressResult
+    internal partial class UnknownDataCenterAddressResponse : DataCenterAddressResult
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResponse"/>. </summary>
         /// <param name="datacenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataCenterAddressResult(DatacenterAddressType datacenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(datacenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, additionalBinaryDataProperties)
+        internal UnknownDataCenterAddressResponse(DatacenterAddressType datacenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(datacenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, additionalBinaryDataProperties)
         {
         }
     }

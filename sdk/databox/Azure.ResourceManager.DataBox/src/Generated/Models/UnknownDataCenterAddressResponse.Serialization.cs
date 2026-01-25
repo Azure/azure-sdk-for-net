@@ -14,10 +14,10 @@ using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataCenterAddressResult : DataCenterAddressResult, IJsonModel<DataCenterAddressResult>
+    internal partial class UnknownDataCenterAddressResponse : DataCenterAddressResult, IJsonModel<DataCenterAddressResult>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResult"/> for deserialization. </summary>
-        internal UnknownDataCenterAddressResult()
+        /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResponse"/> for deserialization. </summary>
+        internal UnknownDataCenterAddressResponse()
         {
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownDataCenterAddressResult DeserializeUnknownDataCenterAddressResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownDataCenterAddressResponse DeserializeUnknownDataCenterAddressResponse(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownDataCenterAddressResult(datacenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, additionalBinaryDataProperties);
+            return new UnknownDataCenterAddressResponse(datacenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

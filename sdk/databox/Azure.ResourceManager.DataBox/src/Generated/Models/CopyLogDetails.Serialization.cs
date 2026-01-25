@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataBox.Models
     [PersistableModelProxy(typeof(UnknownCopyLogDetails))]
     public abstract partial class CopyLogDetails : IJsonModel<CopyLogDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="CopyLogDetails"/> for deserialization. </summary>
-        internal CopyLogDetails()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CopyLogDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

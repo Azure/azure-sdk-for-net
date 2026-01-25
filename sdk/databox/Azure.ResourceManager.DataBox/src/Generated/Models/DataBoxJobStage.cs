@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="stageName"> Name of the job stage. </param>
         /// <param name="displayName"> Display name of the job stage. </param>
         /// <param name="stageStatus"> Status of the job stage. </param>
-        /// <param name="stageOn"> Time for the job stage in UTC ISO 8601 format. </param>
+        /// <param name="stageTime"> Time for the job stage in UTC ISO 8601 format. </param>
         /// <param name="jobStageDetails"> Job Stage Details. </param>
         /// <param name="delayInformation"> Delay information for the job stages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxJobStage(DataBoxStageName? stageName, string displayName, DataBoxStageStatus? stageStatus, DateTimeOffset? stageOn, BinaryData jobStageDetails, IReadOnlyList<JobDelayDetails> delayInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataBoxJobStage(DataBoxStageName? stageName, string displayName, DataBoxStageStatus? stageStatus, DateTimeOffset? stageTime, BinaryData jobStageDetails, IReadOnlyList<JobDelayDetails> delayInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StageName = stageName;
             DisplayName = displayName;
             StageStatus = stageStatus;
-            StageOn = stageOn;
+            StageTime = stageTime;
             JobStageDetails = jobStageDetails;
             DelayInformation = delayInformation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -51,9 +51,6 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Status of the job stage. </summary>
         public DataBoxStageStatus? StageStatus { get; }
-
-        /// <summary> Time for the job stage in UTC ISO 8601 format. </summary>
-        public DateTimeOffset? StageOn { get; }
 
         /// <summary>
         /// Job Stage Details

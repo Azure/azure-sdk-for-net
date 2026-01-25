@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -19,13 +18,6 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxValidationContent"/>. </summary>
-        /// <param name="individualRequestDetails"> List of request details contain validationType and its request as key and value respectively. </param>
-        private protected DataBoxValidationContent(IEnumerable<DataBoxValidationInputContent> individualRequestDetails)
-        {
-            IndividualRequestDetails = individualRequestDetails.ToList();
-        }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxValidationContent"/>. </summary>
         /// <param name="validationCategory"> Identify the nature of validation. </param>

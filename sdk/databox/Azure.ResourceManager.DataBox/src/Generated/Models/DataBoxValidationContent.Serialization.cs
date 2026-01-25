@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Minimum request requirement of any validation category.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateJobValidationContent"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataBoxValidationContent))]
+    [PersistableModelProxy(typeof(UnknownValidationRequest))]
     public abstract partial class DataBoxValidationContent : IJsonModel<DataBoxValidationContent>
     {
         /// <summary> Initializes a new instance of <see cref="DataBoxValidationContent"/> for deserialization. </summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return CreateJobValidationContent.DeserializeCreateJobValidationContent(element, options);
                 }
             }
-            return UnknownDataBoxValidationContent.DeserializeUnknownDataBoxValidationContent(element, options);
+            return UnknownValidationRequest.DeserializeUnknownValidationRequest(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

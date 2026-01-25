@@ -13,10 +13,10 @@ using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataBoxValidationContent : DataBoxValidationContent, IJsonModel<DataBoxValidationContent>
+    internal partial class UnknownValidationRequest : DataBoxValidationContent, IJsonModel<DataBoxValidationContent>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataBoxValidationContent"/> for deserialization. </summary>
-        internal UnknownDataBoxValidationContent()
+        /// <summary> Initializes a new instance of <see cref="UnknownValidationRequest"/> for deserialization. </summary>
+        internal UnknownValidationRequest()
         {
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownDataBoxValidationContent DeserializeUnknownDataBoxValidationContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownValidationRequest DeserializeUnknownValidationRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownDataBoxValidationContent(validationCategory, individualRequestDetails, additionalBinaryDataProperties);
+            return new UnknownValidationRequest(validationCategory, individualRequestDetails, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

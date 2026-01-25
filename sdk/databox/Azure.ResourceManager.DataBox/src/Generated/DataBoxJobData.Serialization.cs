@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox
             AzureLocation location = default;
             JobProperties properties = default;
             DataBoxSku sku = default;
-            ResourceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         continue;
                     }
-                    identity = ResourceIdentity.DeserializeResourceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

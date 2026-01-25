@@ -13,10 +13,10 @@ using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataBoxBasicJobDetails : DataBoxBasicJobDetails, IJsonModel<DataBoxBasicJobDetails>
+    internal partial class UnknownJobDetails : DataBoxBasicJobDetails, IJsonModel<DataBoxBasicJobDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataBoxBasicJobDetails"/> for deserialization. </summary>
-        internal UnknownDataBoxBasicJobDetails()
+        /// <summary> Initializes a new instance of <see cref="UnknownJobDetails"/> for deserialization. </summary>
+        internal UnknownJobDetails()
         {
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownDataBoxBasicJobDetails DeserializeUnknownDataBoxBasicJobDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownDataBoxBasicJobDetails(
+            return new UnknownJobDetails(
                 jobStages ?? new ChangeTrackingList<DataBoxJobStage>(),
                 contactDetails,
                 shippingAddress,
