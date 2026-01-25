@@ -31,7 +31,7 @@ namespace BasicTypeSpec
             }
             if (paramStartIndex == -1)
             {
-                string prefixedPattern = "&" + searchPattern;
+                string prefixedPattern = string.Concat("&", searchPattern);
                 int prefixedIndex = currentQuery.IndexOf(prefixedPattern);
                 if (prefixedIndex >= 0)
                 {
@@ -48,7 +48,7 @@ namespace BasicTypeSpec
                 }
                 string beforeParam = currentQuery.Substring(0, valueStartIndex);
                 string afterParam = currentQuery.Substring(valueEndIndex);
-                string newQuery = beforeParam + value + afterParam;
+                string newQuery = string.Concat(beforeParam, value, afterParam);
                 builder.Query = newQuery;
             }
             else

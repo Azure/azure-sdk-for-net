@@ -102,7 +102,7 @@ namespace Azure.Generator.Providers
                 Declare("currentQuery", typeof(string), uriBuilder.Property("Query"), out var currentQueryVar),
 
                 // Create search pattern "name="
-                Declare("searchPattern", typeof(string), new BinaryOperatorExpression("+", nameParameter, Literal("=")), out var searchPattern),
+                Declare("searchPattern", typeof(string), Static(typeof(string)).Invoke("Concat", nameParameter, Literal("=")), out var searchPattern),
 
                 // Check if parameter exists in query string (at start or after &)
                 Declare("paramStartIndex", typeof(int), Literal(-1), out var paramStartIndex),
@@ -116,7 +116,7 @@ namespace Azure.Generator.Providers
                 // Check if parameter is in the middle/end (preceded by &)
                 new IfStatement(paramStartIndex.Equal(Int(-1)))
                 {
-                    Declare("prefixedPattern", typeof(string), new BinaryOperatorExpression("+", Literal("&"), searchPattern), out var prefixedPattern),
+                    Declare("prefixedPattern", typeof(string), Static(typeof(string)).Invoke("Concat", Literal("&"), searchPattern), out var prefixedPattern),
                     Declare("prefixedIndex", typeof(int), currentQueryVar.Invoke("IndexOf", prefixedPattern), out var prefixedIndex),
                     new IfStatement(prefixedIndex.GreaterThanOrEqual(Int(0)))
                     {
@@ -141,17 +141,14 @@ namespace Azure.Generator.Providers
                         // Build new query: before + newValue + after
                         Declare("beforeParam", typeof(string), currentQueryVar.Invoke("Substring", [Int(0), valueStartIndex]), out var beforeParam),
                         Declare("afterParam", typeof(string), currentQueryVar.Invoke("Substring", valueEndIndex), out var afterParam),
-                        Declare("newQuery", typeof(string), new BinaryOperatorExpression("+", new BinaryOperatorExpression("+", beforeParam, valueParameter), afterParam), out var newQuery),
+                        Declare("newQuery", typeof(string), Static(typeof(string)).Invoke("Concat", [beforeParam, valueParameter, afterParam]), out var newQuery),
 
                         // Set the new query
                         uriBuilder.Property("Query").Assign(newQuery).Terminate()
                     },
                     // Parameter doesn't exist - append it using existing method
-                    new InvokeMethodExpression(
-                        uriBuilder,
-                        nameof(RawRequestUriBuilder.AppendQuery),
-                        [nameParameter, valueParameter, Bool(true)]
-                    ).Terminate()
+                    uriBuilder.Invoke(nameof(RawRequestUriBuilder.AppendQuery),
+                        [nameParameter, valueParameter, Bool(true)]).Terminate()
                 )
             };
 
