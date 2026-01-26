@@ -51,11 +51,6 @@ namespace Azure.AI.VoiceLive
             writer.WriteNumberValue(ContentIndex);
             writer.WritePropertyName("audio_end_ms"u8);
             writer.WriteNumberValue(AudioEndMs);
-            if (Optional.IsDefined(EventId))
-            {
-                writer.WritePropertyName("event_id"u8);
-                writer.WriteStringValue(EventId);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -84,16 +79,21 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             ServerEventType @type = default;
+            string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
             int contentIndex = default;
             int audioEndMs = default;
-            string eventId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ServerEventType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("event_id"u8))
+                {
+                    eventId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("item_id"u8))
@@ -111,11 +111,6 @@ namespace Azure.AI.VoiceLive
                     audioEndMs = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("event_id"u8))
-                {
-                    eventId = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -123,11 +118,11 @@ namespace Azure.AI.VoiceLive
             }
             return new SessionUpdateConversationItemTruncated(
                 @type,
+                eventId,
                 additionalBinaryDataProperties,
                 itemId,
                 contentIndex,
-                audioEndMs,
-                eventId);
+                audioEndMs);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

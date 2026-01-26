@@ -90,7 +90,10 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
 
     private protected BicepExpression CompileProperties()
     {
-        if (_kind == BicepValueKind.Expression) { return _expression ?? BicepSyntax.Null(); }
+        if (_kind == BicepValueKind.Expression)
+        {
+            return _expression ?? BicepSyntax.Null();
+        }
 
         // Aggregate all the properties into a single nested dictionary
         Dictionary<string, object> body = [];
@@ -219,7 +222,10 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     {
         // TODO: Do we want to add a more explicit notion of readonly
         // (especially for expr ref resources)?
-        if (_isOutput) { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
+        if (_isOutput)
+        {
+            throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}");
+        }
 
         // Track the source so we can correctly link references across modules
         _source = source?.Self;
