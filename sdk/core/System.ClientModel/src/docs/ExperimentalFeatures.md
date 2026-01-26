@@ -42,7 +42,6 @@ The Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInject
 
 - `System.ClientModel.Primitives.ClientSettings`
 - `System.ClientModel.Primitives.IClientBuilder`
-- `System.ClientModel.Primitives.HostBuilderExtensions`
 - `System.ClientModel.Primitives.ConfigurationExtensions`
 - `System.ClientModel.Primitives.CredentialSettings`
 - `System.ClientModel.Primitives.AuthenticationPolicy.Create` method
