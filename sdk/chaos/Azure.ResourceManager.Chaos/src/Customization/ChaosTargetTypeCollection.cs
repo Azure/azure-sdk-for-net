@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual Task<Response<ChaosTargetTypeResource>> GetAsync(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual Response<ChaosTargetTypeResource> Get(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="ChaosTargetTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ChaosTargetTypeResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="ChaosTargetTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ChaosTargetTypeResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual Task<Response<bool>> ExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual Response<bool> Exists(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual Task<NullableResponse<ChaosTargetTypeResource>> GetIfExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual NullableResponse<ChaosTargetTypeResource> GetIfExists(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         IEnumerator<ChaosTargetTypeResource> IEnumerable<ChaosTargetTypeResource>.GetEnumerator()

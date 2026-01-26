@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Chaos
                 data.Kind,
                 (IList<string>)data.AzureRbacActions,
                 (IList<string>)data.AzureRbacDataActions,
-                default, //GetCapabilityTypeRuntimeProperties(data.RuntimeProperties),
+                default,
                 null);
         }
 
