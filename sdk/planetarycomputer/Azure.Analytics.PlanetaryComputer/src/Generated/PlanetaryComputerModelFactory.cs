@@ -216,7 +216,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md
-        /// 
         /// Represents a STAC collection.
         /// </summary>
         /// <param name="createdOn"> MSFT Created. </param>
@@ -232,7 +231,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="assets"> Assets. </param>
         /// <param name="itemAssets">
         /// Item Assets
-        /// 
         /// See the [Item Assets Definition Extension Specification](https://github.com/stac-extensions/item-assets)
         /// </param>
         /// <param name="license"> License identifier for the collection data. </param>
@@ -241,7 +239,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="providers"> Organizations or individuals who provide the collection data. </param>
         /// <param name="summaries">
         /// Summaries
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <param name="additionalProperties"></param>
@@ -280,10 +277,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Link model.
-        /// 
         /// Ref:
         /// http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml
-        /// 
         /// Represents a link.
         /// </summary>
         /// <param name="rel"> The relationship type of the link. </param>
@@ -328,7 +323,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/item-spec.md#asset-object
-        /// 
         /// Represents a STAC asset, which is a file or resource associated with a STAC item.
         /// </summary>
         /// <param name="platform"> Platform that acquired the data. </param>
@@ -372,7 +366,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#provider-object
-        /// 
         /// Represents information about a data provider for STAC collections and items.
         /// </summary>
         /// <param name="name"> Name of the provider organization or individual. </param>
@@ -389,7 +382,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/stac-extensions/item-assets
-        /// 
         /// Represents a STAC item asset, which describes the assets available under any item in the collection.
         /// </summary>
         /// <param name="platform"> Platform that acquired the data. </param>
@@ -433,17 +425,14 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#extent-object
-        /// 
         /// Represents the spatial and temporal extent of a STAC collection.
         /// </summary>
         /// <param name="spatial">
         /// Spatial extent defined by bounding boxes.
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <param name="temporal">
         /// Temporal extent defined by time intervals.
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacExtensionExtent"/> instance for mocking. </returns>
@@ -454,7 +443,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object
-        /// 
         /// Represents the spatial extent of a STAC collection with bounding boxes.
         /// </summary>
         /// <param name="boundingBox"> Array of bounding boxes defining the spatial extent, in format [[west, south, east, north]]. </param>
@@ -468,7 +456,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#temporal-extent-object
-        /// 
         /// Represents the temporal extent of a STAC collection with time intervals.
         /// </summary>
         /// <param name="interval"> Array of time intervals in format [[start_datetime, end_datetime]]. </param>
@@ -553,7 +540,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="type"> The type of rendering to apply (raster or vector). </param>
         /// <param name="options">
         /// A URL query-string encoded string of TiTiler rendering options. Valid only for `raster-tile` types.
-        /// 
         /// See [Query Parameters](https://developmentseed.org/titiler/endpoints/cog/#description).
         /// </param>
         /// <param name="vectorOptions">
@@ -651,7 +637,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#_feature_collections_rootcollections
-        /// 
         /// Represents a collection of STAC collections with links.
         /// </summary>
         /// <param name="links"> Links to related resources and endpoints. </param>
@@ -675,7 +660,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-api-spec/blob/master/api-spec.md#ogc-api---features-endpoints
-        /// 
         /// Represents the OGC API conformance declaration.
         /// </summary>
         /// <param name="conformsTo"> List of OGC API conformance classes implemented by this API. </param>
@@ -689,7 +673,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-api-spec/blob/master/api-spec.md#ogc-api---features-endpoints
-        /// 
         /// Represents the STAC API landing page with links to available resources.
         /// </summary>
         /// <param name="createdOn"> MSFT Created. </param>
@@ -755,7 +738,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/itemcollection-spec.md
-        /// 
         /// Represents a collection of STAC Items as a GeoJSON FeatureCollection.
         /// </summary>
         /// <param name="stacVersion"> Stac Version. </param>
@@ -833,15 +815,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Represents a GeoJSON geometry object as defined by RFC 7946.
-        /// 
         /// Supported geometry types include:
-        /// - **Point**: A single geographic coordinate.
-        /// - **LineString**: A sequence of geographic coordinates forming a line.
-        /// - **Polygon**: A closed shape defined by linear rings.
-        /// - **MultiPoint**: A collection of Points.
-        /// - **MultiLineString**: A collection of LineStrings.
-        /// - **MultiPolygon**: A collection of Polygons.
-        /// 
+        /// <list type="bullet"><item><description><b>Point</b>: A single geographic coordinate.</description></item><item><description><b>LineString</b>: A sequence of geographic coordinates forming a line.</description></item><item><description><b>Polygon</b>: A closed shape defined by linear rings.</description></item><item><description><b>MultiPoint</b>: A collection of Points.</description></item><item><description><b>MultiLineString</b>: A collection of LineStrings.</description></item><item><description><b>MultiPolygon</b>: A collection of Polygons.</description></item></list>
         /// Used for spatial filtering in STAC.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PlanetaryComputer.PointGeometry"/>, <see cref="PlanetaryComputer.PolygonGeometry"/>, <see cref="PlanetaryComputer.MultiPolygon"/>, <see cref="PlanetaryComputer.MultiLineString"/>, <see cref="PlanetaryComputer.LineString"/>, and <see cref="PlanetaryComputer.MultiPoint"/>.
         /// </summary>
@@ -928,7 +903,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Properties of a STAC Item containing metadata about the asset.
-        /// 
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/item-spec.md#properties-object
         /// </summary>
         /// <param name="platform"> Platform that acquired the data. </param>
@@ -971,7 +945,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-api-spec/tree/master/extensions/context#context-extension-specification
-        /// 
         /// Context information for a search response including pagination details.
         /// </summary>
         /// <param name="returned"> Number of items returned in the response. </param>
@@ -1009,27 +982,22 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="limit"> Maximum number of results to return. </param>
         /// <param name="conformanceClass">
         /// Conf
-        /// 
         /// Overrides datetime validation from the base request model.
         /// </param>
         /// <param name="query">
         /// STAC Query
-        /// 
         /// See the [STAC Query Extension](https://github.com/stac-api-extensions/query).
         /// </param>
         /// <param name="sortBy">
         /// Sort criteria for the search results.
-        /// 
         /// See the [STAC Sort Extension](https://github.com/stac-api-extensions/sort).
         /// </param>
         /// <param name="fields">
         /// Specifies which fields to include or exclude in the STAC search results.
-        /// 
         /// See the [STAC Fields Extension](https://github.com/stac-api-extensions/fields).
         /// </param>
         /// <param name="filter">
         /// CQL2 Filter
-        /// 
         /// See the [STAC Filter Extension](https://github.com/stac-api-extensions/filter).
         /// </param>
         /// <param name="filterCoordinateReferenceSystem"> Coordinate reference system for the filter. </param>
@@ -1067,7 +1035,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-api-spec/tree/master/extensions/sort#sort-api-extension
-        /// 
         /// Represents a sort specification for STAC API queries.
         /// </summary>
         /// <param name="field"> The field name to sort by. </param>
@@ -1080,11 +1047,9 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// FieldsExtension.
-        /// 
         /// Attributes:
         /// include: set of fields to include.
         /// exclude: set of fields to exclude.
-        /// 
         /// Controls which fields to include or exclude from the response.
         /// </summary>
         /// <param name="include"> Array of field names to include in the response. </param>
@@ -1100,7 +1065,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/tileMatrixSet.json
-        /// 
         /// A definition of a tile matrix set following the Tile Matrix Set standard.
         /// For tileset metadata, such a description (in `tileMatrixSet` property) is only
         /// required for offline use,
@@ -1161,13 +1125,10 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Tile Matrix Definition
-        /// 
         /// A tile matrix, usually corresponding to a particular zoom level of a
         /// TileMatrixSet.
-        /// 
         /// ref:
         /// https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/tileMatrix.json
-        /// 
         /// Definition of a tile matrix at a specific zoom level within a tile matrix set
         /// </summary>
         /// <param name="title"> Human-readable title of the tile matrix level. </param>
@@ -1196,7 +1157,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="matrixHeight"> Number of tiles vertically at this matrix level. </param>
         /// <param name="variableMatrixWidths">
         /// Describes the rows that has variable matrix width
-        /// 
         /// ref: https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/variableMatrixWidth.json
         /// </param>
         /// <returns> A new <see cref="PlanetaryComputer.TileMatrix"/> instance for mocking. </returns>
@@ -1456,7 +1416,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// TileJSON metadata describing a tile set according to the TileJSON specification
-        /// 
         /// Based on https://github.com/mapbox/tilejson-spec/tree/master/2.2.0
         /// </summary>
         /// <param name="tileJson"> TileJson. </param>
@@ -1519,7 +1478,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Information about a registered STAC search query. </summary>
         /// <param name="search">
         /// Details of the saved search query
-        /// 
         /// See the [PgSTAC Search table definition](https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915).
         /// </param>
         /// <param name="links"> Related links for the search query. </param>
@@ -1533,7 +1491,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Stored search query
-        /// 
         /// See:
         /// https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915
         /// </summary>
