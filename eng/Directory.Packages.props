@@ -7,7 +7,8 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
   </PropertyGroup>
-  <!--
+
+    <!--
     Shared version stamps; these packages are intentionally scoped but
     should generally sync to the same version.
   -->
