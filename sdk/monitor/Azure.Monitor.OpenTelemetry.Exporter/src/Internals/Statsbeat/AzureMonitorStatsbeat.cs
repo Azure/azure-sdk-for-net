@@ -229,6 +229,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         public void Dispose()
         {
             _attachStatsbeatMeterProvider?.Dispose();
+            _featureStatsbeatMeterProvider?.Dispose();
         }
     }
 }
