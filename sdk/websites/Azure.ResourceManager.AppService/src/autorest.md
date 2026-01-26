@@ -10,8 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/8f7e56841fd83b8085984e13016953fc0f42219b/specification/web/resource-manager/Microsoft.Web/AppService/readme.md
-#tag: package-2024-11
+tag: package-all
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,12 +19,28 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
 #mgmt-debug:
 #  show-serialized-names: true
+```
+
+### Tag: package-all
+
+These settings apply only when `--tag=package-all` is specified on the command line.
+
+```yaml $(tag) == 'package-all'
+title: AppServiceManagementClient
+description: AppServiceManagement Client
+openapi-type: arm
+
+input-file:
+  - https://github.com/Azure/azure-rest-api-specs/blob/8f7e56841fd83b8085984e13016953fc0f42219b/specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/openapi.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/98343fcd9505ead4cbf8112abff06f635ec73275/specification/certificateregistration/resource-manager/Microsoft.CertificateRegistration/CertificateRegistration/stable/2024-11-01/openapi.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/3cf6b9699f1bf4d959447250d691a544a665ca4a/specification/domainregistration/resource-manager/Microsoft.DomainRegistration/DomainRegistration/stable/2024-11-01/openapi.json
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -990,6 +1005,13 @@ directive:
     where: $.definitions.BackupItemCollection.properties.nextLink
     transform: >
         $["format"] = "string";
+  - from: openapi.json
+    where: $.definitions.ApiKVReferenceProperties.properties.source
+    transform: >
+        $["x-ms-enum"] = {
+                "name": "ConfigReferenceSource",
+                "modelAsString": false
+              };
   - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/syncfunctiontriggers'].post
     transform: >

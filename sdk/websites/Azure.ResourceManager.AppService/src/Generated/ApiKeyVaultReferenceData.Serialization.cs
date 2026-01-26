@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
             string secretVersion = default;
             ManagedServiceIdentity identityType = default;
             string details = default;
-            ApiKVReferencePropertiesSource? source = default;
+            ConfigReferenceSource? source = default;
             string activeVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            source = new ApiKVReferencePropertiesSource(property0.Value.GetString());
+                            source = new ConfigReferenceSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("activeVersion"u8))

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Hostname type. </summary>
+    /// <summary> Type of the hostname. </summary>
     public enum AppServiceHostNameType
     {
         /// <summary> Verified. </summary>

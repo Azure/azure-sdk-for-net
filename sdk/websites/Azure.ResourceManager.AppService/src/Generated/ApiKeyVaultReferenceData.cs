@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="source"></param>
         /// <param name="activeVersion"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identity, string details, ApiKVReferencePropertiesSource? source, string activeVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identity, string details, ConfigReferenceSource? source, string activeVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Reference = reference;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
         public string Details { get; set; }
         /// <summary> Gets or sets the source. </summary>
         [WirePath("properties.source")]
-        public ApiKVReferencePropertiesSource? Source { get; set; }
+        public ConfigReferenceSource? Source { get; set; }
         /// <summary> Gets or sets the active version. </summary>
         [WirePath("properties.activeVersion")]
         public string ActiveVersion { get; set; }
