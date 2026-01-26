@@ -77,16 +77,13 @@ if ($UpdateVsCodeConfig) {
         $vscodeConfig = @{}
     }
     $serverKey = "azure-sdk-mcp"
-    # Use platform-specific wrapper scripts that provide helpful error messages
-    # if PowerShell 7 is not installed
-    $commandPath = if ($IsWindows) {
-        Join-Path $PSScriptRoot "azure-sdk-mcp.cmd"
-    } else {
-        Join-Path $PSScriptRoot "azure-sdk-mcp.sh"
-    }
+    # Use bash wrapper script for cross-platform support (works on Linux, macOS, and Windows with Git Bash)
+    # The wrapper provides helpful error messages if PowerShell 7 is not installed
+    $shPath = Join-Path $PSScriptRoot "azure-sdk-mcp.sh"
     $serverConfig = @{
         "type"    = "stdio"
-        "command" = $commandPath
+        "command" = "bash"
+        "args"    = @($shPath, "-Run")
     }
     $orderedServers = [ordered]@{
         $serverKey = $serverConfig
