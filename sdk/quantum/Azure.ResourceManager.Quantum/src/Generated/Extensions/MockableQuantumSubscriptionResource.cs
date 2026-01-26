@@ -164,7 +164,23 @@ namespace Azure.ResourceManager.Quantum.Mocking
             return new SuiteOffersGetBySubscriptionCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context);
         }
 
-        /// <summary> Check the availability of the resource name for the given location. </summary>
+        /// <summary>
+        /// Check the availability of the resource name for the given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -197,7 +213,23 @@ namespace Azure.ResourceManager.Quantum.Mocking
             }
         }
 
-        /// <summary> Check the availability of the resource name for the given location. </summary>
+        /// <summary>
+        /// Check the availability of the resource name for the given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
