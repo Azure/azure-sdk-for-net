@@ -72,14 +72,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         /// <summary>
         /// 24 hrs == 86400000 milliseconds.
         /// </summary>
-        internal const int AttachStatsbeatInterval = 86400000;
+        internal const int GeneralStatsbeatInterval = 86400000;
+
         internal const string AttachStatsbeatMeterName = "AttachStatsbeatMeter";
         internal const string AttachStatsbeatMetricName = "Attach";
 
-        /// <summary>
-        /// 24 hrs == 86400000 milliseconds.
-        /// </summary>
-        internal const int FeatureStatsbeatInterval = 86400000;
         internal const string FeatureStatsbeatMeterName = "FeatureStatsbeatMeter";
         internal const string FeatureStatsbeatMetricName = "Feature";
     }
