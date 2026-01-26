@@ -15,9 +15,9 @@
 
 - Total libraries: 401
 - Management Plane (MPG): 227
-  - Autorest/Swagger: 150
-  - New Emitter (TypeSpec): 67
-  - Old TypeSpec: 10
+  - Autorest/Swagger: 148
+  - New Emitter (TypeSpec): 72
+  - Old TypeSpec: 7
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
   - New Emitter (TypeSpec): 27
@@ -145,7 +145,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 67 / 77 (87%)
+**Migration Status**: 72 / 79 (91.1%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -159,7 +159,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
 | chaos | Azure.ResourceManager.Chaos |  |
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
-| computefleet | Azure.ResourceManager.ComputeFleet |  |
+| computefleet | Azure.ResourceManager.ComputeFleet | ✅ |
 | computelimit | Azure.ResourceManager.ComputeLimit | ✅ |
 | computerecommender | Azure.ResourceManager.Compute.Recommender | ✅ |
 | computeschedule | Azure.ResourceManager.ComputeSchedule | ✅ |
@@ -176,6 +176,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
+| edgeorder | Azure.ResourceManager.EdgeOrder | ✅ |
 | edgezones | Azure.ResourceManager.EdgeZones | ✅ |
 | elastic | Azure.ResourceManager.Elastic | ✅ |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
@@ -190,11 +191,12 @@ Libraries that provide resource management APIs for Azure services and have been
 | impactreporting | Azure.ResourceManager.ImpactReporting | ✅ |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
 | iotoperations | Azure.ResourceManager.IotOperations | ✅ |
+| keyvault | Azure.ResourceManager.KeyVault | ✅ |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
 | mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
-| mysql | Azure.ResourceManager.MySql |  |
-| neonpostgres | Azure.ResourceManager.NeonPostgres |  |
+| mysql | Azure.ResourceManager.MySql | ✅ |
+| neonpostgres | Azure.ResourceManager.NeonPostgres | ✅ |
 | nginx | Azure.ResourceManager.Nginx | ✅ |
 | onlineexperimentation | Azure.ResourceManager.OnlineExperimentation | ✅ |
 | oracle | Azure.ResourceManager.OracleDatabase | ✅ |
@@ -230,7 +232,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 150
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 148
 
 | Service | Library |
 | ------- | ------- |
@@ -288,7 +290,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
 | dns | Azure.ResourceManager.Dns |
 | dnsresolver | Azure.ResourceManager.DnsResolver |
-| edgeorder | Azure.ResourceManager.EdgeOrder |
 | eventgrid | Azure.ResourceManager.EventGrid |
 | eventhub | Azure.ResourceManager.EventHubs |
 | extendedlocation | Azure.ResourceManager.ExtendedLocations |
@@ -305,7 +306,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | iot | Azure.ResourceManager.IotFirmwareDefense |
 | iotcentral | Azure.ResourceManager.IotCentral |
 | iothub | Azure.ResourceManager.IotHub |
-| keyvault | Azure.ResourceManager.KeyVault |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration |
 | kusto | Azure.ResourceManager.Kusto |
 | labservices | Azure.ResourceManager.LabServices |
