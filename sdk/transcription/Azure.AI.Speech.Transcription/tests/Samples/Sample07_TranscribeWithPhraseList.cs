@@ -14,6 +14,7 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples demonstrating custom phrase list for improved recognition accuracy.
     /// </summary>
+    [Category("Live")]
     public partial class Sample07_TranscribeWithPhraseList : TranscriptionSampleBase
     {
 #if !SNIPPET

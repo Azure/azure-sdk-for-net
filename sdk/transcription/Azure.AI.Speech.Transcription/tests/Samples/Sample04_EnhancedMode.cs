@@ -14,6 +14,7 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples demonstrating LLM-powered Enhanced Mode for transcription and translation.
     /// </summary>
+    [Category("Live")]
     public partial class Sample04_EnhancedMode : TranscriptionSampleBase
     {
 #if !SNIPPET

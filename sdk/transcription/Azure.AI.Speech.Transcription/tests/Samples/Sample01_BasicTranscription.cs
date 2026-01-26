@@ -16,6 +16,7 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples demonstrating basic transcription operations using the <see cref="TranscriptionClient"/>.
     /// </summary>
+    [Category("Live")]
     public partial class Sample01_BasicTranscription : TranscriptionSampleBase
     {
 #if !SNIPPET

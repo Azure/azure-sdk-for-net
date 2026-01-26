@@ -14,8 +14,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 {
     /// <summary>
     /// Samples demonstrating transcription from remote URLs.
-    /// </summary>
-    public partial class Sample03_TranscribeFromUrl : TranscriptionSampleBase
+    /// </summary>    [Category("Live")]    public partial class Sample03_TranscribeFromUrl : TranscriptionSampleBase
     {
 #if !SNIPPET
         private TranscriptionClient _client;

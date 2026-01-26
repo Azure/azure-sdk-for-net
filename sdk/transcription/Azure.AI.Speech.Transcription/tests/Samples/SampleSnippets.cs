@@ -14,6 +14,7 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
+    [Category("Live")]
     public partial class SampleSnippets
     {
 #if !SNIPPET

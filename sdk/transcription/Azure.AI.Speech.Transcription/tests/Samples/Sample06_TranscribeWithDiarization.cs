@@ -14,6 +14,7 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples demonstrating speaker diarization (identifying different speakers).
     /// </summary>
+    [Category("Live")]
     public partial class Sample06_TranscribeWithDiarization : TranscriptionSampleBase
     {
 #if !SNIPPET
