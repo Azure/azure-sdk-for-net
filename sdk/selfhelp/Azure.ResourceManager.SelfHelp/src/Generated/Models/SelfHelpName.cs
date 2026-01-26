@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct SelfHelpName : IEquatable<SelfHelpName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SelfHelpName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SelfHelpName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SolutionIdValue = "SolutionId";
         private const string ProblemClassificationIdValue = "ProblemClassificationId";
         private const string ReplacementKeyValue = "ReplacementKey";
 
-        /// <summary> SolutionId. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SelfHelpName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SolutionId. </summary>
         public static SelfHelpName SolutionId { get; } = new SelfHelpName(SolutionIdValue);
-        /// <summary> ProblemClassificationId. </summary>
+
+        /// <summary> Gets the ProblemClassificationId. </summary>
         public static SelfHelpName ProblemClassificationId { get; } = new SelfHelpName(ProblemClassificationIdValue);
-        /// <summary> ReplacementKey. </summary>
+
+        /// <summary> Gets the ReplacementKey. </summary>
         public static SelfHelpName ReplacementKey { get; } = new SelfHelpName(ReplacementKeyValue);
+
         /// <summary> Determines if two <see cref="SelfHelpName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SelfHelpName left, SelfHelpName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SelfHelpName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SelfHelpName left, SelfHelpName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SelfHelpName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SelfHelpName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SelfHelpName(string value) => new SelfHelpName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SelfHelpName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SelfHelpName?(string value) => value == null ? null : new SelfHelpName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SelfHelpName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SelfHelpName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
