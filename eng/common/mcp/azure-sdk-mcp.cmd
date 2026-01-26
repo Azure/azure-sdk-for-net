@@ -17,13 +17,10 @@ if %ERRORLEVEL% NEQ 0 (
     echo  To install PowerShell 7 on Windows, run one of the following commands:
     echo.
     echo    Using winget ^(recommended^):
-    echo      winget install Microsoft.PowerShell
-    echo.
-    echo    Using Chocolatey:
-    echo      choco install powershell-core
+    echo      winget install --id Microsoft.PowerShell --source winget
     echo.
     echo    Manual download:
-    echo      https://github.com/PowerShell/PowerShell/releases
+    echo      https://learn.microsoft.com/powershell/scripting/install/install-powershell
     echo.
     echo  After installing, restart VS Code and try again.
     echo ================================================================================
