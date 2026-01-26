@@ -1,0 +1,4 @@
+directory: specification/keyvault/KeyVault.Management
+commit: 293e8ad796c600e1de16325c9d1156ffa45dd270
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
