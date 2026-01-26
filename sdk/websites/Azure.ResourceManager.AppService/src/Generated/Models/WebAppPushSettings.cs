@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="dynamicTagsJson"> Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppPushSettings(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, bool? isPushEnabled, string tagWhitelistJson, string tagsRequiringAuth, string dynamicTagsJson, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebAppPushSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isPushEnabled, string tagWhitelistJson, string tagsRequiringAuth, string dynamicTagsJson, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsPushEnabled = isPushEnabled;
             TagWhitelistJson = tagWhitelistJson;

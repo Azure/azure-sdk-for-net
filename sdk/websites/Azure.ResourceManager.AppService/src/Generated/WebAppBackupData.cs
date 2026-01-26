@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, int? backupId, Uri storageAccountUri, string blobName, string backupName, WebAppBackupStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<AppServiceDatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? backupId, Uri storageAccountUri, string blobName, string backupName, WebAppBackupStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<AppServiceDatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             BackupId = backupId;

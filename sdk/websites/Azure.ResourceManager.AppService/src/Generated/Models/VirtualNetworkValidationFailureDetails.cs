@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="warnings"> A list of warnings generated during validation. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkValidationFailureDetails(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string message, bool? isFailed, IList<VirtualNetworkValidationTestFailure> failedTests, IList<VirtualNetworkValidationTestFailure> warnings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal VirtualNetworkValidationFailureDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string message, bool? isFailed, IList<VirtualNetworkValidationTestFailure> failedTests, IList<VirtualNetworkValidationTestFailure> warnings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Message = message;
             IsFailed = isFailed;

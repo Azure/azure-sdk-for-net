@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="roles"> The roles for the static site user, in free-form string format. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteUser(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string provider, string userId, string displayName, string roles, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteUser(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provider, string userId, string displayName, string roles, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Provider = provider;
             UserId = userId;

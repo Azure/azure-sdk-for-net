@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="invitationUri"> The url for the invitation link. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteUserInvitationResult(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DateTimeOffset? expiresOn, Uri invitationUri, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteUserInvitationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expiresOn, Uri invitationUri, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExpiresOn = expiresOn;
             InvitationUri = invitationUri;

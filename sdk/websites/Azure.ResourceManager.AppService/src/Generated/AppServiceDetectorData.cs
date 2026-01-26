@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
         /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, DetectorInfo metadata, IList<DiagnosticDataset> dataset, AppServiceStatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, DetectorInfo metadata, IList<DiagnosticDataset> dataset, AppServiceStatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Metadata = metadata;

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="region"> The region of the database resource. </param>
         /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteDatabaseConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteDatabaseConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ResourceId = resourceId;

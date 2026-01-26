@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, Uri storageAccountUri, string blobName, bool? canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri storageAccountUri, string blobName, bool? canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;

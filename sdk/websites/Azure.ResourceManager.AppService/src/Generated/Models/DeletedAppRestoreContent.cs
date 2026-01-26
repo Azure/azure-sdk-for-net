@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedAppRestoreContent(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string deletedSiteId, bool? recoverConfiguration, string snapshotTime, bool? useDRSecondary, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DeletedAppRestoreContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deletedSiteId, bool? recoverConfiguration, string snapshotTime, bool? useDRSecondary, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DeletedSiteId = deletedSiteId;
             RecoverConfiguration = recoverConfiguration;

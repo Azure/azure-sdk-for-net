@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="comment"> Site Extension comment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedOn, string provisioningState, string comment, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedOn, string provisioningState, string comment, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ExtensionId = extensionId;

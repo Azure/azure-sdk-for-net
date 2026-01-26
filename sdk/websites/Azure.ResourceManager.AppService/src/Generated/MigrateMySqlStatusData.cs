@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> Operation ID for the migration task. </param>
         /// <param name="isLocalMySqlEnabled"> True if the web app has in app MySql enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, AppServiceOperationStatus? migrationOperationStatus, string operationId, bool? isLocalMySqlEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AppServiceOperationStatus? migrationOperationStatus, string operationId, bool? isLocalMySqlEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             MigrationOperationStatus = migrationOperationStatus;

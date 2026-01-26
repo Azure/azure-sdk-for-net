@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
         /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? isDeploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? isDeploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             RepoUri = repoUri;

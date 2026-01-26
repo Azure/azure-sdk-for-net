@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFailedRequestsTracing"> Failed requests tracing configuration. </param>
         /// <param name="isDetailedErrorMessages"> Detailed error messages configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ApplicationLogs = applicationLogs;

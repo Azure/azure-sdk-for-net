@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="blockWriteAccessToSite"> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMigrationContent(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string azurefilesConnectionString, string azurefilesShare, bool? switchSiteAfterMigration, bool? blockWriteAccessToSite, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageMigrationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azurefilesConnectionString, string azurefilesShare, bool? switchSiteAfterMigration, bool? blockWriteAccessToSite, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AzurefilesConnectionString = azurefilesConnectionString;
             AzurefilesShare = azurefilesShare;

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="certificateUri"> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </param>
         /// <param name="keyVaultReferenceIdentity"> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDnsSuffixConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, CustomDnsSuffixProvisioningState? provisioningState, string provisioningDetails, string dnsSuffix, Uri certificateUri, string keyVaultReferenceIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CustomDnsSuffixConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, CustomDnsSuffixProvisioningState? provisioningState, string provisioningDetails, string dnsSuffix, Uri certificateUri, string keyVaultReferenceIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ProvisioningState = provisioningState;

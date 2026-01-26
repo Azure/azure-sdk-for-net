@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="responseMetaData"> Meta Data. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata responseMetaData, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata responseMetaData, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;

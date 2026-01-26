@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             RecommendationName = recommendationName;

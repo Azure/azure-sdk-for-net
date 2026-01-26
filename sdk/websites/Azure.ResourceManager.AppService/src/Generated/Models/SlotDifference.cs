@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="description"> Description of the setting difference. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SlotDifference(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string level, string settingType, string diffRule, string settingName, string valueInCurrentSlot, string valueInTargetSlot, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SlotDifference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string level, string settingType, string diffRule, string settingName, string valueInCurrentSlot, string valueInTargetSlot, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Level = level;
             SettingType = settingType;

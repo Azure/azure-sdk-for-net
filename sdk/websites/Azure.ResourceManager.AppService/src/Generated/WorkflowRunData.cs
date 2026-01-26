@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="outputs"> Gets the outputs. </param>
         /// <param name="response"> Gets the response of the flow run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, WorkflowResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputContent> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, WorkflowResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputContent> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             WaitEndOn = waitEndOn;
             StartOn = startOn;

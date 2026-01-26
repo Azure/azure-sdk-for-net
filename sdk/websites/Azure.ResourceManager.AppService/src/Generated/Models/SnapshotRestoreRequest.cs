@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotRestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string snapshotTime, SnapshotRecoverySource recoverySource, bool? canOverwrite, bool? recoverConfiguration, bool? ignoreConflictingHostNames, bool? useDRSecondary, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SnapshotRestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotTime, SnapshotRecoverySource recoverySource, bool? canOverwrite, bool? recoverConfiguration, bool? ignoreConflictingHostNames, bool? useDRSecondary, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SnapshotTime = snapshotTime;
             RecoverySource = recoverySource;

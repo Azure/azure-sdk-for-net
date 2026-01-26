@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="contents"> The contents for the workflow file to be generated. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSitesWorkflowPreview(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string path, string contents, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSitesWorkflowPreview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, string contents, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Path = path;
             Contents = contents;

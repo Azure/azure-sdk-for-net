@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.ApplicationStackResource"/> instance for mocking. </returns>
-        public static ApplicationStackResource ApplicationStackResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string stackName = null, string display = null, string dependency = null, IEnumerable<StackMajorVersion> majorVersions = null, IEnumerable<ApplicationStack> frameworks = null, IEnumerable<ApplicationStack> isDeprecated = null, string kind = null)
+        public static ApplicationStackResource ApplicationStackResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string stackName = null, string display = null, string dependency = null, IEnumerable<StackMajorVersion> majorVersions = null, IEnumerable<ApplicationStack> frameworks = null, IEnumerable<ApplicationStack> isDeprecated = null, string kind = null)
         {
             majorVersions ??= new List<StackMajorVersion>();
             frameworks ??= new List<ApplicationStack>();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="preferredOS"> Function App stack preferred OS. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.FunctionAppStack"/> instance for mocking. </returns>
-        public static FunctionAppStack FunctionAppStack(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, string displayText = null, string value = null, IEnumerable<FunctionAppMajorVersion> majorVersions = null, StackPreferredOS? preferredOS = null, string kind = null)
+        public static FunctionAppStack FunctionAppStack(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string displayText = null, string value = null, IEnumerable<FunctionAppMajorVersion> majorVersions = null, StackPreferredOS? preferredOS = null, string kind = null)
         {
             majorVersions ??= new List<FunctionAppMajorVersion>();
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="preferredOS"> Web App stack preferred OS. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppStack"/> instance for mocking. </returns>
-        public static WebAppStack WebAppStack(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, string displayText = null, string value = null, IEnumerable<WebAppMajorVersion> majorVersions = null, StackPreferredOS? preferredOS = null, string kind = null)
+        public static WebAppStack WebAppStack(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string displayText = null, string value = null, IEnumerable<WebAppMajorVersion> majorVersions = null, StackPreferredOS? preferredOS = null, string kind = null)
         {
             majorVersions ??= new List<WebAppMajorVersion>();
 
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="publishingPasswordHashSalt"> Password hash salt used for publishing. </param>
         /// <param name="scmUri"> Url of SCM site. </param>
         /// <returns> A new <see cref="AppService.PublishingUserData"/> instance for mocking. </returns>
-        public static PublishingUserData PublishingUserData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string publishingUserName = null, string publishingPassword = null, string publishingPasswordHash = null, string publishingPasswordHashSalt = null, Uri scmUri = null)
+        public static PublishingUserData PublishingUserData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string publishingUserName = null, string publishingPassword = null, string publishingPasswordHash = null, string publishingPasswordHashSalt = null, Uri scmUri = null)
         {
             return new PublishingUserData(
                 id,
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="refreshToken"> OAuth refresh token. </param>
         /// <param name="expireOn"> OAuth token expiration. </param>
         /// <returns> A new <see cref="AppService.AppServiceSourceControlData"/> instance for mocking. </returns>
-        public static AppServiceSourceControlData AppServiceSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string token = null, string tokenSecret = null, string refreshToken = null, DateTimeOffset? expireOn = null)
+        public static AppServiceSourceControlData AppServiceSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string token = null, string tokenSecret = null, string refreshToken = null, DateTimeOffset? expireOn = null)
         {
             return new AppServiceSourceControlData(
                 id,
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="availableOS"> Available OSs in region. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceAseRegion"/> instance for mocking. </returns>
-        public static AppServiceAseRegion AppServiceAseRegion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string displayName = null, bool? isStandard = null, bool? isDedicatedHostEnabled = null, bool? isZoneRedundantEnabled = null, IEnumerable<string> availableSku = null, IEnumerable<string> availableOS = null, string kind = null)
+        public static AppServiceAseRegion AppServiceAseRegion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, bool? isStandard = null, bool? isDedicatedHostEnabled = null, bool? isZoneRedundantEnabled = null, IEnumerable<string> availableSku = null, IEnumerable<string> availableOS = null, string kind = null)
         {
             availableSku ??= new List<string>();
             availableOS ??= new List<string>();
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="multiplier"> Meter Multiplier. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceBillingMeter"/> instance for mocking. </returns>
-        public static AppServiceBillingMeter AppServiceBillingMeter(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, Guid? meterId = null, AzureLocation? billingLocation = null, string shortName = null, string friendlyName = null, string osType = null, double? multiplier = null, string kind = null)
+        public static AppServiceBillingMeter AppServiceBillingMeter(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? meterId = null, AzureLocation? billingLocation = null, string shortName = null, string friendlyName = null, string osType = null, double? multiplier = null, string kind = null)
         {
             return new AppServiceBillingMeter(
                 id,
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <returns> A new <see cref="AppService.AppCertificateData"/> instance for mocking. </returns>
-        public static AppCertificateData AppCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, string password = null, string friendlyName = null, string subjectName = null, IEnumerable<string> hostNames = null, byte[] pfxBlob = null, string siteName = null, string selfLink = null, string issuer = null, DateTimeOffset? issueOn = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isValid = null, byte[] cerBlob = null, string publicKeyHash = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? keyVaultSecretStatus = null, ResourceIdentifier serverFarmId = null, string canonicalName = null, string domainValidationMethod = null)
+        public static AppCertificateData AppCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, string password = null, string friendlyName = null, string subjectName = null, IEnumerable<string> hostNames = null, byte[] pfxBlob = null, string siteName = null, string selfLink = null, string issuer = null, DateTimeOffset? issueOn = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isValid = null, byte[] cerBlob = null, string publicKeyHash = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? keyVaultSecretStatus = null, ResourceIdentifier serverFarmId = null, string canonicalName = null, string domainValidationMethod = null)
         {
             tags ??= new Dictionary<string, string>();
             hostNames ??= new List<string>();
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="siteResourceIds"></param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.CustomHostnameSites"/> instance for mocking. </returns>
-        public static CustomHostnameSites CustomHostnameSites(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string customHostname = null, string region = null, IEnumerable<AppServiceIdentifierData> siteResourceIds = null, string kind = null)
+        public static CustomHostnameSites CustomHostnameSites(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string customHostname = null, string region = null, IEnumerable<AppServiceIdentifierData> siteResourceIds = null, string kind = null)
         {
             siteResourceIds ??= new List<AppServiceIdentifierData>();
 
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="value"> String representation of the identity. </param>
         /// <returns> A new <see cref="AppService.AppServiceIdentifierData"/> instance for mocking. </returns>
-        public static AppServiceIdentifierData AppServiceIdentifierData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string value = null)
+        public static AppServiceIdentifierData AppServiceIdentifierData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string value = null)
         {
             return new AppServiceIdentifierData(
                 id,
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kindPropertiesKind"> Kind of site that was deleted. </param>
         /// <param name="geoRegionName"> Geo Region of the deleted site. </param>
         /// <returns> A new <see cref="AppService.DeletedSiteData"/> instance for mocking. </returns>
-        public static DeletedSiteData DeletedSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, int? deletedSiteId = null, string deletedTimestamp = null, string subscription = null, string resourceGroup = null, string deletedSiteName = null, string slot = null, string kindPropertiesKind = null, string geoRegionName = null)
+        public static DeletedSiteData DeletedSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, int? deletedSiteId = null, string deletedTimestamp = null, string subscription = null, string resourceGroup = null, string deletedSiteName = null, string slot = null, string kindPropertiesKind = null, string geoRegionName = null)
         {
             return new DeletedSiteData(
                 id,
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="time"> The time the snapshot was taken. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppSnapshot"/> instance for mocking. </returns>
-        public static AppSnapshot AppSnapshot(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string time = null, string kind = null)
+        public static AppSnapshot AppSnapshot(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string time = null, string kind = null)
         {
             return new AppSnapshot(
                 id,
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="orgDomain"> Display name for region. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceGeoRegion"/> instance for mocking. </returns>
-        public static AppServiceGeoRegion AppServiceGeoRegion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string description = null, string displayName = null, string orgDomain = null, string kind = null)
+        public static AppServiceGeoRegion AppServiceGeoRegion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string displayName = null, string orgDomain = null, string kind = null)
         {
             return new AppServiceGeoRegion(
                 id,
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="certificateUri"> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </param>
         /// <param name="keyVaultReferenceIdentity"> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </param>
         /// <returns> A new <see cref="AppService.CustomDnsSuffixConfigurationData"/> instance for mocking. </returns>
-        public static CustomDnsSuffixConfigurationData CustomDnsSuffixConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, CustomDnsSuffixProvisioningState? provisioningState = null, string provisioningDetails = null, string dnsSuffix = null, Uri certificateUri = null, string keyVaultReferenceIdentity = null)
+        public static CustomDnsSuffixConfigurationData CustomDnsSuffixConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, CustomDnsSuffixProvisioningState? provisioningState = null, string provisioningDetails = null, string dnsSuffix = null, Uri certificateUri = null, string keyVaultReferenceIdentity = null)
         {
             return new CustomDnsSuffixConfigurationData(
                 id,
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isRemoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
         /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
         /// <returns> A new <see cref="AppService.AseV3NetworkingConfigurationData"/> instance for mocking. </returns>
-        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, IEnumerable<IPAddress> windowsOutboundIPAddresses = null, IEnumerable<IPAddress> linuxOutboundIPAddresses = null, IEnumerable<IPAddress> externalInboundIPAddresses = null, IEnumerable<IPAddress> internalInboundIPAddresses = null, bool? allowNewPrivateEndpointConnections = null, bool? isFtpEnabled = null, bool? isRemoteDebugEnabled = null, string inboundIPAddressOverride = null)
+        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, IEnumerable<IPAddress> windowsOutboundIPAddresses = null, IEnumerable<IPAddress> linuxOutboundIPAddresses = null, IEnumerable<IPAddress> externalInboundIPAddresses = null, IEnumerable<IPAddress> internalInboundIPAddresses = null, bool? allowNewPrivateEndpointConnections = null, bool? isFtpEnabled = null, bool? isRemoteDebugEnabled = null, string inboundIPAddressOverride = null)
         {
             windowsOutboundIPAddresses ??= new List<IPAddress>();
             linuxOutboundIPAddresses ??= new List<IPAddress>();
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="networkingConfiguration"> Full view of networking configuration for an ASE. </param>
         /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
         /// <returns> A new <see cref="AppService.AppServiceEnvironmentData"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentData AppServiceEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, ProvisioningState? provisioningState = null, HostingEnvironmentStatus? status = null, AppServiceVirtualNetworkProfile virtualNetwork = null, LoadBalancingMode? internalLoadBalancingMode = null, string multiSize = null, int? multiRoleCount = null, int? ipSslAddressCount = null, string dnsSuffix = null, int? maximumNumberOfMachines = null, int? frontEndScaleFactor = null, bool? isSuspended = null, IEnumerable<AppServiceNameValuePair> clusterSettings = null, IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = null, AppServiceEnvironmentUpgradePreference? upgradePreference = null, int? dedicatedHostCount = null, bool? isZoneRedundant = null, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = null, AseV3NetworkingConfigurationData networkingConfiguration = null, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability = null)
+        public static AppServiceEnvironmentData AppServiceEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, ProvisioningState? provisioningState = null, HostingEnvironmentStatus? status = null, AppServiceVirtualNetworkProfile virtualNetwork = null, LoadBalancingMode? internalLoadBalancingMode = null, string multiSize = null, int? multiRoleCount = null, int? ipSslAddressCount = null, string dnsSuffix = null, int? maximumNumberOfMachines = null, int? frontEndScaleFactor = null, bool? isSuspended = null, IEnumerable<AppServiceNameValuePair> clusterSettings = null, IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = null, AppServiceEnvironmentUpgradePreference? upgradePreference = null, int? dedicatedHostCount = null, bool? isZoneRedundant = null, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = null, AseV3NetworkingConfigurationData networkingConfiguration = null, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability = null)
         {
             tags ??= new Dictionary<string, string>();
             clusterSettings ??= new List<AppServiceNameValuePair>();
@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
         /// <param name="aksResourceId"></param>
         /// <returns> A new <see cref="AppService.KubeEnvironmentData"/> instance for mocking. </returns>
-        public static KubeEnvironmentData KubeEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string kind = null, KubeEnvironmentProvisioningState? provisioningState = null, string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = null, string defaultDomain = null, string staticIP = null, string environmentType = null, ArcConfiguration arcConfiguration = null, AppLogsConfiguration appLogsConfiguration = null, ContainerAppsConfiguration containerAppsConfiguration = null, ResourceIdentifier aksResourceId = null)
+        public static KubeEnvironmentData KubeEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string kind = null, KubeEnvironmentProvisioningState? provisioningState = null, string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = null, string defaultDomain = null, string staticIP = null, string environmentType = null, ArcConfiguration arcConfiguration = null, AppLogsConfiguration appLogsConfiguration = null, ContainerAppsConfiguration containerAppsConfiguration = null, ResourceIdentifier aksResourceId = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="buildProperties"> Build properties to configure on the repository. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSitesWorkflowPreviewContent"/> instance for mocking. </returns>
-        public static StaticSitesWorkflowPreviewContent StaticSitesWorkflowPreviewContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, Uri repositoryUri = null, string branch = null, StaticSiteBuildProperties buildProperties = null, string kind = null)
+        public static StaticSitesWorkflowPreviewContent StaticSitesWorkflowPreviewContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri repositoryUri = null, string branch = null, StaticSiteBuildProperties buildProperties = null, string kind = null)
         {
             return new StaticSitesWorkflowPreviewContent(
                 id,
@@ -1115,7 +1115,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="contents"> The contents for the workflow file to be generated. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSitesWorkflowPreview"/> instance for mocking. </returns>
-        public static StaticSitesWorkflowPreview StaticSitesWorkflowPreview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string path = null, string contents = null, string kind = null)
+        public static StaticSitesWorkflowPreview StaticSitesWorkflowPreview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, string contents = null, string kind = null)
         {
             return new StaticSitesWorkflowPreview(
                 id,
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="marketplaceOffer"> Marketplace offer. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.PremierAddOnOffer"/> instance for mocking. </returns>
-        public static PremierAddOnOffer PremierAddOnOffer(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string sku = null, string product = null, string vendor = null, bool? isPromoCodeRequired = null, int? quota = null, AppServicePlanRestriction? webHostingPlanRestrictions = null, Uri privacyPolicyUri = null, Uri legalTermsUri = null, string marketplacePublisher = null, string marketplaceOffer = null, string kind = null)
+        public static PremierAddOnOffer PremierAddOnOffer(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string sku = null, string product = null, string vendor = null, bool? isPromoCodeRequired = null, int? quota = null, AppServicePlanRestriction? webHostingPlanRestrictions = null, Uri privacyPolicyUri = null, Uri legalTermsUri = null, string marketplacePublisher = null, string marketplaceOffer = null, string kind = null)
         {
             return new PremierAddOnOffer(
                 id,
@@ -1223,7 +1223,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceRecommendation"/> instance for mocking. </returns>
-        public static AppServiceRecommendation AppServiceRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DateTimeOffset? createdOn = null, Guid? recommendationId = null, string resourceId = null, ResourceScopeType? resourceScope = null, string ruleName = null, string displayName = null, string message = null, NotificationLevel? level = null, RecommendationChannel? channels = null, IEnumerable<string> categoryTags = null, string actionName = null, int? enabled = null, IEnumerable<string> states = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? nextNotificationOn = null, DateTimeOffset? notificationExpirationOn = null, DateTimeOffset? notifiedOn = null, double? score = null, bool? isDynamic = null, string extensionName = null, string bladeName = null, string forwardLink = null, string kind = null)
+        public static AppServiceRecommendation AppServiceRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, Guid? recommendationId = null, string resourceId = null, ResourceScopeType? resourceScope = null, string ruleName = null, string displayName = null, string message = null, NotificationLevel? level = null, RecommendationChannel? channels = null, IEnumerable<string> categoryTags = null, string actionName = null, int? enabled = null, IEnumerable<string> states = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? nextNotificationOn = null, DateTimeOffset? notificationExpirationOn = null, DateTimeOffset? notifiedOn = null, double? score = null, bool? isDynamic = null, string extensionName = null, string bladeName = null, string forwardLink = null, string kind = null)
         {
             categoryTags ??= new List<string>();
             states ??= new List<string>();
@@ -1269,7 +1269,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="category"> The category that the resource matches in the RHC Policy File. </param>
         /// <param name="isSignalAvailable"> Is there a health signal for the resource. </param>
         /// <returns> A new <see cref="AppService.ResourceHealthMetadataData"/> instance for mocking. </returns>
-        public static ResourceHealthMetadataData ResourceHealthMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string category = null, bool? isSignalAvailable = null)
+        public static ResourceHealthMetadataData ResourceHealthMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string category = null, bool? isSignalAvailable = null)
         {
             return new ResourceHealthMetadataData(
                 id,
@@ -1337,7 +1337,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;false&lt;/code&gt;, RDP access is disabled.
         /// </param>
         /// <returns> A new <see cref="AppService.AppServicePlanData"/> instance for mocking. </returns>
-        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppServiceSkuDescription sku = null, ExtendedLocation extendedLocation = null, string kind = null, ManagedServiceIdentity identity = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpireOn = null, DateTimeOffset? freeOfferExpireOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, bool? isAsyncScalingEnabled = null, DefaultIdentity planDefaultIdentity = null, bool? isCustomMode = null, IEnumerable<RegistryAdapter> registryAdapters = null, IEnumerable<InstallScript> installScripts = null, string virtualNetworkSubnetId = null, IEnumerable<StorageMount> storageMounts = null, bool? rdpEnabled = null)
+        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppServiceSkuDescription sku = null, ExtendedLocation extendedLocation = null, string kind = null, ManagedServiceIdentity identity = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpireOn = null, DateTimeOffset? freeOfferExpireOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, bool? isAsyncScalingEnabled = null, DefaultIdentity planDefaultIdentity = null, bool? isCustomMode = null, IEnumerable<RegistryAdapter> registryAdapters = null, IEnumerable<InstallScript> installScripts = null, string virtualNetworkSubnetId = null, IEnumerable<StorageMount> storageMounts = null, bool? rdpEnabled = null)
         {
             tags ??= new Dictionary<string, string>();
             registryAdapters ??= new List<RegistryAdapter>();
@@ -1486,7 +1486,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="managedEnvironmentId"> Azure Resource Manager ID of the customer's selected Managed Environment on which to host this app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
         /// <param name="sku"> Current SKU of application based on associated App Service Plan. Some valid SKU values are Free, Shared, Basic, Dynamic, FlexConsumption, Standard, Premium, PremiumV2, PremiumV3, Isolated, IsolatedV2. </param>
         /// <returns> A new <see cref="AppService.WebSiteData"/> instance for mocking. </returns>
-        public static WebSiteData WebSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, string kind = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier appServicePlanId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedTimeUtc = null, SiteDnsConfig dnsConfiguration = null, OutboundVnetRouting outboundVnetRouting = null, SiteConfigProperties siteConfig = null, FunctionAppConfig functionAppConfig = null, AppDaprConfig daprConfig = null, string workloadProfileName = null, FunctionAppResourceConfig resourceConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientAffinityPartitioningEnabled = null, bool? isClientAffinityProxyEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, AppServiceIPMode? ipMode = null, bool? isEndToEndEncryptionEnabled = null, bool? isSshEnabled = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = null, ResourceIdentifier virtualNetworkSubnetId = null, string managedEnvironmentId = null, string sku = null)
+        public static WebSiteData WebSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, string kind = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier appServicePlanId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedTimeUtc = null, SiteDnsConfig dnsConfiguration = null, OutboundVnetRouting outboundVnetRouting = null, SiteConfigProperties siteConfig = null, FunctionAppConfig functionAppConfig = null, AppDaprConfig daprConfig = null, string workloadProfileName = null, FunctionAppResourceConfig resourceConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientAffinityPartitioningEnabled = null, bool? isClientAffinityProxyEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, AppServiceIPMode? ipMode = null, bool? isEndToEndEncryptionEnabled = null, bool? isSshEnabled = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = null, ResourceIdentifier virtualNetworkSubnetId = null, string managedEnvironmentId = null, string sku = null)
         {
             tags ??= new Dictionary<string, string>();
             hostNames ??= new List<string>();
@@ -1793,7 +1793,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="dynamicTagsJson"> Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppPushSettings"/> instance for mocking. </returns>
-        public static WebAppPushSettings WebAppPushSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isPushEnabled = null, string tagWhitelistJson = null, string tagsRequiringAuth = null, string dynamicTagsJson = null, string kind = null)
+        public static WebAppPushSettings WebAppPushSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isPushEnabled = null, string tagWhitelistJson = null, string tagsRequiringAuth = null, string dynamicTagsJson = null, string kind = null)
         {
             return new WebAppPushSettings(
                 id,
@@ -1905,7 +1905,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="publicNetworkAccess"> State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
         /// <param name="databaseConnections"> Database connections for the static site. </param>
         /// <returns> A new <see cref="AppService.StaticSiteData"/> instance for mocking. </returns>
-        public static StaticSiteData StaticSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, AppServiceSkuDescription sku = null, ManagedServiceIdentity identity = null, string defaultHostname = null, Uri repositoryUri = null, string branch = null, IEnumerable<string> customDomains = null, string repositoryToken = null, StaticSiteBuildProperties buildProperties = null, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, StagingEnvironmentPolicy? stagingEnvironmentPolicy = null, bool? allowConfigFileUpdates = null, StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = null, string provider = null, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = null, string publicNetworkAccess = null, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = null)
+        public static StaticSiteData StaticSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, AppServiceSkuDescription sku = null, ManagedServiceIdentity identity = null, string defaultHostname = null, Uri repositoryUri = null, string branch = null, IEnumerable<string> customDomains = null, string repositoryToken = null, StaticSiteBuildProperties buildProperties = null, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, StagingEnvironmentPolicy? stagingEnvironmentPolicy = null, bool? allowConfigFileUpdates = null, StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = null, string provider = null, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = null, string publicNetworkAccess = null, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = null)
         {
             tags ??= new Dictionary<string, string>();
             customDomains ??= new List<string>();
@@ -1960,7 +1960,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
         /// <returns> A new <see cref="Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection"/> instance for mocking. </returns>
-        public static ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, AppServiceArmPlan plan = null, RemotePrivateEndpointConnection properties = null, AppServiceSkuDescription sku = null, string status = null, ResponseError error = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null)
+        public static ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, AppServiceArmPlan plan = null, RemotePrivateEndpointConnection properties = null, AppServiceSkuDescription sku = null, string status = null, ResponseError error = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -2011,7 +2011,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.RemotePrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RemotePrivateEndpointConnection RemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<IPAddress> ipAddresses = null, string kind = null)
+        public static RemotePrivateEndpointConnection RemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<IPAddress> ipAddresses = null, string kind = null)
         {
             ipAddresses ??= new List<IPAddress>();
 
@@ -2038,7 +2038,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="functionAppRegion"> The region of the function app registered with the static site. </param>
         /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
         /// <returns> A new <see cref="AppService.StaticSiteUserProvidedFunctionAppData"/> instance for mocking. </returns>
-        public static StaticSiteUserProvidedFunctionAppData StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string functionAppResourceId = null, string functionAppRegion = null, DateTimeOffset? createdOn = null)
+        public static StaticSiteUserProvidedFunctionAppData StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string functionAppResourceId = null, string functionAppRegion = null, DateTimeOffset? createdOn = null)
         {
             return new StaticSiteUserProvidedFunctionAppData(
                 id,
@@ -2104,7 +2104,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="subnetResourceId"> The ARM Resource ID of the subnet to validate. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceVirtualNetworkValidationContent"/> instance for mocking. </returns>
-        public static AppServiceVirtualNetworkValidationContent AppServiceVirtualNetworkValidationContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string vnetResourceGroup = null, string vnetName = null, string vnetSubnetName = null, ResourceIdentifier subnetResourceId = null, string kind = null)
+        public static AppServiceVirtualNetworkValidationContent AppServiceVirtualNetworkValidationContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string vnetResourceGroup = null, string vnetName = null, string vnetSubnetName = null, ResourceIdentifier subnetResourceId = null, string kind = null)
         {
             return new AppServiceVirtualNetworkValidationContent(
                 id,
@@ -2130,7 +2130,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="warnings"> A list of warnings generated during validation. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.VirtualNetworkValidationFailureDetails"/> instance for mocking. </returns>
-        public static VirtualNetworkValidationFailureDetails VirtualNetworkValidationFailureDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string message = null, bool? isFailed = null, IEnumerable<VirtualNetworkValidationTestFailure> failedTests = null, IEnumerable<VirtualNetworkValidationTestFailure> warnings = null, string kind = null)
+        public static VirtualNetworkValidationFailureDetails VirtualNetworkValidationFailureDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string message = null, bool? isFailed = null, IEnumerable<VirtualNetworkValidationTestFailure> failedTests = null, IEnumerable<VirtualNetworkValidationTestFailure> warnings = null, string kind = null)
         {
             failedTests ??= new List<VirtualNetworkValidationTestFailure>();
             warnings ??= new List<VirtualNetworkValidationTestFailure>();
@@ -2157,7 +2157,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="details"> The details of what caused the failure, e.g. the blocking rule name, etc. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.VirtualNetworkValidationTestFailure"/> instance for mocking. </returns>
-        public static VirtualNetworkValidationTestFailure VirtualNetworkValidationTestFailure(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string testName = null, string details = null, string kind = null)
+        public static VirtualNetworkValidationTestFailure VirtualNetworkValidationTestFailure(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string testName = null, string details = null, string kind = null)
         {
             return new VirtualNetworkValidationTestFailure(
                 id,
@@ -2198,7 +2198,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppCertificatePatch"/> instance for mocking. </returns>
-        public static AppCertificatePatch AppCertificatePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string password = null, string friendlyName = null, string subjectName = null, IEnumerable<string> hostNames = null, byte[] pfxBlob = null, string siteName = null, string selfLink = null, string issuer = null, DateTimeOffset? issueOn = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isValid = null, byte[] cerBlob = null, string publicKeyHash = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? keyVaultSecretStatus = null, ResourceIdentifier serverFarmId = null, string canonicalName = null, string domainValidationMethod = null, string kind = null)
+        public static AppCertificatePatch AppCertificatePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string password = null, string friendlyName = null, string subjectName = null, IEnumerable<string> hostNames = null, byte[] pfxBlob = null, string siteName = null, string selfLink = null, string issuer = null, DateTimeOffset? issueOn = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isValid = null, byte[] cerBlob = null, string publicKeyHash = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? keyVaultSecretStatus = null, ResourceIdentifier serverFarmId = null, string canonicalName = null, string domainValidationMethod = null, string kind = null)
         {
             hostNames ??= new List<string>();
 
@@ -2262,7 +2262,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceEnvironmentPatch"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentPatch AppServiceEnvironmentPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ProvisioningState? provisioningState = null, HostingEnvironmentStatus? status = null, AppServiceVirtualNetworkProfile virtualNetwork = null, LoadBalancingMode? internalLoadBalancingMode = null, string multiSize = null, int? multiRoleCount = null, int? ipSslAddressCount = null, string dnsSuffix = null, int? maximumNumberOfMachines = null, int? frontEndScaleFactor = null, bool? isSuspended = null, IEnumerable<AppServiceNameValuePair> clusterSettings = null, IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = null, AppServiceEnvironmentUpgradePreference? upgradePreference = null, int? dedicatedHostCount = null, bool? isZoneRedundant = null, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = null, AseV3NetworkingConfigurationData networkingConfiguration = null, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability = null, string kind = null)
+        public static AppServiceEnvironmentPatch AppServiceEnvironmentPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, HostingEnvironmentStatus? status = null, AppServiceVirtualNetworkProfile virtualNetwork = null, LoadBalancingMode? internalLoadBalancingMode = null, string multiSize = null, int? multiRoleCount = null, int? ipSslAddressCount = null, string dnsSuffix = null, int? maximumNumberOfMachines = null, int? frontEndScaleFactor = null, bool? isSuspended = null, IEnumerable<AppServiceNameValuePair> clusterSettings = null, IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = null, AppServiceEnvironmentUpgradePreference? upgradePreference = null, int? dedicatedHostCount = null, bool? isZoneRedundant = null, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = null, AseV3NetworkingConfigurationData networkingConfiguration = null, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability = null, string kind = null)
         {
             clusterSettings ??= new List<AppServiceNameValuePair>();
             userWhitelistedIPRanges ??= new List<string>();
@@ -2345,7 +2345,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <returns> A new <see cref="Models.AppServiceEnvironmentAddressResult"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentAddressResult AppServiceEnvironmentAddressResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, IPAddress serviceIPAddress = null, IPAddress internalIPAddress = null, IEnumerable<IPAddress> outboundIPAddresses = null, IEnumerable<VirtualIPMapping> virtualIPMappings = null)
+        public static AppServiceEnvironmentAddressResult AppServiceEnvironmentAddressResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, IPAddress serviceIPAddress = null, IPAddress internalIPAddress = null, IEnumerable<IPAddress> outboundIPAddresses = null, IEnumerable<VirtualIPMapping> virtualIPMappings = null)
         {
             outboundIPAddresses ??= new List<IPAddress>();
             virtualIPMappings ??= new List<VirtualIPMapping>();
@@ -2375,7 +2375,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
         /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
         /// <returns> A new <see cref="AppService.AppServiceDetectorData"/> instance for mocking. </returns>
-        public static AppServiceDetectorData AppServiceDetectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, DetectorInfo metadata = null, IEnumerable<DiagnosticDataset> dataset = null, AppServiceStatusInfo status = null, IEnumerable<DataProviderMetadata> dataProvidersMetadata = null, QueryUtterancesResults suggestedUtterances = null)
+        public static AppServiceDetectorData AppServiceDetectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, DetectorInfo metadata = null, IEnumerable<DiagnosticDataset> dataset = null, AppServiceStatusInfo status = null, IEnumerable<DataProviderMetadata> dataProvidersMetadata = null, QueryUtterancesResults suggestedUtterances = null)
         {
             dataset ??= new List<DiagnosticDataset>();
             dataProvidersMetadata ??= new List<DataProviderMetadata>();
@@ -2487,7 +2487,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="workerCount"> Number of instances in the worker pool. </param>
         /// <param name="instanceNames"> Names of all instances in the worker pool (read only). </param>
         /// <returns> A new <see cref="AppService.AppServiceWorkerPoolData"/> instance for mocking. </returns>
-        public static AppServiceWorkerPoolData AppServiceWorkerPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AppServiceSkuDescription sku = null, string kind = null, int? workerSizeId = null, ComputeModeOption? computeMode = null, string workerSize = null, int? workerCount = null, IEnumerable<string> instanceNames = null)
+        public static AppServiceWorkerPoolData AppServiceWorkerPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppServiceSkuDescription sku = null, string kind = null, int? workerSizeId = null, ComputeModeOption? computeMode = null, string workerSize = null, int? workerCount = null, IEnumerable<string> instanceNames = null)
         {
             instanceNames ??= new List<string>();
 
@@ -2518,7 +2518,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> Resource metric definition properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.ResourceMetricDefinition"/> instance for mocking. </returns>
-        public static ResourceMetricDefinition ResourceMetricDefinition(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string unit = null, string primaryAggregationType = null, IEnumerable<ResourceMetricAvailability> metricAvailabilities = null, Uri resourceUri = null, IReadOnlyDictionary<string, string> properties = null, string kind = null)
+        public static ResourceMetricDefinition ResourceMetricDefinition(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string unit = null, string primaryAggregationType = null, IEnumerable<ResourceMetricAvailability> metricAvailabilities = null, Uri resourceUri = null, IReadOnlyDictionary<string, string> properties = null, string kind = null)
         {
             metricAvailabilities ??= new List<ResourceMetricAvailability>();
             properties ??= new Dictionary<string, string>();
@@ -2571,7 +2571,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="siteMode"> Site mode used for this usage. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceUsage"/> instance for mocking. </returns>
-        public static AppServiceUsage AppServiceUsage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string displayName = null, string resourceName = null, string unit = null, long? currentValue = null, long? limit = null, DateTimeOffset? nextResetOn = null, ComputeModeOption? computeMode = null, string siteMode = null, string kind = null)
+        public static AppServiceUsage AppServiceUsage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string resourceName = null, string unit = null, long? currentValue = null, long? limit = null, DateTimeOffset? nextResetOn = null, ComputeModeOption? computeMode = null, string siteMode = null, string kind = null)
         {
             return new AppServiceUsage(
                 id,
@@ -2660,7 +2660,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
         /// <returns> A new <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/> instance for mocking. </returns>
-        public static RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<IPAddress> ipAddresses = null)
+        public static RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<IPAddress> ipAddresses = null)
         {
             ipAddresses ??= new List<IPAddress>();
 
@@ -2684,7 +2684,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of a private link resource. </param>
         /// <returns> A new <see cref="Models.AppServicePrivateLinkResourceData"/> instance for mocking. </returns>
-        public static AppServicePrivateLinkResourceData AppServicePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AppServicePrivateLinkResourceProperties properties = null)
+        public static AppServicePrivateLinkResourceData AppServicePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppServicePrivateLinkResourceProperties properties = null)
         {
             return new AppServicePrivateLinkResourceData(
                 id,
@@ -2731,7 +2731,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
         /// <returns> A new <see cref="AppService.RecommendationRuleData"/> instance for mocking. </returns>
-        public static RecommendationRuleData RecommendationRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string recommendationName = null, string displayName = null, string message = null, Guid? recommendationId = null, string description = null, string actionName = null, NotificationLevel? level = null, RecommendationChannel? channels = null, IEnumerable<string> categoryTags = null, bool? isDynamic = null, string extensionName = null, string bladeName = null, string forwardLink = null)
+        public static RecommendationRuleData RecommendationRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string recommendationName = null, string displayName = null, string message = null, Guid? recommendationId = null, string description = null, string actionName = null, NotificationLevel? level = null, RecommendationChannel? channels = null, IEnumerable<string> categoryTags = null, bool? isDynamic = null, string extensionName = null, string bladeName = null, string forwardLink = null)
         {
             categoryTags ??= new List<string>();
 
@@ -2781,7 +2781,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="aksResourceId"></param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.KubeEnvironmentPatch"/> instance for mocking. </returns>
-        public static KubeEnvironmentPatch KubeEnvironmentPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, KubeEnvironmentProvisioningState? provisioningState = null, string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = null, string defaultDomain = null, string staticIP = null, ArcConfiguration arcConfiguration = null, AppLogsConfiguration appLogsConfiguration = null, ContainerAppsConfiguration containerAppsConfiguration = null, ResourceIdentifier aksResourceId = null, string kind = null)
+        public static KubeEnvironmentPatch KubeEnvironmentPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KubeEnvironmentProvisioningState? provisioningState = null, string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = null, string defaultDomain = null, string staticIP = null, ArcConfiguration arcConfiguration = null, AppLogsConfiguration appLogsConfiguration = null, ContainerAppsConfiguration containerAppsConfiguration = null, ResourceIdentifier aksResourceId = null, string kind = null)
         {
             return new KubeEnvironmentPatch(
                 id,
@@ -2838,7 +2838,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServicePlanPatch"/> instance for mocking. </returns>
-        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ManagedServiceIdentity identity = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpirationOn = null, DateTimeOffset? freeOfferExpirationOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, string kind = null)
+        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpirationOn = null, DateTimeOffset? freeOfferExpirationOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, string kind = null)
         {
             return new AppServicePlanPatch(
                 id,
@@ -2900,7 +2900,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
         /// <returns> A new <see cref="AppService.HybridConnectionData"/> instance for mocking. </returns>
-        public static HybridConnectionData HybridConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string serviceBusNamespace = null, string relayName = null, ResourceIdentifier relayArmId = null, string hostname = null, int? port = null, string sendKeyName = null, string sendKeyValue = null, string serviceBusSuffix = null)
+        public static HybridConnectionData HybridConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string serviceBusNamespace = null, string relayName = null, ResourceIdentifier relayArmId = null, string hostname = null, int? port = null, string sendKeyName = null, string sendKeyValue = null, string serviceBusSuffix = null)
         {
             return new HybridConnectionData(
                 id,
@@ -2928,7 +2928,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="sendKeyValue"> The value of the send key. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.HybridConnectionKey"/> instance for mocking. </returns>
-        public static HybridConnectionKey HybridConnectionKey(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string sendKeyName = null, string sendKeyValue = null, string kind = null)
+        public static HybridConnectionKey HybridConnectionKey(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string sendKeyName = null, string sendKeyValue = null, string kind = null)
         {
             return new HybridConnectionKey(
                 id,
@@ -2950,7 +2950,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="current"> The current number of Hybrid Connections. </param>
         /// <param name="maximum"> The maximum number of Hybrid Connections allowed. </param>
         /// <returns> A new <see cref="AppService.HybridConnectionLimitData"/> instance for mocking. </returns>
-        public static HybridConnectionLimitData HybridConnectionLimitData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, int? current = null, int? maximum = null)
+        public static HybridConnectionLimitData HybridConnectionLimitData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, int? current = null, int? maximum = null)
         {
             return new HybridConnectionLimitData(
                 id,
@@ -2999,7 +2999,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
         /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
         /// <returns> A new <see cref="AppService.AppServiceVirtualNetworkData"/> instance for mocking. </returns>
-        public static AppServiceVirtualNetworkData AppServiceVirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, ResourceIdentifier vnetResourceId = null, string certThumbprintString = null, string certBlob = null, IEnumerable<AppServiceVirtualNetworkRoute> routes = null, bool? isResyncRequired = null, string dnsServers = null, bool? isSwift = null)
+        public static AppServiceVirtualNetworkData AppServiceVirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ResourceIdentifier vnetResourceId = null, string certThumbprintString = null, string certBlob = null, IEnumerable<AppServiceVirtualNetworkRoute> routes = null, bool? isResyncRequired = null, string dnsServers = null, bool? isSwift = null)
         {
             routes ??= new List<AppServiceVirtualNetworkRoute>();
 
@@ -3060,7 +3060,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </param>
         /// <returns> A new <see cref="Models.AppServiceVirtualNetworkRoute"/> instance for mocking. </returns>
-        public static AppServiceVirtualNetworkRoute AppServiceVirtualNetworkRoute(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string startAddress = null, string endAddress = null, AppServiceVirtualNetworkRouteType? routeType = null)
+        public static AppServiceVirtualNetworkRoute AppServiceVirtualNetworkRoute(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string startAddress = null, string endAddress = null, AppServiceVirtualNetworkRouteType? routeType = null)
         {
             return new AppServiceVirtualNetworkRoute(
                 id,
@@ -3083,7 +3083,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetName"> The Virtual Network name. </param>
         /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
         /// <returns> A new <see cref="AppService.AppServiceVirtualNetworkGatewayData"/> instance for mocking. </returns>
-        public static AppServiceVirtualNetworkGatewayData AppServiceVirtualNetworkGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string vnetName = null, Uri vpnPackageUri = null)
+        public static AppServiceVirtualNetworkGatewayData AppServiceVirtualNetworkGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string vnetName = null, Uri vpnPackageUri = null)
         {
             return new AppServiceVirtualNetworkGatewayData(
                 id,
@@ -3165,7 +3165,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SitePatchInfo"/> instance for mocking. </returns>
-        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ManagedServiceIdentity identity = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier serverFarmId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedOn = null, SiteDnsConfig dnsConfiguration = null, SiteConfigProperties siteConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientAffinityProxyEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, ResourceIdentifier virtualNetworkSubnetId = null, string kind = null)
+        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier serverFarmId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedOn = null, SiteDnsConfig dnsConfiguration = null, SiteConfigProperties siteConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientAffinityProxyEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, ResourceIdentifier virtualNetworkSubnetId = null, string kind = null)
         {
             hostNames ??= new List<string>();
             enabledHostNames ??= new List<string>();
@@ -3244,7 +3244,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="alternateTxtRecords"> Alternate TXT records controller can see for this hostname. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.CustomHostnameAnalysisResult"/> instance for mocking. </returns>
-        public static CustomHostnameAnalysisResult CustomHostnameAnalysisResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isHostnameAlreadyVerified = null, DnsVerificationTestResult? customDomainVerificationTest = null, ResponseError customDomainVerificationFailureInfo = null, bool? hasConflictOnScaleUnit = null, bool? hasConflictAcrossSubscription = null, string conflictingAppResourceId = null, IEnumerable<string> cNameRecords = null, IEnumerable<string> txtRecords = null, IEnumerable<string> aRecords = null, IEnumerable<string> alternateCNameRecords = null, IEnumerable<string> alternateTxtRecords = null, string kind = null)
+        public static CustomHostnameAnalysisResult CustomHostnameAnalysisResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isHostnameAlreadyVerified = null, DnsVerificationTestResult? customDomainVerificationTest = null, ResponseError customDomainVerificationFailureInfo = null, bool? hasConflictOnScaleUnit = null, bool? hasConflictAcrossSubscription = null, string conflictingAppResourceId = null, IEnumerable<string> cNameRecords = null, IEnumerable<string> txtRecords = null, IEnumerable<string> aRecords = null, IEnumerable<string> alternateCNameRecords = null, IEnumerable<string> alternateTxtRecords = null, string kind = null)
         {
             cNameRecords ??= new List<string>();
             txtRecords ??= new List<string>();
@@ -3284,7 +3284,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="databases"> Databases included in the backup. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppBackupInfo"/> instance for mocking. </returns>
-        public static WebAppBackupInfo WebAppBackupInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string backupName = null, bool? isEnabled = null, Uri storageAccountUri = null, WebAppBackupSchedule backupSchedule = null, IEnumerable<AppServiceDatabaseBackupSetting> databases = null, string kind = null)
+        public static WebAppBackupInfo WebAppBackupInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupName = null, bool? isEnabled = null, Uri storageAccountUri = null, WebAppBackupSchedule backupSchedule = null, IEnumerable<AppServiceDatabaseBackupSetting> databases = null, string kind = null)
         {
             databases ??= new List<AppServiceDatabaseBackupSetting>();
 
@@ -3343,7 +3343,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
         /// <returns> A new <see cref="AppService.WebAppBackupData"/> instance for mocking. </returns>
-        public static WebAppBackupData WebAppBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, int? backupId = null, Uri storageAccountUri = null, string blobName = null, string backupName = null, WebAppBackupStatus? status = null, long? sizeInBytes = null, DateTimeOffset? createdOn = null, string log = null, IEnumerable<AppServiceDatabaseBackupSetting> databases = null, bool? isScheduled = null, DateTimeOffset? lastRestoreOn = null, DateTimeOffset? finishedOn = null, string correlationId = null, long? websiteSizeInBytes = null)
+        public static WebAppBackupData WebAppBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, int? backupId = null, Uri storageAccountUri = null, string blobName = null, string backupName = null, WebAppBackupStatus? status = null, long? sizeInBytes = null, DateTimeOffset? createdOn = null, string log = null, IEnumerable<AppServiceDatabaseBackupSetting> databases = null, bool? isScheduled = null, DateTimeOffset? lastRestoreOn = null, DateTimeOffset? finishedOn = null, string correlationId = null, long? websiteSizeInBytes = null)
         {
             databases ??= new List<AppServiceDatabaseBackupSetting>();
 
@@ -3388,7 +3388,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.RestoreRequestInfo"/> instance for mocking. </returns>
-        public static RestoreRequestInfo RestoreRequestInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, Uri storageAccountUri = null, string blobName = null, bool? canOverwrite = null, string siteName = null, IEnumerable<AppServiceDatabaseBackupSetting> databases = null, bool? ignoreConflictingHostNames = null, bool? ignoreDatabases = null, string appServicePlan = null, BackupRestoreOperationType? operationType = null, bool? adjustConnectionStrings = null, string hostingEnvironment = null, string kind = null)
+        public static RestoreRequestInfo RestoreRequestInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri storageAccountUri = null, string blobName = null, bool? canOverwrite = null, string siteName = null, IEnumerable<AppServiceDatabaseBackupSetting> databases = null, bool? ignoreConflictingHostNames = null, bool? ignoreDatabases = null, string appServicePlan = null, BackupRestoreOperationType? operationType = null, bool? adjustConnectionStrings = null, string hostingEnvironment = null, string kind = null)
         {
             databases ??= new List<AppServiceDatabaseBackupSetting>();
 
@@ -3420,7 +3420,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="allow"> &lt;code&gt;true&lt;/code&gt; to allow access to a publishing method; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <returns> A new <see cref="AppService.CsmPublishingCredentialsPoliciesEntityData"/> instance for mocking. </returns>
-        public static CsmPublishingCredentialsPoliciesEntityData CsmPublishingCredentialsPoliciesEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, bool? allow = null)
+        public static CsmPublishingCredentialsPoliciesEntityData CsmPublishingCredentialsPoliciesEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, bool? allow = null)
         {
             return new CsmPublishingCredentialsPoliciesEntityData(
                 id,
@@ -3528,7 +3528,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
         /// <returns> A new <see cref="AppService.SiteConfigData"/> instance for mocking. </returns>
-        public static SiteConfigData SiteConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, int? numberOfWorkers = null, IEnumerable<string> defaultDocuments = null, string netFrameworkVersion = null, string phpVersion = null, string pythonVersion = null, string nodeVersion = null, string powerShellVersion = null, string linuxFxVersion = null, string windowsFxVersion = null, bool? isRequestTracingEnabled = null, DateTimeOffset? requestTracingExpirationOn = null, bool? isRemoteDebuggingEnabled = null, string remoteDebuggingVersion = null, bool? isHttpLoggingEnabled = null, bool? useManagedIdentityCreds = null, string acrUserManagedIdentityId = null, int? logsDirectorySizeLimit = null, bool? isDetailedErrorLoggingEnabled = null, string publishingUsername = null, IEnumerable<AppServiceNameValuePair> appSettings = null, IEnumerable<AppServiceNameValuePair> metadata = null, IEnumerable<ConnStringInfo> connectionStrings = null, SiteMachineKey machineKey = null, IEnumerable<HttpRequestHandlerMapping> handlerMappings = null, string documentRoot = null, ScmType? scmType = null, bool? use32BitWorkerProcess = null, bool? isWebSocketsEnabled = null, bool? isAlwaysOn = null, string javaVersion = null, string javaContainer = null, string javaContainerVersion = null, string appCommandLine = null, ManagedPipelineMode? managedPipelineMode = null, IEnumerable<VirtualApplication> virtualApplications = null, SiteLoadBalancing? loadBalancing = null, IEnumerable<RampUpRule> experimentsRampUpRules = null, SiteLimits limits = null, bool? isAutoHealEnabled = null, AutoHealRules autoHealRules = null, string tracingOptions = null, string vnetName = null, bool? isVnetRouteAllEnabled = null, int? vnetPrivatePortsCount = null, AppServiceCorsSettings cors = null, WebAppPushSettings push = null, Uri apiDefinitionUri = null, string apiManagementConfigId = null, string autoSwapSlotName = null, bool? isLocalMySqlEnabled = null, int? managedServiceIdentityId = null, int? xManagedServiceIdentityId = null, string keyVaultReferenceIdentity = null, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = null, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = null, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = null, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = null, bool? allowIPSecurityRestrictionsForScmToUseMain = null, bool? isHttp20Enabled = null, int? http20ProxyFlag = null, AppServiceSupportedTlsVersion? minTlsVersion = null, AppServiceTlsCipherSuite? minTlsCipherSuite = null, AppServiceSupportedTlsVersion? scmMinTlsVersion = null, AppServiceFtpsState? ftpsState = null, int? preWarmedInstanceCount = null, int? functionAppScaleLimit = null, int? elasticWebAppScaleLimit = null, string healthCheckPath = null, bool? isFunctionsRuntimeScaleMonitoringEnabled = null, string websiteTimeZone = null, int? minimumElasticInstanceCount = null, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = null, string publicNetworkAccess = null)
+        public static SiteConfigData SiteConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, int? numberOfWorkers = null, IEnumerable<string> defaultDocuments = null, string netFrameworkVersion = null, string phpVersion = null, string pythonVersion = null, string nodeVersion = null, string powerShellVersion = null, string linuxFxVersion = null, string windowsFxVersion = null, bool? isRequestTracingEnabled = null, DateTimeOffset? requestTracingExpirationOn = null, bool? isRemoteDebuggingEnabled = null, string remoteDebuggingVersion = null, bool? isHttpLoggingEnabled = null, bool? useManagedIdentityCreds = null, string acrUserManagedIdentityId = null, int? logsDirectorySizeLimit = null, bool? isDetailedErrorLoggingEnabled = null, string publishingUsername = null, IEnumerable<AppServiceNameValuePair> appSettings = null, IEnumerable<AppServiceNameValuePair> metadata = null, IEnumerable<ConnStringInfo> connectionStrings = null, SiteMachineKey machineKey = null, IEnumerable<HttpRequestHandlerMapping> handlerMappings = null, string documentRoot = null, ScmType? scmType = null, bool? use32BitWorkerProcess = null, bool? isWebSocketsEnabled = null, bool? isAlwaysOn = null, string javaVersion = null, string javaContainer = null, string javaContainerVersion = null, string appCommandLine = null, ManagedPipelineMode? managedPipelineMode = null, IEnumerable<VirtualApplication> virtualApplications = null, SiteLoadBalancing? loadBalancing = null, IEnumerable<RampUpRule> experimentsRampUpRules = null, SiteLimits limits = null, bool? isAutoHealEnabled = null, AutoHealRules autoHealRules = null, string tracingOptions = null, string vnetName = null, bool? isVnetRouteAllEnabled = null, int? vnetPrivatePortsCount = null, AppServiceCorsSettings cors = null, WebAppPushSettings push = null, Uri apiDefinitionUri = null, string apiManagementConfigId = null, string autoSwapSlotName = null, bool? isLocalMySqlEnabled = null, int? managedServiceIdentityId = null, int? xManagedServiceIdentityId = null, string keyVaultReferenceIdentity = null, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = null, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = null, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = null, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = null, bool? allowIPSecurityRestrictionsForScmToUseMain = null, bool? isHttp20Enabled = null, int? http20ProxyFlag = null, AppServiceSupportedTlsVersion? minTlsVersion = null, AppServiceTlsCipherSuite? minTlsCipherSuite = null, AppServiceSupportedTlsVersion? scmMinTlsVersion = null, AppServiceFtpsState? ftpsState = null, int? preWarmedInstanceCount = null, int? functionAppScaleLimit = null, int? elasticWebAppScaleLimit = null, string healthCheckPath = null, bool? isFunctionsRuntimeScaleMonitoringEnabled = null, string websiteTimeZone = null, int? minimumElasticInstanceCount = null, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = null, string publicNetworkAccess = null)
         {
             defaultDocuments ??= new List<string>();
             appSettings ??= new List<AppServiceNameValuePair>();
@@ -3631,7 +3631,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> Settings. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceConfigurationDictionary"/> instance for mocking. </returns>
-        public static AppServiceConfigurationDictionary AppServiceConfigurationDictionary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> properties = null, string kind = null)
+        public static AppServiceConfigurationDictionary AppServiceConfigurationDictionary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> properties = null, string kind = null)
         {
             properties ??= new Dictionary<string, string>();
 
@@ -3806,7 +3806,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SiteAuthSettings"/> instance for mocking. </returns>
-        public static SiteAuthSettings SiteAuthSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isEnabled = null, string runtimeVersion = null, UnauthenticatedClientAction? unauthenticatedClientAction = null, bool? isTokenStoreEnabled = null, IEnumerable<string> allowedExternalRedirectUrls = null, BuiltInAuthenticationProvider? defaultProvider = null, double? tokenRefreshExtensionHours = null, string clientId = null, string clientSecret = null, string clientSecretSettingName = null, string clientSecretCertificateThumbprintString = null, string issuer = null, bool? validateIssuer = null, IEnumerable<string> allowedAudiences = null, IEnumerable<string> additionalLoginParams = null, string aadClaimsAuthorization = null, string googleClientId = null, string googleClientSecret = null, string googleClientSecretSettingName = null, IEnumerable<string> googleOAuthScopes = null, string facebookAppId = null, string facebookAppSecret = null, string facebookAppSecretSettingName = null, IEnumerable<string> facebookOAuthScopes = null, string gitHubClientId = null, string gitHubClientSecret = null, string gitHubClientSecretSettingName = null, IEnumerable<string> gitHubOAuthScopes = null, string twitterConsumerKey = null, string twitterConsumerSecret = null, string twitterConsumerSecretSettingName = null, string microsoftAccountClientId = null, string microsoftAccountClientSecret = null, string microsoftAccountClientSecretSettingName = null, IEnumerable<string> microsoftAccountOAuthScopes = null, string isAuthFromFile = null, string authFilePath = null, string configVersion = null, string kind = null)
+        public static SiteAuthSettings SiteAuthSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isEnabled = null, string runtimeVersion = null, UnauthenticatedClientAction? unauthenticatedClientAction = null, bool? isTokenStoreEnabled = null, IEnumerable<string> allowedExternalRedirectUrls = null, BuiltInAuthenticationProvider? defaultProvider = null, double? tokenRefreshExtensionHours = null, string clientId = null, string clientSecret = null, string clientSecretSettingName = null, string clientSecretCertificateThumbprintString = null, string issuer = null, bool? validateIssuer = null, IEnumerable<string> allowedAudiences = null, IEnumerable<string> additionalLoginParams = null, string aadClaimsAuthorization = null, string googleClientId = null, string googleClientSecret = null, string googleClientSecretSettingName = null, IEnumerable<string> googleOAuthScopes = null, string facebookAppId = null, string facebookAppSecret = null, string facebookAppSecretSettingName = null, IEnumerable<string> facebookOAuthScopes = null, string gitHubClientId = null, string gitHubClientSecret = null, string gitHubClientSecretSettingName = null, IEnumerable<string> gitHubOAuthScopes = null, string twitterConsumerKey = null, string twitterConsumerSecret = null, string twitterConsumerSecretSettingName = null, string microsoftAccountClientId = null, string microsoftAccountClientSecret = null, string microsoftAccountClientSecretSettingName = null, IEnumerable<string> microsoftAccountOAuthScopes = null, string isAuthFromFile = null, string authFilePath = null, string configVersion = null, string kind = null)
         {
             allowedExternalRedirectUrls ??= new List<string>();
             allowedAudiences ??= new List<string>();
@@ -3875,7 +3875,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="login"> The configuration settings of the login flow of users using App Service Authentication/Authorization. </param>
         /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </param>
         /// <returns> A new <see cref="Models.SiteAuthSettingsV2"/> instance for mocking. </returns>
-        public static SiteAuthSettingsV2 SiteAuthSettingsV2(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, AuthPlatform platform = null, GlobalValidation globalValidation = null, AppServiceIdentityProviders identityProviders = null, WebAppLoginInfo login = null, AppServiceHttpSettings httpSettings = null)
+        public static SiteAuthSettingsV2 SiteAuthSettingsV2(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AuthPlatform platform = null, GlobalValidation globalValidation = null, AppServiceIdentityProviders identityProviders = null, WebAppLoginInfo login = null, AppServiceHttpSettings httpSettings = null)
         {
             return new SiteAuthSettingsV2(
                 id,
@@ -3899,7 +3899,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> Azure storage accounts. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AzureStoragePropertyDictionary"/> instance for mocking. </returns>
-        public static AzureStoragePropertyDictionary AzureStoragePropertyDictionary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, AppServiceStorageAccessInfo> properties = null, string kind = null)
+        public static AzureStoragePropertyDictionary AzureStoragePropertyDictionary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, AppServiceStorageAccessInfo> properties = null, string kind = null)
         {
             properties ??= new Dictionary<string, AppServiceStorageAccessInfo>();
 
@@ -3929,7 +3929,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="source"></param>
         /// <param name="activeVersion"></param>
         /// <returns> A new <see cref="AppService.ApiKeyVaultReferenceData"/> instance for mocking. </returns>
-        public static ApiKeyVaultReferenceData ApiKeyVaultReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string reference = null, ResolveStatus? status = null, string vaultName = null, string secretName = null, string secretVersion = null, ManagedServiceIdentity identity = null, string details = null, ApiKVReferencePropertiesSource? source = null, string activeVersion = null)
+        public static ApiKeyVaultReferenceData ApiKeyVaultReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string reference = null, ResolveStatus? status = null, string vaultName = null, string secretName = null, string secretVersion = null, ManagedServiceIdentity identity = null, string details = null, ApiKVReferencePropertiesSource? source = null, string activeVersion = null)
         {
             return new ApiKeyVaultReferenceData(
                 id,
@@ -3957,7 +3957,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> Connection strings. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.ConnectionStringDictionary"/> instance for mocking. </returns>
-        public static ConnectionStringDictionary ConnectionStringDictionary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, ConnStringValueTypePair> properties = null, string kind = null)
+        public static ConnectionStringDictionary ConnectionStringDictionary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, ConnStringValueTypePair> properties = null, string kind = null)
         {
             properties ??= new Dictionary<string, ConnStringValueTypePair>();
 
@@ -3982,7 +3982,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isFailedRequestsTracingEnabled"> Failed requests tracing configuration. </param>
         /// <param name="isDetailedErrorMessagesEnabled"> Detailed error messages configuration. </param>
         /// <returns> A new <see cref="AppService.SiteLogsConfigData"/> instance for mocking. </returns>
-        public static SiteLogsConfigData SiteLogsConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, ApplicationLogsConfig applicationLogs = null, AppServiceHttpLogsConfig httpLogs = null, bool? isFailedRequestsTracingEnabled = null, bool? isDetailedErrorMessagesEnabled = null)
+        public static SiteLogsConfigData SiteLogsConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ApplicationLogsConfig applicationLogs = null, AppServiceHttpLogsConfig httpLogs = null, bool? isFailedRequestsTracingEnabled = null, bool? isDetailedErrorMessagesEnabled = null)
         {
             return new SiteLogsConfigData(
                 id,
@@ -4007,7 +4007,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="appSettingNames"> List of application settings names. </param>
         /// <param name="azureStorageConfigNames"> List of external Azure storage account identifiers. </param>
         /// <returns> A new <see cref="AppService.SlotConfigNamesResourceData"/> instance for mocking. </returns>
-        public static SlotConfigNamesResourceData SlotConfigNamesResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, IEnumerable<string> connectionStringNames = null, IEnumerable<string> appSettingNames = null, IEnumerable<string> azureStorageConfigNames = null)
+        public static SlotConfigNamesResourceData SlotConfigNamesResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, IEnumerable<string> connectionStringNames = null, IEnumerable<string> appSettingNames = null, IEnumerable<string> azureStorageConfigNames = null)
         {
             connectionStringNames ??= new List<string>();
             appSettingNames ??= new List<string>();
@@ -4034,7 +4034,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="snapshotId"> The id of the snapshot. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SiteConfigurationSnapshotInfo"/> instance for mocking. </returns>
-        public static SiteConfigurationSnapshotInfo SiteConfigurationSnapshotInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DateTimeOffset? snapshotTakenOn = null, int? snapshotId = null, string kind = null)
+        public static SiteConfigurationSnapshotInfo SiteConfigurationSnapshotInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? snapshotTakenOn = null, int? snapshotId = null, string kind = null)
         {
             return new SiteConfigurationSnapshotInfo(
                 id,
@@ -4064,7 +4064,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isUsingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
         /// <returns> A new <see cref="AppService.ContinuousWebJobData"/> instance for mocking. </returns>
-        public static ContinuousWebJobData ContinuousWebJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, ContinuousWebJobStatus? status = null, string detailedStatus = null, Uri logUri = null, string runCommand = null, Uri uri = null, Uri extraInfoUri = null, WebJobType? webJobType = null, string error = null, bool? isUsingSdk = null, IDictionary<string, BinaryData> settings = null)
+        public static ContinuousWebJobData ContinuousWebJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ContinuousWebJobStatus? status = null, string detailedStatus = null, Uri logUri = null, string runCommand = null, Uri uri = null, Uri extraInfoUri = null, WebJobType? webJobType = null, string error = null, bool? isUsingSdk = null, IDictionary<string, BinaryData> settings = null)
         {
             settings ??= new Dictionary<string, BinaryData>();
 
@@ -4101,7 +4101,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="failedInstancesLogs"> List of URLs pointing to logs for instances which failed to provision. </param>
         /// <param name="errors"> List of errors. </param>
         /// <returns> A new <see cref="Models.CsmDeploymentStatus"/> instance for mocking. </returns>
-        public static CsmDeploymentStatus CsmDeploymentStatus(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string deploymentId = null, DeploymentBuildStatus? status = null, int? numberOfInstancesInProgress = null, int? numberOfInstancesSuccessful = null, int? numberOfInstancesFailed = null, IEnumerable<string> failedInstancesLogs = null, IEnumerable<ResponseError> errors = null)
+        public static CsmDeploymentStatus CsmDeploymentStatus(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string deploymentId = null, DeploymentBuildStatus? status = null, int? numberOfInstancesInProgress = null, int? numberOfInstancesSuccessful = null, int? numberOfInstancesFailed = null, IEnumerable<string> failedInstancesLogs = null, IEnumerable<ResponseError> errors = null)
         {
             failedInstancesLogs ??= new List<string>();
             errors ??= new List<ResponseError>();
@@ -4138,7 +4138,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isActive"> True if deployment is currently active, false if completed and null if not started. </param>
         /// <param name="details"> Details on deployment. </param>
         /// <returns> A new <see cref="AppService.WebAppDeploymentData"/> instance for mocking. </returns>
-        public static WebAppDeploymentData WebAppDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, int? status = null, string message = null, string author = null, string deployer = null, string authorEmail = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, bool? isActive = null, string details = null)
+        public static WebAppDeploymentData WebAppDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, int? status = null, string message = null, string author = null, string deployer = null, string authorEmail = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, bool? isActive = null, string details = null)
         {
             return new WebAppDeploymentData(
                 id,
@@ -4166,7 +4166,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="description"> Description of the diagnostic category. </param>
         /// <returns> A new <see cref="AppService.DiagnosticCategoryData"/> instance for mocking. </returns>
-        public static DiagnosticCategoryData DiagnosticCategoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string description = null)
+        public static DiagnosticCategoryData DiagnosticCategoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string description = null)
         {
             return new DiagnosticCategoryData(
                 id,
@@ -4186,7 +4186,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="description"> Description of the Analysis. </param>
         /// <returns> A new <see cref="AppService.WebSiteAnalysisDefinitionData"/> instance for mocking. </returns>
-        public static WebSiteAnalysisDefinitionData WebSiteAnalysisDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string description = null)
+        public static WebSiteAnalysisDefinitionData WebSiteAnalysisDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string description = null)
         {
             return new WebSiteAnalysisDefinitionData(
                 id,
@@ -4210,7 +4210,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="nonCorrelatedDetectors"> Data by each detector for detectors that did not corelate. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.DiagnosticAnalysis"/> instance for mocking. </returns>
-        public static DiagnosticAnalysis DiagnosticAnalysis(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<AbnormalTimePeriod> abnormalTimePeriods = null, IEnumerable<AnalysisDetectorEvidences> payload = null, IEnumerable<DetectorDefinition> nonCorrelatedDetectors = null, string kind = null)
+        public static DiagnosticAnalysis DiagnosticAnalysis(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<AbnormalTimePeriod> abnormalTimePeriods = null, IEnumerable<AnalysisDetectorEvidences> payload = null, IEnumerable<DetectorDefinition> nonCorrelatedDetectors = null, string kind = null)
         {
             abnormalTimePeriods ??= new List<AbnormalTimePeriod>();
             payload ??= new List<AnalysisDetectorEvidences>();
@@ -4252,7 +4252,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="rank"> Detector Rank. </param>
         /// <param name="isEnabled"> Flag representing whether detector is enabled or not. </param>
         /// <returns> A new <see cref="AppService.DetectorDefinitionResourceData"/> instance for mocking. </returns>
-        public static DetectorDefinitionResourceData DetectorDefinitionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string displayName = null, string description = null, double? rank = null, bool? isEnabled = null)
+        public static DetectorDefinitionResourceData DetectorDefinitionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string displayName = null, string description = null, double? rank = null, bool? isEnabled = null)
         {
             return new DetectorDefinitionResourceData(
                 id,
@@ -4282,7 +4282,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="dataSource"> Meta Data. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.DiagnosticDetectorResponse"/> instance for mocking. </returns>
-        public static DiagnosticDetectorResponse DiagnosticDetectorResponse(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, bool? issueDetected = null, DetectorDefinition detectorDefinition = null, IEnumerable<DiagnosticMetricSet> metrics = null, IEnumerable<DetectorAbnormalTimePeriod> abnormalTimePeriods = null, IEnumerable<IList<AppServiceNameValuePair>> data = null, DetectorDataSource dataSource = null, string kind = null)
+        public static DiagnosticDetectorResponse DiagnosticDetectorResponse(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, bool? issueDetected = null, DetectorDefinition detectorDefinition = null, IEnumerable<DiagnosticMetricSet> metrics = null, IEnumerable<DetectorAbnormalTimePeriod> abnormalTimePeriods = null, IEnumerable<IList<AppServiceNameValuePair>> data = null, DetectorDataSource dataSource = null, string kind = null)
         {
             metrics ??= new List<DiagnosticMetricSet>();
             abnormalTimePeriods ??= new List<DetectorAbnormalTimePeriod>();
@@ -4317,7 +4317,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="endOn"> End time of deploy operation. </param>
         /// <param name="isComplete"> Whether the deployment operation has completed. </param>
         /// <returns> A new <see cref="AppService.MSDeployStatusData"/> instance for mocking. </returns>
-        public static MSDeployStatusData MSDeployStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string deployer = null, MSDeployProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, bool? isComplete = null)
+        public static MSDeployStatusData MSDeployStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string deployer = null, MSDeployProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, bool? isComplete = null)
         {
             return new MSDeployStatusData(
                 id,
@@ -4355,7 +4355,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppMSDeploy"/> instance for mocking. </returns>
-        public static WebAppMSDeploy WebAppMSDeploy(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, Uri packageUri = null, string connectionString = null, string dbType = null, Uri setParametersXmlFileUri = null, IDictionary<string, string> setParameters = null, bool? skipAppData = null, bool? isAppOffline = null, string kind = null)
+        public static WebAppMSDeploy WebAppMSDeploy(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri packageUri = null, string connectionString = null, string dbType = null, Uri setParametersXmlFileUri = null, IDictionary<string, string> setParameters = null, bool? skipAppData = null, bool? isAppOffline = null, string kind = null)
         {
             setParameters ??= new Dictionary<string, string>();
 
@@ -4383,7 +4383,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="entries"> List of log entry messages. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppMSDeployLog"/> instance for mocking. </returns>
-        public static WebAppMSDeployLog WebAppMSDeployLog(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<WebAppMSDeployLogEntry> entries = null, string kind = null)
+        public static WebAppMSDeployLog WebAppMSDeployLog(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<WebAppMSDeployLogEntry> entries = null, string kind = null)
         {
             entries ??= new List<WebAppMSDeployLogEntry>();
 
@@ -4427,7 +4427,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="language"> The function language. </param>
         /// <param name="isDisabled"> Gets or sets a value indicating whether the function is disabled. </param>
         /// <returns> A new <see cref="AppService.FunctionEnvelopeData"/> instance for mocking. </returns>
-        public static FunctionEnvelopeData FunctionEnvelopeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string functionAppId = null, string scriptRootPathHref = null, string scriptHref = null, string configHref = null, string testDataHref = null, string secretsFileHref = null, string href = null, BinaryData config = null, IDictionary<string, string> files = null, string testData = null, string invokeUrlTemplate = null, string language = null, bool? isDisabled = null)
+        public static FunctionEnvelopeData FunctionEnvelopeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string functionAppId = null, string scriptRootPathHref = null, string scriptHref = null, string configHref = null, string testDataHref = null, string secretsFileHref = null, string href = null, BinaryData config = null, IDictionary<string, string> files = null, string testData = null, string invokeUrlTemplate = null, string language = null, bool? isDisabled = null)
         {
             files ??= new Dictionary<string, string>();
 
@@ -4491,7 +4491,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
         /// <returns> A new <see cref="AppService.HostNameBindingData"/> instance for mocking. </returns>
-        public static HostNameBindingData HostNameBindingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string siteName = null, string domainId = null, string azureResourceName = null, AppServiceResourceType? azureResourceType = null, CustomHostNameDnsRecordType? customHostNameDnsRecordType = null, AppServiceHostNameType? hostNameType = null, HostNameBindingSslState? sslState = null, string thumbprintString = null, string virtualIP = null)
+        public static HostNameBindingData HostNameBindingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string siteName = null, string domainId = null, string azureResourceName = null, AppServiceResourceType? azureResourceType = null, CustomHostNameDnsRecordType? customHostNameDnsRecordType = null, AppServiceHostNameType? hostNameType = null, HostNameBindingSslState? sslState = null, string thumbprintString = null, string virtualIP = null)
         {
             return new HostNameBindingData(
                 id,
@@ -4529,7 +4529,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="outputs"> Gets the outputs. </param>
         /// <param name="response"> Gets the response of the flow run. </param>
         /// <returns> A new <see cref="AppService.WorkflowRunData"/> instance for mocking. </returns>
-        public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DateTimeOffset? waitEndOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string correlationId = null, string correlationClientTrackingId = null, WorkflowResourceReference workflow = null, WorkflowRunTrigger trigger = null, IReadOnlyDictionary<string, WorkflowOutputContent> outputs = null, WorkflowRunTrigger response = null)
+        public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? waitEndOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string correlationId = null, string correlationClientTrackingId = null, WorkflowResourceReference workflow = null, WorkflowRunTrigger trigger = null, IReadOnlyDictionary<string, WorkflowOutputContent> outputs = null, WorkflowRunTrigger response = null)
         {
             outputs ??= new Dictionary<string, WorkflowOutputContent>();
 
@@ -4661,7 +4661,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
         /// <param name="retryHistory"> Gets the retry histories. </param>
         /// <returns> A new <see cref="AppService.WorkflowRunActionData"/> instance for mocking. </returns>
-        public static WorkflowRunActionData WorkflowRunActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, WebAppRunActionCorrelation correlation = null, WebAppContentLink inputsLink = null, WebAppContentLink outputsLink = null, BinaryData trackedProperties = null, IEnumerable<WebAppRetryHistory> retryHistory = null)
+        public static WorkflowRunActionData WorkflowRunActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, WebAppRunActionCorrelation correlation = null, WebAppContentLink inputsLink = null, WebAppContentLink outputsLink = null, BinaryData trackedProperties = null, IEnumerable<WebAppRetryHistory> retryHistory = null)
         {
             retryHistory ??= new List<WebAppRetryHistory>();
 
@@ -4760,7 +4760,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="iterationCount"></param>
         /// <param name="repetitionIndexes"> The repetition indexes. </param>
         /// <returns> A new <see cref="AppService.WorkflowRunActionRepetitionDefinitionData"/> instance for mocking. </returns>
-        public static WorkflowRunActionRepetitionDefinitionData WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WebAppRunActionCorrelation correlation = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, BinaryData inputs = null, WebAppContentLink inputsLink = null, BinaryData outputs = null, WebAppContentLink outputsLink = null, BinaryData trackedProperties = null, IEnumerable<WebAppRetryHistory> retryHistory = null, int? iterationCount = null, IEnumerable<WorkflowRunActionRepetitionIndex> repetitionIndexes = null)
+        public static WorkflowRunActionRepetitionDefinitionData WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WebAppRunActionCorrelation correlation = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, BinaryData inputs = null, WebAppContentLink inputsLink = null, BinaryData outputs = null, WebAppContentLink outputsLink = null, BinaryData trackedProperties = null, IEnumerable<WebAppRetryHistory> retryHistory = null, int? iterationCount = null, IEnumerable<WorkflowRunActionRepetitionIndex> repetitionIndexes = null)
         {
             tags ??= new Dictionary<string, string>();
             retryHistory ??= new List<WebAppRetryHistory>();
@@ -4800,7 +4800,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The request history properties. </param>
         /// <returns> A new <see cref="AppService.WebAppRequestHistoryData"/> instance for mocking. </returns>
-        public static WebAppRequestHistoryData WebAppRequestHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WebAppRequestHistoryProperties properties = null)
+        public static WebAppRequestHistoryData WebAppRequestHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WebAppRequestHistoryProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -4830,7 +4830,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="recurrence"> Gets the workflow trigger recurrence. </param>
         /// <param name="workflow"> Gets the reference to workflow. </param>
         /// <returns> A new <see cref="AppService.WorkflowTriggerData"/> instance for mocking. </returns>
-        public static WorkflowTriggerData WorkflowTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, WorkflowTriggerProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, WorkflowStatus? status = null, DateTimeOffset? lastExecutionOn = null, DateTimeOffset? nextExecutionOn = null, WorkflowTriggerRecurrence recurrence = null, WorkflowResourceReference workflow = null)
+        public static WorkflowTriggerData WorkflowTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowTriggerProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, WorkflowStatus? status = null, DateTimeOffset? lastExecutionOn = null, DateTimeOffset? nextExecutionOn = null, WorkflowTriggerRecurrence recurrence = null, WorkflowResourceReference workflow = null)
         {
             return new WorkflowTriggerData(
                 id,
@@ -4920,7 +4920,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isFired"> The value indicating whether trigger was fired. </param>
         /// <param name="run"> Gets the reference to workflow run. </param>
         /// <returns> A new <see cref="AppService.WorkflowTriggerHistoryData"/> instance for mocking. </returns>
-        public static WorkflowTriggerHistoryData WorkflowTriggerHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? scheduledOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, string correlationClientTrackingId = null, WebAppContentLink inputsLink = null, WebAppContentLink outputsLink = null, bool? isFired = null, WorkflowResourceReference run = null)
+        public static WorkflowTriggerHistoryData WorkflowTriggerHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? scheduledOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, string correlationClientTrackingId = null, WebAppContentLink inputsLink = null, WebAppContentLink outputsLink = null, bool? isFired = null, WorkflowResourceReference run = null)
         {
             return new WorkflowTriggerHistoryData(
                 id,
@@ -5014,7 +5014,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="parameters"> The parameters. </param>
         /// <param name="kind"> The workflow kind. </param>
         /// <returns> A new <see cref="Models.WorkflowData"/> instance for mocking. </returns>
-        public static WorkflowData WorkflowData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, WorkflowResourceReference integrationAccount = null, WorkflowResourceReference integrationServiceEnvironment = null, BinaryData definition = null, IDictionary<string, WorkflowContent> parameters = null, AppServiceKind? kind = null)
+        public static WorkflowData WorkflowData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, WorkflowResourceReference integrationAccount = null, WorkflowResourceReference integrationServiceEnvironment = null, BinaryData definition = null, IDictionary<string, WorkflowContent> parameters = null, AppServiceKind? kind = null)
         {
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, WorkflowContent>();
@@ -5073,7 +5073,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
         /// <returns> A new <see cref="AppService.WorkflowVersionData"/> instance for mocking. </returns>
-        public static WorkflowVersionData WorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, WorkflowResourceReference integrationAccount = null, BinaryData definition = null, IDictionary<string, WorkflowContent> parameters = null)
+        public static WorkflowVersionData WorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, WorkflowResourceReference integrationAccount = null, BinaryData definition = null, IDictionary<string, WorkflowContent> parameters = null)
         {
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, WorkflowContent>();
@@ -5113,7 +5113,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="port"></param>
         /// <param name="biztalkUri"></param>
         /// <returns> A new <see cref="AppService.RelayServiceConnectionEntityData"/> instance for mocking. </returns>
-        public static RelayServiceConnectionEntityData RelayServiceConnectionEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string entityName = null, string entityConnectionString = null, string resourceConnectionString = null, string hostname = null, int? port = null, Uri biztalkUri = null)
+        public static RelayServiceConnectionEntityData RelayServiceConnectionEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string entityName = null, string entityConnectionString = null, string resourceConnectionString = null, string hostname = null, int? port = null, Uri biztalkUri = null)
         {
             return new RelayServiceConnectionEntityData(
                 id,
@@ -5144,7 +5144,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
         /// <param name="physicalZone"> The physical zone that the instance is in. </param>
         /// <returns> A new <see cref="AppService.WebSiteInstanceStatusData"/> instance for mocking. </returns>
-        public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, SiteRuntimeState? state = null, Uri statusUri = null, Uri detectorUri = null, Uri consoleUri = null, string healthCheckUrlString = null, IDictionary<string, ContainerInfo> containers = null, string physicalZone = null)
+        public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, SiteRuntimeState? state = null, Uri statusUri = null, Uri detectorUri = null, Uri consoleUri = null, string healthCheckUrlString = null, IDictionary<string, ContainerInfo> containers = null, string physicalZone = null)
         {
             containers ??= new Dictionary<string, ContainerInfo>();
 
@@ -5207,7 +5207,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isWebjob"> Is this a Web Job?. </param>
         /// <param name="description"> Description of process. </param>
         /// <returns> A new <see cref="AppService.ProcessInfoData"/> instance for mocking. </returns>
-        public static ProcessInfoData ProcessInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, int? identifier = null, string deploymentName = null, string href = null, string minidump = null, bool? isProfileRunning = null, bool? isIisProfileRunning = null, double? iisProfileTimeoutInSeconds = null, string parent = null, IEnumerable<string> children = null, IEnumerable<WebAppProcessThreadInfo> processThreads = null, IEnumerable<string> openFileHandles = null, IEnumerable<ProcessModuleInfoData> modules = null, string fileName = null, string commandLine = null, string userName = null, int? handleCount = null, int? moduleCount = null, int? threadCount = null, DateTimeOffset? startOn = null, string totalCpuTime = null, string userCpuTime = null, string privilegedCpuTime = null, long? workingSet = null, long? peakWorkingSet = null, long? privateMemory = null, long? virtualMemory = null, long? peakVirtualMemory = null, long? pagedSystemMemory = null, long? nonPagedSystemMemory = null, long? pagedMemory = null, long? peakPagedMemory = null, DateTimeOffset? timeStamp = null, IDictionary<string, string> environmentVariables = null, bool? isScmSite = null, bool? isWebjob = null, string description = null)
+        public static ProcessInfoData ProcessInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, int? identifier = null, string deploymentName = null, string href = null, string minidump = null, bool? isProfileRunning = null, bool? isIisProfileRunning = null, double? iisProfileTimeoutInSeconds = null, string parent = null, IEnumerable<string> children = null, IEnumerable<WebAppProcessThreadInfo> processThreads = null, IEnumerable<string> openFileHandles = null, IEnumerable<ProcessModuleInfoData> modules = null, string fileName = null, string commandLine = null, string userName = null, int? handleCount = null, int? moduleCount = null, int? threadCount = null, DateTimeOffset? startOn = null, string totalCpuTime = null, string userCpuTime = null, string privilegedCpuTime = null, long? workingSet = null, long? peakWorkingSet = null, long? privateMemory = null, long? virtualMemory = null, long? peakVirtualMemory = null, long? pagedSystemMemory = null, long? nonPagedSystemMemory = null, long? pagedMemory = null, long? peakPagedMemory = null, DateTimeOffset? timeStamp = null, IDictionary<string, string> environmentVariables = null, bool? isScmSite = null, bool? isWebjob = null, string description = null)
         {
             children ??= new List<string>();
             processThreads ??= new List<WebAppProcessThreadInfo>();
@@ -5279,7 +5279,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="waitReason"> Wait reason. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppProcessThreadInfo"/> instance for mocking. </returns>
-        public static WebAppProcessThreadInfo WebAppProcessThreadInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, int? identifier = null, string href = null, string process = null, string startAddress = null, int? currentPriority = null, string priorityLevel = null, int? basePriority = null, DateTimeOffset? startOn = null, string totalProcessorTime = null, string userProcessorTime = null, string state = null, string waitReason = null, string kind = null)
+        public static WebAppProcessThreadInfo WebAppProcessThreadInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? identifier = null, string href = null, string process = null, string startAddress = null, int? currentPriority = null, string priorityLevel = null, int? basePriority = null, DateTimeOffset? startOn = null, string totalProcessorTime = null, string userProcessorTime = null, string state = null, string waitReason = null, string kind = null)
         {
             return new WebAppProcessThreadInfo(
                 id,
@@ -5320,7 +5320,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isDebug"> Is debug?. </param>
         /// <param name="language"> Module language (locale). </param>
         /// <returns> A new <see cref="AppService.ProcessModuleInfoData"/> instance for mocking. </returns>
-        public static ProcessModuleInfoData ProcessModuleInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string baseAddress = null, string fileName = null, string href = null, string filePath = null, int? moduleMemorySize = null, string fileVersion = null, string fileDescription = null, string product = null, string productVersion = null, bool? isDebug = null, string language = null)
+        public static ProcessModuleInfoData ProcessModuleInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string baseAddress = null, string fileName = null, string href = null, string filePath = null, int? moduleMemorySize = null, string fileVersion = null, string fileDescription = null, string product = null, string productVersion = null, bool? isDebug = null, string language = null)
         {
             return new ProcessModuleInfoData(
                 id,
@@ -5378,7 +5378,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> The resource kind. </param>
         /// <param name="location"> The resource location. </param>
         /// <returns> A new <see cref="AppService.WorkflowEnvelopeData"/> instance for mocking. </returns>
-        public static WorkflowEnvelopeData WorkflowEnvelopeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, WorkflowEnvelopeProperties properties = null, string kind = null, AzureLocation? location = null)
+        public static WorkflowEnvelopeData WorkflowEnvelopeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowEnvelopeProperties properties = null, string kind = null, AzureLocation? location = null)
         {
             return new WorkflowEnvelopeData(
                 id,
@@ -5402,7 +5402,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="blockWriteAccessToSite"> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StorageMigrationContent"/> instance for mocking. </returns>
-        public static StorageMigrationContent StorageMigrationContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string azurefilesConnectionString = null, string azurefilesShare = null, bool? switchSiteAfterMigration = null, bool? blockWriteAccessToSite = null, string kind = null)
+        public static StorageMigrationContent StorageMigrationContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string azurefilesConnectionString = null, string azurefilesShare = null, bool? switchSiteAfterMigration = null, bool? blockWriteAccessToSite = null, string kind = null)
         {
             return new StorageMigrationContent(
                 id,
@@ -5425,7 +5425,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="operationId"> When server starts the migration process, it will return an operation ID identifying that particular migration operation. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StorageMigrationResult"/> instance for mocking. </returns>
-        public static StorageMigrationResult StorageMigrationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string operationId = null, string kind = null)
+        public static StorageMigrationResult StorageMigrationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string operationId = null, string kind = null)
         {
             return new StorageMigrationResult(
                 id,
@@ -5446,7 +5446,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="migrationType"> The type of migration operation to be done. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlContent"/> instance for mocking. </returns>
-        public static MigrateMySqlContent MigrateMySqlContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string connectionString = null, MySqlMigrationType? migrationType = null, string kind = null)
+        public static MigrateMySqlContent MigrateMySqlContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string connectionString = null, MySqlMigrationType? migrationType = null, string kind = null)
         {
             return new MigrateMySqlContent(
                 id,
@@ -5469,7 +5469,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="operationId"> Operation ID for the migration task. </param>
         /// <param name="isLocalMySqlEnabled"> True if the web app has in app MySql enabled. </param>
         /// <returns> A new <see cref="AppService.MigrateMySqlStatusData"/> instance for mocking. </returns>
-        public static MigrateMySqlStatusData MigrateMySqlStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, AppServiceOperationStatus? migrationOperationStatus = null, string operationId = null, bool? isLocalMySqlEnabled = null)
+        public static MigrateMySqlStatusData MigrateMySqlStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AppServiceOperationStatus? migrationOperationStatus = null, string operationId = null, bool? isLocalMySqlEnabled = null)
         {
             return new MigrateMySqlStatusData(
                 id,
@@ -5492,7 +5492,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="subnetResourceId"> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
         /// <param name="isSwiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
         /// <returns> A new <see cref="AppService.SwiftVirtualNetworkData"/> instance for mocking. </returns>
-        public static SwiftVirtualNetworkData SwiftVirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, ResourceIdentifier subnetResourceId = null, bool? isSwiftSupported = null)
+        public static SwiftVirtualNetworkData SwiftVirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ResourceIdentifier subnetResourceId = null, bool? isSwiftSupported = null)
         {
             return new SwiftVirtualNetworkData(
                 id,
@@ -5516,7 +5516,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="hybridConnections"> The Hybrid Connections summary view. </param>
         /// <param name="hybridConnectionsV2"> The Hybrid Connection V2 (Service Bus) view. </param>
         /// <returns> A new <see cref="AppService.NetworkFeatureData"/> instance for mocking. </returns>
-        public static NetworkFeatureData NetworkFeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string virtualNetworkName = null, AppServiceVirtualNetworkProperties virtualNetworkConnection = null, IEnumerable<RelayServiceConnectionEntityData> hybridConnections = null, IEnumerable<HybridConnectionData> hybridConnectionsV2 = null)
+        public static NetworkFeatureData NetworkFeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string virtualNetworkName = null, AppServiceVirtualNetworkProperties virtualNetworkConnection = null, IEnumerable<RelayServiceConnectionEntityData> hybridConnections = null, IEnumerable<HybridConnectionData> hybridConnectionsV2 = null)
         {
             hybridConnections ??= new List<RelayServiceConnectionEntityData>();
             hybridConnectionsV2 ??= new List<HybridConnectionData>();
@@ -5595,7 +5595,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="masterLogErrorsMaxLength"> Master log_errors_max_len setting. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SitePhpErrorLogFlag"/> instance for mocking. </returns>
-        public static SitePhpErrorLogFlag SitePhpErrorLogFlag(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string localLogErrors = null, string masterLogErrors = null, string localLogErrorsMaxLength = null, string masterLogErrorsMaxLength = null, string kind = null)
+        public static SitePhpErrorLogFlag SitePhpErrorLogFlag(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string localLogErrors = null, string masterLogErrors = null, string localLogErrorsMaxLength = null, string masterLogErrorsMaxLength = null, string kind = null)
         {
             return new SitePhpErrorLogFlag(
                 id,
@@ -5624,7 +5624,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
         /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
         /// <returns> A new <see cref="AppService.PremierAddOnData"/> instance for mocking. </returns>
-        public static PremierAddOnData PremierAddOnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, string sku = null, string product = null, string vendor = null, string marketplacePublisher = null, string marketplaceOffer = null)
+        public static PremierAddOnData PremierAddOnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, string sku = null, string product = null, string vendor = null, string marketplacePublisher = null, string marketplaceOffer = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -5656,7 +5656,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.PremierAddOnPatchResource"/> instance for mocking. </returns>
-        public static PremierAddOnPatchResource PremierAddOnPatchResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string sku = null, string product = null, string vendor = null, string marketplacePublisher = null, string marketplaceOffer = null, string kind = null)
+        public static PremierAddOnPatchResource PremierAddOnPatchResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string sku = null, string product = null, string vendor = null, string marketplacePublisher = null, string marketplaceOffer = null, string kind = null)
         {
             return new PremierAddOnPatchResource(
                 id,
@@ -5681,7 +5681,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isEnabled"> Whether private access is enabled or not. </param>
         /// <param name="virtualNetworks"> The Virtual Networks (and subnets) allowed to access the site privately. </param>
         /// <returns> A new <see cref="AppService.PrivateAccessData"/> instance for mocking. </returns>
-        public static PrivateAccessData PrivateAccessData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, bool? isEnabled = null, IEnumerable<PrivateAccessVirtualNetwork> virtualNetworks = null)
+        public static PrivateAccessData PrivateAccessData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, bool? isEnabled = null, IEnumerable<PrivateAccessVirtualNetwork> virtualNetworks = null)
         {
             virtualNetworks ??= new List<PrivateAccessVirtualNetwork>();
 
@@ -5706,7 +5706,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
         /// <param name="thumbprintString"> Certificate Thumbprint. </param>
         /// <returns> A new <see cref="AppService.PublicCertificateData"/> instance for mocking. </returns>
-        public static PublicCertificateData PublicCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, byte[] blob = null, PublicCertificateLocation? publicCertificateLocation = null, string thumbprintString = null)
+        public static PublicCertificateData PublicCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, byte[] blob = null, PublicCertificateLocation? publicCertificateLocation = null, string thumbprintString = null)
         {
             return new PublicCertificateData(
                 id,
@@ -5737,7 +5737,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.DeletedAppRestoreContent"/> instance for mocking. </returns>
-        public static DeletedAppRestoreContent DeletedAppRestoreContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string deletedSiteId = null, bool? recoverConfiguration = null, string snapshotTime = null, bool? useDRSecondary = null, string kind = null)
+        public static DeletedAppRestoreContent DeletedAppRestoreContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deletedSiteId = null, bool? recoverConfiguration = null, string snapshotTime = null, bool? useDRSecondary = null, string kind = null)
         {
             return new DeletedAppRestoreContent(
                 id,
@@ -5771,7 +5771,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SnapshotRestoreRequest"/> instance for mocking. </returns>
-        public static SnapshotRestoreRequest SnapshotRestoreRequest(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string snapshotTime = null, SnapshotRecoverySource recoverySource = null, bool? canOverwrite = null, bool? recoverConfiguration = null, bool? ignoreConflictingHostNames = null, bool? useDRSecondary = null, string kind = null)
+        public static SnapshotRestoreRequest SnapshotRestoreRequest(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string snapshotTime = null, SnapshotRecoverySource recoverySource = null, bool? canOverwrite = null, bool? recoverConfiguration = null, bool? ignoreConflictingHostNames = null, bool? useDRSecondary = null, string kind = null)
         {
             return new SnapshotRestoreRequest(
                 id,
@@ -5808,7 +5808,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="inheritAppSettingsAndConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="environmentVariables"> List of environment variables. </param>
         /// <returns> A new <see cref="AppService.SiteContainerData"/> instance for mocking. </returns>
-        public static SiteContainerData SiteContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string image = null, string targetPort = null, bool? isMain = null, string startUpCommand = null, SiteContainerAuthType? authType = null, string userName = null, string passwordSecret = null, string userManagedIdentityClientId = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, IEnumerable<SiteContainerVolumeMount> volumeMounts = null, bool? inheritAppSettingsAndConnectionStrings = null, IEnumerable<WebAppEnvironmentVariable> environmentVariables = null)
+        public static SiteContainerData SiteContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string image = null, string targetPort = null, bool? isMain = null, string startUpCommand = null, SiteContainerAuthType? authType = null, string userName = null, string passwordSecret = null, string userManagedIdentityClientId = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, IEnumerable<SiteContainerVolumeMount> volumeMounts = null, bool? inheritAppSettingsAndConnectionStrings = null, IEnumerable<WebAppEnvironmentVariable> environmentVariables = null)
         {
             volumeMounts ??= new List<SiteContainerVolumeMount>();
             environmentVariables ??= new List<WebAppEnvironmentVariable>();
@@ -5862,7 +5862,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="comment"> Site Extension comment. </param>
         /// <returns> A new <see cref="AppService.SiteExtensionInfoData"/> instance for mocking. </returns>
-        public static SiteExtensionInfoData SiteExtensionInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string extensionId = null, string title = null, SiteExtensionType? extensionType = null, string summary = null, string description = null, string version = null, Uri extensionUri = null, Uri projectUri = null, Uri iconUri = null, Uri licenseUri = null, Uri feedUri = null, IEnumerable<string> authors = null, string installerCommandLineParams = null, DateTimeOffset? publishedOn = null, int? downloadCount = null, bool? localIsLatestVersion = null, string localPath = null, DateTimeOffset? installedOn = null, string provisioningState = null, string comment = null)
+        public static SiteExtensionInfoData SiteExtensionInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string extensionId = null, string title = null, SiteExtensionType? extensionType = null, string summary = null, string description = null, string version = null, Uri extensionUri = null, Uri projectUri = null, Uri iconUri = null, Uri licenseUri = null, Uri feedUri = null, IEnumerable<string> authors = null, string installerCommandLineParams = null, DateTimeOffset? publishedOn = null, int? downloadCount = null, bool? localIsLatestVersion = null, string localPath = null, DateTimeOffset? installedOn = null, string provisioningState = null, string comment = null)
         {
             authors ??= new List<string>();
 
@@ -5909,7 +5909,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="description"> Description of the setting difference. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SlotDifference"/> instance for mocking. </returns>
-        public static SlotDifference SlotDifference(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string level = null, string settingType = null, string diffRule = null, string settingName = null, string valueInCurrentSlot = null, string valueInTargetSlot = null, string description = null, string kind = null)
+        public static SlotDifference SlotDifference(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string level = null, string settingType = null, string diffRule = null, string settingName = null, string valueInCurrentSlot = null, string valueInTargetSlot = null, string description = null, string kind = null)
         {
             return new SlotDifference(
                 id,
@@ -5941,7 +5941,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
         /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
         /// <returns> A new <see cref="AppService.SiteSourceControlData"/> instance for mocking. </returns>
-        public static SiteSourceControlData SiteSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, Uri repoUri = null, string branch = null, bool? isManualIntegration = null, bool? isGitHubAction = null, bool? isDeploymentRollbackEnabled = null, bool? isMercurial = null, GitHubActionConfiguration gitHubActionConfiguration = null)
+        public static SiteSourceControlData SiteSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, Uri repoUri = null, string branch = null, bool? isManualIntegration = null, bool? isGitHubAction = null, bool? isDeploymentRollbackEnabled = null, bool? isMercurial = null, GitHubActionConfiguration gitHubActionConfiguration = null)
         {
             return new SiteSourceControlData(
                 id,
@@ -5978,7 +5978,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="settings"> Job settings. </param>
         /// <returns> A new <see cref="AppService.TriggeredWebJobData"/> instance for mocking. </returns>
-        public static TriggeredWebJobData TriggeredWebJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, TriggeredJobRun latestRun = null, Uri historyUri = null, Uri schedulerLogsUri = null, string runCommand = null, Uri uri = null, Uri extraInfoUri = null, WebJobType? webJobType = null, string error = null, bool? isUsingSdk = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, IDictionary<string, BinaryData> settings = null)
+        public static TriggeredWebJobData TriggeredWebJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, TriggeredJobRun latestRun = null, Uri historyUri = null, Uri schedulerLogsUri = null, string runCommand = null, Uri uri = null, Uri extraInfoUri = null, WebJobType? webJobType = null, string error = null, bool? isUsingSdk = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, IDictionary<string, BinaryData> settings = null)
         {
             settings ??= new Dictionary<string, BinaryData>();
 
@@ -6011,7 +6011,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="runs"> List of triggered web job runs. </param>
         /// <returns> A new <see cref="AppService.TriggeredJobHistoryData"/> instance for mocking. </returns>
-        public static TriggeredJobHistoryData TriggeredJobHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, IEnumerable<TriggeredJobRun> runs = null)
+        public static TriggeredJobHistoryData TriggeredJobHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, IEnumerable<TriggeredJobRun> runs = null)
         {
             runs ??= new List<TriggeredJobRun>();
 
@@ -6039,7 +6039,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isUsingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
         /// <returns> A new <see cref="AppService.WebJobData"/> instance for mocking. </returns>
-        public static WebJobData WebJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string runCommand = null, Uri uri = null, Uri extraInfoUri = null, WebJobType? webJobType = null, string error = null, bool? isUsingSdk = null, IDictionary<string, BinaryData> settings = null)
+        public static WebJobData WebJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string runCommand = null, Uri uri = null, Uri extraInfoUri = null, WebJobType? webJobType = null, string error = null, bool? isUsingSdk = null, IDictionary<string, BinaryData> settings = null)
         {
             settings ??= new Dictionary<string, BinaryData>();
 
@@ -6084,7 +6084,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="databaseConnections"> Database connections for the static site. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSitePatch"/> instance for mocking. </returns>
-        public static StaticSitePatch StaticSitePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string defaultHostname = null, Uri repositoryUri = null, string branch = null, IEnumerable<string> customDomains = null, string repositoryToken = null, StaticSiteBuildProperties buildProperties = null, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, StagingEnvironmentPolicy? stagingEnvironmentPolicy = null, bool? allowConfigFileUpdates = null, StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = null, string provider = null, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = null, string publicNetworkAccess = null, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = null, string kind = null)
+        public static StaticSitePatch StaticSitePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string defaultHostname = null, Uri repositoryUri = null, string branch = null, IEnumerable<string> customDomains = null, string repositoryToken = null, StaticSiteBuildProperties buildProperties = null, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, StagingEnvironmentPolicy? stagingEnvironmentPolicy = null, bool? allowConfigFileUpdates = null, StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = null, string provider = null, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = null, string publicNetworkAccess = null, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = null, string kind = null)
         {
             customDomains ??= new List<string>();
             privateEndpointConnections ??= new List<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
@@ -6131,7 +6131,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="environments"> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </param>
         /// <param name="secretState"> State indicating if basic auth has a secret and what type it is. </param>
         /// <returns> A new <see cref="AppService.StaticSiteBasicAuthPropertyData"/> instance for mocking. </returns>
-        public static StaticSiteBasicAuthPropertyData StaticSiteBasicAuthPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string password = null, Uri secretUri = null, string applicableEnvironmentsMode = null, IEnumerable<string> environments = null, string secretState = null)
+        public static StaticSiteBasicAuthPropertyData StaticSiteBasicAuthPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string password = null, Uri secretUri = null, string applicableEnvironmentsMode = null, IEnumerable<string> environments = null, string secretState = null)
         {
             environments ??= new List<string>();
 
@@ -6166,7 +6166,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="linkedBackends"> Backends linked to the static side build. </param>
         /// <param name="databaseConnections"> Database connections for the static site build. </param>
         /// <returns> A new <see cref="AppService.StaticSiteBuildData"/> instance for mocking. </returns>
-        public static StaticSiteBuildData StaticSiteBuildData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string buildId = null, string sourceBranch = null, string pullRequestTitle = null, string hostname = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, StaticSiteBuildStatus? status = null, IEnumerable<StaticSiteUserProvidedFunctionAppProperties> userProvidedFunctionApps = null, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = null, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = null)
+        public static StaticSiteBuildData StaticSiteBuildData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string buildId = null, string sourceBranch = null, string pullRequestTitle = null, string hostname = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, StaticSiteBuildStatus? status = null, IEnumerable<StaticSiteUserProvidedFunctionAppProperties> userProvidedFunctionApps = null, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = null, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = null)
         {
             userProvidedFunctionApps ??= new List<StaticSiteUserProvidedFunctionAppProperties>();
             linkedBackends ??= new List<StaticSiteLinkedBackendInfo>();
@@ -6201,7 +6201,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteUserProvidedFunctionAppProperties"/> instance for mocking. </returns>
-        public static StaticSiteUserProvidedFunctionAppProperties StaticSiteUserProvidedFunctionAppProperties(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string functionAppResourceId = null, string functionAppRegion = null, DateTimeOffset? createdOn = null, string kind = null)
+        public static StaticSiteUserProvidedFunctionAppProperties StaticSiteUserProvidedFunctionAppProperties(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string functionAppResourceId = null, string functionAppRegion = null, DateTimeOffset? createdOn = null, string kind = null)
         {
             return new StaticSiteUserProvidedFunctionAppProperties(
                 id,
@@ -6227,7 +6227,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="region"> The region of the database resource. </param>
         /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
         /// <returns> A new <see cref="AppService.StaticSiteDatabaseConnectionData"/> instance for mocking. </returns>
-        public static StaticSiteDatabaseConnectionData StaticSiteDatabaseConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, ResourceIdentifier resourceId = null, string connectionIdentity = null, string connectionString = null, string region = null, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = null)
+        public static StaticSiteDatabaseConnectionData StaticSiteDatabaseConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ResourceIdentifier resourceId = null, string connectionIdentity = null, string connectionString = null, string region = null, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = null)
         {
             configurationFiles ??= new List<StaticSiteDatabaseConnectionConfigurationFileOverview>();
 
@@ -6254,7 +6254,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="triggerType"> The trigger type of the function. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteFunctionOverview"/> instance for mocking. </returns>
-        public static StaticSiteFunctionOverview StaticSiteFunctionOverview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string functionName = null, FunctionTriggerType? triggerType = null, string kind = null)
+        public static StaticSiteFunctionOverview StaticSiteFunctionOverview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string functionName = null, FunctionTriggerType? triggerType = null, string kind = null)
         {
             return new StaticSiteFunctionOverview(
                 id,
@@ -6278,7 +6278,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="createdOn"> The date and time on which the backend was linked to the static site. </param>
         /// <param name="provisioningState"> The provisioning state of the linking process. </param>
         /// <returns> A new <see cref="AppService.StaticSiteLinkedBackendData"/> instance for mocking. </returns>
-        public static StaticSiteLinkedBackendData StaticSiteLinkedBackendData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, ResourceIdentifier backendResourceId = null, string region = null, DateTimeOffset? createdOn = null, string provisioningState = null)
+        public static StaticSiteLinkedBackendData StaticSiteLinkedBackendData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ResourceIdentifier backendResourceId = null, string region = null, DateTimeOffset? createdOn = null, string provisioningState = null)
         {
             return new StaticSiteLinkedBackendData(
                 id,
@@ -6305,7 +6305,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="functionLanguage"> The language of the api content, if it exists. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteZipDeployment"/> instance for mocking. </returns>
-        public static StaticSiteZipDeployment StaticSiteZipDeployment(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, Uri appZipUri = null, Uri apiZipUri = null, string deploymentTitle = null, string provider = null, string functionLanguage = null, string kind = null)
+        public static StaticSiteZipDeployment StaticSiteZipDeployment(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri appZipUri = null, Uri apiZipUri = null, string deploymentTitle = null, string provider = null, string functionLanguage = null, string kind = null)
         {
             return new StaticSiteZipDeployment(
                 id,
@@ -6333,7 +6333,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="numHoursToExpiration"> The number of hours the sas token stays valid. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteUserInvitationContent"/> instance for mocking. </returns>
-        public static StaticSiteUserInvitationContent StaticSiteUserInvitationContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string domain = null, string provider = null, string userDetails = null, string roles = null, int? numHoursToExpiration = null, string kind = null)
+        public static StaticSiteUserInvitationContent StaticSiteUserInvitationContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string domain = null, string provider = null, string userDetails = null, string roles = null, int? numHoursToExpiration = null, string kind = null)
         {
             return new StaticSiteUserInvitationContent(
                 id,
@@ -6358,7 +6358,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="invitationUri"> The url for the invitation link. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteUserInvitationResult"/> instance for mocking. </returns>
-        public static StaticSiteUserInvitationResult StaticSiteUserInvitationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DateTimeOffset? expiresOn = null, Uri invitationUri = null, string kind = null)
+        public static StaticSiteUserInvitationResult StaticSiteUserInvitationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? expiresOn = null, Uri invitationUri = null, string kind = null)
         {
             return new StaticSiteUserInvitationResult(
                 id,
@@ -6383,7 +6383,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="validationToken"> The TXT record validation token. </param>
         /// <param name="errorMessage"></param>
         /// <returns> A new <see cref="AppService.StaticSiteCustomDomainOverviewData"/> instance for mocking. </returns>
-        public static StaticSiteCustomDomainOverviewData StaticSiteCustomDomainOverviewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string domainName = null, DateTimeOffset? createdOn = null, CustomDomainStatus? status = null, string validationToken = null, string errorMessage = null)
+        public static StaticSiteCustomDomainOverviewData StaticSiteCustomDomainOverviewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string domainName = null, DateTimeOffset? createdOn = null, CustomDomainStatus? status = null, string validationToken = null, string errorMessage = null)
         {
             return new StaticSiteCustomDomainOverviewData(
                 id,
@@ -6407,7 +6407,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="validationMethod"> Validation method for adding a custom domain. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteCustomDomainContent"/> instance for mocking. </returns>
-        public static StaticSiteCustomDomainContent StaticSiteCustomDomainContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string validationMethod = null, string kind = null)
+        public static StaticSiteCustomDomainContent StaticSiteCustomDomainContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string validationMethod = null, string kind = null)
         {
             return new StaticSiteCustomDomainContent(
                 id,
@@ -6427,7 +6427,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> List of string resources. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteStringList"/> instance for mocking. </returns>
-        public static StaticSiteStringList StaticSiteStringList(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<string> properties = null, string kind = null)
+        public static StaticSiteStringList StaticSiteStringList(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> properties = null, string kind = null)
         {
             properties ??= new List<string>();
 
@@ -6450,7 +6450,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="shouldUpdateRepository"> Determines whether the repository should be updated with the new properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteResetContent"/> instance for mocking. </returns>
-        public static StaticSiteResetContent StaticSiteResetContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string repositoryToken = null, bool? shouldUpdateRepository = null, string kind = null)
+        public static StaticSiteResetContent StaticSiteResetContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string repositoryToken = null, bool? shouldUpdateRepository = null, string kind = null)
         {
             return new StaticSiteResetContent(
                 id,
@@ -6534,7 +6534,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="roles"> The roles for the static site user, in free-form string format. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteUser"/> instance for mocking. </returns>
-        public static StaticSiteUser StaticSiteUser(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string provider = null, string userId = null, string displayName = null, string roles = null, string kind = null)
+        public static StaticSiteUser StaticSiteUser(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provider = null, string userId = null, string displayName = null, string roles = null, string kind = null)
         {
             return new StaticSiteUser(
                 id,
@@ -6557,7 +6557,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.PrivateLinkConnectionApprovalRequestInfo"/> instance for mocking. </returns>
-        public static PrivateLinkConnectionApprovalRequestInfo PrivateLinkConnectionApprovalRequestInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, string kind = null)
+        public static PrivateLinkConnectionApprovalRequestInfo PrivateLinkConnectionApprovalRequestInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, string kind = null)
         {
             return new PrivateLinkConnectionApprovalRequestInfo(
                 id,
@@ -6614,7 +6614,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.AppServicePlanData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, bool? isAsyncScalingEnabled, string kind)
+        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, bool? isAsyncScalingEnabled, string kind)
         {
             return AppServicePlanData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, extendedLocation: extendedLocation, kind: kind, identity: default, workerTierName: workerTierName, status: status, subscription: subscription, hostingEnvironmentProfile: hostingEnvironmentProfile, maximumNumberOfWorkers: maximumNumberOfWorkers, numberOfWorkers: numberOfWorkers, geoRegion: geoRegion, isPerSiteScaling: isPerSiteScaling, isElasticScaleEnabled: isElasticScaleEnabled, maximumElasticWorkerCount: maximumElasticWorkerCount, numberOfSites: numberOfSites, isSpot: isSpot, spotExpireOn: spotExpireOn, freeOfferExpireOn: freeOfferExpireOn, resourceGroup: resourceGroup, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, targetWorkerCount: targetWorkerCount, targetWorkerSizeId: targetWorkerSizeId, provisioningState: provisioningState, kubeEnvironmentProfile: kubeEnvironmentProfile, isZoneRedundant: isZoneRedundant, isAsyncScalingEnabled: isAsyncScalingEnabled, planDefaultIdentity: default, isCustomMode: default, registryAdapters: default, installScripts: default, virtualNetworkSubnetId: default, storageMounts: default, rdpEnabled: default);
         }
@@ -6656,7 +6656,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.Models.AppServicePlanPatch" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind)
+        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind)
         {
             return AppServicePlanPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, identity: default, workerTierName: workerTierName, status: status, subscription: subscription, hostingEnvironmentProfile: hostingEnvironmentProfile, maximumNumberOfWorkers: maximumNumberOfWorkers, numberOfWorkers: numberOfWorkers, geoRegion: geoRegion, isPerSiteScaling: isPerSiteScaling, isElasticScaleEnabled: isElasticScaleEnabled, maximumElasticWorkerCount: maximumElasticWorkerCount, numberOfSites: numberOfSites, isSpot: isSpot, spotExpirationOn: spotExpirationOn, freeOfferExpirationOn: freeOfferExpirationOn, resourceGroup: resourceGroup, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, targetWorkerCount: targetWorkerCount, targetWorkerSizeId: targetWorkerSizeId, provisioningState: provisioningState, kubeEnvironmentProfile: kubeEnvironmentProfile, isZoneRedundant: isZoneRedundant, kind: kind);
         }
@@ -6733,7 +6733,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.Models.SitePatchInfo" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ManagedServiceIdentity identity, string state, IEnumerable<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IEnumerable<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IEnumerable<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteDnsConfig dnsConfiguration, SiteConfigProperties siteConfig, IEnumerable<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientAffinityProxyEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind)
+        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IEnumerable<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IEnumerable<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IEnumerable<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteDnsConfig dnsConfiguration, SiteConfigProperties siteConfig, IEnumerable<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientAffinityProxyEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind)
         {
             return SitePatchInfo(id: id, name: name, resourceType: resourceType, systemData: systemData, identity: identity, state: state, hostNames: hostNames, repositorySiteName: repositorySiteName, usageState: usageState, isEnabled: isEnabled, enabledHostNames: enabledHostNames, availabilityState: availabilityState, hostNameSslStates: hostNameSslStates, serverFarmId: serverFarmId, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, lastModifiedOn: lastModifiedOn, dnsConfiguration: dnsConfiguration, siteConfig: siteConfig, trafficManagerHostNames: trafficManagerHostNames, isScmSiteAlsoStopped: isScmSiteAlsoStopped, targetSwapSlot: targetSwapSlot, hostingEnvironmentProfile: hostingEnvironmentProfile, isClientAffinityEnabled: isClientAffinityEnabled, isClientAffinityProxyEnabled: isClientAffinityProxyEnabled, isClientCertEnabled: isClientCertEnabled, clientCertMode: clientCertMode, clientCertExclusionPaths: clientCertExclusionPaths, isHostNameDisabled: isHostNameDisabled, customDomainVerificationId: customDomainVerificationId, outboundIPAddresses: outboundIPAddresses, possibleOutboundIPAddresses: possibleOutboundIPAddresses, containerSize: containerSize, dailyMemoryTimeQuota: dailyMemoryTimeQuota, suspendOn: suspendOn, maxNumberOfWorkers: maxNumberOfWorkers, cloningInfo: cloningInfo, resourceGroup: resourceGroup, isDefaultContainer: isDefaultContainer, defaultHostName: defaultHostName, slotSwapStatus: slotSwapStatus, isHttpsOnly: isHttpsOnly, redundancyMode: redundancyMode, inProgressOperationId: inProgressOperationId, publicNetworkAccess: default, isStorageAccountRequired: isStorageAccountRequired, keyVaultReferenceIdentity: keyVaultReferenceIdentity, virtualNetworkSubnetId: virtualNetworkSubnetId, kind: kind);
         }
@@ -6779,7 +6779,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.AppServicePlanData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind)
+        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind)
         {
             return AppServicePlanData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, extendedLocation: extendedLocation, kind: kind, identity: default, workerTierName: workerTierName, status: status, subscription: subscription, hostingEnvironmentProfile: hostingEnvironmentProfile, maximumNumberOfWorkers: maximumNumberOfWorkers, numberOfWorkers: numberOfWorkers, geoRegion: geoRegion, isPerSiteScaling: isPerSiteScaling, isElasticScaleEnabled: isElasticScaleEnabled, maximumElasticWorkerCount: maximumElasticWorkerCount, numberOfSites: numberOfSites, isSpot: isSpot, spotExpireOn: spotExpireOn, freeOfferExpireOn: freeOfferExpireOn, resourceGroup: resourceGroup, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, targetWorkerCount: targetWorkerCount, targetWorkerSizeId: targetWorkerSizeId, provisioningState: provisioningState, kubeEnvironmentProfile: kubeEnvironmentProfile, isZoneRedundant: isZoneRedundant, isAsyncScalingEnabled: default, planDefaultIdentity: default, isCustomMode: default, registryAdapters: default, installScripts: default, virtualNetworkSubnetId: default, storageMounts: default, rdpEnabled: default);
         }
@@ -6951,7 +6951,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.Models.SitePatchInfo" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ManagedServiceIdentity identity, string state, IEnumerable<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IEnumerable<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IEnumerable<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteDnsConfig dnsConfiguration, SiteConfigProperties siteConfig, IEnumerable<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind)
+        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IEnumerable<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IEnumerable<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IEnumerable<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteDnsConfig dnsConfiguration, SiteConfigProperties siteConfig, IEnumerable<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind)
         {
             return SitePatchInfo(id: id, name: name, resourceType: resourceType, systemData: systemData, identity: identity, state: state, hostNames: hostNames, repositorySiteName: repositorySiteName, usageState: usageState, isEnabled: isEnabled, enabledHostNames: enabledHostNames, availabilityState: availabilityState, hostNameSslStates: hostNameSslStates, serverFarmId: serverFarmId, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, lastModifiedOn: lastModifiedOn, dnsConfiguration: dnsConfiguration, siteConfig: siteConfig, trafficManagerHostNames: trafficManagerHostNames, isScmSiteAlsoStopped: isScmSiteAlsoStopped, targetSwapSlot: targetSwapSlot, hostingEnvironmentProfile: hostingEnvironmentProfile, isClientAffinityEnabled: isClientAffinityEnabled, isClientAffinityProxyEnabled: default, isClientCertEnabled: isClientCertEnabled, clientCertMode: clientCertMode, clientCertExclusionPaths: clientCertExclusionPaths, isHostNameDisabled: isHostNameDisabled, customDomainVerificationId: customDomainVerificationId, outboundIPAddresses: outboundIPAddresses, possibleOutboundIPAddresses: possibleOutboundIPAddresses, containerSize: containerSize, dailyMemoryTimeQuota: dailyMemoryTimeQuota, suspendOn: suspendOn, maxNumberOfWorkers: maxNumberOfWorkers, cloningInfo: cloningInfo, resourceGroup: resourceGroup, isDefaultContainer: isDefaultContainer, defaultHostName: defaultHostName, slotSwapStatus: slotSwapStatus, isHttpsOnly: isHttpsOnly, redundancyMode: redundancyMode, inProgressOperationId: inProgressOperationId, publicNetworkAccess: default, isStorageAccountRequired: isStorageAccountRequired, keyVaultReferenceIdentity: keyVaultReferenceIdentity, virtualNetworkSubnetId: virtualNetworkSubnetId, kind: kind);
         }
@@ -7052,7 +7052,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.SiteConfigData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SiteConfigData SiteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, int? numberOfWorkers, IEnumerable<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IEnumerable<AppServiceNameValuePair> appSettings, IEnumerable<AppServiceNameValuePair> metadata, IEnumerable<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IEnumerable<HttpRequestHandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IEnumerable<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, IEnumerable<RampUpRule> experimentsRampUpRules, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, AppServiceCorsSettings cors, WebAppPushSettings push, Uri apiDefinitionUri, string apiManagementConfigId, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions, SiteDefaultAction? ipSecurityRestrictionsDefaultAction, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, AppServiceSupportedTlsVersion? minTlsVersion, AppServiceTlsCipherSuite? minTlsCipherSuite, AppServiceSupportedTlsVersion? scmMinTlsVersion, AppServiceFtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, int? elasticWebAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess, string kind)
+        public static SiteConfigData SiteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? numberOfWorkers, IEnumerable<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IEnumerable<AppServiceNameValuePair> appSettings, IEnumerable<AppServiceNameValuePair> metadata, IEnumerable<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IEnumerable<HttpRequestHandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IEnumerable<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, IEnumerable<RampUpRule> experimentsRampUpRules, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, AppServiceCorsSettings cors, WebAppPushSettings push, Uri apiDefinitionUri, string apiManagementConfigId, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions, SiteDefaultAction? ipSecurityRestrictionsDefaultAction, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, AppServiceSupportedTlsVersion? minTlsVersion, AppServiceTlsCipherSuite? minTlsCipherSuite, AppServiceSupportedTlsVersion? scmMinTlsVersion, AppServiceFtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, int? elasticWebAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess, string kind)
         {
             return SiteConfigData(id: id, name: name, resourceType: resourceType, systemData: systemData, kind: kind, numberOfWorkers: numberOfWorkers, defaultDocuments: defaultDocuments, netFrameworkVersion: netFrameworkVersion, phpVersion: phpVersion, pythonVersion: pythonVersion, nodeVersion: nodeVersion, powerShellVersion: powerShellVersion, linuxFxVersion: linuxFxVersion, windowsFxVersion: windowsFxVersion, isRequestTracingEnabled: isRequestTracingEnabled, requestTracingExpirationOn: requestTracingExpirationOn, isRemoteDebuggingEnabled: isRemoteDebuggingEnabled, remoteDebuggingVersion: remoteDebuggingVersion, isHttpLoggingEnabled: isHttpLoggingEnabled, useManagedIdentityCreds: useManagedIdentityCreds, acrUserManagedIdentityId: acrUserManagedIdentityId, logsDirectorySizeLimit: logsDirectorySizeLimit, isDetailedErrorLoggingEnabled: isDetailedErrorLoggingEnabled, publishingUsername: publishingUsername, appSettings: appSettings, metadata: metadata, connectionStrings: connectionStrings, machineKey: machineKey, handlerMappings: handlerMappings, documentRoot: documentRoot, scmType: scmType, use32BitWorkerProcess: use32BitWorkerProcess, isWebSocketsEnabled: isWebSocketsEnabled, isAlwaysOn: isAlwaysOn, javaVersion: javaVersion, javaContainer: javaContainer, javaContainerVersion: javaContainerVersion, appCommandLine: appCommandLine, managedPipelineMode: managedPipelineMode, virtualApplications: virtualApplications, loadBalancing: loadBalancing, experimentsRampUpRules: experimentsRampUpRules, limits: limits, isAutoHealEnabled: isAutoHealEnabled, autoHealRules: autoHealRules, tracingOptions: tracingOptions, vnetName: vnetName, isVnetRouteAllEnabled: isVnetRouteAllEnabled, vnetPrivatePortsCount: vnetPrivatePortsCount, cors: cors, push: push, apiDefinitionUri: apiDefinitionUri, apiManagementConfigId: apiManagementConfigId, autoSwapSlotName: autoSwapSlotName, isLocalMySqlEnabled: isLocalMySqlEnabled, managedServiceIdentityId: managedServiceIdentityId, xManagedServiceIdentityId: xManagedServiceIdentityId, keyVaultReferenceIdentity: keyVaultReferenceIdentity, ipSecurityRestrictions: ipSecurityRestrictions, ipSecurityRestrictionsDefaultAction: ipSecurityRestrictionsDefaultAction, scmIPSecurityRestrictions: scmIPSecurityRestrictions, scmIPSecurityRestrictionsDefaultAction: scmIPSecurityRestrictionsDefaultAction, allowIPSecurityRestrictionsForScmToUseMain: allowIPSecurityRestrictionsForScmToUseMain, isHttp20Enabled: isHttp20Enabled, http20ProxyFlag: default, minTlsVersion: minTlsVersion, minTlsCipherSuite: minTlsCipherSuite, scmMinTlsVersion: scmMinTlsVersion, ftpsState: ftpsState, preWarmedInstanceCount: preWarmedInstanceCount, functionAppScaleLimit: functionAppScaleLimit, elasticWebAppScaleLimit: elasticWebAppScaleLimit, healthCheckPath: healthCheckPath, isFunctionsRuntimeScaleMonitoringEnabled: isFunctionsRuntimeScaleMonitoringEnabled, websiteTimeZone: websiteTimeZone, minimumElasticInstanceCount: minimumElasticInstanceCount, azureStorageAccounts: azureStorageAccounts, publicNetworkAccess: publicNetworkAccess);
         }
@@ -7077,7 +7077,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.SiteContainerData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SiteContainerData SiteContainerData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string image, string targetPort, bool? isMain, string startUpCommand, SiteContainerAuthType? authType, string userName, string passwordSecret, string userManagedIdentityClientId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IEnumerable<SiteContainerVolumeMount> volumeMounts, IEnumerable<WebAppEnvironmentVariable> environmentVariables, string kind)
+        public static SiteContainerData SiteContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string image, string targetPort, bool? isMain, string startUpCommand, SiteContainerAuthType? authType, string userName, string passwordSecret, string userManagedIdentityClientId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IEnumerable<SiteContainerVolumeMount> volumeMounts, IEnumerable<WebAppEnvironmentVariable> environmentVariables, string kind)
         {
             return SiteContainerData(id: id, name: name, resourceType: resourceType, systemData: systemData, kind: kind, image: image, targetPort: targetPort, isMain: isMain, startUpCommand: startUpCommand, authType: authType, userName: userName, passwordSecret: passwordSecret, userManagedIdentityClientId: userManagedIdentityClientId, createdOn: createdOn, lastModifiedOn: lastModifiedOn, volumeMounts: volumeMounts, inheritAppSettingsAndConnectionStrings: default, environmentVariables: environmentVariables);
         }
@@ -7096,7 +7096,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.WebSiteInstanceStatusData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, string healthCheckUrlString, IDictionary<string, ContainerInfo> containers, string kind)
+        public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, string healthCheckUrlString, IDictionary<string, ContainerInfo> containers, string kind)
         {
             return WebSiteInstanceStatusData(id: id, name: name, resourceType: resourceType, systemData: systemData, kind: kind, state: state, statusUri: statusUri, detectorUri: detectorUri, consoleUri: consoleUri, healthCheckUrlString: healthCheckUrlString, containers: containers, physicalZone: default);
         }

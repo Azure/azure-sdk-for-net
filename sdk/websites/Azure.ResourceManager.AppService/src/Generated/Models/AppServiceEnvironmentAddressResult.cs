@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceEnvironmentAddressResult(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, IPAddress serviceIPAddress, IPAddress internalIPAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceEnvironmentAddressResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IPAddress serviceIPAddress, IPAddress internalIPAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ServiceIPAddress = serviceIPAddress;

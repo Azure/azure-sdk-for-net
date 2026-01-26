@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceVirtualNetworkRoute(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceVirtualNetworkRoute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             StartAddress = startAddress;

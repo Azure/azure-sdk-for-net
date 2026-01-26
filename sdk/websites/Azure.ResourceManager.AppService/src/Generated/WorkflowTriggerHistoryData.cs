@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFired"> The value indicating whether trigger was fired. </param>
         /// <param name="run"> Gets the reference to workflow run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, bool? isFired, WorkflowResourceReference run, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, bool? isFired, WorkflowResourceReference run, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;

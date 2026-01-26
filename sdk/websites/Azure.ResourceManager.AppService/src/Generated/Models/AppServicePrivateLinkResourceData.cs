@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of a private link resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, AppServicePrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServicePrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

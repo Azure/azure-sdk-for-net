@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             SiteName = siteName;

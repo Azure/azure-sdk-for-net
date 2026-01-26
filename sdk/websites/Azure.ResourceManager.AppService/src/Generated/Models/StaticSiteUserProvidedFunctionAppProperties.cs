@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteUserProvidedFunctionAppProperties(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteUserProvidedFunctionAppProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             FunctionAppResourceId = functionAppResourceId;
             FunctionAppRegion = functionAppRegion;

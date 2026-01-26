@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linkedBackends"> Backends linked to the static side build. </param>
         /// <param name="databaseConnections"> Database connections for the static site build. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppProperties> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppProperties> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             BuildId = buildId;

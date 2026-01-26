@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="numHoursToExpiration"> The number of hours the sas token stays valid. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteUserInvitationContent(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string domain, string provider, string userDetails, string roles, int? numHoursToExpiration, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteUserInvitationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domain, string provider, string userDetails, string roles, int? numHoursToExpiration, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Domain = domain;
             Provider = provider;

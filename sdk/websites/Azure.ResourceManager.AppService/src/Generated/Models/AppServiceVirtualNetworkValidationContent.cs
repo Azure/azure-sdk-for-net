@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="subnetResourceId"> The ARM Resource ID of the subnet to validate. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceVirtualNetworkValidationContent(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string vnetResourceGroup, string vnetName, string vnetSubnetName, ResourceIdentifier subnetResourceId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceVirtualNetworkValidationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceGroup, string vnetName, string vnetSubnetName, ResourceIdentifier subnetResourceId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             VnetResourceGroup = vnetResourceGroup;
             VnetName = vnetName;

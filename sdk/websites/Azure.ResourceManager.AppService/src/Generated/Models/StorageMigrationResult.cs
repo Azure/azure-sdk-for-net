@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="operationId"> When server starts the migration process, it will return an operation ID identifying that particular migration operation. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMigrationResult(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string operationId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageMigrationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operationId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             OperationId = operationId;
             Kind = kind;

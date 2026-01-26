@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            ResourceManager.Models.SystemData systemData = default;
+            SystemData systemData = default;
             string siteName = default;
             string domainId = default;
             string azureResourceName = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

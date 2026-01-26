@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
         /// <param name="thumbprintString"> Certificate Thumbprint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprintString, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprintString, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Blob = blob;

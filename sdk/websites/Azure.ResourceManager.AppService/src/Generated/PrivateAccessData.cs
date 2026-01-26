@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isEnabled"> Whether private access is enabled or not. </param>
         /// <param name="virtualNetworks"> The Virtual Networks (and subnets) allowed to access the site privately. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, bool? isEnabled, IList<PrivateAccessVirtualNetwork> virtualNetworks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? isEnabled, IList<PrivateAccessVirtualNetwork> virtualNetworks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             IsEnabled = isEnabled;

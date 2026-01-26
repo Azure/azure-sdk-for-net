@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="login"> The configuration settings of the login flow of users using App Service Authentication/Authorization. </param>
         /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteAuthSettingsV2(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, AuthPlatform platform, GlobalValidation globalValidation, AppServiceIdentityProviders identityProviders, WebAppLoginInfo login, AppServiceHttpSettings httpSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteAuthSettingsV2(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AuthPlatform platform, GlobalValidation globalValidation, AppServiceIdentityProviders identityProviders, WebAppLoginInfo login, AppServiceHttpSettings httpSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Platform = platform;

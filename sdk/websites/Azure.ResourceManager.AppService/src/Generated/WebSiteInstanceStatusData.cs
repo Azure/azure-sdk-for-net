@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
         /// <param name="physicalZone"> The physical zone that the instance is in. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, string healthCheckUrlString, IDictionary<string, ContainerInfo> containers, string physicalZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, string healthCheckUrlString, IDictionary<string, ContainerInfo> containers, string physicalZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             State = state;

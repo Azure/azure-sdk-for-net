@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="settings"> Job settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             LatestRun = latestRun;

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerCount"> Number of instances in the worker pool. </param>
         /// <param name="instanceNames"> Names of all instances in the worker pool (read only). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceWorkerPoolData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, AppServiceSkuDescription sku, string kind, int? workerSizeId, ComputeModeOption? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceWorkerPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceSkuDescription sku, string kind, int? workerSizeId, ComputeModeOption? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Kind = kind;

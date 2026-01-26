@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PremierAddOnPatchResource(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PremierAddOnPatchResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Product = product;

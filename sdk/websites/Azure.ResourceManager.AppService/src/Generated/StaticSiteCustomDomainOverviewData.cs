@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="validationToken"> The TXT record validation token. </param>
         /// <param name="errorMessage"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteCustomDomainOverviewData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteCustomDomainOverviewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             DomainName = domainName;

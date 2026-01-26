@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The request history properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppRequestHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebAppRequestHistoryProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal WebAppRequestHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebAppRequestHistoryProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
