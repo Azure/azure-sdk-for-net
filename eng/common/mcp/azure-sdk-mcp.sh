@@ -13,6 +13,9 @@ if ! command -v pwsh &> /dev/null; then
     echo "" >&2
     echo " To install PowerShell 7:" >&2
     echo "" >&2
+    echo "   On Windows:" >&2
+    echo "     winget install --id Microsoft.PowerShell --source winget" >&2
+    echo "" >&2
     echo "   On Ubuntu/Debian:" >&2
     echo "     sudo apt-get update && sudo apt-get install -y powershell" >&2
     echo "" >&2
