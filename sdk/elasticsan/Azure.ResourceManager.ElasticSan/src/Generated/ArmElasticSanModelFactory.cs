@@ -128,6 +128,41 @@ namespace Azure.ResourceManager.ElasticSan.Models
             return new DiskSnapshotListContent(diskSnapshotIds.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="provisioningState"> State of the operation on the resource. </param>
+        /// <param name="protocolType"> Type of storage target. </param>
+        /// <param name="encryption"> Type of encryption. </param>
+        /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
+        /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
+        /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
+        /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
+        /// <param name="deleteRetentionPolicy"></param>
+        /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeGroupData"/> instance for mocking. </returns>
+        public static ElasticSanVolumeGroupData ElasticSanVolumeGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, ElasticSanProvisioningState? provisioningState = default, ElasticSanStorageTargetType? protocolType = default, ElasticSanEncryptionType? encryption = default, ElasticSanEncryptionProperties encryptionProperties = default, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default, bool? enforceDataIntegrityCheckForIscsi = default, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules = default, ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default)
+        {
+            return new ElasticSanVolumeGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                identity,
+                provisioningState is null && protocolType is null && encryption is null && encryptionProperties is null && privateEndpointConnections is null && enforceDataIntegrityCheckForIscsi is null && virtualNetworkRules is null ? default : new VolumeGroupProperties(
+                    provisioningState,
+                    protocolType,
+                    encryption,
+                    encryptionProperties,
+                    new ElasticSanNetworkRuleSet((virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>()).ToList(), null),
+                    (privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>()).ToList(),
+                    enforceDataIntegrityCheckForIscsi,
+                    null),
+                deleteRetentionPolicy);
+        }
+
         /// <summary> Properties of key vault. </summary>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
@@ -274,19 +309,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
         /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeGroupData"/> instance for mocking. </returns>
-        public static ElasticSanVolumeGroupData ElasticSanVolumeGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, ElasticSanProvisioningState? provisioningState = default, ElasticSanStorageTargetType? protocolType = default, ElasticSanEncryptionType? encryption = default, ElasticSanEncryptionProperties encryptionProperties = default, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules = default, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default, bool? enforceDataIntegrityCheckForIscsi = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticSanVolumeGroupData ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, bool? enforceDataIntegrityCheckForIscsi)
         {
-            virtualNetworkRules ??= new ChangeTrackingList<ElasticSanVirtualNetworkRule>();
-            privateEndpointConnections ??= new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
-
-            return new ElasticSanVolumeGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                identity,
-                default);
+            return ElasticSanVolumeGroupData(id, name, resourceType, systemData, identity, provisioningState, protocolType, encryption, encryptionProperties, privateEndpointConnections, enforceDataIntegrityCheckForIscsi, virtualNetworkRules, deleteRetentionPolicy: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanVolumeData"/>. </summary>
