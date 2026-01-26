@@ -12,21 +12,21 @@ using Azure.ResourceManager.SelfHelp;
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> List of solutions. </summary>
-    internal partial class SolutionMetadatas
+    internal partial class SelfhelpSolutions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SolutionMetadatas"/>. </summary>
-        public SolutionMetadatas()
+        /// <summary> Initializes a new instance of <see cref="SelfhelpSolutions"/>. </summary>
+        public SelfhelpSolutions()
         {
             Solutions = new ChangeTrackingList<SolutionMetadataProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SolutionMetadatas"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfhelpSolutions"/>. </summary>
         /// <param name="solutions"> List of metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionMetadatas(IList<SolutionMetadataProperties> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SelfhelpSolutions(IList<SolutionMetadataProperties> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Solutions = solutions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

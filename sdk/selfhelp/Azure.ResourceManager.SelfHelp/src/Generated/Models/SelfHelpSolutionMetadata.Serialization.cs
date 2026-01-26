@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SolutionMetadatas properties = default;
+            SelfhelpSolutions properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    properties = SolutionMetadatas.DeserializeSolutionMetadatas(prop.Value, options);
+                    properties = SelfhelpSolutions.DeserializeSelfhelpSolutions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

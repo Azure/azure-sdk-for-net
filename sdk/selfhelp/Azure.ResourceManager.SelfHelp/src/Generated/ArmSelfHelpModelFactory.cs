@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                solutions is null ? default : new SolutionMetadatas((solutions ?? new ChangeTrackingList<SolutionMetadataProperties>()).ToList(), null));
+                solutions is null ? default : new SelfhelpSolutions((solutions ?? new ChangeTrackingList<SolutionMetadataProperties>()).ToList(), null));
         }
     }
 }

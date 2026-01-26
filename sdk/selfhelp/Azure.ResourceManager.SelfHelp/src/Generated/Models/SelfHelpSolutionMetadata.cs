@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Solution metadata Resource properties. </param>
-        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SolutionMetadatas properties) : base(id, name, resourceType, systemData)
+        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SelfhelpSolutions properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> Solution metadata Resource properties. </summary>
-        internal SolutionMetadatas Properties { get; set; }
+        internal SelfhelpSolutions Properties { get; set; }
 
         /// <summary> List of metadata. </summary>
         public IList<SolutionMetadataProperties> Solutions
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new SolutionMetadatas();
+                    Properties = new SelfhelpSolutions();
                 }
                 return Properties.Solutions;
             }
