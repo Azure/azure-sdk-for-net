@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.SdkAnalyzers.csproj" />
+  <Project Path="tests/Azure.SdkAnalyzers.Tests/Azure.SdkAnalyzers.Tests.csproj" />
+</Solution>
