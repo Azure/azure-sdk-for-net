@@ -58,7 +58,7 @@ namespace Azure.SdkAnalyzers
                         break;
                     }
 
-                    namespaces.Add(namespaceParent.Name.ToString());
+                    namespaces.Add(parentNamespace.Name.ToString());
                     namespaceParent = parentNamespace;
                 }
             }
