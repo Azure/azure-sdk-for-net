@@ -7,3 +7,4 @@ supportedEmitters:
     path: eng/http-client-csharp-emitter-package.json
   - name: "@azure-tools/typespec-csharp"
     path: eng/legacy-emitter-package.json
+

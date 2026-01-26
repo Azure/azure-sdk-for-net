@@ -19,6 +19,7 @@ To transcribe a local file synchronously, create a stream from the file and call
 
 ```C# Snippet:TranscribeLocalFileSync
 string filePath = "path/to/audio.wav";
+TranscriptionClient client = CreateTranscriptionClient();
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions(fileStream);
@@ -38,6 +39,7 @@ To transcribe a local file asynchronously, create a stream from the file and cal
 
 ```C# Snippet:TranscribeLocalFileAsync
 string filePath = "path/to/audio.wav";
+TranscriptionClient client = CreateTranscriptionClient();
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions(fileStream);

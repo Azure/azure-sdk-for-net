@@ -159,6 +159,7 @@ Transcribe audio from a local file using the synchronous API:
 
 ```C# Snippet:TranscribeLocalFileSync
 string filePath = "path/to/audio.wav";
+TranscriptionClient client = CreateTranscriptionClient();
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions(fileStream);
@@ -176,6 +177,7 @@ Or use the asynchronous API:
 
 ```C# Snippet:TranscribeLocalFileAsync
 string filePath = "path/to/audio.wav";
+TranscriptionClient client = CreateTranscriptionClient();
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions(fileStream);

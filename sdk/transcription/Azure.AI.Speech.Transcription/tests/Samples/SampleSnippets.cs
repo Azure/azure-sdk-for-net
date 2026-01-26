@@ -47,12 +47,15 @@ namespace Azure.AI.Speech.Transcription.Samples
         [Test]
         public void TranscribeLocalFileSync()
         {
+#if !SNIPPET
+            var client = _client;
+#endif
             #region Snippet:TranscribeLocalFileSync
 #if SNIPPET
             string filePath = "path/to/audio.wav";
+            TranscriptionClient client = CreateTranscriptionClient();
 #else
             string filePath = TestConfiguration.SampleAudioFilePath;
-            var client = _client;
 #endif
             using (FileStream fileStream = File.Open(filePath, FileMode.Open))
             {
@@ -71,12 +74,15 @@ namespace Azure.AI.Speech.Transcription.Samples
         [Test]
         public async Task TranscribeLocalFileAsync()
         {
+#if !SNIPPET
+            var client = _client;
+#endif
             #region Snippet:TranscribeLocalFileAsync
 #if SNIPPET
             string filePath = "path/to/audio.wav";
+            TranscriptionClient client = CreateTranscriptionClient();
 #else
             string filePath = TestConfiguration.SampleAudioFilePath;
-            var client = _client;
 #endif
             using (FileStream fileStream = File.Open(filePath, FileMode.Open))
             {
