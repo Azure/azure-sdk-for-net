@@ -211,7 +211,8 @@ namespace Azure.Generator.Management.Providers
             }
 
             // Build unique method names for non-resource methods to avoid duplicate signatures
-            var methodNamesForNonResourceMethods = GetUniqueMethodNames(_nonResourceMethods, _clientInfos);
+            var clientToResourceName = BuildClientToResourceNameMap();
+            var methodNamesForNonResourceMethods = GetUniqueMethodNames(_nonResourceMethods, _clientInfos, clientToResourceName);
             foreach (var method in _nonResourceMethods)
             {
                 var methodName = methodNamesForNonResourceMethods.TryGetValue(method, out var uniqueName) ? uniqueName : null;
@@ -234,12 +235,32 @@ namespace Azure.Generator.Management.Providers
         }
 
         /// <summary>
+        /// Builds a mapping from InputClient to ResourceName using resource metadata from the input library.
+        /// </summary>
+        private static Dictionary<InputClient, string> BuildClientToResourceNameMap()
+        {
+            var map = new Dictionary<InputClient, string>();
+
+            // Build mapping from resource metadata methods
+            foreach (var resourceMetadata in ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas)
+            {
+                foreach (var method in resourceMetadata.Methods)
+                {
+                    map.TryAdd(method.InputClient, resourceMetadata.ResourceName);
+                }
+            }
+
+            return map;
+        }
+
+        /// <summary>
         /// Generates unique method names for non-resource methods to avoid duplicate signatures.
-        /// When multiple methods would have the same signature, appends the resource name from the operation path.
+        /// When multiple methods would have the same signature, appends the resource name.
         /// </summary>
         private static Dictionary<NonResourceMethod, string> GetUniqueMethodNames(
             IReadOnlyList<NonResourceMethod> nonResourceMethods,
-            Dictionary<InputClient, RestClientInfo> clientInfos)
+            Dictionary<InputClient, RestClientInfo> clientInfos,
+            Dictionary<InputClient, string> clientToResourceName)
         {
             var result = new Dictionary<NonResourceMethod, string>();
 
@@ -263,7 +284,7 @@ namespace Azure.Generator.Management.Providers
                 list.Add(method);
             }
 
-            // For groups with duplicates, generate unique names based on resource name from path
+            // For groups with duplicates, generate unique names based on resource name
             foreach (var (baseName, group) in methodsByBaseName)
             {
                 if (group.Count <= 1)
@@ -271,8 +292,8 @@ namespace Azure.Generator.Management.Providers
 
                 foreach (var method in group)
                 {
-                    var resourceName = ResourceHelpers.GetResourceNameFromPath(method.InputMethod.Operation.Path);
-                    if (resourceName != null)
+                    // Get resource name from InputClient mapping - only resource clients have a resource name
+                    if (clientToResourceName.TryGetValue(method.InputClient, out var resourceName))
                     {
                         // Create unique method name like "GetFoosBySubscriptionAsync" or "GetZoosBySubscriptionAsync"
                         // Insert the pluralized resource name after "Get" prefix
