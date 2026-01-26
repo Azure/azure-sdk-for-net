@@ -15,7 +15,7 @@ using Azure.ResourceManager.DeviceProvisioningServices;
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> The JSON-serialized array of Certificate objects. </summary>
-    public partial class CertificateListDescription : IJsonModel<CertificateListDescription>
+    internal partial class CertificateListDescription : IJsonModel<CertificateListDescription>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.DeviceProvisioningServices.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
@@ -285,30 +284,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CertificateListDescription>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeviceProvisioningServicesCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _certificateResponsesRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CertificateListDescription> response = Response.FromValue(CertificateListDescription.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new CertificateResponsesGetAllAsyncCollectionResultOfT(_certificateResponsesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DeviceProvisioningServicesCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -329,30 +312,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CertificateListDescription> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeviceProvisioningServicesCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _certificateResponsesRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CertificateListDescription> response = Response.FromValue(CertificateListDescription.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new CertificateResponsesGetAllCollectionResultOfT(_certificateResponsesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DeviceProvisioningServicesCertificateResource(Client, data));
         }
 
         /// <summary>

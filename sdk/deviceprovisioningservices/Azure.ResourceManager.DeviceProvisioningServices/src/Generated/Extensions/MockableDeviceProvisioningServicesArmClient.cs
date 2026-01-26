@@ -44,15 +44,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
             return new DeviceProvisioningServiceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            DeviceProvisioningServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> object. </returns>
@@ -60,6 +51,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         {
             DeviceProvisioningServicesPrivateLinkResource.ValidateResourceId(id);
             return new DeviceProvisioningServicesPrivateLinkResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            DeviceProvisioningServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, id);
         }
     }
 }

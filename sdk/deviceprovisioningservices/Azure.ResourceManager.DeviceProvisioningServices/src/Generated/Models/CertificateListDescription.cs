@@ -12,7 +12,7 @@ using Azure.ResourceManager.DeviceProvisioningServices;
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> The JSON-serialized array of Certificate objects. </summary>
-    public partial class CertificateListDescription
+    internal partial class CertificateListDescription
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

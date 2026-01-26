@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServiceProperties"/>. </summary>
         public DeviceProvisioningServiceProperties()
         {
-            IpFilterRules = new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>();
+            IPFilterRules = new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>();
             PrivateEndpointConnections = new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>();
             IotHubs = new ChangeTrackingList<IotHubDefinitionDescription>();
             AuthorizationPolicies = new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         {
             State = state;
             PublicNetworkAccess = publicNetworkAccess;
-            IpFilterRules = ipFilterRules;
+            IPFilterRules = ipFilterRules;
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             IotHubs = iotHubs;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public DeviceProvisioningServicesPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> The IP filter rules. </summary>
-        public IList<DeviceProvisioningServicesIPFilterRule> IpFilterRules { get; }
+        public IList<DeviceProvisioningServicesIPFilterRule> IPFilterRules { get; }
 
         /// <summary> Private endpoint connections created on this IotHub. </summary>
         public IList<DeviceProvisioningServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }

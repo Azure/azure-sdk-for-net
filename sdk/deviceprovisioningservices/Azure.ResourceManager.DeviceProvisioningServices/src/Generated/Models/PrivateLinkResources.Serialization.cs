@@ -15,7 +15,7 @@ using Azure.ResourceManager.DeviceProvisioningServices;
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> The available private link resources for a provisioning service. </summary>
-    public partial class PrivateLinkResources : IJsonModel<PrivateLinkResources>
+    internal partial class PrivateLinkResources : IJsonModel<PrivateLinkResources>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public DeviceProvisioningServicesPrivateLinkServiceConnectionState ConnectionState { get; set; }
 
         /// <summary> The resource identifier. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

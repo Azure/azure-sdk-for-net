@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToSerialString());
             writer.WritePropertyName("ipMask"u8);
-            writer.WriteStringValue(IpMask);
+            writer.WriteStringValue(IPMask);
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);

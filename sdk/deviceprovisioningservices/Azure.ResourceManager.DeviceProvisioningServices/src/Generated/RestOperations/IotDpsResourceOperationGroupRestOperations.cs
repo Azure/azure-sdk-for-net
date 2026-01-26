@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    internal partial class IotDpsResource
+    internal partial class IotDpsResourceOperationGroup
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of IotDpsResource for mocking. </summary>
-        protected IotDpsResource()
+        /// <summary> Initializes a new instance of IotDpsResourceOperationGroup for mocking. </summary>
+        protected IotDpsResourceOperationGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of IotDpsResource. </summary>
+        /// <summary> Initializes a new instance of IotDpsResourceOperationGroup. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal IotDpsResource(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal IotDpsResourceOperationGroup(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

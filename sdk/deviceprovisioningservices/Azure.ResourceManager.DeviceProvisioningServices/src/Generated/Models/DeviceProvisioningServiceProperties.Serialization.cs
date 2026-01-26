@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpFilterRules))
+            if (Optional.IsCollectionDefined(IPFilterRules))
             {
                 writer.WritePropertyName("ipFilterRules"u8);
                 writer.WriteStartArray();
-                foreach (DeviceProvisioningServicesIPFilterRule item in IpFilterRules)
+                foreach (DeviceProvisioningServicesIPFilterRule item in IPFilterRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }

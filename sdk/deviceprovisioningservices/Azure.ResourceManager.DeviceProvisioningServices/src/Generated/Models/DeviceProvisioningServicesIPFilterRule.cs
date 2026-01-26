@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
             FilterName = filterName;
             Action = action;
-            IpMask = ipMask;
+            IPMask = ipMask;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesIPFilterRule"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         {
             FilterName = filterName;
             Action = action;
-            IpMask = ipMask;
+            IPMask = ipMask;
             Target = target;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public DeviceProvisioningServicesIPFilterActionType Action { get; set; }
 
         /// <summary> A string that contains the IP address range in CIDR notation for the rule. </summary>
-        public string IpMask { get; set; }
+        public string IPMask { get; set; }
 
         /// <summary> Target for requests captured by this rule. </summary>
         public DeviceProvisioningServicesIPFilterTargetType? Target { get; set; }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.DeviceProvisioningServices;
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> The available private link resources for a provisioning service. </summary>
-    public partial class PrivateLinkResources
+    internal partial class PrivateLinkResources
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

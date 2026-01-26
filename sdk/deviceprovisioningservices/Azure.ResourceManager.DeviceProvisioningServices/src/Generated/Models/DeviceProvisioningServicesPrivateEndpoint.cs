@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateEndpoint"/>. </summary>
         /// <param name="id"> The resource identifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceProvisioningServicesPrivateEndpoint(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceProvisioningServicesPrivateEndpoint(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource identifier. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

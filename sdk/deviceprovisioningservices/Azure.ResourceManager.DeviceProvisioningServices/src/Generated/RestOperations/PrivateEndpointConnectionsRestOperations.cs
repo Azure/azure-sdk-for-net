@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             return message;
         }
 
-        internal HttpMessage CreateGetPrivateEndpointConnectionsRequest(string subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
