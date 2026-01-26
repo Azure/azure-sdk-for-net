@@ -10,7 +10,7 @@ namespace System.ClientModel.Primitives;
 /// Helper class for JSON models implementing <see cref="IJsonModel{T}"/>.
 /// </summary>
 /// <typeparam name="T">The type of the model represented by this JSON model.</typeparam>
-[Experimental("SCME0001")]
+[Experimental("SCME0003")]
 public abstract class JsonModel<T> : IJsonModel<T>
 {
     /// <summary>
