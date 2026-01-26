@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Attestation
         public virtual Azure.Response<bool> Exists(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource> Get(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Attestation.Models.AttestationProviderCreateOrUpdateContent> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.Models.AttestationProviderCreateOrUpdateContent>> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource>> GetAsync(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Attestation.AttestationProviderResource> GetIfExists(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Attestation.AttestationProviderResource>> GetIfExistsAsync(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -428,9 +428,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public static Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType Disabled { get { throw null; } }
         public static Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType left, Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType (string value) { throw null; }

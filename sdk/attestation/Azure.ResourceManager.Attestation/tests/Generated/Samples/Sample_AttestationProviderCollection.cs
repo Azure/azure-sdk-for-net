@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Attestation.Samples
 
             // invoke the operation
             string providerName = "myattestationprovider";
-            AttestationProviderCreateOrUpdateContent content = new AttestationProviderCreateOrUpdateContent(new AzureLocation("East US"), new AttestationServiceCreationSpecificParams
+            AttestationServiceCreationParams content = new AttestationServiceCreationParams("East US", new AttestationServiceCreationSpecificParams
             {
                 PublicNetworkAccess = PublicNetworkAccessType.Enabled,
             })
