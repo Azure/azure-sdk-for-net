@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(PrivateEndpoint))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToBatchPrivateEndpointConnectionProvisioningState();
+                            provisioningState = new BatchPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpoint"u8))

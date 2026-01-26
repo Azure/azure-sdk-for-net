@@ -239,12 +239,14 @@ directive:
       };
 # make provisioning state enumerations all extensible because they are meant to be extensible
   - from: openapi.json
-    where: $.definitions
-    transform: >
-      $.ProvisioningState["x-ms-enum"].modelAsString = true;
-      $.CertificateProvisioningState["x-ms-enum"].modelAsString = true;
-      $.PrivateEndpointConnectionProvisioningState["x-ms-enum"].modelAsString = true;
-      $.PoolProvisioningState["x-ms-enum"].modelAsString = true;
+    where: $.definitions.ProvisioningState
+    transform: $["x-ms-enum"].modelAsString = true
+  - from: openapi.json
+    where: $.definitions.PrivateEndpointConnectionProvisioningState
+    transform: $["x-ms-enum"].modelAsString = true
+  - from: openapi.json
+    where: $.definitions.PoolProvisioningState
+    transform: $["x-ms-enum"].modelAsString = true
 # add some missing properties to ResizeError so that it could be replaced by Azure.ResponseError
   - from: openapi.json
     where: $.definitions.ResizeError.properties
