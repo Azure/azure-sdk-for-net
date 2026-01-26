@@ -259,6 +259,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.AccessTier P70 { get { throw null; } }
         public static Azure.Storage.Blobs.Models.AccessTier P80 { get { throw null; } }
         public static Azure.Storage.Blobs.Models.AccessTier Premium { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier Smart { get { throw null; } }
         public bool Equals(Azure.Storage.Blobs.Models.AccessTier other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
