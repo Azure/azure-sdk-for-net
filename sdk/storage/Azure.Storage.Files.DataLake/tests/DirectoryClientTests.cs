@@ -1746,6 +1746,148 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public async Task GetSystemPropertiesAsync_FileSystemSAS()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string directoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+
+            // Arrange
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+
+            DataLakeDirectoryClient sasDirectory = InstrumentClient(
+                GetServiceClient_DataLakeServiceSas_FileSystem(
+                    fileSystemName: fileSystemName)
+                .GetFileSystemClient(fileSystemName)
+                .GetDirectoryClient(directoryName));
+
+            // Act
+            PathSystemProperties systemProperties = await sasDirectory.GetSystemPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(systemProperties.CreationTime);
+            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.ETag);
+            Assert.IsNotNull(systemProperties.ContentLength);
+            Assert.IsNotNull(systemProperties.IsDirectory);
+            Assert.IsNotNull(systemProperties.IsServerEncrypted);
+            Assert.IsNotNull(systemProperties.Owner);
+            Assert.IsNotNull(systemProperties.Group);
+            Assert.IsNotNull(systemProperties.Permissions);
+        }
+
+        [RecordedTest]
+        public async Task GetSystemPropertiesAsync_FileSystemIdentitySAS()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            string directoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            // Arrange
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                options: getUserDelegationKeyOptions);
+
+            DataLakeDirectoryClient identitySasDirectory = InstrumentClient(
+                GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
+                    fileSystemName: fileSystemName,
+                    userDelegationKey: userDelegationKey)
+                .GetFileSystemClient(fileSystemName)
+                .GetDirectoryClient(directoryName));
+
+            // Act
+            PathSystemProperties systemProperties = await identitySasDirectory.GetSystemPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(systemProperties.CreationTime);
+            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.ETag);
+            Assert.IsNotNull(systemProperties.ContentLength);
+            Assert.IsNotNull(systemProperties.IsDirectory);
+            Assert.IsNotNull(systemProperties.IsServerEncrypted);
+            Assert.IsNotNull(systemProperties.Owner);
+            Assert.IsNotNull(systemProperties.Group);
+            Assert.IsNotNull(systemProperties.Permissions);
+        }
+
+        [RecordedTest]
+        public async Task GetSystemPropertiesAsync_PathSAS()
+        {
+            var fileSystemName = GetNewFileSystemName();
+            var directoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+
+            // Arrange
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+
+            DataLakeDirectoryClient sasDirectory = InstrumentClient(
+                GetServiceClient_DataLakeServiceSas_Path(
+                    fileSystemName: fileSystemName,
+                    path: directoryName)
+                .GetFileSystemClient(fileSystemName)
+                .GetDirectoryClient(directoryName));
+
+            // Act
+            PathSystemProperties systemProperties = await sasDirectory.GetSystemPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(systemProperties.CreationTime);
+            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.ETag);
+            Assert.IsNotNull(systemProperties.ContentLength);
+            Assert.IsNotNull(systemProperties.IsDirectory);
+            Assert.IsNotNull(systemProperties.IsServerEncrypted);
+            Assert.IsNotNull(systemProperties.Owner);
+            Assert.IsNotNull(systemProperties.Group);
+            Assert.IsNotNull(systemProperties.Permissions);
+        }
+
+        [RecordedTest]
+        public async Task GetSystemPropertiesAsync_PathIdentitySAS()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            string directoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            // Arrange
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                options: getUserDelegationKeyOptions);
+
+            DataLakeDirectoryClient identitySasDirectory = InstrumentClient(
+                GetServiceClient_DataLakeServiceIdentitySas_Path(
+                    fileSystemName: fileSystemName,
+                    path: directoryName,
+                    userDelegationKey: userDelegationKey)
+                .GetFileSystemClient(fileSystemName)
+                .GetDirectoryClient(directoryName));
+
+            // Act
+            PathSystemProperties systemProperties = await identitySasDirectory.GetSystemPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(systemProperties.CreationTime);
+            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.ETag);
+            Assert.IsNotNull(systemProperties.ContentLength);
+            Assert.IsNotNull(systemProperties.IsDirectory);
+            Assert.IsNotNull(systemProperties.IsServerEncrypted);
+            Assert.IsNotNull(systemProperties.Owner);
+            Assert.IsNotNull(systemProperties.Group);
+            Assert.IsNotNull(systemProperties.Permissions);
+        }
+
+        [RecordedTest]
         public async Task GetSystemPropertiesAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
