@@ -178,11 +178,8 @@ namespace Azure.Provisioning.KeyVault
         public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultSecretsUser { get { throw null; } }
         public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole ManagedHsmContributor { get { throw null; } }
         public bool Equals(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole left, Azure.Provisioning.KeyVault.KeyVaultBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.KeyVault.KeyVaultBuiltInRole (string value) { throw null; }
@@ -247,7 +244,6 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2022_11_01;
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
         }
@@ -325,7 +321,6 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.KeyVault.KeyVaultSecret FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -338,7 +333,6 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2022_11_01;
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
         }
@@ -356,7 +350,6 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.KeyVault.KeyVaultService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -369,7 +362,6 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2022_11_01;
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
         }
@@ -419,7 +411,6 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2022_11_01;
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
         }
@@ -501,7 +492,6 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2022_11_01;
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
         }

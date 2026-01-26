@@ -498,9 +498,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ApplicationMoveCost Medium { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ApplicationMoveCost Zero { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ApplicationMoveCost other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ApplicationMoveCost left, Azure.ResourceManager.ServiceFabric.Models.ApplicationMoveCost right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ApplicationMoveCost (string value) { throw null; }
@@ -518,9 +516,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ApplicationRollingUpgradeMode UnmonitoredAuto { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ApplicationRollingUpgradeMode UnmonitoredManual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ApplicationRollingUpgradeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ApplicationRollingUpgradeMode left, Azure.ResourceManager.ServiceFabric.Models.ApplicationRollingUpgradeMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ApplicationRollingUpgradeMode (string value) { throw null; }
@@ -593,7 +589,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ServiceFabricApplicationPatch ServiceFabricApplicationPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string typeVersion = null, System.Collections.Generic.IDictionary<string, string> parameters = null, Azure.ResourceManager.ServiceFabric.Models.ApplicationUpgradePolicy upgradePolicy = null, long? minimumNodes = default(long?), long? maximumNodes = default(long?), bool? removeApplicationCapacity = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ApplicationMetricDescription> metrics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ApplicationUserAssignedIdentity> managedIdentities = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeData ServiceFabricApplicationTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string provisioningState = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionData ServiceFabricApplicationTypeVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string provisioningState = null, System.Uri appPackageUri = null, System.Collections.Generic.IReadOnlyDictionary<string, string> defaultParameterList = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceFabric.ServiceFabricClusterData ServiceFabricClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature> addOnFeatures, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterVersionDetails> availableClusterVersions, Azure.ResourceManager.ServiceFabric.Models.ClusterAadSetting azureActiveDirectory, Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateDescription certificate, Azure.ResourceManager.ServiceFabric.Models.ClusterServerCertificateCommonNames certificateCommonNames, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterClientCertificateCommonName> clientCertificateCommonNames, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, System.Uri clusterEndpoint, System.Guid? clusterId, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricClusterState? clusterState, Azure.ResourceManager.ServiceFabric.Models.DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? isEventStoreServiceEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.SettingsSectionDescription> fabricSettings, System.Uri managementEndpoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterNodeTypeDescription> nodeTypes, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricProvisioningState? provisioningState, Azure.ResourceManager.ServiceFabric.Models.ClusterReliabilityLevel? reliabilityLevel, Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateDescription reverseProxyCertificate, Azure.ResourceManager.ServiceFabric.Models.ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradePolicy upgradeDescription, Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode? upgradeMode, long? maxUnusedVersionsToKeep, string vmImage, Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode? serviceFabricZonalUpgradeMode, Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence? upgradeWave, System.DateTimeOffset? upgradePauseStartOn, System.DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterNotification> notifications, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.ServiceFabric.ServiceFabricClusterData ServiceFabricClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature> addOnFeatures = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterVersionDetails> availableClusterVersions = null, Azure.ResourceManager.ServiceFabric.Models.ClusterAadSetting azureActiveDirectory = null, Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateDescription certificate = null, Azure.ResourceManager.ServiceFabric.Models.ClusterServerCertificateCommonNames certificateCommonNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterClientCertificateCommonName> clientCertificateCommonNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterClientCertificateThumbprint> clientCertificateThumbprints = null, string clusterCodeVersion = null, System.Uri clusterEndpoint = null, System.Guid? clusterId = default(System.Guid?), Azure.ResourceManager.ServiceFabric.Models.ServiceFabricClusterState? clusterState = default(Azure.ResourceManager.ServiceFabric.Models.ServiceFabricClusterState?), Azure.ResourceManager.ServiceFabric.Models.DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = null, bool? isEventStoreServiceEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.SettingsSectionDescription> fabricSettings = null, System.Uri managementEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterNodeTypeDescription> nodeTypes = null, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceFabric.Models.ServiceFabricProvisioningState?), Azure.ResourceManager.ServiceFabric.Models.ClusterReliabilityLevel? reliabilityLevel = default(Azure.ResourceManager.ServiceFabric.Models.ClusterReliabilityLevel?), Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateDescription reverseProxyCertificate = null, Azure.ResourceManager.ServiceFabric.Models.ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames = null, Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradePolicy upgradeDescription = null, Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode? upgradeMode = default(Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode?), long? maxUnusedVersionsToKeep = default(long?), string vmImage = null, Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode? serviceFabricZonalUpgradeMode = default(Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode?), Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode? vmssZonalUpgradeMode = default(Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode?), bool? isInfrastructureServiceManagerEnabled = default(bool?), Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence? upgradeWave = default(Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence?), System.DateTimeOffset? upgradePauseStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? upgradePauseEndOn = default(System.DateTimeOffset?), bool? isWaveUpgradePaused = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.Models.ClusterNotification> notifications = null, bool? isHttpGatewayExclusiveAuthModeEnabled = default(bool?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ServiceFabric.ServiceFabricVmSizeResourceData ServiceFabricVmSizeResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string vmSize = null) { throw null; }
@@ -608,9 +603,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ArmServicePackageActivationMode ExclusiveProcess { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ArmServicePackageActivationMode SharedProcess { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ArmServicePackageActivationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ArmServicePackageActivationMode left, Azure.ResourceManager.ServiceFabric.Models.ArmServicePackageActivationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ArmServicePackageActivationMode (string value) { throw null; }
@@ -639,9 +632,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ArmUpgradeFailureAction Manual { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ArmUpgradeFailureAction Rollback { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ArmUpgradeFailureAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ArmUpgradeFailureAction left, Azure.ResourceManager.ServiceFabric.Models.ArmUpgradeFailureAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ArmUpgradeFailureAction (string value) { throw null; }
@@ -672,9 +663,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature RepairManager { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature ResourceMonitorService { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature left, Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature (string value) { throw null; }
@@ -709,9 +698,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateStoreName TrustedPeople { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateStoreName TrustedPublisher { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateStoreName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateStoreName left, Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateStoreName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateStoreName (string value) { throw null; }
@@ -766,9 +753,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterDurabilityLevel Gold { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterDurabilityLevel Silver { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterDurabilityLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterDurabilityLevel left, Azure.ResourceManager.ServiceFabric.Models.ClusterDurabilityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterDurabilityLevel (string value) { throw null; }
@@ -796,9 +781,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterEnvironment Linux { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterEnvironment Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterEnvironment other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterEnvironment left, Azure.ResourceManager.ServiceFabric.Models.ClusterEnvironment right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterEnvironment (string value) { throw null; }
@@ -864,9 +847,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public ClusterNotificationCategory(string value) { throw null; }
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationCategory WaveProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationCategory left, Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationCategory (string value) { throw null; }
@@ -882,9 +863,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationChannel EmailSubscription { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationChannel EmailUser { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationChannel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationChannel left, Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationChannel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationChannel (string value) { throw null; }
@@ -900,9 +879,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationLevel All { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationLevel Critical { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationLevel left, Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterNotificationLevel (string value) { throw null; }
@@ -933,9 +910,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterReliabilityLevel Platinum { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterReliabilityLevel Silver { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterReliabilityLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterReliabilityLevel left, Azure.ResourceManager.ServiceFabric.Models.ClusterReliabilityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterReliabilityLevel (string value) { throw null; }
@@ -976,9 +951,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence Wave1 { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence Wave2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence left, Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence (string value) { throw null; }
@@ -1008,9 +981,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode Automatic { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode Manual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode left, Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode (string value) { throw null; }
@@ -1058,9 +1029,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterVersionsEnvironment Linux { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ClusterVersionsEnvironment Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterVersionsEnvironment other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterVersionsEnvironment left, Azure.ResourceManager.ServiceFabric.Models.ClusterVersionsEnvironment right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterVersionsEnvironment (string value) { throw null; }
@@ -1128,9 +1097,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationScheme Invalid { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationScheme NonAlignedAffinity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationScheme other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationScheme left, Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationScheme right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationScheme (string value) { throw null; }
@@ -1207,9 +1174,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ServiceFabricClusterState UpgradeServiceUnreachable { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ServiceFabricClusterState WaitingForNodes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ServiceFabricClusterState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ServiceFabricClusterState left, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricClusterState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ServiceFabricClusterState (string value) { throw null; }
@@ -1227,9 +1192,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ServiceFabricProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ServiceFabricProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ServiceFabricProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ServiceFabricProvisioningState left, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ServiceFabricProvisioningState (string value) { throw null; }
@@ -1278,9 +1241,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.ServiceLoadMetricWeight Medium { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.ServiceLoadMetricWeight Zero { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ServiceLoadMetricWeight other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ServiceLoadMetricWeight left, Azure.ResourceManager.ServiceFabric.Models.ServiceLoadMetricWeight right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ServiceLoadMetricWeight (string value) { throw null; }
@@ -1352,9 +1313,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode Hierarchical { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode Parallel { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode left, Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode (string value) { throw null; }
@@ -1415,9 +1374,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode Hierarchical { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode Parallel { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode left, Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode (string value) { throw null; }

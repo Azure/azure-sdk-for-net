@@ -36,7 +36,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <summary>
         /// Gets or sets the ratio of telemetry items to be sampled. The value must be between 0.0F and 1.0F, inclusive.
         /// For example, specifying 0.4 means that 40% of traces are sampled and 60% are dropped.
-        /// The default value is 1.0F, indicating that all telemetry items are sampled.
         /// </summary>
         public float SamplingRatio { get; set; } = 1.0F;
 
@@ -45,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// For example, specifying 0.5 means one request every two seconds.
         /// When both TracesPerSecond and SamplingRatio are specified, TracesPerSecond takes precedence.
         /// </summary>
-        public double? TracesPerSecond { get; set; }
+        public double? TracesPerSecond { get; set; } = 5.0;
 
         /// <summary>
         /// The <see cref="ServiceVersion"/> of the Azure Monitor ingestion API.

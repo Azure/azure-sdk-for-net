@@ -981,9 +981,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.AacAudioProfile HEAacV1 { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.AacAudioProfile HEAacV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.AacAudioProfile other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.AacAudioProfile left, Azure.ResourceManager.Media.Models.AacAudioProfile right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.AacAudioProfile (string value) { throw null; }
@@ -1024,9 +1022,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.AccountEncryptionKeyType CustomerKey { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.AccountEncryptionKeyType SystemKey { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.AccountEncryptionKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.AccountEncryptionKeyType left, Azure.ResourceManager.Media.Models.AccountEncryptionKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.AccountEncryptionKeyType (string value) { throw null; }
@@ -1098,9 +1094,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.AudioAnalysisMode Basic { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.AudioAnalysisMode Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.AudioAnalysisMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.AudioAnalysisMode left, Azure.ResourceManager.Media.Models.AudioAnalysisMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.AudioAnalysisMode (string value) { throw null; }
@@ -1210,9 +1204,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.ChannelMapping StereoLeft { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.ChannelMapping StereoRight { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.ChannelMapping other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.ChannelMapping left, Azure.ResourceManager.Media.Models.ChannelMapping right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.ChannelMapping (string value) { throw null; }
@@ -1339,9 +1331,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayRentalAndLeaseKeyType Undefined { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayRentalAndLeaseKeyType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayRentalAndLeaseKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayRentalAndLeaseKeyType left, Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayRentalAndLeaseKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayRentalAndLeaseKeyType (string value) { throw null; }
@@ -1426,9 +1416,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentType Unknown { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentType Unspecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentType left, Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentType (string value) { throw null; }
@@ -1478,9 +1466,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicenseType Persistent { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicenseType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicenseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicenseType left, Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicenseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicenseType (string value) { throw null; }
@@ -1521,9 +1507,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyUnknownOutputPassingOption NotAllowed { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyUnknownOutputPassingOption Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyUnknownOutputPassingOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyUnknownOutputPassingOption left, Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyUnknownOutputPassingOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyUnknownOutputPassingOption (string value) { throw null; }
@@ -1575,9 +1559,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenType Swt { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenType left, Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenType (string value) { throw null; }
@@ -1709,9 +1691,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.DeinterlaceMode AutoPixelAdaptive { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.DeinterlaceMode Off { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.DeinterlaceMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.DeinterlaceMode left, Azure.ResourceManager.Media.Models.DeinterlaceMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.DeinterlaceMode (string value) { throw null; }
@@ -1728,9 +1708,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.DeinterlaceParity BottomFieldFirst { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.DeinterlaceParity TopFieldFirst { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.DeinterlaceParity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.DeinterlaceParity left, Azure.ResourceManager.Media.Models.DeinterlaceParity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.DeinterlaceParity (string value) { throw null; }
@@ -1811,9 +1789,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.EncoderNamedPreset H265SingleBitrate4K { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.EncoderNamedPreset H265SingleBitrate720P { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.EncoderNamedPreset other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.EncoderNamedPreset left, Azure.ResourceManager.Media.Models.EncoderNamedPreset right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.EncoderNamedPreset (string value) { throw null; }
@@ -1848,9 +1824,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.EncodingComplexity Quality { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.EncodingComplexity Speed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.EncodingComplexity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.EncodingComplexity left, Azure.ResourceManager.Media.Models.EncodingComplexity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.EncodingComplexity (string value) { throw null; }
@@ -1921,9 +1895,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.FilterTrackPropertyCompareOperation Equal { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.FilterTrackPropertyCompareOperation NotEqual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.FilterTrackPropertyCompareOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.FilterTrackPropertyCompareOperation left, Azure.ResourceManager.Media.Models.FilterTrackPropertyCompareOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.FilterTrackPropertyCompareOperation (string value) { throw null; }
@@ -1956,9 +1928,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.FilterTrackPropertyType Type { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.FilterTrackPropertyType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.FilterTrackPropertyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.FilterTrackPropertyType left, Azure.ResourceManager.Media.Models.FilterTrackPropertyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.FilterTrackPropertyType (string value) { throw null; }
@@ -2006,9 +1976,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.H264Complexity Quality { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.H264Complexity Speed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.H264Complexity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.H264Complexity left, Azure.ResourceManager.Media.Models.H264Complexity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.H264Complexity (string value) { throw null; }
@@ -2041,9 +2009,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.H264RateControlMode Cbr { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.H264RateControlMode Crf { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.H264RateControlMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.H264RateControlMode left, Azure.ResourceManager.Media.Models.H264RateControlMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.H264RateControlMode (string value) { throw null; }
@@ -2077,9 +2043,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.H264VideoProfile High444 { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.H264VideoProfile Main { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.H264VideoProfile other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.H264VideoProfile left, Azure.ResourceManager.Media.Models.H264VideoProfile right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.H264VideoProfile (string value) { throw null; }
@@ -2096,9 +2060,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.H265Complexity Quality { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.H265Complexity Speed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.H265Complexity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.H265Complexity left, Azure.ResourceManager.Media.Models.H265Complexity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.H265Complexity (string value) { throw null; }
@@ -2159,9 +2121,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.H265VideoProfile Main { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.H265VideoProfile Main10 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.H265VideoProfile other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.H265VideoProfile left, Azure.ResourceManager.Media.Models.H265VideoProfile right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.H265VideoProfile (string value) { throw null; }
@@ -2191,9 +2151,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.InputVideoStretchMode AutoSize { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.InputVideoStretchMode None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.InputVideoStretchMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.InputVideoStretchMode left, Azure.ResourceManager.Media.Models.InputVideoStretchMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.InputVideoStretchMode (string value) { throw null; }
@@ -2210,9 +2168,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.InsightsType AudioInsightsOnly { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.InsightsType VideoInsightsOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.InsightsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.InsightsType left, Azure.ResourceManager.Media.Models.InsightsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.InsightsType (string value) { throw null; }
@@ -2228,9 +2184,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.InterleaveOutput InterleavedOutput { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.InterleaveOutput NonInterleavedOutput { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.InterleaveOutput other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.InterleaveOutput left, Azure.ResourceManager.Media.Models.InterleaveOutput right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.InterleaveOutput (string value) { throw null; }
@@ -2246,9 +2200,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction Allow { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction left, Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction (string value) { throw null; }
@@ -2322,9 +2274,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.LayerEntropyMode Cabac { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.LayerEntropyMode Cavlc { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.LayerEntropyMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.LayerEntropyMode left, Azure.ResourceManager.Media.Models.LayerEntropyMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.LayerEntropyMode (string value) { throw null; }
@@ -2368,9 +2318,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.LiveEventEncodingType Premium1080P { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.LiveEventEncodingType Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.LiveEventEncodingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventEncodingType left, Azure.ResourceManager.Media.Models.LiveEventEncodingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.LiveEventEncodingType (string value) { throw null; }
@@ -2412,9 +2360,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.LiveEventInputProtocol FragmentedMp4 { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.LiveEventInputProtocol Rtmp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.LiveEventInputProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventInputProtocol left, Azure.ResourceManager.Media.Models.LiveEventInputProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.LiveEventInputProtocol (string value) { throw null; }
@@ -2463,9 +2409,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.LiveEventResourceState Stopped { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.LiveEventResourceState Stopping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.LiveEventResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventResourceState left, Azure.ResourceManager.Media.Models.LiveEventResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.LiveEventResourceState (string value) { throw null; }
@@ -2495,9 +2439,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.LiveOutputResourceState Deleting { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.LiveOutputResourceState Running { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.LiveOutputResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.LiveOutputResourceState left, Azure.ResourceManager.Media.Models.LiveOutputResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.LiveOutputResourceState (string value) { throw null; }
@@ -2526,9 +2468,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaAssetContainerPermission ReadWrite { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaAssetContainerPermission ReadWriteDelete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaAssetContainerPermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaAssetContainerPermission left, Azure.ResourceManager.Media.Models.MediaAssetContainerPermission right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaAssetContainerPermission (string value) { throw null; }
@@ -2569,9 +2509,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaAssetStorageEncryptionFormat MediaStorageClientEncryption { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaAssetStorageEncryptionFormat None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaAssetStorageEncryptionFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaAssetStorageEncryptionFormat left, Azure.ResourceManager.Media.Models.MediaAssetStorageEncryptionFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaAssetStorageEncryptionFormat (string value) { throw null; }
@@ -2696,9 +2634,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaJobErrorCategory Service { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaJobErrorCategory Upload { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaJobErrorCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaJobErrorCategory left, Azure.ResourceManager.Media.Models.MediaJobErrorCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaJobErrorCategory (string value) { throw null; }
@@ -2722,9 +2658,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaJobErrorCode UploadNotAccessible { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaJobErrorCode UploadTransientError { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaJobErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaJobErrorCode left, Azure.ResourceManager.Media.Models.MediaJobErrorCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaJobErrorCode (string value) { throw null; }
@@ -2872,9 +2806,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaJobPriority Low { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaJobPriority Normal { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaJobPriority other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaJobPriority left, Azure.ResourceManager.Media.Models.MediaJobPriority right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaJobPriority (string value) { throw null; }
@@ -2890,9 +2822,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaJobRetry DoNotRetry { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaJobRetry MayRetry { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaJobRetry other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaJobRetry left, Azure.ResourceManager.Media.Models.MediaJobRetry right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaJobRetry (string value) { throw null; }
@@ -2913,9 +2843,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaJobState Queued { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaJobState Scheduled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaJobState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaJobState left, Azure.ResourceManager.Media.Models.MediaJobState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaJobState (string value) { throw null; }
@@ -2973,9 +2901,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Media.Models.MediaPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -2992,9 +2918,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.Media.Models.MediaPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -3057,9 +2981,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion Tls12 { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion Tls13 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion left, Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion (string value) { throw null; }
@@ -3101,9 +3023,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaServicesProvisioningState InProgress { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaServicesProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaServicesProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaServicesProvisioningState left, Azure.ResourceManager.Media.Models.MediaServicesProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaServicesProvisioningState (string value) { throw null; }
@@ -3119,9 +3039,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaServicesPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaServicesPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaServicesPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaServicesPublicNetworkAccess left, Azure.ResourceManager.Media.Models.MediaServicesPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaServicesPublicNetworkAccess (string value) { throw null; }
@@ -3151,9 +3069,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaServicesStorageAccountType Primary { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaServicesStorageAccountType Secondary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaServicesStorageAccountType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaServicesStorageAccountType left, Azure.ResourceManager.Media.Models.MediaServicesStorageAccountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaServicesStorageAccountType (string value) { throw null; }
@@ -3169,9 +3085,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaStorageAuthentication ManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaStorageAuthentication System { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaStorageAuthentication other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaStorageAuthentication left, Azure.ResourceManager.Media.Models.MediaStorageAuthentication right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaStorageAuthentication (string value) { throw null; }
@@ -3198,9 +3112,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.MediaTransformOnErrorType ContinueJob { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.MediaTransformOnErrorType StopProcessingJob { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.MediaTransformOnErrorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.MediaTransformOnErrorType left, Azure.ResourceManager.Media.Models.MediaTransformOnErrorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.MediaTransformOnErrorType (string value) { throw null; }
@@ -3283,9 +3195,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.PlayerVisibility Hidden { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.PlayerVisibility Visible { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.PlayerVisibility other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.PlayerVisibility left, Azure.ResourceManager.Media.Models.PlayerVisibility right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.PlayerVisibility (string value) { throw null; }
@@ -3303,9 +3213,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.PlayReadySecurityLevel SL3000 { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.PlayReadySecurityLevel Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.PlayReadySecurityLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.PlayReadySecurityLevel left, Azure.ResourceManager.Media.Models.PlayReadySecurityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.PlayReadySecurityLevel (string value) { throw null; }
@@ -3398,9 +3306,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.RotationSetting Rotate270 { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.RotationSetting Rotate90 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.RotationSetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.RotationSetting left, Azure.ResourceManager.Media.Models.RotationSetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.RotationSetting (string value) { throw null; }
@@ -3532,9 +3438,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.StreamingEndpointResourceState Stopped { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.StreamingEndpointResourceState Stopping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.StreamingEndpointResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.StreamingEndpointResourceState left, Azure.ResourceManager.Media.Models.StreamingEndpointResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.StreamingEndpointResourceState (string value) { throw null; }
@@ -3591,9 +3495,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.StreamingLocatorContentKeyType CommonEncryptionCenc { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.StreamingLocatorContentKeyType EnvelopeEncryption { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.StreamingLocatorContentKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.StreamingLocatorContentKeyType left, Azure.ResourceManager.Media.Models.StreamingLocatorContentKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.StreamingLocatorContentKeyType (string value) { throw null; }
@@ -3624,9 +3526,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme EnvelopeEncryption { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme NoEncryption { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme left, Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme (string value) { throw null; }
@@ -3705,9 +3605,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.StreamingPolicyStreamingProtocol Hls { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.StreamingPolicyStreamingProtocol SmoothStreaming { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.StreamingPolicyStreamingProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.StreamingPolicyStreamingProtocol left, Azure.ResourceManager.Media.Models.StreamingPolicyStreamingProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.StreamingPolicyStreamingProtocol (string value) { throw null; }
@@ -3724,9 +3622,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.StreamOptionsFlag LowLatency { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.StreamOptionsFlag LowLatencyV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.StreamOptionsFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.StreamOptionsFlag left, Azure.ResourceManager.Media.Models.StreamOptionsFlag right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.StreamOptionsFlag (string value) { throw null; }
@@ -3768,9 +3664,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.TrackAttribute Bitrate { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.TrackAttribute Language { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.TrackAttribute other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.TrackAttribute left, Azure.ResourceManager.Media.Models.TrackAttribute right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.TrackAttribute (string value) { throw null; }
@@ -3788,9 +3682,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.TrackAttributeFilter Top { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.TrackAttributeFilter ValueEquals { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.TrackAttributeFilter other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.TrackAttributeFilter left, Azure.ResourceManager.Media.Models.TrackAttributeFilter right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.TrackAttributeFilter (string value) { throw null; }
@@ -3816,9 +3708,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.TrackPropertyCompareOperation Equal { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.TrackPropertyCompareOperation Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.TrackPropertyCompareOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.TrackPropertyCompareOperation left, Azure.ResourceManager.Media.Models.TrackPropertyCompareOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.TrackPropertyCompareOperation (string value) { throw null; }
@@ -3847,9 +3737,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.TrackPropertyType FourCC { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.TrackPropertyType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.TrackPropertyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.TrackPropertyType left, Azure.ResourceManager.Media.Models.TrackPropertyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.TrackPropertyType (string value) { throw null; }
@@ -3928,9 +3816,7 @@ namespace Azure.ResourceManager.Media.Models
         public static Azure.ResourceManager.Media.Models.VideoSyncMode Passthrough { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.VideoSyncMode Vfr { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.VideoSyncMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Media.Models.VideoSyncMode left, Azure.ResourceManager.Media.Models.VideoSyncMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.VideoSyncMode (string value) { throw null; }

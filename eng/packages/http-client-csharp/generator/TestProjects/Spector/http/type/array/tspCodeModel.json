@@ -817,7 +817,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "82",
@@ -1071,7 +1072,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "98",
@@ -1325,7 +1327,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "114",
@@ -1579,7 +1582,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "130",
@@ -1833,7 +1837,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "146",
@@ -2095,7 +2100,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "163",
@@ -2357,7 +2363,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "180",
@@ -2611,7 +2618,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "196",
@@ -2854,7 +2862,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "210",
@@ -3113,7 +3122,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "227",
@@ -3372,7 +3382,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "244",
@@ -3631,7 +3642,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "261",
@@ -3890,7 +3902,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "278",
@@ -4145,9 +4158,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

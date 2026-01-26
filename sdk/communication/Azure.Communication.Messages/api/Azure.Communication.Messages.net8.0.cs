@@ -641,9 +641,7 @@ namespace Azure.Communication.Messages
         public static Azure.Communication.Messages.MessageTemplateStatus Pending { get { throw null; } }
         public static Azure.Communication.Messages.MessageTemplateStatus Rejected { get { throw null; } }
         public bool Equals(Azure.Communication.Messages.MessageTemplateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.Messages.MessageTemplateStatus left, Azure.Communication.Messages.MessageTemplateStatus right) { throw null; }
         public static implicit operator Azure.Communication.Messages.MessageTemplateStatus (string value) { throw null; }
@@ -731,9 +729,7 @@ namespace Azure.Communication.Messages
         public static Azure.Communication.Messages.OutboundDeliveryStrategyKind AllParticipants { get { throw null; } }
         public static Azure.Communication.Messages.OutboundDeliveryStrategyKind InternalOnly { get { throw null; } }
         public bool Equals(Azure.Communication.Messages.OutboundDeliveryStrategyKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.Messages.OutboundDeliveryStrategyKind left, Azure.Communication.Messages.OutboundDeliveryStrategyKind right) { throw null; }
         public static implicit operator Azure.Communication.Messages.OutboundDeliveryStrategyKind (string value) { throw null; }
@@ -978,9 +974,7 @@ namespace Azure.Communication.Messages.Models.Channels
         public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType QuickReply { get { throw null; } }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType Url { get { throw null; } }
         public bool Equals(Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType left, Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType right) { throw null; }
         public static implicit operator Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType (string value) { throw null; }

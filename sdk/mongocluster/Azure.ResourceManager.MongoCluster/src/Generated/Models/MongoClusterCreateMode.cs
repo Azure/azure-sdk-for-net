@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterCreateMode : IEquatable<MongoClusterCreateMode>
     {
         private readonly string _value;
+        /// <summary> Create a new mongo cluster. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Create a mongo cluster from a restore point-in-time. </summary>
+        private const string PointInTimeRestoreValue = "PointInTimeRestore";
+        /// <summary> Create a replica cluster in distinct geographic region from the source cluster. </summary>
+        private const string GeoReplicaValue = "GeoReplica";
+        /// <summary> Create a replica cluster in the same geographic region as the source cluster. </summary>
+        private const string ReplicaValue = "Replica";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterCreateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterCreateMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string PointInTimeRestoreValue = "PointInTimeRestore";
-        private const string GeoReplicaValue = "GeoReplica";
-        private const string ReplicaValue = "Replica";
+            _value = value;
+        }
 
         /// <summary> Create a new mongo cluster. </summary>
         public static MongoClusterCreateMode Default { get; } = new MongoClusterCreateMode(DefaultValue);
+
         /// <summary> Create a mongo cluster from a restore point-in-time. </summary>
         public static MongoClusterCreateMode PointInTimeRestore { get; } = new MongoClusterCreateMode(PointInTimeRestoreValue);
+
         /// <summary> Create a replica cluster in distinct geographic region from the source cluster. </summary>
         public static MongoClusterCreateMode GeoReplica { get; } = new MongoClusterCreateMode(GeoReplicaValue);
+
         /// <summary> Create a replica cluster in the same geographic region as the source cluster. </summary>
         public static MongoClusterCreateMode Replica { get; } = new MongoClusterCreateMode(ReplicaValue);
+
         /// <summary> Determines if two <see cref="MongoClusterCreateMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterCreateMode left, MongoClusterCreateMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterCreateMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterCreateMode left, MongoClusterCreateMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterCreateMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterCreateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterCreateMode(string value) => new MongoClusterCreateMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterCreateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterCreateMode?(string value) => value == null ? null : new MongoClusterCreateMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterCreateMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterCreateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

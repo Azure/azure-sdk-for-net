@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class AvsPrivateCloudAddonOperationSource : IOperationSource<AvsPrivateCloudAddonResource>
+    /// <summary></summary>
+    internal partial class AvsPrivateCloudAddonOperationSource : IOperationSource<AvsPrivateCloudAddonResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal AvsPrivateCloudAddonOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         AvsPrivateCloudAddonResource IOperationSource<AvsPrivateCloudAddonResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AvsPrivateCloudAddonData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            AvsPrivateCloudAddonData data = AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AvsPrivateCloudAddonResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<AvsPrivateCloudAddonResource> IOperationSource<AvsPrivateCloudAddonResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AvsPrivateCloudAddonData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
-            return await Task.FromResult(new AvsPrivateCloudAddonResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            AvsPrivateCloudAddonData data = AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AvsPrivateCloudAddonResource(_client, data);
         }
     }
 }

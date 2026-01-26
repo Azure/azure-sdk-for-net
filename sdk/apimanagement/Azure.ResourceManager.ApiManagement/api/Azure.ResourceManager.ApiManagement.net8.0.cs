@@ -39,12 +39,10 @@ namespace Azure.ResourceManager.ApiManagement
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ServiceLink { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri ServiceUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceApiId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } set { } }
         public string TermsOfServiceLink { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri TermsOfServiceUri { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ApiManagement.ApiData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.ApiData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2162,10 +2160,8 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.WorkspaceContractResource>> GetWorkspaceContractAsync(string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApiManagement.WorkspaceContractCollection GetWorkspaceContracts() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource> MigrateToStv2(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiManagement.Models.MigrateToStv2Contract migrateToStv2Contract = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource> MigrateToStv2(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource>> MigrateToStv2Async(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiManagement.Models.MigrateToStv2Contract migrateToStv2Contract = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource>> MigrateToStv2Async(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.Models.ConnectivityCheckResult> PerformConnectivityCheckAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiManagement.Models.ConnectivityCheckContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.Models.ConnectivityCheckResult>> PerformConnectivityCheckAsyncAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiManagement.Models.ConnectivityCheckContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -5170,9 +5166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.AccessName TenantAccess { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.AccessName TenantGitAccess { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.AccessName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.AccessName left, Azure.ResourceManager.ApiManagement.Models.AccessName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.AccessName (string value) { throw null; }
@@ -5221,9 +5215,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public AlwaysLog(string value) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AlwaysLog AllErrors { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.AlwaysLog other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.AlwaysLog left, Azure.ResourceManager.ApiManagement.Models.AlwaysLog right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.AlwaysLog (string value) { throw null; }
@@ -5266,13 +5258,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ServiceLink { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri ServiceUri { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SoapApiType? SoapApiType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceApiId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } set { } }
         public string TermsOfServiceLink { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri TermsOfServiceUri { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TranslateRequiredQueryParametersConduct? TranslateRequiredQueryParametersConduct { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
@@ -5314,7 +5304,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation License { get { throw null; } }
         public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } }
         public string TermsOfServiceLink { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri TermsOfServiceUri { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ApiManagement.Models.ApiEntityBaseContract System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.ApiEntityBaseContract>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5353,9 +5342,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ApiGatewaySkuType WorkspaceGatewayPremium { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ApiGatewaySkuType WorkspaceGatewayStandard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiGatewaySkuType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiGatewaySkuType left, Azure.ResourceManager.ApiManagement.Models.ApiGatewaySkuType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiGatewaySkuType (string value) { throw null; }
@@ -5438,9 +5425,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public ApiManagementAuthorizationType(string value) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationType OAuth2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationType left, Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationType (string value) { throw null; }
@@ -5712,9 +5697,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState Disabled { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState left, Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState (string value) { throw null; }
@@ -5761,9 +5744,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -5780,9 +5761,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -5848,9 +5827,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType Manual { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType left, Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType (string value) { throw null; }
@@ -6011,9 +5988,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuType Standard { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuType StandardV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuType left, Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuType (string value) { throw null; }
@@ -6243,9 +6218,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState Deleted { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState Pending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState left, Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState (string value) { throw null; }
@@ -6263,9 +6236,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol Ws { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol Wss { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol left, Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol (string value) { throw null; }
@@ -6310,11 +6281,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Path { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
         public string ServiceLink { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri ServiceUri { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } set { } }
         public string TermsOfServiceLink { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri TermsOfServiceUri { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ApiManagement.Models.ApiPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.ApiPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6332,7 +6301,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Description { get { throw null; } }
         public bool? IsCurrent { get { throw null; } }
         public bool? IsOnline { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `PrivateUriString` instead.", false)]
         public System.Uri PrivateUri { get { throw null; } }
         public string PrivateUriString { get { throw null; } }
@@ -6353,9 +6321,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ApiSchemaType Json { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ApiSchemaType Xml { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiSchemaType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiSchemaType left, Azure.ResourceManager.ApiManagement.Models.ApiSchemaType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiSchemaType (string value) { throw null; }
@@ -6388,9 +6354,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ApiType Soap { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ApiType WebSocket { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiType left, Azure.ResourceManager.ApiManagement.Models.ApiType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiType (string value) { throw null; }
@@ -6437,9 +6401,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.AppType DeveloperPortal { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.AppType Portal { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.AppType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.AppType left, Azure.ResourceManager.ApiManagement.Models.AppType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.AppType (string value) { throw null; }
@@ -6449,21 +6411,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public static partial class ArmApiManagementModelFactory
     {
         public static Azure.ResourceManager.ApiManagement.Models.AdditionalLocation AdditionalLocation(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuProperties sku = null, System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> publicIPAddresses = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> privateIPAddresses = null, Azure.Core.ResourceIdentifier publicIPAddressId = null, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkConfiguration virtualNetworkConfiguration = null, System.Uri gatewayRegionalUri = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState? natGatewayState = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState?), System.Collections.Generic.IEnumerable<string> outboundPublicIPAddresses = null, bool? disableGateway = default(bool?), Azure.ResourceManager.ApiManagement.Models.PlatformVersion? platformVersion = default(Azure.ResourceManager.ApiManagement.Models.PlatformVersion?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.AdditionalLocation AdditionalLocation(Azure.Core.AzureLocation location, Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuProperties sku, System.Collections.Generic.IEnumerable<string> zones, System.Collections.Generic.IEnumerable<System.Net.IPAddress> publicIPAddresses, System.Collections.Generic.IEnumerable<System.Net.IPAddress> privateIPAddresses, Azure.Core.ResourceIdentifier publicIPAddressId, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkConfiguration virtualNetworkConfiguration, System.Uri gatewayRegionalUri, bool? disableGateway, Azure.ResourceManager.ApiManagement.Models.PlatformVersion? platformVersion) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AllPoliciesContract AllPoliciesContract(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier referencePolicyId = null, Azure.ResourceManager.ApiManagement.Models.PolicyComplianceState? complianceState = default(Azure.ResourceManager.ApiManagement.Models.PolicyComplianceState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, Azure.Core.ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet, string value, Azure.ResourceManager.ApiManagement.Models.ContentFormat? format, Azure.ResourceManager.ApiManagement.Models.ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, Azure.ResourceManager.ApiManagement.Models.SoapApiType? soapApiType, Azure.ResourceManager.ApiManagement.Models.TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description = null, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings = null, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType = default(Azure.ResourceManager.ApiManagement.Models.ApiType?), string apiRevision = null, string apiVersion = null, bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = null, string apiVersionDescription = null, Azure.Core.ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = default(bool?), string termsOfServiceLink = null, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact = null, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license = null, Azure.Core.ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet = null, string provisioningState = null, string value = null, Azure.ResourceManager.ApiManagement.Models.ContentFormat? format = default(Azure.ResourceManager.ApiManagement.Models.ContentFormat?), Azure.ResourceManager.ApiManagement.Models.ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = null, Azure.ResourceManager.ApiManagement.Models.SoapApiType? soapApiType = default(Azure.ResourceManager.ApiManagement.Models.SoapApiType?), Azure.ResourceManager.ApiManagement.Models.TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct = default(Azure.ResourceManager.ApiManagement.Models.TranslateRequiredQueryParametersConduct?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, System.Uri termsOfServiceUri, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, Azure.Core.ResourceIdentifier sourceApiId, string displayName, System.Uri serviceUri, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet = null, string value = null, Azure.ResourceManager.ApiManagement.Models.ContentFormat? format = default(Azure.ResourceManager.ApiManagement.Models.ContentFormat?), Azure.ResourceManager.ApiManagement.Models.ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = null, Azure.ResourceManager.ApiManagement.Models.SoapApiType? soapApiType = default(Azure.ResourceManager.ApiManagement.Models.SoapApiType?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiData ApiData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, Azure.Core.ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiData ApiData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings = null, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType = default(Azure.ResourceManager.ApiManagement.Models.ApiType?), string apiRevision = null, string apiVersion = null, bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = null, string apiVersionDescription = null, Azure.Core.ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = default(bool?), string termsOfServiceLink = null, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact = null, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license = null, Azure.Core.ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet = null, string provisioningState = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiData ApiData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, System.Uri termsOfServiceUri, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, Azure.Core.ResourceIdentifier sourceApiId, string displayName, System.Uri serviceUri, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiEntityBaseContract ApiEntityBaseContract(string description = null, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings = null, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType = default(Azure.ResourceManager.ApiManagement.Models.ApiType?), string apiRevision = null, string apiVersion = null, bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = null, string apiVersionDescription = null, Azure.Core.ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = default(bool?), string termsOfServiceLink = null, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact = null, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.ApiEntityBaseContract ApiEntityBaseContract(string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, System.Uri termsOfServiceUri, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact = null, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiGatewayConfigConnectionData ApiGatewayConfigConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.ResourceIdentifier sourceId = null, string defaultHostname = null, System.Collections.Generic.IEnumerable<string> hostnames = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiGatewayData ApiGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ApiManagement.Models.ApiManagementGatewaySkuProperties sku = null, Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, string targetProvisioningState = null, System.DateTimeOffset? createdAtUtc = default(System.DateTimeOffset?), string frontendDefaultHostname = null, Azure.Core.ResourceIdentifier subnetId = null, string configurationApiHostname = null, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType? virtualNetworkType = default(Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType?)) { throw null; }
@@ -6471,13 +6427,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.ApiIssueAttachmentData ApiIssueAttachmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string contentFormat = null, string content = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiIssueCommentData ApiIssueCommentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string text = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier userId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementAuthorizationServerData ApiManagementAuthorizationServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AuthorizationMethod> authorizationMethods = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod> clientAuthenticationMethods = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.TokenBodyParameterContract> tokenBodyParameters = null, string tokenEndpoint = null, bool? doesSupportState = default(bool?), string defaultScope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> bearerTokenSendingMethods = null, string resourceOwnerUsername = null, string resourceOwnerPassword = null, string displayName = null, bool? useInTestConsole = default(bool?), bool? useInApiDocumentation = default(bool?), string clientRegistrationEndpoint = null, string authorizationEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.GrantType> grantTypes = null, string clientId = null, string clientSecret = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiManagementAuthorizationServerData ApiManagementAuthorizationServerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AuthorizationMethod> authorizationMethods, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod> clientAuthenticationMethods, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.GrantType> grantTypes, string clientId, string clientSecret) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationServerPatch ApiManagementAuthorizationServerPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AuthorizationMethod> authorizationMethods = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod> clientAuthenticationMethods = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.TokenBodyParameterContract> tokenBodyParameters = null, string tokenEndpoint = null, bool? doesSupportState = default(bool?), string defaultScope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> bearerTokenSendingMethods = null, string resourceOwnerUsername = null, string resourceOwnerPassword = null, string displayName = null, bool? useInTestConsole = default(bool?), bool? useInApiDocumentation = default(bool?), string clientRegistrationEndpoint = null, string authorizationEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.GrantType> grantTypes = null, string clientId = null, string clientSecret = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationServerPatch ApiManagementAuthorizationServerPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AuthorizationMethod> authorizationMethods, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod> clientAuthenticationMethods, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.GrantType> grantTypes, string clientId, string clientSecret) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementBackendData ApiManagementBackendData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string description = null, System.Uri resourceUri = null, Azure.ResourceManager.ApiManagement.Models.BackendServiceFabricClusterProperties backendServiceFabricCluster = null, Azure.ResourceManager.ApiManagement.Models.BackendCredentialsContract credentials = null, Azure.ResourceManager.ApiManagement.Models.BackendProxyContract proxy = null, Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties tls = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.CircuitBreakerRule> circuitBreakerRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BackendPoolItem> poolServices = null, Azure.ResourceManager.ApiManagement.Models.BackendType? typePropertiesType = default(Azure.ResourceManager.ApiManagement.Models.BackendType?), System.Uri uri = null, Azure.ResourceManager.ApiManagement.Models.BackendProtocol? protocol = default(Azure.ResourceManager.ApiManagement.Models.BackendProtocol?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiManagementBackendData ApiManagementBackendData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string title, string description, System.Uri resourceUri, Azure.ResourceManager.ApiManagement.Models.BackendServiceFabricClusterProperties backendServiceFabricCluster, Azure.ResourceManager.ApiManagement.Models.BackendCredentialsContract credentials, Azure.ResourceManager.ApiManagement.Models.BackendProxyContract proxy, Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties tls, System.Uri uri, Azure.ResourceManager.ApiManagement.Models.BackendProtocol? protocol) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementCacheData ApiManagementCacheData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string connectionString = null, string useFromLocation = null, System.Uri resourceUri = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementCertificateData ApiManagementCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string subject = null, string thumbprint = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.ApiManagement.Models.KeyVaultContractProperties keyVaultDetails = null) { throw null; }
@@ -6486,28 +6439,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.ApiManagementGatewayCertificateAuthorityData ApiManagementGatewayCertificateAuthorityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isTrusted = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementGatewayData ApiManagementGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.ResourceLocationDataContract locationData = null, string description = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementGatewayHostnameConfigurationData ApiManagementGatewayHostnameConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string hostname = null, string certificateId = null, bool? isClientCertificateRequired = default(bool?), bool? isTls10Enabled = default(bool?), bool? isTls11Enabled = default(bool?), bool? isHttp20Enabled = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiManagementGlobalSchemaData ApiManagementGlobalSchemaData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ApiManagement.Models.ApiSchemaType? schemaType, string description, System.BinaryData value, System.BinaryData document) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementGlobalSchemaData ApiManagementGlobalSchemaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.ApiSchemaType? schemaType = default(Azure.ResourceManager.ApiManagement.Models.ApiSchemaType?), string description = null, System.BinaryData value = null, System.BinaryData document = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementGroupData ApiManagementGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, bool? isBuiltIn = default(bool?), Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType? groupType = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType?), string externalId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupUserData ApiManagementGroupUserData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState?), string note = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.UserIdentityContract> identities = null, string firstName = null, string lastName = null, string email = null, System.DateTimeOffset? registriesOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.GroupContractProperties> groups = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? identityProviderType, string signInTenant, System.Collections.Generic.IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientId, string clientSecret) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? identityProviderType = default(Azure.ResourceManager.ApiManagement.Models.IdentityProviderType?), string signInTenant = null, System.Collections.Generic.IEnumerable<string> allowedTenants = null, string authority = null, string signUpPolicyName = null, string signInPolicyName = null, string profileEditingPolicyName = null, string passwordResetPolicyName = null, string clientLibrary = null, string clientId = null, string clientSecret = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiManagementIdentityProviderData ApiManagementIdentityProviderData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? identityProviderType, string signInTenant, System.Collections.Generic.IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientId, string clientSecret) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementIdentityProviderData ApiManagementIdentityProviderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? identityProviderType = default(Azure.ResourceManager.ApiManagement.Models.IdentityProviderType?), string signInTenant = null, System.Collections.Generic.IEnumerable<string> allowedTenants = null, string authority = null, string signUpPolicyName = null, string signInPolicyName = null, string profileEditingPolicyName = null, string passwordResetPolicyName = null, string clientLibrary = null, string clientId = null, string clientSecret = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementLoggerData ApiManagementLoggerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.LoggerType? loggerType = default(Azure.ResourceManager.ApiManagement.Models.LoggerType?), string description = null, System.Collections.Generic.IDictionary<string, string> credentials = null, bool? isBuffered = default(bool?), Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementNamedValueCreateOrUpdateContent ApiManagementNamedValueCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> tags = null, bool? isSecret = default(bool?), string displayName = null, string value = null, Azure.ResourceManager.ApiManagement.Models.KeyVaultContractCreateProperties keyVault = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiManagementNamedValueData ApiManagementNamedValueData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IEnumerable<string> tags, bool? isSecret, string displayName, string value, Azure.ResourceManager.ApiManagement.Models.KeyVaultContractProperties keyVaultDetails) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementNamedValueData ApiManagementNamedValueData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> tags = null, bool? isSecret = default(bool?), string displayName = null, string value = null, Azure.ResourceManager.ApiManagement.Models.KeyVaultContractProperties keyVaultDetails = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementNotificationData ApiManagementNotificationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string description = null, Azure.ResourceManager.ApiManagement.Models.RecipientsContractProperties recipients = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, string metadataEndpoint = null, string clientId = null, string clientSecret = null, bool? useInTestConsole = default(bool?), bool? useInApiDocumentation = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri uri = null, string validationKey = null, bool? isSubscriptionDelegationEnabled = default(bool?), bool? isUserRegistrationDelegationEnabled = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiManagementPortalRevisionData ApiManagementPortalRevisionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, string statusDetails, Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus? status, bool? isCurrent, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementPortalRevisionData ApiManagementPortalRevisionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string statusDetails = null, Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus? status = default(Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus?), bool? isCurrent = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementPortalSignInSettingData ApiManagementPortalSignInSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isRedirectEnabled = default(bool?)) { throw null; }
@@ -6517,17 +6464,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.ApiManagementProductData ApiManagementProductData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string terms = null, bool? isSubscriptionRequired = default(bool?), bool? isApprovalRequired = default(bool?), int? subscriptionsLimit = default(int?), Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?), string displayName = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacity ApiManagementResourceSkuCapacity(int? minimum = default(int?), int? maximum = default(int?), int? @default = default(int?), Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType? scaleType = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceBackupRestoreContent ApiManagementServiceBackupRestoreContent(string storageAccount = null, string containerName = null, string backupName = null, Azure.ResourceManager.ApiManagement.Models.StorageAccountAccessType? accessType = default(Azure.ResourceManager.ApiManagement.Models.StorageAccountAccessType?), string accessKey = null, string clientId = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiManagementServiceData ApiManagementServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuProperties sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, System.DateTimeOffset? createdAtUtc, System.Uri gatewayUri, System.Uri gatewayRegionalUri, System.Uri portalUri, System.Uri managementApiUri, System.Uri scmUri, System.Uri developerPortalUri, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration> hostnameConfigurations, System.Collections.Generic.IEnumerable<System.Net.IPAddress> publicIPAddresses, System.Collections.Generic.IEnumerable<System.Net.IPAddress> privateIPAddresses, Azure.Core.ResourceIdentifier publicIPAddressId, Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkConfiguration virtualNetworkConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AdditionalLocation> additionalLocations, System.Collections.Generic.IDictionary<string, string> customProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.CertificateConfiguration> certificates, bool? enableClientCertificate, Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState? natGatewayState, System.Collections.Generic.IEnumerable<string> outboundPublicIPAddresses, bool? disableGateway, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType? virtualNetworkType, string minApiVersion, bool? restore, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, Azure.ResourceManager.ApiManagement.Models.PlatformVersion? platformVersion, string publisherEmail, string publisherName) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiManagementServiceData ApiManagementServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuProperties sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, System.DateTimeOffset? createdAtUtc, System.Uri gatewayUri, System.Uri gatewayRegionalUri, System.Uri portalUri, System.Uri managementApiUri, System.Uri scmUri, System.Uri developerPortalUri, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration> hostnameConfigurations, System.Collections.Generic.IEnumerable<System.Net.IPAddress> publicIPAddresses, System.Collections.Generic.IEnumerable<System.Net.IPAddress> privateIPAddresses, Azure.Core.ResourceIdentifier publicIPAddressId, Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkConfiguration virtualNetworkConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AdditionalLocation> additionalLocations, System.Collections.Generic.IDictionary<string, string> customProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.CertificateConfiguration> certificates, bool? enableClientCertificate, bool? disableGateway, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType? virtualNetworkType, string minApiVersion, bool? restore, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, Azure.ResourceManager.ApiManagement.Models.PlatformVersion? platformVersion, string publisherEmail, string publisherName) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementServiceData ApiManagementServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuProperties sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null, string notificationSenderEmail = null, string provisioningState = null, string targetProvisioningState = null, System.DateTimeOffset? createdAtUtc = default(System.DateTimeOffset?), System.Uri gatewayUri = null, System.Uri gatewayRegionalUri = null, System.Uri portalUri = null, System.Uri managementApiUri = null, System.Uri scmUri = null, System.Uri developerPortalUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration> hostnameConfigurations = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> publicIPAddresses = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> privateIPAddresses = null, Azure.Core.ResourceIdentifier publicIPAddressId = null, Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess?), Azure.ResourceManager.ApiManagement.Models.LegacyApiState? legacyApi = default(Azure.ResourceManager.ApiManagement.Models.LegacyApiState?), Azure.ResourceManager.ApiManagement.Models.VirtualNetworkConfiguration virtualNetworkConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AdditionalLocation> additionalLocations = null, System.Collections.Generic.IDictionary<string, string> customProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.CertificateConfiguration> certificates = null, bool? enableClientCertificate = default(bool?), Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState? natGatewayState = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState?), System.Collections.Generic.IEnumerable<string> outboundPublicIPAddresses = null, bool? disableGateway = default(bool?), Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType? virtualNetworkType = default(Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType?), string minApiVersion = null, bool? restore = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = null, Azure.ResourceManager.ApiManagement.Models.PlatformVersion? platformVersion = default(Azure.ResourceManager.ApiManagement.Models.PlatformVersion?), Azure.ResourceManager.ApiManagement.Models.LegacyPortalStatus? legacyPortalStatus = default(Azure.ResourceManager.ApiManagement.Models.LegacyPortalStatus?), Azure.ResourceManager.ApiManagement.Models.DeveloperPortalStatus? developerPortalStatus = default(Azure.ResourceManager.ApiManagement.Models.DeveloperPortalStatus?), string publisherEmail = null, string publisherName = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceGetDomainOwnershipIdentifierResult ApiManagementServiceGetDomainOwnershipIdentifierResult(string domainOwnershipIdentifier = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceGetSsoTokenResult ApiManagementServiceGetSsoTokenResult(System.Uri redirectUri = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityResult ApiManagementServiceNameAvailabilityResult(bool? isNameAvailable = default(bool?), string message = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameUnavailableReason? reason = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameUnavailableReason?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementServicePatch ApiManagementServicePatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuProperties sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, System.DateTimeOffset? createdAtUtc, System.Uri gatewayUri, System.Uri gatewayRegionalUri, System.Uri portalUri, System.Uri managementApiUri, System.Uri scmUri, System.Uri developerPortalUri, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration> hostnameConfigurations, System.Collections.Generic.IEnumerable<System.Net.IPAddress> publicIPAddresses, System.Collections.Generic.IEnumerable<System.Net.IPAddress> privateIPAddresses, Azure.Core.ResourceIdentifier publicIPAddressId, Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkConfiguration virtualNetworkConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AdditionalLocation> additionalLocations, System.Collections.Generic.IDictionary<string, string> customProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.CertificateConfiguration> certificates, bool? enableClientCertificate, Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState? natGatewayState, System.Collections.Generic.IEnumerable<string> outboundPublicIPAddresses, bool? disableGateway, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType? virtualNetworkType, string minApiVersion, bool? restore, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, Azure.ResourceManager.ApiManagement.Models.PlatformVersion? platformVersion, string publisherEmail, string publisherName, System.Collections.Generic.IDictionary<string, string> tags) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementServicePatch ApiManagementServicePatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuProperties sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, System.DateTimeOffset? createdAtUtc, System.Uri gatewayUri, System.Uri gatewayRegionalUri, System.Uri portalUri, System.Uri managementApiUri, System.Uri scmUri, System.Uri developerPortalUri, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration> hostnameConfigurations, System.Collections.Generic.IEnumerable<System.Net.IPAddress> publicIPAddresses, System.Collections.Generic.IEnumerable<System.Net.IPAddress> privateIPAddresses, Azure.Core.ResourceIdentifier publicIPAddressId, Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkConfiguration virtualNetworkConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AdditionalLocation> additionalLocations, System.Collections.Generic.IDictionary<string, string> customProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.CertificateConfiguration> certificates, bool? enableClientCertificate, bool? disableGateway, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType? virtualNetworkType, string minApiVersion, bool? restore, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, Azure.ResourceManager.ApiManagement.Models.PlatformVersion? platformVersion, string publisherEmail, string publisherName, System.Collections.Generic.IDictionary<string, string> tags) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementServicePatch ApiManagementServicePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuProperties sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null, string notificationSenderEmail = null, string provisioningState = null, string targetProvisioningState = null, System.DateTimeOffset? createdAtUtc = default(System.DateTimeOffset?), System.Uri gatewayUri = null, System.Uri gatewayRegionalUri = null, System.Uri portalUri = null, System.Uri managementApiUri = null, System.Uri scmUri = null, System.Uri developerPortalUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration> hostnameConfigurations = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> publicIPAddresses = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> privateIPAddresses = null, Azure.Core.ResourceIdentifier publicIPAddressId = null, Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess?), Azure.ResourceManager.ApiManagement.Models.LegacyApiState? legacyApi = default(Azure.ResourceManager.ApiManagement.Models.LegacyApiState?), Azure.ResourceManager.ApiManagement.Models.VirtualNetworkConfiguration virtualNetworkConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AdditionalLocation> additionalLocations = null, System.Collections.Generic.IDictionary<string, string> customProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.CertificateConfiguration> certificates = null, bool? enableClientCertificate = default(bool?), Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState? natGatewayState = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementNatGatewayState?), System.Collections.Generic.IEnumerable<string> outboundPublicIPAddresses = null, bool? disableGateway = default(bool?), Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType? virtualNetworkType = default(Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType?), string minApiVersion = null, bool? restore = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = null, Azure.ResourceManager.ApiManagement.Models.PlatformVersion? platformVersion = default(Azure.ResourceManager.ApiManagement.Models.PlatformVersion?), Azure.ResourceManager.ApiManagement.Models.LegacyPortalStatus? legacyPortalStatus = default(Azure.ResourceManager.ApiManagement.Models.LegacyPortalStatus?), Azure.ResourceManager.ApiManagement.Models.DeveloperPortalStatus? developerPortalStatus = default(Azure.ResourceManager.ApiManagement.Models.DeveloperPortalStatus?), string publisherEmail = null, string publisherName = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementSku ApiManagementSku(string resourceType = null, string name = null, string tier = null, string size = null, string family = null, string kind = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuCapacity capacity = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuLocationInfo> locationInfo = null, System.Collections.Generic.IEnumerable<string> apiVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuCosts> costs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuCapabilities> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuRestrictions> restrictions = null) { throw null; }
@@ -6542,24 +6485,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.ApiManagementWorkspaceLinksData ApiManagementWorkspaceLinksData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier workspaceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> gateways = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiOperationData ApiOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ParameterContract> templateParameters = null, string description = null, Azure.ResourceManager.ApiManagement.Models.RequestContract request = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ResponseContract> responses = null, string policies = null, string displayName = null, string method = null, string uriTemplate = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiPatch ApiPatch(string description = null, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings = null, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType = default(Azure.ResourceManager.ApiManagement.Models.ApiType?), string apiRevision = null, string apiVersion = null, bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = null, string apiVersionDescription = null, Azure.Core.ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = default(bool?), string termsOfServiceLink = null, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact = null, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license = null, string displayName = null, string serviceLink = null, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.ApiPatch ApiPatch(string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, System.Uri termsOfServiceUri, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, string displayName, System.Uri serviceUri, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiReleaseData ApiReleaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier apiId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string notes = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiRevisionContract ApiRevisionContract(string apiId = null, string apiRevision = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string description = null, string privateUriString = null, bool? isOnline = default(bool?), bool? isCurrent = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.ApiSchemaData ApiSchemaData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string contentType, string value, System.BinaryData definitions, System.BinaryData components) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiSchemaData ApiSchemaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string contentType = null, string provisioningState = null, string value = null, System.BinaryData definitions = null, System.BinaryData components = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiTagDescriptionData ApiTagDescriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Uri externalDocsUri = null, string externalDocsDescription = null, string tagId = null, string displayName = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiVersionSetData ApiVersionSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string versionQueryName = null, string versionHeaderName = null, string displayName = null, Azure.ResourceManager.ApiManagement.Models.VersioningScheme? versioningScheme = default(Azure.ResourceManager.ApiManagement.Models.VersioningScheme?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AssociatedApiProperties AssociatedApiProperties(string description = null, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings = null, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType = default(Azure.ResourceManager.ApiManagement.Models.ApiType?), string apiRevision = null, string apiVersion = null, bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = null, string apiVersionDescription = null, Azure.Core.ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = default(bool?), string termsOfServiceLink = null, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact = null, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license = null, string id = null, string name = null, System.Uri serviceUri = null, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.AssociatedApiProperties AssociatedApiProperties(string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, System.Uri termsOfServiceUri, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, string id, string name, System.Uri serviceUri, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AssociatedOperationProperties AssociatedOperationProperties(string id = null, string name = null, string apiName = null, string apiRevision = null, string apiVersion = null, string description = null, string method = null, string uriTemplate = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AssociatedProductProperties AssociatedProductProperties(string description = null, string terms = null, bool? isSubscriptionRequired = default(bool?), bool? isApprovalRequired = default(bool?), int? subscriptionsLimit = default(int?), Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?), string id = null, string name = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AssociatedTagProperties AssociatedTagProperties(string id = null, string name = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AssociationContract AssociationContract(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.AssociationEntityProvisioningState? provisioningState = default(Azure.ResourceManager.ApiManagement.Models.AssociationEntityProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.AuthorizationAccessPolicyContractData AuthorizationAccessPolicyContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> appIds = null, System.Guid? tenantId = default(System.Guid?), string objectId = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.AuthorizationAccessPolicyContractData AuthorizationAccessPolicyContractData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Guid? tenantId, string objectId) { throw null; }
         public static Azure.ResourceManager.ApiManagement.AuthorizationContractData AuthorizationContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationType? authorizationType = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationType?), Azure.ResourceManager.ApiManagement.Models.OAuth2GrantType? oAuth2GrantType = default(Azure.ResourceManager.ApiManagement.Models.OAuth2GrantType?), System.Collections.Generic.IDictionary<string, string> parameters = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationError error = null, string status = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AuthorizationLoginResult AuthorizationLoginResult(string loginLink = null) { throw null; }
@@ -6579,10 +6518,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.DocumentationContractData DocumentationContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string content = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.EndpointDependency EndpointDependency(string domainName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.EndpointDetail> endpointDetails = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.EndpointDetail EndpointDetail(int? port = default(int?), string region = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.GatewayApiData GatewayApiData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, Azure.Core.ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.GatewayApiData GatewayApiData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings = null, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType = default(Azure.ResourceManager.ApiManagement.Models.ApiType?), string apiRevision = null, string apiVersion = null, bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = null, string apiVersionDescription = null, Azure.Core.ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = default(bool?), string termsOfServiceLink = null, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact = null, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license = null, Azure.Core.ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet = null, string provisioningState = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.GatewayApiData GatewayApiData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, System.Uri termsOfServiceUri, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, Azure.Core.ResourceIdentifier sourceApiId, string displayName, System.Uri serviceUri, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.GatewayDebugCredentialsContract GatewayDebugCredentialsContract(string token = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.GatewayKeysContract GatewayKeysContract(string primary = null, string secondary = null) { throw null; }
@@ -6601,17 +6538,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.OutboundEnvironmentEndpoint OutboundEnvironmentEndpoint(string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.EndpointDependency> endpoints = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.PolicyContractData PolicyContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string value = null, Azure.ResourceManager.ApiManagement.Models.PolicyContentFormat? format = default(Azure.ResourceManager.ApiManagement.Models.PolicyContentFormat?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PolicyDescriptionContractData PolicyDescriptionContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, long? scope = default(long?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.PolicyFragmentContractData PolicyFragmentContractData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string value, string description, Azure.ResourceManager.ApiManagement.Models.PolicyFragmentContentFormat? format) { throw null; }
         public static Azure.ResourceManager.ApiManagement.PolicyFragmentContractData PolicyFragmentContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string value = null, string description = null, Azure.ResourceManager.ApiManagement.Models.PolicyFragmentContentFormat? format = default(Azure.ResourceManager.ApiManagement.Models.PolicyFragmentContentFormat?), string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.PolicyRestrictionContractData PolicyRestrictionContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, Azure.ResourceManager.ApiManagement.Models.PolicyRestrictionRequireBase? requireBase = default(Azure.ResourceManager.ApiManagement.Models.PolicyRestrictionRequireBase?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.PortalConfigContractData PortalConfigContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? enableBasicAuth = default(bool?), bool? require = default(bool?), Azure.ResourceManager.ApiManagement.Models.PortalConfigTermsOfServiceProperties signupTermsOfService = null, Azure.ResourceManager.ApiManagement.Models.PortalConfigDelegationProperties delegation = null, System.Collections.Generic.IEnumerable<string> corsAllowedOrigins = null, Azure.ResourceManager.ApiManagement.Models.PortalConfigCspProperties csp = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PortalSettingsContractData PortalSettingsContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri uri = null, string validationKey = null, bool? isSubscriptionDelegationEnabled = default(bool?), bool? isUserRegistrationDelegationEnabled = default(bool?), bool? isRedirectEnabled = default(bool?), Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties termsOfService = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PortalSettingValidationKeyContract PortalSettingValidationKeyContract(string validationKey = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.ProductApiData ProductApiData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, Azure.Core.ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ProductApiData ProductApiData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings = null, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType = default(Azure.ResourceManager.ApiManagement.Models.ApiType?), string apiRevision = null, string apiVersion = null, bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = null, string apiVersionDescription = null, Azure.Core.ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = default(bool?), string termsOfServiceLink = null, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact = null, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license = null, Azure.Core.ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet = null, string provisioningState = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ApiManagement.Models.ProductApiData ProductApiData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, System.Uri termsOfServiceUri, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, Azure.Core.ResourceIdentifier sourceApiId, string displayName, System.Uri serviceUri, string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols = null, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ProductApiLinkContractData ProductApiLinkContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string apiId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ProductEntityBaseProperties ProductEntityBaseProperties(string description = null, string terms = null, bool? isSubscriptionRequired = default(bool?), bool? isApprovalRequired = default(bool?), int? subscriptionsLimit = default(int?), Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?)) { throw null; }
@@ -6719,9 +6653,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public AssociationEntityProvisioningState(string value) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AssociationEntityProvisioningState Created { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.AssociationEntityProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.AssociationEntityProvisioningState left, Azure.ResourceManager.ApiManagement.Models.AssociationEntityProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.AssociationEntityProvisioningState (string value) { throw null; }
@@ -6892,9 +6824,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.BackendProtocol Http { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.BackendProtocol Soap { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.BackendProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.BackendProtocol left, Azure.ResourceManager.ApiManagement.Models.BackendProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.BackendProtocol (string value) { throw null; }
@@ -6962,9 +6892,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.BackendType Pool { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.BackendType Single { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.BackendType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.BackendType left, Azure.ResourceManager.ApiManagement.Models.BackendType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.BackendType (string value) { throw null; }
@@ -6980,9 +6908,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod AuthorizationHeader { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod Query { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod left, Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod (string value) { throw null; }
@@ -7012,9 +6938,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.CertificateConfigurationStoreName CertificateAuthority { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.CertificateConfigurationStoreName Root { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.CertificateConfigurationStoreName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.CertificateConfigurationStoreName left, Azure.ResourceManager.ApiManagement.Models.CertificateConfigurationStoreName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.CertificateConfigurationStoreName (string value) { throw null; }
@@ -7045,9 +6969,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.CertificateSource KeyVault { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.CertificateSource Managed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.CertificateSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.CertificateSource left, Azure.ResourceManager.ApiManagement.Models.CertificateSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.CertificateSource (string value) { throw null; }
@@ -7064,9 +6986,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.CertificateStatus Failed { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.CertificateStatus InProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.CertificateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.CertificateStatus left, Azure.ResourceManager.ApiManagement.Models.CertificateStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.CertificateStatus (string value) { throw null; }
@@ -7111,9 +7031,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod Basic { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod Body { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod left, Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod (string value) { throw null; }
@@ -7151,9 +7069,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public ConfigurationName(string value) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ConfigurationName Configuration { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ConfigurationName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ConfigurationName left, Azure.ResourceManager.ApiManagement.Models.ConfigurationName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ConfigurationName (string value) { throw null; }
@@ -7181,9 +7097,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ConfirmationEmailType Invite { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ConfirmationEmailType SignUp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ConfirmationEmailType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ConfirmationEmailType left, Azure.ResourceManager.ApiManagement.Models.ConfirmationEmailType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ConfirmationEmailType (string value) { throw null; }
@@ -7201,9 +7115,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ConnectionStatus Disconnected { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ConnectionStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ConnectionStatus left, Azure.ResourceManager.ApiManagement.Models.ConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ConnectionStatus (string value) { throw null; }
@@ -7235,9 +7147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ConnectivityCheckProtocol Https { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ConnectivityCheckProtocol Tcp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ConnectivityCheckProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ConnectivityCheckProtocol left, Azure.ResourceManager.ApiManagement.Models.ConnectivityCheckProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ConnectivityCheckProtocol (string value) { throw null; }
@@ -7355,9 +7265,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ConnectivityStatusType Initializing { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ConnectivityStatusType Success { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ConnectivityStatusType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ConnectivityStatusType left, Azure.ResourceManager.ApiManagement.Models.ConnectivityStatusType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ConnectivityStatusType (string value) { throw null; }
@@ -7386,9 +7294,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.ContentFormat Wsdl { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.ContentFormat WsdlLink { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.ContentFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ContentFormat left, Azure.ResourceManager.ApiManagement.Models.ContentFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ContentFormat (string value) { throw null; }
@@ -7428,9 +7334,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.DataMaskingMode Hide { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.DataMaskingMode Mask { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.DataMaskingMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.DataMaskingMode left, Azure.ResourceManager.ApiManagement.Models.DataMaskingMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.DataMaskingMode (string value) { throw null; }
@@ -7446,9 +7350,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.DeveloperPortalStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.DeveloperPortalStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.DeveloperPortalStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.DeveloperPortalStatus left, Azure.ResourceManager.ApiManagement.Models.DeveloperPortalStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.DeveloperPortalStatus (string value) { throw null; }
@@ -7584,12 +7486,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ServiceLink { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri ServiceUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceApiId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } set { } }
         public string TermsOfServiceLink { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri TermsOfServiceUri { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ApiManagement.Models.GatewayApiData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.GatewayApiData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7653,9 +7553,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public GatewayListDebugCredentialsContractPurpose(string value) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.GatewayListDebugCredentialsContractPurpose Tracing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.GatewayListDebugCredentialsContractPurpose other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.GatewayListDebugCredentialsContractPurpose left, Azure.ResourceManager.ApiManagement.Models.GatewayListDebugCredentialsContractPurpose right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.GatewayListDebugCredentialsContractPurpose (string value) { throw null; }
@@ -7715,9 +7613,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.GatewaySkuCapacityScaleType Manual { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.GatewaySkuCapacityScaleType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.GatewaySkuCapacityScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.GatewaySkuCapacityScaleType left, Azure.ResourceManager.ApiManagement.Models.GatewaySkuCapacityScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.GatewaySkuCapacityScaleType (string value) { throw null; }
@@ -7786,9 +7682,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.GrantType Implicit { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.GrantType ResourceOwnerPassword { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.GrantType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.GrantType left, Azure.ResourceManager.ApiManagement.Models.GrantType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.GrantType (string value) { throw null; }
@@ -7844,9 +7738,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.HostnameType Proxy { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.HostnameType Scm { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.HostnameType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.HostnameType left, Azure.ResourceManager.ApiManagement.Models.HostnameType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.HostnameType (string value) { throw null; }
@@ -7863,9 +7755,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol None { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol W3C { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol left, Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol (string value) { throw null; }
@@ -7906,9 +7796,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.HttpMethodConfiguration Get { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.HttpMethodConfiguration Post { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.HttpMethodConfiguration other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.HttpMethodConfiguration left, Azure.ResourceManager.ApiManagement.Models.HttpMethodConfiguration right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.HttpMethodConfiguration (string value) { throw null; }
@@ -7928,9 +7816,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.IdentityProviderType Microsoft { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.IdentityProviderType Twitter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.IdentityProviderType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.IdentityProviderType left, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.IdentityProviderType (string value) { throw null; }
@@ -7947,9 +7833,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.IssueOrigin Local { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.IssueOrigin Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.IssueOrigin other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.IssueOrigin left, Azure.ResourceManager.ApiManagement.Models.IssueOrigin right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.IssueOrigin (string value) { throw null; }
@@ -7965,9 +7849,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.IssueSeverity Error { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.IssueSeverity Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.IssueSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.IssueSeverity left, Azure.ResourceManager.ApiManagement.Models.IssueSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.IssueSeverity (string value) { throw null; }
@@ -7986,9 +7868,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.IssueState Removed { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.IssueState Resolved { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.IssueState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.IssueState left, Azure.ResourceManager.ApiManagement.Models.IssueState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.IssueState (string value) { throw null; }
@@ -8011,9 +7891,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.IssueType Unknown { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.IssueType UserDefinedRoute { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.IssueType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.IssueType left, Azure.ResourceManager.ApiManagement.Models.IssueType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.IssueType (string value) { throw null; }
@@ -8065,9 +7943,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.KeyVaultRefreshState False { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.KeyVaultRefreshState True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.KeyVaultRefreshState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.KeyVaultRefreshState left, Azure.ResourceManager.ApiManagement.Models.KeyVaultRefreshState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.KeyVaultRefreshState (string value) { throw null; }
@@ -8083,9 +7959,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.LegacyApiState Disabled { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.LegacyApiState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.LegacyApiState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.LegacyApiState left, Azure.ResourceManager.ApiManagement.Models.LegacyApiState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.LegacyApiState (string value) { throw null; }
@@ -8101,9 +7975,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.LegacyPortalStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.LegacyPortalStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.LegacyPortalStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.LegacyPortalStatus left, Azure.ResourceManager.ApiManagement.Models.LegacyPortalStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.LegacyPortalStatus (string value) { throw null; }
@@ -8120,9 +7992,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.LoggerType AzureEventHub { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.LoggerType AzureMonitor { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.LoggerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.LoggerType left, Azure.ResourceManager.ApiManagement.Models.LoggerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.LoggerType (string value) { throw null; }
@@ -8149,9 +8019,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.MigrateToStv2Mode NewIP { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.MigrateToStv2Mode PreserveIP { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.MigrateToStv2Mode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.MigrateToStv2Mode left, Azure.ResourceManager.ApiManagement.Models.MigrateToStv2Mode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.MigrateToStv2Mode (string value) { throw null; }
@@ -8207,9 +8075,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.NotificationName QuotaLimitApproachingPublisherNotificationMessage { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.NotificationName RequestPublisherNotificationMessage { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.NotificationName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.NotificationName left, Azure.ResourceManager.ApiManagement.Models.NotificationName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.NotificationName (string value) { throw null; }
@@ -8237,9 +8103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.OAuth2GrantType AuthorizationCode { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.OAuth2GrantType ClientCredentials { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.OAuth2GrantType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.OAuth2GrantType left, Azure.ResourceManager.ApiManagement.Models.OAuth2GrantType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.OAuth2GrantType (string value) { throw null; }
@@ -8267,9 +8131,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.OperationNameFormat Name { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.OperationNameFormat Uri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.OperationNameFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.OperationNameFormat left, Azure.ResourceManager.ApiManagement.Models.OperationNameFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.OperationNameFormat (string value) { throw null; }
@@ -8358,9 +8220,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.PlatformVersion Stv21 { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.PlatformVersion Undetermined { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.PlatformVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.PlatformVersion left, Azure.ResourceManager.ApiManagement.Models.PlatformVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PlatformVersion (string value) { throw null; }
@@ -8377,9 +8237,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.PolicyComplianceState NonCompliant { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.PolicyComplianceState Pending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.PolicyComplianceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.PolicyComplianceState left, Azure.ResourceManager.ApiManagement.Models.PolicyComplianceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PolicyComplianceState (string value) { throw null; }
@@ -8397,9 +8255,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.PolicyContentFormat Xml { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.PolicyContentFormat XmlLink { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.PolicyContentFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.PolicyContentFormat left, Azure.ResourceManager.ApiManagement.Models.PolicyContentFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PolicyContentFormat (string value) { throw null; }
@@ -8427,9 +8283,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.PolicyExportFormat RawXml { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.PolicyExportFormat Xml { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.PolicyExportFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.PolicyExportFormat left, Azure.ResourceManager.ApiManagement.Models.PolicyExportFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PolicyExportFormat (string value) { throw null; }
@@ -8445,9 +8299,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.PolicyFragmentContentFormat Rawxml { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.PolicyFragmentContentFormat Xml { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.PolicyFragmentContentFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.PolicyFragmentContentFormat left, Azure.ResourceManager.ApiManagement.Models.PolicyFragmentContentFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PolicyFragmentContentFormat (string value) { throw null; }
@@ -8462,9 +8314,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public PolicyName(string value) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PolicyName Policy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.PolicyName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.PolicyName left, Azure.ResourceManager.ApiManagement.Models.PolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PolicyName (string value) { throw null; }
@@ -8492,9 +8342,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.PolicyRestrictionRequireBase False { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.PolicyRestrictionRequireBase True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.PolicyRestrictionRequireBase other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.PolicyRestrictionRequireBase left, Azure.ResourceManager.ApiManagement.Models.PolicyRestrictionRequireBase right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PolicyRestrictionRequireBase (string value) { throw null; }
@@ -8559,9 +8407,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus Publishing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus left, Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus (string value) { throw null; }
@@ -8594,9 +8440,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.PortalSettingsCspMode Enabled { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.PortalSettingsCspMode ReportOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.PortalSettingsCspMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.PortalSettingsCspMode left, Azure.ResourceManager.ApiManagement.Models.PortalSettingsCspMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PortalSettingsCspMode (string value) { throw null; }
@@ -8622,9 +8466,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public PreferredIPVersion(string value) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PreferredIPVersion IPv4 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.PreferredIPVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.PreferredIPVersion left, Azure.ResourceManager.ApiManagement.Models.PreferredIPVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PreferredIPVersion (string value) { throw null; }
@@ -8653,12 +8495,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ServiceLink { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri ServiceUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceApiId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } set { } }
         public string TermsOfServiceLink { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri TermsOfServiceUri { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ApiManagement.Models.ProductApiData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.ProductApiData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8707,9 +8547,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess left, Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess (string value) { throw null; }
@@ -8983,9 +8821,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public SamplingType(string value) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.SamplingType Fixed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.SamplingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.SamplingType left, Azure.ResourceManager.ApiManagement.Models.SamplingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.SamplingType (string value) { throw null; }
@@ -9000,9 +8836,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public SettingsType(string value) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.SettingsType Public { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.SettingsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.SettingsType left, Azure.ResourceManager.ApiManagement.Models.SettingsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.SettingsType (string value) { throw null; }
@@ -9022,9 +8856,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.SoapApiType SoapToRest { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.SoapApiType WebSocket { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.SoapApiType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.SoapApiType left, Azure.ResourceManager.ApiManagement.Models.SoapApiType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.SoapApiType (string value) { throw null; }
@@ -9041,9 +8873,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.StorageAccountAccessType SystemAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.StorageAccountAccessType UserAssignedManagedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.StorageAccountAccessType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.StorageAccountAccessType left, Azure.ResourceManager.ApiManagement.Models.StorageAccountAccessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.StorageAccountAccessType (string value) { throw null; }
@@ -9118,9 +8948,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.TemplateName RejectDeveloperNotificationMessage { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.TemplateName RequestDeveloperNotificationMessage { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.TemplateName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.TemplateName left, Azure.ResourceManager.ApiManagement.Models.TemplateName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.TemplateName (string value) { throw null; }
@@ -9225,9 +9053,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel Information { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel Verbose { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel left, Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel (string value) { throw null; }
@@ -9243,9 +9069,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.TranslateRequiredQueryParametersConduct Query { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.TranslateRequiredQueryParametersConduct Template { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.TranslateRequiredQueryParametersConduct other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.TranslateRequiredQueryParametersConduct left, Azure.ResourceManager.ApiManagement.Models.TranslateRequiredQueryParametersConduct right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.TranslateRequiredQueryParametersConduct (string value) { throw null; }
@@ -9297,9 +9121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.VersioningScheme Query { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.VersioningScheme Segment { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.VersioningScheme other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.VersioningScheme left, Azure.ResourceManager.ApiManagement.Models.VersioningScheme right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.VersioningScheme (string value) { throw null; }
@@ -9329,9 +9151,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType Internal { get { throw null; } }
         public static Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType left, Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType (string value) { throw null; }

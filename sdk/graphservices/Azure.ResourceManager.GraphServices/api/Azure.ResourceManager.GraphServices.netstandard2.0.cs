@@ -130,9 +130,7 @@ namespace Azure.ResourceManager.GraphServices.Models
         public static Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState left, Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState (string value) { throw null; }

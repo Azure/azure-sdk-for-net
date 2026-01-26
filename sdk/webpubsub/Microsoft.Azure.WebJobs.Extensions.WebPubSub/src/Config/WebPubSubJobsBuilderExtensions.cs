@@ -35,6 +35,8 @@ namespace Microsoft.Extensions.Hosting
             // Register the options setup to read from default configuration section
             builder.Services.AddSingleton<IConfigureOptions<WebPubSubServiceAccessOptions>, WebPubSubServiceAccessOptionsSetup>();
 
+            builder.Services.TryAddSingleton<WebPubSubServiceAccessFactory>();
+
             builder.Services.AddAzureClientsCore();
             builder.Services.TryAddSingleton<IWebPubSubServiceClientFactory, WebPubSubServiceClientFactory>();
 

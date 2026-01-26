@@ -1085,9 +1085,11 @@
           ],
           "parent": {
             "$ref": "41"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

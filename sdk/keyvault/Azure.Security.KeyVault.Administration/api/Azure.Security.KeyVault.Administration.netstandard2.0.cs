@@ -82,7 +82,6 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment KeyVaultRoleAssignment(string id = null, string name = null, string type = null, Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties properties = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties KeyVaultRoleAssignmentProperties(Azure.Security.KeyVault.Administration.KeyVaultRoleScope? scope = default(Azure.Security.KeyVault.Administration.KeyVaultRoleScope?), string roleDefinitionId = null, string principalId = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition KeyVaultRoleDefinition(string id = null, string name = null, Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType? type = default(Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType?), string roleName = null, string description = null, Azure.Security.KeyVault.Administration.KeyVaultRoleType? roleType = default(Azure.Security.KeyVault.Administration.KeyVaultRoleType?), System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultPermission> permissions = null, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultRoleScope> assignableScopes = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition KeyVaultRoleDefinition(string id, string name, Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType? type, string roleName, string description, Azure.Security.KeyVault.Administration.KeyVaultRoleType? roleType, System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultPermission> permissions, System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultRoleScope> assignableScopes) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultSetting KeyVaultSetting(string name = null, string content = null, Azure.Security.KeyVault.Administration.KeyVaultSettingType? settingType = default(Azure.Security.KeyVault.Administration.KeyVaultSettingType?)) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRestoreOperation RestoreOperation(Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string errorMessage = null) { throw null; }
@@ -172,9 +171,7 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction WriteRoleAssignment { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction WriteRoleDefinition { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Administration.KeyVaultDataAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultDataAction left, Azure.Security.KeyVault.Administration.KeyVaultDataAction right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultDataAction (string value) { throw null; }
@@ -285,9 +282,7 @@ namespace Azure.Security.KeyVault.Administration
         public KeyVaultRoleDefinitionType(string value) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType MicrosoftAuthorizationRoleDefinitions { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType left, Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType (string value) { throw null; }
@@ -305,9 +300,7 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleScope Global { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleScope Keys { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Administration.KeyVaultRoleScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultRoleScope left, Azure.Security.KeyVault.Administration.KeyVaultRoleScope right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleScope (string value) { throw null; }
@@ -324,9 +317,7 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleType BuiltInRole { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleType CustomRole { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Administration.KeyVaultRoleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultRoleType left, Azure.Security.KeyVault.Administration.KeyVaultRoleType right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleType (string value) { throw null; }
@@ -395,9 +386,7 @@ namespace Azure.Security.KeyVault.Administration
         public KeyVaultSettingType(string value) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultSettingType Boolean { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Administration.KeyVaultSettingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultSettingType left, Azure.Security.KeyVault.Administration.KeyVaultSettingType right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultSettingType (string value) { throw null; }

@@ -11,17 +11,6 @@ trigger:
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iot/ci.mgmt.yml
 
-pr:
-  branches:
-    include:
-    - main
-  paths:
-    include:
-    - sdk/iot/
-    exclude:
-    - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
-    - sdk/iot/ci.mgmt.yml
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

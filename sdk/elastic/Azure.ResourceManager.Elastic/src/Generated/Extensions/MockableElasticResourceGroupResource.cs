@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Elastic;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Elastic.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableElasticResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableElasticResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableElasticResourceGroupResource for mocking. </summary>
         protected MockableElasticResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableElasticResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableElasticResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableElasticResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ElasticMonitorResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ElasticMonitorResources and their operations over a ElasticMonitorResource. </returns>
+        /// <summary> Gets a collection of ElasticMonitors in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ElasticMonitors and their operations over a ElasticMonitorResource. </returns>
         public virtual ElasticMonitorCollection GetElasticMonitors()
         {
             return GetCachedClient(client => new ElasticMonitorCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Elastic.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ElasticMonitorResource>> GetElasticMonitorAsync(string monitorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
             return await GetElasticMonitors().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Elastic.Mocking
         [ForwardsClientCalls]
         public virtual Response<ElasticMonitorResource> GetElasticMonitor(string monitorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
             return GetElasticMonitors().Get(monitorName, cancellationToken);
         }
     }
