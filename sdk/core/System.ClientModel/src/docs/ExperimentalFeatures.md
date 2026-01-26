@@ -66,3 +66,53 @@ Or in your project file:
   <NoWarn>$(NoWarn);SCME0002</NoWarn>
 </PropertyGroup>
 ```
+
+## SCME0003 - JsonModel<T> Experimental API
+
+### Description
+
+The `JsonModel<T>` abstract base class is an experimental feature that provides a simplified way to implement `IJsonModel<T>` for JSON serialization and deserialization. This API is subject to change or removal in future updates as we gather feedback and refine the implementation.
+
+### Affected APIs
+
+- `System.ClientModel.Primitives.JsonModel<T>`
+
+### Example Usage
+
+```csharp
+#pragma warning disable SCME0003
+public class MyModel : JsonModel<MyModel>
+{
+    public string Name { get; set; }
+
+    protected override void WriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+    {
+        writer.WriteStartObject();
+        writer.WriteString("name", Name);
+        writer.WriteEndObject();
+    }
+
+    protected override MyModel CreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+    {
+        // Read and return model from JSON
+        // ...
+    }
+}
+#pragma warning restore SCME0003
+```
+
+### Suppression
+
+If you want to use these experimental APIs and accept the risk that they may change, you can suppress the warning:
+
+```csharp
+#pragma warning disable SCME0003 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+```
+
+Or in your project file:
+
+```xml
+<PropertyGroup>
+  <NoWarn>$(NoWarn);SCME0003</NoWarn>
+</PropertyGroup>
+```
