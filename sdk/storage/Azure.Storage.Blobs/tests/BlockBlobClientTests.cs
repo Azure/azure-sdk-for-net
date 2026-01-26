@@ -1307,6 +1307,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(AccessTier.Smart.ToString(), properties.AccessTier);
+            Assert.NotNull(properties.SmartAccessTier);
         }
 
         [RecordedTest]
@@ -2241,6 +2242,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobProperties> properties = await blob.GetPropertiesAsync();
             Assert.AreEqual(AccessTier.Smart.ToString(), properties.Value.AccessTier);
+            Assert.NotNull(properties.Value.SmartAccessTier);
         }
 
         [RecordedTest]
@@ -3010,6 +3012,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
             Assert.AreEqual(AccessTier.Smart.ToString(), response.Value.AccessTier);
+            Assert.NotNull(response.Value.SmartAccessTier);
         }
 
         [RecordedTest]

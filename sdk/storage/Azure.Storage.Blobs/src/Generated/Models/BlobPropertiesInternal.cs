@@ -55,6 +55,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="accessTier"></param>
         /// <param name="accessTierInferred"></param>
         /// <param name="archiveStatus"></param>
+        /// <param name="smartAccessTier"></param>
         /// <param name="customerProvidedKeySha256"></param>
         /// <param name="encryptionScope"> The name of the encryption scope under which the blob is encrypted. </param>
         /// <param name="accessTierChangeTime"></param>
@@ -66,7 +67,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="immutabilityPolicyExpiresOn"></param>
         /// <param name="immutabilityPolicyMode"></param>
         /// <param name="legalHold"></param>
-        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, byte[] contentMD5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
+        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, byte[] contentMD5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, AccessTier? smartAccessTier, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
             CreationTime = creationTime;
             LastModified = lastModified;
@@ -97,6 +98,7 @@ namespace Azure.Storage.Blobs.Models
             AccessTier = accessTier;
             AccessTierInferred = accessTierInferred;
             ArchiveStatus = archiveStatus;
+            SmartAccessTier = smartAccessTier;
             CustomerProvidedKeySha256 = customerProvidedKeySha256;
             EncryptionScope = encryptionScope;
             AccessTierChangeTime = accessTierChangeTime;
@@ -168,6 +170,8 @@ namespace Azure.Storage.Blobs.Models
         public bool? AccessTierInferred { get; }
         /// <summary> Gets the archive status. </summary>
         public ArchiveStatus? ArchiveStatus { get; }
+        /// <summary> Gets the smart access tier. </summary>
+        public AccessTier? SmartAccessTier { get; }
         /// <summary> Gets the customer provided key sha 256. </summary>
         public string CustomerProvidedKeySha256 { get; }
         /// <summary> The name of the encryption scope under which the blob is encrypted. </summary>

@@ -44,6 +44,7 @@ namespace Azure.Storage.Blobs.Models
             AccessTier? accessTier = default;
             bool? accessTierInferred = default;
             ArchiveStatus? archiveStatus = default;
+            AccessTier? smartAccessTier = default;
             string customerProvidedKeySha256 = default;
             string encryptionScope = default;
             DateTimeOffset? accessTierChangeTime = default;
@@ -171,6 +172,10 @@ namespace Azure.Storage.Blobs.Models
             {
                 archiveStatus = archiveStatusElement.Value.ToArchiveStatus();
             }
+            if (element.Element("SmartAccessTier") is XElement smartAccessTierElement)
+            {
+                smartAccessTier = new AccessTier(smartAccessTierElement.Value);
+            }
             if (element.Element("CustomerProvidedKeySha256") is XElement customerProvidedKeySha256Element)
             {
                 customerProvidedKeySha256 = (string)customerProvidedKeySha256Element;
@@ -245,6 +250,7 @@ namespace Azure.Storage.Blobs.Models
                 accessTier,
                 accessTierInferred,
                 archiveStatus,
+                smartAccessTier,
                 customerProvidedKeySha256,
                 encryptionScope,
                 accessTierChangeTime,

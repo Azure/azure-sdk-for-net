@@ -212,6 +212,7 @@ namespace Azure.Storage.Blobs.Models
         ///  <item><description>Hot</description></item>
         ///  <item><description>Cool</description></item>
         ///  <item><description>Archive</description></item>
+        ///  <item><description>Smart</description></item>
         /// </list>
         /// </summary>
         public string AccessTier { get; }
@@ -233,6 +234,19 @@ namespace Azure.Storage.Blobs.Models
         /// The time the tier was changed on the object. This is only returned if the tier on the block blob was ever set.
         /// </summary>
         public DateTimeOffset AccessTierChangedOn { get; }
+
+        /// <summary>
+        /// The tier of page blob on a premium storage account or tier of block blob on blob storage LRS accounts. Only returned if the blob is in Smart tier.
+        /// For a list of allowed premium page blob tiers, see
+        /// <see href="https://docs.microsoft.com/azure/virtual-machines/windows/premium-storage#features" />. For general
+        /// purpose v2 and blob storage account types, the valid values are:
+        /// <list type="bullet">
+        ///  <item><description>Hot</description></item>
+        ///  <item><description>Cool</description></item>
+        ///  <item><description>Archive</description></item>
+        /// </list>
+        /// </summary>
+        public string SmartAccessTier { get; }
 
         /// <summary>
         /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header
@@ -336,7 +350,8 @@ namespace Azure.Storage.Blobs.Models
             string rehydratePriority,
             DateTimeOffset lastAccessed,
             BlobImmutabilityPolicy immutabilityPolicy,
-            bool hasLegalHold)
+            bool hasLegalHold,
+            string smartAccessTier)
         {
             LastModified = lastModified;
             LeaseStatus = leaseStatus;
@@ -382,6 +397,7 @@ namespace Azure.Storage.Blobs.Models
             LastAccessed = lastAccessed;
             ImmutabilityPolicy = immutabilityPolicy;
             HasLegalHold = hasLegalHold;
+            SmartAccessTier = smartAccessTier;
         }
     }
 }
