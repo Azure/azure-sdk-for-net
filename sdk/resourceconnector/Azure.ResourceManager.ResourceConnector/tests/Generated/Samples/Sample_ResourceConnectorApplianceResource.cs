@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             ResourceConnectorApplianceResource resourceConnectorAppliance = client.GetResourceConnectorApplianceResource(resourceConnectorApplianceResourceId);
 
             // invoke the operation
-            ApplianceClusterUserCredentialResult result = await resourceConnectorAppliance.GetClusterUserCredentialAsync();
+            ApplianceListCredentialResult result = await resourceConnectorAppliance.GetClusterUserCredentialAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             ResourceConnectorApplianceResource resourceConnectorAppliance = client.GetResourceConnectorApplianceResource(resourceConnectorApplianceResourceId);
 
             // invoke the operation
-            ApplianceClusterUserKeysResult result = await resourceConnectorAppliance.GetKeysAsync();
+            ApplianceListKeysResult result = await resourceConnectorAppliance.GetKeysAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

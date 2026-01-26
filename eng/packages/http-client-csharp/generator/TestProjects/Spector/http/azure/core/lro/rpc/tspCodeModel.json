@@ -1050,7 +1050,8 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

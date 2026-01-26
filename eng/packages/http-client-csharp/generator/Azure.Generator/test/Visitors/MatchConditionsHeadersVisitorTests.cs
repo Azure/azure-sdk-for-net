@@ -45,10 +45,9 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
-            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
-
             foreach (var method in methodCollection)
             {
+                visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added to all the client methods
                 Assert.AreEqual(2, method.Signature.Parameters.Count);
                 Assert.IsTrue(method.Signature.Parameters[0].Name == "requestConditions");
@@ -123,10 +122,9 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
-            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
-
             foreach (var method in methodCollection)
             {
+                visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added to all the client methods
                 Assert.AreEqual(2, method.Signature.Parameters.Count);
                 Assert.IsTrue(method.Signature.Parameters[0].Name == conditionName.ToVariableName());
@@ -258,10 +256,9 @@ namespace Azure.Generator.Tests.Visitors
             MethodProvider? protocolMethod = null;
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
-            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
-
             foreach (var method in methodCollection)
             {
+                visitor.VisitScmMethod(method);
                 if (method.Kind == ScmMethodKind.Protocol && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
                 {
                     protocolMethod = method;
@@ -309,10 +306,9 @@ namespace Azure.Generator.Tests.Visitors
             MethodProvider? protocolMethod = null;
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
-            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
-
             foreach (var method in methodCollection)
             {
+                visitor.VisitScmMethod(method);
                 if (method.Kind == ScmMethodKind.Protocol && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
                 {
                     protocolMethod = method;
@@ -354,10 +350,9 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
-            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
-
             foreach (var method in methodCollection)
             {
+                visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added to all the client methods
                 Assert.AreEqual(3, method.Signature.Parameters.Count);
                 Assert.IsTrue(method.Signature.Parameters[0].Type.Equals(ETagType));
@@ -397,10 +392,9 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
-            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
-
             foreach (var method in methodCollection)
             {
+                visitor.VisitScmMethod(method);
                 // Verify that the parameters are unchanged
                 Assert.AreEqual(3, method.Signature.Parameters.Count);
                 Assert.IsTrue(method.Signature.Parameters.Any(p => p.Name == "authorization"));
@@ -443,10 +437,9 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
-            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
-
             foreach (var method in methodCollection)
             {
+                visitor.VisitScmMethod(method);
                 // Verify that the MatchConditions parameter is added
                 Assert.AreEqual(2, method.Signature.Parameters.Count);
                 Assert.IsTrue(method.Signature.Parameters[0].Name == "matchConditions");
@@ -486,10 +479,9 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
-            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
-
             foreach (var method in methodCollection)
             {
+                visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added
                 Assert.AreEqual(2, method.Signature.Parameters.Count);
                 Assert.IsTrue(method.Signature.Parameters[0].Name == "requestConditions");
@@ -531,10 +523,9 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
-            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
-
             foreach (var method in methodCollection)
             {
+                visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added
                 Assert.AreEqual(3, method.Signature.Parameters.Count);
                 Assert.IsTrue(method.Signature.Parameters[0].Name == "requestConditions");
@@ -683,12 +674,9 @@ namespace Azure.Generator.Tests.Visitors
 
         private class TestMatchConditionsHeaderVisitor : MatchConditionsHeadersVisitor
         {
-            public ScmMethodProviderCollection? VisitScmMethodCollection(
-                InputServiceMethod serviceMethod,
-                ClientProvider enclosingType,
-                ScmMethodProviderCollection? methodProviderCollection)
+            public ScmMethodProvider? VisitScmMethod(ScmMethodProvider method)
             {
-                return base.Visit(serviceMethod, enclosingType, methodProviderCollection);
+                return base.VisitMethod(method);
             }
 
             public ScmMethodProvider? VisitCreateRequest(

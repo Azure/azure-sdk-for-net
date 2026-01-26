@@ -78,9 +78,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision Allowed { get { throw null; } }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision Denied { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision right) { throw null; }
         public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision (string value) { throw null; }
@@ -115,9 +113,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType ResourceType { get { throw null; } }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType Subscription { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType (string value) { throw null; }
@@ -231,9 +227,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn PreviousMonthEmissions { get { throw null; } }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn ResourceGroup { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn right) { throw null; }
         public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn (string value) { throw null; }
@@ -250,9 +244,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection Asc { get { throw null; } }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection Desc { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection (string value) { throw null; }
@@ -270,9 +262,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope Scope2 { get { throw null; } }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope Scope3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope (string value) { throw null; }

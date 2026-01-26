@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -24,38 +25,57 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetDiskControllerType : IEquatable<ComputeFleetDiskControllerType>
     {
         private readonly string _value;
+        /// <summary> SCSI disk type. </summary>
+        private const string ScsiValue = "SCSI";
+        /// <summary> NVMe disk type. </summary>
+        private const string NvmeValue = "NVMe";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetDiskControllerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetDiskControllerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ScsiValue = "SCSI";
-        private const string NvmeValue = "NVMe";
+            _value = value;
+        }
 
         /// <summary> SCSI disk type. </summary>
         public static ComputeFleetDiskControllerType Scsi { get; } = new ComputeFleetDiskControllerType(ScsiValue);
+
         /// <summary> NVMe disk type. </summary>
         public static ComputeFleetDiskControllerType Nvme { get; } = new ComputeFleetDiskControllerType(NvmeValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetDiskControllerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetDiskControllerType left, ComputeFleetDiskControllerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetDiskControllerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetDiskControllerType left, ComputeFleetDiskControllerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetDiskControllerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskControllerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetDiskControllerType(string value) => new ComputeFleetDiskControllerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskControllerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetDiskControllerType?(string value) => value == null ? null : new ComputeFleetDiskControllerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetDiskControllerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetDiskControllerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

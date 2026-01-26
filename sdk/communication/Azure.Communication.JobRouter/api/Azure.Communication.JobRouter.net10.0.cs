@@ -254,9 +254,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.DistributionModeKind LongestIdle { get { throw null; } }
         public static Azure.Communication.JobRouter.DistributionModeKind RoundRobin { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.DistributionModeKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.DistributionModeKind left, Azure.Communication.JobRouter.DistributionModeKind right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.DistributionModeKind (string value) { throw null; }
@@ -300,9 +298,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.ExceptionActionKind ManualReclassify { get { throw null; } }
         public static Azure.Communication.JobRouter.ExceptionActionKind Reclassify { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.ExceptionActionKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.ExceptionActionKind left, Azure.Communication.JobRouter.ExceptionActionKind right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.ExceptionActionKind (string value) { throw null; }
@@ -356,9 +352,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.ExceptionTriggerKind QueueLength { get { throw null; } }
         public static Azure.Communication.JobRouter.ExceptionTriggerKind WaitTime { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.ExceptionTriggerKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.ExceptionTriggerKind left, Azure.Communication.JobRouter.ExceptionTriggerKind right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.ExceptionTriggerKind (string value) { throw null; }
@@ -420,9 +414,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.JobMatchingModeKind ScheduleAndSuspend { get { throw null; } }
         public static Azure.Communication.JobRouter.JobMatchingModeKind Suspend { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.JobMatchingModeKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.JobMatchingModeKind left, Azure.Communication.JobRouter.JobMatchingModeKind right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.JobMatchingModeKind (string value) { throw null; }
@@ -651,9 +643,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.LabelOperator LessThanOrEqual { get { throw null; } }
         public static Azure.Communication.JobRouter.LabelOperator NotEqual { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.LabelOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.LabelOperator left, Azure.Communication.JobRouter.LabelOperator right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.LabelOperator (string value) { throw null; }
@@ -762,9 +752,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.QueueSelectorAttachmentKind Static { get { throw null; } }
         public static Azure.Communication.JobRouter.QueueSelectorAttachmentKind WeightedAllocation { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.QueueSelectorAttachmentKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.QueueSelectorAttachmentKind left, Azure.Communication.JobRouter.QueueSelectorAttachmentKind right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.QueueSelectorAttachmentKind (string value) { throw null; }
@@ -922,9 +910,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.RouterJobStatus ScheduleFailed { get { throw null; } }
         public static Azure.Communication.JobRouter.RouterJobStatus WaitingForActivation { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.RouterJobStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.RouterJobStatus left, Azure.Communication.JobRouter.RouterJobStatus right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.RouterJobStatus (string value) { throw null; }
@@ -952,9 +938,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.RouterJobStatusSelector ScheduleFailed { get { throw null; } }
         public static Azure.Communication.JobRouter.RouterJobStatusSelector WaitingForActivation { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.RouterJobStatusSelector other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.RouterJobStatusSelector left, Azure.Communication.JobRouter.RouterJobStatusSelector right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.RouterJobStatusSelector (string value) { throw null; }
@@ -1027,9 +1011,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.RouterRuleKind Static { get { throw null; } }
         public static Azure.Communication.JobRouter.RouterRuleKind Webhook { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.RouterRuleKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.RouterRuleKind left, Azure.Communication.JobRouter.RouterRuleKind right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.RouterRuleKind (string value) { throw null; }
@@ -1047,9 +1029,7 @@ namespace Azure.Communication.JobRouter
         public RouterValue(string value) { }
         public object Value { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.RouterValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.RouterValue left, Azure.Communication.JobRouter.RouterValue right) { throw null; }
         public static bool operator !=(Azure.Communication.JobRouter.RouterValue left, Azure.Communication.JobRouter.RouterValue right) { throw null; }
@@ -1118,9 +1098,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.RouterWorkerSelectorStatus Active { get { throw null; } }
         public static Azure.Communication.JobRouter.RouterWorkerSelectorStatus Expired { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.RouterWorkerSelectorStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.RouterWorkerSelectorStatus left, Azure.Communication.JobRouter.RouterWorkerSelectorStatus right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.RouterWorkerSelectorStatus (string value) { throw null; }
@@ -1137,9 +1115,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.RouterWorkerState Draining { get { throw null; } }
         public static Azure.Communication.JobRouter.RouterWorkerState Inactive { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.RouterWorkerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.RouterWorkerState left, Azure.Communication.JobRouter.RouterWorkerState right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.RouterWorkerState (string value) { throw null; }
@@ -1157,9 +1133,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.RouterWorkerStateSelector Draining { get { throw null; } }
         public static Azure.Communication.JobRouter.RouterWorkerStateSelector Inactive { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.RouterWorkerStateSelector other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.RouterWorkerStateSelector left, Azure.Communication.JobRouter.RouterWorkerStateSelector right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.RouterWorkerStateSelector (string value) { throw null; }
@@ -1222,9 +1196,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.ScoringRuleParameterSelector JobLabels { get { throw null; } }
         public static Azure.Communication.JobRouter.ScoringRuleParameterSelector WorkerSelectors { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.ScoringRuleParameterSelector other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.ScoringRuleParameterSelector left, Azure.Communication.JobRouter.ScoringRuleParameterSelector right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.ScoringRuleParameterSelector (string value) { throw null; }
@@ -1368,9 +1340,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.WorkerSelectorAttachmentKind Static { get { throw null; } }
         public static Azure.Communication.JobRouter.WorkerSelectorAttachmentKind WeightedAllocation { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.WorkerSelectorAttachmentKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.WorkerSelectorAttachmentKind left, Azure.Communication.JobRouter.WorkerSelectorAttachmentKind right) { throw null; }
         public static implicit operator Azure.Communication.JobRouter.WorkerSelectorAttachmentKind (string value) { throw null; }

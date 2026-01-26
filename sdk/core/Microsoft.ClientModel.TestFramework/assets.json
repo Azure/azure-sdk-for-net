@@ -1,7 +1,7 @@
 {
   "AssetsFileName": "assets.json",
   "AssetsRepo": "Azure/azure-sdk-assets",
-  "Tag": "net/core/Microsoft.ClientModel.TestFramework_88f7a1a8a9",
+  "Tag": "net/core/Microsoft.ClientModel.TestFramework_47c8821b23",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/core/Microsoft.ClientModel.TestFramework",
   "AssetsRepoLocation": {},

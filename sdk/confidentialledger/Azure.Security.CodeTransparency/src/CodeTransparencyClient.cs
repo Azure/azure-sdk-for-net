@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.CodeTransparency.Receipt;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.CodeTransparency
 {
@@ -61,7 +62,7 @@ namespace Azure.Security.CodeTransparency
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(
+            Pipeline = HttpPipelineBuilder.Build(
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
                 _keyCredential == null ?
@@ -203,13 +204,13 @@ namespace Azure.Security.CodeTransparency
         public virtual Operation<BinaryData> CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
+                Response response = Pipeline.ProcessMessage(message, context, cancellationToken);
 
                 string operationId = string.Empty;
                 try
@@ -252,13 +253,13 @@ namespace Azure.Security.CodeTransparency
         public virtual async Task<Operation<BinaryData>> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntryAsync");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
+                Response response = await Pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
 
                 string operationId = string.Empty;
                 try
@@ -574,7 +575,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetTransparencyConfigCborRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -588,7 +589,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -602,7 +603,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201202);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier201202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -618,7 +619,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -633,7 +634,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetEntryRequest(string entryId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -648,7 +649,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetEntryStatementRequest(string entryId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class VirtualMachineInstanceManagedDiskContent : IJsonModel<VirtualMachineInstanceManagedDiskContent>
+    internal partial class VirtualMachineInstanceManagedDiskContent : IJsonModel<VirtualMachineInstanceManagedDiskContent>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

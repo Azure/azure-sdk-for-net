@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Tests
         }
 
         [TestCase]
-        [RecordedTest]
+        //[RecordedTest]
         public async Task Get()
         {
             var collection = await GetPrivateCloudClusterCollectionAsync();

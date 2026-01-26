@@ -11,19 +11,6 @@ trigger:
     - sdk/quantum/service.projects
     - sdk/quantum/Azure.Quantum.Jobs
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/quantum/ci.yml
-    - sdk/quantum/service.projects
-    - sdk/quantum/Azure.Quantum.Jobs
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

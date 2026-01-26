@@ -672,9 +672,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed Approved { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed left, Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed (string value) { throw null; }
@@ -789,9 +787,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType IPAddress { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType PrivateNetwork { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType left, Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType (string value) { throw null; }
@@ -814,9 +810,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol left, Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol (string value) { throw null; }
@@ -853,9 +847,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState PendingApproval { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState PendingUpdate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState left, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState (string value) { throw null; }
@@ -910,9 +902,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol left, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol (string value) { throw null; }
@@ -961,9 +951,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus Approved { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus (string value) { throw null; }
@@ -980,9 +968,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus Approved { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus (string value) { throw null; }
@@ -1000,9 +986,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType Delete { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType Update { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType (string value) { throw null; }
@@ -1021,9 +1005,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType Reset { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType Update { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType (string value) { throw null; }
@@ -1041,9 +1023,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType Enforce { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType left, Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType (string value) { throw null; }
@@ -1062,9 +1042,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType ExceptionOnly { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType NotApplicable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType left, Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType (string value) { throw null; }
@@ -1081,9 +1059,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement Disabled { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement left, Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement (string value) { throw null; }
@@ -1103,9 +1079,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState PendingApproval { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState PendingUpdate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState left, Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState (string value) { throw null; }
@@ -1138,9 +1112,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType Gateway { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType Peering { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType left, Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType (string value) { throw null; }
@@ -1191,9 +1163,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy NotRequired { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy Required { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy (string value) { throw null; }
@@ -1262,9 +1232,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus (string value) { throw null; }
@@ -1364,9 +1332,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride Enclave { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride (string value) { throw null; }
@@ -1444,9 +1410,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination CommunityOnly { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination EnclaveOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination (string value) { throw null; }
@@ -1495,9 +1459,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku Premium { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku (string value) { throw null; }
@@ -1546,9 +1508,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier ServiceBus { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier Storage { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier (string value) { throw null; }
@@ -1566,9 +1526,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification Networking { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification Off { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification (string value) { throw null; }
@@ -1588,9 +1546,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode Off { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode (string value) { throw null; }
@@ -1705,9 +1661,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType ServicePrincipal { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType (string value) { throw null; }
@@ -1757,9 +1711,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState (string value) { throw null; }

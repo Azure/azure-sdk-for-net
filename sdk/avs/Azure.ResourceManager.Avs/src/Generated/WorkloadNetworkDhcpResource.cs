@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A Class representing a WorkloadNetworkDhcp along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkDhcpResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkDhcpResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkloadNetworkResource"/> using the GetWorkloadNetworkDhcp method.
+    /// A class representing a WorkloadNetworkDhcp along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkDhcpResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkloadNetworkResource"/> using the GetWorkloadNetworkDhcps method.
     /// </summary>
     public partial class WorkloadNetworkDhcpResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WorkloadNetworkDhcpResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="privateCloudName"> The privateCloudName. </param>
-        /// <param name="dhcpId"> The dhcpId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _workloadNetworkDhcpWorkloadNetworksClientDiagnostics;
-        private readonly WorkloadNetworksRestOperations _workloadNetworkDhcpWorkloadNetworksRestClient;
+        private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
+        private readonly WorkloadNetworks _workloadNetworksRestClient;
         private readonly WorkloadNetworkDhcpData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations";
 
-        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkDhcpResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WorkloadNetworkDhcpResource for mocking. </summary>
         protected WorkloadNetworkDhcpResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkDhcpResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkloadNetworkDhcpResource(ArmClient client, WorkloadNetworkDhcpData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Avs
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkDhcpResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WorkloadNetworkDhcpResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workloadNetworkDhcpWorkloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string workloadNetworkDhcpWorkloadNetworksApiVersion);
-            _workloadNetworkDhcpWorkloadNetworksRestClient = new WorkloadNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkDhcpWorkloadNetworksApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string workloadNetworkDhcpApiVersion);
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkDhcpApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual WorkloadNetworkDhcpData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="dhcpId"> The dhcpId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a WorkloadNetworkDhcp
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworkDhcp_GetDhcp</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadNetworkDhcpConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkloadNetworkDhcpResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WorkloadNetworkDhcpResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Get");
             scope.Start();
             try
             {
-                var response = await _workloadNetworkDhcpWorkloadNetworksRestClient.GetDhcpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkloadNetworkDhcpData> response = Response.FromValue(WorkloadNetworkDhcpData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkloadNetworkDhcpResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,118 +143,42 @@ namespace Azure.ResourceManager.Avs
         /// Get a WorkloadNetworkDhcp
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworkDhcp_GetDhcp</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadNetworkDhcpConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkloadNetworkDhcpResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WorkloadNetworkDhcpResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Get");
             scope.Start();
             try
             {
-                var response = _workloadNetworkDhcpWorkloadNetworksRestClient.GetDhcp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkloadNetworkDhcpData> response = Response.FromValue(WorkloadNetworkDhcpData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkloadNetworkDhcpResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a WorkloadNetworkDhcp
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworkDhcp_DeleteDhcp</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _workloadNetworkDhcpWorkloadNetworksRestClient.DeleteDhcpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDhcpWorkloadNetworksRestClient.CreateDeleteDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a WorkloadNetworkDhcp
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworkDhcp_DeleteDhcp</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _workloadNetworkDhcpWorkloadNetworksRestClient.DeleteDhcp(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(_workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDhcpWorkloadNetworksRestClient.CreateDeleteDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -256,20 +191,20 @@ namespace Azure.ResourceManager.Avs
         /// Update a WorkloadNetworkDhcp
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworkDhcp_UpdateDhcp</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadNetworkDhcpConfigurations_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkloadNetworkDhcpResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +216,27 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Update");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Update");
             scope.Start();
             try
             {
-                var response = await _workloadNetworkDhcpWorkloadNetworksRestClient.UpdateDhcpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(new WorkloadNetworkDhcpOperationSource(Client), _workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDhcpWorkloadNetworksRestClient.CreateUpdateDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workloadNetworksRestClient.CreateUpdateDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkDhcpData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AvsArmOperation<WorkloadNetworkDhcpResource> operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(
+                    new WorkloadNetworkDhcpOperationSource(Client),
+                    _workloadNetworksClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -302,20 +250,20 @@ namespace Azure.ResourceManager.Avs
         /// Update a WorkloadNetworkDhcp
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworkDhcp_UpdateDhcp</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadNetworkDhcpConfigurations_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkloadNetworkDhcpResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +275,125 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Update");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Update");
             scope.Start();
             try
             {
-                var response = _workloadNetworkDhcpWorkloadNetworksRestClient.UpdateDhcp(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(new WorkloadNetworkDhcpOperationSource(Client), _workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDhcpWorkloadNetworksRestClient.CreateUpdateDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workloadNetworksRestClient.CreateUpdateDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkDhcpData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AvsArmOperation<WorkloadNetworkDhcpResource> operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(
+                    new WorkloadNetworkDhcpOperationSource(Client),
+                    _workloadNetworksClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a WorkloadNetworkDhcp
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadNetworkDhcpConfigurations_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkloadNetworkDhcpResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workloadNetworksRestClient.CreateDeleteDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a WorkloadNetworkDhcp
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadNetworkDhcpConfigurations_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkloadNetworkDhcpResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workloadNetworksRestClient.CreateDeleteDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

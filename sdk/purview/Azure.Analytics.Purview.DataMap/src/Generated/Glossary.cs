@@ -10,26 +10,17 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    // Data plane generated sub-client.
     /// <summary> The Glossary sub-client. </summary>
     public partial class Glossary
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of Glossary for mocking. </summary>
         protected Glossary()
@@ -37,73 +28,23 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Initializes a new instance of Glossary. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Glossary(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Glossary(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
+            Pipeline = pipeline;
             _apiVersion = apiVersion;
         }
 
-        /// <summary>
-        /// Get all glossaries. Recommend using limit/offset to get pagination result.
-        /// Recommend using 'ignoreTermsAndCategories=true' and fetch terms/categories
-        /// separately using 'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
-        /// and 'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
-        /// </summary>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='BatchGetAsync(int?,int?,string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<AtlasGlossary>>> BatchGetAsync(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await BatchGetAsync(limit, offset, sort, ignoreTermsAndCategories, context).ConfigureAwait(false);
-            IReadOnlyList<AtlasGlossary> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<AtlasGlossary> array = new List<AtlasGlossary>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasGlossary.DeserializeAtlasGlossary(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        /// <summary>
-        /// Get all glossaries. Recommend using limit/offset to get pagination result.
-        /// Recommend using 'ignoreTermsAndCategories=true' and fetch terms/categories
-        /// separately using 'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
-        /// and 'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
-        /// </summary>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='BatchGet(int?,int?,string,bool?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<AtlasGlossary>> BatchGet(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = BatchGet(limit, offset, sort, ignoreTermsAndCategories, context);
-            IReadOnlyList<AtlasGlossary> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<AtlasGlossary> array = new List<AtlasGlossary>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasGlossary.DeserializeAtlasGlossary(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Get all glossaries. Recommend using limit/offset to get pagination result.
@@ -112,14 +53,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// and 'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BatchGetAsync(int?,int?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,60 +61,163 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='BatchGetAsync(int?,int?,string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> BatchGetAsync(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("Glossary.BatchGet");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateBatchGetRequest(limit, offset, sort, ignoreTermsAndCategories, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get all glossaries. Recommend using limit/offset to get pagination result.
-        /// Recommend using 'ignoreTermsAndCategories=true' and fetch terms/categories
-        /// separately using 'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
-        /// and 'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BatchGet(int?,int?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='BatchGet(int?,int?,string,bool?,RequestContext)']/*" />
         public virtual Response BatchGet(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Glossary.BatchGet");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.BatchGet");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateBatchGetRequest(limit, offset, sort, ignoreTermsAndCategories, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all glossaries. Recommend using limit/offset to get pagination result.
+        /// Recommend using 'ignoreTermsAndCategories=true' and fetch terms/categories
+        /// separately using 'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
+        /// and 'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> BatchGetAsync(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.BatchGet");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateBatchGetRequest(limit, offset, sort, ignoreTermsAndCategories, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all glossaries. Recommend using limit/offset to get pagination result.
+        /// Recommend using 'ignoreTermsAndCategories=true' and fetch terms/categories
+        /// separately using 'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
+        /// and 'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
+        /// </summary>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<AtlasGlossary>> BatchGet(int? limit = default, int? offset = default, string sort = default, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
+        {
+            Response result = BatchGet(limit, offset, sort, ignoreTermsAndCategories, cancellationToken.ToRequestContext());
+            List<AtlasGlossary> value = new List<AtlasGlossary>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasGlossary.DeserializeAtlasGlossary(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasGlossary>)value, result);
+        }
+
+        /// <summary>
+        /// Get all glossaries. Recommend using limit/offset to get pagination result.
+        /// Recommend using 'ignoreTermsAndCategories=true' and fetch terms/categories
+        /// separately using 'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
+        /// and 'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
+        /// </summary>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<AtlasGlossary>>> BatchGetAsync(int? limit = default, int? offset = default, string sort = default, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await BatchGetAsync(limit, offset, sort, ignoreTermsAndCategories, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<AtlasGlossary> value = new List<AtlasGlossary>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasGlossary.DeserializeAtlasGlossary(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasGlossary>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a glossary.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Create(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a glossary.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -191,297 +228,246 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Create a glossary. </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateAsync(AtlasGlossary,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossary>> CreateAsync(AtlasGlossary body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossary.FromResponse(response), response);
-        }
-
-        /// <summary> Create a glossary. </summary>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Create(AtlasGlossary,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasGlossary> Create(AtlasGlossary body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(content, context);
-            return Response.FromValue(AtlasGlossary.FromResponse(response), response);
+            Response result = Create(body, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossary)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Create a glossary.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateAsync(AtlasGlossary,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.Create");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a glossary.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Create(AtlasGlossary,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
-        public virtual Response Create(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.Create");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create glossary category in bulk. </summary>
-        /// <param name="body"> An array of glossary category definitions to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <summary> Create a glossary. </summary>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoriesAsync(IEnumerable{AtlasGlossaryCategory},CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryCategory>>> CreateCategoriesAsync(IEnumerable<AtlasGlossaryCategory> body, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasGlossary>> CreateAsync(AtlasGlossary body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateCategoriesAsync(content, context).ConfigureAwait(false);
-            IReadOnlyList<AtlasGlossaryCategory> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<AtlasGlossaryCategory> array = new List<AtlasGlossaryCategory>();
-            foreach (var item in document.RootElement.EnumerateArray())
+            Response result = await CreateAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossary)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create glossary category in bulk.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateCategories(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateCategories");
+            scope.Start();
+            try
             {
-                array.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateCategoriesRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-            value = array;
-            return Response.FromValue(value, response);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create glossary category in bulk.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateCategoriesAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateCategories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateCategoriesRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create glossary category in bulk. </summary>
         /// <param name="body"> An array of glossary category definitions to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategories(IEnumerable{AtlasGlossaryCategory},CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IReadOnlyList<AtlasGlossaryCategory>> CreateCategories(IEnumerable<AtlasGlossaryCategory> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateCategories(content, context);
-            IReadOnlyList<AtlasGlossaryCategory> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<AtlasGlossaryCategory> array = new List<AtlasGlossaryCategory>();
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            Response result = CreateCategories(content, cancellationToken.ToRequestContext());
+            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item));
+                value.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, ModelSerializationExtensions.WireOptions));
             }
-            value = array;
-            return Response.FromValue(value, response);
+            return Response.FromValue((IReadOnlyList<AtlasGlossaryCategory>)value, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Create glossary category in bulk.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateCategoriesAsync(IEnumerable{AtlasGlossaryCategory},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoriesAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateCategoriesAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.CreateCategories");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateCategoriesRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create glossary category in bulk.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateCategories(IEnumerable{AtlasGlossaryCategory},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategories(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateCategories(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.CreateCategories");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateCategoriesRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a glossary category. </summary>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <summary> Create glossary category in bulk. </summary>
+        /// <param name="body"> An array of glossary category definitions to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoryAsync(AtlasGlossaryCategory,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryCategory>> CreateCategoryAsync(AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryCategory>>> CreateCategoriesAsync(IEnumerable<AtlasGlossaryCategory> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateCategoryAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            Response result = await CreateCategoriesAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasGlossaryCategory>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a glossary category.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateCategory(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateCategory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateCategoryRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a glossary category.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateCategoryAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateCategory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateCategoryRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create a glossary category. </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategory(AtlasGlossaryCategory,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasGlossaryCategory> CreateCategory(AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateCategory(content, context);
-            return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
+            Response result = CreateCategory(body, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossaryCategory)result, result);
+        }
+
+        /// <summary> Create a glossary category. </summary>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasGlossaryCategory>> CreateCategoryAsync(AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await CreateCategoryAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossaryCategory)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Create a glossary category.
+        /// [Protocol Method] Get specific glossary category by its GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateCategoryAsync(AtlasGlossaryCategory,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoryAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateCategoryAsync(RequestContent content, RequestContext context = null)
+        public virtual Response GetCategory(string categoryId, RequestContext context)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.CreateCategory");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategory");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCategoryRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+                using HttpMessage message = CreateGetCategoryRequest(categoryId, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -491,36 +477,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Create a glossary category.
+        /// [Protocol Method] Get specific glossary category by its GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateCategory(AtlasGlossaryCategory,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategory(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateCategory(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetCategoryAsync(string categoryId, RequestContext context)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.CreateCategory");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategory");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCategoryRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+                using HttpMessage message = CreateGetCategoryRequest(categoryId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -531,66 +510,58 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get specific glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryCategory>> GetCategoryAsync(string categoryId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCategoryAsync(categoryId, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
-        }
-
-        /// <summary> Get specific glossary category by its GUID. </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategory(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasGlossaryCategory> GetCategory(string categoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCategory(categoryId, context);
-            return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
+            Response result = GetCategory(categoryId, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossaryCategory)result, result);
+        }
+
+        /// <summary> Get specific glossary category by its GUID. </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasGlossaryCategory>> GetCategoryAsync(string categoryId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+            Response result = await GetCategoryAsync(categoryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossaryCategory)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Get specific glossary category by its GUID.
+        /// [Protocol Method] Update the given glossary category by its GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCategoryAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCategoryAsync(string categoryId, RequestContext context)
+        public virtual Response UpdateCategory(string categoryId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategory");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.UpdateCategory");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCategoryRequest(categoryId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUpdateCategoryRequest(categoryId, content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -600,37 +571,31 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get specific glossary category by its GUID.
+        /// [Protocol Method] Update the given glossary category by its GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCategory(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategory(string,RequestContext)']/*" />
-        public virtual Response GetCategory(string categoryId, RequestContext context)
+        public virtual async Task<Response> UpdateCategoryAsync(string categoryId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategory");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.UpdateCategory");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCategoryRequest(categoryId, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUpdateCategoryRequest(categoryId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -642,217 +607,193 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategoryAsync(string,AtlasGlossaryCategory,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateCategoryAsync(categoryId, content, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
-        }
-
-        /// <summary> Update the given glossary category by its GUID. </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategory(string,AtlasGlossaryCategory,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasGlossaryCategory> UpdateCategory(string categoryId, AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateCategory(categoryId, content, context);
-            return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
+            Response result = UpdateCategory(categoryId, body, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossaryCategory)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Update the given glossary category by its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="UpdateCategoryAsync(string,AtlasGlossaryCategory,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update the given glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategoryAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateCategoryAsync(string categoryId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.UpdateCategory");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUpdateCategoryRequest(categoryId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update the given glossary category by its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="UpdateCategory(string,AtlasGlossaryCategory,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategory(string,RequestContent,RequestContext)']/*" />
-        public virtual Response UpdateCategory(string categoryId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.UpdateCategory");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUpdateCategoryRequest(categoryId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Delete a glossary category.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteCategoryAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteCategoryAsync(string categoryId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteCategory");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteCategoryRequest(categoryId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Delete a glossary category.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteCategory(string,RequestContext)']/*" />
-        public virtual Response DeleteCategory(string categoryId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteCategory");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteCategoryRequest(categoryId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update the glossary category partially. So far we only supports partial
-        /// updating shortDescription and longDescription for category.
-        /// </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="body">
-        /// A map containing keys as attribute names and values as corresponding attribute
-        /// values for partial update.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateCategoryAsync(string,IDictionary{string,string},CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryCategory>> PartialUpdateCategoryAsync(string categoryId, IDictionary<string, string> body, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = RequestContentHelper.FromDictionary(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await PartialUpdateCategoryAsync(categoryId, content, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
+            Response result = await UpdateCategoryAsync(categoryId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossaryCategory)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete a glossary category.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response DeleteCategory(string categoryId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.DeleteCategory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+                using HttpMessage message = CreateDeleteCategoryRequest(categoryId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete a glossary category.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteCategoryAsync(string categoryId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.DeleteCategory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+                using HttpMessage message = CreateDeleteCategoryRequest(categoryId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a glossary category. </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteCategory(string categoryId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+            return DeleteCategory(categoryId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Delete a glossary category. </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteCategoryAsync(string categoryId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+            return await DeleteCategoryAsync(categoryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update the glossary category partially. So far we only supports partial
+        /// updating shortDescription and longDescription for category.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response PartialUpdateCategory(string categoryId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateCategory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreatePartialUpdateCategoryRequest(categoryId, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update the glossary category partially. So far we only supports partial
+        /// updating shortDescription and longDescription for category.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> PartialUpdateCategoryAsync(string categoryId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateCategory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreatePartialUpdateCategoryRequest(categoryId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -864,187 +805,41 @@ namespace Azure.Analytics.Purview.DataMap
         /// A map containing keys as attribute names and values as corresponding attribute
         /// values for partial update.
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateCategory(string,IDictionary{string,string},CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasGlossaryCategory> PartialUpdateCategory(string categoryId, IDictionary<string, string> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = RequestContentHelper.FromDictionary(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = PartialUpdateCategory(categoryId, content, context);
-            return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
+            using RequestContent content = BinaryContentHelper.FromDictionary(body);
+            Response result = PartialUpdateCategory(categoryId, content, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossaryCategory)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Update the glossary category partially. So far we only supports partial
+        /// Update the glossary category partially. So far we only supports partial
         /// updating shortDescription and longDescription for category.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="PartialUpdateCategoryAsync(string,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
         /// </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="body">
+        /// A map containing keys as attribute names and values as corresponding attribute
+        /// values for partial update.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateCategoryAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> PartialUpdateCategoryAsync(string categoryId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response<AtlasGlossaryCategory>> PartialUpdateCategoryAsync(string categoryId, IDictionary<string, string> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateCategory");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreatePartialUpdateCategoryRequest(categoryId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update the glossary category partially. So far we only supports partial
-        /// updating shortDescription and longDescription for category.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="PartialUpdateCategory(string,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateCategory(string,RequestContent,RequestContext)']/*" />
-        public virtual Response PartialUpdateCategory(string categoryId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateCategory");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreatePartialUpdateCategoryRequest(categoryId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get all related categories (parent and children). Limit, offset, and sort
-        /// parameters are currently not being enabled and won't work even they are passed.
-        /// </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedCategoriesAsync(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>>> GetRelatedCategoriesAsync(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetRelatedCategoriesAsync(categoryId, limit, offset, sort, context).ConfigureAwait(false);
-            IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            Dictionary<string, IList<AtlasRelatedCategoryHeader>> dictionary = new Dictionary<string, IList<AtlasRelatedCategoryHeader>>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    List<AtlasRelatedCategoryHeader> array = new List<AtlasRelatedCategoryHeader>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item));
-                    }
-                    dictionary.Add(property.Name, array);
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// Get all related categories (parent and children). Limit, offset, and sort
-        /// parameters are currently not being enabled and won't work even they are passed.
-        /// </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedCategories(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>> GetRelatedCategories(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetRelatedCategories(categoryId, limit, offset, sort, context);
-            IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            Dictionary<string, IList<AtlasRelatedCategoryHeader>> dictionary = new Dictionary<string, IList<AtlasRelatedCategoryHeader>>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    List<AtlasRelatedCategoryHeader> array = new List<AtlasRelatedCategoryHeader>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item));
-                    }
-                    dictionary.Add(property.Name, array);
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            using RequestContent content = BinaryContentHelper.FromDictionary(body);
+            Response result = await PartialUpdateCategoryAsync(categoryId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossaryCategory)result, result);
         }
 
         /// <summary>
@@ -1052,14 +847,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// parameters are currently not being enabled and won't work even they are passed.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRelatedCategoriesAsync(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1067,66 +855,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedCategoriesAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedCategories");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryId, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get all related categories (parent and children). Limit, offset, and sort
-        /// parameters are currently not being enabled and won't work even they are passed.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRelatedCategories(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedCategories(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetRelatedCategories(string categoryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedCategories");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedCategories");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
                 using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryId, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1135,70 +878,12 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        /// <summary> Get all terms associated with the specific category. </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryTermsAsync(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<AtlasRelatedTermHeader>>> GetCategoryTermsAsync(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCategoryTermsAsync(categoryId, limit, offset, sort, context).ConfigureAwait(false);
-            IReadOnlyList<AtlasRelatedTermHeader> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Get all terms associated with the specific category. </summary>
-        /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryTerms(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<AtlasRelatedTermHeader>> GetCategoryTerms(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCategoryTerms(categoryId, limit, offset, sort, context);
-            IReadOnlyList<AtlasRelatedTermHeader> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Get all terms associated with the specific category.
+        /// [Protocol Method] Get all related categories (parent and children). Limit, offset, and sort
+        /// parameters are currently not being enabled and won't work even they are passed.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCategoryTermsAsync(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1206,22 +891,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryTermsAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCategoryTermsAsync(string categoryId, int? limit, int? offset, string sort, RequestContext context)
+        public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategoryTerms");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedCategories");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCategoryTermsRequest(categoryId, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+                using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryId, limit, offset, sort, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1231,17 +915,54 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
+        /// Get all related categories (parent and children). Limit, offset, and sort
+        /// parameters are currently not being enabled and won't work even they are passed.
+        /// </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>> GetRelatedCategories(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+            Response result = GetRelatedCategories(categoryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            IDictionary<string, IList<AtlasRelatedCategoryHeader>> value = new Dictionary<string, IList<AtlasRelatedCategoryHeader>>();
+            BinaryData data = result.Content;
+            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>)value, result);
+        }
+
+        /// <summary>
+        /// Get all related categories (parent and children). Limit, offset, and sort
+        /// parameters are currently not being enabled and won't work even they are passed.
+        /// </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>>> GetRelatedCategoriesAsync(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+            Response result = await GetRelatedCategoriesAsync(categoryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            IDictionary<string, IList<AtlasRelatedCategoryHeader>> value = new Dictionary<string, IList<AtlasRelatedCategoryHeader>>();
+            BinaryData data = result.Content;
+            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>)value, result);
+        }
+
+        /// <summary>
         /// [Protocol Method] Get all terms associated with the specific category.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCategoryTerms(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1249,94 +970,136 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryTerms(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetCategoryTerms(string categoryId, int? limit, int? offset, string sort, RequestContext context)
         {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategoryTerms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+                using HttpMessage message = CreateGetCategoryTermsRequest(categoryId, limit, offset, sort, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all terms associated with the specific category.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCategoryTermsAsync(string categoryId, int? limit, int? offset, string sort, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategoryTerms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+
+                using HttpMessage message = CreateGetCategoryTermsRequest(categoryId, limit, offset, sort, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all terms associated with the specific category. </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<AtlasRelatedTermHeader>> GetCategoryTerms(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategoryTerms");
-            scope.Start();
-            try
+            Response result = GetCategoryTerms(categoryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
             {
-                using HttpMessage message = CreateGetCategoryTermsRequest(categoryId, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
+                value.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, ModelSerializationExtensions.WireOptions));
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return Response.FromValue((IReadOnlyList<AtlasRelatedTermHeader>)value, result);
         }
 
-        /// <summary> Create a glossary term. </summary>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermAsync(AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryTerm>> CreateTermAsync(AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        /// <summary> Get all terms associated with the specific category. </summary>
+        /// <param name="categoryId"> The globally unique identifier of the category. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<AtlasRelatedTermHeader>>> GetCategoryTermsAsync(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateTermAsync(content, includeTermHierarchy, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
-        }
-
-        /// <summary> Create a glossary term. </summary>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerm(AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryTerm> CreateTerm(AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateTerm(content, includeTermHierarchy, context);
-            return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
+            Response result = await GetCategoryTermsAsync(categoryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasRelatedTermHeader>)value, result);
         }
 
         /// <summary>
         /// [Protocol Method] Create a glossary term.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateTermAsync(AtlasGlossaryTerm,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermAsync(RequestContent,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> CreateTermAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual Response CreateTerm(RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.CreateTerm");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateTerm");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateTermRequest(content, includeTermHierarchy, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1349,34 +1112,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// [Protocol Method] Create a glossary term.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateTerm(AtlasGlossaryTerm,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerm(RequestContent,bool?,RequestContext)']/*" />
-        public virtual Response CreateTerm(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual async Task<Response> CreateTermAsync(RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.CreateTerm");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateTerm");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateTermRequest(content, includeTermHierarchy, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1385,189 +1140,153 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        /// <summary> Get a specific glossary term by its GUID. </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryTerm>> GetTermAsync(string termId, CancellationToken cancellationToken = default)
+        /// <summary> Create a glossary term. </summary>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<AtlasGlossaryTerm> CreateTerm(AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTermAsync(termId, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
+            Response result = CreateTerm(body, includeTermHierarchy, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossaryTerm)result, result);
         }
 
-        /// <summary> Get a specific glossary term by its GUID. </summary>
+        /// <summary> Create a glossary term. </summary>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasGlossaryTerm>> CreateTermAsync(AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await CreateTermAsync(body, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossaryTerm)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get a specific glossary term by its GUID. 
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerm(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTerm(string termId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetTerm");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
+                using HttpMessage message = CreateGetTermRequest(termId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get a specific glossary term by its GUID. 
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTermAsync(string termId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetTerm");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
+                using HttpMessage message = CreateGetTermRequest(termId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a specific glossary term by its GUID. . </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasGlossaryTerm> GetTerm(string termId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTerm(termId, context);
-            return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
+            Response result = GetTerm(termId, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossaryTerm)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get a specific glossary term by its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTermAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a specific glossary term by its GUID. . </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTermAsync(string termId, RequestContext context)
+        public virtual async Task<Response<AtlasGlossaryTerm>> GetTermAsync(string termId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetTerm");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTermRequest(termId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get a specific glossary term by its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTerm(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerm(string,RequestContext)']/*" />
-        public virtual Response GetTerm(string termId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetTerm");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTermRequest(termId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update the given glossary term by its GUID. </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTermAsync(string,AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryTerm>> UpdateTermAsync(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateTermAsync(termId, content, includeTermHierarchy, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
-        }
-
-        /// <summary> Update the given glossary term by its GUID. </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTerm(string,AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryTerm> UpdateTerm(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateTerm(termId, content, includeTermHierarchy, context);
-            return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
+            Response result = await GetTermAsync(termId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossaryTerm)result, result);
         }
 
         /// <summary>
         /// [Protocol Method] Update the given glossary term by its GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="UpdateTermAsync(string,AtlasGlossaryTerm,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTermAsync(string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateTermAsync(string termId, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual Response UpdateTerm(string termId, RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.UpdateTerm");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.UpdateTerm");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateUpdateTermRequest(termId, content, includeTermHierarchy, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1580,37 +1299,29 @@ namespace Azure.Analytics.Purview.DataMap
         /// [Protocol Method] Update the given glossary term by its GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="UpdateTerm(string,AtlasGlossaryTerm,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTerm(string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual Response UpdateTerm(string termId, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual async Task<Response> UpdateTermAsync(string termId, RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.UpdateTerm");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.UpdateTerm");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateUpdateTermRequest(termId, content, includeTermHierarchy, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1619,34 +1330,64 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary> Update the given glossary term by its GUID. </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<AtlasGlossaryTerm> UpdateTerm(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = UpdateTerm(termId, body, includeTermHierarchy, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossaryTerm)result, result);
+        }
+
+        /// <summary> Update the given glossary term by its GUID. </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasGlossaryTerm>> UpdateTermAsync(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await UpdateTermAsync(termId, body, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossaryTerm)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Delete a glossary term.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteTermAsync(string termId, RequestContext context = null)
+        public virtual Response DeleteTerm(string termId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteTerm");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.DeleteTerm");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
                 using HttpMessage message = CreateDeleteTermRequest(termId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1655,34 +1396,128 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete a glossary term.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTerm(string,RequestContext)']/*" />
-        public virtual Response DeleteTerm(string termId, RequestContext context = null)
+        public virtual async Task<Response> DeleteTermAsync(string termId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteTerm");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.DeleteTerm");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
                 using HttpMessage message = CreateDeleteTermRequest(termId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a glossary term. </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteTerm(string termId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
+            return DeleteTerm(termId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Delete a glossary term. </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteTermAsync(string termId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
+            return await DeleteTermAsync(termId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update the glossary term partially. So far we only supports partial updating
+        /// shortDescription, longDescription, abbreviation, usage and status for term.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response PartialUpdateTerm(string termId, RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateTerm");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreatePartialUpdateTermRequest(termId, content, includeTermHierarchy, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update the glossary term partially. So far we only supports partial updating
+        /// shortDescription, longDescription, abbreviation, usage and status for term.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> PartialUpdateTermAsync(string termId, RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateTerm");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreatePartialUpdateTermRequest(termId, content, includeTermHierarchy, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1701,19 +1536,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// values to be updated.
         /// </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateTermAsync(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryTerm>> PartialUpdateTermAsync(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<AtlasGlossaryTerm> PartialUpdateTerm(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = RequestContentHelper.FromDictionary(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await PartialUpdateTermAsync(termId, content, includeTermHierarchy, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
+            using RequestContent content = BinaryContentHelper.FromDictionary(body);
+            Response result = PartialUpdateTerm(termId, content, includeTermHierarchy, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossaryTerm)result, result);
         }
 
         /// <summary>
@@ -1726,189 +1560,44 @@ namespace Azure.Analytics.Purview.DataMap
         /// values to be updated.
         /// </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateTerm(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryTerm> PartialUpdateTerm(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = RequestContentHelper.FromDictionary(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = PartialUpdateTerm(termId, content, includeTermHierarchy, context);
-            return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update the glossary term partially. So far we only supports partial updating
-        /// shortDescription, longDescription, abbreviation, usage and status for term.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="PartialUpdateTermAsync(string,IDictionary{string,string},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateTermAsync(string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> PartialUpdateTermAsync(string termId, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual async Task<Response<AtlasGlossaryTerm>> PartialUpdateTermAsync(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateTerm");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreatePartialUpdateTermRequest(termId, content, includeTermHierarchy, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update the glossary term partially. So far we only supports partial updating
-        /// shortDescription, longDescription, abbreviation, usage and status for term.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="PartialUpdateTerm(string,IDictionary{string,string},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateTerm(string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual Response PartialUpdateTerm(string termId, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateTerm");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreatePartialUpdateTermRequest(termId, content, includeTermHierarchy, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create glossary terms in bulk. </summary>
-        /// <param name="body"> An array of glossary term definitions to be created in bulk. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermsAsync(IEnumerable{AtlasGlossaryTerm},bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryTerm>>> CreateTermsAsync(IEnumerable<AtlasGlossaryTerm> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
-        {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateTermsAsync(content, includeTermHierarchy, context).ConfigureAwait(false);
-            IReadOnlyList<AtlasGlossaryTerm> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<AtlasGlossaryTerm> array = new List<AtlasGlossaryTerm>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Create glossary terms in bulk. </summary>
-        /// <param name="body"> An array of glossary term definitions to be created in bulk. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerms(IEnumerable{AtlasGlossaryTerm},bool?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<AtlasGlossaryTerm>> CreateTerms(IEnumerable<AtlasGlossaryTerm> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateTerms(content, includeTermHierarchy, context);
-            IReadOnlyList<AtlasGlossaryTerm> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<AtlasGlossaryTerm> array = new List<AtlasGlossaryTerm>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            using RequestContent content = BinaryContentHelper.FromDictionary(body);
+            Response result = await PartialUpdateTermAsync(termId, content, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossaryTerm)result, result);
         }
 
         /// <summary>
         /// [Protocol Method] Create glossary terms in bulk.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateTermsAsync(IEnumerable{AtlasGlossaryTerm},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermsAsync(RequestContent,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> CreateTermsAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual Response CreateTerms(RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.CreateTerms");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateTerms");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateTermsRequest(content, includeTermHierarchy, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1921,34 +1610,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// [Protocol Method] Create glossary terms in bulk.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateTerms(IEnumerable{AtlasGlossaryTerm},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerms(RequestContent,bool?,RequestContext)']/*" />
-        public virtual Response CreateTerms(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual async Task<Response> CreateTermsAsync(RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.CreateTerms");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateTerms");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateTermsRequest(content, includeTermHierarchy, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1957,62 +1638,48 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        /// <summary>
-        /// List all related objects assigned with the specified term. Recommend using
-        /// limit/offset to get pagination result.
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTermAsync(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<AtlasRelatedObjectId>>> GetEntitiesAssignedWithTermAsync(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <summary> Create glossary terms in bulk. </summary>
+        /// <param name="body"> An array of glossary term definitions to be created in bulk. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<AtlasGlossaryTerm>> CreateTerms(IEnumerable<AtlasGlossaryTerm> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEntitiesAssignedWithTermAsync(termId, limit, offset, sort, context).ConfigureAwait(false);
-            IReadOnlyList<AtlasRelatedObjectId> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<AtlasRelatedObjectId> array = new List<AtlasRelatedObjectId>();
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            Response result = CreateTerms(content, includeTermHierarchy, cancellationToken.ToRequestContext());
+            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(AtlasRelatedObjectId.DeserializeAtlasRelatedObjectId(item));
+                value.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, ModelSerializationExtensions.WireOptions));
             }
-            value = array;
-            return Response.FromValue(value, response);
+            return Response.FromValue((IReadOnlyList<AtlasGlossaryTerm>)value, result);
         }
 
-        /// <summary>
-        /// List all related objects assigned with the specified term. Recommend using
-        /// limit/offset to get pagination result.
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTerm(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<AtlasRelatedObjectId>> GetEntitiesAssignedWithTerm(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <summary> Create glossary terms in bulk. </summary>
+        /// <param name="body"> An array of glossary term definitions to be created in bulk. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryTerm>>> CreateTermsAsync(IEnumerable<AtlasGlossaryTerm> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetEntitiesAssignedWithTerm(termId, limit, offset, sort, context);
-            IReadOnlyList<AtlasRelatedObjectId> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<AtlasRelatedObjectId> array = new List<AtlasRelatedObjectId>();
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            Response result = await CreateTermsAsync(content, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(AtlasRelatedObjectId.DeserializeAtlasRelatedObjectId(item));
+                value.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, ModelSerializationExtensions.WireOptions));
             }
-            value = array;
-            return Response.FromValue(value, response);
+            return Response.FromValue((IReadOnlyList<AtlasGlossaryTerm>)value, result);
         }
 
         /// <summary>
@@ -2020,14 +1687,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// limit/offset to get pagination result.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEntitiesAssignedWithTermAsync(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2035,66 +1695,189 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTermAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetEntitiesAssignedWithTerm");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termId, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] List all related objects assigned with the specified term. Recommend using
-        /// limit/offset to get pagination result.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEntitiesAssignedWithTerm(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTerm(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetEntitiesAssignedWithTerm(string termId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetEntitiesAssignedWithTerm");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetEntitiesAssignedWithTerm");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
                 using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termId, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List all related objects assigned with the specified term. Recommend using
+        /// limit/offset to get pagination result.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termId, int? limit, int? offset, string sort, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetEntitiesAssignedWithTerm");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
+                using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termId, limit, offset, sort, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all related objects assigned with the specified term. Recommend using
+        /// limit/offset to get pagination result.
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<AtlasRelatedObjectId>> GetEntitiesAssignedWithTerm(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
+            Response result = GetEntitiesAssignedWithTerm(termId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<AtlasRelatedObjectId> value = new List<AtlasRelatedObjectId>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasRelatedObjectId.DeserializeAtlasRelatedObjectId(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasRelatedObjectId>)value, result);
+        }
+
+        /// <summary>
+        /// List all related objects assigned with the specified term. Recommend using
+        /// limit/offset to get pagination result.
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<AtlasRelatedObjectId>>> GetEntitiesAssignedWithTermAsync(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
+            Response result = await GetEntitiesAssignedWithTermAsync(termId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<AtlasRelatedObjectId> value = new List<AtlasRelatedObjectId>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasRelatedObjectId.DeserializeAtlasRelatedObjectId(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasRelatedObjectId>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Assign the given term to the provided list of related objects. Recommend using
+        /// small batches with multiple API calls.
+        /// 
+        /// [Entities Create Or Update
+        /// operation](https://learn.microsoft.com/en-us/rest/api/purview/datamapdataplane/entity/bulk-create-or-update?tabs=HTTP)
+        /// is an alternative to assign a term to multiple entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response AssignTermToEntities(string termId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.AssignTermToEntities");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateAssignTermToEntitiesRequest(termId, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Assign the given term to the provided list of related objects. Recommend using
+        /// small batches with multiple API calls.
+        /// 
+        /// [Entities Create Or Update
+        /// operation](https://learn.microsoft.com/en-us/rest/api/purview/datamapdataplane/entity/bulk-create-or-update?tabs=HTTP)
+        /// is an alternative to assign a term to multiple entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> AssignTermToEntitiesAsync(string termId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.AssignTermToEntities");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateAssignTermToEntitiesRequest(termId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2106,347 +1889,147 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Assign the given term to the provided list of related objects. Recommend using
         /// small batches with multiple API calls.
-        ///
+        /// 
         /// [Entities Create Or Update
         /// operation](https://learn.microsoft.com/en-us/rest/api/purview/datamapdataplane/entity/bulk-create-or-update?tabs=HTTP)
         /// is an alternative to assign a term to multiple entities.
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="body"> An array of related object IDs to which the term has to be associated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='AssignTermToEntitiesAsync(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
-        public virtual async Task<Response> AssignTermToEntitiesAsync(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AssignTermToEntitiesAsync(termId, content, context).ConfigureAwait(false);
-            return response;
-        }
-
-        /// <summary>
-        /// Assign the given term to the provided list of related objects. Recommend using
-        /// small batches with multiple API calls.
-        ///
-        /// [Entities Create Or Update
-        /// operation](https://learn.microsoft.com/en-us/rest/api/purview/datamapdataplane/entity/bulk-create-or-update?tabs=HTTP)
-        /// is an alternative to assign a term to multiple entities.
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="body"> An array of related object IDs to which the term has to be associated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='AssignTermToEntities(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AssignTermToEntities(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AssignTermToEntities(termId, content, context);
-            return response;
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            return AssignTermToEntities(termId, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
-        /// [Protocol Method] Assign the given term to the provided list of related objects. Recommend using
+        /// Assign the given term to the provided list of related objects. Recommend using
         /// small batches with multiple API calls.
-        ///
+        /// 
         /// [Entities Create Or Update
         /// operation](https://learn.microsoft.com/en-us/rest/api/purview/datamapdataplane/entity/bulk-create-or-update?tabs=HTTP)
         /// is an alternative to assign a term to multiple entities.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="AssignTermToEntitiesAsync(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='AssignTermToEntitiesAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> AssignTermToEntitiesAsync(string termId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.AssignTermToEntities");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateAssignTermToEntitiesRequest(termId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Assign the given term to the provided list of related objects. Recommend using
-        /// small batches with multiple API calls.
-        ///
-        /// [Entities Create Or Update
-        /// operation](https://learn.microsoft.com/en-us/rest/api/purview/datamapdataplane/entity/bulk-create-or-update?tabs=HTTP)
-        /// is an alternative to assign a term to multiple entities.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="AssignTermToEntities(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='AssignTermToEntities(string,RequestContent,RequestContext)']/*" />
-        public virtual Response AssignTermToEntities(string termId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.AssignTermToEntities");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateAssignTermToEntitiesRequest(termId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete the term assignment for the given list of related objects. </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="body"> An array of related object IDs from which the term has to be dissociated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="body"> An array of related object IDs to which the term has to be associated. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntitiesAsync(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
-        public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> AssignTermToEntitiesAsync(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DeleteTermAssignmentFromEntitiesAsync(termId, content, context).ConfigureAwait(false);
-            return response;
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            return await AssignTermToEntitiesAsync(termId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete the term assignment for the given list of related objects.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response DeleteTermAssignmentFromEntities(string termId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.DeleteTermAssignmentFromEntities");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termId, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete the term assignment for the given list of related objects.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.DeleteTermAssignmentFromEntities");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="body"> An array of related object IDs from which the term has to be dissociated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntities(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteTermAssignmentFromEntities(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DeleteTermAssignmentFromEntities(termId, content, context);
-            return response;
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            return DeleteTermAssignmentFromEntities(termId, content, cancellationToken.ToRequestContext());
         }
 
-        /// <summary>
-        /// [Protocol Method] Delete the term assignment for the given list of related objects.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="DeleteTermAssignmentFromEntitiesAsync(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Delete the term assignment for the given list of related objects. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="body"> An array of related object IDs from which the term has to be dissociated. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntitiesAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteTermAssignmentFromEntities");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Delete the term assignment for the given list of related objects.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="DeleteTermAssignmentFromEntities(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntities(string,RequestContent,RequestContext)']/*" />
-        public virtual Response DeleteTermAssignmentFromEntities(string termId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteTermAssignmentFromEntities");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get all related terms for a specific term by its GUID. Limit, offset, and sort
-        /// parameters are currently not being enabled and won't work even they are passed.
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedTermsAsync(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>>> GetRelatedTermsAsync(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetRelatedTermsAsync(termId, limit, offset, sort, context).ConfigureAwait(false);
-            IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            Dictionary<string, IList<AtlasRelatedTermHeader>> dictionary = new Dictionary<string, IList<AtlasRelatedTermHeader>>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
-                    }
-                    dictionary.Add(property.Name, array);
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// Get all related terms for a specific term by its GUID. Limit, offset, and sort
-        /// parameters are currently not being enabled and won't work even they are passed.
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedTerms(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>> GetRelatedTerms(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetRelatedTerms(termId, limit, offset, sort, context);
-            IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            Dictionary<string, IList<AtlasRelatedTermHeader>> dictionary = new Dictionary<string, IList<AtlasRelatedTermHeader>>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
-                    }
-                    dictionary.Add(property.Name, array);
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            return await DeleteTermAssignmentFromEntitiesAsync(termId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2454,14 +2037,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// parameters are currently not being enabled and won't work even they are passed.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRelatedTermsAsync(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2469,66 +2045,165 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedTermsAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRelatedTermsAsync(string termId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedTerms");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetRelatedTermsRequest(termId, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get all related terms for a specific term by its GUID. Limit, offset, and sort
-        /// parameters are currently not being enabled and won't work even they are passed.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRelatedTerms(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedTerms(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetRelatedTerms(string termId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedTerms");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedTerms");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
                 using HttpMessage message = CreateGetRelatedTermsRequest(termId, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all related terms for a specific term by its GUID. Limit, offset, and sort
+        /// parameters are currently not being enabled and won't work even they are passed.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetRelatedTermsAsync(string termId, int? limit, int? offset, string sort, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedTerms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
+                using HttpMessage message = CreateGetRelatedTermsRequest(termId, limit, offset, sort, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all related terms for a specific term by its GUID. Limit, offset, and sort
+        /// parameters are currently not being enabled and won't work even they are passed.
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>> GetRelatedTerms(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
+            Response result = GetRelatedTerms(termId, limit, offset, sort, cancellationToken.ToRequestContext());
+            IDictionary<string, IList<AtlasRelatedTermHeader>> value = new Dictionary<string, IList<AtlasRelatedTermHeader>>();
+            BinaryData data = result.Content;
+            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>)value, result);
+        }
+
+        /// <summary>
+        /// Get all related terms for a specific term by its GUID. Limit, offset, and sort
+        /// parameters are currently not being enabled and won't work even they are passed.
+        /// </summary>
+        /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>>> GetRelatedTermsAsync(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+
+            Response result = await GetRelatedTermsAsync(termId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            IDictionary<string, IList<AtlasRelatedTermHeader>> value = new Dictionary<string, IList<AtlasRelatedTermHeader>>();
+            BinaryData data = result.Content;
+            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get a specific Glossary by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetGlossary(string glossaryId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetGlossary");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+                using HttpMessage message = CreateGetGlossaryRequest(glossaryId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get a specific Glossary by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetGlossaryAsync(string glossaryId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetGlossary");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+                using HttpMessage message = CreateGetGlossaryRequest(glossaryId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2539,187 +2214,59 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get a specific Glossary by its GUID. </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetGlossaryAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossary>> GetGlossaryAsync(string glossaryId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetGlossaryAsync(glossaryId, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossary.FromResponse(response), response);
-        }
-
-        /// <summary> Get a specific Glossary by its GUID. </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetGlossary(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasGlossary> GetGlossary(string glossaryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetGlossary(glossaryId, context);
-            return Response.FromValue(AtlasGlossary.FromResponse(response), response);
+            Response result = GetGlossary(glossaryId, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossary)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get a specific Glossary by its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetGlossaryAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a specific Glossary by its GUID. </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetGlossaryAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryAsync(string glossaryId, RequestContext context)
+        public virtual async Task<Response<AtlasGlossary>> GetGlossaryAsync(string glossaryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetGlossary");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossaryRequest(glossaryId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get a specific Glossary by its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetGlossary(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetGlossary(string,RequestContext)']/*" />
-        public virtual Response GetGlossary(string glossaryId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetGlossary");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossaryRequest(glossaryId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update the given glossary. </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateAsync(string,AtlasGlossary,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossary>> UpdateAsync(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateAsync(glossaryId, content, ignoreTermsAndCategories, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossary.FromResponse(response), response);
-        }
-
-        /// <summary> Update the given glossary. </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Update(string,AtlasGlossary,bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossary> Update(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Update(glossaryId, content, ignoreTermsAndCategories, context);
-            return Response.FromValue(AtlasGlossary.FromResponse(response), response);
+            Response result = await GetGlossaryAsync(glossaryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossary)result, result);
         }
 
         /// <summary>
         /// [Protocol Method] Update the given glossary.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="UpdateAsync(string,AtlasGlossary,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateAsync(string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateAsync(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = null, RequestContext context = null)
+        public virtual Response Update(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = default, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.Update");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.Update");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2732,37 +2279,29 @@ namespace Azure.Analytics.Purview.DataMap
         /// [Protocol Method] Update the given glossary.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Update(string,AtlasGlossary,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Update(string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual Response Update(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = null, RequestContext context = null)
+        public virtual async Task<Response> UpdateAsync(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = default, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.Update");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.Update");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2771,35 +2310,65 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary> Update the given glossary. </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<AtlasGlossary> Update(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = Update(glossaryId, body, ignoreTermsAndCategories, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossary)result, result);
+        }
+
+        /// <summary> Update the given glossary. </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasGlossary>> UpdateAsync(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await UpdateAsync(glossaryId, body, ignoreTermsAndCategories, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossary)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Delete a glossary. Will delete underlying terms/categories together. Recommend
         /// separate delete terms and categories.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string glossaryId, RequestContext context = null)
+        public virtual Response Delete(string glossaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.Delete");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.Delete");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
                 using HttpMessage message = CreateDeleteRequest(glossaryId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2808,35 +2377,31 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete a glossary. Will delete underlying terms/categories together. Recommend
         /// separate delete terms and categories.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
-        public virtual Response Delete(string glossaryId, RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(string glossaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.Delete");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.Delete");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
                 using HttpMessage message = CreateDeleteRequest(glossaryId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2846,61 +2411,35 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// Get the categories belonging to a specific glossary. Recommend using
-        /// limit/offset to get pagination result.
+        /// Delete a glossary. Will delete underlying terms/categories together. Recommend
+        /// separate delete terms and categories.
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesAsync(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryCategory>>> GetCategoriesAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Delete(string glossaryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCategoriesAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
-            IReadOnlyList<AtlasGlossaryCategory> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<AtlasGlossaryCategory> array = new List<AtlasGlossaryCategory>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            return Delete(glossaryId, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
-        /// Get the categories belonging to a specific glossary. Recommend using
-        /// limit/offset to get pagination result.
+        /// Delete a glossary. Will delete underlying terms/categories together. Recommend
+        /// separate delete terms and categories.
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategories(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<AtlasGlossaryCategory>> GetCategories(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteAsync(string glossaryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCategories(glossaryId, limit, offset, sort, context);
-            IReadOnlyList<AtlasGlossaryCategory> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<AtlasGlossaryCategory> array = new List<AtlasGlossaryCategory>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            return await DeleteAsync(glossaryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2908,14 +2447,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// limit/offset to get pagination result.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCategoriesAsync(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2923,66 +2455,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCategoriesAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategories");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCategoriesRequest(glossaryId, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get the categories belonging to a specific glossary. Recommend using
-        /// limit/offset to get pagination result.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCategories(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategories(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetCategories(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategories");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategories");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
                 using HttpMessage message = CreateGetCategoriesRequest(glossaryId, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2992,76 +2479,11 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// Get the category headers belonging to a specific glossary. Recommend using
-        /// limit/offset to get pagination result.
-        /// </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesHeadersAsync(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<AtlasRelatedCategoryHeader>>> GetCategoriesHeadersAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCategoriesHeadersAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
-            IReadOnlyList<AtlasRelatedCategoryHeader> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<AtlasRelatedCategoryHeader> array = new List<AtlasRelatedCategoryHeader>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// Get the category headers belonging to a specific glossary. Recommend using
-        /// limit/offset to get pagination result.
-        /// </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesHeaders(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<AtlasRelatedCategoryHeader>> GetCategoriesHeaders(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCategoriesHeaders(glossaryId, limit, offset, sort, context);
-            IReadOnlyList<AtlasRelatedCategoryHeader> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<AtlasRelatedCategoryHeader> array = new List<AtlasRelatedCategoryHeader>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get the category headers belonging to a specific glossary. Recommend using
+        /// [Protocol Method] Get the categories belonging to a specific glossary. Recommend using
         /// limit/offset to get pagination result.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCategoriesHeadersAsync(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3069,22 +2491,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesHeadersAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCategoriesHeadersAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
+        public virtual async Task<Response> GetCategoriesAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategoriesHeaders");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategories");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCategoriesHeadersRequest(glossaryId, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+                using HttpMessage message = CreateGetCategoriesRequest(glossaryId, limit, offset, sort, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3094,18 +2515,65 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
+        /// Get the categories belonging to a specific glossary. Recommend using
+        /// limit/offset to get pagination result.
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<AtlasGlossaryCategory>> GetCategories(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+            Response result = GetCategories(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasGlossaryCategory>)value, result);
+        }
+
+        /// <summary>
+        /// Get the categories belonging to a specific glossary. Recommend using
+        /// limit/offset to get pagination result.
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryCategory>>> GetCategoriesAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+            Response result = await GetCategoriesAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasGlossaryCategory>)value, result);
+        }
+
+        /// <summary>
         /// [Protocol Method] Get the category headers belonging to a specific glossary. Recommend using
         /// limit/offset to get pagination result.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCategoriesHeaders(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3113,22 +2581,189 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesHeaders(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetCategoriesHeaders(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategoriesHeaders");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategoriesHeaders");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
                 using HttpMessage message = CreateGetCategoriesHeadersRequest(glossaryId, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the category headers belonging to a specific glossary. Recommend using
+        /// limit/offset to get pagination result.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCategoriesHeadersAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategoriesHeaders");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+                using HttpMessage message = CreateGetCategoriesHeadersRequest(glossaryId, limit, offset, sort, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the category headers belonging to a specific glossary. Recommend using
+        /// limit/offset to get pagination result.
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<AtlasRelatedCategoryHeader>> GetCategoriesHeaders(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+            Response result = GetCategoriesHeaders(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<AtlasRelatedCategoryHeader> value = new List<AtlasRelatedCategoryHeader>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasRelatedCategoryHeader>)value, result);
+        }
+
+        /// <summary>
+        /// Get the category headers belonging to a specific glossary. Recommend using
+        /// limit/offset to get pagination result.
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<AtlasRelatedCategoryHeader>>> GetCategoriesHeadersAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+            Response result = await GetCategoriesHeadersAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<AtlasRelatedCategoryHeader> value = new List<AtlasRelatedCategoryHeader>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasRelatedCategoryHeader>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get a specific glossary with detailed information. This API is not
+        /// recommend.
+        /// 
+        /// Recommend to fetch terms/categories details separately using 
+        /// 
+        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and 
+        /// 
+        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/categories.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetDetailed(string glossaryId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetDetailed");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+                using HttpMessage message = CreateGetDetailedRequest(glossaryId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get a specific glossary with detailed information. This API is not
+        /// recommend.
+        /// 
+        /// Recommend to fetch terms/categories details separately using 
+        /// 
+        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and 
+        /// 
+        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/categories.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetDetailedAsync(string glossaryId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetDetailed");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+                using HttpMessage message = CreateGetDetailedRequest(glossaryId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3140,249 +2775,83 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Get a specific glossary with detailed information. This API is not
         /// recommend.
-        ///
-        /// Recommend to fetch terms/categories details separately using
-        ///
-        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and
-        ///
+        /// 
+        /// Recommend to fetch terms/categories details separately using 
+        /// 
+        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and 
+        /// 
         /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/categories.
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetDetailedAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryExtInfo>> GetDetailedAsync(string glossaryId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetDetailedAsync(glossaryId, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossaryExtInfo.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// Get a specific glossary with detailed information. This API is not
-        /// recommend.
-        ///
-        /// Recommend to fetch terms/categories details separately using
-        ///
-        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and
-        ///
-        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/categories.
-        /// </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetDetailed(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasGlossaryExtInfo> GetDetailed(string glossaryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetDetailed(glossaryId, context);
-            return Response.FromValue(AtlasGlossaryExtInfo.FromResponse(response), response);
+            Response result = GetDetailed(glossaryId, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossaryExtInfo)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Get a specific glossary with detailed information. This API is not
+        /// Get a specific glossary with detailed information. This API is not
         /// recommend.
-        ///
-        /// Recommend to fetch terms/categories details separately using
-        ///
-        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and
-        ///
+        /// 
+        /// Recommend to fetch terms/categories details separately using 
+        /// 
+        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and 
+        /// 
         /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/categories.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetDetailedAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetDetailedAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDetailedAsync(string glossaryId, RequestContext context)
+        public virtual async Task<Response<AtlasGlossaryExtInfo>> GetDetailedAsync(string glossaryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetDetailed");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDetailedRequest(glossaryId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get a specific glossary with detailed information. This API is not
-        /// recommend.
-        ///
-        /// Recommend to fetch terms/categories details separately using
-        ///
-        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and
-        ///
-        /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/categories.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetDetailed(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetDetailed(string,RequestContext)']/*" />
-        public virtual Response GetDetailed(string glossaryId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetDetailed");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDetailedRequest(glossaryId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update the glossary partially. Some properties such as qualifiedName are not
-        /// allowed to be updated.
-        ///
-        /// So far we only supports partial updating
-        /// shortDescription, longDescription, language and usage for glossary.
-        ///
-        /// Recommend
-        /// using 'ignoreTermsAndCategories=true' to reduce response body size.
-        /// </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="body">
-        /// A map containing keys as attribute names and values as corresponding attribute
-        /// values.
-        /// </param>
-        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateAsync(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossary>> PartialUpdateAsync(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = RequestContentHelper.FromDictionary(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await PartialUpdateAsync(glossaryId, content, ignoreTermsAndCategories, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasGlossary.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// Update the glossary partially. Some properties such as qualifiedName are not
-        /// allowed to be updated.
-        ///
-        /// So far we only supports partial updating
-        /// shortDescription, longDescription, language and usage for glossary.
-        ///
-        /// Recommend
-        /// using 'ignoreTermsAndCategories=true' to reduce response body size.
-        /// </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="body">
-        /// A map containing keys as attribute names and values as corresponding attribute
-        /// values.
-        /// </param>
-        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdate(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossary> PartialUpdate(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = RequestContentHelper.FromDictionary(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = PartialUpdate(glossaryId, content, ignoreTermsAndCategories, context);
-            return Response.FromValue(AtlasGlossary.FromResponse(response), response);
+            Response result = await GetDetailedAsync(glossaryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossaryExtInfo)result, result);
         }
 
         /// <summary>
         /// [Protocol Method] Update the glossary partially. Some properties such as qualifiedName are not
         /// allowed to be updated.
-        ///
+        /// 
         /// So far we only supports partial updating
-        /// shortDescription, longDescription, language and usage for glossary.
-        ///
+        /// shortDescription, longDescription, language and usage for glossary. 
+        /// 
         /// Recommend
         /// using 'ignoreTermsAndCategories=true' to reduce response body size.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="PartialUpdateAsync(string,IDictionary{string,string},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateAsync(string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> PartialUpdateAsync(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = null, RequestContext context = null)
+        public virtual Response PartialUpdate(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = default, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdate");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreatePartialUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3394,45 +2863,37 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Update the glossary partially. Some properties such as qualifiedName are not
         /// allowed to be updated.
-        ///
+        /// 
         /// So far we only supports partial updating
-        /// shortDescription, longDescription, language and usage for glossary.
-        ///
+        /// shortDescription, longDescription, language and usage for glossary. 
+        /// 
         /// Recommend
         /// using 'ignoreTermsAndCategories=true' to reduce response body size.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="PartialUpdate(string,IDictionary{string,string},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdate(string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual Response PartialUpdate(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = null, RequestContext context = null)
+        public virtual async Task<Response> PartialUpdateAsync(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = default, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdate");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreatePartialUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3442,61 +2903,63 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// Get terms belonging to a specific glossary. Recommend using limit/offset to get
-        /// pagination result.
+        /// Update the glossary partially. Some properties such as qualifiedName are not
+        /// allowed to be updated.
+        /// 
+        /// So far we only supports partial updating
+        /// shortDescription, longDescription, language and usage for glossary. 
+        /// 
+        /// Recommend
+        /// using 'ignoreTermsAndCategories=true' to reduce response body size.
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <param name="body">
+        /// A map containing keys as attribute names and values as corresponding attribute
+        /// values.
+        /// </param>
+        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermsAsync(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryTerm>>> GetTermsAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<AtlasGlossary> PartialUpdate(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTermsAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
-            IReadOnlyList<AtlasGlossaryTerm> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<AtlasGlossaryTerm> array = new List<AtlasGlossaryTerm>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            using RequestContent content = BinaryContentHelper.FromDictionary(body);
+            Response result = PartialUpdate(glossaryId, content, ignoreTermsAndCategories, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasGlossary)result, result);
         }
 
         /// <summary>
-        /// Get terms belonging to a specific glossary. Recommend using limit/offset to get
-        /// pagination result.
+        /// Update the glossary partially. Some properties such as qualifiedName are not
+        /// allowed to be updated.
+        /// 
+        /// So far we only supports partial updating
+        /// shortDescription, longDescription, language and usage for glossary. 
+        /// 
+        /// Recommend
+        /// using 'ignoreTermsAndCategories=true' to reduce response body size.
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <param name="body">
+        /// A map containing keys as attribute names and values as corresponding attribute
+        /// values.
+        /// </param>
+        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerms(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<AtlasGlossaryTerm>> GetTerms(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasGlossary>> PartialUpdateAsync(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTerms(glossaryId, limit, offset, sort, context);
-            IReadOnlyList<AtlasGlossaryTerm> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<AtlasGlossaryTerm> array = new List<AtlasGlossaryTerm>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            using RequestContent content = BinaryContentHelper.FromDictionary(body);
+            Response result = await PartialUpdateAsync(glossaryId, content, ignoreTermsAndCategories, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasGlossary)result, result);
         }
 
         /// <summary>
@@ -3504,14 +2967,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// pagination result.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTermsAsync(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3519,66 +2975,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermsAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTermsAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetTerms");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTermsRequest(glossaryId, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get terms belonging to a specific glossary. Recommend using limit/offset to get
-        /// pagination result.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTerms(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerms(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetTerms(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetTerms");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetTerms");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
                 using HttpMessage message = CreateGetTermsRequest(glossaryId, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3588,76 +2999,11 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// Get term headers belonging to a specific glossary. Recommend using limit/offset
-        /// to get pagination result.
-        /// </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermHeadersAsync(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<AtlasRelatedTermHeader>>> GetTermHeadersAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTermHeadersAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
-            IReadOnlyList<AtlasRelatedTermHeader> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// Get term headers belonging to a specific glossary. Recommend using limit/offset
-        /// to get pagination result.
-        /// </summary>
-        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermHeaders(string,int?,int?,string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<AtlasRelatedTermHeader>> GetTermHeaders(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTermHeaders(glossaryId, limit, offset, sort, context);
-            IReadOnlyList<AtlasRelatedTermHeader> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get term headers belonging to a specific glossary. Recommend using limit/offset
-        /// to get pagination result.
+        /// [Protocol Method] Get terms belonging to a specific glossary. Recommend using limit/offset to get
+        /// pagination result.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTermHeadersAsync(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3665,22 +3011,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermHeadersAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTermHeadersAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
+        public virtual async Task<Response> GetTermsAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetTermHeaders");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetTerms");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermHeadersRequest(glossaryId, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+                using HttpMessage message = CreateGetTermsRequest(glossaryId, limit, offset, sort, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3690,18 +3035,65 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
+        /// Get terms belonging to a specific glossary. Recommend using limit/offset to get
+        /// pagination result.
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<AtlasGlossaryTerm>> GetTerms(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+            Response result = GetTerms(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasGlossaryTerm>)value, result);
+        }
+
+        /// <summary>
+        /// Get terms belonging to a specific glossary. Recommend using limit/offset to get
+        /// pagination result.
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryTerm>>> GetTermsAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+            Response result = await GetTermsAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasGlossaryTerm>)value, result);
+        }
+
+        /// <summary>
         /// [Protocol Method] Get term headers belonging to a specific glossary. Recommend using limit/offset
         /// to get pagination result.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTermHeaders(string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3709,22 +3101,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermHeaders(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetTermHeaders(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("Glossary.GetTermHeaders");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetTermHeaders");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
                 using HttpMessage message = CreateGetTermHeadersRequest(glossaryId, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3733,630 +3124,94 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        internal HttpMessage CreateBatchGetRequest(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Get term headers belonging to a specific glossary. Recommend using limit/offset
+        /// to get pagination result.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTermHeadersAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (limit != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetTermHeaders");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("limit", limit.Value, true);
+                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+                using HttpMessage message = CreateGetTermHeadersRequest(glossaryId, limit, offset, sort, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (offset != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("offset", offset.Value, true);
+                scope.Failed(e);
+                throw;
             }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            if (ignoreTermsAndCategories != null)
-            {
-                uri.AppendQuery("ignoreTermsAndCategories", ignoreTermsAndCategories.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
-        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
+        /// <summary>
+        /// Get term headers belonging to a specific glossary. Recommend using limit/offset
+        /// to get pagination result.
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<AtlasRelatedTermHeader>> GetTermHeaders(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+            Response result = GetTermHeaders(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasRelatedTermHeader>)value, result);
         }
 
-        internal HttpMessage CreateCreateCategoriesRequest(RequestContent content, RequestContext context)
+        /// <summary>
+        /// Get term headers belonging to a specific glossary. Recommend using limit/offset
+        /// to get pagination result.
+        /// </summary>
+        /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<AtlasRelatedTermHeader>>> GetTermHeadersAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/categories", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+
+            Response result = await GetTermHeadersAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<AtlasRelatedTermHeader>)value, result);
         }
-
-        internal HttpMessage CreateCreateCategoryRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetCategoryRequest(string categoryId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryId, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateCategoryRequest(string categoryId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryId, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteCategoryRequest(string categoryId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryId, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreatePartialUpdateCategoryRequest(string categoryId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryId, true);
-            uri.AppendPath("/partial", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetRelatedCategoriesRequest(string categoryId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryId, true);
-            uri.AppendPath("/related", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetCategoryTermsRequest(string categoryId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryId, true);
-            uri.AppendPath("/terms", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateTermRequest(RequestContent content, bool? includeTermHierarchy, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/term", false);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetTermRequest(string termId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/term/", false);
-            uri.AppendPath(termId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateTermRequest(string termId, RequestContent content, bool? includeTermHierarchy, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/term/", false);
-            uri.AppendPath(termId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteTermRequest(string termId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/term/", false);
-            uri.AppendPath(termId, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreatePartialUpdateTermRequest(string termId, RequestContent content, bool? includeTermHierarchy, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/term/", false);
-            uri.AppendPath(termId, true);
-            uri.AppendPath("/partial", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateCreateTermsRequest(RequestContent content, bool? includeTermHierarchy, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/terms", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntitiesAssignedWithTermRequest(string termId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/terms/", false);
-            uri.AppendPath(termId, true);
-            uri.AppendPath("/assignedEntities", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateAssignTermToEntitiesRequest(string termId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/terms/", false);
-            uri.AppendPath(termId, true);
-            uri.AppendPath("/assignedEntities", false);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteTermAssignmentFromEntitiesRequest(string termId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/terms/", false);
-            uri.AppendPath(termId, true);
-            uri.AppendPath("/assignedEntities", false);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetRelatedTermsRequest(string termId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/terms/", false);
-            uri.AppendPath(termId, true);
-            uri.AppendPath("/related", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetGlossaryRequest(string glossaryId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryId, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (ignoreTermsAndCategories != null)
-            {
-                uri.AppendQuery("ignoreTermsAndCategories", ignoreTermsAndCategories.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string glossaryId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryId, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreateGetCategoriesRequest(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryId, true);
-            uri.AppendPath("/categories", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetCategoriesHeadersRequest(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryId, true);
-            uri.AppendPath("/categories/headers", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetDetailedRequest(string glossaryId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryId, true);
-            uri.AppendPath("/detailed", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreatePartialUpdateRequest(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryId, true);
-            uri.AppendPath("/partial", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (ignoreTermsAndCategories != null)
-            {
-                uri.AppendQuery("ignoreTermsAndCategories", ignoreTermsAndCategories.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetTermsRequest(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryId, true);
-            uri.AppendPath("/terms", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTermHeadersRequest(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryId, true);
-            uri.AppendPath("/terms/headers", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier204;
-        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }

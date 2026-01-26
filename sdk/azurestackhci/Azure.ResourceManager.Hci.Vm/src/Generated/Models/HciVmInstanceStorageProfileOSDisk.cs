@@ -42,6 +42,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmOSType? OSType { get; set; }
 
         /// <summary> The managed disk parameters. </summary>
-        public VirtualMachineInstanceManagedDiskContent ManagedDisk { get; set; }
+        internal VirtualMachineInstanceManagedDiskContent ManagedDisk { get; set; }
+
+        /// <summary> Specifies the EncryptionType of the managed disk. It is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. NOTE: It can be set for only Confidential VMs. </summary>
+        public HciVmSecurityEncryptionType? ManagedDiskSecurityEncryptionType
+        {
+            get
+            {
+                return ManagedDisk is null ? default : ManagedDisk.SecurityEncryptionType;
+            }
+            set
+            {
+                if (ManagedDisk is null)
+                {
+                    ManagedDisk = new VirtualMachineInstanceManagedDiskContent();
+                }
+                ManagedDisk.SecurityEncryptionType = value;
+            }
+        }
     }
 }

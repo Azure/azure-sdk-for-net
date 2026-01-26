@@ -226,9 +226,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static Azure.ResourceManager.Quantum.Models.ProviderProvisioningStatus ProviderUpdating { get { throw null; } }
         public static Azure.ResourceManager.Quantum.Models.ProviderProvisioningStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quantum.Models.ProviderProvisioningStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quantum.Models.ProviderProvisioningStatus left, Azure.ResourceManager.Quantum.Models.ProviderProvisioningStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quantum.Models.ProviderProvisioningStatus (string value) { throw null; }
@@ -366,9 +364,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static Azure.ResourceManager.Quantum.Models.QuantumProvisioningStatus Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Quantum.Models.QuantumProvisioningStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quantum.Models.QuantumProvisioningStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quantum.Models.QuantumProvisioningStatus left, Azure.ResourceManager.Quantum.Models.QuantumProvisioningStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quantum.Models.QuantumProvisioningStatus (string value) { throw null; }
@@ -534,9 +530,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static Azure.ResourceManager.Quantum.Models.WorkspaceKeyType Primary { get { throw null; } }
         public static Azure.ResourceManager.Quantum.Models.WorkspaceKeyType Secondary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quantum.Models.WorkspaceKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quantum.Models.WorkspaceKeyType left, Azure.ResourceManager.Quantum.Models.WorkspaceKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quantum.Models.WorkspaceKeyType (string value) { throw null; }
@@ -607,9 +601,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static Azure.ResourceManager.Quantum.Models.WorkspaceUsableStatus Partial { get { throw null; } }
         public static Azure.ResourceManager.Quantum.Models.WorkspaceUsableStatus Yes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quantum.Models.WorkspaceUsableStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quantum.Models.WorkspaceUsableStatus left, Azure.ResourceManager.Quantum.Models.WorkspaceUsableStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quantum.Models.WorkspaceUsableStatus (string value) { throw null; }

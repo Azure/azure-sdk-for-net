@@ -31,6 +31,7 @@ namespace Azure.Generator.Visitors
         private const string IfNoneMatch = "If-None-Match";
         private const string IfModifiedSince = "If-Modified-Since";
         private const string IfUnmodifiedSince = "If-Unmodified-Since";
+        private readonly HashSet<ScmMethodProvider> _visited = [];
 
         private static readonly HashSet<string> _conditionalHeaders = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -53,6 +54,19 @@ namespace Azure.Generator.Visitors
             { RequestConditionHeaders.IfUnmodifiedSince, IfUnmodifiedSince }
         };
 
+        protected override ScmMethodProvider? VisitCreateRequestMethod(
+            InputServiceMethod serviceMethod,
+            RestClientProvider enclosingType,
+            ScmMethodProvider? createRequestMethodProvider)
+        {
+            if (createRequestMethodProvider != null && _visited.Add(createRequestMethodProvider))
+            {
+                UpdateMethod(createRequestMethodProvider);
+            }
+
+            return createRequestMethodProvider;
+        }
+
         protected override ScmMethodProviderCollection? Visit(
             InputServiceMethod serviceMethod,
             ClientProvider enclosingType,
@@ -62,24 +76,24 @@ namespace Azure.Generator.Visitors
             {
                 foreach (var method in methodProviderCollection)
                 {
-                    UpdateMethod(method);
+                    if (_visited.Add(method))
+                    {
+                        UpdateMethod(method);
+                    }
                 }
             }
 
             return methodProviderCollection;
         }
 
-        protected override ScmMethodProvider? VisitCreateRequestMethod(
-            InputServiceMethod serviceMethod,
-            RestClientProvider enclosingType,
-            ScmMethodProvider? createRequestMethodProvider)
+        protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
-            if (createRequestMethodProvider != null)
+            if (_visited.Add(method))
             {
-                UpdateMethod(createRequestMethodProvider);
+                UpdateMethod(method);
             }
 
-            return createRequestMethodProvider;
+            return method;
         }
 
         /// <summary>

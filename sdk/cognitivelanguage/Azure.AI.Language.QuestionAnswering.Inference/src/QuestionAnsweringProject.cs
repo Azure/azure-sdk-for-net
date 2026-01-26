@@ -19,8 +19,11 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <exception cref="ArgumentNullException"><paramref name="projectName"/> or <paramref name="deploymentName"/> is null.</exception>
         public QuestionAnsweringProject(string projectName, string deploymentName)
         {
-            ProjectName = Argument.CheckNotNull(projectName, nameof(projectName));
-            DeploymentName = Argument.CheckNotNull(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+
+            ProjectName = projectName;
+            DeploymentName = deploymentName;
         }
 
         /// <summary>

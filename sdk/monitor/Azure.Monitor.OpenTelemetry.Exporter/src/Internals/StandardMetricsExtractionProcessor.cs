@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
-using System.Diagnostics.Tracing;
 using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly bool _enableStandardMetrics;
         private readonly bool _enablePerfCounters;
 
-        internal readonly MeterProvider? _meterProvider;
+        internal readonly Lazy<MeterProvider?> _meterProvider;
         private readonly Meter? _standardMetricMeter;
         private readonly Meter? _perfCounterMeter;
 
@@ -75,8 +75,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _enableStandardMetrics = options.EnableStandardMetrics;
             _enablePerfCounters = options.EnablePerfCounters;
 
-            if (_enableStandardMetrics || _enablePerfCounters)
+            // Initialize Lazy<T> for thread-safe lazy initialization of MeterProvider
+            _meterProvider = new Lazy<MeterProvider?>(() =>
             {
+                if (!_enableStandardMetrics && !_enablePerfCounters)
+                {
+                    return null;
+                }
+
                 var meterProviderBuilder = Sdk.CreateMeterProviderBuilder();
 
                 if (_enableStandardMetrics)
@@ -89,15 +95,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     meterProviderBuilder.AddMeter(PerfCounterConstants.PerfCounterMeterName);
                 }
 
-                _meterProvider = meterProviderBuilder
+                // Configure resource from ParentProvider - works for both DI and manual scenarios
+                var resource = ParentProvider?.GetResource();
+                if (resource != null)
+                {
+                    meterProviderBuilder.ConfigureResource(rb => rb.AddAttributes(resource.Attributes));
+                }
+
+                return meterProviderBuilder
                     .AddReader(new PeriodicExportingMetricReader(metricExporter)
                     { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                     .Build();
-            }
-            else
-            {
-                _meterProvider = null;
-            }
+            }, LazyThreadSafetyMode.ExecutionAndPublication);
 
             if (_enableStandardMetrics)
             {
@@ -137,6 +146,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public override void OnEnd(Activity activity)
         {
+            EnsureMeterProviderInitialized();
+
             if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
             {
                 if (_requestDuration != null && _requestDuration.Enabled)
@@ -423,6 +434,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return true;
         }
 
+        private void EnsureMeterProviderInitialized()
+        {
+            // Access Value to trigger lazy initialization if not yet done
+            // Lazy<T> handles thread-safety automatically
+            _ = _meterProvider.Value;
+        }
+
         private void InitializeCpuBaseline()
         {
             if (_process == null)
@@ -450,7 +468,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     try
                     {
-                        _meterProvider?.Dispose();
+                        if (_meterProvider.IsValueCreated)
+                        {
+                            _meterProvider.Value?.Dispose();
+                        }
                         _standardMetricMeter?.Dispose();
                         _perfCounterMeter?.Dispose();
                         _process?.Dispose();

@@ -760,7 +760,8 @@
       "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }
