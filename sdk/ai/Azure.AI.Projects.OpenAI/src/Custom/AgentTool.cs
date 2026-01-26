@@ -15,15 +15,15 @@ namespace Azure.AI.Projects.OpenAI;
 [CodeGenType("Tool")]
 public abstract partial class AgentTool
 {
-    public static BingGroundingAgentTool CreateBingGroundingTool(BingGroundingSearchToolOptions options) => new BingGroundingAgentTool(options);
-    public static MicrosoftFabricAgentTool CreateMicrosoftFabricTool(FabricDataAgentToolOptions options) => new MicrosoftFabricAgentTool(options);
-    public static SharepointAgentTool CreateSharepointTool(SharePointGroundingToolOptions options) => new SharepointAgentTool(options);
-    public static AzureAISearchAgentTool CreateAzureAISearchTool(AzureAISearchToolOptions options = null) => new AzureAISearchAgentTool(options ?? new());
-    public static OpenAPIAgentTool CreateOpenApiTool(OpenAPIFunctionDefinition definition) => new OpenAPIAgentTool(definition);
-    public static BingCustomSearchAgentTool CreateBingCustomSearchTool(BingCustomSearchToolParameters parameters) => new BingCustomSearchAgentTool(parameters);
-    public static BrowserAutomationAgentTool CreateBrowserAutomationTool(BrowserAutomationToolParameters parameters) => new BrowserAutomationAgentTool(parameters);
+    public static BingGroundingTool CreateBingGroundingTool(BingGroundingSearchToolOptions options) => new BingGroundingTool(options);
+    public static MicrosoftFabricPreviewTool CreateMicrosoftFabricTool(FabricDataAgentToolOptions options) => new MicrosoftFabricPreviewTool(options);
+    public static SharepointPreviewTool CreateSharepointTool(SharePointGroundingToolOptions options) => new SharepointPreviewTool(options);
+    public static AzureAISearchTool CreateAzureAISearchTool(AzureAISearchToolOptions options = null) => new AzureAISearchTool(options ?? new());
+    public static OpenAPITool CreateOpenApiTool(OpenAPIFunctionDefinition definition) => new OpenAPITool(definition);
+    public static BingCustomSearchPreviewTool CreateBingCustomSearchTool(BingCustomSearchToolParameters parameters) => new BingCustomSearchPreviewTool(parameters);
+    public static BrowserAutomationPreviewTool CreateBrowserAutomationTool(BrowserAutomationToolParameters parameters) => new BrowserAutomationPreviewTool(parameters);
     public static CaptureStructuredOutputsTool CreateStructuredOutputsTool(StructuredOutputDefinition outputs) => new CaptureStructuredOutputsTool(outputs);
-    public static ResponseTool CreateA2ATool(Uri baseUri, string agentCardPath = null) => new A2ATool(baseUri)
+    public static ResponseTool CreateA2ATool(Uri baseUri, string agentCardPath = null) => new A2APreviewTool(baseUri)
     {
         AgentCardPath = agentCardPath,
     };

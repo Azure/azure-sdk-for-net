@@ -75,7 +75,7 @@ namespace OpenAI
             AgentItemSource itemSource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string output = default;
-            ItemResourceLocalShellToolCallOutputStatus? status = default;
+            InputItemLocalShellToolCallOutputStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -109,7 +109,7 @@ namespace OpenAI
                         status = null;
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemResourceLocalShellToolCallOutputStatus();
+                    status = prop.Value.GetString().ToInputItemLocalShellToolCallOutputStatus();
                     continue;
                 }
                 if (options.Format != "W")

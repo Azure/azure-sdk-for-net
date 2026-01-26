@@ -51,7 +51,7 @@ namespace OpenAI
         /// <param name="allowedTools"></param>
         /// <param name="requireApproval"></param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -71,7 +71,7 @@ namespace OpenAI
         /// The URL for the MCP server. One of `server_url` or `connector_id` must be
         ///   provided.
         /// </summary>
-        public string ServerUrl { get; set; }
+        public Uri ServerUrl { get; set; }
 
         /// <summary>
         /// Identifier for service connectors, like those available in ChatGPT. One of

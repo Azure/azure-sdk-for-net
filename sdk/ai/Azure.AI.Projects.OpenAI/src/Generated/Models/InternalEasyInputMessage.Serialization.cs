@@ -47,6 +47,11 @@ namespace OpenAI
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -78,6 +83,7 @@ namespace OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             EasyInputMessageRole role = default;
             BinaryData content = default;
+            EasyInputMessageStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -95,12 +101,21 @@ namespace OpenAI
                     content = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = prop.Value.GetString().ToEasyInputMessageStatus();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalEasyInputMessage(@type, additionalBinaryDataProperties, role, content);
+            return new InternalEasyInputMessage(@type, additionalBinaryDataProperties, role, content, status);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

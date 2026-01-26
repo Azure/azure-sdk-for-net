@@ -30,7 +30,7 @@ AzureAISearchToolIndex index = new()
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
-    Tools = { new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [index])) }
+    Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
 };
 AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
@@ -50,7 +50,7 @@ AzureAISearchToolIndex index = new()
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
-    Tools = { new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [index])) }
+    Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",

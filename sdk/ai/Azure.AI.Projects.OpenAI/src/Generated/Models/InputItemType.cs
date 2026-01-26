@@ -13,6 +13,29 @@ namespace OpenAI
     {
         private readonly string _value;
         private const string MessageValue = "message";
+        private const string OutputMessageValue = "output_message";
+        private const string FileSearchCallValue = "file_search_call";
+        private const string ComputerCallValue = "computer_call";
+        private const string ComputerCallOutputValue = "computer_call_output";
+        private const string WebSearchCallValue = "web_search_call";
+        private const string FunctionCallValue = "function_call";
+        private const string FunctionCallOutputValue = "function_call_output";
+        private const string ReasoningValue = "reasoning";
+        private const string CompactionValue = "compaction";
+        private const string ImageGenerationCallValue = "image_generation_call";
+        private const string CodeInterpreterCallValue = "code_interpreter_call";
+        private const string LocalShellCallValue = "local_shell_call";
+        private const string LocalShellCallOutputValue = "local_shell_call_output";
+        private const string ShellCallValue = "shell_call";
+        private const string ShellCallOutputValue = "shell_call_output";
+        private const string ApplyPatchCallValue = "apply_patch_call";
+        private const string ApplyPatchCallOutputValue = "apply_patch_call_output";
+        private const string McpListToolsValue = "mcp_list_tools";
+        private const string McpApprovalRequestValue = "mcp_approval_request";
+        private const string McpApprovalResponseValue = "mcp_approval_response";
+        private const string McpCallValue = "mcp_call";
+        private const string CustomToolCallOutputValue = "custom_tool_call_output";
+        private const string CustomToolCallValue = "custom_tool_call";
         private const string ItemReferenceValue = "item_reference";
 
         /// <summary> Initializes a new instance of <see cref="InputItemType"/>. </summary>
@@ -27,6 +50,75 @@ namespace OpenAI
 
         /// <summary> Gets the Message. </summary>
         public static InputItemType Message { get; } = new InputItemType(MessageValue);
+
+        /// <summary> Gets the OutputMessage. </summary>
+        public static InputItemType OutputMessage { get; } = new InputItemType(OutputMessageValue);
+
+        /// <summary> Gets the FileSearchCall. </summary>
+        public static InputItemType FileSearchCall { get; } = new InputItemType(FileSearchCallValue);
+
+        /// <summary> Gets the ComputerCall. </summary>
+        public static InputItemType ComputerCall { get; } = new InputItemType(ComputerCallValue);
+
+        /// <summary> Gets the ComputerCallOutput. </summary>
+        public static InputItemType ComputerCallOutput { get; } = new InputItemType(ComputerCallOutputValue);
+
+        /// <summary> Gets the WebSearchCall. </summary>
+        public static InputItemType WebSearchCall { get; } = new InputItemType(WebSearchCallValue);
+
+        /// <summary> Gets the FunctionCall. </summary>
+        public static InputItemType FunctionCall { get; } = new InputItemType(FunctionCallValue);
+
+        /// <summary> Gets the FunctionCallOutput. </summary>
+        public static InputItemType FunctionCallOutput { get; } = new InputItemType(FunctionCallOutputValue);
+
+        /// <summary> Gets the Reasoning. </summary>
+        public static InputItemType Reasoning { get; } = new InputItemType(ReasoningValue);
+
+        /// <summary> Gets the Compaction. </summary>
+        public static InputItemType Compaction { get; } = new InputItemType(CompactionValue);
+
+        /// <summary> Gets the ImageGenerationCall. </summary>
+        public static InputItemType ImageGenerationCall { get; } = new InputItemType(ImageGenerationCallValue);
+
+        /// <summary> Gets the CodeInterpreterCall. </summary>
+        public static InputItemType CodeInterpreterCall { get; } = new InputItemType(CodeInterpreterCallValue);
+
+        /// <summary> Gets the LocalShellCall. </summary>
+        public static InputItemType LocalShellCall { get; } = new InputItemType(LocalShellCallValue);
+
+        /// <summary> Gets the LocalShellCallOutput. </summary>
+        public static InputItemType LocalShellCallOutput { get; } = new InputItemType(LocalShellCallOutputValue);
+
+        /// <summary> Gets the ShellCall. </summary>
+        public static InputItemType ShellCall { get; } = new InputItemType(ShellCallValue);
+
+        /// <summary> Gets the ShellCallOutput. </summary>
+        public static InputItemType ShellCallOutput { get; } = new InputItemType(ShellCallOutputValue);
+
+        /// <summary> Gets the ApplyPatchCall. </summary>
+        public static InputItemType ApplyPatchCall { get; } = new InputItemType(ApplyPatchCallValue);
+
+        /// <summary> Gets the ApplyPatchCallOutput. </summary>
+        public static InputItemType ApplyPatchCallOutput { get; } = new InputItemType(ApplyPatchCallOutputValue);
+
+        /// <summary> Gets the McpListTools. </summary>
+        public static InputItemType McpListTools { get; } = new InputItemType(McpListToolsValue);
+
+        /// <summary> Gets the McpApprovalRequest. </summary>
+        public static InputItemType McpApprovalRequest { get; } = new InputItemType(McpApprovalRequestValue);
+
+        /// <summary> Gets the McpApprovalResponse. </summary>
+        public static InputItemType McpApprovalResponse { get; } = new InputItemType(McpApprovalResponseValue);
+
+        /// <summary> Gets the McpCall. </summary>
+        public static InputItemType McpCall { get; } = new InputItemType(McpCallValue);
+
+        /// <summary> Gets the CustomToolCallOutput. </summary>
+        public static InputItemType CustomToolCallOutput { get; } = new InputItemType(CustomToolCallOutputValue);
+
+        /// <summary> Gets the CustomToolCall. </summary>
+        public static InputItemType CustomToolCall { get; } = new InputItemType(CustomToolCallValue);
 
         /// <summary> Gets the ItemReference. </summary>
         public static InputItemType ItemReference { get; } = new InputItemType(ItemReferenceValue);

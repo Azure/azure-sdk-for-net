@@ -13,7 +13,42 @@ namespace Azure.AI.Projects.OpenAI
     public static partial class ProjectsOpenAIModelFactory
     {
 
-        /// <summary> The conversation object. </summary>
+        /// <summary> Input text. </summary>
+        /// <param name="text"> The text input to the model. </param>
+        /// <returns> A new <see cref="global::OpenAI.InputTextContentParam"/> instance for mocking. </returns>
+        public static InputTextContentParam InputTextContentParam(string text = default)
+        {
+            return new InputTextContentParam("input_text", text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input image. </summary>
+        /// <param name="imageUrl"></param>
+        /// <param name="fileId"></param>
+        /// <param name="detail"></param>
+        /// <returns> A new <see cref="global::OpenAI.InputImageContentParamAutoParam"/> instance for mocking. </returns>
+        public static InputImageContentParamAutoParam InputImageContentParamAutoParam(Uri imageUrl = default, string fileId = default, DetailEnum? detail = default)
+        {
+            return new InputImageContentParamAutoParam("input_image", imageUrl, fileId, detail, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input file. </summary>
+        /// <param name="fileId"></param>
+        /// <param name="filename"></param>
+        /// <param name="fileData"></param>
+        /// <param name="fileUrl"></param>
+        /// <returns> A new <see cref="global::OpenAI.InputFileContentParam"/> instance for mocking. </returns>
+        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUrl = default)
+        {
+            return new InputFileContentParam(
+                "input_file",
+                fileId,
+                filename,
+                fileData,
+                fileUrl,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ProjectConversation. </summary>
         /// <param name="id"> The unique ID of the conversation. </param>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
@@ -48,7 +83,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary>
         /// A tool that can be used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.BingGroundingAgentTool"/>, <see cref="OpenAI.MicrosoftFabricAgentTool"/>, <see cref="OpenAI.SharepointAgentTool"/>, <see cref="OpenAI.AzureAISearchAgentTool"/>, <see cref="OpenAI.OpenAPIAgentTool"/>, <see cref="OpenAI.BingCustomSearchAgentTool"/>, <see cref="OpenAI.BrowserAutomationAgentTool"/>, <see cref="OpenAI.AzureFunctionAgentTool"/>, <see cref="OpenAI.CaptureStructuredOutputsTool"/>, <see cref="OpenAI.A2ATool"/>, and <see cref="OpenAI.MemorySearchTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.BingGroundingTool"/>, <see cref="OpenAI.MicrosoftFabricPreviewTool"/>, <see cref="OpenAI.SharepointPreviewTool"/>, <see cref="OpenAI.AzureAISearchTool"/>, <see cref="OpenAI.OpenAPITool"/>, <see cref="OpenAI.BingCustomSearchPreviewTool"/>, <see cref="OpenAI.BrowserAutomationPreviewTool"/>, <see cref="OpenAI.AzureFunctionTool"/>, <see cref="OpenAI.CaptureStructuredOutputsTool"/>, <see cref="OpenAI.A2APreviewTool"/>, and <see cref="OpenAI.MemorySearchPreviewTool"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="OpenAI.AgentTool"/> instance for mocking. </returns>
@@ -57,21 +92,12 @@ namespace Azure.AI.Projects.OpenAI
             return new UnknownTool(new ToolType(@type), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A web search configuration for bing custom search. </summary>
-        /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
-        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
-        /// <returns> A new <see cref="OpenAI.ProjectWebSearchConfiguration"/> instance for mocking. </returns>
-        public static ProjectWebSearchConfiguration ProjectWebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
-        {
-            return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        /// <returns> A new <see cref="OpenAI.BingGroundingAgentTool"/> instance for mocking. </returns>
-        public static BingGroundingAgentTool BingGroundingAgentTool(BingGroundingSearchToolOptions bingGrounding = default)
+        /// <returns> A new <see cref="OpenAI.BingGroundingTool"/> instance for mocking. </returns>
+        public static BingGroundingTool BingGroundingTool(BingGroundingSearchToolOptions bingGrounding = default)
         {
-            return new BingGroundingAgentTool(ToolType.BingGrounding, additionalBinaryDataProperties: null, bingGrounding);
+            return new BingGroundingTool(ToolType.BingGrounding, additionalBinaryDataProperties: null, bingGrounding);
         }
 
         /// <summary> The bing grounding search tool parameters. </summary>
@@ -107,10 +133,10 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
         /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
-        /// <returns> A new <see cref="OpenAI.MicrosoftFabricAgentTool"/> instance for mocking. </returns>
-        public static MicrosoftFabricAgentTool MicrosoftFabricAgentTool(FabricDataAgentToolOptions fabricDataagentPreview = default)
+        /// <returns> A new <see cref="OpenAI.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
+        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolOptions fabricDataagentPreview = default)
         {
-            return new MicrosoftFabricAgentTool(ToolType.FabricDataagentPreview, additionalBinaryDataProperties: null, fabricDataagentPreview);
+            return new MicrosoftFabricPreviewTool(ToolType.FabricDataagentPreview, additionalBinaryDataProperties: null, fabricDataagentPreview);
         }
 
         /// <summary> The fabric data agent tool parameters. </summary>
@@ -136,10 +162,10 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
         /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
-        /// <returns> A new <see cref="OpenAI.SharepointAgentTool"/> instance for mocking. </returns>
-        public static SharepointAgentTool SharepointAgentTool(SharePointGroundingToolOptions sharepointGroundingPreview = default)
+        /// <returns> A new <see cref="OpenAI.SharepointPreviewTool"/> instance for mocking. </returns>
+        public static SharepointPreviewTool SharepointPreviewTool(SharePointGroundingToolOptions sharepointGroundingPreview = default)
         {
-            return new SharepointAgentTool(ToolType.SharepointGroundingPreview, additionalBinaryDataProperties: null, sharepointGroundingPreview);
+            return new SharepointPreviewTool(ToolType.SharepointGroundingPreview, additionalBinaryDataProperties: null, sharepointGroundingPreview);
         }
 
         /// <summary> The sharepoint grounding tool parameters. </summary>
@@ -157,10 +183,10 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
         /// <param name="options"> The azure ai search index resource. </param>
-        /// <returns> A new <see cref="OpenAI.AzureAISearchAgentTool"/> instance for mocking. </returns>
-        public static AzureAISearchAgentTool AzureAISearchAgentTool(AzureAISearchToolOptions options = default)
+        /// <returns> A new <see cref="OpenAI.AzureAISearchTool"/> instance for mocking. </returns>
+        public static AzureAISearchTool AzureAISearchTool(AzureAISearchToolOptions options = default)
         {
-            return new AzureAISearchAgentTool(ToolType.AzureAiSearch, additionalBinaryDataProperties: null, options);
+            return new AzureAISearchTool(ToolType.AzureAiSearch, additionalBinaryDataProperties: null, options);
         }
 
         /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
@@ -198,10 +224,10 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
         /// <param name="openapi"> The openapi function definition. </param>
-        /// <returns> A new <see cref="OpenAI.OpenAPIAgentTool"/> instance for mocking. </returns>
-        public static OpenAPIAgentTool OpenAPIAgentTool(OpenAPIFunctionDefinition openapi = default)
+        /// <returns> A new <see cref="OpenAI.OpenAPITool"/> instance for mocking. </returns>
+        public static OpenAPITool OpenAPITool(OpenAPIFunctionDefinition openapi = default)
         {
-            return new OpenAPIAgentTool(ToolType.Openapi, additionalBinaryDataProperties: null, openapi);
+            return new OpenAPITool(ToolType.Openapi, additionalBinaryDataProperties: null, openapi);
         }
 
         /// <summary> The input definition information for an openapi function. </summary>
@@ -289,10 +315,10 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
-        /// <returns> A new <see cref="OpenAI.BingCustomSearchAgentTool"/> instance for mocking. </returns>
-        public static BingCustomSearchAgentTool BingCustomSearchAgentTool(BingCustomSearchToolParameters bingCustomSearchPreview = default)
+        /// <returns> A new <see cref="OpenAI.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
+        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolParameters bingCustomSearchPreview = default)
         {
-            return new BingCustomSearchAgentTool(ToolType.BingCustomSearchPreview, additionalBinaryDataProperties: null, bingCustomSearchPreview);
+            return new BingCustomSearchPreviewTool(ToolType.BingCustomSearchPreview, additionalBinaryDataProperties: null, bingCustomSearchPreview);
         }
 
         /// <summary> The bing custom search tool parameters. </summary>
@@ -330,10 +356,10 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
-        /// <returns> A new <see cref="OpenAI.BrowserAutomationAgentTool"/> instance for mocking. </returns>
-        public static BrowserAutomationAgentTool BrowserAutomationAgentTool(BrowserAutomationToolParameters browserAutomationPreview = default)
+        /// <returns> A new <see cref="OpenAI.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
+        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolParameters browserAutomationPreview = default)
         {
-            return new BrowserAutomationAgentTool(ToolType.BrowserAutomationPreview, additionalBinaryDataProperties: null, browserAutomationPreview);
+            return new BrowserAutomationPreviewTool(ToolType.BrowserAutomationPreview, additionalBinaryDataProperties: null, browserAutomationPreview);
         }
 
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
@@ -354,10 +380,10 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
-        /// <returns> A new <see cref="OpenAI.AzureFunctionAgentTool"/> instance for mocking. </returns>
-        public static AzureFunctionAgentTool AzureFunctionAgentTool(AzureFunctionDefinition azureFunction = default)
+        /// <returns> A new <see cref="OpenAI.AzureFunctionTool"/> instance for mocking. </returns>
+        public static AzureFunctionTool AzureFunctionTool(AzureFunctionDefinition azureFunction = default)
         {
-            return new AzureFunctionAgentTool(ToolType.AzureFunction, additionalBinaryDataProperties: null, azureFunction);
+            return new AzureFunctionTool(ToolType.AzureFunction, additionalBinaryDataProperties: null, azureFunction);
         }
 
         /// <summary> The definition of Azure function. </summary>
@@ -426,10 +452,10 @@ namespace Azure.AI.Projects.OpenAI
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
-        /// <returns> A new <see cref="OpenAI.A2ATool"/> instance for mocking. </returns>
-        public static A2ATool A2ATool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default)
+        /// <returns> A new <see cref="OpenAI.A2APreviewTool"/> instance for mocking. </returns>
+        public static A2APreviewTool A2APreviewTool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default)
         {
-            return new A2ATool(ToolType.A2aPreview, additionalBinaryDataProperties: null, baseUri, agentCardPath, projectConnectionId);
+            return new A2APreviewTool(ToolType.A2aPreview, additionalBinaryDataProperties: null, baseUri, agentCardPath, projectConnectionId);
         }
 
         /// <summary> A tool for integrating memories into the agent. </summary>
@@ -441,10 +467,10 @@ namespace Azure.AI.Projects.OpenAI
         /// </param>
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelay"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
-        /// <returns> A new <see cref="OpenAI.MemorySearchTool"/> instance for mocking. </returns>
-        public static MemorySearchTool MemorySearchTool(string memoryStoreName = default, string scope = default, MemorySearchToolOptions searchOptions = default, int? updateDelay = default)
+        /// <returns> A new <see cref="OpenAI.MemorySearchPreviewTool"/> instance for mocking. </returns>
+        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchToolOptions searchOptions = default, int? updateDelay = default)
         {
-            return new MemorySearchTool(
+            return new MemorySearchPreviewTool(
                 ToolType.MemorySearch,
                 additionalBinaryDataProperties: null,
                 memoryStoreName,
@@ -459,6 +485,15 @@ namespace Azure.AI.Projects.OpenAI
         public static MemorySearchToolOptions MemorySearchToolOptions(int? maxMemories = default)
         {
             return new MemorySearchToolOptions(maxMemories, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A web search configuration for bing custom search. </summary>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
+        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
+        /// <returns> A new <see cref="OpenAI.ProjectWebSearchConfiguration"/> instance for mocking. </returns>
+        public static ProjectWebSearchConfiguration ProjectWebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
+        {
+            return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentReference. </summary>

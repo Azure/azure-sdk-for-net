@@ -38,7 +38,7 @@ namespace OpenAI
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url);
+            writer.WriteStringValue(Url.AbsoluteUri);
             writer.WritePropertyName("start_index"u8);
             writer.WriteNumberValue(StartIndex);
             writer.WritePropertyName("end_index"u8);
@@ -74,7 +74,7 @@ namespace OpenAI
             }
             AnnotationType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string url = default;
+            Uri url = default;
             long startIndex = default;
             long endIndex = default;
             string title = default;
@@ -87,7 +87,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    url = prop.Value.GetString();
+                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("start_index"u8))

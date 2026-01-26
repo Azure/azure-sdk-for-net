@@ -24,7 +24,7 @@ namespace Azure.AI.Projects
         /// <param name="fileId"></param>
         /// <param name="detail"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputImageContentParamAutoParam(string @type, string imageUrl, string fileId, DetailEnum? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputImageContentParamAutoParam(string @type, Uri imageUrl, string fileId, DetailEnum? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ImageUrl = imageUrl;
@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
         internal string Type { get; } = "input_image";
 
         /// <summary> Gets or sets the ImageUrl. </summary>
-        public string ImageUrl { get; set; }
+        public Uri ImageUrl { get; set; }
 
         /// <summary> Gets or sets the FileId. </summary>
         public string FileId { get; set; }

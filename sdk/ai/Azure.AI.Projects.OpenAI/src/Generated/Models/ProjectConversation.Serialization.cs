@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    /// <summary> The conversation object. </summary>
+    /// <summary> The ProjectConversation. </summary>
     public partial class ProjectConversation : IJsonModel<ProjectConversation>
     {
         /// <summary> Initializes a new instance of <see cref="ProjectConversation"/> for deserialization. </summary>

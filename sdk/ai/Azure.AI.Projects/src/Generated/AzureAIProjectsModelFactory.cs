@@ -1448,7 +1448,7 @@ namespace Azure.AI.Projects
         /// <param name="fileId"></param>
         /// <param name="detail"></param>
         /// <returns> A new <see cref="Projects.InputImageContentParamAutoParam"/> instance for mocking. </returns>
-        public static InputImageContentParamAutoParam InputImageContentParamAutoParam(string imageUrl = default, string fileId = default, DetailEnum? detail = default)
+        public static InputImageContentParamAutoParam InputImageContentParamAutoParam(Uri imageUrl = default, string fileId = default, DetailEnum? detail = default)
         {
             return new InputImageContentParamAutoParam("input_image", imageUrl, fileId, detail, additionalBinaryDataProperties: null);
         }
@@ -1459,7 +1459,7 @@ namespace Azure.AI.Projects
         /// <param name="fileData"></param>
         /// <param name="fileUrl"></param>
         /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
-        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, string fileUrl = default)
+        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUrl = default)
         {
             return new InputFileContentParam(
                 "input_file",
@@ -1468,6 +1468,18 @@ namespace Azure.AI.Projects
                 fileData,
                 fileUrl,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Memory search response. </summary>
+        /// <param name="searchId"> The unique ID of this search request. Use this value as previous_search_id in subsequent requests to perform incremental searches. </param>
+        /// <param name="memories"> Related memory items found during the search operation. </param>
+        /// <param name="usage"> Usage statistics associated with the memory search operation. </param>
+        /// <returns> A new <see cref="Projects.MemoryStoreSearchResponse"/> instance for mocking. </returns>
+        public static MemoryStoreSearchResponse MemoryStoreSearchResponse(string searchId = default, IEnumerable<MemorySearchItem> memories = default, MemoryStoreOperationUsage usage = default)
+        {
+            memories ??= new ChangeTrackingList<MemorySearchItem>();
+
+            return new MemoryStoreSearchResponse(searchId, memories.ToList(), usage, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A retrieved memory item from memory search. </summary>
@@ -1531,18 +1543,6 @@ namespace Azure.AI.Projects
                 content,
                 MemoryItemKind.ChatSummary,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Memory search response. </summary>
-        /// <param name="searchId"> The unique ID of this search request. Use this value as previous_search_id in subsequent requests to perform incremental searches. </param>
-        /// <param name="memories"> Related memory items found during the search operation. </param>
-        /// <param name="usage"> Usage statistics associated with the memory search operation. </param>
-        /// <returns> A new <see cref="Projects.MemoryStoreSearchResponse"/> instance for mocking. </returns>
-        public static MemoryStoreSearchResponse MemoryStoreSearchResponse(string searchId = default, IEnumerable<MemorySearchItem> memories = default, MemoryStoreOperationUsage usage = default)
-        {
-            memories ??= new ChangeTrackingList<MemorySearchItem>();
-
-            return new MemoryStoreSearchResponse(searchId, memories.ToList(), usage, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Usage statistics of a memory store operation. </summary>

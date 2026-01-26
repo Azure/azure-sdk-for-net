@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
@@ -12,8 +13,11 @@ namespace OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
-        internal FunctionAndCustomToolCallOutputInputTextContent(string text) : base(FunctionAndCustomToolCallOutputType.InputText)
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public FunctionAndCustomToolCallOutputInputTextContent(string text) : base(FunctionAndCustomToolCallOutputType.InputText)
         {
+            Argument.AssertNotNull(text, nameof(text));
+
             Text = text;
         }
 

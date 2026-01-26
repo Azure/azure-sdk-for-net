@@ -14,7 +14,7 @@ namespace OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotImage"/>. </summary>
-        internal ComputerScreenshotImage()
+        public ComputerScreenshotImage()
         {
         }
 
@@ -26,7 +26,7 @@ namespace OpenAI
         /// <param name="imageUrl"> The URL of the screenshot image. </param>
         /// <param name="fileId"> The identifier of an uploaded file that contains the screenshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputerScreenshotImage(string @type, string imageUrl, string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputerScreenshotImage(string @type, Uri imageUrl, string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ImageUrl = imageUrl;
@@ -41,9 +41,9 @@ namespace OpenAI
         internal string Type { get; } = "computer_screenshot";
 
         /// <summary> The URL of the screenshot image. </summary>
-        public string ImageUrl { get; }
+        public Uri ImageUrl { get; set; }
 
         /// <summary> The identifier of an uploaded file that contains the screenshot. </summary>
-        public string FileId { get; }
+        public string FileId { get; set; }
     }
 }

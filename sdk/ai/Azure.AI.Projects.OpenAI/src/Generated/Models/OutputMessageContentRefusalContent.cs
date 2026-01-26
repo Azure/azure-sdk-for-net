@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
@@ -12,8 +13,11 @@ namespace OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentRefusalContent"/>. </summary>
         /// <param name="refusal"> The refusal explanation from the model. </param>
-        internal OutputMessageContentRefusalContent(string refusal) : base(OutputMessageContentType.Refusal)
+        /// <exception cref="ArgumentNullException"> <paramref name="refusal"/> is null. </exception>
+        public OutputMessageContentRefusalContent(string refusal) : base(OutputMessageContentType.Refusal)
         {
+            Argument.AssertNotNull(refusal, nameof(refusal));
+
             Refusal = refusal;
         }
 

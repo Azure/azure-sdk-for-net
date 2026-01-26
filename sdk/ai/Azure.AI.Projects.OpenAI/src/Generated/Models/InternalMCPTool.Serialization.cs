@@ -41,7 +41,7 @@ namespace OpenAI
             if (Optional.IsDefined(ServerUrl))
             {
                 writer.WritePropertyName("server_url"u8);
-                writer.WriteStringValue(ServerUrl);
+                writer.WriteStringValue(ServerUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(ConnectorId))
             {
@@ -133,7 +133,7 @@ namespace OpenAI
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
-            string serverUrl = default;
+            Uri serverUrl = default;
             MCPToolConnectorId? connectorId = default;
             string authorization = default;
             string serverDescription = default;
@@ -155,7 +155,11 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("server_url"u8))
                 {
-                    serverUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connector_id"u8))

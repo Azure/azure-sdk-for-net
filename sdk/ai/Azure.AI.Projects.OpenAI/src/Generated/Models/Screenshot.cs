@@ -11,7 +11,7 @@ namespace OpenAI
     internal partial class Screenshot : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="Screenshot"/>. </summary>
-        internal Screenshot() : base(ComputerActionType.Screenshot)
+        public Screenshot() : base(ComputerActionType.Screenshot)
         {
         }
 

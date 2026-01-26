@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
@@ -13,8 +14,11 @@ namespace OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="KeyPressAction"/>. </summary>
         /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
-        internal KeyPressAction(IEnumerable<string> keys) : base(ComputerActionType.Keypress)
+        /// <exception cref="ArgumentNullException"> <paramref name="keys"/> is null. </exception>
+        public KeyPressAction(IEnumerable<string> keys) : base(ComputerActionType.Keypress)
         {
+            Argument.AssertNotNull(keys, nameof(keys));
+
             Keys = keys.ToList();
         }
 

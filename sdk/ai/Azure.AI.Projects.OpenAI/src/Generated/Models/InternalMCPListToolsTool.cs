@@ -15,7 +15,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalMCPListToolsTool"/>. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="inputSchema"> The JSON schema describing the tool's input. </param>
-        internal InternalMCPListToolsTool(string name, MCPListToolsToolInputSchema inputSchema)
+        public InternalMCPListToolsTool(string name, MCPListToolsToolInputSchema inputSchema)
         {
             Name = name;
             InputSchema = inputSchema;
@@ -39,13 +39,13 @@ namespace OpenAI
         /// <summary> The name of the tool. </summary>
         public string Name { get; }
 
-        /// <summary> Gets the Description. </summary>
-        public string Description { get; }
+        /// <summary> Gets or sets the Description. </summary>
+        public string Description { get; set; }
 
         /// <summary> The JSON schema describing the tool's input. </summary>
         public MCPListToolsToolInputSchema InputSchema { get; }
 
-        /// <summary> Gets the Annotations. </summary>
-        public MCPListToolsToolAnnotations Annotations { get; }
+        /// <summary> Gets or sets the Annotations. </summary>
+        public MCPListToolsToolAnnotations Annotations { get; set; }
     }
 }

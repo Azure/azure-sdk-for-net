@@ -39,7 +39,7 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = { new SharepointAgentTool(sharepointToolOption), }
+            Tools = { new SharepointPreviewTool(sharepointToolOption), }
         };
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
@@ -90,7 +90,7 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = { new SharepointAgentTool(sharepointToolOption), }
+            Tools = { new SharepointPreviewTool(sharepointToolOption), }
         };
         AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",

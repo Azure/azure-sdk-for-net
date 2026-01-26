@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
@@ -22,8 +23,11 @@ namespace OpenAI
         ///   ]
         ///   ```
         /// </param>
-        internal Drag(IEnumerable<DragPoint> path) : base(ComputerActionType.Drag)
+        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
+        public Drag(IEnumerable<DragPoint> path) : base(ComputerActionType.Drag)
         {
+            Argument.AssertNotNull(path, nameof(path));
+
             Path = path.ToList();
         }
 

@@ -35,7 +35,7 @@ namespace OpenAI
         }
 
         /// <summary> The action type. </summary>
-        internal string Type { get; } = "find";
+        internal string Type { get; } = "find_in_page";
 
         /// <summary> The URL of the page searched for the pattern. </summary>
         public Uri Url { get; }

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
@@ -14,8 +15,12 @@ namespace OpenAI
         /// <param name="fileId"> The ID of the file. </param>
         /// <param name="index"> The index of the file in the list of files. </param>
         /// <param name="filename"> The filename of the file cited. </param>
-        internal FileCitationBody(string fileId, long index, string filename) : base(AnnotationType.FileCitation)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="filename"/> is null. </exception>
+        public FileCitationBody(string fileId, long index, string filename) : base(AnnotationType.FileCitation)
         {
+            Argument.AssertNotNull(fileId, nameof(fileId));
+            Argument.AssertNotNull(filename, nameof(filename));
+
             FileId = fileId;
             Index = index;
             Filename = filename;

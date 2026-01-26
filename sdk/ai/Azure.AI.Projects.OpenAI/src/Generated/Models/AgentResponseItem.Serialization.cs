@@ -103,6 +103,8 @@ namespace Azure.AI.Projects.OpenAI
                         return AgentWorkflowActionResponseItem.DeserializeAgentWorkflowActionResponseItem(element, options);
                     case "oauth_consent_request":
                         return OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem(element, options);
+                    case "memory_search_call":
+                        return MemorySearchToolCallResponseItem.DeserializeMemorySearchToolCallResponseItem(element, options);
                     case "message":
                         return InternalInputMessageResource.DeserializeInternalInputMessageResource(element, options);
                     case "output_message":
@@ -143,8 +145,6 @@ namespace Azure.AI.Projects.OpenAI
                         return InternalItemResourceMcpApprovalResponseResource.DeserializeInternalItemResourceMcpApprovalResponseResource(element, options);
                     case "mcp_call":
                         return InternalItemResourceMcpToolCall.DeserializeInternalItemResourceMcpToolCall(element, options);
-                    case "memory_search_call":
-                        return MemorySearchToolCallResponseItem.DeserializeMemorySearchToolCallResponseItem(element, options);
                 }
             }
             return UnknownAgentResponseItem.DeserializeUnknownAgentResponseItem(element, options);

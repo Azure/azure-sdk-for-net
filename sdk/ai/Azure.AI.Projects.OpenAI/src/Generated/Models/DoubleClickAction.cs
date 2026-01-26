@@ -13,7 +13,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/>. </summary>
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
-        internal DoubleClickAction(long x, long y) : base(ComputerActionType.DoubleClick)
+        public DoubleClickAction(long x, long y) : base(ComputerActionType.DoubleClick)
         {
             X = x;
             Y = y;

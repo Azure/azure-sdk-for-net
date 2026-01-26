@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
@@ -16,8 +17,13 @@ namespace OpenAI
         /// <param name="startIndex"> The index of the first character of the container file citation in the message. </param>
         /// <param name="endIndex"> The index of the last character of the container file citation in the message. </param>
         /// <param name="filename"> The filename of the container file cited. </param>
-        internal ContainerFileCitationBody(string containerId, string fileId, long startIndex, long endIndex, string filename) : base(AnnotationType.ContainerFileCitation)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerId"/>, <paramref name="fileId"/> or <paramref name="filename"/> is null. </exception>
+        public ContainerFileCitationBody(string containerId, string fileId, long startIndex, long endIndex, string filename) : base(AnnotationType.ContainerFileCitation)
         {
+            Argument.AssertNotNull(containerId, nameof(containerId));
+            Argument.AssertNotNull(fileId, nameof(fileId));
+            Argument.AssertNotNull(filename, nameof(filename));
+
             ContainerId = containerId;
             FileId = fileId;
             StartIndex = startIndex;

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
@@ -12,8 +13,11 @@ namespace OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="Type"/>. </summary>
         /// <param name="text"> The text to type. </param>
-        internal Type(string text) : base(ComputerActionType.Type)
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public Type(string text) : base(ComputerActionType.Type)
         {
+            Argument.AssertNotNull(text, nameof(text));
+
             Text = text;
         }
 

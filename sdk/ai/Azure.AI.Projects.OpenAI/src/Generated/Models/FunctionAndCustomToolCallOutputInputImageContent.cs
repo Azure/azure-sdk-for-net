@@ -12,7 +12,7 @@ namespace OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputImageContent"/>. </summary>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </param>
-        internal FunctionAndCustomToolCallOutputInputImageContent(ImageDetail detail) : base(FunctionAndCustomToolCallOutputType.InputImage)
+        public FunctionAndCustomToolCallOutputInputImageContent(ImageDetail detail) : base(FunctionAndCustomToolCallOutputType.InputImage)
         {
             Detail = detail;
         }
@@ -23,18 +23,18 @@ namespace OpenAI
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </param>
-        internal FunctionAndCustomToolCallOutputInputImageContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string imageUrl, string fileId, ImageDetail detail) : base(@type, additionalBinaryDataProperties)
+        internal FunctionAndCustomToolCallOutputInputImageContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri imageUrl, string fileId, ImageDetail detail) : base(@type, additionalBinaryDataProperties)
         {
             ImageUrl = imageUrl;
             FileId = fileId;
             Detail = detail;
         }
 
-        /// <summary> Gets the ImageUrl. </summary>
-        public string ImageUrl { get; }
+        /// <summary> Gets or sets the ImageUrl. </summary>
+        public Uri ImageUrl { get; set; }
 
-        /// <summary> Gets the FileId. </summary>
-        public string FileId { get; }
+        /// <summary> Gets or sets the FileId. </summary>
+        public string FileId { get; set; }
 
         /// <summary> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </summary>
         public ImageDetail Detail { get; }

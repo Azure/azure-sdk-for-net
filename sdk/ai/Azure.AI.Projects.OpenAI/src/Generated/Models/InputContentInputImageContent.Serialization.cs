@@ -40,7 +40,7 @@ namespace OpenAI
             if (Optional.IsDefined(ImageUrl))
             {
                 writer.WritePropertyName("image_url"u8);
-                writer.WriteStringValue(ImageUrl);
+                writer.WriteStringValue(ImageUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(FileId))
             {
@@ -78,7 +78,7 @@ namespace OpenAI
             }
             InputContentType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string imageUrl = default;
+            Uri imageUrl = default;
             string fileId = default;
             ImageDetail detail = default;
             foreach (var prop in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace OpenAI
                         imageUrl = null;
                         continue;
                     }
-                    imageUrl = prop.Value.GetString();
+                    imageUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("file_id"u8))

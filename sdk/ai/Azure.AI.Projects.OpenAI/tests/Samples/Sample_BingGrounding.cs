@@ -31,7 +31,7 @@ public class Sample_BingGrounding : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateAgent_BingGrounding_Async
         AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
-        BingGroundingAgentTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
+        BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
             searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
             )
         );
@@ -78,7 +78,7 @@ public class Sample_BingGrounding : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateAgent_BingGrounding_Sync
         AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-        BingGroundingAgentTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
+        BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
             searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
             )
         );

@@ -11,7 +11,7 @@ namespace OpenAI
     internal partial class FunctionAndCustomToolCallOutputInputFileContent : InternalFunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>. </summary>
-        internal FunctionAndCustomToolCallOutputInputFileContent() : base(FunctionAndCustomToolCallOutputType.InputFile)
+        public FunctionAndCustomToolCallOutputInputFileContent() : base(FunctionAndCustomToolCallOutputType.InputFile)
         {
         }
 
@@ -22,7 +22,7 @@ namespace OpenAI
         /// <param name="filename"> The name of the file to be sent to the model. </param>
         /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
         /// <param name="fileData"> The content of the file to be sent to the model. </param>
-        internal FunctionAndCustomToolCallOutputInputFileContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fileId, string filename, string fileUrl, string fileData) : base(@type, additionalBinaryDataProperties)
+        internal FunctionAndCustomToolCallOutputInputFileContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fileId, string filename, Uri fileUrl, string fileData) : base(@type, additionalBinaryDataProperties)
         {
             FileId = fileId;
             Filename = filename;
@@ -30,16 +30,16 @@ namespace OpenAI
             FileData = fileData;
         }
 
-        /// <summary> Gets the FileId. </summary>
-        public string FileId { get; }
+        /// <summary> Gets or sets the FileId. </summary>
+        public string FileId { get; set; }
 
         /// <summary> The name of the file to be sent to the model. </summary>
-        public string Filename { get; }
+        public string Filename { get; set; }
 
         /// <summary> The URL of the file to be sent to the model. </summary>
-        public string FileUrl { get; }
+        public Uri FileUrl { get; set; }
 
         /// <summary> The content of the file to be sent to the model. </summary>
-        public string FileData { get; }
+        public string FileData { get; set; }
     }
 }

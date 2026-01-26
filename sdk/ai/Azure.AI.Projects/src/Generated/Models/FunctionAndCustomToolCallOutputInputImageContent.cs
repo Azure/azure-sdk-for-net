@@ -23,7 +23,7 @@ namespace Azure.AI.Projects
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </param>
-        internal FunctionAndCustomToolCallOutputInputImageContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string imageUrl, string fileId, ImageDetail detail) : base(@type, additionalBinaryDataProperties)
+        internal FunctionAndCustomToolCallOutputInputImageContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri imageUrl, string fileId, ImageDetail detail) : base(@type, additionalBinaryDataProperties)
         {
             ImageUrl = imageUrl;
             FileId = fileId;
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Gets or sets the ImageUrl. </summary>
-        public string ImageUrl { get; set; }
+        public Uri ImageUrl { get; set; }
 
         /// <summary> Gets or sets the FileId. </summary>
         public string FileId { get; set; }

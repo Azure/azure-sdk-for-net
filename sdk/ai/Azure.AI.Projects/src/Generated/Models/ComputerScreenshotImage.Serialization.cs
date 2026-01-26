@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(ImageUrl))
             {
                 writer.WritePropertyName("image_url"u8);
-                writer.WriteStringValue(ImageUrl);
+                writer.WriteStringValue(ImageUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(FileId))
             {
@@ -85,7 +85,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             string @type = default;
-            string imageUrl = default;
+            Uri imageUrl = default;
             string fileId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -97,7 +97,11 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("image_url"u8))
                 {
-                    imageUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imageUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("file_id"u8))

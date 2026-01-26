@@ -53,7 +53,7 @@ internal static partial class ResponseItemHelpers
         s_contextMap ??= new()
         {
             [typeof(ResponseItem)] = OpenAIContext.Default,
-            [typeof(Item)] = AzureAIProjectsContext.Default,
+            [typeof(InputItem)] = AzureAIProjectsContext.Default,
         };
         if (!s_contextMap.ContainsKey(typeof(T)) || !s_contextMap.ContainsKey(typeof(U)))
         {
