@@ -562,10 +562,12 @@ function isValidListOperationForResource(
   // collection type segments (resource type without the last name parameter)
   const resourceCollectionTypeSegments = resourceTypeSegments.slice(0, -1);
 
-  // Only apply resource type matching for NESTED resources (more than one type/name pair)
+  // Only apply resource type matching for NESTED resources (more than one type/name pair).
+  // Count only non-parameter segments (resource type names) to determine nesting.
   // For top-level resources (single type like "foos"), a subscription-level list at a different scope
-  // should be treated as a non-resource method
-  const isNestedResource = resourceCollectionTypeSegments.length > 1;
+  // should be treated as a non-resource method.
+  const resourceTypeNames = resourceTypeSegments.filter((s) => !isVariableSegment(s));
+  const isNestedResource = resourceTypeNames.length > 1;
   if (
     isNestedResource &&
     pathSegmentsMatch(listResourceTypeSegments, resourceCollectionTypeSegments)
