@@ -98,6 +98,11 @@
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.26.0" />
   </ItemGroup>
 
+  <!-- SignalRService compat issue with Microsoft.Azure.SignalR.Management (tracked by #51460) -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.SignalRService')) and '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageVersion Include="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
+  </ItemGroup>
+
   <!--
     Dependency versions for current generation Azure libraries and support
     projects. Only packages that are approved dependencies for public releases
@@ -593,19 +598,13 @@
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
   </ItemGroup>
 
-  <!--
-    Scoped package versions for specific projects.
-    These replace VersionOverride usage in individual csproj files to maintain
-    central visibility of all package versions.
-  -->
-
   <!-- Azure.Test.Perf needs older Azure.Core for maximum compatibility with test projects -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Test.Perf'))">
     <PackageVersion Include="Azure.Core" Version="1.40.0" />
   </ItemGroup>
 
   <!-- Legacy Batch tests require ADAL and specific MSAL versions -->
-  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))">
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))">
     <PackageVersion Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.2, 4.0.0)" />
     <PackageVersion Include="Microsoft.Identity.Client" Version="4.61.3" />
   </ItemGroup>
@@ -619,11 +618,6 @@
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.ResourceManager.SecurityCenter'))">
     <PackageVersion Include="Azure.ResourceManager.IotHub" Version="1.2.0-beta.1" />
     <PackageVersion Include="Azure.ResourceManager.Logic" Version="1.2.0-beta.1" />
-  </ItemGroup>
-
-  <!-- SignalRService compat issue with Microsoft.Azure.SignalR.Management (tracked by #51460) -->
-  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.SignalRService')) and '$(TargetFramework)' == 'netstandard2.0'">
-    <PackageVersion Include="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
   </ItemGroup>
 
   <!-- Tables.Tests needs legacy WebJobs.Extensions.Storage for T1 testing -->
