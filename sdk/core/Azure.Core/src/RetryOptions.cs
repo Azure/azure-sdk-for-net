@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Core
 {
@@ -20,6 +21,30 @@ namespace Azure.Core
         /// </summary>
         internal RetryOptions() : this(ClientOptions.Default.Retry)
         {
+        }
+
+        internal RetryOptions(IConfigurationSection section)
+        {
+            if (int.TryParse(section["MaxRetries"], out int maxRetries))
+            {
+                MaxRetries = maxRetries;
+            }
+            if (TimeSpan.TryParse(section["Delay"], out TimeSpan delay))
+            {
+                Delay = delay;
+            }
+            if (TimeSpan.TryParse(section["MaxDelay"], out TimeSpan maxDelay))
+            {
+                MaxDelay = maxDelay;
+            }
+            if (Enum.TryParse(section["Mode"], out RetryMode mode))
+            {
+                Mode = mode;
+            }
+            if (TimeSpan.TryParse(section["NetworkTimeout"], out TimeSpan networkTimeout))
+            {
+                NetworkTimeout = networkTimeout;
+            }
         }
 
         /// <summary>

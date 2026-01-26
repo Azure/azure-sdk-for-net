@@ -88,6 +88,17 @@ namespace Azure.ResourceManager
                 new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(defaultSubscriptionId));
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="settings"></param>
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        public ArmClient(ArmSettings settings)
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+            : this((TokenCredential)settings.CredentialObject, settings.DefaultSubscriptionId, settings.Options)
+        {
+        }
+
         internal virtual bool CanUseTagResource(CancellationToken cancellationToken = default)
         {
             if (_canUseTagResource == null)

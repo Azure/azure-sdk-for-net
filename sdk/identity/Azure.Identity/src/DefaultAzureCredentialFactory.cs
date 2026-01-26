@@ -42,7 +42,7 @@ namespace Azure.Identity
         public TokenCredential[] CreateCredentialChain()
         {
             TokenCredential[] tokenCredentials = Array.Empty<TokenCredential>();
-            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim().ToLowerInvariant();
+            string credentialSelection = Options.CredentialSource ?? EnvironmentVariables.CredentialSelection?.Trim().ToLowerInvariant();
 
             if (_customEnvironmentVariableName != null)
             {

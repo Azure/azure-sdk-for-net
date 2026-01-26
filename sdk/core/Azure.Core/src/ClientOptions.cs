@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core.Pipeline;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Core
 {
@@ -63,9 +64,20 @@ namespace Azure.Core
                 // null as the argument rather than calling their default constructors. Calling their default constructors would result
                 // in a stack overflow as this constructor is called from a static initializer.
                 _transport = HttpPipelineTransport.Create();
-                Diagnostics = new DiagnosticsOptions(null);
-                Retry = new RetryOptions(null);
+                Diagnostics = new DiagnosticsOptions((DiagnosticsOptions?)null);
+                Retry = new RetryOptions((RetryOptions?)null);
             }
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="ClientOptions"/> with the specified <see cref="IConfigurationSection"/>.
+        /// </summary>
+        /// <param name="section">The <see cref="IConfigurationSection"/> to read from.</param>
+        protected ClientOptions(IConfigurationSection section)
+        {
+            _transport = HttpPipelineTransport.Create();
+            Diagnostics = section is null ? new DiagnosticsOptions((DiagnosticsOptions?)null) : new DiagnosticsOptions(section.GetSection("Diagnostics"));
+            Retry = section is null ? new RetryOptions((RetryOptions?)null) : new RetryOptions(section.GetSection("Retry"));
         }
 
         /// <summary>
