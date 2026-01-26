@@ -112,6 +112,7 @@ namespace Azure.Data.AppConfiguration
         public static Azure.Data.AppConfiguration.FeatureFlagConfigurationSetting FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.Data.AppConfiguration.SecretReferenceConfigurationSetting SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.Data.AppConfiguration.SettingLabel SettingLabel(string name = null) { throw null; }
+        public static Azure.Data.AppConfiguration.SnapshotReferenceConfigurationSetting SnapshotReferenceConfigurationSetting(string key, string snapshotName, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
     }
     public partial class ConfigurationSetting : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSetting>
     {
@@ -343,6 +344,12 @@ namespace Azure.Data.AppConfiguration
         public static implicit operator Azure.Data.AppConfiguration.SnapshotFields? (string value) { throw null; }
         public static bool operator !=(Azure.Data.AppConfiguration.SnapshotFields left, Azure.Data.AppConfiguration.SnapshotFields right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SnapshotReferenceConfigurationSetting : Azure.Data.AppConfiguration.ConfigurationSetting
+    {
+        public SnapshotReferenceConfigurationSetting(string key, string snapshotName, string label = null) : base (default(string), default(string), default(string)) { }
+        public SnapshotReferenceConfigurationSetting(string key, string snapshotName, string label, Azure.ETag etag) : base (default(string), default(string), default(string)) { }
+        public string SnapshotName { get { throw null; } set { } }
     }
     public partial class SnapshotSelector
     {
