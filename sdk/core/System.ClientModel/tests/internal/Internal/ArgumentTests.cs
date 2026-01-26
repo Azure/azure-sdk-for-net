@@ -14,7 +14,7 @@ public class ArgumentTests
     {
         Argument.AssertNotNull(value, "value");
 
-        Assert.AreEqual("test", value!.ToString());
+        Assert.That(value!.ToString(), Is.EqualTo("test"));
     }
 
     [Test]

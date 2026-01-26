@@ -21,8 +21,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
-            Assert.IsTrue(json.TryGetJson(jsonPath, out var slice));
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(slice.ToArray()));
+            Assert.That(json.TryGetJson(jsonPath, out var slice), Is.True);
+            Assert.That(Encoding.UTF8.GetString(slice.ToArray()), Is.EqualTo(expected));
         }
 
         [TestCase("{\"a\":1}", "$.missing")]
@@ -34,7 +34,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
             var ex = Assert.Throws<InvalidOperationException>(() => json.GetJson(Encoding.UTF8.GetBytes(jsonPathStr)));
-            Assert.AreEqual($"{jsonPathStr} was not found in the JSON structure.", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo($"{jsonPathStr} was not found in the JSON structure."));
         }
 
         [TestCase("{\"a\":1,\"b\":2}", "$.b", "100", "{\"a\":1,\"b\":100}")]
@@ -50,7 +50,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             ReadOnlyMemory<byte> value = Encoding.UTF8.GetBytes(newValue);
             var replaced = json.Set(jsonPath, value);
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(replaced));
+            Assert.That(Encoding.UTF8.GetString(replaced), Is.EqualTo(expected));
         }
 
         [TestCase("{\"a\":1,\"b\":2}", "$.b", "{\"a\":1}")]
@@ -61,7 +61,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             var updated = json.Remove(jsonPath);
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(updated));
+            Assert.That(Encoding.UTF8.GetString(updated), Is.EqualTo(expected));
         }
 
         [TestCase("{\"arr\":[1]}", "$.arr", "2", "{\"arr\":[1,2]}")]
@@ -74,7 +74,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             ReadOnlyMemory<byte> value = Encoding.UTF8.GetBytes(newValue);
             var appended = json.Append(jsonPath, value);
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(appended));
+            Assert.That(Encoding.UTF8.GetString(appended), Is.EqualTo(expected));
         }
 
         [TestCase("{\"arr\":[10,20,30]}", "$.arr", 3)]
@@ -85,7 +85,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             var reader = new Utf8JsonReader(json.Span);
             int length = reader.GetArrayLength(jsonPath);
-            Assert.AreEqual(expectedLength, length);
+            Assert.That(length, Is.EqualTo(expectedLength));
         }
 
         [TestCase("$[0]", true)]
@@ -119,10 +119,10 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void IsArrayIndex(string jsonPathStr, bool expected)
         {
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
-            Assert.AreEqual(expected, jsonPath.IsArrayIndex());
+            Assert.That(jsonPath.IsArrayIndex(), Is.EqualTo(expected));
 
             byte[] jsonPathArray = jsonPath.ToArray();
-            Assert.AreEqual(expected, jsonPathArray.IsArrayIndex());
+            Assert.That(jsonPathArray.IsArrayIndex(), Is.EqualTo(expected));
         }
 
         [TestCase("$[0][1].a", "$[0][1].a")]
@@ -138,7 +138,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             byte[] jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             var first = jsonPath.GetFirstNonIndexParent();
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(first.ToArray()));
+            Assert.That(Encoding.UTF8.GetString(first.ToArray()), Is.EqualTo(expected));
         }
 
         [TestCase(".foo.bar[0]", "foo")]
@@ -166,7 +166,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             ReadOnlySpan<byte> jsonSlice = Encoding.UTF8.GetBytes(jsonSliceStr);
             var name = jsonSlice.GetPropertyNameFromSlice();
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(name.ToArray()));
+            Assert.That(Encoding.UTF8.GetString(name.ToArray()), Is.EqualTo(expected));
         }
 
         [TestCase("$.a.b.c", "c")]
@@ -178,7 +178,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             var last = jsonPath.GetPropertyName();
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(last.ToArray()));
+            Assert.That(Encoding.UTF8.GetString(last.ToArray()), Is.EqualTo(expected));
         }
 
         [TestCase("$.foo.bar", "$.foo")]
@@ -196,7 +196,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void GetParent(string jsonPathStr, string expected)
         {
             var result = Encoding.UTF8.GetBytes(jsonPathStr).GetParent();
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(result.ToArray()));
+            Assert.That(Encoding.UTF8.GetString(result.ToArray()), Is.EqualTo(expected));
         }
 
         [TestCase("$[123]", "123")]
@@ -209,7 +209,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void GetIndexSpan_Value(string jsonPathStr, string expected)
         {
             var index = Encoding.UTF8.GetBytes(jsonPathStr).GetIndexSpan();
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(index.ToArray()));
+            Assert.That(Encoding.UTF8.GetString(index.ToArray()), Is.EqualTo(expected));
         }
 
         [TestCase("$", true)]
@@ -218,7 +218,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void IsRoot(string jsonPathStr, bool expected)
         {
             var root = Encoding.UTF8.GetBytes(jsonPathStr);
-            Assert.AreEqual(expected, root.IsRoot());
+            Assert.That(root.IsRoot(), Is.EqualTo(expected));
         }
 
         [TestCase("[10,20,30]", "10", 0, 0)]
@@ -228,11 +228,11 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var json = Encoding.UTF8.GetBytes(jsonStr);
             var reader = new Utf8JsonReader(json);
-            Assert.IsTrue(reader.Read());
+            Assert.That(reader.Read(), Is.True);
             int maxIndex;
-            Assert.IsTrue(reader.SkipToIndex(index, out maxIndex));
-            Assert.AreEqual(expectedValue, Encoding.UTF8.GetString(reader.ValueSpan.ToArray()));
-            Assert.AreEqual(expectedMaxIndex, maxIndex);
+            Assert.That(reader.SkipToIndex(index, out maxIndex), Is.True);
+            Assert.That(Encoding.UTF8.GetString(reader.ValueSpan.ToArray()), Is.EqualTo(expectedValue));
+            Assert.That(maxIndex, Is.EqualTo(expectedMaxIndex));
         }
 
         [TestCase("[10,20,30]", -1, 3)]
@@ -242,10 +242,10 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var json = Encoding.UTF8.GetBytes(jsonStr);
             var reader = new Utf8JsonReader(json);
-            Assert.IsTrue(reader.Read());
+            Assert.That(reader.Read(), Is.True);
             int maxIndex;
-            Assert.IsFalse(reader.SkipToIndex(index, out maxIndex));
-            Assert.AreEqual(expectedMaxIndex, maxIndex);
+            Assert.That(reader.SkipToIndex(index, out maxIndex), Is.False);
+            Assert.That(maxIndex, Is.EqualTo(expectedMaxIndex));
         }
 
         [TestCase("$.a.b.c", "$.a")]
@@ -257,7 +257,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             var first = jsonPath.GetFirstProperty();
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(first.ToArray()));
+            Assert.That(Encoding.UTF8.GetString(first.ToArray()), Is.EqualTo(expected));
         }
 
         [TestCase("{\"a\":1,\"b\":2}", "$.b", "100", "{\"a\":1,\"b\":100}")]
@@ -275,7 +275,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             ReadOnlyMemory<byte> value = Encoding.UTF8.GetBytes(newValue);
             var result = json.Set(jsonPath, value);
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(result));
+            Assert.That(Encoding.UTF8.GetString(result), Is.EqualTo(expected));
         }
 
         [TestCase("{\"a\":1,\"b\":2}", "$.c", "3", false, "{\"a\":1,\"b\":2,\"c\":3}")]
@@ -289,10 +289,10 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             ReadOnlyMemory<byte> value = Encoding.UTF8.GetBytes(newValue);
 
             var reader = new Utf8JsonReader(json.Span);
-            Assert.AreEqual(shouldBeFound, reader.Advance(jsonPath));
+            Assert.That(reader.Advance(jsonPath), Is.EqualTo(shouldBeFound));
 
             var result = reader.SetCurrentValue(shouldBeFound, jsonPath.GetPropertyName(), json, value);
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(result));
+            Assert.That(Encoding.UTF8.GetString(result), Is.EqualTo(expected));
         }
 
         [TestCase("{\"arr\":[1,2,3]}", "$.arr[1]", "10", "{\"arr\":[1,10,2,3]}")]
@@ -316,7 +316,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             ReadOnlyMemory<byte> value = Encoding.UTF8.GetBytes(newValue);
 
             var result = json.InsertAt(arrayPath, value);
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(result));
+            Assert.That(Encoding.UTF8.GetString(result), Is.EqualTo(expected));
         }
 
         [TestCase("{\"arr\":1}", "$.arr[1]")]
@@ -326,7 +326,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
             var ex = Assert.Throws<FormatException>(() => json.InsertAt(Encoding.UTF8.GetBytes(arrayPathStr), Encoding.UTF8.GetBytes("1")));
-            Assert.AreEqual($"$.arr is not an array.", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo($"$.arr is not an array."));
         }
 
         [TestCase("{\"a\":1,\"b\":2}", "$.a", true)]
@@ -348,12 +348,12 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 
             var reader = new Utf8JsonReader(json.Span);
             bool result = reader.Advance(jsonPath);
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
 
             var jsonReader = new Utf8JsonReader(json.Span);
             var pathReader = new JsonPathReader(jsonPath);
             result = jsonReader.Advance(ref pathReader);
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
         }
 
         [TestCase("{\"arr\":[1]}", "$.arr", "", "2", "{\"arr\":[1,2]}")]
@@ -372,7 +372,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             reader.Advance(jsonPath);
 
             var result = reader.Insert(json, propertyName, value);
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(result));
+            Assert.That(Encoding.UTF8.GetString(result), Is.EqualTo(expected));
         }
 
         [TestCase("invalid")]
@@ -381,9 +381,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var ex = Assert.Throws<ArgumentException>(() => Encoding.UTF8.GetBytes(jsonPathStr).GetPropertyName());
 #if NET8_0_OR_GREATER
-            Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message.Split('\n')[0]);
+            Assert.That(ex!.Message.Split('\n')[0], Is.EqualTo("JsonPath must start with '$' (Parameter 'jsonPath')"));
 #else
-            Assert.AreEqual("JsonPath must start with '$'\r\nParameter name: jsonPath", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("JsonPath must start with '$'\r\nParameter name: jsonPath"));
 #endif
         }
 
@@ -393,9 +393,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var ex = Assert.Throws<ArgumentException>(() => Encoding.UTF8.GetBytes(jsonPathStr).GetParent());
 #if NET8_0_OR_GREATER
-            Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message.Split('\n')[0]);
+            Assert.That(ex!.Message.Split('\n')[0], Is.EqualTo("JsonPath must start with '$' (Parameter 'jsonPath')"));
 #else
-            Assert.AreEqual("JsonPath must start with '$'\r\nParameter name: jsonPath", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("JsonPath must start with '$'\r\nParameter name: jsonPath"));
 #endif
         }
 
@@ -405,9 +405,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var ex = Assert.Throws<ArgumentException>(() => Encoding.UTF8.GetBytes(jsonPathStr).GetIndexSpan());
 #if NET8_0_OR_GREATER
-            Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message.Split('\n')[0]);
+            Assert.That(ex!.Message.Split('\n')[0], Is.EqualTo("JsonPath must start with '$' (Parameter 'jsonPath')"));
 #else
-            Assert.AreEqual("JsonPath must start with '$'\r\nParameter name: jsonPath", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("JsonPath must start with '$'\r\nParameter name: jsonPath"));
 #endif
         }
 
@@ -427,13 +427,13 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             catch (ArgumentException ex)
             {
 #if NET8_0_OR_GREATER
-                Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message);
+                Assert.That(ex!.Message, Is.EqualTo("JsonPath must start with '$' (Parameter 'jsonPath')"));
 #else
-                Assert.AreEqual("JsonPath must start with '$'\r\nParameter name: jsonPath", ex!.Message);
+                Assert.That(ex!.Message, Is.EqualTo("JsonPath must start with '$'\r\nParameter name: jsonPath"));
 #endif
                 exceptionThrown = true;
             }
-            Assert.IsTrue(exceptionThrown);
+            Assert.That(exceptionThrown, Is.True);
         }
 
         [TestCase("{\"arr\":[1,2,3],\"notArray\":1}", "$.notArray", "$.notArray is not an array.")]
@@ -451,10 +451,10 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             }
             catch (Exception ex)
             {
-                Assert.AreEqual(expectedMessage, ex!.Message);
+                Assert.That(ex!.Message, Is.EqualTo(expectedMessage));
                 exceptionThrown = true;
             }
-            Assert.IsTrue(exceptionThrown);
+            Assert.That(exceptionThrown, Is.True);
         }
 
         [TestCase("$", "/")]
@@ -473,7 +473,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             byte[] jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             Span<byte> jsonPointerSpan = stackalloc byte[jsonPath.Length << 1];
             int bytesWritten = jsonPath.ConvertToJsonPointer(jsonPointerSpan);
-            Assert.AreEqual(expectedJsonPointer, Encoding.UTF8.GetString(jsonPointerSpan.Slice(0, bytesWritten).ToArray()));
+            Assert.That(Encoding.UTF8.GetString(jsonPointerSpan.Slice(0, bytesWritten).ToArray()), Is.EqualTo(expectedJsonPointer));
         }
 
         [TestCase("$", "/-")]
@@ -492,7 +492,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             byte[] jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             Span<byte> jsonPointerSpan = stackalloc byte[jsonPath.Length << 1];
             int bytesWritten = jsonPath.ConvertToJsonPointer(jsonPointerSpan, true);
-            Assert.AreEqual(expectedJsonPointer, Encoding.UTF8.GetString(jsonPointerSpan.Slice(0, bytesWritten).ToArray()));
+            Assert.That(Encoding.UTF8.GetString(jsonPointerSpan.Slice(0, bytesWritten).ToArray()), Is.EqualTo(expectedJsonPointer));
         }
 
         [TestCase("{\"x\":1,\"y\":2,\"z\":3}", "$.x", "{\"y\":2,\"z\":3}")]
@@ -522,7 +522,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             byte[] jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
             var newJson = json.Remove(jsonPath.AsSpan());
-            Assert.AreEqual(expectedJsonPointer, Encoding.UTF8.GetString(newJson));
+            Assert.That(Encoding.UTF8.GetString(newJson), Is.EqualTo(expectedJsonPointer));
         }
     }
 }

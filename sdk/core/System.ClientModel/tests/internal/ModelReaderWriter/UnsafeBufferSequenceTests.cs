@@ -16,15 +16,15 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             using UnsafeBufferSequence writer = UnsafeBufferSequenceHelper.SetUpBufferBuilder();
             ClientModel.Internal.UnsafeBufferSegment[] buffers = (ClientModel.Internal.UnsafeBufferSegment[])_buffersField.GetValue(writer)!;
-            Assert.IsNotNull(buffers);
-            Assert.Greater(buffers.Length, 0);
+            Assert.That(buffers, Is.Not.Null);
+            Assert.That(buffers.Length, Is.GreaterThan(0));
 
             using UnsafeBufferSequence.Reader reader = writer.ExtractReader();
-            Assert.AreEqual(100000, reader.Length);
+            Assert.That(reader.Length, Is.EqualTo(100000));
 
             buffers = (ClientModel.Internal.UnsafeBufferSegment[])_buffersField.GetValue(writer)!;
-            Assert.IsNotNull(buffers);
-            Assert.AreEqual(0, buffers.Length);
+            Assert.That(buffers, Is.Not.Null);
+            Assert.That(buffers.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -35,15 +35,15 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 
             UnsafeBufferSequenceHelper.WriteBytes(writer, 0xFF, 110000, 15000);
             ClientModel.Internal.UnsafeBufferSegment[] buffers = (ClientModel.Internal.UnsafeBufferSegment[])_buffersField.GetValue(writer)!;
-            Assert.IsNotNull(buffers);
-            Assert.Greater(buffers.Length, 0);
+            Assert.That(buffers, Is.Not.Null);
+            Assert.That(buffers.Length, Is.GreaterThan(0));
 
             using UnsafeBufferSequence.Reader reader2 = writer.ExtractReader();
-            Assert.AreEqual(110000, reader2.Length);
+            Assert.That(reader2.Length, Is.EqualTo(110000));
 
             buffers = (ClientModel.Internal.UnsafeBufferSegment[])_buffersField.GetValue(writer)!;
-            Assert.IsNotNull(buffers);
-            Assert.AreEqual(0, buffers.Length);
+            Assert.That(buffers, Is.Not.Null);
+            Assert.That(buffers.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -51,13 +51,13 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             using UnsafeBufferSequence writer = UnsafeBufferSequenceHelper.SetUpBufferBuilder();
             ClientModel.Internal.UnsafeBufferSegment[] buffers = (ClientModel.Internal.UnsafeBufferSegment[])_buffersField.GetValue(writer)!;
-            Assert.IsNotNull(buffers);
-            Assert.Greater(buffers.Length, 0);
+            Assert.That(buffers, Is.Not.Null);
+            Assert.That(buffers.Length, Is.GreaterThan(0));
 
             writer.Dispose();
             buffers = (ClientModel.Internal.UnsafeBufferSegment[])_buffersField.GetValue(writer)!;
-            Assert.IsNotNull(buffers);
-            Assert.AreEqual(0, buffers.Length);
+            Assert.That(buffers, Is.Not.Null);
+            Assert.That(buffers.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -68,15 +68,15 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 
             UnsafeBufferSequenceHelper.WriteBytes(writer, 0xFF, 110000, 15000);
             ClientModel.Internal.UnsafeBufferSegment[] buffers = (ClientModel.Internal.UnsafeBufferSegment[])_buffersField.GetValue(writer)!;
-            Assert.IsNotNull(buffers);
-            Assert.Greater(buffers.Length, 0);
+            Assert.That(buffers, Is.Not.Null);
+            Assert.That(buffers.Length, Is.GreaterThan(0));
 
             using UnsafeBufferSequence.Reader reader = writer.ExtractReader();
-            Assert.AreEqual(110000, reader.Length);
+            Assert.That(reader.Length, Is.EqualTo(110000));
 
             buffers = (ClientModel.Internal.UnsafeBufferSegment[])_buffersField.GetValue(writer)!;
-            Assert.IsNotNull(buffers);
-            Assert.AreEqual(0, buffers.Length);
+            Assert.That(buffers, Is.Not.Null);
+            Assert.That(buffers.Length, Is.EqualTo(0));
         }
     }
 }

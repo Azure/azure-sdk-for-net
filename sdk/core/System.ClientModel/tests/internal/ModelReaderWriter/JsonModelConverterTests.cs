@@ -24,8 +24,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCaseSource(typeof(ReaderWriterTestSource), "NullBinaryData")]
         public void ValidateNullBinaryData(BinaryData data)
         {
-            Assert.IsNull(JsonSerializer.Deserialize<ModelX>(data, _options));
-            Assert.IsNull(JsonSerializer.Deserialize(data, typeof(ModelX), _options));
+            Assert.That(JsonSerializer.Deserialize<ModelX>(data, _options), Is.Null);
+            Assert.That(JsonSerializer.Deserialize(data, typeof(ModelX), _options), Is.Null);
         }
 
         [TestCaseSource(typeof(ReaderWriterTestSource), "InvalidOperationBinaryData")]
@@ -69,17 +69,17 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             var converter = context is null ? new JsonModelConverter(mrwOptions) : new JsonModelConverter(mrwOptions, context);
             options.Converters.Add(converter);
             ModelY? modelY = JsonSerializer.Deserialize<ModelY>(modelYResponse, options);
-            Assert.IsNotNull(modelY);
+            Assert.That(modelY, Is.Not.Null);
 
-            Assert.AreEqual("Y", modelY!.Kind);
-            Assert.AreEqual("ymodel", modelY.Name);
+            Assert.That(modelY!.Kind, Is.EqualTo("Y"));
+            Assert.That(modelY.Name, Is.EqualTo("ymodel"));
             if (format == "J")
-                Assert.AreEqual("100", modelY.YProperty);
+                Assert.That(modelY.YProperty, Is.EqualTo("100"));
 
             var additionalProperties = GetRawData(modelY);
-            Assert.IsNotNull(additionalProperties);
+            Assert.That(additionalProperties, Is.Not.Null);
             if (format == "J")
-                Assert.AreEqual("stuff", additionalProperties["extra"].ToObjectFromJson<string>());
+                Assert.That(additionalProperties["extra"].ToObjectFromJson<string>(), Is.EqualTo("stuff"));
 
             string expectedModelY = "{";
             expectedModelY += "\"kind\":\"Y\",\"name\":\"ymodel\"";
@@ -88,20 +88,20 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             expectedModelY += "}";
 
             var actualModelY = JsonSerializer.Serialize(modelY, options);
-            Assert.AreEqual(expectedModelY, actualModelY);
+            Assert.That(actualModelY, Is.EqualTo(expectedModelY));
 
             ModelX? modelX = JsonSerializer.Deserialize<ModelX>(modelXResponse, options);
-            Assert.IsNotNull(modelX);
+            Assert.That(modelX, Is.Not.Null);
 
-            Assert.AreEqual("X", modelX!.Kind);
-            Assert.AreEqual("xmodel", modelX.Name);
+            Assert.That(modelX!.Kind, Is.EqualTo("X"));
+            Assert.That(modelX.Name, Is.EqualTo("xmodel"));
             if (format == "J")
-                Assert.AreEqual(100, modelX.XProperty);
+                Assert.That(modelX.XProperty, Is.EqualTo(100));
 
             additionalProperties = GetRawData(modelX);
-            Assert.IsNotNull(additionalProperties);
+            Assert.That(additionalProperties, Is.Not.Null);
             if (format == "J")
-                Assert.AreEqual("stuff", additionalProperties["extra"].ToObjectFromJson<string>());
+                Assert.That(additionalProperties["extra"].ToObjectFromJson<string>(), Is.EqualTo("stuff"));
 
             string expectedModelX = "{";
             expectedModelX += "\"kind\":\"X\"";
@@ -113,23 +113,23 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             expectedModelX += "}";
 
             var actualModelX = JsonSerializer.Serialize(modelX, options);
-            Assert.AreEqual(expectedModelX, actualModelX);
+            Assert.That(actualModelX, Is.EqualTo(expectedModelX));
         }
 
         [Test]
         public void NullContextThrows()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => new JsonModelConverter(ModelReaderWriterOptions.Json, null!));
-            Assert.IsNotNull(ex);
-            Assert.AreEqual("context", ex!.ParamName);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex!.ParamName, Is.EqualTo("context"));
         }
 
         [Test]
         public void NullOptionsThrows()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => new JsonModelConverter(null!, new TestClientModelReaderWriterContext()));
-            Assert.IsNotNull(ex);
-            Assert.AreEqual("options", ex!.ParamName);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex!.ParamName, Is.EqualTo("options"));
         }
 
         [Test]
@@ -139,8 +139,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             var converter = new JsonModelConverter(ModelReaderWriterOptions.Json, new TestClientModelReaderWriterContext());
             options.Converters.Add(converter);
             var ex = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize("{}", typeof(PersistableModel), options));
-            Assert.IsNotNull(ex);
-            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for PersistableModel.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.", ex!.Message);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex!.Message, Is.EqualTo("No ModelReaderWriterTypeBuilder found for PersistableModel.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info."));
         }
 
         [Test]
@@ -150,8 +150,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             var converter = new JsonModelConverter(ModelReaderWriterOptions.Json, SystemClientModelTestsInternalContext.Default);
             options.Converters.Add(converter);
             var ex = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize("{}", typeof(PersistableModel), options));
-            Assert.IsNotNull(ex);
-            Assert.AreEqual("Either PersistableModel or the PersistableModelProxyAttribute defined needs to implement IJsonModel.", ex!.Message);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex!.Message, Is.EqualTo("Either PersistableModel or the PersistableModelProxyAttribute defined needs to implement IJsonModel."));
         }
 
         [Test]
@@ -163,7 +163,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             };
             var jsonOptions = new JsonSerializerOptions { Converters = { new JsonModelConverter() } };
             string json = JsonSerializer.Serialize(data, jsonOptions);
-            Assert.AreEqual("{\"Name\":\"John Doe\"}", json);
+            Assert.That(json, Is.EqualTo("{\"Name\":\"John Doe\"}"));
         }
 
         private class Person
@@ -184,11 +184,11 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             };
             var jsonOptions = new JsonSerializerOptions { Converters = { new JsonModelConverter() } };
             string json = JsonSerializer.Serialize(data, jsonOptions);
-            Assert.AreEqual("{\"Name\":\"John Doe\",\"Model\":{\"kind\":\"X\",\"name\":\"MyName\",\"fields\":[],\"keyValuePairs\":{},\"xProperty\":0}}", json);
+            Assert.That(json, Is.EqualTo("{\"Name\":\"John Doe\",\"Model\":{\"kind\":\"X\",\"name\":\"MyName\",\"fields\":[],\"keyValuePairs\":{},\"xProperty\":0}}"));
 
             //without converter we should get PascalCase and different property order
             string json2 = JsonSerializer.Serialize(data);
-            Assert.AreEqual("{\"Name\":\"John Doe\",\"Model\":{\"XProperty\":0,\"Fields\":[],\"KeyValuePairs\":{},\"Kind\":\"X\",\"Name\":\"MyName\"}}", json2);
+            Assert.That(json2, Is.EqualTo("{\"Name\":\"John Doe\",\"Model\":{\"XProperty\":0,\"Fields\":[],\"KeyValuePairs\":{},\"Kind\":\"X\",\"Name\":\"MyName\"}}"));
         }
 
         private class PersonMixed
@@ -200,13 +200,13 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         private static Dictionary<string, BinaryData> GetRawData(object model)
         {
             Type modelType = model.GetType();
-            Assert.IsNotNull(modelType);
+            Assert.That(modelType, Is.Not.Null);
             while (modelType!.BaseType != typeof(object) && modelType.BaseType != typeof(ValueType))
             {
                 modelType = modelType.BaseType!;
             }
             var propertyInfo = modelType.GetField("_serializedAdditionalRawData", BindingFlags.Instance | BindingFlags.NonPublic);
-            Assert.IsNotNull(propertyInfo);
+            Assert.That(propertyInfo, Is.Not.Null);
             return (Dictionary<string, BinaryData>)propertyInfo!.GetValue(model)!;
         }
 
