@@ -13,11 +13,11 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
 {
     public static class TestAgent
     {
-        public static async Task CreateAgentAsync(string agentName)
+        public static async Task CreateAgentAsync(string agentName, VoiceLiveTestEnvironment testEnvironment)
         {
             //Create a PersistentAgentsClient and PersistentAgent.
-            var projectEndpoint = System.Environment.GetEnvironmentVariable("AI_SERVICES_ENDPOINT");
-            var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+            var projectEndpoint = testEnvironment.Endpoint;
+            var modelDeploymentName = testEnvironment.ModelName;
 
             PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
@@ -30,11 +30,11 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
             );
         }
 
-        public static async Task<string> FindAgentAsync(string agentName)
+        public static async Task<string> FindAgentAsync(string agentName, VoiceLiveTestEnvironment testEnvironment)
         {
             //Create a PersistentAgentsClient and PersistentAgent.
-            var projectEndpoint = System.Environment.GetEnvironmentVariable("AI_SERVICES_ENDPOINT");
-            var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+            var projectEndpoint = testEnvironment.Endpoint;
+            var modelDeploymentName = testEnvironment.ModelName;
 
             PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 

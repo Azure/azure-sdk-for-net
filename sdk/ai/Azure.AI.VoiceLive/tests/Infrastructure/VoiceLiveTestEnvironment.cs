@@ -28,6 +28,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// </summary>
         public string ApiKey => GetOptionalVariable("AI_SERVICES_KEY");
 
+        public string ModelName => GetVariable("MODEL_DEPLOYMENT_NAME");
+
         // ===== Model Configuration =====
 
         /// <summary>
