@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+<Project>
   <!--
     Central Package Management (CPM) Configuration
     See: https://learn.microsoft.com/nuget/consume-packages/Central-Package-Management
@@ -18,21 +16,8 @@
     <!-- Library, sample, and test packages -->
     <CastleCoreVersion>5.1.0</CastleCoreVersion>
     <CloudNativeCloudEventsSystemTextJsonVersion>2.8.0</CloudNativeCloudEventsSystemTextJsonVersion>
-    <MicrosoftAspNetCoreHttpVersion>2.3.0</MicrosoftAspNetCoreHttpVersion>
-    <MicrosoftAspNetCoreVersion>2.3.0</MicrosoftAspNetCoreVersion>
-    <MicrosoftExtensionsAzureVersion>1.13.1</MicrosoftExtensionsAzureVersion>
-    <MicrosoftExtensionsConfigurationAbstractionsVersion>10.0.1</MicrosoftExtensionsConfigurationAbstractionsVersion>
-    <MicrosoftExtensionsConfigurationBinderVersion>10.0.1</MicrosoftExtensionsConfigurationBinderVersion>
-    <MicrosoftExtensionsConfigurationVersion>10.0.1</MicrosoftExtensionsConfigurationVersion>
-    <MicrosoftExtensionsDependencyInjectionAbstractionsVersion>10.0.1</MicrosoftExtensionsDependencyInjectionAbstractionsVersion>
-    <MicrosoftExtensionsHostingVersion>10.0.1</MicrosoftExtensionsHostingVersion>
-    <MicrosoftExtensionsLoggingVersion>10.0.1</MicrosoftExtensionsLoggingVersion>
-    <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
-    <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
     <MSTestVersion>1.3.2</MSTestVersion>
     <NUnitVersion>3.14.0</NUnitVersion>
-    <OpenTelemetryInstrumentationHttpVersion>1.14.0</OpenTelemetryInstrumentationHttpVersion>
-    <OpenTelemetryVersion>1.14.0</OpenTelemetryVersion>
 
     <!-- Internal tooling from the Azure Development Feed -->
     <TestProxyVersion>1.0.0-dev.20251209.1</TestProxyVersion>
@@ -167,7 +152,8 @@
 
     <!-- Azure SDK packages -->
     <PackageVersion Include="Azure.AI.Inference" Version="1.0.0-beta.5" />
-    <PackageVersion Include="Azure.AI.OpenAI" Version="2.0.0" />
+    <!-- Test projects use a beta version defined separately -->
+    <PackageVersion Include="Azure.AI.OpenAI" Version="2.0.0" Condition="'$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true'" />
     <PackageVersion Include="Azure.AI.Projects" Version="1.1.0" />
     <PackageVersion Include="Azure.Communication.Common" Version="1.4.0" />
     <PackageVersion Include="Azure.Core" Version="1.50.0" />
@@ -264,6 +250,11 @@
     <PackageVersion Include="OpenAI" Version="2.8.0" />
   </ItemGroup>
 
+  <!-- Test projects may need beta versions of Azure.AI.OpenAI for testing new features -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">
+    <PackageVersion Include="Azure.AI.OpenAI" Version="2.8.0-beta.1" />
+  </ItemGroup>
+
   <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.AI.Agents.Persistent'))">
     <PackageVersion Include="Microsoft.Extensions.AI.Abstractions" Version="10.1.1"/>
   </ItemGroup>
@@ -279,10 +270,10 @@
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
     <PackageVersion Include="Microsoft.Extensions.Telemetry" Version="10.1.0" />
-    <PackageVersion Include="OpenTelemetry" Version="$(OpenTelemetryVersion)" />
+    <PackageVersion Include="OpenTelemetry" Version="1.14.0" />
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.14.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.14.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryInstrumentationHttpVersion)" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.14.0" />
     <PackageVersion Include="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.2" />
   </ItemGroup>
 
@@ -290,7 +281,7 @@
     <PackageVersion Include="Azure.Data.AppConfiguration" Version="1.6.0"/>
     <PackageVersion Include="Azure.Provisioning.AppConfiguration" Version="1.0.0"/>
     <PackageVersion Include="Azure.Provisioning.Deployment" Version="1.0.0-beta.2"/>
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(MicrosoftExtensionsHostingVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.1" />
   </ItemGroup>
 
   <!-- Packages used by the TypeSpec generators -->
@@ -317,22 +308,22 @@
     <PackageVersion Include="Microsoft.Azure.WebJobs.Sources" Version="3.0.44" PrivateAssets="All"/>
     <PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.44" />
     <PackageVersion Include="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.1" />
-    <PackageVersion Include="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" />
-    <PackageVersion Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
+    <PackageVersion Include="Microsoft.Spatial" Version="7.5.3" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageVersion Include="Microsoft.AspNetCore.DataProtection" Version="10.0.1" />
-    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Http.Connections" Version="1.2.0" />
     <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.3.0" />
-    <PackageVersion Include="Microsoft.Extensions.Azure" Version="$(MicrosoftExtensionsAzureVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftExtensionsConfigurationAbstractionsVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Azure" Version="1.13.1" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.1" />
   </ItemGroup>
 
   <!-- Packages intended for WCF/CoreWCF Extensions libraries only -->
@@ -341,7 +332,7 @@
     <PackageVersion Include="Azure.Storage.Queues" Version="12.21.0" />
     <PackageVersion Include="CoreWCF.Primitives" Version="1.7.0" />
     <PackageVersion Include="CoreWCF.Queue" Version="1.7.0" />
-    <PackageVersion Include="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore" Version="2.3.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" />
@@ -375,7 +366,6 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
-    <PackageVersion Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageVersion Include="SauceControl.InheritDoc" Version="2.0.2" PrivateAssets="All" />
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
@@ -409,21 +399,16 @@
 
     <!-- Support packages -->
     <PackageVersion Include="Azure.AI.Agents.Persistent" Version="1.1.0" />
-    <PackageVersion Include="Azure.AI.OpenAI" Version="2.8.0-beta.1" />
     <PackageVersion Include="Azure.Messaging.EventHubs.Processor" Version="5.12.2" />
     <PackageVersion Include="Azure.ResourceManager.Compute" Version="1.13.0" />
     <PackageVersion Include="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
-    <PackageVersion Include="Azure.ResourceManager.PrivateDns" Version="1.2.1" />
     <PackageVersion Include="Azure.ResourceManager.RecoveryServices" Version="1.2.0-beta.1" />
     <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" />
-    <PackageVersion Include="CloudNative.CloudEvents.SystemTextJson" Version="$(CloudNativeCloudEventsSystemTextJsonVersion)" />
     <PackageVersion Include="CommandLineParser" Version="2.9.1" />
     <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.23.0" />
-    <PackageVersion Include="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
-    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" />
 
     <!-- The AspNetCore.Mvc.Testing package has a hard association on a specific target framework -->
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.1"/>
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.1" Condition="'$(TargetFramework)' != 'net8.0' and '$(TargetFramework)' != 'net9.0'"/>
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.11" Condition="'$(TargetFramework)' == 'net9.0'"/>
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.22" Condition="'$(TargetFramework)' == 'net8.0'"/>
 
@@ -463,29 +448,19 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
     <PackageVersion Include="Microsoft.CognitiveServices.Speech"  Version="1.47.0" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="6.1.3" />
-    <PackageVersion Include="Microsoft.Extensions.Azure" Version="$(MicrosoftExtensionsAzureVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftExtensionsConfigurationAbstractionsVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.1" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="10.0.1"/>
     <PackageVersion Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageVersion Include="Microsoft.Extensions.Primitives" Version="10.0.1"/>
     <PackageVersion Include="Microsoft.Graph" Version="5.100.0" />
-    <PackageVersion Include="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" />
     <PackageVersion Include="Mono.Posix" Version="7.0.0-alpha8.21302.6" />
     <PackageVersion Include="NAudio" Version="2.2.1" />
-    <PackageVersion Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
-    <PackageVersion Include="OpenTelemetry" Version="$(OpenTelemetryVersion)" />
     <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.14.0" />
     <PackageVersion Include="OpenTelemetry.Exporter.InMemory" Version="1.14.0" />
     <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.14.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryInstrumentationHttpVersion)" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.14.0-beta.1" />
 
     <!-- Note: Polly v8+ is a complete rewrite with a new resilience pipeline API and significant breaking changes -->
@@ -587,20 +562,25 @@
 
   <!-- Source Generation for System.ClientModel requires a specific set of analysis rules -->
   <ItemGroup Condition="$(IsTestProject) == 'true' and $(MSBuildProjectName.StartsWith('System.ClientModel.SourceGeneration.Tests'))">
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version ="4.12.0" />
+    <PackageVersion Update="Microsoft.CodeAnalysis.CSharp" Version ="4.12.0" />
   </ItemGroup>
 
   <!-- The unbranded test framework is the first to use NUnit 4; the repository will migrate fully in the near future -->
-  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
+  <!-- The src project needs Include since it's not a test project -->
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.Equals('Microsoft.ClientModel.TestFramework'))">
     <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageVersion Include="NUnit" Version="4.4.0" />
-    <PackageVersion Include="NUnit3TestAdapter" Version="5.1.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+  </ItemGroup>
+
+  <!-- The tests project needs Update since it gets base versions from the test section -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework.Tests'))">
+    <PackageVersion Update="NUnit3TestAdapter" Version="5.1.0" />
+    <PackageVersion Update="Microsoft.NET.Test.Sdk" Version="17.13.0" />
   </ItemGroup>
 
   <!-- Azure.Test.Perf needs older Azure.Core for maximum compatibility with test projects -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Test.Perf'))">
-    <PackageVersion Include="Azure.Core" Version="1.40.0" />
+    <PackageVersion Update="Azure.Core" Version="1.40.0" />
   </ItemGroup>
 
   <!-- Legacy Batch tests require ADAL and specific MSAL versions -->
@@ -611,7 +591,19 @@
 
   <!-- Azure.Core.TestFramework needs pinned AutoRest version (workaround for pipeline conflicts) -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Core.TestFramework'))">
-    <PackageVersion Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20231107.1" />
+    <PackageVersion Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20231107.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <!-- Azure.Core.Tests needs OpenTelemetry for tracing tests -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Core.Tests'))">
+    <PackageVersion Include="OpenTelemetry" Version="1.14.0" />
+  </ItemGroup>
+
+  <!-- Azure.Core.Perf needs AspNetCore.Http -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Core.Perf'))">
+    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
   </ItemGroup>
 
   <!-- SecurityCenter.Tests needs beta versions of IotHub and Logic -->
@@ -623,9 +615,5 @@
   <!-- Tables.Tests needs legacy WebJobs.Extensions.Storage for T1 testing -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.Tables.Tests'))">
     <PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="4.0.5" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
   </ItemGroup>
 </Project>

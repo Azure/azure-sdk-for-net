@@ -11,7 +11,6 @@
   <ItemGroup>
     <!-- NUnit 4.x versions are scoped in eng/Packages.Data.props -->
     <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="NUnit" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
