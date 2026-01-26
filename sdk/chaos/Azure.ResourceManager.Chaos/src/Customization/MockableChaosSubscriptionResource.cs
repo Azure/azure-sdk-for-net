@@ -92,5 +92,13 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             return await GetChaosTargetTypes(locationName).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
         }
+
+        /// <summary> Gets a collection of ChaosTargetMetadataResources in the SubscriptionResource. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <returns> An object representing collection of ChaosTargetMetadataResources and their operations over a ChaosTargetMetadataResource. </returns>
+        public virtual ChaosTargetMetadataCollection GetAllChaosTargetMetadata(AzureLocation location)
+        {
+            return new ChaosTargetMetadataCollection(Client, Id, location);
+        }
     }
 }

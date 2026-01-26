@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents the execution details of an Experiment. </summary>
-    public partial class ExperimentExecutionDetails
+    public partial class ExperimentExecutionDetails : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,28 +24,17 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetails"/>. </summary>
-        /// <param name="type"> String of the resource type. </param>
-        /// <param name="id"> String of the fully qualified resource ID. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> String of the resource name. </param>
         /// <param name="properties"> The properties of the experiment execution details. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentExecutionDetails(string @type, string id, string name, ExperimentExecutionDetailsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExperimentExecutionDetails(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ExperimentExecutionDetailsProperties properties) : base(id, name, resourceType, systemData)
         {
-            Type = @type;
-            Id = id;
-            Name = name;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
-
-        /// <summary> String of the resource type. </summary>
-        public string Type { get; }
-
-        /// <summary> String of the fully qualified resource ID. </summary>
-        public string Id { get; }
-
-        /// <summary> String of the resource name. </summary>
-        public string Name { get; }
 
         /// <summary> The properties of the experiment execution details. </summary>
         internal ExperimentExecutionDetailsProperties Properties { get; }

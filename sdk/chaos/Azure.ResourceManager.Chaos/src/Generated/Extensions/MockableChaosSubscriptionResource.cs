@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Chaos;
 using Azure.ResourceManager.Resources;
@@ -19,6 +20,9 @@ namespace Azure.ResourceManager.Chaos.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableChaosSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _experimentsClientDiagnostics;
+        private Experiments _experimentsRestClient;
+
         /// <summary> Initializes a new instance of MockableChaosSubscriptionResource for mocking. </summary>
         protected MockableChaosSubscriptionResource()
         {
@@ -30,6 +34,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
         internal MockableChaosSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ExperimentsClientDiagnostics => _experimentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Experiments ExperimentsRestClient => _experimentsRestClient ??= new Experiments(ExperimentsClientDiagnostics, Pipeline, Endpoint, "2025-01-01");
 
         /// <summary> Gets a collection of ChaosTargetMetadatas in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -97,6 +105,66 @@ namespace Azure.ResourceManager.Chaos.Mocking
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
             return GetChaosTargetMetadatas(location).Get(targetTypeName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of Experiment resources in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Experiments_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ChaosExperimentResource> GetChaosExperimentsAsync(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetExperimentsAsyncCollectionResultOfT(ExperimentsRestClient, Guid.Parse(Id.SubscriptionId), running, continuationToken, context), data => new ChaosExperimentResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a list of Experiment resources in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Experiments_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ChaosExperimentResource> GetChaosExperiments(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetExperimentsCollectionResultOfT(ExperimentsRestClient, Guid.Parse(Id.SubscriptionId), running, continuationToken, context), data => new ChaosExperimentResource(Client, data));
         }
     }
 }

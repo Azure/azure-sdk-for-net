@@ -158,6 +158,42 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
+        internal HttpMessage CreateGetExperimentsRequest(Guid subscriptionId, bool? running, string continuationToken, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (running != null)
+            {
+                uri.AppendQuery("running", TypeFormatters.ConvertToString(running), true);
+            }
+            if (continuationToken != null)
+            {
+                uri.AppendQuery("continuationToken", continuationToken, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetExperimentsRequest(Uri nextPage, Guid subscriptionId, bool? running, string continuationToken, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string experimentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

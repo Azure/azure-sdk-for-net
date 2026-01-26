@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.Chaos.Models
     [PersistableModelProxy(typeof(UnknownChaosTargetFilter))]
     public abstract partial class ChaosTargetFilter : IJsonModel<ChaosTargetFilter>
     {
-        /// <summary> Initializes a new instance of <see cref="ChaosTargetFilter"/> for deserialization. </summary>
-        internal ChaosTargetFilter()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ChaosTargetFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

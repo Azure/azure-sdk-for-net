@@ -160,5 +160,23 @@ namespace Azure.ResourceManager.Chaos
 
             return GetMockableChaosArmClient(client).GetChaosCapabilityTypeResource(id);
         }
+
+        /// <summary>
+        /// Gets a collection of ChaosTargetMetadataResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetAllChaosTargetMetadata(AzureLocation)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ChaosTargetMetadataResources and their operations over a ChaosTargetMetadataResource. </returns>
+        public static ChaosTargetMetadataCollection GetAllChaosTargetMetadata(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetAllChaosTargetMetadata(location);
+        }
     }
 }
