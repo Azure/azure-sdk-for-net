@@ -13,7 +13,9 @@ namespace Azure.AI.Speech.Transcription.Samples
 {
     /// <summary>
     /// Samples demonstrating locale configuration for transcription.
-    /// </summary>    [Category("Live")]    public partial class Sample08_TranscribeWithLocales : TranscriptionSampleBase
+    /// </summary>
+    [Category("Live")]
+    public partial class Sample08_TranscribeWithLocales : TranscriptionSampleBase
     {
 #if !SNIPPET
         private TranscriptionClient _client;

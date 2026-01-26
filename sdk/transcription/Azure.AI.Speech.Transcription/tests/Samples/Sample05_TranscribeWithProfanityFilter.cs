@@ -13,7 +13,9 @@ namespace Azure.AI.Speech.Transcription.Samples
 {
     /// <summary>
     /// Samples demonstrating profanity filtering options.
-    /// </summary>    [Category("Live")]    public partial class Sample05_TranscribeWithProfanityFilter : TranscriptionSampleBase
+    /// </summary>
+    [Category("Live")]
+    public partial class Sample05_TranscribeWithProfanityFilter : TranscriptionSampleBase
     {
 #if !SNIPPET
         private TranscriptionClient _client;

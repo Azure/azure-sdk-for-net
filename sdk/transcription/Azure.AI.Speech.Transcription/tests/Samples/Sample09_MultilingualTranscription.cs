@@ -13,7 +13,9 @@ namespace Azure.AI.Speech.Transcription.Samples
 {
     /// <summary>
     /// Samples demonstrating multilingual transcription (preview).
-    /// </summary>    [Category("Live")]    public partial class Sample09_MultilingualTranscription : TranscriptionSampleBase
+    /// </summary>
+    [Category("Live")]
+    public partial class Sample09_MultilingualTranscription : TranscriptionSampleBase
     {
 #if !SNIPPET
         private TranscriptionClient _client;
