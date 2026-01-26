@@ -9,14 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MySql;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerCapabilityProperties : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerCapabilityProperties>
+    /// <summary> Location capabilities. </summary>
+    public partial class MySqlFlexibleServerCapabilityProperties : IJsonModel<MySqlFlexibleServerCapabilityProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerCapabilityProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerCapabilityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerCapabilityProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Zone))
             {
                 writer.WritePropertyName("zone"u8);
@@ -43,8 +44,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 writer.WritePropertyName("supportedHAMode"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedHAMode)
+                foreach (string item in SupportedHAMode)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -53,8 +59,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 writer.WritePropertyName("supportedGeoBackupRegions"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedGeoBackupRegions)
+                foreach (string item in SupportedGeoBackupRegions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -63,21 +74,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 writer.WritePropertyName("supportedFlexibleServerEditions"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedFlexibleServerEditions)
+                foreach (MySqlFlexibleServerEditionCapability item in SupportedFlexibleServerEditions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +97,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
         }
 
-        MySqlFlexibleServerCapabilityProperties IJsonModel<MySqlFlexibleServerCapabilityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServerCapabilityProperties IJsonModel<MySqlFlexibleServerCapabilityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MySqlFlexibleServerCapabilityProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerCapabilityProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMySqlFlexibleServerCapabilityProperties(document.RootElement, options);
         }
 
-        internal static MySqlFlexibleServerCapabilityProperties DeserializeMySqlFlexibleServerCapabilityProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MySqlFlexibleServerCapabilityProperties DeserializeMySqlFlexibleServerCapabilityProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -110,51 +126,64 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             IReadOnlyList<string> supportedHAMode = default;
             IReadOnlyList<string> supportedGeoBackupRegions = default;
             IReadOnlyList<MySqlFlexibleServerEditionCapability> supportedFlexibleServerEditions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("zone"u8))
+                if (prop.NameEquals("zone"u8))
                 {
-                    zone = property.Value.GetString();
+                    zone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedHAMode"u8))
+                if (prop.NameEquals("supportedHAMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     supportedHAMode = array;
                     continue;
                 }
-                if (property.NameEquals("supportedGeoBackupRegions"u8))
+                if (prop.NameEquals("supportedGeoBackupRegions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     supportedGeoBackupRegions = array;
                     continue;
                 }
-                if (property.NameEquals("supportedFlexibleServerEditions"u8))
+                if (prop.NameEquals("supportedFlexibleServerEditions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MySqlFlexibleServerEditionCapability> array = new List<MySqlFlexibleServerEditionCapability>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MySqlFlexibleServerEditionCapability.DeserializeMySqlFlexibleServerEditionCapability(item, options));
                     }
@@ -163,17 +192,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MySqlFlexibleServerCapabilityProperties(zone, supportedHAMode ?? new ChangeTrackingList<string>(), supportedGeoBackupRegions ?? new ChangeTrackingList<string>(), supportedFlexibleServerEditions ?? new ChangeTrackingList<MySqlFlexibleServerEditionCapability>(), serializedAdditionalRawData);
+            return new MySqlFlexibleServerCapabilityProperties(zone, supportedHAMode ?? new ChangeTrackingList<string>(), supportedGeoBackupRegions ?? new ChangeTrackingList<string>(), supportedFlexibleServerEditions ?? new ChangeTrackingList<MySqlFlexibleServerEditionCapability>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<MySqlFlexibleServerCapabilityProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MySqlFlexibleServerCapabilityProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -183,15 +214,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
         }
 
-        MySqlFlexibleServerCapabilityProperties IPersistableModel<MySqlFlexibleServerCapabilityProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServerCapabilityProperties IPersistableModel<MySqlFlexibleServerCapabilityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MySqlFlexibleServerCapabilityProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlFlexibleServerCapabilityProperties(document.RootElement, options);
                     }
                 default:
@@ -199,6 +235,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServerCapabilityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
