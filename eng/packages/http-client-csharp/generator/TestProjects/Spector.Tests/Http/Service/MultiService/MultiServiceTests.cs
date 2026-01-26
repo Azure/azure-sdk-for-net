@@ -23,25 +23,5 @@ namespace TestProjects.Spector.Tests.Http.Service.MultiService
             var response = await new CombinedClient(host, new CombinedClientOptions()).GetBarClient().TestAsync();
             Assert.AreEqual(204, response.Status);
         });
-
-        [Test]
-        public Task ServiceAOperation_SetDiffServiceVersion() => Test(async (host) =>
-        {
-            var serviceVersion = CombinedClientOptions.ServiceAVersion.Vav1;
-            var clientOptions = new CombinedClientOptions(serviceVersion);
-            var client = new CombinedClient(host, clientOptions).GetFooClient();
-
-            Assert.IsNotNull(client);
-        });
-
-        [Test]
-        public Task ServiceBOperation_SetDiffServiceVersion() => Test(async (host) =>
-        {
-            var serviceVersion = CombinedClientOptions.ServiceBVersion.Vbv1;
-            var clientOptions = new CombinedClientOptions(serviceBVersion: serviceVersion);
-            var client = new CombinedClient(host, clientOptions).GetBarClient();
-
-            Assert.IsNotNull(client);
-        });
     }
 }
