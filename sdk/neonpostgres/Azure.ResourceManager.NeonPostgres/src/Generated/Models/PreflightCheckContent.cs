@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
     /// <summary>
     /// Preflight check parameters for branch and child resources.
-    ///
+    /// 
     /// IMPORTANT: Only one of the property types (branchProperties, roleProperties, databaseProperties,
     /// or endpointProperties) should be provided at a time, based on the entityType value:
     /// - When entityType is "branch", provide only branchProperties
@@ -22,37 +23,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     /// </summary>
     public partial class PreflightCheckContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PreflightCheckContent"/>. </summary>
         /// <param name="projectId"> Project Id associated with this connection. </param>
@@ -77,8 +49,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="roleProperties"> The role properties - ONLY provided when entityType is 'role'. </param>
         /// <param name="databaseProperties"> The database properties - ONLY provided when entityType is 'database'. </param>
         /// <param name="endpointProperties"> The endpoint properties - ONLY provided when entityType is 'endpoint'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PreflightCheckContent(string projectId, string branchId, PreflightCheckEntityType entityType, NeonBranchProperties branchProperties, NeonRoleProperties roleProperties, NeonDatabaseProperties databaseProperties, NeonEndpointProperties endpointProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PreflightCheckContent(string projectId, string branchId, PreflightCheckEntityType entityType, NeonBranchProperties branchProperties, NeonRoleProperties roleProperties, NeonDatabaseProperties databaseProperties, NeonEndpointProperties endpointProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectId = projectId;
             BranchId = branchId;
@@ -87,26 +59,27 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             RoleProperties = roleProperties;
             DatabaseProperties = databaseProperties;
             EndpointProperties = endpointProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PreflightCheckContent"/> for deserialization. </summary>
-        internal PreflightCheckContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Project Id associated with this connection. </summary>
         public string ProjectId { get; }
+
         /// <summary> Branch Id associated with this connection. </summary>
         public string BranchId { get; }
+
         /// <summary> Entity type to be validated for deletion. </summary>
         public PreflightCheckEntityType EntityType { get; }
+
         /// <summary> The branch properties - ONLY provided when entityType is 'branch'. </summary>
         public NeonBranchProperties BranchProperties { get; set; }
+
         /// <summary> The role properties - ONLY provided when entityType is 'role'. </summary>
         public NeonRoleProperties RoleProperties { get; set; }
+
         /// <summary> The database properties - ONLY provided when entityType is 'database'. </summary>
         public NeonDatabaseProperties DatabaseProperties { get; set; }
+
         /// <summary> The endpoint properties - ONLY provided when entityType is 'endpoint'. </summary>
         public NeonEndpointProperties EndpointProperties { get; set; }
     }

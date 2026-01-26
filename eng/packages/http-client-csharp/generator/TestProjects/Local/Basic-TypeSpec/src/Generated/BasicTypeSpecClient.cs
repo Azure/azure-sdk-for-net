@@ -2096,15 +2096,15 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response ConditionalRequestDate(RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions?.IfUnmodifiedSince != null)
-            {
-                throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ConditionalRequestDate");
             scope.Start();
             try
             {
+                if (requestConditions?.IfUnmodifiedSince != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
+                }
+
                 using HttpMessage message = CreateConditionalRequestDateRequest(requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2129,15 +2129,15 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ConditionalRequestDateAsync(RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions?.IfUnmodifiedSince != null)
-            {
-                throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ConditionalRequestDate");
             scope.Start();
             try
             {
+                if (requestConditions?.IfUnmodifiedSince != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
+                }
+
                 using HttpMessage message = CreateConditionalRequestDateRequest(requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }

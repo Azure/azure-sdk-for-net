@@ -1183,6 +1183,14 @@ interface ScheduledActionExtension {
     GetAssociatedScheduledActionsRequest,
     GetAssociatedScheduledActionsResponse
   >;
+
+  @doc("Action to retrieve the PostgreSQL versions.")
+  @autoRoute
+  @armResourceAction(ScheduledAction)
+  @post
+  getPostgresVersions(
+    ...ResourceInstanceParameters<GetAssociatedScheduledActionsRequest>
+  ): ArmResponse<GetAssociatedScheduledActionsResponse> | ErrorResponse;
 }
 `,
       runner
@@ -1227,6 +1235,16 @@ interface ScheduledActionExtension {
       "getAssociatedScheduledActions should be in non-resource methods"
     );
     strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
+
+    // Verify getPostgresVersions is also a non-resource method
+    const getPostgresVersionsEntry = nonResourceMethods.find((m: any) =>
+      m.operationPath.includes("getPostgresVersions")
+    );
+    ok(
+      getPostgresVersionsEntry,
+      "getPostgresVersions should be in non-resource methods"
+    );
+    strictEqual(getPostgresVersionsEntry.operationScope, ResourceScope.ResourceGroup);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1470,22 +1488,42 @@ interface NoGetResources {
     ok(parentResource);
     strictEqual(parentResource.metadata.resourceName, "Parent");
 
-    // Parent should have 5 methods: its own 4 methods (get, createOrUpdate, delete, listByResourceGroup)
-    // plus the listByResourceGroup for NoGetResource children
+    // Parent should have 7 methods: its own 4 methods (get, createOrUpdate, delete, listByResourceGroup)
+    // plus all 3 operations from NoGetResource (createOrUpdate, delete, listByResourceGroup)
     strictEqual(
       parentResource.metadata.methods.length,
-      5,
-      "Parent should have 5 methods including the list operation from NoGetResource"
+      7,
+      "Parent should have 7 methods including all operations from NoGetResource"
     );
 
-    // Verify the list operation for NoGetResource is in parent's methods
+    // Verify the list operation for NoGetResource is in parent's methods as Action
     const noGetListInParent = parentResource.metadata.methods.find(
       (m) =>
-        m.kind === "List" && m.operationPath.includes("noGetResources")
+        m.kind === "Action" && m.operationPath.includes("noGetResources") && m.operationPath.endsWith("/noGetResources")
     );
     ok(
       noGetListInParent,
-      "Parent resource should have the list operation for NoGetResource"
+      "Parent resource should have the list operation for NoGetResource as Action"
+    );
+
+    // Verify the create operation for NoGetResource is in parent's methods as Action
+    const noGetCreateInParent = parentResource.metadata.methods.find(
+      (m) =>
+        m.kind === "Action" && m.operationPath.includes("noGetResources")
+    );
+    ok(
+      noGetCreateInParent,
+      "Parent resource should have the create operation for NoGetResource as Action"
+    );
+
+    // Verify the delete operation for NoGetResource is in parent's methods as Action
+    const noGetDeleteInParent = parentResource.metadata.methods.find(
+      (m) =>
+        m.kind === "Action" && m.operationPath.includes("noGetResources")
+    );
+    ok(
+      noGetDeleteInParent,
+      "Parent resource should have the delete operation for NoGetResource as Action"
     );
 
     // Verify NoGetResource is NOT in resources
@@ -1494,16 +1532,15 @@ interface NoGetResources {
     );
     strictEqual(noGetResource, undefined);
 
-    // Verify only non-list NoGetResource operations are in non-resource methods
+    // Verify NO NoGetResource operations are in non-resource methods (all should be on parent)
     ok(armProviderSchema.nonResourceMethods);
     const noGetMethods = armProviderSchema.nonResourceMethods.filter((m) =>
       m.operationPath.includes("noGetResources")
     );
-    // Should have only createOrUpdate and delete operations (list is now on parent)
     strictEqual(
       noGetMethods.length,
-      2,
-      "Should have only createOrUpdate and delete in non-resource methods"
+      0,
+      "Should have no NoGetResource operations in non-resource methods"
     );
   });
 });

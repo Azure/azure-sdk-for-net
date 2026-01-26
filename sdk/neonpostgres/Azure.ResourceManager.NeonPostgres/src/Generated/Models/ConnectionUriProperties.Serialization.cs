@@ -9,14 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    public partial class ConnectionUriProperties : IUtf8JsonSerializable, IJsonModel<ConnectionUriProperties>
+    /// <summary> Connection uri parameters for the associated database. </summary>
+    public partial class ConnectionUriProperties : IJsonModel<ConnectionUriProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionUriProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectionUriProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +31,11 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionUriProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionUriProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectionUriProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ProjectId))
             {
                 writer.WritePropertyName("projectId"u8);
@@ -69,15 +71,15 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("connectionStringUri"u8);
                 writer.WriteStringValue(ConnectionStringUri);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +88,27 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
-        ConnectionUriProperties IJsonModel<ConnectionUriProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectionUriProperties IJsonModel<ConnectionUriProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectionUriProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionUriProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionUriProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectionUriProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectionUriProperties(document.RootElement, options);
         }
 
-        internal static ConnectionUriProperties DeserializeConnectionUriProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConnectionUriProperties DeserializeConnectionUriProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,55 +120,53 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             string endpointId = default;
             bool? isPooled = default;
             string connectionStringUri = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("projectId"u8))
+                if (prop.NameEquals("projectId"u8))
                 {
-                    projectId = property.Value.GetString();
+                    projectId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("branchId"u8))
+                if (prop.NameEquals("branchId"u8))
                 {
-                    branchId = property.Value.GetString();
+                    branchId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"u8))
+                if (prop.NameEquals("databaseName"u8))
                 {
-                    databaseName = property.Value.GetString();
+                    databaseName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roleName"u8))
+                if (prop.NameEquals("roleName"u8))
                 {
-                    roleName = property.Value.GetString();
+                    roleName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointId"u8))
+                if (prop.NameEquals("endpointId"u8))
                 {
-                    endpointId = property.Value.GetString();
+                    endpointId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPooled"u8))
+                if (prop.NameEquals("isPooled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isPooled = property.Value.GetBoolean();
+                    isPooled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("connectionStringUri"u8))
+                if (prop.NameEquals("connectionStringUri"u8))
                 {
-                    connectionStringUri = property.Value.GetString();
+                    connectionStringUri = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectionUriProperties(
                 projectId,
                 branchId,
@@ -170,13 +175,16 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 endpointId,
                 isPooled,
                 connectionStringUri,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ConnectionUriProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionUriProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectionUriProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionUriProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -186,15 +194,20 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
-        ConnectionUriProperties IPersistableModel<ConnectionUriProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionUriProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectionUriProperties IPersistableModel<ConnectionUriProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectionUriProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionUriProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectionUriProperties(document.RootElement, options);
                     }
                 default:
@@ -202,6 +215,26 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConnectionUriProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="connectionUriProperties"> The <see cref="ConnectionUriProperties"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConnectionUriProperties connectionUriProperties)
+        {
+            if (connectionUriProperties == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(connectionUriProperties, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConnectionUriProperties"/> from. </param>
+        internal static ConnectionUriProperties FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeConnectionUriProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

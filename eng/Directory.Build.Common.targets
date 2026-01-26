@@ -30,7 +30,7 @@
     <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(SupportsNetStandard20)' != 'true'">$(ApiCompatRunnableTargetFramework)</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' == 'false'">
+  <PropertyGroup Condition="'$(AotCompatOptOut)' == 'false' and '$(AotAnalyzersOptOut)' == 'false'">
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
@@ -395,7 +395,7 @@
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
 
       <!-- Format package info line for output -->
-      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(AotCompatOptOut)'</PackageInfoText>
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' </PackageInfoText>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">
