@@ -1,5 +1,5 @@
 {
-  "name": "Service.MultiService.ServiceA",
+  "name": "Service.MultiService.Combined",
   "apiVersions": [],
   "enums": [
     {
@@ -101,7 +101,7 @@
     {
       "$id": "9",
       "kind": "client",
-      "name": "Combined",
+      "name": "CombinedClient",
       "namespace": "Service.MultiService.Combined",
       "methods": [],
       "parameters": [
@@ -302,7 +302,8 @@
           ],
           "parent": {
             "$ref": "9"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "25",
@@ -444,9 +445,11 @@
           ],
           "parent": {
             "$ref": "9"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": true
     }
   ]
 }
