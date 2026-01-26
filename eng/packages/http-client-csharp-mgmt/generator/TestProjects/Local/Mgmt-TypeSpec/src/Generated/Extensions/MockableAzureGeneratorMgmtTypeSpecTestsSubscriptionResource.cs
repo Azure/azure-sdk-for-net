@@ -31,8 +31,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private Zoos _zoosRestClient;
         private ClientDiagnostics _sapVirtualInstancesClientDiagnostics;
         private SAPVirtualInstances _sapVirtualInstancesRestClient;
-        private ClientDiagnostics _experimentsClientDiagnostics;
-        private Experiments _experimentsRestClient;
 
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource for mocking. </summary>
         protected MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource()
@@ -65,10 +63,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics SAPVirtualInstancesClientDiagnostics => _sapVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private SAPVirtualInstances SAPVirtualInstancesRestClient => _sapVirtualInstancesRestClient ??= new SAPVirtualInstances(SAPVirtualInstancesClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
-
-        private ClientDiagnostics ExperimentsClientDiagnostics => _experimentsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Experiments ExperimentsRestClient => _experimentsRestClient ??= new Experiments(ExperimentsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -494,66 +488,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Get a list of Experiment resources in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/experiments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_GetExperiments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExperimentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExperimentResource> GetExperimentsAsync(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ExperimentData, ExperimentResource>(new ExperimentsGetExperimentsAsyncCollectionResultOfT(ExperimentsRestClient, Guid.Parse(Id.SubscriptionId), running, continuationToken, context), data => new ExperimentResource(Client, data));
-        }
-
-        /// <summary>
-        /// Get a list of Experiment resources in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/experiments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_GetExperiments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExperimentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExperimentResource> GetExperiments(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ExperimentData, ExperimentResource>(new ExperimentsGetExperimentsCollectionResultOfT(ExperimentsRestClient, Guid.Parse(Id.SubscriptionId), running, continuationToken, context), data => new ExperimentResource(Client, data));
         }
     }
 }

@@ -368,15 +368,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new TargetResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ExperimentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExperimentResource"/> object. </returns>
-        public virtual ExperimentResource GetExperimentResource(ResourceIdentifier id)
-        {
-            ExperimentResource.ValidateResourceId(id);
-            return new ExperimentResource(Client, id);
-        }
-
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">
