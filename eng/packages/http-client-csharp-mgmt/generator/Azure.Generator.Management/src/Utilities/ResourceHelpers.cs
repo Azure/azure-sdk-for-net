@@ -87,6 +87,37 @@ namespace Azure.Generator.Management.Utilities
             };
         }
 
+        /// <summary>
+        /// Extracts the resource name from an operation path.
+        /// For paths like "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/foos" it extracts "Foo".
+        /// </summary>
+        /// <param name="operationPath">The operation path.</param>
+        /// <returns>The singularized resource name, or null if it cannot be determined.</returns>
+        public static string? GetResourceNameFromPath(string operationPath)
+        {
+            if (string.IsNullOrEmpty(operationPath))
+                return null;
+
+            var segments = operationPath.Split('/', StringSplitOptions.RemoveEmptyEntries);
+            // Find the last constant segment (not a parameter like {subscriptionId})
+            string? lastConstant = null;
+            for (int i = segments.Length - 1; i >= 0; i--)
+            {
+                var segment = segments[i];
+                if (!segment.StartsWith("{") && !segment.EndsWith("}") && segment != "providers")
+                {
+                    lastConstant = segment;
+                    break;
+                }
+            }
+
+            if (lastConstant == null)
+                return null;
+
+            // Singularize and convert to PascalCase
+            return lastConstant.Singularize().ToIdentifierName();
+        }
+
         public static string GetDiagnosticScope(TypeProvider enclosingType, string methodName, bool isAsync)
         {
             var rawMethodName = isAsync && methodName.EndsWith("Async") ? methodName[..^5] : methodName; // trim "Async" if the method is async method

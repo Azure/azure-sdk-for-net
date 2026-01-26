@@ -61,7 +61,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoos");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoosBySubscription");
             scope.Start();
             try
             {

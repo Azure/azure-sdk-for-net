@@ -194,7 +194,7 @@ model GlobalSettings {
     );
   });
 
-  it("should not detect ARM resource operations as non-resource methods", async () => {
+  it("should detect subscription-level list as non-resource method for RG-scoped resource", async () => {
     const program = await typeSpecCompile(
       `
 /** A standard ARM resource */
@@ -233,13 +233,15 @@ interface Employees {
     const root = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
-    // Should not have non-resource methods since all methods are standard ARM operations
+    // listBySubscription should be a non-resource method for a top-level RG-scoped resource
+    // because its path (/subscriptions/{subscriptionId}/providers/.../employees) doesn't match
+    // the resource's RG-scoped path (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/.../employees/{employeeName})
     ok(armProviderSchemaResult, "Should have ARM provider schema");
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
-      0,
-      "Should have no non-resource methods for standard ARM operations"
+      1,
+      "Should have one non-resource method for subscription-level list of RG-scoped resource"
     );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match

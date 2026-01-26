@@ -1244,7 +1244,10 @@ interface ScheduledActionExtension {
       getPostgresVersionsEntry,
       "getPostgresVersions should be in non-resource methods"
     );
-    strictEqual(getPostgresVersionsEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(
+      getPostgresVersionsEntry.operationScope,
+      ResourceScope.ResourceGroup
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1499,7 +1502,9 @@ interface NoGetResources {
     // Verify the list operation for NoGetResource is in parent's methods as Action
     const noGetListInParent = parentResource.metadata.methods.find(
       (m) =>
-        m.kind === "Action" && m.operationPath.includes("noGetResources") && m.operationPath.endsWith("/noGetResources")
+        m.kind === "Action" &&
+        m.operationPath.includes("noGetResources") &&
+        m.operationPath.endsWith("/noGetResources")
     );
     ok(
       noGetListInParent,
@@ -1508,8 +1513,7 @@ interface NoGetResources {
 
     // Verify the create operation for NoGetResource is in parent's methods as Action
     const noGetCreateInParent = parentResource.metadata.methods.find(
-      (m) =>
-        m.kind === "Action" && m.operationPath.includes("noGetResources")
+      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
     );
     ok(
       noGetCreateInParent,
@@ -1518,8 +1522,7 @@ interface NoGetResources {
 
     // Verify the delete operation for NoGetResource is in parent's methods as Action
     const noGetDeleteInParent = parentResource.metadata.methods.find(
-      (m) =>
-        m.kind === "Action" && m.operationPath.includes("noGetResources")
+      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
     );
     ok(
       noGetDeleteInParent,
