@@ -26,7 +26,7 @@ namespace Azure.Generator.Providers
 
         protected override MethodProvider[] BuildMethods()
         {
-            return new[] { BuildAppendQueryDelimitedMethod(), BuildUpdateQueryMethod() };
+            return [BuildAppendQueryDelimitedMethod(), BuildUpdateQueryMethod()];
         }
 
         private MethodProvider BuildAppendQueryDelimitedMethod()
@@ -98,19 +98,15 @@ namespace Azure.Generator.Providers
             var body = new[]
             {
                 MethodBodyStatement.Empty,
-                // Get the current query string
                 Declare("currentQuery", typeof(string), uriBuilder.Property("Query"), out var currentQueryVar),
 
-                // Create search pattern "name="
                 Declare("searchPattern", typeof(string), Static(typeof(string)).Invoke("Concat", nameParameter, Literal("=")), out var searchPattern),
 
-                // Check if parameter exists in query string (at start or after &)
                 Declare("paramStartIndex", typeof(int), Literal(-1), out var paramStartIndex),
 
-                // Check if parameter is at the beginning of the query
-                new IfStatement(currentQueryVar.Invoke("StartsWith", searchPattern))
+                new IfStatement(currentQueryVar.Invoke("StartsWith", Static(typeof(string)).Invoke("Concat", Literal("?"), searchPattern)))
                 {
-                    paramStartIndex.Assign(Int(0)).Terminate()
+                    paramStartIndex.Assign(Int(1)).Terminate()
                 },
 
                 // Check if parameter is in the middle/end (preceded by &)
@@ -126,24 +122,20 @@ namespace Azure.Generator.Providers
 
                 new IfElseStatement(
                     paramStartIndex.GreaterThanOrEqual(Int(0)),
-                    // Parameter exists - replace its value
                     new MethodBodyStatement[]
                     {
                         Declare("valueStartIndex", typeof(int), new BinaryOperatorExpression("+", paramStartIndex, searchPattern.Property("Length")), out var valueStartIndex),
                         Declare("valueEndIndex", typeof(int), currentQueryVar.Invoke("IndexOf", [Literal('&'), valueStartIndex]), out var valueEndIndex),
 
-                        // If no & found after parameter, it goes to end of query
                         new IfStatement(valueEndIndex.Equal(Int(-1)))
                         {
                             valueEndIndex.Assign(currentQueryVar.Property("Length")).Terminate()
                         },
 
-                        // Build new query: before + newValue + after
                         Declare("beforeParam", typeof(string), currentQueryVar.Invoke("Substring", [Int(0), valueStartIndex]), out var beforeParam),
                         Declare("afterParam", typeof(string), currentQueryVar.Invoke("Substring", valueEndIndex), out var afterParam),
                         Declare("newQuery", typeof(string), Static(typeof(string)).Invoke("Concat", [beforeParam, valueParameter, afterParam]), out var newQuery),
 
-                        // Set the new query
                         uriBuilder.Property("Query").Assign(newQuery).Terminate()
                     },
                     // Parameter doesn't exist - append it using existing method
