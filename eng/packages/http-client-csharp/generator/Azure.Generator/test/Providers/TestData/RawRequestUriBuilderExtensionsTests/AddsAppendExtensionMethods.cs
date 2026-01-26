@@ -25,9 +25,9 @@ namespace Samples
             string currentQuery = builder.Query;
             string searchPattern = string.Concat(name, "=");
             int paramStartIndex = -1;
-            if (currentQuery.StartsWith(searchPattern))
+            if (currentQuery.StartsWith(string.Concat("?", searchPattern)))
             {
-                paramStartIndex = 0;
+                paramStartIndex = 1;
             }
             if ((paramStartIndex == -1))
             {
