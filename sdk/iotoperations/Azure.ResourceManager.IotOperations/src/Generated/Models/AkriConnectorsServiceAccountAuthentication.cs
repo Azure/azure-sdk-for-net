@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class AkriConnectorsServiceAccountAuthentication : AkriConnectorsMqttAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsServiceAccountAuthentication"/>. </summary>
-        /// <param name="serviceAccountTokenSettings"> The service account token for the MQTT connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceAccountTokenSettings"/> is null. </exception>
-        public AkriConnectorsServiceAccountAuthentication(AkriConnectorsServiceAccountTokenSettings serviceAccountTokenSettings) : base(AkriConnectorsMqttAuthenticationMethod.ServiceAccountToken)
+        /// <param name="serviceAccountTokenAudience"> The audience for the service account token. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceAccountTokenAudience"/> is null. </exception>
+        public AkriConnectorsServiceAccountAuthentication(string serviceAccountTokenAudience) : base(AkriConnectorsMqttAuthenticationMethod.ServiceAccountToken)
         {
-            Argument.AssertNotNull(serviceAccountTokenSettings, nameof(serviceAccountTokenSettings));
+            Argument.AssertNotNull(serviceAccountTokenAudience, nameof(serviceAccountTokenAudience));
 
-            ServiceAccountTokenSettings = serviceAccountTokenSettings;
+            ServiceAccountTokenSettings = new AkriConnectorsServiceAccountTokenSettings(serviceAccountTokenAudience);
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsServiceAccountAuthentication"/>. </summary>

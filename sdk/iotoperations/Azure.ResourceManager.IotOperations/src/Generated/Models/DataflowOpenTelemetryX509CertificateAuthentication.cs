@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class DataflowOpenTelemetryX509CertificateAuthentication : DataflowOpenTelemetryAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>. </summary>
-        /// <param name="x509CertificateSettings"> X.509 certificate authentication settings. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="x509CertificateSettings"/> is null. </exception>
-        public DataflowOpenTelemetryX509CertificateAuthentication(DataflowEndpointAuthenticationX509 x509CertificateSettings) : base(DataflowOpenTelemetryAuthenticationMethod.X509Certificate)
+        /// <param name="x509CertificateSecretRef"> Secret reference of the X.509 certificate. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="x509CertificateSecretRef"/> is null. </exception>
+        public DataflowOpenTelemetryX509CertificateAuthentication(string x509CertificateSecretRef) : base(DataflowOpenTelemetryAuthenticationMethod.X509Certificate)
         {
-            Argument.AssertNotNull(x509CertificateSettings, nameof(x509CertificateSettings));
+            Argument.AssertNotNull(x509CertificateSecretRef, nameof(x509CertificateSecretRef));
 
-            X509CertificateSettings = x509CertificateSettings;
+            X509CertificateSettings = new DataflowEndpointAuthenticationX509(x509CertificateSecretRef);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>. </summary>

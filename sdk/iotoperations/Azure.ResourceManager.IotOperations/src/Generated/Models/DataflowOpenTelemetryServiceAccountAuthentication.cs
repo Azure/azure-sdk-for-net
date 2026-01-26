@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class DataflowOpenTelemetryServiceAccountAuthentication : DataflowOpenTelemetryAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/>. </summary>
-        /// <param name="serviceAccountTokenSettings"> Kubernetes service account token authentication. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceAccountTokenSettings"/> is null. </exception>
-        public DataflowOpenTelemetryServiceAccountAuthentication(DataflowEndpointAuthenticationServiceAccountToken serviceAccountTokenSettings) : base(DataflowOpenTelemetryAuthenticationMethod.ServiceAccountToken)
+        /// <param name="serviceAccountTokenAudience"> Audience of the service account. Optional, defaults to the broker internal service account audience. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceAccountTokenAudience"/> is null. </exception>
+        public DataflowOpenTelemetryServiceAccountAuthentication(string serviceAccountTokenAudience) : base(DataflowOpenTelemetryAuthenticationMethod.ServiceAccountToken)
         {
-            Argument.AssertNotNull(serviceAccountTokenSettings, nameof(serviceAccountTokenSettings));
+            Argument.AssertNotNull(serviceAccountTokenAudience, nameof(serviceAccountTokenAudience));
 
-            ServiceAccountTokenSettings = serviceAccountTokenSettings;
+            ServiceAccountTokenSettings = new DataflowEndpointAuthenticationServiceAccountToken(serviceAccountTokenAudience);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/>. </summary>

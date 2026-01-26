@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
+    /// <summary></summary>
     public partial class ApplicationGatewayForContainersSecurityPolicyResource : IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>
     {
-        private static ApplicationGatewayForContainersSecurityPolicyData s_dataDeserializationInstance;
-        private static ApplicationGatewayForContainersSecurityPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApplicationGatewayForContainersSecurityPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApplicationGatewayForContainersSecurityPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApplicationGatewayForContainersSecurityPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>)Data).Write(writer, options);
 
-        ApplicationGatewayForContainersSecurityPolicyData IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationGatewayForContainersSecurityPolicyData IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationGatewayForContainersSecurityPolicyData>(Data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApplicationGatewayForContainersSecurityPolicyData IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
-        string IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

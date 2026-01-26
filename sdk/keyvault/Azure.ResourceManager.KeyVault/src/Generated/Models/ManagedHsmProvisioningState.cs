@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.KeyVault.Models
     public readonly partial struct ManagedHsmProvisioningState : IEquatable<ManagedHsmProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The managed HSM Pool has been full provisioned. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The managed HSM Pool is currently being provisioned. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Provisioning of the managed HSM Pool has failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The managed HSM Pool is currently being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The managed HSM Pool is currently being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The managed HSM pool is ready for normal use. </summary>
+        private const string ActivatedValue = "Activated";
+        /// <summary> The managed HSM pool is waiting for a security domain restore action. </summary>
+        private const string SecurityDomainRestoreValue = "SecurityDomainRestore";
+        /// <summary> The managed HSM pool is being restored from full HSM backup. </summary>
+        private const string RestoringValue = "Restoring";
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedHsmProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string ProvisioningValue = "Provisioning";
-        private const string FailedValue = "Failed";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string ActivatedValue = "Activated";
-        private const string SecurityDomainRestoreValue = "SecurityDomainRestore";
-        private const string RestoringValue = "Restoring";
+            _value = value;
+        }
 
         /// <summary> The managed HSM Pool has been full provisioned. </summary>
         public static ManagedHsmProvisioningState Succeeded { get; } = new ManagedHsmProvisioningState(SucceededValue);
+
         /// <summary> The managed HSM Pool is currently being provisioned. </summary>
         public static ManagedHsmProvisioningState Provisioning { get; } = new ManagedHsmProvisioningState(ProvisioningValue);
+
         /// <summary> Provisioning of the managed HSM Pool has failed. </summary>
         public static ManagedHsmProvisioningState Failed { get; } = new ManagedHsmProvisioningState(FailedValue);
+
         /// <summary> The managed HSM Pool is currently being updated. </summary>
         public static ManagedHsmProvisioningState Updating { get; } = new ManagedHsmProvisioningState(UpdatingValue);
+
         /// <summary> The managed HSM Pool is currently being deleted. </summary>
         public static ManagedHsmProvisioningState Deleting { get; } = new ManagedHsmProvisioningState(DeletingValue);
+
         /// <summary> The managed HSM pool is ready for normal use. </summary>
         public static ManagedHsmProvisioningState Activated { get; } = new ManagedHsmProvisioningState(ActivatedValue);
+
         /// <summary> The managed HSM pool is waiting for a security domain restore action. </summary>
         public static ManagedHsmProvisioningState SecurityDomainRestore { get; } = new ManagedHsmProvisioningState(SecurityDomainRestoreValue);
+
         /// <summary> The managed HSM pool is being restored from full HSM backup. </summary>
         public static ManagedHsmProvisioningState Restoring { get; } = new ManagedHsmProvisioningState(RestoringValue);
+
         /// <summary> Determines if two <see cref="ManagedHsmProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedHsmProvisioningState left, ManagedHsmProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedHsmProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedHsmProvisioningState left, ManagedHsmProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHsmProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedHsmProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedHsmProvisioningState(string value) => new ManagedHsmProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedHsmProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedHsmProvisioningState?(string value) => value == null ? null : new ManagedHsmProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedHsmProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedHsmProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

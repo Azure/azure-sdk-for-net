@@ -1,14 +1,18 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (2026-01-23)
 
 ### Features Added
 
-### Breaking Changes
+- Added `BicepMetadata` class that provides a clean, type-safe way to set Bicep metadata on resources:
+    - Description - Adds `@description('...')` decorator
+    - BatchSize - Adds `@batchSize(n)` decorator for loop deployments
+    - OnlyIfNotExists - Adds `@onlyIfNotExists()` decorator
+- Added `BicepMetadata` property on `ProvisionableResource`
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed `PropertyName` in `Self` reference for `IBicepValue` instances of collection items to include its index (for list) or its key (for dictionary) to avoid colliding with its enclosing collection's property name. (#54802)
 
 ## 1.4.0 (2025-12-10)
 

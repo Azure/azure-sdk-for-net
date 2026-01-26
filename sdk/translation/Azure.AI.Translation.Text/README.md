@@ -93,12 +93,12 @@ A `TextTranslationClient` is the primary interface for developers using the Text
 
 ### Input
 
-A **text element** (`string`), is a single unit of input to be processed by the translation models in the Translator service. Operations on `TextTranslationClient` may take a single text element or a collection of text elements.
+A **TranslateInputItem** is a single unit of input to be processed by the translation models in the Translator service. Each `TranslateInputItem` defines both the input string to translate and the output specifications for the translation. Operations on `TextTranslationClient` may take a single `TranslateInputItem` or a collection of `TranslateInputItem` objects.
 For text element length limits, maximum requests size, and supported text encoding see [here][translator_limits].
 
 ### Return value
 
-Return values, such as `Response<IReadOnlyList<TranslatedTextItem>>`, is the result of a Text Translation operation, It contains array with one result for each string in the input array.  An operation's return value also may optionally include information about the input text element (for example detected language).
+Return values, such as `Response<IReadOnlyList<TranslatedTextItem>>`, is the result of a Text Translation operation. It contains an array with one `TranslatedTextItem` for each input `TranslateInputItem`. An operation's return value also may optionally include information about the input text element (for example detected language).
 
 ### Thread safety
 

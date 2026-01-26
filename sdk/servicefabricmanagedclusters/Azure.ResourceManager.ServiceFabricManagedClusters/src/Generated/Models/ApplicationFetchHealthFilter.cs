@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ApplicationFetchHealthFilter : IEquatable<ApplicationFetchHealthFilter>
     {
         private readonly string _value;
+        /// <summary> Default value. Matches any health state. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Filter that doesn't match any health state. Used to return no results on a given collection of health entities. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Filter for health state Ok. </summary>
+        private const string OkValue = "Ok";
+        /// <summary> Filter for health state Warning. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Filter for health state Error. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> Filter that matches input with any health state. </summary>
+        private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationFetchHealthFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationFetchHealthFilter(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string NoneValue = "None";
-        private const string OkValue = "Ok";
-        private const string WarningValue = "Warning";
-        private const string ErrorValue = "Error";
-        private const string AllValue = "All";
+            _value = value;
+        }
 
         /// <summary> Default value. Matches any health state. </summary>
         public static ApplicationFetchHealthFilter Default { get; } = new ApplicationFetchHealthFilter(DefaultValue);
+
         /// <summary> Filter that doesn't match any health state. Used to return no results on a given collection of health entities. </summary>
         public static ApplicationFetchHealthFilter None { get; } = new ApplicationFetchHealthFilter(NoneValue);
+
         /// <summary> Filter for health state Ok. </summary>
         public static ApplicationFetchHealthFilter Ok { get; } = new ApplicationFetchHealthFilter(OkValue);
+
         /// <summary> Filter for health state Warning. </summary>
         public static ApplicationFetchHealthFilter Warning { get; } = new ApplicationFetchHealthFilter(WarningValue);
+
         /// <summary> Filter for health state Error. </summary>
         public static ApplicationFetchHealthFilter Error { get; } = new ApplicationFetchHealthFilter(ErrorValue);
+
         /// <summary> Filter that matches input with any health state. </summary>
         public static ApplicationFetchHealthFilter All { get; } = new ApplicationFetchHealthFilter(AllValue);
+
         /// <summary> Determines if two <see cref="ApplicationFetchHealthFilter"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationFetchHealthFilter left, ApplicationFetchHealthFilter right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationFetchHealthFilter"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationFetchHealthFilter left, ApplicationFetchHealthFilter right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationFetchHealthFilter"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationFetchHealthFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationFetchHealthFilter(string value) => new ApplicationFetchHealthFilter(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationFetchHealthFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationFetchHealthFilter?(string value) => value == null ? null : new ApplicationFetchHealthFilter(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationFetchHealthFilter other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationFetchHealthFilter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

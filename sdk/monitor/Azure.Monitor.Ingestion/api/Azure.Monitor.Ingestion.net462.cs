@@ -14,9 +14,7 @@ namespace Azure.Monitor.Ingestion
         public static Azure.Monitor.Ingestion.LogsIngestionAudience AzureGovernment { get { throw null; } }
         public static Azure.Monitor.Ingestion.LogsIngestionAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.Monitor.Ingestion.LogsIngestionAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Monitor.Ingestion.LogsIngestionAudience left, Azure.Monitor.Ingestion.LogsIngestionAudience right) { throw null; }
         public static implicit operator Azure.Monitor.Ingestion.LogsIngestionAudience (string value) { throw null; }

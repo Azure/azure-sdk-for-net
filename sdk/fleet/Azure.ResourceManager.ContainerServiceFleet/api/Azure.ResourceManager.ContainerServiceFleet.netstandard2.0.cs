@@ -390,30 +390,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     public static partial class ArmContainerServiceFleetModelFactory
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ContainerServiceFleet.AutoUpgradeProfileData AutoUpgradeProfileData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? eTag, Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileProvisioningState? provisioningState, Azure.Core.ResourceIdentifier updateStrategyId, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpgradeChannel? channel, Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeNodeImageSelectionType? selectionType, bool? disabled, Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileStatus autoUpgradeProfileStatus) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.AutoUpgradeProfileData AutoUpgradeProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileProvisioningState?), Azure.Core.ResourceIdentifier updateStrategyId = null, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpgradeChannel? channel = default(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpgradeChannel?), Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeNodeImageSelectionType? selectionType = default(Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeNodeImageSelectionType?), bool? disabled = default(bool?), Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileStatus autoUpgradeProfileStatus = null, string targetKubernetesVersion = null, bool? longTermSupport = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileGenerateResult AutoUpgradeProfileGenerateResult(string id = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileStatus AutoUpgradeProfileStatus(System.DateTimeOffset? lastTriggeredOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeLastTriggerStatus? lastTriggerStatus = default(Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeLastTriggerStatus?), Azure.ResponseError lastTriggerError = null, System.Collections.Generic.IEnumerable<string> lastTriggerUpgradeVersions = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetData ContainerServiceFleetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? eTag, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.ContainerServiceFleet.Models.FleetProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetData ContainerServiceFleetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ContainerServiceFleet.Models.FleetProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceFleet.Models.FleetProvisioningState?), Azure.ResourceManager.ContainerServiceFleet.Models.FleetHubProfile hubProfile = null, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetStatus status = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetGateData ContainerServiceFleetGateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateProvisioningState?), string displayName = null, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateType? gateType = default(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateType?), Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateTarget target = null, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateState? state = default(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetMemberData ContainerServiceFleetMemberData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? eTag, Azure.Core.ResourceIdentifier clusterResourceId, string group, Azure.ResourceManager.ContainerServiceFleet.Models.FleetMemberProvisioningState? provisioningState) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetMemberData ContainerServiceFleetMemberData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? eTag, Azure.Core.ResourceIdentifier clusterResourceId, string group, Azure.ResourceManager.ContainerServiceFleet.Models.FleetMemberProvisioningState? provisioningState, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetMemberStatus status) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetMemberData ContainerServiceFleetMemberData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.Core.ResourceIdentifier clusterResourceId = null, string group = null, Azure.ResourceManager.ContainerServiceFleet.Models.FleetMemberProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceFleet.Models.FleetMemberProvisioningState?), System.Collections.Generic.IDictionary<string, string> labels = null, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetMemberStatus status = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetMemberStatus ContainerServiceFleetMemberStatus(string lastOperationId = null, Azure.ResponseError lastOperationError = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetStatus ContainerServiceFleetStatus(string lastOperationId = null, Azure.ResponseError lastOperationError = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateGroupStatus ContainerServiceFleetUpdateGroupStatus(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStatus status, string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.MemberUpdateStatus> members) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateGroupStatus ContainerServiceFleetUpdateGroupStatus(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStatus status = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.MemberUpdateStatus> members = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.UpdateRunGateStatus> beforeGates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.UpdateRunGateStatus> afterGates = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetUpdateRunData ContainerServiceFleetUpdateRunData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? eTag, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunProvisioningState? provisioningState, Azure.Core.ResourceIdentifier updateStrategyId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStage> strategyStages, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpdate managedClusterUpdate, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunStatus status) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetUpdateRunData ContainerServiceFleetUpdateRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunProvisioningState?), Azure.Core.ResourceIdentifier updateStrategyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStage> strategyStages = null, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpdate managedClusterUpdate = null, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunStatus status = null, Azure.Core.ResourceIdentifier autoUpgradeProfileId = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunStatus ContainerServiceFleetUpdateRunStatus(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStatus status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStageStatus> stages = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageVersion> selectedNodeImageVersions = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStageStatus ContainerServiceFleetUpdateStageStatus(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStatus status, string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateGroupStatus> groups, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetWaitStatus afterStageWaitStatus) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStageStatus ContainerServiceFleetUpdateStageStatus(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStatus status = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateGroupStatus> groups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.UpdateRunGateStatus> beforeGates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.UpdateRunGateStatus> afterGates = null, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetWaitStatus afterStageWaitStatus = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStatus ContainerServiceFleetUpdateStatus(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateState? state = default(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateState?), Azure.ResponseError error = null) { throw null; }
@@ -436,9 +429,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeLastTriggerStatus Failed { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeLastTriggerStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeLastTriggerStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeLastTriggerStatus left, Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeLastTriggerStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeLastTriggerStatus (string value) { throw null; }
@@ -454,9 +445,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeNodeImageSelectionType Consistent { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeNodeImageSelectionType Latest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeNodeImageSelectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeNodeImageSelectionType left, Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeNodeImageSelectionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeNodeImageSelectionType (string value) { throw null; }
@@ -484,9 +473,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileProvisioningState left, Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeProfileProvisioningState (string value) { throw null; }
@@ -565,9 +552,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateProvisioningState left, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateProvisioningState (string value) { throw null; }
@@ -584,9 +569,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateState Pending { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateState Skipped { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateState left, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateState (string value) { throw null; }
@@ -614,9 +597,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateTiming After { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateTiming Before { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateTiming other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateTiming left, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateTiming right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateTiming (string value) { throw null; }
@@ -631,9 +612,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public ContainerServiceFleetGateType(string value) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateType Approval { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateType left, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetGateType (string value) { throw null; }
@@ -644,7 +623,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     {
         public ContainerServiceFleetManagedClusterUpdate(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpgradeSpec upgrade) { }
         public Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageSelection NodeImageSelection { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageSelectionType? SelectionType { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpgradeSpec Upgrade { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -676,9 +654,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpgradeType Full { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpgradeType NodeImageOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpgradeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpgradeType left, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpgradeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpgradeType (string value) { throw null; }
@@ -767,9 +743,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetTargetType Member { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetTargetType Stage { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetTargetType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetTargetType left, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetTargetType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetTargetType (string value) { throw null; }
@@ -814,9 +788,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunProvisioningState left, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateRunProvisioningState (string value) { throw null; }
@@ -882,9 +854,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateState Stopped { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateState Stopping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateState left, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateState (string value) { throw null; }
@@ -916,9 +886,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpgradeChannel Stable { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpgradeChannel TargetKubernetesVersion { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpgradeChannel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpgradeChannel left, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpgradeChannel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpgradeChannel (string value) { throw null; }
@@ -989,9 +957,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.FleetMemberProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.FleetMemberProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.FleetMemberProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.FleetMemberProvisioningState left, Azure.ResourceManager.ContainerServiceFleet.Models.FleetMemberProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.FleetMemberProvisioningState (string value) { throw null; }
@@ -1011,9 +977,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.FleetProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.FleetProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.FleetProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.FleetProvisioningState left, Azure.ResourceManager.ContainerServiceFleet.Models.FleetProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.FleetProvisioningState (string value) { throw null; }
@@ -1030,9 +994,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.FleetUpdateStrategyProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.FleetUpdateStrategyProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.FleetUpdateStrategyProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.FleetUpdateStrategyProvisioningState left, Azure.ResourceManager.ContainerServiceFleet.Models.FleetUpdateStrategyProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.FleetUpdateStrategyProvisioningState (string value) { throw null; }
@@ -1076,9 +1038,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageSelectionType Custom { get { throw null; } }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageSelectionType Latest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageSelectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageSelectionType left, Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageSelectionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageSelectionType (string value) { throw null; }

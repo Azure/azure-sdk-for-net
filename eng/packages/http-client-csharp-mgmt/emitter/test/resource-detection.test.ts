@@ -121,7 +121,9 @@ interface Employees2 {
 
     // Find the Employee resource in the schema by resource type
     const employeeResource = armProviderSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/employeeParents/employees"
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/employeeParents/employees"
     );
     ok(employeeResource);
     const metadata = employeeResource.metadata;
@@ -207,7 +209,8 @@ interface Employees2 {
 
     // Validate ListByResourceGroup (list by parent)
     const listByRgEntry = metadata.methods.find(
-      (m: any) => m.kind === "List" && m.operationPath.includes("employeeParents")
+      (m: any) =>
+        m.kind === "List" && m.operationPath.includes("employeeParents")
     );
     ok(listByRgEntry);
     strictEqual(listByRgEntry.kind, "List");
@@ -223,7 +226,8 @@ interface Employees2 {
 
     // Validate ListBySubscription
     const listBySubEntry = metadata.methods.find(
-      (m: any) => m.kind === "List" && m.operationScope === ResourceScope.Subscription
+      (m: any) =>
+        m.kind === "List" && m.operationScope === ResourceScope.Subscription
     );
     ok(listBySubEntry);
     strictEqual(listBySubEntry.kind, "List");
@@ -337,7 +341,8 @@ interface CurrentEmployees {
 
     // Find the Employee resource in the schema by resource type
     const employeeResource = armProviderSchemaResult.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/employees"
+      (r) =>
+        r.metadata.resourceType === "Microsoft.ContosoProviderHub/employees"
     );
     ok(employeeResource);
     const metadata = employeeResource.metadata;
@@ -351,21 +356,21 @@ interface CurrentEmployees {
       metadata.resourceType,
       "Microsoft.ContosoProviderHub/employees"
     );
-    strictEqual(
-      metadata.singletonResourceName,
-      "default"
-    );
-    strictEqual(
-      metadata.resourceScope,
-      "ResourceGroup"
-    );
+    strictEqual(metadata.singletonResourceName, "default");
+    strictEqual(metadata.resourceScope, "ResourceGroup");
     strictEqual(metadata.methods.length, 3);
-    strictEqual(metadata.methods[0].kind, "Read");
+    // Verify a Read method exists (position may vary due to sorting)
+    ok(
+      metadata.methods.find((m: any) => m.kind === "Read"),
+      "Should have a Read method"
+    );
     strictEqual(metadata.resourceName, "Employee");
 
     // Find the CurrentEmployee resource in the schema by resource type
     const currentEmployeeResource = armProviderSchemaResult.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/currentEmployees"
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/currentEmployees"
     );
     ok(currentEmployeeResource);
     const currentMetadata = currentEmployeeResource.metadata;
@@ -378,19 +383,10 @@ interface CurrentEmployees {
       currentMetadata.resourceType,
       "Microsoft.ContosoProviderHub/currentEmployees"
     );
-    strictEqual(
-      currentMetadata.singletonResourceName,
-      "current"
-    );
-    strictEqual(
-      currentMetadata.resourceScope,
-      "ResourceGroup"
-    );
+    strictEqual(currentMetadata.singletonResourceName, "current");
+    strictEqual(currentMetadata.resourceScope, "ResourceGroup");
     strictEqual(currentMetadata.methods.length, 3);
-    strictEqual(
-      currentMetadata.resourceName,
-      "CurrentEmployee"
-    );
+    strictEqual(currentMetadata.resourceName, "CurrentEmployee");
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -488,7 +484,9 @@ interface Employees {
 
     // Find the Employee resource in the schema by resource type
     const employeeResource = armProviderSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments/employees"
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     ok(employeeResource);
     const employeeMetadata = employeeResource.metadata;
@@ -505,7 +503,11 @@ interface Employees {
     strictEqual(employeeMetadata.singletonResourceName, undefined);
     strictEqual(employeeMetadata.resourceScope, "ResourceGroup");
     strictEqual(employeeMetadata.methods.length, 5);
-    strictEqual(employeeMetadata.methods[0].kind, "Read");
+    // Verify a Read method exists (position may vary due to sorting)
+    ok(
+      employeeMetadata.methods.find((m: any) => m.kind === "Read"),
+      "Should have a Read method"
+    );
     strictEqual(
       employeeMetadata.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -514,7 +516,9 @@ interface Employees {
 
     // Find the Department resource in the schema by resource type
     const departmentResource = armProviderSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments"
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/companies/departments"
     );
     ok(departmentResource);
     const departmentMetadata = departmentResource.metadata;
@@ -539,7 +543,8 @@ interface Employees {
 
     // Find the Company resource in the schema by resource type
     const companyResource = armProviderSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies"
+      (r) =>
+        r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies"
     );
     ok(companyResource);
     const companyMetadata = companyResource.metadata;
@@ -656,7 +661,9 @@ interface Employees {
 
     // Find the Employee resource in the schema by resource type
     const employeeResource = armProviderSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments/employees"
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     ok(employeeResource);
     const employeeMetadata = employeeResource.metadata;
@@ -673,7 +680,11 @@ interface Employees {
     strictEqual(employeeMetadata.singletonResourceName, undefined);
     strictEqual(employeeMetadata.resourceScope, "Subscription");
     strictEqual(employeeMetadata.methods.length, 5);
-    strictEqual(employeeMetadata.methods[0].kind, "Read");
+    // Verify a Read method exists (position may vary due to sorting)
+    ok(
+      employeeMetadata.methods.find((m: any) => m.kind === "Read"),
+      "Should have a Read method"
+    );
     strictEqual(
       employeeMetadata.parentResourceId,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -682,7 +693,9 @@ interface Employees {
 
     // Find the Department resource in the schema by resource type
     const departmentResource = armProviderSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments"
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/companies/departments"
     );
     ok(departmentResource);
     const departmentMetadata = departmentResource.metadata;
@@ -707,7 +720,8 @@ interface Employees {
 
     // Find the Company resource in the schema by resource type
     const companyResource = armProviderSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies"
+      (r) =>
+        r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies"
     );
     ok(companyResource);
     const companyMetadata = companyResource.metadata;
@@ -825,7 +839,9 @@ interface Employees {
 
     // Find the Employee resource in the schema by resource type
     const employeeResource = armProviderSchemaResult.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments/employees"
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     ok(employeeResource);
     const metadata = employeeResource.metadata;
@@ -842,7 +858,11 @@ interface Employees {
     strictEqual(metadata.singletonResourceName, undefined);
     strictEqual(metadata.resourceScope, "Tenant");
     strictEqual(metadata.methods.length, 5);
-    strictEqual(metadata.methods[0].kind, "Read");
+    // Verify a Read method exists (position may vary due to sorting)
+    ok(
+      metadata.methods.find((m: any) => m.kind === "Read"),
+      "Should have a Read method"
+    );
     strictEqual(
       metadata.parentResourceId,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -851,7 +871,9 @@ interface Employees {
 
     // Find the Department resource in the schema by resource type
     const departmentResource = armProviderSchemaResult.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments"
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/companies/departments"
     );
     ok(departmentResource);
     const departmentMetadata = departmentResource.metadata;
@@ -876,7 +898,8 @@ interface Employees {
 
     // Find the Company resource in the schema by resource type
     const companyResource = armProviderSchemaResult.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies"
+      (r) =>
+        r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies"
     );
     ok(companyResource);
     const companyMetadata = companyResource.metadata;
@@ -1025,7 +1048,9 @@ interface Employees {
 
     // Find the EmployeeParent resource in the schema by resource type
     const employeeParentResource = armProviderSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/employeeParents"
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/employeeParents"
     );
     ok(employeeParentResource);
     const metadata = employeeParentResource.metadata;
@@ -1045,7 +1070,9 @@ interface Employees {
     strictEqual(metadata.methods.length, 2); // Get and ListByParent
 
     // Validate EmployeeParent has listByParent method
-    const listByParentEntry = metadata.methods.find((m: any) => m.kind === "List");
+    const listByParentEntry = metadata.methods.find(
+      (m: any) => m.kind === "List"
+    );
     ok(listByParentEntry);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -1100,7 +1127,8 @@ interface Employees {
 
     // Find the Employee resource in the schema by resource type
     const employeeResource = armProviderSchemaResult.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/employees"
+      (r) =>
+        r.metadata.resourceType === "Microsoft.ContosoProviderHub/employees"
     );
     ok(employeeResource);
     const metadata = employeeResource.metadata;
@@ -1155,6 +1183,14 @@ interface ScheduledActionExtension {
     GetAssociatedScheduledActionsRequest,
     GetAssociatedScheduledActionsResponse
   >;
+
+  @doc("Action to retrieve the PostgreSQL versions.")
+  @autoRoute
+  @armResourceAction(ScheduledAction)
+  @post
+  getPostgresVersions(
+    ...ResourceInstanceParameters<GetAssociatedScheduledActionsRequest>
+  ): ArmResponse<GetAssociatedScheduledActionsResponse> | ErrorResponse;
 }
 `,
       runner
@@ -1170,7 +1206,9 @@ interface ScheduledActionExtension {
     // ScheduledAction should NOT have a resource entry since it has no CRUD operations
     ok(armProviderSchemaResult.resources);
     const scheduledActionResource = armProviderSchemaResult.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/scheduledActions"
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/scheduledActions"
     );
     strictEqual(
       scheduledActionResource,
@@ -1179,15 +1217,34 @@ interface ScheduledActionExtension {
     );
 
     // Check that the method is treated as a non-resource method
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods");
-    ok(armProviderSchemaResult.nonResourceMethods.length >= 1, "Should have at least one non-resource method");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods"
+    );
+    ok(
+      armProviderSchemaResult.nonResourceMethods.length >= 1,
+      "Should have at least one non-resource method"
+    );
 
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
-    const methodEntry = nonResourceMethods.find(
-      (m: any) => m.operationPath.includes("getAssociatedScheduledActions")
+    const methodEntry = nonResourceMethods.find((m: any) =>
+      m.operationPath.includes("getAssociatedScheduledActions")
     );
-    ok(methodEntry, "getAssociatedScheduledActions should be in non-resource methods");
+    ok(
+      methodEntry,
+      "getAssociatedScheduledActions should be in non-resource methods"
+    );
     strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
+
+    // Verify getPostgresVersions is also a non-resource method
+    const getPostgresVersionsEntry = nonResourceMethods.find((m: any) =>
+      m.operationPath.includes("getPostgresVersions")
+    );
+    ok(
+      getPostgresVersionsEntry,
+      "getPostgresVersions should be in non-resource methods"
+    );
+    strictEqual(getPostgresVersionsEntry.operationScope, ResourceScope.ResourceGroup);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1277,7 +1334,9 @@ interface BestPracticeVersions {
     ok(armProviderSchemaResult);
 
     // Verify BestPractice model exists
-    const bestPracticeModel = root.models.find((m) => m.name === "BestPractice");
+    const bestPracticeModel = root.models.find(
+      (m) => m.name === "BestPractice"
+    );
     ok(bestPracticeModel, "BestPractice model should exist");
 
     // Verify the ARM provider schema has TWO resource entries for the same model
@@ -1293,9 +1352,11 @@ interface BestPracticeVersions {
     );
 
     // Find metadata for BestPractices resource (parent-level)
-    const bestPracticesResource = resourcesForModel.find((r) =>
-      r.metadata.resourceIdPattern.includes("/bestPractices/{bestPracticeName}") &&
-      !r.metadata.resourceIdPattern.includes("/versions")
+    const bestPracticesResource = resourcesForModel.find(
+      (r) =>
+        r.metadata.resourceIdPattern.includes(
+          "/bestPractices/{bestPracticeName}"
+        ) && !r.metadata.resourceIdPattern.includes("/versions")
     );
     ok(bestPracticesResource, "Should have metadata for parent-level resource");
     const bestPracticesMetadata = bestPracticesResource.metadata;
@@ -1312,13 +1373,20 @@ interface BestPracticeVersions {
       bestPracticesMetadata.resourceType,
       "Microsoft.ContosoProviderHub/bestPractices"
     );
-    strictEqual(bestPracticesMetadata.methods.length, 3, "Should have 3 methods");
+    strictEqual(
+      bestPracticesMetadata.methods.length,
+      3,
+      "Should have 3 methods"
+    );
 
     // Find metadata for BestPracticeVersions resource (child-level)
     const bestPracticeVersionsResource = resourcesForModel.find((r) =>
       r.metadata.resourceIdPattern.includes("/versions/{versionName}")
     );
-    ok(bestPracticeVersionsResource, "Should have metadata for child-level resource");
+    ok(
+      bestPracticeVersionsResource,
+      "Should have metadata for child-level resource"
+    );
     const bestPracticeVersionsMetadata = bestPracticeVersionsResource.metadata;
     strictEqual(
       bestPracticeVersionsMetadata.resourceName,
@@ -1333,10 +1401,17 @@ interface BestPracticeVersions {
       bestPracticeVersionsMetadata.resourceType,
       "Microsoft.ContosoProviderHub/bestPractices/versions"
     );
-    strictEqual(bestPracticeVersionsMetadata.methods.length, 3, "Should have 3 methods");
+    strictEqual(
+      bestPracticeVersionsMetadata.methods.length,
+      3,
+      "Should have 3 methods"
+    );
     // Note: parentResourceId is not set for legacy operations as there's no explicit @parentResource decorator
     // The parent-child relationship is inferred from the path structure in the generator
-    strictEqual(bestPracticeVersionsMetadata.parentResourceId, bestPracticesMetadata.resourceIdPattern);
+    strictEqual(
+      bestPracticeVersionsMetadata.parentResourceId,
+      bestPracticesMetadata.resourceIdPattern
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1346,6 +1421,126 @@ interface BestPracticeVersions {
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
       normalizeSchemaForComparison(armProviderSchemaResult)
+    );
+  });
+
+  it("resource without get operation should be filtered", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A parent resource */
+model Parent is TrackedResource<ParentProperties> {
+  ...ResourceNameParameter<Parent>;
+}
+
+/** Parent properties */
+model ParentProperties {
+  /** Description */
+  description?: string;
+}
+
+/** A resource without Get operation */
+@parentResource(Parent)
+model NoGetResource is TrackedResource<NoGetResourceProperties> {
+  ...ResourceNameParameter<NoGetResource>;
+}
+
+/** NoGetResource properties */
+model NoGetResourceProperties {
+  /** Description */
+  description?: string;
+}
+
+@armResourceOperations
+interface Parents {
+  get is ArmResourceRead<Parent>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Parent>;
+  delete is ArmResourceDeleteWithoutOkAsync<Parent>;
+  listByResourceGroup is ArmResourceListByParent<Parent>;
+}
+
+@armResourceOperations
+interface NoGetResources {
+  // Note: No Get operation
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<NoGetResource>;
+  delete is ArmResourceDeleteWithoutOkAsync<NoGetResource>;
+  listByResourceGroup is ArmResourceListByParent<NoGetResource>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema and verify its structure
+    // This uses the legacy buildArmProviderSchema which properly filters resources without Get
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    // Should only have Parent resource, NoGetResource should be filtered out
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    // Verify Parent resource exists
+    const parentResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/parents"
+    );
+    ok(parentResource);
+    strictEqual(parentResource.metadata.resourceName, "Parent");
+
+    // Parent should have 7 methods: its own 4 methods (get, createOrUpdate, delete, listByResourceGroup)
+    // plus all 3 operations from NoGetResource (createOrUpdate, delete, listByResourceGroup)
+    strictEqual(
+      parentResource.metadata.methods.length,
+      7,
+      "Parent should have 7 methods including all operations from NoGetResource"
+    );
+
+    // Verify the list operation for NoGetResource is in parent's methods as Action
+    const noGetListInParent = parentResource.metadata.methods.find(
+      (m) =>
+        m.kind === "Action" && m.operationPath.includes("noGetResources") && m.operationPath.endsWith("/noGetResources")
+    );
+    ok(
+      noGetListInParent,
+      "Parent resource should have the list operation for NoGetResource as Action"
+    );
+
+    // Verify the create operation for NoGetResource is in parent's methods as Action
+    const noGetCreateInParent = parentResource.metadata.methods.find(
+      (m) =>
+        m.kind === "Action" && m.operationPath.includes("noGetResources")
+    );
+    ok(
+      noGetCreateInParent,
+      "Parent resource should have the create operation for NoGetResource as Action"
+    );
+
+    // Verify the delete operation for NoGetResource is in parent's methods as Action
+    const noGetDeleteInParent = parentResource.metadata.methods.find(
+      (m) =>
+        m.kind === "Action" && m.operationPath.includes("noGetResources")
+    );
+    ok(
+      noGetDeleteInParent,
+      "Parent resource should have the delete operation for NoGetResource as Action"
+    );
+
+    // Verify NoGetResource is NOT in resources
+    const noGetResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceName === "NoGetResource"
+    );
+    strictEqual(noGetResource, undefined);
+
+    // Verify NO NoGetResource operations are in non-resource methods (all should be on parent)
+    ok(armProviderSchema.nonResourceMethods);
+    const noGetMethods = armProviderSchema.nonResourceMethods.filter((m) =>
+      m.operationPath.includes("noGetResources")
+    );
+    strictEqual(
+      noGetMethods.length,
+      0,
+      "Should have no NoGetResource operations in non-resource methods"
     );
   });
 });

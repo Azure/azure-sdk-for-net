@@ -110,9 +110,7 @@ namespace Azure.Communication.Email
         public static Azure.Communication.Email.EmailSendStatus Running { get { throw null; } }
         public static Azure.Communication.Email.EmailSendStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.Communication.Email.EmailSendStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.Email.EmailSendStatus left, Azure.Communication.Email.EmailSendStatus right) { throw null; }
         public static implicit operator Azure.Communication.Email.EmailSendStatus (string value) { throw null; }

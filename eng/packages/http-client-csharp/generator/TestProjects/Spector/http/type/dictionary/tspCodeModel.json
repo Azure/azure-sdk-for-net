@@ -722,7 +722,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.Int32Value.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -731,7 +731,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "72",
@@ -981,7 +982,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.Int64Value.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -990,7 +991,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "89",
@@ -1240,7 +1242,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.BooleanValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1249,7 +1251,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "106",
@@ -1499,7 +1502,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.StringValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1508,7 +1511,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "123",
@@ -1758,7 +1762,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.Float32Value.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1767,7 +1771,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "140",
@@ -2025,7 +2030,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.DatetimeValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2034,7 +2039,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "158",
@@ -2292,7 +2298,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.DurationValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2301,7 +2307,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "176",
@@ -2551,7 +2558,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.UnknownValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2560,7 +2567,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "193",
@@ -2794,7 +2802,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.ModelValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2803,7 +2811,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "207",
@@ -3037,7 +3046,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.RecursiveModelValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3046,7 +3055,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "221",
@@ -3301,7 +3311,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.NullableFloatValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3310,9 +3320,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

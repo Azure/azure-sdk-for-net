@@ -14,7 +14,7 @@ using Azure.ResourceManager.FileShares;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> File share provisioning parameters recommendation API input structure. </summary>
-    public partial class FileShareProvisioningRecommendationInputProperties : IJsonModel<FileShareProvisioningRecommendationInputProperties>
+    internal partial class FileShareProvisioningRecommendationInputProperties : IJsonModel<FileShareProvisioningRecommendationInputProperties>
     {
         /// <summary> Initializes a new instance of <see cref="FileShareProvisioningRecommendationInputProperties"/> for deserialization. </summary>
         internal FileShareProvisioningRecommendationInputProperties()

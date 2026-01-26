@@ -14,7 +14,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> System assigned managed identity properties. </summary>
-    public partial class RegistryEndpointSystemAssignedManagedIdentitySettings : IJsonModel<RegistryEndpointSystemAssignedManagedIdentitySettings>
+    internal partial class RegistryEndpointSystemAssignedManagedIdentitySettings : IJsonModel<RegistryEndpointSystemAssignedManagedIdentitySettings>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -320,10 +320,8 @@ namespace Azure.ResourceManager.CognitiveServices
         protected CognitiveServicesDeletedAccountResource() { }
         public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string resourceGroupName, string accountName) { throw null; }
@@ -331,16 +329,12 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1165,9 +1159,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction Block { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction Throttle { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction left, Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction (string value) { throw null; }
@@ -1218,9 +1210,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType Agent { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType left, Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType (string value) { throw null; }
@@ -1249,26 +1239,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResult CalculateModelCapacityResult(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model = null, string skuName = null, Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity estimatedCapacity = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity CalculateModelCapacityResultEstimatedCapacity(int? value = default(int?), int? deployableValue = default(int?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData CognitiveServicesAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string kind = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku, Azure.ETag? etag, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties properties) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel CognitiveServicesAccountDeploymentModel(string format, string name, string version, string source, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel CognitiveServicesAccountDeploymentModel(string publisher = null, string format = null, string name = null, string version = null, string source = null, Azure.Core.ResourceIdentifier sourceAccount = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState? provisioningState, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings scaleSettings, System.Collections.Generic.IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> rateLimits, Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption? versionUpgradeOption) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState? provisioningState, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings scaleSettings, System.Collections.Generic.IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> rateLimits, Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings capacitySettings, string parentDeploymentName) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings scaleSettings = null, System.Collections.Generic.IReadOnlyDictionary<string, string> capabilities = null, string raiPolicyName = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> rateLimits = null, Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption? versionUpgradeOption = default(Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption?), bool? isDynamicThrottlingEnabled = default(bool?), int? currentCapacity = default(int?), Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings capacitySettings = null, string parentDeploymentName = null, string spilloverDeploymentName = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings CognitiveServicesAccountDeploymentScaleSettings(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType? scaleType = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType?), int? capacity = default(int?), int? activeCapacity = default(int?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel CognitiveServicesAccountModel(string format, string name, string version, string source, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku> skus, int? maxCapacity, System.Collections.Generic.IDictionary<string, string> capabilities, System.Collections.Generic.IDictionary<string, string> finetuneCapabilities, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo deprecation, Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus? lifecycleStatus, Azure.ResourceManager.Models.SystemData systemData) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel CognitiveServicesAccountModel(string publisher = null, string format = null, string name = null, string version = null, string source = null, Azure.Core.ResourceIdentifier sourceAccount = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel baseModel = null, bool? isDefaultVersion = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku> skus = null, int? maxCapacity = default(int?), System.Collections.Generic.IDictionary<string, string> capabilities = null, System.Collections.Generic.IDictionary<string, string> finetuneCapabilities = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo deprecation = null, Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus? lifecycleStatus = default(Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus?), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties CognitiveServicesAccountProperties(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? provisioningState, string endpoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet networkAcls, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> userOwnedStorage, Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace amlWorkspace, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties apiProperties, System.DateTimeOffset? createdOn, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, System.Collections.Generic.IReadOnlyDictionary<string, string> endpoints, bool? restore, System.DateTimeOffset? deletedOn, string scheduledPurgeDate, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings locations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation> commitmentPlanAssociations, Azure.ResourceManager.CognitiveServices.Models.AbusePenalty abusePenalty, Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig raiMonitorConfig) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties CognitiveServicesAccountProperties(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState?), string endpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = default(bool?), string migrationToken = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet networkAcls = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> userOwnedStorage = null, Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace amlWorkspace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties apiProperties = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null, bool? enableDynamicThrottling = default(bool?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = default(bool?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> endpoints = null, bool? restore = default(bool?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), string scheduledPurgeDate = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation> commitmentPlanAssociations = null, Azure.ResourceManager.CognitiveServices.Models.AbusePenalty abusePenalty = null, Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig raiMonitorConfig = null, Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection aiFoundryNetworkInjection = null, bool? allowProjectManagement = default(bool?), string defaultProject = null, System.Collections.Generic.IEnumerable<string> associatedProjects = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties CognitiveServicesAccountProperties(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState?), string endpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = default(bool?), string migrationToken = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet networkAcls = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> userOwnedStorage = null, Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace amlWorkspace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties apiProperties = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null, bool? enableDynamicThrottling = default(bool?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = default(bool?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> endpoints = null, bool? restore = default(bool?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), string scheduledPurgeDate = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation> commitmentPlanAssociations = null, Azure.ResourceManager.CognitiveServices.Models.AbusePenalty abusePenalty = null, Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig raiMonitorConfig = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection> aiFoundryNetworkInjections = null, bool? allowProjectManagement = default(bool?), string defaultProject = null, System.Collections.Generic.IEnumerable<string> associatedProjects = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties CognitiveServicesAccountProperties(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? provisioningState, string endpoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet networkAcls, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> userOwnedStorage, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties apiProperties, System.DateTimeOffset? createdOn, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, System.Collections.Generic.IReadOnlyDictionary<string, string> endpoints, bool? restore, System.DateTimeOffset? deletedOn, string scheduledPurgeDate, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings locations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation> commitmentPlanAssociations, Azure.ResourceManager.CognitiveServices.Models.AbusePenalty abusePenalty) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku CognitiveServicesAccountSku(Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData CognitiveServicesCapabilityHostData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties properties = null) { throw null; }
@@ -1279,10 +1262,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList CognitiveServicesDomainAvailabilityList(bool? isSubdomainAvailable = default(bool?), string reason = null, string subdomainName = null, string domainAvailabilityType = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeData CognitiveServicesEncryptionScopeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties CognitiveServicesEncryptionScopeProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties keyVaultProperties = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource? keySource = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource?), Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState?), Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState? state = default(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel CognitiveServicesModel(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel model, string kind, string skuName) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel CognitiveServicesModel(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel model = null, string kind = null, string skuName = null, string description = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku CognitiveServicesModelSku(string name, string usageName, System.DateTimeOffset? deprecationOn, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig capacity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit> rateLimits) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku CognitiveServicesModelSku(string name = null, string usageName = null, System.DateTimeOffset? deprecationOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig capacity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit> rateLimits = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo> cost = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData CognitiveServicesPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState?), System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -1299,7 +1280,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CommitmentCost CommitmentCost(string commitmentMeterId = null, string overageMeterId = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod CommitmentPeriod(string tier = null, int? count = default(int?), Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota quota = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, string accountId = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, string accountId) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation CommitmentPlanAssociation(Azure.Core.ResourceIdentifier commitmentPlanId = null, string commitmentPlanLocation = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CommitmentPlanData CommitmentPlanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string kind = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties properties = null) { throw null; }
@@ -1406,9 +1386,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CapabilityHostKind(string value) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind Agents { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind left, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind (string value) { throw null; }
@@ -1428,9 +1406,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState (string value) { throw null; }
@@ -1492,9 +1468,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState Moving { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState (string value) { throw null; }
@@ -1523,9 +1497,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType Manual { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType (string value) { throw null; }
@@ -1577,7 +1549,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings Locations { get { throw null; } set { } }
         public string MigrationToken { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet NetworkAcls { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("Please use `AIFoundryNetworkInjections` instead.")]
         public Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection NetworkInjections { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
@@ -1775,9 +1746,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Xero { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Zoho { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory (string value) { throw null; }
@@ -1798,9 +1767,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup NoSQL { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup ServicesAndApps { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup (string value) { throw null; }
@@ -2012,9 +1979,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction Allow { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction (string value) { throw null; }
@@ -2070,9 +2035,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -2089,9 +2052,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -2199,9 +2160,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod Priority { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod Weighted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod (string value) { throw null; }
@@ -2298,9 +2257,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode NotAvailableForSubscription { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode QuotaId { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode (string value) { throw null; }
@@ -2338,9 +2295,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier Premium { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier (string value) { throw null; }
@@ -2432,9 +2387,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState Moving { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState (string value) { throw null; }
@@ -2502,9 +2455,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState Disabled { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState left, Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState (string value) { throw null; }
@@ -2533,9 +2484,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption OnceCurrentVersionExpired { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption OnceNewDefaultVersionAvailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption left, Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption (string value) { throw null; }
@@ -2556,9 +2505,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState Moving { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState (string value) { throw null; }
@@ -2574,9 +2521,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState Disabled { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState left, Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState (string value) { throw null; }
@@ -2604,9 +2549,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement NotRequired { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement Required { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement left, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement (string value) { throw null; }
@@ -2623,9 +2566,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus Inactive { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus NotApplicable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus left, Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus (string value) { throw null; }
@@ -2680,9 +2621,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus Preview { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus Stable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus left, Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus (string value) { throw null; }
@@ -2818,9 +2757,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection left, Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection (string value) { throw null; }
@@ -2946,9 +2883,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel Low { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel (string value) { throw null; }
@@ -2964,9 +2899,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource Completion { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource Prompt { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource (string value) { throw null; }
@@ -2984,9 +2917,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode Default { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode Deferred { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode (string value) { throw null; }
@@ -3017,9 +2948,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType SystemManaged { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType UserManaged { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType (string value) { throw null; }
@@ -3103,9 +3032,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource MicrosoftCognitiveServices { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource MicrosoftKeyVault { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource (string value) { throw null; }
@@ -3115,18 +3042,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class ServiceAccountEncryptionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties>
     {
         public ServiceAccountEncryptionProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Guid? IdentityClientId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public string KeyName { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource? KeySource { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Uri KeyVaultUri { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public string KeyVersion { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3147,9 +3070,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel ProvisionedWeb { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel Web { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel (string value) { throw null; }
@@ -3188,9 +3109,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState ResolvingDns { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState (string value) { throw null; }
@@ -3206,9 +3125,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess (string value) { throw null; }
@@ -3239,9 +3156,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus InOverage { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus (string value) { throw null; }
@@ -3319,9 +3234,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType Percent { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType Seconds { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType (string value) { throw null; }
@@ -3360,9 +3273,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection AzureServices { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection left, Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection (string value) { throw null; }

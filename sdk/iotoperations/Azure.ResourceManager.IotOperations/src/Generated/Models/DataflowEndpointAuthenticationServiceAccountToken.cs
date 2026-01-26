@@ -12,7 +12,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Service Account Token for BrokerAuthentication. </summary>
-    public partial class DataflowEndpointAuthenticationServiceAccountToken
+    internal partial class DataflowEndpointAuthenticationServiceAccountToken
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

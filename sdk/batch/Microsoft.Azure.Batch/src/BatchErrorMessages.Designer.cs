@@ -11,8 +11,8 @@
 namespace Microsoft.Azure.Batch {
     using System;
     using System.Reflection;
-    
-    
+
+
     /// <summary>
     ///    A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,14 +23,14 @@ namespace Microsoft.Azure.Batch {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class BatchErrorMessages {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         internal BatchErrorMessages() {
         }
-        
+
         /// <summary>
         ///    Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Batch {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///    Overrides the current thread's CurrentUICulture property for all
         ///    resource lookups using this strongly typed resource class.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Batch {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Addition of a task failed with unexpected status code. Details: {0}.
         /// </summary>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("AddTaskCollectionTerminated", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Task {0} reported AddTaskResultAction.UnretryableFailure.
         /// </summary>
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("AddTaskResultActionUnretryableFailure", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to An attempt was made to use an instance of BatchClient that is in the closed state.  No further calls to the Batch Service can be made with that instance.  This can happen if the instance was explicitly closed or if the BatchClient.Dispose() method was called..
         /// </summary>
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("BatchClientIsClosed", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to This BatchRequest has started executing and can no longer be modified..
         /// </summary>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("BatchRequestCannotBeModified", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to A value of null cannot be specified when invoking the CommitChanges operation..
         /// </summary>
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("CannotPatchNullValue", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to {0} can only be run once..
         /// </summary>
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("CanOnlyBeRunOnceFailure", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Items contained in collection must not be null.
         /// </summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("CollectionMustNotContainNull", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Must have at least one behavior of type {0}.
         /// </summary>
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("GeneralBehaviorMissing", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to This object is in an invalid state.  Write access is not allowed..
         /// </summary>
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("GeneralObjectInInvalidState", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Simultaneous Commit operators are forbidden..
         /// </summary>
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("GeneralSimultaneousCommitsForbidden", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Incorrect type returned..
         /// </summary>
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("IncorrectTypeReturned", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Monitor requires all instances to have the same server-side parent..
         /// </summary>
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("MonitorInstancesMustHaveSameServerSideParent", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to One or more requests to the Azure Batch service failed..
         /// </summary>
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("MultipleParallelRequestsHitUnexpectedErrors", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Timed out waiting for resources after {0}..
         /// </summary>
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("ODataMonitorTimedOut", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to This operation is forbidden on bound objects..
         /// </summary>
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("OperationForbiddenOnBoundObjects", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to This operation is forbidden on unbound objects..
         /// </summary>
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("OperationForbiddenOnUnboundObjects", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to The property {0} cannot be read while the object is in the {1} state..
         /// </summary>
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("PropertiesReadAccessViolation", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to The property {0} cannot be modified while the object is in the {1} state..
         /// </summary>
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("PropertiesWriteAccessViolation", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to End task id must be greater than or equal to the start task id..
         /// </summary>
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("TaskIdRangeCannotHaveEndLessThanStart", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to End task id must be greater or equal to 0..
         /// </summary>
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("TaskIdRangeCannotHaveNegativeEnd", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to First task id must be greater or equal to 0..
         /// </summary>
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("TaskIdRangeCannotHaveNegativeStart", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Type {0} does not support an expand clause..
         /// </summary>
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("TypeDoesNotSupportExpandClause", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Type {0} does not support a filter clause..
         /// </summary>
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("TypeDoesNotSupportFilterClause", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Type {0} does not support a select clause..
         /// </summary>
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Batch {
                 return ResourceManager.GetString("TypeDoesNotSupportSelectClause", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Unknown AddTaskResultAction value: {0}.
         /// </summary>

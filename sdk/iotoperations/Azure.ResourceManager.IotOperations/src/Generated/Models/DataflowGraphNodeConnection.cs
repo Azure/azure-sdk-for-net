@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Initializes a new instance of <see cref="DataflowGraphNodeConnection"/>. </summary>
         /// <param name="from"> Information about the source node. </param>
-        /// <param name="to"> Information about the destination node. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="to"/> is null. </exception>
-        public DataflowGraphNodeConnection(DataflowGraphConnectionInput @from, DataflowGraphConnectionOutput to)
+        /// <param name="toName"> Name of the destination node. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="toName"/> is null. </exception>
+        public DataflowGraphNodeConnection(DataflowGraphConnectionInput @from, string toName)
         {
             Argument.AssertNotNull(@from, nameof(@from));
-            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(toName, nameof(toName));
 
             From = @from;
-            To = to;
+            To = new DataflowGraphConnectionOutput(toName);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowGraphNodeConnection"/>. </summary>

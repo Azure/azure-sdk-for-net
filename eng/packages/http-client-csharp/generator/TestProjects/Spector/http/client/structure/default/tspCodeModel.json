@@ -245,7 +245,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Baz.endpoint"
             },
             {
               "$id": "19",
@@ -263,7 +263,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Baz.client"
             }
           ],
           "initializedBy": 0,
@@ -338,7 +338,7 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Baz.Foo.endpoint"
                 },
                 {
                   "$id": "25",
@@ -356,7 +356,7 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.client"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Baz.Foo.client"
                 }
               ],
               "initializedBy": 0,
@@ -365,9 +365,11 @@
               "apiVersions": [],
               "parent": {
                 "$ref": "16"
-              }
+              },
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         },
         {
           "$id": "26",
@@ -433,7 +435,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Qux.endpoint"
             },
             {
               "$id": "31",
@@ -451,7 +453,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Qux.client"
             }
           ],
           "initializedBy": 0,
@@ -526,7 +528,7 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Qux.Bar.endpoint"
                 },
                 {
                   "$id": "37",
@@ -544,7 +546,7 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.client"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Qux.Bar.client"
                 }
               ],
               "initializedBy": 0,
@@ -553,9 +555,11 @@
               "apiVersions": [],
               "parent": {
                 "$ref": "26"
-              }
+              },
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         },
         {
           "$id": "38",
@@ -658,7 +662,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Foo.endpoint"
             },
             {
               "$id": "45",
@@ -676,7 +680,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Foo.client"
             }
           ],
           "initializedBy": 0,
@@ -685,7 +689,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "46",
@@ -788,7 +793,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Bar.endpoint"
             },
             {
               "$id": "53",
@@ -806,7 +811,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Bar.client"
             }
           ],
           "initializedBy": 0,
@@ -815,9 +820,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

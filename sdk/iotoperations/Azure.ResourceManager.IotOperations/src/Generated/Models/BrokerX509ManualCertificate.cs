@@ -12,7 +12,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> X509 Certificate Authentication properties. </summary>
-    public partial class BrokerX509ManualCertificate
+    internal partial class BrokerX509ManualCertificate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

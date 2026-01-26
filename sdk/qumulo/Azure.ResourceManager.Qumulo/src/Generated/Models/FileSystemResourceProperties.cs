@@ -21,21 +21,21 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <summary> Initializes a new instance of <see cref="FileSystemResourceProperties"/>. </summary>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <param name="storageSkuName"> Storage Sku. </param>
-        /// <param name="userDetails"> User Details. </param>
+        /// <param name="userDetailsEmail"> User Email. </param>
         /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
         /// <param name="adminPassword"> Initial administrator password of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceDetails"/>, <paramref name="storageSkuName"/>, <paramref name="userDetails"/>, <paramref name="delegatedSubnetId"/> or <paramref name="adminPassword"/> is null. </exception>
-        public FileSystemResourceProperties(MarketplaceDetails marketplaceDetails, string storageSkuName, QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword)
+        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceDetails"/>, <paramref name="storageSkuName"/>, <paramref name="userDetailsEmail"/>, <paramref name="delegatedSubnetId"/> or <paramref name="adminPassword"/> is null. </exception>
+        public FileSystemResourceProperties(MarketplaceDetails marketplaceDetails, string storageSkuName, string userDetailsEmail, string delegatedSubnetId, string adminPassword)
         {
             Argument.AssertNotNull(marketplaceDetails, nameof(marketplaceDetails));
             Argument.AssertNotNull(storageSkuName, nameof(storageSkuName));
-            Argument.AssertNotNull(userDetails, nameof(userDetails));
+            Argument.AssertNotNull(userDetailsEmail, nameof(userDetailsEmail));
             Argument.AssertNotNull(delegatedSubnetId, nameof(delegatedSubnetId));
             Argument.AssertNotNull(adminPassword, nameof(adminPassword));
 
             MarketplaceDetails = marketplaceDetails;
             StorageSkuName = storageSkuName;
-            UserDetails = userDetails;
+            UserDetails = new QumuloUserDetails(userDetailsEmail);
             DelegatedSubnetId = delegatedSubnetId;
             PrivateIPs = new ChangeTrackingList<IPAddress>();
             AdminPassword = adminPassword;

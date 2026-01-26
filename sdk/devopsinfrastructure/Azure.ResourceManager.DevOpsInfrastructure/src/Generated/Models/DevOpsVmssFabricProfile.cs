@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public partial class DevOpsVmssFabricProfile : DevOpsFabricProfile
     {
         /// <summary> Initializes a new instance of <see cref="DevOpsVmssFabricProfile"/>. </summary>
-        /// <param name="sku"> The Azure SKU of the machines in the pool. </param>
+        /// <param name="skuName"> The Azure SKU name of the machines in the pool. </param>
         /// <param name="images"> The VM images of the machines in the pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="images"/> is null. </exception>
-        public DevOpsVmssFabricProfile(DevOpsAzureSku sku, IEnumerable<DevOpsPoolVmImage> images) : base("Vmss")
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> or <paramref name="images"/> is null. </exception>
+        public DevOpsVmssFabricProfile(string skuName, IEnumerable<DevOpsPoolVmImage> images) : base("Vmss")
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(skuName, nameof(skuName));
             Argument.AssertNotNull(images, nameof(images));
 
-            Sku = sku;
+            Sku = new DevOpsAzureSku(skuName);
             Images = images.ToList();
         }
 

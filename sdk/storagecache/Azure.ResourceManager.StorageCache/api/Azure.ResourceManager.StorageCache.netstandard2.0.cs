@@ -418,11 +418,9 @@ namespace Azure.ResourceManager.StorageCache
         Azure.ResourceManager.StorageCache.StorageCacheData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheResource> Update(Azure.ResourceManager.StorageCache.StorageCacheData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageCache.StorageCacheResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageCache.StorageCacheData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheResource>> UpdateAsync(Azure.ResourceManager.StorageCache.StorageCacheData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageCache.StorageCacheResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageCache.StorageCacheData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -634,9 +632,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealthStateType Transitioning { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealthStateType Unavailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealthStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealthStateType left, Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealthStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealthStateType (string value) { throw null; }
@@ -708,9 +704,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType Succeeded { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType left, Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType (string value) { throw null; }
@@ -742,9 +736,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemSquashMode None { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemSquashMode RootOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.AmlFileSystemSquashMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.AmlFileSystemSquashMode left, Azure.ResourceManager.StorageCache.Models.AmlFileSystemSquashMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.AmlFileSystemSquashMode (string value) { throw null; }
@@ -792,9 +784,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.ArchiveStatusType InProgress { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.ArchiveStatusType NotConfigured { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.ArchiveStatusType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.ArchiveStatusType left, Azure.ResourceManager.StorageCache.Models.ArchiveStatusType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.ArchiveStatusType (string value) { throw null; }
@@ -807,7 +797,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemArchiveStatus AmlFileSystemArchiveStatus(Azure.ResourceManager.StorageCache.Models.ArchiveStatusType? state = default(Azure.ResourceManager.StorageCache.Models.ArchiveStatusType?), System.DateTimeOffset? lastCompletionOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastStartedOn = default(System.DateTimeOffset?), int? percentComplete = default(int?), string errorCode = null, string errorMessage = null) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemClientInfo AmlFileSystemClientInfo(string mgsAddress = null, string mountCommand = null, string lustreVersion = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemContainerStorageInterface containerStorageInterface = null) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemContainerStorageInterface AmlFileSystemContainerStorageInterface(string persistentVolumeClaim = null, string persistentVolume = null, string storageClass = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.StorageCache.AmlFileSystemData AmlFileSystemData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string skuName, System.Collections.Generic.IEnumerable<string> zones, float? storageCapacityTiB, Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealth health, Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, Azure.ResourceManager.StorageCache.Models.AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, Azure.ResourceManager.StorageCache.Models.StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey, Azure.ResourceManager.StorageCache.Models.AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, Azure.ResourceManager.StorageCache.Models.AmlFileSystemPropertiesHsm hsm) { throw null; }
         public static Azure.ResourceManager.StorageCache.AmlFileSystemData AmlFileSystemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string skuName = null, System.Collections.Generic.IEnumerable<string> zones = null, float? storageCapacityTiB = default(float?), Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealth health = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType? provisioningState = default(Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType?), string filesystemSubnet = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemClientInfo clientInfo = null, int? throughputProvisionedMBps = default(int?), Azure.ResourceManager.StorageCache.Models.StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemPropertiesHsm hsm = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemRootSquashSettings rootSquashSettings = null) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealth AmlFileSystemHealth(Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealthStateType? state = default(Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealthStateType?), string statusCode = null, string statusDescription = null) { throw null; }
@@ -822,7 +811,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheActiveDirectorySettings StorageCacheActiveDirectorySettings(System.Net.IPAddress primaryDnsIPAddress = null, System.Net.IPAddress secondaryDnsIPAddress = null, string domainName = null, string domainNetBiosName = null, string cacheNetBiosName = null, Azure.ResourceManager.StorageCache.Models.DomainJoinedType? domainJoined = default(Azure.ResourceManager.StorageCache.Models.DomainJoinedType?), Azure.ResourceManager.StorageCache.Models.StorageCacheActiveDirectorySettingsCredentials credentials = null) { throw null; }
         public static Azure.ResourceManager.StorageCache.StorageCacheData StorageCacheData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string skuName = null, int? cacheSizeGB = default(int?), Azure.ResourceManager.StorageCache.Models.StorageCacheHealth health = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> mountAddresses = null, Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType? provisioningState = default(Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType?), Azure.Core.ResourceIdentifier subnet = null, Azure.ResourceManager.StorageCache.Models.StorageCacheUpgradeStatus upgradeStatus = null, Azure.ResourceManager.StorageCache.Models.StorageCacheUpgradeSettings upgradeSettings = null, Azure.ResourceManager.StorageCache.Models.StorageCacheNetworkSettings networkSettings = null, Azure.ResourceManager.StorageCache.Models.StorageCacheEncryptionSettings encryptionSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageCache.Models.NfsAccessPolicy> securityAccessPolicies = null, Azure.ResourceManager.StorageCache.Models.StorageCacheDirectorySettings directoryServicesSettings = null, System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageCache.Models.PrimingJob> primingJobs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageCache.Models.StorageTargetSpaceAllocation> spaceAllocation = null) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheHealth StorageCacheHealth(Azure.ResourceManager.StorageCache.Models.StorageCacheHealthStateType? state = default(Azure.ResourceManager.StorageCache.Models.StorageCacheHealthStateType?), string statusDescription = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageCache.Models.OutstandingCondition> conditions = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.StorageCache.StorageCacheImportJobData StorageCacheImportJobData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.StorageCache.Models.ImportJobProvisioningStateType? provisioningState, System.Collections.Generic.IEnumerable<string> importPrefixes, Azure.ResourceManager.StorageCache.Models.ConflictResolutionMode? conflictResolutionMode, int? maximumErrors, Azure.ResourceManager.StorageCache.Models.ImportStatusType? state, string statusMessage, long? totalBlobsWalked, long? blobsWalkedPerSecond, long? totalBlobsImported, long? blobsImportedPerSecond, System.DateTimeOffset? lastCompletionOn, System.DateTimeOffset? lastStartedOn, int? totalErrors, int? totalConflicts) { throw null; }
         public static Azure.ResourceManager.StorageCache.StorageCacheImportJobData StorageCacheImportJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.StorageCache.Models.ImportJobProvisioningStateType? provisioningState = default(Azure.ResourceManager.StorageCache.Models.ImportJobProvisioningStateType?), Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus? adminStatus = default(Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus?), System.Collections.Generic.IEnumerable<string> importPrefixes = null, Azure.ResourceManager.StorageCache.Models.ConflictResolutionMode? conflictResolutionMode = default(Azure.ResourceManager.StorageCache.Models.ConflictResolutionMode?), int? maximumErrors = default(int?), Azure.ResourceManager.StorageCache.Models.ImportStatusType? state = default(Azure.ResourceManager.StorageCache.Models.ImportStatusType?), string statusMessage = null, long? totalBlobsWalked = default(long?), long? blobsWalkedPerSecond = default(long?), long? totalBlobsImported = default(long?), long? importedFiles = default(long?), long? importedDirectories = default(long?), long? importedSymlinks = default(long?), long? preexistingFiles = default(long?), long? preexistingDirectories = default(long?), long? preexistingSymlinks = default(long?), long? blobsImportedPerSecond = default(long?), System.DateTimeOffset? lastCompletionOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastStartedOn = default(System.DateTimeOffset?), int? totalErrors = default(int?), int? totalConflicts = default(int?)) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheNetworkSettings StorageCacheNetworkSettings(int? mtu = default(int?), System.Collections.Generic.IEnumerable<System.Net.IPAddress> utilityAddresses = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> dnsServers = null, string dnsSearchDomain = null, string ntpServer = null) { throw null; }
@@ -846,9 +834,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.AutoExportJobAdminStatus Disable { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.AutoExportJobAdminStatus Enable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.AutoExportJobAdminStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.AutoExportJobAdminStatus left, Azure.ResourceManager.StorageCache.Models.AutoExportJobAdminStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.AutoExportJobAdminStatus (string value) { throw null; }
@@ -880,9 +866,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.AutoExportJobProvisioningStateType Succeeded { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.AutoExportJobProvisioningStateType Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.AutoExportJobProvisioningStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.AutoExportJobProvisioningStateType left, Azure.ResourceManager.StorageCache.Models.AutoExportJobProvisioningStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.AutoExportJobProvisioningStateType (string value) { throw null; }
@@ -901,9 +885,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.AutoExportStatusType Failed { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.AutoExportStatusType InProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.AutoExportStatusType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.AutoExportStatusType left, Azure.ResourceManager.StorageCache.Models.AutoExportStatusType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.AutoExportStatusType (string value) { throw null; }
@@ -931,9 +913,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesAdminStatus Disable { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesAdminStatus Enable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesAdminStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesAdminStatus left, Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesAdminStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesAdminStatus (string value) { throw null; }
@@ -953,9 +933,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesProvisioningState left, Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.AutoImportJobPropertiesProvisioningState (string value) { throw null; }
@@ -996,9 +974,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.AutoImportJobState Failed { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.AutoImportJobState InProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.AutoImportJobState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.AutoImportJobState left, Azure.ResourceManager.StorageCache.Models.AutoImportJobState right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.AutoImportJobState (string value) { throw null; }
@@ -1014,9 +990,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.AutoImportJobUpdatePropertiesAdminStatus Disable { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.AutoImportJobUpdatePropertiesAdminStatus Enable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.AutoImportJobUpdatePropertiesAdminStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.AutoImportJobUpdatePropertiesAdminStatus left, Azure.ResourceManager.StorageCache.Models.AutoImportJobUpdatePropertiesAdminStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.AutoImportJobUpdatePropertiesAdminStatus (string value) { throw null; }
@@ -1048,9 +1022,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.ConflictResolutionMode OverwriteIfDirty { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.ConflictResolutionMode Skip { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.ConflictResolutionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.ConflictResolutionMode left, Azure.ResourceManager.StorageCache.Models.ConflictResolutionMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.ConflictResolutionMode (string value) { throw null; }
@@ -1067,9 +1039,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.DomainJoinedType No { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.DomainJoinedType Yes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.DomainJoinedType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.DomainJoinedType left, Azure.ResourceManager.StorageCache.Models.DomainJoinedType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.DomainJoinedType (string value) { throw null; }
@@ -1085,9 +1055,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus Active { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus Cancel { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus left, Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus (string value) { throw null; }
@@ -1107,9 +1075,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.ImportJobProvisioningStateType Succeeded { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.ImportJobProvisioningStateType Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.ImportJobProvisioningStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.ImportJobProvisioningStateType left, Azure.ResourceManager.StorageCache.Models.ImportJobProvisioningStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.ImportJobProvisioningStateType (string value) { throw null; }
@@ -1129,9 +1095,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.ImportStatusType Failed { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.ImportStatusType InProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.ImportStatusType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.ImportStatusType left, Azure.ResourceManager.StorageCache.Models.ImportStatusType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.ImportStatusType (string value) { throw null; }
@@ -1216,9 +1180,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess ReadOnly { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess ReadWrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess left, Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess (string value) { throw null; }
@@ -1235,9 +1197,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.NfsAccessRuleScope Host { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.NfsAccessRuleScope Network { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.NfsAccessRuleScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.NfsAccessRuleScope left, Azure.ResourceManager.StorageCache.Models.NfsAccessRuleScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.NfsAccessRuleScope (string value) { throw null; }
@@ -1295,9 +1255,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.PrimingJobState Queued { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.PrimingJobState Running { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.PrimingJobState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.PrimingJobState left, Azure.ResourceManager.StorageCache.Models.PrimingJobState right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.PrimingJobState (string value) { throw null; }
@@ -1347,7 +1305,6 @@ namespace Azure.ResourceManager.StorageCache.Models
     public partial class StorageCacheActiveDirectorySettingsCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.Models.StorageCacheActiveDirectorySettingsCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheActiveDirectorySettingsCredentials>
     {
         public StorageCacheActiveDirectorySettingsCredentials(string username) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public StorageCacheActiveDirectorySettingsCredentials(string username, string password) { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
@@ -1403,9 +1360,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheFirmwareStatusType Available { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheFirmwareStatusType Unavailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.StorageCacheFirmwareStatusType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.StorageCacheFirmwareStatusType left, Azure.ResourceManager.StorageCache.Models.StorageCacheFirmwareStatusType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheFirmwareStatusType (string value) { throw null; }
@@ -1444,9 +1399,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheHealthStateType Upgrading { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheHealthStateType WaitingForKey { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.StorageCacheHealthStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.StorageCacheHealthStateType left, Azure.ResourceManager.StorageCache.Models.StorageCacheHealthStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheHealthStateType (string value) { throw null; }
@@ -1487,7 +1440,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         private readonly int _dummyPrimitive;
         public StorageCacheProvisioningStateType(string value) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType Canceled { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType Cancelled { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType Creating { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType Deleting { get { throw null; } }
@@ -1495,9 +1447,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType Succeeded { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType left, Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType (string value) { throw null; }
@@ -1526,9 +1476,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheRestrictionReasonCode NotAvailableForSubscription { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheRestrictionReasonCode QuotaId { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.StorageCacheRestrictionReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.StorageCacheRestrictionReasonCode left, Azure.ResourceManager.StorageCache.Models.StorageCacheRestrictionReasonCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheRestrictionReasonCode (string value) { throw null; }
@@ -1663,9 +1611,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameDownloadedType No { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameDownloadedType Yes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameDownloadedType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameDownloadedType left, Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameDownloadedType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameDownloadedType (string value) { throw null; }
@@ -1705,9 +1651,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameSourceType Ldap { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameSourceType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameSourceType left, Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameSourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheUsernameSourceType (string value) { throw null; }
@@ -1725,9 +1669,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.StorageTargetOperationalStateType Ready { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageTargetOperationalStateType Suspended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.StorageTargetOperationalStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.StorageTargetOperationalStateType left, Azure.ResourceManager.StorageCache.Models.StorageTargetOperationalStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageTargetOperationalStateType (string value) { throw null; }
@@ -1757,9 +1699,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.Models.StorageTargetType Nfs3 { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageTargetType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.StorageTargetType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageCache.Models.StorageTargetType left, Azure.ResourceManager.StorageCache.Models.StorageTargetType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageTargetType (string value) { throw null; }

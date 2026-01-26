@@ -39,15 +39,6 @@ namespace Azure.ResourceManager.Quota.Mocking
             return new GroupQuotaEntityResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GroupQuotaRequestStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GroupQuotaRequestStatusResource"/> object. </returns>
-        public virtual GroupQuotaRequestStatusResource GetGroupQuotaRequestStatusResource(ResourceIdentifier id)
-        {
-            GroupQuotaRequestStatusResource.ValidateResourceId(id);
-            return new GroupQuotaRequestStatusResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="GroupQuotaSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GroupQuotaSubscriptionResource"/> object. </returns>
@@ -73,6 +64,15 @@ namespace Azure.ResourceManager.Quota.Mocking
         {
             GroupQuotaLimitListResource.ValidateResourceId(id);
             return new GroupQuotaLimitListResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="GroupQuotaRequestStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GroupQuotaRequestStatusResource"/> object. </returns>
+        public virtual GroupQuotaRequestStatusResource GetGroupQuotaRequestStatusResource(ResourceIdentifier id)
+        {
+            GroupQuotaRequestStatusResource.ValidateResourceId(id);
+            return new GroupQuotaRequestStatusResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SubscriptionQuotaAllocationsListResource"/> along with the instance operations that can be performed on it but with no data. </summary>

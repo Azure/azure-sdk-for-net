@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Fabric.Mocking;
 using Azure.ResourceManager.Fabric.Models;
 using Azure.ResourceManager.Resources;
@@ -18,30 +20,32 @@ namespace Azure.ResourceManager.Fabric
     /// <summary> A class to add extension methods to Azure.ResourceManager.Fabric. </summary>
     public static partial class FabricExtensions
     {
+        /// <param name="client"></param>
         private static MockableFabricArmClient GetMockableFabricArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableFabricArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableFabricArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableFabricResourceGroupResource GetMockableFabricResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableFabricResourceGroupResource GetMockableFabricResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableFabricResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableFabricResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableFabricSubscriptionResource GetMockableFabricSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableFabricSubscriptionResource GetMockableFabricSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableFabricSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableFabricSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FabricCapacityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FabricCapacityResource.CreateResourceIdentifier" /> to create a <see cref="FabricCapacityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FabricCapacityResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricArmClient.GetFabricCapacityResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricArmClient.GetFabricCapacityResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="FabricCapacityResource"/> object. </returns>
@@ -53,15 +57,15 @@ namespace Azure.ResourceManager.Fabric
         }
 
         /// <summary>
-        /// Gets a collection of FabricCapacityResources in the ResourceGroupResource.
+        /// Gets a collection of FabricCapacities in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricResourceGroupResource.GetFabricCapacities()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricResourceGroupResource.GetFabricCapacities()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of FabricCapacityResources and their operations over a FabricCapacityResource. </returns>
+        /// <returns> An object representing collection of FabricCapacities and their operations over a FabricCapacityResource. </returns>
         public static FabricCapacityCollection GetFabricCapacities(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -71,34 +75,15 @@ namespace Azure.ResourceManager.Fabric
 
         /// <summary>
         /// Get a FabricCapacity
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricCapacity_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FabricCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricResourceGroupResource.GetFabricCapacityAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricResourceGroupResource.GetFabricCapacityAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="capacityName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<FabricCapacityResource>> GetFabricCapacityAsync(this ResourceGroupResource resourceGroupResource, string capacityName, CancellationToken cancellationToken = default)
         {
@@ -109,34 +94,15 @@ namespace Azure.ResourceManager.Fabric
 
         /// <summary>
         /// Get a FabricCapacity
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricCapacity_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FabricCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricResourceGroupResource.GetFabricCapacity(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricResourceGroupResource.GetFabricCapacity(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="capacityName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<FabricCapacityResource> GetFabricCapacity(this ResourceGroupResource resourceGroupResource, string capacityName, CancellationToken cancellationToken = default)
         {
@@ -147,33 +113,15 @@ namespace Azure.ResourceManager.Fabric
 
         /// <summary>
         /// List FabricCapacity resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/capacities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricCapacity_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FabricCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricSubscriptionResource.GetFabricCapacities(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricSubscriptionResource.GetFabricCapacitiesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="FabricCapacityResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FabricCapacityResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FabricCapacityResource> GetFabricCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -183,30 +131,12 @@ namespace Azure.ResourceManager.Fabric
 
         /// <summary>
         /// List FabricCapacity resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/capacities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricCapacity_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FabricCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricSubscriptionResource.GetFabricCapacities(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricSubscriptionResource.GetFabricCapacities(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="FabricCapacityResource"/> that may take multiple service requests to iterate over. </returns>
@@ -219,34 +149,16 @@ namespace Azure.ResourceManager.Fabric
 
         /// <summary>
         /// Implements local CheckNameAvailability operations
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricCapacities_CheckFabricCapacityNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FabricCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailability(AzureLocation,FabricNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailabilityAsync(AzureLocation, FabricNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<FabricNameAvailabilityResult>> CheckFabricCapacityNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -256,34 +168,16 @@ namespace Azure.ResourceManager.Fabric
 
         /// <summary>
         /// Implements local CheckNameAvailability operations
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricCapacities_CheckFabricCapacityNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FabricCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailability(AzureLocation,FabricNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailability(AzureLocation, FabricNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<FabricNameAvailabilityResult> CheckFabricCapacityNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -293,33 +187,15 @@ namespace Azure.ResourceManager.Fabric
 
         /// <summary>
         /// List eligible SKUs for Microsoft Fabric resource provider
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricCapacities_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FabricCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricSubscriptionResource.GetSkusFabricCapacities(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricSubscriptionResource.GetSkusFabricCapacitiesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="FabricSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FabricSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FabricSkuDetailsForNewCapacity> GetSkusFabricCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -329,30 +205,12 @@ namespace Azure.ResourceManager.Fabric
 
         /// <summary>
         /// List eligible SKUs for Microsoft Fabric resource provider
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricCapacities_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FabricCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricSubscriptionResource.GetSkusFabricCapacities(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricSubscriptionResource.GetSkusFabricCapacities(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="FabricSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
@@ -361,6 +219,44 @@ namespace Azure.ResourceManager.Fabric
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableFabricSubscriptionResource(subscriptionResource).GetSkusFabricCapacities(cancellationToken);
+        }
+
+        /// <summary>
+        /// List the current consumption and limit in this location for the provided subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricSubscriptionResource.GetUsagesAsync(AzureLocation, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FabricCapacitiesQuota"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FabricCapacitiesQuota> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFabricSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the current consumption and limit in this location for the provided subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFabricSubscriptionResource.GetUsages(AzureLocation, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FabricCapacitiesQuota"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FabricCapacitiesQuota> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFabricSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }

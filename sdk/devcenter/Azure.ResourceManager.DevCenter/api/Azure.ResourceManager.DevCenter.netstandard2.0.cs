@@ -1069,9 +1069,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState InProgress { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState (string value) { throw null; }
@@ -1156,9 +1154,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus (string value) { throw null; }
@@ -1177,9 +1173,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus (string value) { throw null; }
@@ -1207,9 +1201,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport IsDisabled { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport IsEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport left, Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport (string value) { throw null; }
@@ -1236,9 +1228,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterLicenseType(string value) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType WindowsClient { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType left, Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType (string value) { throw null; }
@@ -1279,9 +1269,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason left, Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason (string value) { throw null; }
@@ -1393,9 +1381,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState Updated { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState left, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState (string value) { throw null; }
@@ -1422,9 +1408,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterScheduledFrequency(string value) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency Daily { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency left, Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency (string value) { throw null; }
@@ -1439,9 +1423,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterScheduledType(string value) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType StopDevBox { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType left, Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType (string value) { throw null; }
@@ -1457,9 +1439,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus IsDisabled { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus IsEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus (string value) { throw null; }
@@ -1562,9 +1542,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterUsageUnit(string value) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit Count { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit left, Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit (string value) { throw null; }
@@ -1591,9 +1569,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.DomainJoinType AadJoin { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.DomainJoinType HybridAadJoin { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.DomainJoinType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DomainJoinType left, Azure.ResourceManager.DevCenter.Models.DomainJoinType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DomainJoinType (string value) { throw null; }
@@ -1622,9 +1598,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus IsDisabled { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus IsEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus left, Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus (string value) { throw null; }
@@ -1655,9 +1629,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.ImageValidationStatus TimedOut { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.ImageValidationStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.ImageValidationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.ImageValidationStatus left, Azure.ResourceManager.DevCenter.Models.ImageValidationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.ImageValidationStatus (string value) { throw null; }
@@ -1673,9 +1645,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.LocalAdminStatus IsDisabled { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.LocalAdminStatus IsEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.LocalAdminStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.LocalAdminStatus left, Azure.ResourceManager.DevCenter.Models.LocalAdminStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.LocalAdminStatus (string value) { throw null; }
@@ -1727,9 +1697,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus IsDisabled { get { throw null; } }
         public static Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus IsEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus (string value) { throw null; }

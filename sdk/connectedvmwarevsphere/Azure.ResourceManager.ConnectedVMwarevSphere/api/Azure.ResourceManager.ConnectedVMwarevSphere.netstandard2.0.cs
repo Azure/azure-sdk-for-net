@@ -769,7 +769,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings NicIPAddressSettings(string allocationMethod = null, string ipAddress = null, string subnetMask = null) { throw null; }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings NicIPSettings(Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod? allocationMethod = default(Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod?), System.Collections.Generic.IEnumerable<string> dnsServers = null, System.Collections.Generic.IEnumerable<string> gateway = null, string ipAddress = null, string subnetMask = null, string primaryWinsServer = null, string secondaryWinsServer = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings> ipAddressInfo = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfileForVmInstance OSProfileForVmInstance(string computerName, string adminUsername, string adminPassword, string guestId, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareOSType? osType, string osSku, string toolsRunningStatus, string toolsVersionStatus, string toolsVersion) { throw null; }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfileForVmInstance OSProfileForVmInstance(string computerName = null, string adminUsername = null, string adminPassword = null, string guestId = null, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareOSType? osType = default(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareOSType?), string osSku = null, string toolsRunningStatus = null, string toolsVersionStatus = null, string toolsVersion = null, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVmWindowsConfiguration windowsConfiguration = null) { throw null; }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInfrastructureProfile VCenterInfrastructureProfile(string templateId = null, string vCenterId = null, string moRefId = null, string inventoryItemId = null, string moName = null, string folderPath = null, string instanceUuid = null, string smbiosUuid = null, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareFirmwareType? firmwareType = default(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareFirmwareType?), string customResourceName = null) { throw null; }
@@ -800,9 +799,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.GuestAgentProvisioningAction Repair { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.GuestAgentProvisioningAction Uninstall { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.GuestAgentProvisioningAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.GuestAgentProvisioningAction left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.GuestAgentProvisioningAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.GuestAgentProvisioningAction (string value) { throw null; }
@@ -822,9 +819,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod Static { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod Unset { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod (string value) { throw null; }
@@ -905,9 +900,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.PowerOnBootOption Disabled { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.PowerOnBootOption Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.PowerOnBootOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.PowerOnBootOption left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.PowerOnBootOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.PowerOnBootOption (string value) { throw null; }
@@ -925,9 +918,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType Lsilogicsas { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType Pvscsi { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType (string value) { throw null; }
@@ -979,9 +970,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInventoryType VirtualMachineTemplate { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInventoryType VirtualNetwork { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInventoryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInventoryType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInventoryType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInventoryType (string value) { throw null; }
@@ -1025,9 +1014,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing PhysicalSharing { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing VirtualSharing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing (string value) { throw null; }
@@ -1073,9 +1060,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskMode IndependentPersistent { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskMode Persistent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskMode left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskMode (string value) { throw null; }
@@ -1096,9 +1081,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskType Sparse { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskType (string value) { throw null; }
@@ -1114,9 +1097,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareFirmwareType Bios { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareFirmwareType Efi { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareFirmwareType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareFirmwareType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareFirmwareType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareFirmwareType (string value) { throw null; }
@@ -1172,9 +1153,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNicType Vmxnet2 { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNicType Vmxnet3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNicType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNicType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNicType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNicType (string value) { throw null; }
@@ -1191,9 +1170,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareOSType Other { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareOSType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareOSType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareOSType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareOSType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareOSType (string value) { throw null; }
@@ -1226,9 +1203,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceProvisioningState left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceProvisioningState (string value) { throw null; }

@@ -635,9 +635,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation ProtectedAsyncOperationPolling { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation ProtectedAsyncOperationPollingAuditOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation left, Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation (string value) { throw null; }
@@ -653,9 +651,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType ProtectedAsyncOperationPolling { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType ProtectedAsyncOperationPollingAuditOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType left, Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType (string value) { throw null; }
@@ -671,9 +667,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration ProtectedAsyncOperationPolling { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration ProtectedAsyncOperationPollingAuditOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration left, Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration (string value) { throw null; }
@@ -703,9 +697,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent RPContract { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent left, Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent (string value) { throw null; }
@@ -745,9 +737,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole LimitedOwner { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole ServiceOwner { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole left, Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole (string value) { throw null; }
@@ -768,41 +758,33 @@ namespace Azure.ResourceManager.ProviderHub.Models
     }
     public static partial class ArmProviderHubModelFactory
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo CheckinManifestInfo(bool isCheckedIn = false, string statusMessage = null, string pullRequest = null, string commitId = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.CustomRolloutData CustomRolloutData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties CustomRolloutProperties(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?), Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification specification = null, Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus status = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.DefaultRolloutData DefaultRolloutData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties DefaultRolloutProperties(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?), Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification specification = null, Azure.ResourceManager.ProviderHub.Models.DefaultRolloutStatus status = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule LinkedOperationRule(Azure.ResourceManager.ProviderHub.Models.LinkedOperation linkedOperation = default(Azure.ResourceManager.ProviderHub.Models.LinkedOperation), Azure.ResourceManager.ProviderHub.Models.LinkedAction linkedAction = default(Azure.ResourceManager.ProviderHub.Models.LinkedAction)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.NotificationRegistrationData NotificationRegistrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties NotificationRegistrationProperties(Azure.ResourceManager.ProviderHub.Models.NotificationMode? notificationMode = default(Azure.ResourceManager.ProviderHub.Models.NotificationMode?), Azure.ResourceManager.ProviderHub.Models.MessageScope? messageScope = default(Azure.ResourceManager.ProviderHub.Models.MessageScope?), System.Collections.Generic.IEnumerable<string> includedEvents = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.NotificationEndpoint> notificationEndpoints = null, Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.ProviderAuthorizedApplicationData ProviderAuthorizedApplicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties ProviderAuthorizedApplicationProperties(Azure.ResourceManager.ProviderHub.Models.ApplicationProviderAuthorization providerAuthorization = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ApplicationDataAuthorization> dataAuthorizations = null, Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.ProviderMonitorSettingData ProviderMonitorSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? providerMonitorSettingProvisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ProviderHub.ProviderRegistrationData ProviderRegistrationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties properties) { throw null; }
         public static Azure.ResourceManager.ProviderHub.ProviderRegistrationData ProviderRegistrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties properties = null, Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind? kind = default(Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind?)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties ProviderRegistrationProperties(System.Collections.Generic.IEnumerable<string> providerAuthenticationAllowedAudiences = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderService> services = null, string serviceName = null, string providerVersion = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderType? providerType = default(Azure.ResourceManager.ProviderHub.Models.ResourceProviderType?), System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions requestHeaderOptions = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement management = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities> capabilities = null, Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation? crossTenantTokenValidation = default(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation?), System.BinaryData metadata = null, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions templateDeploymentOptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> globalNotificationEndpoints = null, bool? enableTenantLinkedNotification = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderNotification> notifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule> linkedNotificationRules = null, Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules asyncOperationPollingRules = null, Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration dstsConfiguration = null, Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption? notificationOptions = default(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount> resourceHydrationAccounts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.SubscriberSetting> notificationSubscriberSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints = null, System.Collections.Generic.IEnumerable<string> optionalFeatures = null, Azure.ResourceManager.ProviderHub.Models.BlockActionVerb? resourceGroupLockOptionDuringMoveBlockActionVerb = default(Azure.ResourceManager.ProviderHub.Models.BlockActionVerb?), Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType? serviceClientOptionsType = default(Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType?), string legacyNamespace = null, System.Collections.Generic.IEnumerable<string> legacyRegistrations = null, string customManifestVersion = null, Azure.ResourceManager.ProviderHub.Models.ProviderHubMetadata providerHubMetadata = null, Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?), Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = null, System.Collections.Generic.IEnumerable<string> privateResourceProviderAllowedSubscriptions = null, Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration tokenAuthConfiguration = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceType ProviderResourceType(string name = null, Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType? routingType = default(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType?), Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType? additionalOptions = default(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType?), Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation? crossTenantTokenValidation = default(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation?), Azure.ResourceManager.ProviderHub.Models.ResourceValidation? resourceValidation = default(Azure.ResourceManager.ProviderHub.Models.ResourceValidation?), System.Collections.Generic.IEnumerable<string> allowedUnauthorizedActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping> authorizationActionMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LoggingRule> loggingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule> throttlingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> endpoints = null, Azure.ResourceManager.ProviderHub.Models.MarketplaceType? marketplaceType = default(Azure.ResourceManager.ProviderHub.Models.MarketplaceType?), Azure.ResourceManager.ProviderHub.Models.IdentityManagementType? managementType = default(Azure.ResourceManager.ProviderHub.Models.IdentityManagementType?), System.BinaryData metadata = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule> subscriptionStateRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo> serviceTreeInfos = null, Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions requestHeaderOptions = null, string skuLink = null, System.Collections.Generic.IEnumerable<string> disallowedActionVerbs = null, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy templateDeploymentPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions> extendedLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule> linkedOperationRules = null, Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy? resourceDeletionPolicy = default(Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy?), Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule quotaRule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderNotification> notifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule> linkedNotificationRules = null, Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules asyncOperationPollingRules = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceType ProviderResourceType(string name = null, Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType? routingType = default(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType?), Azure.ResourceManager.ProviderHub.Models.ResourceValidation? resourceValidation = default(Azure.ResourceManager.ProviderHub.Models.ResourceValidation?), System.Collections.Generic.IEnumerable<string> allowedUnauthorizedActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping> authorizationActionMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LoggingRule> loggingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule> throttlingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> endpoints = null, Azure.ResourceManager.ProviderHub.Models.MarketplaceType? marketplaceType = default(Azure.ResourceManager.ProviderHub.Models.MarketplaceType?), Azure.ResourceManager.ProviderHub.Models.IdentityManagementType? managementType = default(Azure.ResourceManager.ProviderHub.Models.IdentityManagementType?), System.BinaryData metadata = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule> subscriptionStateRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo> serviceTreeInfos = null, Azure.ResourceManager.ProviderHub.Models.OptInHeaderType? optInHeaders = default(Azure.ResourceManager.ProviderHub.Models.OptInHeaderType?), string skuLink = null, System.Collections.Generic.IEnumerable<string> disallowedActionVerbs = null, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy templateDeploymentPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions> extendedLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule> linkedOperationRules = null, Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy? resourceDeletionPolicy = default(Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy?)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata(bool isEnabled = false, int? concurrencyLimit = default(int?)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceManagementEntity ResourceManagementEntity(Azure.Core.ResourceIdentifier resourceId = null, string homeTenantId = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string status = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> apiVersions = null, System.Uri endpointUri = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), System.TimeSpan? timeout = default(System.TimeSpan?)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> apiVersions = null, System.Uri endpointUri = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), System.TimeSpan? timeout = default(System.TimeSpan?), Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType? endpointType = default(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType?), string skuLink = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest ResourceProviderManifest(System.Collections.Generic.IEnumerable<string> providerAuthenticationAllowedAudiences = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderService> services = null, string serviceName = null, string providerVersion = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderType? providerType = default(Azure.ResourceManager.ProviderHub.Models.ResourceProviderType?), System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions requestHeaderOptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderResourceType> resourceTypes = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement management = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities> capabilities = null, Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation? crossTenantTokenValidation = default(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation?), System.BinaryData metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> globalNotificationEndpoints = null, Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = null, bool? isTenantLinkedNotificationEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderNotification> notifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule> linkedNotificationRules = null, Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules asyncOperationPollingRules = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest ResourceProviderManifest(System.Collections.Generic.IEnumerable<string> providerAuthenticationAllowedAudiences = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, string providerVersion = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderType? providerType = default(Azure.ResourceManager.ProviderHub.Models.ResourceProviderType?), System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), Azure.ResourceManager.ProviderHub.Models.OptInHeaderType? optInHeaders = default(Azure.ResourceManager.ProviderHub.Models.OptInHeaderType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderResourceType> resourceTypes = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement management = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities> capabilities = null, System.BinaryData metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> globalNotificationEndpoints = null, Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData ResourceTypeRegistrationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties properties) { throw null; }
         public static Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData ResourceTypeRegistrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties properties = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind? kind = default(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind?)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties ResourceTypeRegistrationProperties(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType? routingType = default(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType?), Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration? additionalOptions = default(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration?), Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation? crossTenantTokenValidation = default(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation?), Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality? regionality = default(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpoint> endpoints = null, Azure.ResourceManager.ProviderHub.Models.ExtensionOptions extensionOptionsResourceCreationBegin = null, Azure.ResourceManager.ProviderHub.Models.MarketplaceType? marketplaceType = default(Azure.ResourceManager.ProviderHub.Models.MarketplaceType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.SwaggerSpecification> swaggerSpecifications = null, System.Collections.Generic.IEnumerable<string> allowedUnauthorizedActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping> authorizationActionMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LoggingRule> loggingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule> throttlingRules = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), bool? isAsyncOperationEnabled = default(bool?), Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?), bool? isThirdPartyS2SEnabled = default(bool?), Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = null, bool? isPureProxy = default(bool?), Azure.ResourceManager.ProviderHub.Models.IdentityManagementProperties identityManagement = null, Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications = null, System.Collections.Generic.IEnumerable<string> disallowedActionVerbs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo> serviceTreeInfos = null, Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions requestHeaderOptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule> subscriptionStateRules = null, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions templateDeploymentOptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions> extendedLocations = null, Azure.ResourceManager.ProviderHub.Models.ResourceMovePolicy resourceMovePolicy = null, Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy? resourceDeletionPolicy = default(Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyControlOption> resourceConcurrencyControlOptions = null, Azure.ResourceManager.ProviderHub.Models.ResourceGraphConfiguration resourceGraphConfiguration = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement management = null, bool? isNoncompliantCollectionResponseAllowed = default(bool?), Azure.ResourceManager.ProviderHub.Models.ResourceTypeOnBehalfOfToken onBehalfOfTokens = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory? category = default(Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory?), Azure.ResourceManager.ProviderHub.Models.ResourceValidation? resourceValidation = default(Azure.ResourceManager.ProviderHub.Models.ResourceValidation?), System.Collections.Generic.IEnumerable<string> disallowedEndUserOperations = null, System.Collections.Generic.IDictionary<string, System.BinaryData> metadata = null, string skuLink = null, Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule quotaRule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderNotification> notifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule> linkedNotificationRules = null, Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules asyncOperationPollingRules = null, Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration tokenAuthConfiguration = null, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy templateDeploymentPolicy = null, bool? isEmptyRoleAssignmentsAllowed = default(bool?), Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType? policyExecutionType = default(Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType?), Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy? availabilityZonePolicy = default(Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy?), Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration dstsConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRule> asyncTimeoutRules = null, System.Collections.Generic.IEnumerable<string> commonApiVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationApiProfile> apiProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule> linkedOperationRules = null, string legacyName = null, System.Collections.Generic.IEnumerable<string> legacyNames = null, System.Collections.Generic.IEnumerable<string> allowedTemplateDeploymentReferenceActions = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationLegacyPolicy legacyPolicy = null, string manifestLink = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityRule capacityRule = null, bool? isAddOnPlanConversionAllowed = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AllowedResourceName> allowedResourceNames = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceCache resourceCache = null, Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption? resourceQueryManagementFilterOption = default(Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption?), bool? areTagsSupported = default(bool?), Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions resourceManagementOptions = null, string groupingTag = null, bool? isAddResourceListTargetLocationsAllowed = default(bool?), Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode? commonApiVersionsMergeMode = default(Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode?), string routingRuleHostResourceType = null, Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode? frontdoorRequestMode = default(Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode?), Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType? resourceSubType = default(Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType?), string asyncOperationResourceTypeName = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.ResourceTypeSkuData ResourceTypeSkuData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties ResourceTypeSkuProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting> skuSettings = null, Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy TemplateDeploymentPolicy(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability capabilities = default(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability), Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption preflightOptions = default(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.TypedErrorInfo TypedErrorInfo(string typedErrorInfoType = null, System.BinaryData info = null) { throw null; }
     }
@@ -852,9 +834,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy SingleZoned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy left, Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy (string value) { throw null; }
@@ -874,9 +854,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment Prod { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment left, Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment (string value) { throw null; }
@@ -896,9 +874,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.BlockActionVerb Unrecognized { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.BlockActionVerb Write { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.BlockActionVerb other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.BlockActionVerb left, Azure.ResourceManager.ProviderHub.Models.BlockActionVerb right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.BlockActionVerb (string value) { throw null; }
@@ -964,9 +940,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode Merge { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode Overwrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode left, Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode (string value) { throw null; }
@@ -982,9 +956,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation EnsureSecureValidation { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation PassthroughInsecureToken { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation left, Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation (string value) { throw null; }
@@ -1115,9 +1087,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent Hotfix { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent left, Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent (string value) { throw null; }
@@ -1173,9 +1143,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType IncludeInternalMetadata { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType left, Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType (string value) { throw null; }
@@ -1205,9 +1173,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy All { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy Any { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy left, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy (string value) { throw null; }
@@ -1223,9 +1189,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode UseManifest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode left, Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode (string value) { throw null; }
@@ -1258,9 +1222,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.IdentityManagementType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.IdentityManagementType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.IdentityManagementType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.IdentityManagementType left, Azure.ResourceManager.ProviderHub.Models.IdentityManagementType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.IdentityManagementType (string value) { throw null; }
@@ -1317,9 +1279,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.LinkedAction NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.LinkedAction Validate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.LinkedAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.LinkedAction left, Azure.ResourceManager.ProviderHub.Models.LinkedAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.LinkedAction (string value) { throw null; }
@@ -1351,9 +1311,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.LinkedOperation CrossSubscriptionResourceMove { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.LinkedOperation None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.LinkedOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.LinkedOperation left, Azure.ResourceManager.ProviderHub.Models.LinkedOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.LinkedOperation (string value) { throw null; }
@@ -1382,9 +1340,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.LoggingDetail Body { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.LoggingDetail None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.LoggingDetail other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.LoggingDetail left, Azure.ResourceManager.ProviderHub.Models.LoggingDetail right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.LoggingDetail (string value) { throw null; }
@@ -1401,9 +1357,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.LoggingDirection Request { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.LoggingDirection Response { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.LoggingDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.LoggingDirection left, Azure.ResourceManager.ProviderHub.Models.LoggingDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.LoggingDirection (string value) { throw null; }
@@ -1457,9 +1411,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy Force { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy left, Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy (string value) { throw null; }
@@ -1482,9 +1434,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.MessageScope NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.MessageScope RegisteredSubscriptions { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.MessageScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.MessageScope left, Azure.ResourceManager.ProviderHub.Models.MessageScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.MessageScope (string value) { throw null; }
@@ -1513,9 +1463,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.NotificationMode NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.NotificationMode WebHook { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.NotificationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.NotificationMode left, Azure.ResourceManager.ProviderHub.Models.NotificationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.NotificationMode (string value) { throw null; }
@@ -1556,9 +1504,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.OptInHeaderType SignedUserToken { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.OptInHeaderType UnboundedClientGroupMembership { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.OptInHeaderType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.OptInHeaderType left, Azure.ResourceManager.ProviderHub.Models.OptInHeaderType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.OptInHeaderType (string value) { throw null; }
@@ -1574,9 +1520,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType SystemDataCreatedByLastModifiedBy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType left, Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType (string value) { throw null; }
@@ -1594,9 +1538,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType ExpectPartialPutRequests { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType left, Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType (string value) { throw null; }
@@ -1613,9 +1555,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.PreflightOption DefaultValidationOnly { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.PreflightOption None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.PreflightOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.PreflightOption left, Azure.ResourceManager.ProviderHub.Models.PreflightOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.PreflightOption (string value) { throw null; }
@@ -1643,9 +1583,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme Bearer { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme PoP { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme left, Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme (string value) { throw null; }
@@ -1701,9 +1639,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType Production { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType TestInProduction { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType left, Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType (string value) { throw null; }
@@ -1721,9 +1657,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType Production { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType TestInProduction { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType left, Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType (string value) { throw null; }
@@ -1741,9 +1675,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType EdgeZone { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType left, Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType (string value) { throw null; }
@@ -1808,11 +1740,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public partial class ProviderHubExtendedLocationOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>
     {
         public ProviderHubExtendedLocationOptions() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ExtendedLocationOptionsType { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType? LocationType { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy? SupportedLocationPolicy { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SupportedPolicy { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1821,7 +1751,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum ProviderHubExtendedLocationType
     {
         NotSpecified = 0,
@@ -1865,9 +1794,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState TransientFailure { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState left, Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState (string value) { throw null; }
@@ -1891,9 +1818,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation ResourceCacheWaiting { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation Waiting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation left, Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation (string value) { throw null; }
@@ -1934,9 +1859,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType Eventhub { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType Webhook { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType left, Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType (string value) { throw null; }
@@ -1953,9 +1876,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption None { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption left, Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption (string value) { throw null; }
@@ -1971,9 +1892,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType SubscriptionNotification { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType Unspecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType left, Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType (string value) { throw null; }
@@ -1990,9 +1909,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy None { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy Restricted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy left, Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy (string value) { throw null; }
@@ -2022,9 +1939,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind Hybrid { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind Managed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind left, Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind (string value) { throw null; }
@@ -2067,9 +1982,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption EnableSubscriptionFilterOnTenant { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption left, Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption (string value) { throw null; }
@@ -2085,9 +1998,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType AsyncOperation { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType left, Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType (string value) { throw null; }
@@ -2149,9 +2060,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState PastDue { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState Warned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState left, Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState (string value) { throw null; }
@@ -2220,9 +2129,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy SynchronizeBeginExtension { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy (string value) { throw null; }
@@ -2239,9 +2146,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy CascadeDeleteProxyOnlyChildren { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy (string value) { throw null; }
@@ -2309,9 +2214,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation Get { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation left, Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation (string value) { throw null; }
@@ -2370,9 +2273,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect Disallow { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect left, Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect (string value) { throw null; }
@@ -2426,7 +2327,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string ProfitCenterProgramId { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ResourceAccessPolicy? ResourceAccessPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceAccessRole> ResourceAccessRoleList { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property has been deprecated, please use `ResourceAccessRoleList` instead.", false)]
         public System.Collections.Generic.IList<System.BinaryData> ResourceAccessRoles { get { throw null; } }
         public System.Collections.Generic.IList<string> SchemaOwners { get { throw null; } }
@@ -2534,9 +2434,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus Active { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus left, Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus (string value) { throw null; }
@@ -2558,9 +2456,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderType RegistrationFree { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderType TenantOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceProviderType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceProviderType left, Azure.ResourceManager.ProviderHub.Models.ResourceProviderType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceProviderType (string value) { throw null; }
@@ -2588,9 +2484,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType ServiceFanout { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType Tenant { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType left, Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType (string value) { throw null; }
@@ -2620,9 +2514,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory None { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory PureProxy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory (string value) { throw null; }
@@ -2640,9 +2532,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary NotDefined { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary US { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary (string value) { throw null; }
@@ -2706,9 +2596,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind Direct { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind Managed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind (string value) { throw null; }
@@ -2724,9 +2612,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy All { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy (string value) { throw null; }
@@ -2771,9 +2657,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory SubscriptionLifecycleNotification { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory SubscriptionLifecycleNotificationDeletion { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory (string value) { throw null; }
@@ -2813,9 +2697,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy Default { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy Restricted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy (string value) { throw null; }
@@ -2857,9 +2739,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind Hybrid { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind Managed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind (string value) { throw null; }
@@ -2974,9 +2854,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality Regional { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality (string value) { throw null; }
@@ -3039,7 +2917,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public ResourceTypeSkuLocationInfo(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> ExtendedLocations { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType? LocationType { get { throw null; } set { } }
@@ -3074,9 +2951,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType Manual { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType (string value) { throw null; }
@@ -3127,9 +3002,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceValidation ProfaneWords { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceValidation ReservedWords { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceValidation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceValidation left, Azure.ResourceManager.ProviderHub.Models.ResourceValidation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceValidation (string value) { throw null; }
@@ -3157,9 +3030,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType OutageReporting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType left, Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType (string value) { throw null; }
@@ -3175,9 +3046,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType DisableAutomaticDecompression { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType left, Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType (string value) { throw null; }
@@ -3193,9 +3062,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction Create { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction DoNotCreate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction left, Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction (string value) { throw null; }
@@ -3231,9 +3098,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness RemovedFromARM { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness Retired { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness left, Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness (string value) { throw null; }
@@ -3249,9 +3114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.SignedRequestScope Endpoint { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.SignedRequestScope ResourceUri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.SignedRequestScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.SignedRequestScope left, Azure.ResourceManager.ProviderHub.Models.SignedRequestScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.SignedRequestScope (string value) { throw null; }
@@ -3268,9 +3131,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.SkipNotification Enabled { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.SkipNotification Unspecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.SkipNotification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.SkipNotification left, Azure.ResourceManager.ProviderHub.Models.SkipNotification right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.SkipNotification (string value) { throw null; }
@@ -3313,9 +3174,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation SoftDeleteAllResources { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation UndoSoftDelete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation left, Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation (string value) { throw null; }
@@ -3333,9 +3192,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult ForcedUpdate { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult NotApplicable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult left, Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult (string value) { throw null; }
@@ -3374,9 +3231,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState WarnedToSuspended { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState WarnedToUnregistered { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState left, Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState (string value) { throw null; }
@@ -3404,9 +3259,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability Default { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability Preflight { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability left, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability (string value) { throw null; }
@@ -3447,9 +3300,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification None { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification UnregisteredSubscriptions { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification left, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification (string value) { throw null; }
@@ -3468,9 +3319,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption TestOnly { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption ValidationRequests { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption left, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption (string value) { throw null; }
@@ -3523,9 +3372,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType NumberOfRequests { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType NumberOfResources { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType left, Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType (string value) { throw null; }
@@ -3574,9 +3421,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory RestOfTheWorldGroupOne { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory RestOfTheWorldGroupTwo { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory left, Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory (string value) { throw null; }
