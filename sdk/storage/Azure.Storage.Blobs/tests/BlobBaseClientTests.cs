@@ -2095,6 +2095,32 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task StartCopyFromUriAsync_SmartAccessTier()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                AccessTier = AccessTier.Smart
+            };
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri, options);
+
+            // Assert
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Smart.ToString(), response.Value.AccessTier);
+        }
+
+        [RecordedTest]
         [TestCase(nameof(BlobRequestConditions.LeaseId))]
         public async Task StartCopyFromUriAsync_InvalidSourceRequestConditions(string invalidSourceCondition)
         {
@@ -2896,6 +2922,30 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(copyResponse.Value.LastModified);
             Assert.IsNotNull(copyResponse.Value.CopyId);
             Assert.AreEqual(CopyStatus.Success, copyResponse.Value.CopyStatus);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task SyncCopyFromUriAsync_SmartAccessTier()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            Uri srcBlobSasUri = srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1));
+            srcBlob = InstrumentClient(new BlobBaseClient(srcBlobSasUri, GetOptions()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions()
+            {
+                AccessTier = AccessTier.Smart
+            };
+            await destBlob.SyncCopyFromUriAsync(srcBlob.Uri, options);
+
+            // Assert
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Smart.ToString(), response.Value.AccessTier);
         }
 
         [RecordedTest]
@@ -6340,6 +6390,42 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.AreEqual(1, blobHierarchyItems.Count);
             Assert.AreEqual(AccessTier.Cold, blobHierarchyItems[0].Blob.Properties.AccessTier);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task SetTierAsync_Smart()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            await blob.SetAccessTierAsync(AccessTier.Smart);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Smart.ToString(), response.Value.AccessTier);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task SetTierAsync_Smart_GetBlobsAsync()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob1 = await GetNewBlobClient(test.Container, "smartBlob1");
+            BlobBaseClient blob2 = await GetNewBlobClient(test.Container, "smartBlob2");
+
+            // Act
+            await blob1.SetAccessTierAsync(AccessTier.Smart);
+            await blob2.SetAccessTierAsync(AccessTier.Smart);
+
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync())
+            {
+                // Assert
+                Assert.AreEqual(AccessTier.Smart, blobItem.Properties.AccessTier);
+            }
         }
 
         [RecordedTest]

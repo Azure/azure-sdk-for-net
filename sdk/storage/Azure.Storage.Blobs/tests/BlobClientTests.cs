@@ -376,6 +376,29 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task UploadAsync_Stream_AccessTier_Smart()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                AccessTier = AccessTier.Smart
+            };
+
+            // Act
+            await blob.UploadAsync(stream, options);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Smart.ToString(), response.Value.AccessTier);
+        }
+
+        [RecordedTest]
         public async Task UploadAsync_BinaryData()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

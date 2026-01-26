@@ -814,6 +814,20 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task SetBlobAccessTier_Smart()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            Response[] responses = await client.SetBlobsAccessTierAsync(uris, AccessTier.Smart);
+
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Smart, blobs);
+        }
+
+        [RecordedTest]
         public async Task SetBlobAccessTier_Basic_Convenience()
         {
             await using TestScenario scenario = Scenario();
