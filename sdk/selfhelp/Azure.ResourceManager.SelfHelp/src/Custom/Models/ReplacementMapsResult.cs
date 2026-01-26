@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public partial class ReplacementMapsResult
     {
         /// <summary> Solution AzureKB results. </summary>
+        /// This is required to change the type of WebResults from IList to IReadOnlyList. The other two properties in the class are changed similarly.
         public IReadOnlyList<KBWebResult> WebResults { get; }
 
         /// <summary> Video solutions, which have the power to engage the customer by stimulating their senses. </summary>
