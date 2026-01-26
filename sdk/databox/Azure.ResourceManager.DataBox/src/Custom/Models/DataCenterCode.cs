@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.DataBox.Models
     public readonly partial struct DataCenterCode : IEquatable<DataCenterCode>
     {
         /// <summary> IDC5. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataCenterCode IdC5 { get; } = new DataCenterCode(IDC5Value);
     }
 }
