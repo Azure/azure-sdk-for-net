@@ -94,18 +94,14 @@ Write-Host "  ✓ Committed changes" -ForegroundColor Green
 Write-Host ""
 
 # ============================================================================
-# STEP 2: Run migration script for each service
+# STEP 2: Run migration script for all services at once
 # ============================================================================
 
-Write-Host "STEP 2: Running migration script for each service" -ForegroundColor Cyan
+Write-Host "STEP 2: Running migration script for all services" -ForegroundColor Cyan
 Write-Host "============================================================================" -ForegroundColor Cyan
 Write-Host ""
 
-foreach ($serviceDir in $serviceDirectories) {
-    Write-Host "Migrating: $serviceDir" -ForegroundColor White
-    & "$PSScriptRoot\Migrate-NUnit4.ps1" -ServiceDirectory $serviceDir
-    Write-Host ""
-}
+& "$PSScriptRoot\Migrate-NUnit4.ps1" -ServiceDirectories $serviceDirectories
 
 # Commit migration changes
 git add "sdk/*/*.cs"
