@@ -157,7 +157,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(ex.Status, Is.EqualTo(200));
 
             dynamic error = ex.GetRawResponse()?.Content.ToDynamicFromJson(JsonPropertyNames.UseExact).error;
-            Assert.NotNull(error);
+            Assert.That(error, Is.Not.Null);
             Assert.That((string)error.code, Is.EqualTo("BadRequest"));
             Assert.That((string)error.message, Is.EqualTo("Invalid backup: Reason: Cannot read backup status document"));
         }
@@ -194,7 +194,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(ex.Status, Is.EqualTo(200));
 
             dynamic error = ex.GetRawResponse()?.Content.ToDynamicFromJson(JsonPropertyNames.UseExact).error;
-            Assert.NotNull(error);
+            Assert.That(error, Is.Not.Null);
             Assert.That((string)error.code, Is.EqualTo("BadRequest"));
             Assert.That((string)error.message, Is.EqualTo("Invalid backup: Reason: Cannot read backup status document"));
         }

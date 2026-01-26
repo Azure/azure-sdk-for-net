@@ -14,7 +14,6 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
-using static Moq.It;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -342,18 +341,18 @@ namespace Azure.Storage.Blobs.Test
         {
             clientMock.Setup(
                 c => c.StageBlockInternal(
-                    IsAny<string>(),
-                    IsAny<Stream>(),
-                    IsAny<UploadTransferValidationOptions>(),
-                    IsAny<BlobRequestConditions>(),
-                    IsAny<IProgress<long>>(),
+                    It.IsAny<string>(),
+                    It.IsAny<Stream>(),
+                    It.IsAny<UploadTransferValidationOptions>(),
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<IProgress<long>>(),
                     _async,
                     s_cancellationToken
                 )).Returns<string, Stream, UploadTransferValidationOptions, BlobRequestConditions, IProgress<long>, bool, CancellationToken>(sink.StageInternal);
 
             clientMock.Setup(
                 c => c.CommitBlockListInternal(
-                    IsAny<IEnumerable<string>>(),
+                    It.IsAny<IEnumerable<string>>(),
                     s_blobHttpHeaders,
                     s_metadata,
                     s_tags,

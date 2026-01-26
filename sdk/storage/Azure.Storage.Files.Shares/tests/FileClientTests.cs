@@ -7062,8 +7062,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileSymbolicLinkInfo> getSymLinkResponse = await symlink.GetSymbolicLinkAsync();
 
             // Assert
-            Assert.That(getSymLinkResponse.Value.ETag, Is.Not.EqualTo(default));
-            Assert.That(getSymLinkResponse.Value.LastModified, Is.Not.EqualTo(default));
+            Assert.That(getSymLinkResponse.Value.ETag, Is.Not.EqualTo(default(ETag)));
+            Assert.That(getSymLinkResponse.Value.LastModified, Is.Not.EqualTo(default(DateTimeOffset)));
             Assert.That(getSymLinkResponse.Value.LinkText, Is.EqualTo(WebUtility.UrlEncode(source.Uri.ToString())));
         }
 

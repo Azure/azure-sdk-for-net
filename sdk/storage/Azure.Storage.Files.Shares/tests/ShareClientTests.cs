@@ -511,7 +511,7 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 Response<ShareInfo> result = await share.CreateAsync(quotaInGB: 1);
 
-                Assert.That(result.GetRawResponse().Headers.RequestId, Is.Not.EqualTo(default), $"{nameof(result)} may not be populated");
+                Assert.That(result.GetRawResponse().Headers.RequestId, Is.Not.EqualTo(default(string)), $"{nameof(result)} may not be populated");
             }
             finally
             {
@@ -566,7 +566,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
 
             // Assert
-            Assert.AreEqual(permission, getResponse.Value.Permission);
+            Assert.That(getResponse.Value.Permission, Is.EqualTo(permission));
         }
 
         [RecordedTest]
@@ -591,7 +591,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
 
             // Assert
-            Assert.AreEqual(permission, getResponse.Value.Permission);
+            Assert.That(getResponse.Value.Permission, Is.EqualTo(permission));
         }
 
         [RecordedTest]
@@ -625,14 +625,14 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey, filePermissionFormat);
 
             // Assert
-            Assert.AreEqual(permission, getResponse.Value.Permission);
+            Assert.That(getResponse.Value.Permission, Is.EqualTo(permission));
             if (filePermissionFormat == null || filePermissionFormat == FilePermissionFormat.Sddl)
             {
-                Assert.AreEqual(FilePermissionFormat.Sddl, getResponse.Value.PermissionFormat);
+                Assert.That(getResponse.Value.PermissionFormat, Is.EqualTo(FilePermissionFormat.Sddl));
             }
             else
             {
-                Assert.AreEqual(FilePermissionFormat.Binary, getResponse.Value.PermissionFormat);
+                Assert.That(getResponse.Value.PermissionFormat, Is.EqualTo(FilePermissionFormat.Binary));
             }
         }
 
@@ -652,7 +652,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.CreatePermissionAsync(filePermission),
-                e => Assert.AreEqual("FileInvalidPermission", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("FileInvalidPermission")));
         }
 
         [RecordedTest]
@@ -677,8 +677,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 // Assert
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
-                Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
-                Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
+                Assert.That(response.Value.Protocols, Is.EqualTo(ShareProtocols.Nfs));
+                Assert.That(response.Value.RootSquash, Is.EqualTo(ShareRootSquash.AllSquash));
             }
             finally
             {
@@ -709,7 +709,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 // Assert
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
-                Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
+                Assert.That(response.Value.Protocols, Is.EqualTo(ShareProtocols.Nfs));
                 if (enableSnapshotVirtualDirectoryAccess == true || enableSnapshotVirtualDirectoryAccess == null)
                 {
                     Assert.That(response.Value.EnableSnapshotVirtualDirectoryAccess, Is.True);
@@ -748,8 +748,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 // Assert
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
                 Assert.That(response.Value.EnablePaidBursting, Is.True);
-                Assert.AreEqual(5000, response.Value.PaidBurstingMaxIops);
-                Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
+                Assert.That(response.Value.PaidBurstingMaxIops, Is.EqualTo(5000));
+                Assert.That(response.Value.PaidBurstingMaxBandwidthMibps, Is.EqualTo(1000));
 
                 // Act
                 IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
@@ -757,8 +757,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 // Assert
                 Assert.That(shareItem.Properties.EnablePaidBursting, Is.True);
-                Assert.AreEqual(5000, shareItem.Properties.PaidBurstingMaxIops);
-                Assert.AreEqual(1000, shareItem.Properties.PaidBurstingMaxBandwidthMibps);
+                Assert.That(shareItem.Properties.PaidBurstingMaxIops, Is.EqualTo(5000));
+                Assert.That(shareItem.Properties.PaidBurstingMaxBandwidthMibps, Is.EqualTo(1000));
             }
             finally
             {
@@ -835,7 +835,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 // Assert
                 Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
                 // Ensure that we grab the whole ETag value from the service without removing the quotes
-                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+                Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
             }
             finally
             {
@@ -855,7 +855,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.GetPermissionAsync(permissionKey),
-                e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("InvalidHeaderValue")));
         }
 
         [RecordedTest]
@@ -907,7 +907,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizesShareClient.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("NoAuthenticationInformation")));
         }
 
         [RecordedTest]
@@ -963,7 +963,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedShareClient.ExistsAsync(),
-                e => Assert.AreEqual("AuthorizationFailure", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthorizationFailure")));
         }
 
         [RecordedTest]
@@ -1033,7 +1033,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedShareClient.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("AuthorizationFailure", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthorizationFailure")));
         }
 
         [RecordedTest]
@@ -1080,7 +1080,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 shareClient.DeleteIfExistsAsync(options: options),
-                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithContainerOperation")));
 
             // Cleanup
             await shareClient.DeleteAsync();
@@ -1097,7 +1097,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
             Assert.That(response.Value.LastModified, Is.Not.Null);
         }
 
@@ -1131,7 +1131,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 snapshotShareClient.GetPropertiesAsync(),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -1155,8 +1155,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(ShareProtocols.Nfs, propertiesResponse.Value.Protocols);
-            Assert.AreEqual(ShareRootSquash.AllSquash, propertiesResponse.Value.RootSquash);
+            Assert.That(propertiesResponse.Value.Protocols, Is.EqualTo(ShareProtocols.Nfs));
+            Assert.That(propertiesResponse.Value.RootSquash, Is.EqualTo(ShareRootSquash.AllSquash));
         }
 
         [RecordedTest]
@@ -1192,7 +1192,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.GetPropertiesAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ShareNotFound")));
         }
 
         [RecordedTest]
@@ -1238,7 +1238,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 test.Share.GetPropertiesAsync(conditions: conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithContainerOperation")));
         }
 
         [RecordedTest]
@@ -1256,7 +1256,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
             Assert.That(response.Value.LastModified, Is.Not.Null);
         }
 
@@ -1274,7 +1274,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
 
             // Ensure the correct metadata was set by doing a GetProperties call
             Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
@@ -1293,7 +1293,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetMetadataAsync(metadata),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ShareNotFound")));
         }
 
         [RecordedTest]
@@ -1347,7 +1347,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 test.Share.SetMetadataAsync(
                     metadata: metadata,
                     conditions: conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithContainerOperation")));
         }
 
         [RecordedTest]
@@ -1366,7 +1366,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
 
             // Ensure the correct metadata was set by doing a GetProperties call
             Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
@@ -1389,11 +1389,11 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             ShareSignedIdentifier acl = response.Value.First();
 
-            Assert.AreEqual(1, response.Value.Count());
-            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
+            Assert.That(response.Value.Count(), Is.EqualTo(1));
+            Assert.That(acl.Id, Is.EqualTo(signedIdentifiers[0].Id));
+            Assert.That(acl.AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyStartsOn));
+            Assert.That(acl.AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn));
+            Assert.That(acl.AccessPolicy.Permissions, Is.EqualTo(signedIdentifiers[0].AccessPolicy.Permissions));
         }
 
         [RecordedTest]
@@ -1407,7 +1407,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.GetAccessPolicyAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ShareNotFound")));
         }
 
         [RecordedTest]
@@ -1453,7 +1453,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 test.Share.GetAccessPolicyAsync(conditions: conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithContainerOperation")));
         }
 
         [RecordedTest]
@@ -1474,11 +1474,11 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             ShareSignedIdentifier acl = response.Value.First();
 
-            Assert.AreEqual(1, response.Value.Count());
-            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
+            Assert.That(response.Value.Count(), Is.EqualTo(1));
+            Assert.That(acl.Id, Is.EqualTo(signedIdentifiers[0].Id));
+            Assert.That(acl.AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyStartsOn));
+            Assert.That(acl.AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn));
+            Assert.That(acl.AccessPolicy.Permissions, Is.EqualTo(signedIdentifiers[0].AccessPolicy.Permissions));
         }
 
         [RecordedTest]
@@ -1496,7 +1496,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
         }
 
         [RecordedTest]
@@ -1551,7 +1551,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 test.Share.SetAccessPolicyAsync(
                     signedIdentifiers,
                     conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithContainerOperation")));
         }
 
         [RecordedTest]
@@ -1575,8 +1575,8 @@ namespace Azure.Storage.Files.Shares.Tests
                     }
                 };
             // Assert
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifiers[0].AccessPolicy.StartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifiers[0].AccessPolicy.ExpiresOn);
+            Assert.That(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.StartsOn));
+            Assert.That(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.ExpiresOn));
 
             // Act
             Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiers);
@@ -1585,12 +1585,12 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<System.Collections.Generic.IEnumerable<ShareSignedIdentifier>> responseAfter = await share.GetAccessPolicyAsync();
             Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             ShareSignedIdentifier signedIdentifierResponse = responseAfter.Value.First();
-            Assert.AreEqual(1, responseAfter.Value.Count());
-            Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.StartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.ExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
+            Assert.That(responseAfter.Value.Count(), Is.EqualTo(1));
+            Assert.That(signedIdentifiers[0].Id, Is.EqualTo(signedIdentifierResponse.Id));
+            Assert.That(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.PolicyStartsOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.StartsOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.PolicyStartsOn));
+            Assert.That(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.ExpiresOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn));
             Assert.That(signedIdentifierResponse.AccessPolicy.Permissions, Is.Null);
         }
 
@@ -1615,7 +1615,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 }
             };
             // Assert
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifiers[0].AccessPolicy.StartsOn);
+            Assert.That(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.StartsOn));
             Assert.That(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, Is.Null);
 
             // Act
@@ -1627,12 +1627,12 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<System.Collections.Generic.IEnumerable<ShareSignedIdentifier>> responseAfter = await share.GetAccessPolicyAsync();
             Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             ShareSignedIdentifier signedIdentifierResponse = responseAfter.Value.First();
-            Assert.AreEqual(1, responseAfter.Value.Count());
-            Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.StartsOn);
+            Assert.That(responseAfter.Value.Count(), Is.EqualTo(1));
+            Assert.That(signedIdentifiers[0].Id, Is.EqualTo(signedIdentifierResponse.Id));
+            Assert.That(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.PolicyStartsOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.StartsOn));
             Assert.That(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn, Is.Null);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.Permissions, signedIdentifiers[0].AccessPolicy.Permissions);
+            Assert.That(signedIdentifierResponse.AccessPolicy.Permissions, Is.EqualTo(signedIdentifiers[0].AccessPolicy.Permissions));
         }
 
         [RecordedTest]
@@ -1656,8 +1656,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 }
             };
             // Assert
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifiers[0].AccessPolicy.StartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifiers[0].AccessPolicy.ExpiresOn);
+            Assert.That(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.StartsOn));
+            Assert.That(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.ExpiresOn));
 
             // Act
             Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiers);
@@ -1668,12 +1668,12 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<System.Collections.Generic.IEnumerable<ShareSignedIdentifier>> responseAfter = await share.GetAccessPolicyAsync();
             Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             ShareSignedIdentifier signedIdentifierResponse = responseAfter.Value.First();
-            Assert.AreEqual(1, responseAfter.Value.Count());
-            Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.StartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.ExpiresOn);
+            Assert.That(responseAfter.Value.Count(), Is.EqualTo(1));
+            Assert.That(signedIdentifiers[0].Id, Is.EqualTo(signedIdentifierResponse.Id));
+            Assert.That(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.PolicyStartsOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.StartsOn));
+            Assert.That(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.ExpiresOn));
             Assert.That(signedIdentifierResponse.AccessPolicy.Permissions, Is.Null);
         }
 
@@ -1689,7 +1689,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetAccessPolicyAsync(signedIdentifiers),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ShareNotFound")));
         }
 
         [RecordedTest]
@@ -1709,7 +1709,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
         }
 
         [RecordedTest]
@@ -1720,8 +1720,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 Permissions = "rw"
             };
 
-            Assert.AreEqual(new DateTimeOffset(), accessPolicy.StartsOn);
-            Assert.AreEqual(new DateTimeOffset(), accessPolicy.ExpiresOn);
+            Assert.That(accessPolicy.StartsOn, Is.EqualTo(new DateTimeOffset()));
+            Assert.That(accessPolicy.ExpiresOn, Is.EqualTo(new DateTimeOffset()));
         }
 
         [RecordedTest]
@@ -1755,7 +1755,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareStatistics> response = await shareClient.GetStatisticsAsync();
 
             // Assert
-            Assert.AreEqual(size, response.Value.ShareUsageInBytes);
+            Assert.That(response.Value.ShareUsageInBytes, Is.EqualTo(size));
 
             TestHelper.AssertExpectedException(
                 () => { int intSize = response.Value.ShareUsageBytes; },
@@ -1774,7 +1774,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.GetStatisticsAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ShareNotFound")));
         }
 
         [RecordedTest]
@@ -1820,7 +1820,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 test.Share.GetStatisticsAsync(conditions: conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithContainerOperation")));
         }
 
         [RecordedTest]
@@ -1851,7 +1851,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.That(response, Is.Not.Null);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
         }
 
         [RecordedTest]
@@ -1865,7 +1865,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.CreateSnapshotAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ShareNotFound")));
         }
 
         [RecordedTest]
@@ -1882,7 +1882,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.That(response, Is.Not.Null);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
         }
 
         [RecordedTest]
@@ -1902,11 +1902,11 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
 
             // Ensure correct properties by doing a GetProperties call
             Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
-            Assert.AreEqual(5, propertiesResponse.Value.QuotaInGB);
+            Assert.That(propertiesResponse.Value.QuotaInGB, Is.EqualTo(5));
         }
 
         [RecordedTest]
@@ -1928,9 +1928,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
-            Assert.AreEqual(ShareAccessTier.Hot.ToString(), response.Value.AccessTier);
-            Assert.AreEqual("pending-from-transactionOptimized", response.Value.AccessTierTransitionState);
-            Assert.AreEqual(5, response.Value.QuotaInGB);
+            Assert.That(response.Value.AccessTier, Is.EqualTo(ShareAccessTier.Hot.ToString()));
+            Assert.That(response.Value.AccessTierTransitionState, Is.EqualTo("pending-from-transactionOptimized"));
+            Assert.That(response.Value.QuotaInGB, Is.EqualTo(5));
             Assert.That(response.Value.AccessTierChangeTime, Is.Not.Null);
         }
 
@@ -1952,7 +1952,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
-            Assert.AreEqual(ShareAccessTier.Premium.ToString(), response.Value.AccessTier);
+            Assert.That(response.Value.AccessTier, Is.EqualTo(ShareAccessTier.Premium.ToString()));
         }
 
         //[RecordedTest]
@@ -2024,7 +2024,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
-            Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
+            Assert.That(response.Value.RootSquash, Is.EqualTo(ShareRootSquash.AllSquash));
         }
 
         [RecordedTest]
@@ -2043,7 +2043,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetPropertiesAsync(options),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -2076,7 +2076,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 // Assert
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
-                Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
+                Assert.That(response.Value.Protocols, Is.EqualTo(ShareProtocols.Nfs));
                 if (enableSnapshotVirtualDirectoryAccess == true || enableSnapshotVirtualDirectoryAccess == null)
                 {
                     Assert.That(response.Value.EnableSnapshotVirtualDirectoryAccess, Is.True);
@@ -2113,8 +2113,8 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
             Assert.That(response.Value.EnablePaidBursting, Is.True);
-            Assert.AreEqual(5000, response.Value.PaidBurstingMaxIops);
-            Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
+            Assert.That(response.Value.PaidBurstingMaxIops, Is.EqualTo(5000));
+            Assert.That(response.Value.PaidBurstingMaxBandwidthMibps, Is.EqualTo(1000));
         }
 
         [RecordedTest]
@@ -2136,8 +2136,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
-            Assert.AreEqual(3000, response.Value.ProvisionedIops);
-            Assert.AreEqual(125, response.Value.ProvisionedBandwidthMiBps);
+            Assert.That(response.Value.ProvisionedIops, Is.EqualTo(3000));
+            Assert.That(response.Value.ProvisionedBandwidthMiBps, Is.EqualTo(125));
             Assert.That(response.Value.IncludedBurstIops, Is.Not.Null);
             Assert.That(response.Value.MaxBurstCreditsForIops, Is.Not.Null);
             Assert.That(response.Value.NextAllowedProvisionedIopsDowngradeTime, Is.Not.Null);
@@ -2155,7 +2155,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
-            Assert.AreEqual(Constants.KB, response.Value.QuotaInGB);
+            Assert.That(response.Value.QuotaInGB, Is.EqualTo(Constants.KB));
         }
 
         [RecordedTest]
@@ -2169,7 +2169,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetQuotaAsync(Constants.KB),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ShareNotFound")));
         }
 
         [RecordedTest]
@@ -2219,7 +2219,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 test.Share.SetQuotaAsync(
                     quotaInGB: Constants.KB,
                     conditions: conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithContainerOperation")));
         }
 
         [RecordedTest]
@@ -2325,7 +2325,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                snapshotShareClient.DeleteAsync(),
-               e => Assert.AreEqual("ShareSnapshotNotFound", e.ErrorCode));
+               e => Assert.That(e.ErrorCode, Is.EqualTo("ShareSnapshotNotFound")));
         }
 
         [RecordedTest]
@@ -2340,7 +2340,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.DeleteAsync(false),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -2387,7 +2387,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 shareClient.DeleteAsync(options: options),
-                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithContainerOperation")));
 
             // Cleanup
             await shareClient.DeleteAsync();
@@ -2472,22 +2472,22 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareUriBuilder shareUriBuilder = new ShareUriBuilder(directoryFromConstructor.Uri);
 
             // Assert
-            Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
+            Assert.That(createResponse.Value.ETag, Is.EqualTo(propertiesResponse.Value.ETag));
 
-            Assert.AreEqual(1, shareFileItems.Count);
-            Assert.AreEqual(directoryName, shareFileItems[0].Name);
+            Assert.That(shareFileItems.Count, Is.EqualTo(1));
+            Assert.That(shareFileItems[0].Name, Is.EqualTo(directoryName));
 
-            Assert.AreEqual(directoryName, directoryFromShareClient.Name);
-            Assert.AreEqual(directoryName, directoryFromShareClient.Path);
-            Assert.AreEqual(expectedUri, directoryFromShareClient.Uri);
+            Assert.That(directoryFromShareClient.Name, Is.EqualTo(directoryName));
+            Assert.That(directoryFromShareClient.Path, Is.EqualTo(directoryName));
+            Assert.That(directoryFromShareClient.Uri, Is.EqualTo(expectedUri));
 
-            Assert.AreEqual(directoryName, directoryFromConstructor.Name);
-            Assert.AreEqual(directoryName, directoryFromConstructor.Path);
-            Assert.AreEqual(expectedUri, directoryFromConstructor.Uri);
+            Assert.That(directoryFromConstructor.Name, Is.EqualTo(directoryName));
+            Assert.That(directoryFromConstructor.Path, Is.EqualTo(directoryName));
+            Assert.That(directoryFromConstructor.Uri, Is.EqualTo(expectedUri));
 
-            Assert.AreEqual(directoryName, shareUriBuilder.LastDirectoryOrFileName);
-            Assert.AreEqual(directoryName, shareUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual(expectedUri, shareUriBuilder.ToUri());
+            Assert.That(shareUriBuilder.LastDirectoryOrFileName, Is.EqualTo(directoryName));
+            Assert.That(shareUriBuilder.DirectoryOrFilePath, Is.EqualTo(directoryName));
+            Assert.That(shareUriBuilder.ToUri(), Is.EqualTo(expectedUri));
         }
 
         [RecordedTest]
@@ -2507,9 +2507,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-            Assert.AreEqual(id, response.Value.LeaseId);
-            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
+            Assert.That(id, Is.EqualTo(response.Value.LeaseId));
+            Assert.That(response.Value.LeaseId, Is.EqualTo(leaseClient.LeaseId));
 
             // Cleanup
             ShareDeleteOptions options = new ShareDeleteOptions
@@ -2537,7 +2537,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 leaseClient.AcquireAsync(duration),
                 e =>
                 {
-                    Assert.AreEqual(ShareErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode);
+                    Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.InvalidHeaderValue.ToString()));
                     Assert.That(e.Message.Contains($"Additional Information:{Environment.NewLine}HeaderName: x-ms-lease-duration{Environment.NewLine}HeaderValue: 10"), Is.True);
                 });
         }
@@ -2560,7 +2560,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.AcquireAsync(duration);
 
             // Assert
-            Assert.AreEqual(id, response.Value.LeaseId);
+            Assert.That(response.Value.LeaseId, Is.EqualTo(id));
 
             // Cleanup
             await leaseClient.ReleaseAsync();
@@ -2579,7 +2579,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 leaseClient.AcquireAsync(),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -2596,7 +2596,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 leaseClient.AcquireAsync(),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -2616,9 +2616,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-            Assert.AreEqual(id, response.Value.LeaseId);
-            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
+            Assert.That(id, Is.EqualTo(response.Value.LeaseId));
+            Assert.That(response.Value.LeaseId, Is.EqualTo(leaseClient.LeaseId));
 
             // Cleanup
             ShareDeleteOptions options = new ShareDeleteOptions
@@ -2648,9 +2648,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareProperties> propertiesResponse = await test.Share.GetPropertiesAsync();
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(releaseResponse.Value.ETag.ToString(), $"\"{releaseResponse.GetRawResponse().Headers.ETag}\"");
-            Assert.AreEqual(ShareLeaseStatus.Unlocked, propertiesResponse.Value.LeaseStatus);
-            Assert.AreEqual(ShareLeaseState.Available, propertiesResponse.Value.LeaseState);
+            Assert.That(releaseResponse.Value.ETag.ToString(), Is.EqualTo($"\"{releaseResponse.GetRawResponse().Headers.ETag}\""));
+            Assert.That(propertiesResponse.Value.LeaseStatus, Is.EqualTo(ShareLeaseStatus.Unlocked));
+            Assert.That(propertiesResponse.Value.LeaseState, Is.EqualTo(ShareLeaseState.Available));
         }
 
         [RecordedTest]
@@ -2666,7 +2666,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 leaseClient.ReleaseAsync(),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -2701,7 +2701,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 leaseClient.ReleaseAsync(),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -2722,9 +2722,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareProperties> propertiesResponse = await test.Share.GetPropertiesAsync();
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(releaseResponse.Value.ETag.ToString(), $"\"{releaseResponse.GetRawResponse().Headers.ETag}\"");
-            Assert.AreEqual(ShareLeaseStatus.Unlocked, propertiesResponse.Value.LeaseStatus);
-            Assert.AreEqual(ShareLeaseState.Available, propertiesResponse.Value.LeaseState);
+            Assert.That(releaseResponse.Value.ETag.ToString(), Is.EqualTo($"\"{releaseResponse.GetRawResponse().Headers.ETag}\""));
+            Assert.That(propertiesResponse.Value.LeaseStatus, Is.EqualTo(ShareLeaseStatus.Unlocked));
+            Assert.That(propertiesResponse.Value.LeaseState, Is.EqualTo(ShareLeaseState.Available));
         }
 
         [RecordedTest]
@@ -2743,10 +2743,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(changeResponse.Value.ETag.ToString(), $"\"{changeResponse.GetRawResponse().Headers.ETag}\"");
+            Assert.That(changeResponse.Value.ETag.ToString(), Is.EqualTo($"\"{changeResponse.GetRawResponse().Headers.ETag}\""));
 
-            Assert.AreEqual(changeResponse.Value.LeaseId, newId);
-            Assert.AreEqual(changeResponse.Value.LeaseId, leaseClient.LeaseId);
+            Assert.That(changeResponse.Value.LeaseId, Is.EqualTo(newId));
+            Assert.That(changeResponse.Value.LeaseId, Is.EqualTo(leaseClient.LeaseId));
 
             // Cleanup
             leaseClient = InstrumentClient(test.Share.GetShareLeaseClient(newId));
@@ -2767,7 +2767,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 leaseClient.ChangeAsync(newId),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -2807,7 +2807,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 leaseClient.ChangeAsync(id),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -2827,10 +2827,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(changeResponse.Value.ETag.ToString(), $"\"{changeResponse.GetRawResponse().Headers.ETag}\"");
+            Assert.That(changeResponse.Value.ETag.ToString(), Is.EqualTo($"\"{changeResponse.GetRawResponse().Headers.ETag}\""));
 
-            Assert.AreEqual(changeResponse.Value.LeaseId, newId);
-            Assert.AreEqual(changeResponse.Value.LeaseId, leaseClient.LeaseId);
+            Assert.That(changeResponse.Value.LeaseId, Is.EqualTo(newId));
+            Assert.That(changeResponse.Value.LeaseId, Is.EqualTo(leaseClient.LeaseId));
 
             // Cleanup
             leaseClient = InstrumentClient(test.Share.GetShareLeaseClient(newId));
@@ -2853,11 +2853,11 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
 
             Response<ShareProperties> propertiesResponse = await test.Share.GetPropertiesAsync();
-            Assert.AreEqual(ShareLeaseStatus.Unlocked, propertiesResponse.Value.LeaseStatus);
-            Assert.AreEqual(ShareLeaseState.Broken, propertiesResponse.Value.LeaseState);
+            Assert.That(propertiesResponse.Value.LeaseStatus, Is.EqualTo(ShareLeaseStatus.Unlocked));
+            Assert.That(propertiesResponse.Value.LeaseState, Is.EqualTo(ShareLeaseState.Broken));
         }
 
         [RecordedTest]
@@ -2874,7 +2874,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 leaseClient.BreakAsync(),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -2909,7 +2909,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 leaseClient.BreakAsync(),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -2929,11 +2929,11 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That(response.Value.ETag.ToString(), Is.EqualTo($"\"{response.GetRawResponse().Headers.ETag}\""));
 
             Response<ShareProperties> propertiesResponse = await test.Share.GetPropertiesAsync();
-            Assert.AreEqual(ShareLeaseStatus.Unlocked, propertiesResponse.Value.LeaseStatus);
-            Assert.AreEqual(ShareLeaseState.Broken, propertiesResponse.Value.LeaseState);
+            Assert.That(propertiesResponse.Value.LeaseStatus, Is.EqualTo(ShareLeaseStatus.Unlocked));
+            Assert.That(propertiesResponse.Value.LeaseState, Is.EqualTo(ShareLeaseState.Broken));
         }
 
         [RecordedTest]
@@ -2953,9 +2953,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> renewResponse = await leaseClient.RenewAsync();
 
             // Assert
-            Assert.AreEqual(renewResponse.Value.LeaseId, leaseClient.LeaseId);
+            Assert.That(renewResponse.Value.LeaseId, Is.EqualTo(leaseClient.LeaseId));
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(renewResponse.Value.ETag.ToString(), $"\"{renewResponse.GetRawResponse().Headers.ETag}\"");
+            Assert.That(renewResponse.Value.ETag.ToString(), Is.EqualTo($"\"{renewResponse.GetRawResponse().Headers.ETag}\""));
 
             // Cleanup
             ShareDeleteOptions options = new ShareDeleteOptions
@@ -2982,7 +2982,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 leaseClient.RenewAsync(),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -3020,7 +3020,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 leaseClient.RenewAsync(),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -3040,9 +3040,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> renewResponse = await leaseClient.RenewAsync();
 
             // Assert
-            Assert.AreEqual(renewResponse.Value.LeaseId, leaseClient.LeaseId);
+            Assert.That(renewResponse.Value.LeaseId, Is.EqualTo(leaseClient.LeaseId));
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(renewResponse.Value.ETag.ToString(), $"\"{renewResponse.GetRawResponse().Headers.ETag}\"");
+            Assert.That(renewResponse.Value.ETag.ToString(), Is.EqualTo($"\"{renewResponse.GetRawResponse().Headers.ETag}\""));
 
             // Cleanup
             ShareDeleteOptions options = new ShareDeleteOptions
@@ -3271,7 +3271,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 ShareName = shareName,
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
             Assert.That(stringToSign, Is.Not.Null);
         }
 
@@ -3313,7 +3313,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 ShareName = shareName,
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
             Assert.That(stringToSign, Is.Not.Null);
         }
 
@@ -3353,7 +3353,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 ShareName = shareName,
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
         }
 
         [RecordedTest]
@@ -3397,16 +3397,16 @@ namespace Azure.Storage.Files.Shares.Tests
 
             bool result1 = ShareErrorCode.ShareNotFound == ex.ErrorCode;
             bool result2 = ex.ErrorCode == ShareErrorCode.ShareNotFound;
-            Assert.AreEqual(expected, result1);
-            Assert.AreEqual(expected, result2);
+            Assert.That(result1, Is.EqualTo(expected));
+            Assert.That(result2, Is.EqualTo(expected));
 
             bool result3 = ShareErrorCode.ShareNotFound != ex.ErrorCode;
             bool result4 = ex.ErrorCode != ShareErrorCode.ShareNotFound;
-            Assert.AreEqual(!expected, result3);
-            Assert.AreEqual(!expected, result4);
+            Assert.That(result3, Is.EqualTo(!expected));
+            Assert.That(result4, Is.EqualTo(!expected));
 
             bool result5 = ShareErrorCode.ShareNotFound.Equals(ex.ErrorCode);
-            Assert.AreEqual(expected, result5);
+            Assert.That(result5, Is.EqualTo(expected));
         }
 
         [RecordedTest]

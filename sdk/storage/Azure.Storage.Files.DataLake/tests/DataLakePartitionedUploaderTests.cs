@@ -14,7 +14,6 @@ using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
-using static Moq.It;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
@@ -296,7 +295,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             clientMock.Setup(
                 c => c.CreateInternal(
-                    IsAny<PathResourceType>(),
+                    It.IsAny<PathResourceType>(),
                     s_pathHttpHeaders,
                     default,
                     s_permissions,
@@ -316,29 +315,29 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             clientMock.Setup(
                 c => c.AppendInternal(
-                    IsAny<Stream>(),
-                    IsAny<long>(),
-                    IsAny<UploadTransferValidationOptions>(),
-                    IsAny<string>(),
-                    IsAny<DataLakeLeaseAction?>(),
-                    IsAny<TimeSpan?>(),
-                    IsAny<string>(),
-                    IsAny<IProgress<long>>(),
-                    IsAny<bool?>(),
+                    It.IsAny<Stream>(),
+                    It.IsAny<long>(),
+                    It.IsAny<UploadTransferValidationOptions>(),
+                    It.IsAny<string>(),
+                    It.IsAny<DataLakeLeaseAction?>(),
+                    It.IsAny<TimeSpan?>(),
+                    It.IsAny<string>(),
+                    It.IsAny<IProgress<long>>(),
+                    It.IsAny<bool?>(),
                     _async,
                     cts.Token
                 )).Returns<Stream, long, UploadTransferValidationOptions, string, DataLakeLeaseAction?, TimeSpan?, string, IProgress<long>, bool?, bool, CancellationToken>(sink.AppendInternal);
 
             clientMock.Setup(
                 c => c.FlushInternal(
-                    IsAny<long>(),
-                    IsAny<bool?>(),
-                    IsAny<bool?>(),
+                    It.IsAny<long>(),
+                    It.IsAny<bool?>(),
+                    It.IsAny<bool?>(),
                     s_pathHttpHeaders,
-                    IsAny<DataLakeRequestConditions>(),
-                    IsAny<DataLakeLeaseAction?>(),
-                    IsAny<TimeSpan?>(),
-                    IsAny<string>(),
+                    It.IsAny<DataLakeRequestConditions>(),
+                    It.IsAny<DataLakeLeaseAction?>(),
+                    It.IsAny<TimeSpan?>(),
+                    It.IsAny<string>(),
                     _async,
                     cts.Token
                 )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, DataLakeLeaseAction?, TimeSpan?, string, bool, CancellationToken>(sink.FlushInternal);

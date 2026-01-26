@@ -24,7 +24,6 @@ using Moq;
 using NUnit.Framework;
 using static Azure.Storage.Constants.ClientSideEncryption;
 using static Azure.Storage.Test.Shared.ClientSideEncryptionTestExtensions;
-using static Moq.It;
 
 namespace Azure.Storage.Queues.Test
 {
