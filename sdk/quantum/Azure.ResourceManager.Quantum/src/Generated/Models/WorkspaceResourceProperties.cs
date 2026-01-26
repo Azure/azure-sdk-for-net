@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public ResourceIdentifier ManagedStorageAccount { get; }
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
-        public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
+        public IReadOnlyList<MoboBrokerInfo> ManagedOnBehalfOfMoboBrokerResources
         {
             get
             {

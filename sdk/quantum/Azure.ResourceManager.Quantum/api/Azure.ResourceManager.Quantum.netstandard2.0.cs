@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Quantum.Models
 {
     public static partial class ArmQuantumModelFactory
     {
-        public static Azure.ResourceManager.Quantum.Models.MoboBrokerResource MoboBrokerResource(Azure.Core.ResourceIdentifier id = null) { throw null; }
+        public static Azure.ResourceManager.Quantum.Models.MoboBrokerInfo MoboBrokerInfo(Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.Quantum.Models.ProviderAadInfo ProviderAadInfo(string applicationId = null, System.Guid? tenantId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Quantum.Models.ProviderApplicationInfo ProviderApplicationInfo(string publisherId = null, string offerId = null) { throw null; }
         public static Azure.ResourceManager.Quantum.Models.ProviderPricingDimension ProviderPricingDimension(string id = null, string name = null) { throw null; }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static Azure.ResourceManager.Quantum.Models.WorkspaceApiKeys WorkspaceApiKeys(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quantum.Models.WorkspaceKeyType> keys = null) { throw null; }
         public static Azure.ResourceManager.Quantum.Models.WorkspaceKeyListResult WorkspaceKeyListResult(bool? isApiKeyEnabled = default(bool?), Azure.ResourceManager.Quantum.Models.WorkspaceApiKey primaryKey = null, Azure.ResourceManager.Quantum.Models.WorkspaceApiKey secondaryKey = null, string primaryConnectionString = null, string secondaryConnectionString = null) { throw null; }
         public static Azure.ResourceManager.Quantum.Models.WorkspaceNameAvailabilityResult WorkspaceNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityReason? reason = default(Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityReason?), string message = null) { throw null; }
-        public static Azure.ResourceManager.Quantum.Models.WorkspaceResourceProperties WorkspaceResourceProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quantum.Models.QuantumProvider> providers = null, Azure.ResourceManager.Quantum.Models.WorkspaceUsableStatus? usable = default(Azure.ResourceManager.Quantum.Models.WorkspaceUsableStatus?), Azure.ResourceManager.Quantum.Models.ProviderProvisioningStatus? provisioningState = default(Azure.ResourceManager.Quantum.Models.ProviderProvisioningStatus?), Azure.Core.ResourceIdentifier storageAccount = null, Azure.ResourceManager.Quantum.Models.QuantumWorkspaceKind? workspaceKind = default(Azure.ResourceManager.Quantum.Models.QuantumWorkspaceKind?), System.Uri endpointUri = null, bool? isApiKeyEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quantum.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null, Azure.Core.ResourceIdentifier managedStorageAccount = null) { throw null; }
+        public static Azure.ResourceManager.Quantum.Models.WorkspaceResourceProperties WorkspaceResourceProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quantum.Models.QuantumProvider> providers = null, Azure.ResourceManager.Quantum.Models.WorkspaceUsableStatus? usable = default(Azure.ResourceManager.Quantum.Models.WorkspaceUsableStatus?), Azure.ResourceManager.Quantum.Models.ProviderProvisioningStatus? provisioningState = default(Azure.ResourceManager.Quantum.Models.ProviderProvisioningStatus?), Azure.Core.ResourceIdentifier storageAccount = null, Azure.ResourceManager.Quantum.Models.QuantumWorkspaceKind? workspaceKind = default(Azure.ResourceManager.Quantum.Models.QuantumWorkspaceKind?), System.Uri endpointUri = null, bool? isApiKeyEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quantum.Models.MoboBrokerInfo> managedOnBehalfOfMoboBrokerResources = null, Azure.Core.ResourceIdentifier managedStorageAccount = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CheckNameAvailabilityReason : System.IEquatable<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityReason>
@@ -143,9 +143,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityReason (string value) { throw null; }
@@ -153,19 +151,19 @@ namespace Azure.ResourceManager.Quantum.Models
         public static bool operator !=(Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityReason right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MoboBrokerResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.MoboBrokerResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.MoboBrokerResource>
+    public partial class MoboBrokerInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.MoboBrokerInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.MoboBrokerInfo>
     {
-        internal MoboBrokerResource() { }
+        internal MoboBrokerInfo() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        protected virtual Azure.ResourceManager.Quantum.Models.MoboBrokerResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Quantum.Models.MoboBrokerInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Quantum.Models.MoboBrokerResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Quantum.Models.MoboBrokerInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Quantum.Models.MoboBrokerResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.MoboBrokerResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.MoboBrokerResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Quantum.Models.MoboBrokerResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.MoboBrokerResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.MoboBrokerResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.MoboBrokerResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Quantum.Models.MoboBrokerInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.MoboBrokerInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.MoboBrokerInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.MoboBrokerInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.MoboBrokerInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.MoboBrokerInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.MoboBrokerInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ProviderAadInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderAadInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderAadInfo>
     {
@@ -450,9 +448,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static Azure.ResourceManager.Quantum.Models.QuantumWorkspaceKind V1 { get { throw null; } }
         public static Azure.ResourceManager.Quantum.Models.QuantumWorkspaceKind V2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quantum.Models.QuantumWorkspaceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quantum.Models.QuantumWorkspaceKind left, Azure.ResourceManager.Quantum.Models.QuantumWorkspaceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quantum.Models.QuantumWorkspaceKind (string value) { throw null; }
@@ -574,7 +570,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public WorkspaceResourceProperties() { }
         public System.Uri EndpointUri { get { throw null; } }
         public bool? IsApiKeyEnabled { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quantum.Models.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quantum.Models.MoboBrokerInfo> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManagedStorageAccount { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Quantum.Models.QuantumProvider> Providers { get { throw null; } }
         public Azure.ResourceManager.Quantum.Models.ProviderProvisioningStatus? ProvisioningState { get { throw null; } }

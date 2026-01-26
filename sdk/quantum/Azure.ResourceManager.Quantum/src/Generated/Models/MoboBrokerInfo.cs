@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
-    public partial class MoboBrokerResource
+    public partial class MoboBrokerInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MoboBrokerResource"/>. </summary>
-        internal MoboBrokerResource()
+        /// <summary> Initializes a new instance of <see cref="MoboBrokerInfo"/>. </summary>
+        internal MoboBrokerInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MoboBrokerResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoboBrokerInfo"/>. </summary>
         /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MoboBrokerResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MoboBrokerInfo(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

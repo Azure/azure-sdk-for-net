@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <param name="managedStorageAccount"> ARM Resource Id of the managed storage account associated with this workspace. </param>
         /// <returns> A new <see cref="Models.WorkspaceResourceProperties"/> instance for mocking. </returns>
-        public static WorkspaceResourceProperties WorkspaceResourceProperties(IEnumerable<QuantumProvider> providers = default, WorkspaceUsableStatus? usable = default, ProviderProvisioningStatus? provisioningState = default, ResourceIdentifier storageAccount = default, QuantumWorkspaceKind? workspaceKind = default, Uri endpointUri = default, bool? isApiKeyEnabled = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier managedStorageAccount = default)
+        public static WorkspaceResourceProperties WorkspaceResourceProperties(IEnumerable<QuantumProvider> providers = default, WorkspaceUsableStatus? usable = default, ProviderProvisioningStatus? provisioningState = default, ResourceIdentifier storageAccount = default, QuantumWorkspaceKind? workspaceKind = default, Uri endpointUri = default, bool? isApiKeyEnabled = default, IEnumerable<MoboBrokerInfo> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier managedStorageAccount = default)
         {
             providers ??= new ChangeTrackingList<QuantumProvider>();
 
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.Quantum.Models
                 workspaceKind,
                 endpointUri,
                 isApiKeyEnabled,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>()).ToList(), null),
+                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerInfo>()).ToList(), null),
                 managedStorageAccount,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
         /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
-        /// <returns> A new <see cref="Models.MoboBrokerResource"/> instance for mocking. </returns>
-        public static MoboBrokerResource MoboBrokerResource(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.MoboBrokerInfo"/> instance for mocking. </returns>
+        public static MoboBrokerInfo MoboBrokerInfo(ResourceIdentifier id = default)
         {
-            return new MoboBrokerResource(id, additionalBinaryDataProperties: null);
+            return new MoboBrokerInfo(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The type used for updating tags in QuantumWorkspace resources. </summary>

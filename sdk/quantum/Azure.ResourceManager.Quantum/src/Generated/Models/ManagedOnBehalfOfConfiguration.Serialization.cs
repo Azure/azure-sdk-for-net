@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 writer.WritePropertyName("moboBrokerResources"u8);
                 writer.WriteStartArray();
-                foreach (MoboBrokerResource item in MoboBrokerResources)
+                foreach (MoboBrokerInfo item in MoboBrokerResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            IReadOnlyList<MoboBrokerResource> moboBrokerResources = default;
+            IReadOnlyList<MoboBrokerInfo> moboBrokerResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    List<MoboBrokerResource> array = new List<MoboBrokerResource>();
+                    List<MoboBrokerInfo> array = new List<MoboBrokerInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MoboBrokerResource.DeserializeMoboBrokerResource(item, options));
+                        array.Add(MoboBrokerInfo.DeserializeMoboBrokerInfo(item, options));
                     }
                     moboBrokerResources = array;
                     continue;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedOnBehalfOfConfiguration(moboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>(), additionalBinaryDataProperties);
+            return new ManagedOnBehalfOfConfiguration(moboBrokerResources ?? new ChangeTrackingList<MoboBrokerInfo>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

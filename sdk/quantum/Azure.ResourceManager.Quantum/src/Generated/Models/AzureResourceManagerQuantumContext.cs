@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Quantum
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ManagedOnBehalfOfConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(MoboBrokerResource))]
+    [ModelReaderWriterBuildable(typeof(MoboBrokerInfo))]
     [ModelReaderWriterBuildable(typeof(OfferingsListResult))]
     [ModelReaderWriterBuildable(typeof(ProviderAadInfo))]
     [ModelReaderWriterBuildable(typeof(ProviderApplicationInfo))]

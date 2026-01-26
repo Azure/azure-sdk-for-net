@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
         internal ManagedOnBehalfOfConfiguration()
         {
-            MoboBrokerResources = new ChangeTrackingList<MoboBrokerResource>();
+            MoboBrokerResources = new ChangeTrackingList<MoboBrokerInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
         /// <param name="moboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedOnBehalfOfConfiguration(IReadOnlyList<MoboBrokerResource> moboBrokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedOnBehalfOfConfiguration(IReadOnlyList<MoboBrokerInfo> moboBrokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MoboBrokerResources = moboBrokerResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
-        public IReadOnlyList<MoboBrokerResource> MoboBrokerResources { get; }
+        public IReadOnlyList<MoboBrokerInfo> MoboBrokerResources { get; }
     }
 }
