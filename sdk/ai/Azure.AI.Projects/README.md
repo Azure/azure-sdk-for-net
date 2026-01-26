@@ -41,6 +41,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
     - [Using uploaded datasets](#using-uploaded-datasets)
     - [Using custom prompt-based evaluator](#using-custom-prompt-based-evaluator)
     - [Using custom code-based evaluator](#using-custom-code-based-evaluator)
+    - [Evaluation with Application Insights](#evaluation-with-application-insights)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -1052,6 +1053,68 @@ private EvaluatorVersion GetCodeEvaluatorVersion()
 ```
 
 The code-based evaluator can be used the same way as prompt-based
+
+#### Evaluation with Application Insights
+
+Evaluators can be used to gather data from the Application Insights, connected to Microsoft Foundry.
+It requires both foundry and projects managed identity to be assigned "Log Analytics Reader" for the application insights.
+The data source configuration must have `scenario` field set to `traces`, informing that the data will be generated from Kusto query.
+
+```C# Snippet:Sample_CreateData_EvaluationsMonitor
+private static BinaryData GetEvaluationCriteria(string[] names, string modelDeploymentName)
+{
+    object[] testingCriteria = new object[names.Length];
+    for (int i = 0; i < names.Length; i++)
+    {
+        testingCriteria[i] = new {
+            type = "azure_ai_evaluator",
+            name = names[i],
+            evaluator_name = $"builtin.{names[i]}",
+            data_mapping = new { query = "{{query}}", response = "{{response}}", tool_definitions= "{{tool_definitions}}" },
+            initialization_parameters = new { deployment_name = modelDeploymentName },
+        };
+    }
+    object dataSourceConfig = new
+    {
+        type = "azure_ai_source",
+        scenario = "traces"
+    };
+    return BinaryData.FromObjectAsJson(
+        new
+        {
+            name = "Agent Evaluation",
+            data_source_config = dataSourceConfig,
+            testing_criteria = testingCriteria
+        }
+    );
+}
+```
+
+The `runData` must contain name and ID of the evaluation and data source. In this scenario it type is `azure_ai_traces`, which informs the service to run the Kusto query on traces and filter it by the trace IDs, stored in traceIDs array of strings.
+
+```C# Snippet:Sample_CreateDataSource_EvaluationsMonitor
+object dataSource = new
+{
+    type = "azure_ai_traces",
+    trace_ids = traceIDs,
+    lookback_hours = lookbackHours
+};
+BinaryData runData = BinaryData.FromObjectAsJson(
+    new
+    {
+        eval_id = evaluationId,
+        name = $"agent_trace_eval_{endTime:O}",
+        data_source = dataSource,
+        metadata = new
+        {
+            agent_id = agentId,
+            start_time = endTime.AddHours(-lookbackHours).ToString("O"),
+            end_time = endTime.ToString("O"),
+        }
+    }
+);
+using BinaryContent runDataContent = BinaryContent.Create(runData);
+```
 
 ## Troubleshooting
 

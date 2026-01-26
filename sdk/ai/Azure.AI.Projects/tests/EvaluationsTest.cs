@@ -7,7 +7,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -15,7 +14,6 @@ using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using OpenAI.Evals;
 
