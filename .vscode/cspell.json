@@ -350,6 +350,12 @@
       ]
     },
     {
+      "filename": "**/sdk/chaos/**/*.cs",
+      "words": [
+        "metadatas"
+      ]
+    },
+    {
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
         "dscp",
