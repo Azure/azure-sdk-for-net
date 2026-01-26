@@ -18,20 +18,32 @@ namespace Azure.Generator.Management.Tests.Providers
             {
                 // When running from test bin folder, need to navigate back to the eng/packages folder
                 var testAssemblyPath = Path.GetDirectoryName(typeof(ArrayResponseCollectionResultDefinitionTests).Assembly.Location)!;
-                // Navigate from artifacts/bin/Azure.Generator.Mgmt.Tests/Debug/net10.0/ back to repo root
+
+                // Try to find the repo root by looking for "azure-sdk-for-net" folder
                 var currentPath = testAssemblyPath;
-                while (!string.IsNullOrEmpty(currentPath) && Path.GetFileName(currentPath) != "azure-sdk-for-net")
+                while (!string.IsNullOrEmpty(currentPath))
                 {
+                    var folderName = Path.GetFileName(currentPath);
+                    if (folderName == "azure-sdk-for-net")
+                    {
+                        return Path.Combine(currentPath, "eng", "packages", "http-client-csharp-mgmt", "generator", "TestProjects", "Local", "Mgmt-TypeSpec");
+                    }
                     currentPath = Path.GetDirectoryName(currentPath);
                 }
 
-                if (string.IsNullOrEmpty(currentPath))
+                // Fallback: try navigating up 5 levels (from artifacts/bin/Azure.Generator.Mgmt.Tests/Debug/net10.0/)
+                var repoRoot = Path.GetFullPath(Path.Combine(testAssemblyPath, "..", "..", "..", "..", ".."));
+                var testProjectPath = Path.Combine(repoRoot, "eng", "packages", "http-client-csharp-mgmt", "generator", "TestProjects", "Local", "Mgmt-TypeSpec");
+
+                // Verify the path exists before returning
+                if (!Directory.Exists(testProjectPath))
                 {
-                    // Fallback: assume we're in the standard structure
-                    currentPath = Path.GetFullPath(Path.Combine(testAssemblyPath, "..", "..", "..", "..", "..", "..", "..", ".."));
+                    Assert.Fail($"Could not find test project at expected path: {testProjectPath}. " +
+                        $"Test assembly is at: {testAssemblyPath}. " +
+                        $"Calculated repo root: {repoRoot}");
                 }
 
-                return Path.Combine(currentPath, "eng", "packages", "http-client-csharp-mgmt", "generator", "TestProjects", "Local", "Mgmt-TypeSpec");
+                return testProjectPath;
             }
         }
 
