@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
@@ -9,7 +10,8 @@ namespace System.ClientModel.Primitives;
 /// Helper class for JSON models implementing <see cref="IJsonModel{T}"/>.
 /// </summary>
 /// <typeparam name="T">The type of the model represented by this JSON model.</typeparam>
-public abstract class JsonModel<T> : IJsonModel<T>, IPersistableModel<T>
+[Experimental("SCME0001")]
+public abstract class JsonModel<T> : IJsonModel<T>
 {
     /// <summary>
     /// Writes the model to the provided <see cref="Utf8JsonWriter"/>.
