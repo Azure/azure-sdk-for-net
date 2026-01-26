@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class DiscoveryNlpContent : IUtf8JsonSerializable, IJsonModel<DiscoveryNlpContent>
+    /// <summary> Discover NLP request. </summary>
+    public partial class DiscoveryNlpContent : IJsonModel<DiscoveryNlpContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoveryNlpContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DiscoveryNlpContent"/> for deserialization. </summary>
+        internal DiscoveryNlpContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiscoveryNlpContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiscoveryNlpContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("issueSummary"u8);
             writer.WriteStringValue(IssueSummary);
             if (Optional.IsDefined(ResourceId))
@@ -51,15 +57,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("additionalContext"u8);
                 writer.WriteStringValue(AdditionalContext);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,22 +74,27 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
-        DiscoveryNlpContent IJsonModel<DiscoveryNlpContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiscoveryNlpContent IJsonModel<DiscoveryNlpContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DiscoveryNlpContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiscoveryNlpContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDiscoveryNlpContent(document.RootElement, options);
         }
 
-        internal static DiscoveryNlpContent DeserializeDiscoveryNlpContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DiscoveryNlpContent DeserializeDiscoveryNlpContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,43 +103,44 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string resourceId = default;
             string serviceId = default;
             string additionalContext = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("issueSummary"u8))
+                if (prop.NameEquals("issueSummary"u8))
                 {
-                    issueSummary = property.Value.GetString();
+                    issueSummary = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceId"u8))
+                if (prop.NameEquals("serviceId"u8))
                 {
-                    serviceId = property.Value.GetString();
+                    serviceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("additionalContext"u8))
+                if (prop.NameEquals("additionalContext"u8))
                 {
-                    additionalContext = property.Value.GetString();
+                    additionalContext = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DiscoveryNlpContent(issueSummary, resourceId, serviceId, additionalContext, serializedAdditionalRawData);
+            return new DiscoveryNlpContent(issueSummary, resourceId, serviceId, additionalContext, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DiscoveryNlpContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DiscoveryNlpContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -138,15 +150,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
-        DiscoveryNlpContent IPersistableModel<DiscoveryNlpContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiscoveryNlpContent IPersistableModel<DiscoveryNlpContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DiscoveryNlpContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDiscoveryNlpContent(document.RootElement, options);
                     }
                 default:
@@ -154,6 +171,19 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DiscoveryNlpContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="discoveryNlpContent"> The <see cref="DiscoveryNlpContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DiscoveryNlpContent discoveryNlpContent)
+        {
+            if (discoveryNlpContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(discoveryNlpContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }
