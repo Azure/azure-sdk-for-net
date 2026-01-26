@@ -41,6 +41,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
     - [Using uploaded datasets](#using-uploaded-datasets)
     - [Using custom prompt-based evaluator](#using-custom-prompt-based-evaluator)
     - [Using custom code-based evaluator](#using-custom-code-based-evaluator)
+    - [Evaluating responses](#evaluating-responses)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -1052,6 +1053,73 @@ private EvaluatorVersion GetCodeEvaluatorVersion()
 ```
 
 The code-based evaluator can be used the same way as prompt-based
+
+#### Evaluating responses
+
+The evaluation may be done on the OpenAI response items, received from the Agent. To use this data structure,
+the data source configuration `scenario` has to be set to "responses".
+
+```C# Snippet:Sample_CreateData_EvaluationsAgent
+private static BinaryData GetEvaluationConfig(string modelDeploymentName)
+{
+    object[] testingCriteria = [
+        new {
+            type = "azure_ai_evaluator",
+            name = "violence_detection",
+            evaluator_name = "builtin.violence",
+        },
+    ];
+    object dataSourceConfig = new
+    {
+        type = "azure_ai_source",
+        scenario = "responses"
+    };
+    return BinaryData.FromObjectAsJson(
+        new
+        {
+            name = "Agent Response Evaluation",
+            data_source_config = dataSourceConfig,
+            testing_criteria = testingCriteria
+        }
+    );
+}
+```
+
+The data source needs to have section `item_generation_params`, having `response_retrieval`  type.
+This section informs service to get the data from the response with the given ID.
+
+```C# Snippet:Sample_CreateDataSource_EvaluationsAgent
+private static BinaryData GetRunData(string agentName, string responseId, string evaluationId)
+{
+    object dataSource = new
+    {
+        type = "azure_ai_responses",
+        item_generation_params = new {
+            type = "response_retrieval",
+            data_mapping = new { response_id = "{{item.resp_id}}" },
+            source = new
+            {
+                type = "file_content",
+                content = new[]
+                {
+                    new
+                    {
+                        item = new { resp_id =  responseId}
+                    }
+                }
+            }
+        },
+    };
+    return BinaryData.FromObjectAsJson(
+        new
+        {
+            eval_id = evaluationId,
+            name = $"Evaluation Run for Agent {agentName}",
+            data_source = dataSource
+        }
+    );
+}
+```
 
 ## Troubleshooting
 
