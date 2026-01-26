@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Microsoft Azure Red Hat OpenShift management client library</Description>
+    <AssemblyTitle>Microsoft Azure.ResourceManager.RedHatOpenShift client library</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Microsoft Azure Red Hat OpenShift management;RedHatOpenShift;ARO</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+      This is the initial preview release of the Azure Red Hat OpenShift management library.
+      ]]>
+    </PackageReleaseNotes>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+</Project>
