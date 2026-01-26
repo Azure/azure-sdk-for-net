@@ -49,7 +49,7 @@ The Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInject
 
 ### Example Usage
 
-See [ConfigurationAndDependencyInjection.md](https://github.com/Azure/azure-sdk-for-net/blob/system-clientmodel-config/sdk/core/System.ClientModel/src/docs/ConfigurationAndDependencyInjection.md) for detailed examples.
+See [ConfigurationAndDependencyInjection.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ConfigurationAndDependencyInjection.md) for detailed examples.
 
 ### Suppression
 
