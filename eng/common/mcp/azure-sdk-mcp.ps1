@@ -77,9 +77,16 @@ if ($UpdateVsCodeConfig) {
         $vscodeConfig = @{}
     }
     $serverKey = "azure-sdk-mcp"
+    # Use .cmd wrapper on Windows, .ps1 on other platforms
+    # The .cmd wrapper provides helpful error messages if PowerShell 7 is not installed
+    $commandPath = if ($IsWindows) {
+        Join-Path $PSScriptRoot "azure-sdk-mcp.cmd"
+    } else {
+        $PSCommandPath
+    }
     $serverConfig = @{
         "type"    = "stdio"
-        "command" = "$PSCommandPath"
+        "command" = $commandPath
     }
     $orderedServers = [ordered]@{
         $serverKey = $serverConfig
