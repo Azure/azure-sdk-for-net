@@ -1361,6 +1361,268 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [AsyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task CheckBatchSettingIfChangedWithUnmodifiedPage()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            await foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettingsAsync(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+            }
+
+            int pagesCount = 0;
+
+            await foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettingsAsync(selector).AsPages(matchConditionsList))
+            {
+                Response response = page.GetRawResponse();
+
+                Assert.AreEqual(304, response.Status);
+                Assert.IsEmpty(page.Values);
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task CheckBatchSettingIfChangedWithUnmodifiedPageSync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettings(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+            }
+
+            int pagesCount = 0;
+
+            foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettings(selector).AsPages(matchConditionsList))
+            {
+                Response response = page.GetRawResponse();
+
+                Assert.AreEqual(304, response.Status);
+                Assert.IsEmpty(page.Values);
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task CheckBatchSettingIfChangedWithUnmodifiedPageDoesNotLogWarningAsync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            var pagesEnumerator = service.CheckConfigurationSettingsAsync(selector).AsPages().GetAsyncEnumerator();
+            await pagesEnumerator.MoveNextAsync();
+
+            Page<ConfigurationSetting> firstPage = pagesEnumerator.Current;
+
+            var matchConditions = new MatchConditions()
+            {
+                IfNoneMatch = firstPage.GetRawResponse().Headers.ETag
+            };
+            matchConditionsList.Add(matchConditions);
+
+            string logMessage = null;
+            Action<EventWrittenEventArgs, string> warningLog = (_, text) =>
+            {
+                logMessage = text;
+            };
+
+            pagesEnumerator = service.CheckConfigurationSettingsAsync(selector).AsPages(matchConditionsList).GetAsyncEnumerator();
+
+            using (var listener = new AzureEventSourceListener(warningLog, EventLevel.Warning))
+            {
+                await pagesEnumerator.MoveNextAsync();
+                firstPage = pagesEnumerator.Current;
+                Assert.AreEqual(304, firstPage.GetRawResponse().Status);
+            }
+
+            Assert.Null(logMessage);
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task CheckBatchSettingIfChangedWithUnmodifiedPageDoesNotLogWarningSync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            var pagesEnumerator = service.CheckConfigurationSettings(selector).AsPages().GetEnumerator();
+            pagesEnumerator.MoveNext();
+
+            Page<ConfigurationSetting> firstPage = pagesEnumerator.Current;
+
+            var matchConditions = new MatchConditions()
+            {
+                IfNoneMatch = firstPage.GetRawResponse().Headers.ETag
+            };
+            matchConditionsList.Add(matchConditions);
+
+            string logMessage = null;
+            Action<EventWrittenEventArgs, string> warningLog = (_, text) =>
+            {
+                logMessage = text;
+            };
+
+            pagesEnumerator = service.CheckConfigurationSettings(selector).AsPages(matchConditionsList).GetEnumerator();
+
+            using (var listener = new AzureEventSourceListener(warningLog, EventLevel.Warning))
+            {
+                pagesEnumerator.MoveNext();
+                firstPage = pagesEnumerator.Current;
+                Assert.AreEqual(304, firstPage.GetRawResponse().Status);
+            }
+
+            Assert.Null(logMessage);
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task CheckBatchSettingIfChangedWithModifiedPage()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+            ConfigurationSetting lastSetting = null;
+
+            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+                lastSetting = page.Values.Last();
+            }
+
+            lastSetting.Value += "1";
+            await service.SetConfigurationSettingAsync(lastSetting);
+
+            int pagesCount = 0;
+
+            await foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettingsAsync(selector).AsPages(matchConditionsList))
+            {
+                Response response = page.GetRawResponse();
+
+                if (pagesCount == 0)
+                {
+                    Assert.AreEqual(304, response.Status);
+                }
+                else
+                {
+                    Assert.AreEqual(200, response.Status);
+                }
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task CheckBatchSettingIfChangedWithModifiedPageSync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+            ConfigurationSetting lastSetting = null;
+
+            foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettings(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+                lastSetting = page.Values.Last();
+            }
+
+            lastSetting.Value += "1";
+            await service.SetConfigurationSettingAsync(lastSetting);
+
+            int pagesCount = 0;
+
+            foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettings(selector).AsPages(matchConditionsList))
+            {
+                Response response = page.GetRawResponse();
+
+                if (pagesCount == 0)
+                {
+                    Assert.AreEqual(304, response.Status);
+                }
+                else
+                {
+                    Assert.AreEqual(200, response.Status);
+                }
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
         public async Task GetBatchSettingAny()
         {
             ConfigurationClient service = GetClient();
