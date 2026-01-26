@@ -85,6 +85,11 @@
     <_PackageReferenceWithVersion Include="@(PackageReference->HasMetadata('Version'))" />
 
     <!--
+      Store a list of <PackageReference /> items that use VersionOverride so we can error if it's disabled.
+    -->
+    <_PackageReferenceWithVersionOverrideForValidation Include="@(PackageReference->HasMetadata('VersionOverride'))" />
+
+    <!--
       Store a list of the original <PackageReference /> items so later they can be checked for duplicates in
       the <GlobalPackageReference /> items.  Clear the metadata to save some memory.
     -->
@@ -131,6 +136,15 @@
 
   <Target Name="CheckPackageReferences"
           Condition=" '$(EnableCentralPackageVersions)' != 'false' And '$(DesignTimeBuild)' != 'true' And @(PackageReference->Count()) > 0">
+
+    <!--
+      Check for VersionOverride usage when it's disabled.
+    -->
+    <Error
+      Text="The package reference '%(_PackageReferenceWithVersionOverrideForValidation.Identity)' uses VersionOverride which is disabled in this repository. Please add a scoped version entry to '$(CentralPackagesFile)' instead."
+      Condition=" '$(EnablePackageVersionOverride)' == 'false' And @(_PackageReferenceWithVersionOverrideForValidation->Count()) > 0 "
+      Code="AZSDK0004"
+      File="$(MSBuildProjectFullPath)" />
 
     <!--
       Get a list of duplicate <PackageReference /> and <GlobalPackageReference /> items.  Users must be made aware
