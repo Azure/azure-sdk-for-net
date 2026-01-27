@@ -11,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.DeploymentStacks.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.DeploymentStacks
 {
     internal partial class DeploymentStacksRestOperations
     {
@@ -25,42 +25,44 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of DeploymentStacksRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public DeploymentStacksRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateExportTemplateAtScopeRequestUri(string scope, string deploymentStackName)
+        internal RequestUriBuilder CreateGetAtResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string deploymentStackName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
             uri.AppendPath(deploymentStackName, true);
-            uri.AppendPath("/exportTemplate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateExportTemplateAtScopeRequest(string scope, string deploymentStackName)
+        internal HttpMessage CreateGetAtResourceGroupRequest(string subscriptionId, string resourceGroupName, string deploymentStackName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
             uri.AppendPath(deploymentStackName, true);
-            uri.AppendPath("/exportTemplate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -68,26 +70,28 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> Exports the template used to create the Deployment stack. </summary>
-        /// <param name="scope"> The resource scope. </param>
+        /// <summary> Gets the Deployment stack with the given name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentStackName"> Name of the deployment stack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentStackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentStackTemplateDefinition>> ExportTemplateAtScopeAsync(string scope, string deploymentStackName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStack>> GetAtResourceGroupAsync(string subscriptionId, string resourceGroupName, string deploymentStackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
 
-            using var message = CreateExportTemplateAtScopeRequest(scope, deploymentStackName);
+            using var message = CreateGetAtResourceGroupRequest(subscriptionId, resourceGroupName, deploymentStackName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeploymentStackTemplateDefinition value = default;
+                        DeploymentStack value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentStackTemplateDefinition.DeserializeDeploymentStackTemplateDefinition(document.RootElement);
+                        value = DeploymentStack.DeserializeDeploymentStack(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,26 +99,28 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Exports the template used to create the Deployment stack. </summary>
-        /// <param name="scope"> The resource scope. </param>
+        /// <summary> Gets the Deployment stack with the given name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentStackName"> Name of the deployment stack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentStackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentStackTemplateDefinition> ExportTemplateAtScope(string scope, string deploymentStackName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStack> GetAtResourceGroup(string subscriptionId, string resourceGroupName, string deploymentStackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
 
-            using var message = CreateExportTemplateAtScopeRequest(scope, deploymentStackName);
+            using var message = CreateGetAtResourceGroupRequest(subscriptionId, resourceGroupName, deploymentStackName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeploymentStackTemplateDefinition value = default;
+                        DeploymentStack value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeploymentStackTemplateDefinition.DeserializeDeploymentStackTemplateDefinition(document.RootElement);
+                        value = DeploymentStack.DeserializeDeploymentStack(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,12 +128,100 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal RequestUriBuilder CreateValidateStackAtScopeRequestUri(string scope, string deploymentStackName, DeploymentStackData data)
+        internal RequestUriBuilder CreateListAtResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListAtResourceGroupRequest(string subscriptionId, string resourceGroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStackListResult>> ListAtResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var message = CreateListAtResourceGroupRequest(subscriptionId, resourceGroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStackListResult> ListAtResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var message = CreateListAtResourceGroupRequest(subscriptionId, resourceGroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateValidateStackAtResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStack deploymentStack)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
             uri.AppendPath(deploymentStackName, true);
             uri.AppendPath("/validate", false);
@@ -135,15 +229,17 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateValidateStackAtScopeRequest(string scope, string deploymentStackName, DeploymentStackData data)
+        internal HttpMessage CreateValidateStackAtResourceGroupRequest(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStack deploymentStack)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
             uri.AppendPath(deploymentStackName, true);
             uri.AppendPath("/validate", false);
@@ -152,31 +248,33 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(deploymentStack, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Runs preflight validation on the specific scoped Deployment stack template to verify its acceptance to Azure Resource Manager. </summary>
-        /// <param name="scope"> The resource scope. </param>
+        /// <summary> Runs preflight validation on the Deployment stack template at the specified scope to verify its acceptance to Azure Resource Manager. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentStackName"> Name of the deployment stack. </param>
-        /// <param name="data"> Deployment stack to validate. </param>
+        /// <param name="deploymentStack"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentStackName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateStackAtScopeAsync(string scope, string deploymentStackName, DeploymentStackData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ValidateStackAtResourceGroupAsync(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
 
-            using var message = CreateValidateStackAtScopeRequest(scope, deploymentStackName, data);
+            using var message = CreateValidateStackAtResourceGroupRequest(subscriptionId, resourceGroupName, deploymentStackName, deploymentStack);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                 case 400:
                     return message.Response;
                 default:
@@ -184,25 +282,27 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Runs preflight validation on the specific scoped Deployment stack template to verify its acceptance to Azure Resource Manager. </summary>
-        /// <param name="scope"> The resource scope. </param>
+        /// <summary> Runs preflight validation on the Deployment stack template at the specified scope to verify its acceptance to Azure Resource Manager. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentStackName"> Name of the deployment stack. </param>
-        /// <param name="data"> Deployment stack to validate. </param>
+        /// <param name="deploymentStack"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentStackName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateStackAtScope(string scope, string deploymentStackName, DeploymentStackData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ValidateStackAtResourceGroup(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
 
-            using var message = CreateValidateStackAtScopeRequest(scope, deploymentStackName, data);
+            using var message = CreateValidateStackAtResourceGroupRequest(subscriptionId, resourceGroupName, deploymentStackName, deploymentStack);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                 case 400:
                     return message.Response;
                 default:
@@ -210,103 +310,31 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal RequestUriBuilder CreateListAtScopeRequestUri(string scope)
+        internal RequestUriBuilder CreateCreateOrUpdateAtResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStack deploymentStack)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
-            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListAtScopeRequest(string scope)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
-            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists all the Deployment stacks within the specified scope. </summary>
-        /// <param name="scope"> The resource scope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DeploymentStackListResult>> ListAtScopeAsync(string scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using var message = CreateListAtScopeRequest(scope);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists all the Deployment stacks within the specified scope. </summary>
-        /// <param name="scope"> The resource scope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<DeploymentStackListResult> ListAtScope(string scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using var message = CreateListAtScopeRequest(scope);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateAtScopeRequestUri(string scope, string deploymentStackName, DeploymentStackData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
             uri.AppendPath(deploymentStackName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, string deploymentStackName, DeploymentStackData data)
+        internal HttpMessage CreateCreateOrUpdateAtResourceGroupRequest(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStack deploymentStack)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
             uri.AppendPath(deploymentStackName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -314,26 +342,28 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(deploymentStack, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Creates or updates a Deployment stack at specific scope. </summary>
-        /// <param name="scope"> The resource scope. </param>
+        /// <summary> Creates or updates a Deployment stack at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentStackName"> Name of the deployment stack. </param>
-        /// <param name="data"> Deployment stack supplied to the operation. </param>
+        /// <param name="deploymentStack"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentStackName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAtScopeAsync(string scope, string deploymentStackName, DeploymentStackData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAtResourceGroupAsync(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
 
-            using var message = CreateCreateOrUpdateAtScopeRequest(scope, deploymentStackName, data);
+            using var message = CreateCreateOrUpdateAtResourceGroupRequest(subscriptionId, resourceGroupName, deploymentStackName, deploymentStack);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -345,20 +375,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Creates or updates a Deployment stack at specific scope. </summary>
-        /// <param name="scope"> The resource scope. </param>
+        /// <summary> Creates or updates a Deployment stack at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentStackName"> Name of the deployment stack. </param>
-        /// <param name="data"> Deployment stack supplied to the operation. </param>
+        /// <param name="deploymentStack"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentStackName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdateAtScope(string scope, string deploymentStackName, DeploymentStackData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdateAtResourceGroup(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
 
-            using var message = CreateCreateOrUpdateAtScopeRequest(scope, deploymentStackName, data);
+            using var message = CreateCreateOrUpdateAtResourceGroupRequest(subscriptionId, resourceGroupName, deploymentStackName, deploymentStack);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -370,102 +402,17 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal RequestUriBuilder CreateGetAtScopeRequestUri(string scope, string deploymentStackName)
+        internal RequestUriBuilder CreateDeleteAtResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport, bool? bypassStackOutOfSyncError)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
             uri.AppendPath(deploymentStackName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetAtScopeRequest(string scope, string deploymentStackName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
-            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
-            uri.AppendPath(deploymentStackName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets a Deployment stack with a given name at specific scope. </summary>
-        /// <param name="scope"> The resource scope. </param>
-        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentStackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentStackData>> GetAtScopeAsync(string scope, string deploymentStackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
-
-            using var message = CreateGetAtScopeRequest(scope, deploymentStackName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentStackData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentStackData.DeserializeDeploymentStackData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DeploymentStackData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets a Deployment stack with a given name at specific scope. </summary>
-        /// <param name="scope"> The resource scope. </param>
-        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentStackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentStackData> GetAtScope(string scope, string deploymentStackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
-
-            using var message = CreateGetAtScopeRequest(scope, deploymentStackName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentStackData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeploymentStackData.DeserializeDeploymentStackData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DeploymentStackData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteAtScopeRequestUri(string scope, string deploymentStackName, UnmanageActionResourceMode? unmanageActionResources, UnmanageActionResourceGroupMode? unmanageActionResourceGroups, UnmanageActionManagementGroupMode? unmanageActionManagementGroups, bool? bypassStackOutOfSyncError)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
-            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
-            uri.AppendPath(deploymentStackName, true);
             if (unmanageActionResources != null)
             {
                 uri.AppendQuery("unmanageAction.Resources", unmanageActionResources.Value.ToString(), true);
@@ -478,25 +425,31 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("unmanageAction.ManagementGroups", unmanageActionManagementGroups.Value.ToString(), true);
             }
+            if (unmanageActionResourcesWithoutDeleteSupport != null)
+            {
+                uri.AppendQuery("unmanageAction.ResourcesWithoutDeleteSupport", unmanageActionResourcesWithoutDeleteSupport.Value.ToString(), true);
+            }
             if (bypassStackOutOfSyncError != null)
             {
                 uri.AppendQuery("bypassStackOutOfSyncError", bypassStackOutOfSyncError.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateDeleteAtScopeRequest(string scope, string deploymentStackName, UnmanageActionResourceMode? unmanageActionResources, UnmanageActionResourceGroupMode? unmanageActionResourceGroups, UnmanageActionManagementGroupMode? unmanageActionManagementGroups, bool? bypassStackOutOfSyncError)
+        internal HttpMessage CreateDeleteAtResourceGroupRequest(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport, bool? bypassStackOutOfSyncError)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
             uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (unmanageActionResources != null)
             {
                 uri.AppendQuery("unmanageAction.Resources", unmanageActionResources.Value.ToString(), true);
@@ -509,33 +462,38 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("unmanageAction.ManagementGroups", unmanageActionManagementGroups.Value.ToString(), true);
             }
+            if (unmanageActionResourcesWithoutDeleteSupport != null)
+            {
+                uri.AppendQuery("unmanageAction.ResourcesWithoutDeleteSupport", unmanageActionResourcesWithoutDeleteSupport.Value.ToString(), true);
+            }
             if (bypassStackOutOfSyncError != null)
             {
                 uri.AppendQuery("bypassStackOutOfSyncError", bypassStackOutOfSyncError.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Deletes a Deployment stack by name at specific scope. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="scope"> The resource scope. </param>
+        /// <summary> Deletes a Deployment stack by name at the specified scope. When operation completes, status code 200 returned without content. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentStackName"> Name of the deployment stack. </param>
         /// <param name="unmanageActionResources"> Flag to indicate delete rather than detach for unmanaged resources. </param>
         /// <param name="unmanageActionResourceGroups"> Flag to indicate delete rather than detach for unmanaged resource groups. </param>
         /// <param name="unmanageActionManagementGroups"> Flag to indicate delete rather than detach for unmanaged management groups. </param>
+        /// <param name="unmanageActionResourcesWithoutDeleteSupport"> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </param>
         /// <param name="bypassStackOutOfSyncError"> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentStackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAtScopeAsync(string scope, string deploymentStackName, UnmanageActionResourceMode? unmanageActionResources = null, UnmanageActionResourceGroupMode? unmanageActionResourceGroups = null, UnmanageActionManagementGroupMode? unmanageActionManagementGroups = null, bool? bypassStackOutOfSyncError = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAtResourceGroupAsync(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources = null, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups = null, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups = null, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport = null, bool? bypassStackOutOfSyncError = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
 
-            using var message = CreateDeleteAtScopeRequest(scope, deploymentStackName, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError);
+            using var message = CreateDeleteAtResourceGroupRequest(subscriptionId, resourceGroupName, deploymentStackName, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, unmanageActionResourcesWithoutDeleteSupport, bypassStackOutOfSyncError);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -548,22 +506,25 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Deletes a Deployment stack by name at specific scope. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="scope"> The resource scope. </param>
+        /// <summary> Deletes a Deployment stack by name at the specified scope. When operation completes, status code 200 returned without content. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentStackName"> Name of the deployment stack. </param>
         /// <param name="unmanageActionResources"> Flag to indicate delete rather than detach for unmanaged resources. </param>
         /// <param name="unmanageActionResourceGroups"> Flag to indicate delete rather than detach for unmanaged resource groups. </param>
         /// <param name="unmanageActionManagementGroups"> Flag to indicate delete rather than detach for unmanaged management groups. </param>
+        /// <param name="unmanageActionResourcesWithoutDeleteSupport"> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </param>
         /// <param name="bypassStackOutOfSyncError"> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentStackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteAtScope(string scope, string deploymentStackName, UnmanageActionResourceMode? unmanageActionResources = null, UnmanageActionResourceGroupMode? unmanageActionResourceGroups = null, UnmanageActionManagementGroupMode? unmanageActionManagementGroups = null, bool? bypassStackOutOfSyncError = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteAtResourceGroup(string subscriptionId, string resourceGroupName, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources = null, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups = null, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups = null, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport = null, bool? bypassStackOutOfSyncError = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
 
-            using var message = CreateDeleteAtScopeRequest(scope, deploymentStackName, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError);
+            using var message = CreateDeleteAtResourceGroupRequest(subscriptionId, resourceGroupName, deploymentStackName, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, unmanageActionResourcesWithoutDeleteSupport, bypassStackOutOfSyncError);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -576,39 +537,222 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal RequestUriBuilder CreateListAtScopeNextPageRequestUri(string nextLink, string scope)
+        internal RequestUriBuilder CreateExportTemplateAtResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string deploymentStackName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendPath("/exportTemplate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope)
+        internal HttpMessage CreateExportTemplateAtResourceGroupRequest(string subscriptionId, string resourceGroupName, string deploymentStackName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendPath("/exportTemplate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Lists all the Deployment stacks within the specified scope. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The resource scope. </param>
+        /// <summary> Exports the template used to create the Deployment stack at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DeploymentStackListResult>> ListAtScopeNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStackTemplateExportResult>> ExportTemplateAtResourceGroupAsync(string subscriptionId, string resourceGroupName, string deploymentStackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
 
-            using var message = CreateListAtScopeNextPageRequest(nextLink, scope);
+            using var message = CreateExportTemplateAtResourceGroupRequest(subscriptionId, resourceGroupName, deploymentStackName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackTemplateExportResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DeploymentStackTemplateExportResult.DeserializeDeploymentStackTemplateExportResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Exports the template used to create the Deployment stack at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStackTemplateExportResult> ExportTemplateAtResourceGroup(string subscriptionId, string resourceGroupName, string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateExportTemplateAtResourceGroupRequest(subscriptionId, resourceGroupName, deploymentStackName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackTemplateExportResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DeploymentStackTemplateExportResult.DeserializeDeploymentStackTemplateExportResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetAtSubscriptionRequestUri(string subscriptionId, string deploymentStackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetAtSubscriptionRequest(string subscriptionId, string deploymentStackName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the Deployment stack with the given name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStack>> GetAtSubscriptionAsync(string subscriptionId, string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateGetAtSubscriptionRequest(subscriptionId, deploymentStackName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStack value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DeploymentStack.DeserializeDeploymentStack(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the Deployment stack with the given name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStack> GetAtSubscription(string subscriptionId, string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateGetAtSubscriptionRequest(subscriptionId, deploymentStackName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStack value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DeploymentStack.DeserializeDeploymentStack(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListAtSubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListAtSubscriptionRequest(string subscriptionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStackListResult>> ListAtSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListAtSubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -624,17 +768,1180 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Lists all the Deployment stacks within the specified scope. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The resource scope. </param>
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<DeploymentStackListResult> ListAtScopeNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStackListResult> ListAtSubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListAtSubscriptionRequest(subscriptionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateValidateStackAtSubscriptionRequestUri(string subscriptionId, string deploymentStackName, DeploymentStack deploymentStack)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateValidateStackAtSubscriptionRequest(string subscriptionId, string deploymentStackName, DeploymentStack deploymentStack)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deploymentStack, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Runs preflight validation on the Deployment stack template at the specified scope to verify its acceptance to Azure Resource Manager. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="deploymentStack"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ValidateStackAtSubscriptionAsync(string subscriptionId, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
+
+            using var message = CreateValidateStackAtSubscriptionRequest(subscriptionId, deploymentStackName, deploymentStack);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 200:
+                case 400:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Runs preflight validation on the Deployment stack template at the specified scope to verify its acceptance to Azure Resource Manager. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="deploymentStack"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ValidateStackAtSubscription(string subscriptionId, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
+
+            using var message = CreateValidateStackAtSubscriptionRequest(subscriptionId, deploymentStackName, deploymentStack);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 200:
+                case 400:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateAtSubscriptionRequestUri(string subscriptionId, string deploymentStackName, DeploymentStack deploymentStack)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateAtSubscriptionRequest(string subscriptionId, string deploymentStackName, DeploymentStack deploymentStack)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deploymentStack, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Creates or updates a Deployment stack at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="deploymentStack"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAtSubscriptionAsync(string subscriptionId, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
+
+            using var message = CreateCreateOrUpdateAtSubscriptionRequest(subscriptionId, deploymentStackName, deploymentStack);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates or updates a Deployment stack at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="deploymentStack"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdateAtSubscription(string subscriptionId, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
+
+            using var message = CreateCreateOrUpdateAtSubscriptionRequest(subscriptionId, deploymentStackName, deploymentStack);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteAtSubscriptionRequestUri(string subscriptionId, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport, bool? bypassStackOutOfSyncError)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (unmanageActionResources != null)
+            {
+                uri.AppendQuery("unmanageAction.Resources", unmanageActionResources.Value.ToString(), true);
+            }
+            if (unmanageActionResourceGroups != null)
+            {
+                uri.AppendQuery("unmanageAction.ResourceGroups", unmanageActionResourceGroups.Value.ToString(), true);
+            }
+            if (unmanageActionManagementGroups != null)
+            {
+                uri.AppendQuery("unmanageAction.ManagementGroups", unmanageActionManagementGroups.Value.ToString(), true);
+            }
+            if (unmanageActionResourcesWithoutDeleteSupport != null)
+            {
+                uri.AppendQuery("unmanageAction.ResourcesWithoutDeleteSupport", unmanageActionResourcesWithoutDeleteSupport.Value.ToString(), true);
+            }
+            if (bypassStackOutOfSyncError != null)
+            {
+                uri.AppendQuery("bypassStackOutOfSyncError", bypassStackOutOfSyncError.Value, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteAtSubscriptionRequest(string subscriptionId, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport, bool? bypassStackOutOfSyncError)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (unmanageActionResources != null)
+            {
+                uri.AppendQuery("unmanageAction.Resources", unmanageActionResources.Value.ToString(), true);
+            }
+            if (unmanageActionResourceGroups != null)
+            {
+                uri.AppendQuery("unmanageAction.ResourceGroups", unmanageActionResourceGroups.Value.ToString(), true);
+            }
+            if (unmanageActionManagementGroups != null)
+            {
+                uri.AppendQuery("unmanageAction.ManagementGroups", unmanageActionManagementGroups.Value.ToString(), true);
+            }
+            if (unmanageActionResourcesWithoutDeleteSupport != null)
+            {
+                uri.AppendQuery("unmanageAction.ResourcesWithoutDeleteSupport", unmanageActionResourcesWithoutDeleteSupport.Value.ToString(), true);
+            }
+            if (bypassStackOutOfSyncError != null)
+            {
+                uri.AppendQuery("bypassStackOutOfSyncError", bypassStackOutOfSyncError.Value, true);
+            }
+            request.Uri = uri;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes a Deployment stack by name at the specified scope. When operation completes, status code 200 returned without content. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="unmanageActionResources"> Flag to indicate delete rather than detach for unmanaged resources. </param>
+        /// <param name="unmanageActionResourceGroups"> Flag to indicate delete rather than detach for unmanaged resource groups. </param>
+        /// <param name="unmanageActionManagementGroups"> Flag to indicate delete rather than detach for unmanaged management groups. </param>
+        /// <param name="unmanageActionResourcesWithoutDeleteSupport"> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </param>
+        /// <param name="bypassStackOutOfSyncError"> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAtSubscriptionAsync(string subscriptionId, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources = null, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups = null, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups = null, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport = null, bool? bypassStackOutOfSyncError = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateDeleteAtSubscriptionRequest(subscriptionId, deploymentStackName, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, unmanageActionResourcesWithoutDeleteSupport, bypassStackOutOfSyncError);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes a Deployment stack by name at the specified scope. When operation completes, status code 200 returned without content. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="unmanageActionResources"> Flag to indicate delete rather than detach for unmanaged resources. </param>
+        /// <param name="unmanageActionResourceGroups"> Flag to indicate delete rather than detach for unmanaged resource groups. </param>
+        /// <param name="unmanageActionManagementGroups"> Flag to indicate delete rather than detach for unmanaged management groups. </param>
+        /// <param name="unmanageActionResourcesWithoutDeleteSupport"> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </param>
+        /// <param name="bypassStackOutOfSyncError"> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteAtSubscription(string subscriptionId, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources = null, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups = null, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups = null, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport = null, bool? bypassStackOutOfSyncError = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateDeleteAtSubscriptionRequest(subscriptionId, deploymentStackName, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, unmanageActionResourcesWithoutDeleteSupport, bypassStackOutOfSyncError);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateExportTemplateAtSubscriptionRequestUri(string subscriptionId, string deploymentStackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendPath("/exportTemplate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateExportTemplateAtSubscriptionRequest(string subscriptionId, string deploymentStackName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendPath("/exportTemplate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Exports the template used to create the Deployment stack at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStackTemplateExportResult>> ExportTemplateAtSubscriptionAsync(string subscriptionId, string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateExportTemplateAtSubscriptionRequest(subscriptionId, deploymentStackName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackTemplateExportResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DeploymentStackTemplateExportResult.DeserializeDeploymentStackTemplateExportResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Exports the template used to create the Deployment stack at the specified scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStackTemplateExportResult> ExportTemplateAtSubscription(string subscriptionId, string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateExportTemplateAtSubscriptionRequest(subscriptionId, deploymentStackName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackTemplateExportResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DeploymentStackTemplateExportResult.DeserializeDeploymentStackTemplateExportResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetAtManagementGroupRequestUri(string managementGroupId, string deploymentStackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetAtManagementGroupRequest(string managementGroupId, string deploymentStackName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the Deployment stack with the given name. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStack>> GetAtManagementGroupAsync(string managementGroupId, string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateGetAtManagementGroupRequest(managementGroupId, deploymentStackName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStack value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DeploymentStack.DeserializeDeploymentStack(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the Deployment stack with the given name. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStack> GetAtManagementGroup(string managementGroupId, string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateGetAtManagementGroupRequest(managementGroupId, deploymentStackName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStack value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DeploymentStack.DeserializeDeploymentStack(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListAtManagementGroupRequestUri(string managementGroupId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListAtManagementGroupRequest(string managementGroupId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStackListResult>> ListAtManagementGroupAsync(string managementGroupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+
+            using var message = CreateListAtManagementGroupRequest(managementGroupId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStackListResult> ListAtManagementGroup(string managementGroupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+
+            using var message = CreateListAtManagementGroupRequest(managementGroupId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateValidateStackAtManagementGroupRequestUri(string managementGroupId, string deploymentStackName, DeploymentStack deploymentStack)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateValidateStackAtManagementGroupRequest(string managementGroupId, string deploymentStackName, DeploymentStack deploymentStack)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deploymentStack, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Runs preflight validation on the Deployment stack template at the specified scope to verify its acceptance to Azure Resource Manager. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="deploymentStack"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ValidateStackAtManagementGroupAsync(string managementGroupId, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
+
+            using var message = CreateValidateStackAtManagementGroupRequest(managementGroupId, deploymentStackName, deploymentStack);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 200:
+                case 400:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Runs preflight validation on the Deployment stack template at the specified scope to verify its acceptance to Azure Resource Manager. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="deploymentStack"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ValidateStackAtManagementGroup(string managementGroupId, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
+
+            using var message = CreateValidateStackAtManagementGroupRequest(managementGroupId, deploymentStackName, deploymentStack);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 200:
+                case 400:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateAtManagementGroupRequestUri(string managementGroupId, string deploymentStackName, DeploymentStack deploymentStack)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateAtManagementGroupRequest(string managementGroupId, string deploymentStackName, DeploymentStack deploymentStack)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deploymentStack, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Creates or updates a Deployment stack at the specified scope. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="deploymentStack"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAtManagementGroupAsync(string managementGroupId, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
+
+            using var message = CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, deploymentStackName, deploymentStack);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates or updates a Deployment stack at the specified scope. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="deploymentStack"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="deploymentStackName"/> or <paramref name="deploymentStack"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdateAtManagementGroup(string managementGroupId, string deploymentStackName, DeploymentStack deploymentStack, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+            Argument.AssertNotNull(deploymentStack, nameof(deploymentStack));
+
+            using var message = CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, deploymentStackName, deploymentStack);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteAtManagementGroupRequestUri(string managementGroupId, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport, bool? bypassStackOutOfSyncError)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (unmanageActionResources != null)
+            {
+                uri.AppendQuery("unmanageAction.Resources", unmanageActionResources.Value.ToString(), true);
+            }
+            if (unmanageActionResourceGroups != null)
+            {
+                uri.AppendQuery("unmanageAction.ResourceGroups", unmanageActionResourceGroups.Value.ToString(), true);
+            }
+            if (unmanageActionManagementGroups != null)
+            {
+                uri.AppendQuery("unmanageAction.ManagementGroups", unmanageActionManagementGroups.Value.ToString(), true);
+            }
+            if (unmanageActionResourcesWithoutDeleteSupport != null)
+            {
+                uri.AppendQuery("unmanageAction.ResourcesWithoutDeleteSupport", unmanageActionResourcesWithoutDeleteSupport.Value.ToString(), true);
+            }
+            if (bypassStackOutOfSyncError != null)
+            {
+                uri.AppendQuery("bypassStackOutOfSyncError", bypassStackOutOfSyncError.Value, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteAtManagementGroupRequest(string managementGroupId, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport, bool? bypassStackOutOfSyncError)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (unmanageActionResources != null)
+            {
+                uri.AppendQuery("unmanageAction.Resources", unmanageActionResources.Value.ToString(), true);
+            }
+            if (unmanageActionResourceGroups != null)
+            {
+                uri.AppendQuery("unmanageAction.ResourceGroups", unmanageActionResourceGroups.Value.ToString(), true);
+            }
+            if (unmanageActionManagementGroups != null)
+            {
+                uri.AppendQuery("unmanageAction.ManagementGroups", unmanageActionManagementGroups.Value.ToString(), true);
+            }
+            if (unmanageActionResourcesWithoutDeleteSupport != null)
+            {
+                uri.AppendQuery("unmanageAction.ResourcesWithoutDeleteSupport", unmanageActionResourcesWithoutDeleteSupport.Value.ToString(), true);
+            }
+            if (bypassStackOutOfSyncError != null)
+            {
+                uri.AppendQuery("bypassStackOutOfSyncError", bypassStackOutOfSyncError.Value, true);
+            }
+            request.Uri = uri;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes a Deployment stack by name at the specified scope. When operation completes, status code 200 returned without content. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="unmanageActionResources"> Flag to indicate delete rather than detach for unmanaged resources. </param>
+        /// <param name="unmanageActionResourceGroups"> Flag to indicate delete rather than detach for unmanaged resource groups. </param>
+        /// <param name="unmanageActionManagementGroups"> Flag to indicate delete rather than detach for unmanaged management groups. </param>
+        /// <param name="unmanageActionResourcesWithoutDeleteSupport"> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </param>
+        /// <param name="bypassStackOutOfSyncError"> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAtManagementGroupAsync(string managementGroupId, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources = null, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups = null, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups = null, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport = null, bool? bypassStackOutOfSyncError = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateDeleteAtManagementGroupRequest(managementGroupId, deploymentStackName, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, unmanageActionResourcesWithoutDeleteSupport, bypassStackOutOfSyncError);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes a Deployment stack by name at the specified scope. When operation completes, status code 200 returned without content. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="unmanageActionResources"> Flag to indicate delete rather than detach for unmanaged resources. </param>
+        /// <param name="unmanageActionResourceGroups"> Flag to indicate delete rather than detach for unmanaged resource groups. </param>
+        /// <param name="unmanageActionManagementGroups"> Flag to indicate delete rather than detach for unmanaged management groups. </param>
+        /// <param name="unmanageActionResourcesWithoutDeleteSupport"> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </param>
+        /// <param name="bypassStackOutOfSyncError"> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteAtManagementGroup(string managementGroupId, string deploymentStackName, DeploymentStacksDeleteDetachEnum? unmanageActionResources = null, DeploymentStacksDeleteDetachEnum? unmanageActionResourceGroups = null, DeploymentStacksDeleteDetachEnum? unmanageActionManagementGroups = null, DeploymentStacksResourcesWithoutDeleteSupportEnum? unmanageActionResourcesWithoutDeleteSupport = null, bool? bypassStackOutOfSyncError = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateDeleteAtManagementGroupRequest(managementGroupId, deploymentStackName, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, unmanageActionResourcesWithoutDeleteSupport, bypassStackOutOfSyncError);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateExportTemplateAtManagementGroupRequestUri(string managementGroupId, string deploymentStackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendPath("/exportTemplate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateExportTemplateAtManagementGroupRequest(string managementGroupId, string deploymentStackName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deploymentStacks/", false);
+            uri.AppendPath(deploymentStackName, true);
+            uri.AppendPath("/exportTemplate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Exports the template used to create the Deployment stack at the specified scope. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStackTemplateExportResult>> ExportTemplateAtManagementGroupAsync(string managementGroupId, string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateExportTemplateAtManagementGroupRequest(managementGroupId, deploymentStackName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackTemplateExportResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DeploymentStackTemplateExportResult.DeserializeDeploymentStackTemplateExportResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Exports the template used to create the Deployment stack at the specified scope. </summary>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStackTemplateExportResult> ExportTemplateAtManagementGroup(string managementGroupId, string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
+
+            using var message = CreateExportTemplateAtManagementGroupRequest(managementGroupId, deploymentStackName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackTemplateExportResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DeploymentStackTemplateExportResult.DeserializeDeploymentStackTemplateExportResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListAtResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListAtResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStackListResult>> ListAtResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListAtScopeNextPageRequest(nextLink, scope);
+            using var message = CreateListAtResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStackListResult> ListAtResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var message = CreateListAtResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListAtSubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListAtSubscriptionNextPageRequest(string nextLink, string subscriptionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStackListResult>> ListAtSubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListAtSubscriptionNextPageRequest(nextLink, subscriptionId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStackListResult> ListAtSubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListAtSubscriptionNextPageRequest(nextLink, subscriptionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListAtManagementGroupNextPageRequestUri(string nextLink, string managementGroupId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListAtManagementGroupNextPageRequest(string nextLink, string managementGroupId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeploymentStackListResult>> ListAtManagementGroupNextPageAsync(string nextLink, string managementGroupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+
+            using var message = CreateListAtManagementGroupNextPageRequest(nextLink, managementGroupId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeploymentStackListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DeploymentStackListResult.DeserializeDeploymentStackListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists Deployment stacks at the specified scope. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="managementGroupId"> The name of the management group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeploymentStackListResult> ListAtManagementGroupNextPage(string nextLink, string managementGroupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+
+            using var message = CreateListAtManagementGroupNextPageRequest(nextLink, managementGroupId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

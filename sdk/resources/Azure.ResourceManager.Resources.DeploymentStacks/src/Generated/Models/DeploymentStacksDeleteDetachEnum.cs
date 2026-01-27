@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </summary>
     public readonly partial struct DeploymentStacksDeleteDetachEnum : IEquatable<DeploymentStacksDeleteDetachEnum>
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Resources.Models
         private const string DeleteValue = "delete";
         private const string DetachValue = "detach";
 
-        /// <summary> delete. </summary>
+        /// <summary> Delete the specified resources from Azure. </summary>
         public static DeploymentStacksDeleteDetachEnum Delete { get; } = new DeploymentStacksDeleteDetachEnum(DeleteValue);
-        /// <summary> detach. </summary>
+        /// <summary> Keep the specified resources in Azure. </summary>
         public static DeploymentStacksDeleteDetachEnum Detach { get; } = new DeploymentStacksDeleteDetachEnum(DetachValue);
         /// <summary> Determines if two <see cref="DeploymentStacksDeleteDetachEnum"/> values are the same. </summary>
         public static bool operator ==(DeploymentStacksDeleteDetachEnum left, DeploymentStacksDeleteDetachEnum right) => left.Equals(right);

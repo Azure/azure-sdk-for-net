@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> denySettings Mode that defines denied actions. </summary>
     public readonly partial struct DenySettingsMode : IEquatable<DenySettingsMode>

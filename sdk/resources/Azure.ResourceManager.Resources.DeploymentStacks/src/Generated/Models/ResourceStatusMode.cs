@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> Current management state of the resource in the deployment stack. </summary>
     public readonly partial struct ResourceStatusMode : IEquatable<ResourceStatusMode>

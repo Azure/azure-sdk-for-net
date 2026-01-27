@@ -8,11 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     public partial class DeploymentStacksParametersLink : IUtf8JsonSerializable, IJsonModel<DeploymentStacksParametersLink>
     {
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            writer.WriteStringValue(Uri);
             if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Uri uri = default;
+            string uri = default;
             string contentVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("uri"u8))
                 {
-                    uri = new Uri(property.Value.GetString());
+                    uri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("contentVersion"u8))
@@ -104,59 +103,6 @@ namespace Azure.ResourceManager.Resources.Models
             return new DeploymentStacksParametersLink(uri, contentVersion, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  uri: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Uri))
-                {
-                    builder.Append("  uri: ");
-                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContentVersion))
-                {
-                    builder.Append("  contentVersion: ");
-                    if (ContentVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContentVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContentVersion}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<DeploymentStacksParametersLink>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentStacksParametersLink>)this).GetFormatFromOptions(options) : options.Format;
@@ -164,9 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentStacksParametersLink)} does not support writing '{options.Format}' format.");
             }

@@ -8,11 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     public partial class ActionOnUnmanage : IUtf8JsonSerializable, IJsonModel<ActionOnUnmanage>
     {
@@ -46,6 +45,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStringValue(ManagementGroups.Value.ToString());
+            }
+            if (Optional.IsDefined(ResourcesWithoutDeleteSupport))
+            {
+                writer.WritePropertyName("resourcesWithoutDeleteSupport"u8);
+                writer.WriteStringValue(ResourcesWithoutDeleteSupport.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,6 +91,7 @@ namespace Azure.ResourceManager.Resources.Models
             DeploymentStacksDeleteDetachEnum resources = default;
             DeploymentStacksDeleteDetachEnum? resourceGroups = default;
             DeploymentStacksDeleteDetachEnum? managementGroups = default;
+            DeploymentStacksResourcesWithoutDeleteSupportEnum? resourcesWithoutDeleteSupport = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,70 +119,22 @@ namespace Azure.ResourceManager.Resources.Models
                     managementGroups = new DeploymentStacksDeleteDetachEnum(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("resourcesWithoutDeleteSupport"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourcesWithoutDeleteSupport = new DeploymentStacksResourcesWithoutDeleteSupportEnum(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ActionOnUnmanage(resources, resourceGroups, managementGroups, serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Resources), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resources: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  resources: ");
-                builder.AppendLine($"'{Resources.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resourceGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceGroups))
-                {
-                    builder.Append("  resourceGroups: ");
-                    builder.AppendLine($"'{ResourceGroups.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagementGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  managementGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ManagementGroups))
-                {
-                    builder.Append("  managementGroups: ");
-                    builder.AppendLine($"'{ManagementGroups.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
+            return new ActionOnUnmanage(resources, resourceGroups, managementGroups, resourcesWithoutDeleteSupport, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionOnUnmanage>.Write(ModelReaderWriterOptions options)
@@ -187,9 +144,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ActionOnUnmanage)} does not support writing '{options.Format}' format.");
             }

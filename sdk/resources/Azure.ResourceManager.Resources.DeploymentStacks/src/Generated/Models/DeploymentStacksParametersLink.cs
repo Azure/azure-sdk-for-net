@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> Entity representing the reference to the deployment parameters. </summary>
     public partial class DeploymentStacksParametersLink
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="DeploymentStacksParametersLink"/>. </summary>
         /// <param name="uri"> The URI of the parameters file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public DeploymentStacksParametersLink(Uri uri)
+        public DeploymentStacksParametersLink(string uri)
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="uri"> The URI of the parameters file. </param>
         /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentStacksParametersLink(Uri uri, string contentVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentStacksParametersLink(string uri, string contentVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             ContentVersion = contentVersion;
@@ -72,10 +72,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The URI of the parameters file. </summary>
-        [WirePath("uri")]
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
         /// <summary> If included, must match the ContentVersion in the template. </summary>
-        [WirePath("contentVersion")]
         public string ContentVersion { get; set; }
     }
 }

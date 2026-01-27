@@ -5,32 +5,26 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Resources.DeploymentStacks.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.DeploymentStacks
 {
-    internal class DeploymentStackOperationSource : IOperationSource<DeploymentStackResource>
+    internal class DeploymentStackOperationSource : IOperationSource<DeploymentStack>
     {
-        private readonly ArmClient _client;
-
-        internal DeploymentStackOperationSource(ArmClient client)
+        DeploymentStack IOperationSource<DeploymentStack>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            _client = client;
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeploymentStack.DeserializeDeploymentStack(document.RootElement);
         }
 
-        DeploymentStackResource IOperationSource<DeploymentStackResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        async ValueTask<DeploymentStack> IOperationSource<DeploymentStack>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeploymentStackData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
-            return new DeploymentStackResource(_client, data);
-        }
-
-        async ValueTask<DeploymentStackResource> IOperationSource<DeploymentStackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            var data = ModelReaderWriter.Read<DeploymentStackData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
-            return await Task.FromResult(new DeploymentStackResource(_client, data)).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return DeploymentStack.DeserializeDeploymentStack(document.RootElement);
         }
     }
 }

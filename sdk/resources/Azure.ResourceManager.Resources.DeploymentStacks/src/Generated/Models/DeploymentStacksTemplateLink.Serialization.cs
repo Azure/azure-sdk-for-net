@@ -8,11 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     public partial class DeploymentStacksTemplateLink : IUtf8JsonSerializable, IJsonModel<DeploymentStacksTemplateLink>
     {
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Uri);
             }
             if (Optional.IsDefined(Id))
             {
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Uri uri = default;
+            string uri = default;
             string id = default;
             string relativePath = default;
             string queryString = default;
@@ -108,11 +107,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("uri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uri = new Uri(property.Value.GetString());
+                    uri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -150,128 +145,6 @@ namespace Azure.ResourceManager.Resources.Models
                 serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  uri: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Uri))
-                {
-                    builder.Append("  uri: ");
-                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelativePath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  relativePath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RelativePath))
-                {
-                    builder.Append("  relativePath: ");
-                    if (RelativePath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RelativePath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RelativePath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryString), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  queryString: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QueryString))
-                {
-                    builder.Append("  queryString: ");
-                    if (QueryString.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{QueryString}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{QueryString}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContentVersion))
-                {
-                    builder.Append("  contentVersion: ");
-                    if (ContentVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContentVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContentVersion}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<DeploymentStacksTemplateLink>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentStacksTemplateLink>)this).GetFormatFromOptions(options) : options.Format;
@@ -279,9 +152,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentStacksTemplateLink)} does not support writing '{options.Format}' format.");
             }
