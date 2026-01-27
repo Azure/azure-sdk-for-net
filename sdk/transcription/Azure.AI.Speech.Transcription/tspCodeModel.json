@@ -1534,7 +1534,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Azure.Ai.Speech.Transcription.transcribe",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Azure.AI.Speech.Transcription"
           },
           "parameters": [
             {
