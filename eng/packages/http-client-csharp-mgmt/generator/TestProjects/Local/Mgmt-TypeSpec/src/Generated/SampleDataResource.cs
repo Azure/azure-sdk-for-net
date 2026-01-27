@@ -21,7 +21,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// <summary>
     /// A class representing a SampleData along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SampleDataResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSampleData method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAllSampleData method.
     /// </summary>
     public partial class SampleDataResource : ArmResource
     {
