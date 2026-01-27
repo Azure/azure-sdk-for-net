@@ -529,6 +529,29 @@
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2" />
   </ItemGroup>
 
+  <!-- Temporary section for phased NUnit 4 migration -->
+    <ItemGroup Condition="('$(IsTestProject)' == 'true'
+      or '$(IsTestSupportProject)' == 'true'
+      or '$(IsPerfProject)' == 'true'
+      or '$(IsStressProject)' == 'true'
+      or '$(IsSamplesProject)' == 'true')
+      and ($(MSBuildProjectDirectory.Contains('\sdk\core\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\template\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storage\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storagecache\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storageactions\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storagemover\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storagepool\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storagesync\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storagediscovery\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\identity\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\keyvault\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\entra\')))">
+      <PackageReference Update="NUnit" Version="4.4.0" />
+      <PackageReference Update="NUnit3TestAdapter" Version="4.6.0" />
+      <PackageReference Update="NUnit.Analyzers" Version="4.5.0" />
+    </ItemGroup>
+
   <!--
     FluentAssertions is approved only for legacy use. Azure SDK test projects should
     use NUnit assertions.
@@ -578,27 +601,12 @@
 
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
     <PackageReference Update="Castle.Core" Version="$(CastleCoreVersion)" />
+    <PackageReference Update="NUnit" Version="4.4.0" />
+    <PackageReference Update="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Update="NUnit.Analyzers" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
-  </ItemGroup>
-
-  <!-- Temporary section for phased NUnit 4 migration -->
-  <ItemGroup Condition="$(MSBuildProjectDirectory.Contains('\sdk\core\'))
-    or $(MSBuildProjectDirectory.Contains('\sdk\template\'))
-    or $(MSBuildProjectDirectory.Contains('\sdk\storage\'))
-    or $(MSBuildProjectDirectory.Contains('\sdk\storagecache\'))
-    or $(MSBuildProjectDirectory.Contains('\sdk\storageactions\'))
-    or $(MSBuildProjectDirectory.Contains('\sdk\storagemover\'))
-    or $(MSBuildProjectDirectory.Contains('\sdk\storagepool\'))
-    or $(MSBuildProjectDirectory.Contains('\sdk\storagesync\'))
-    or $(MSBuildProjectDirectory.Contains('\sdk\storagediscovery\'))
-    or $(MSBuildProjectDirectory.Contains('\sdk\identity\'))
-    or $(MSBuildProjectDirectory.Contains('\sdk\keyvault\'))
-    or $(MSBuildProjectDirectory.Contains('\sdk\entra\'))">
-    <PackageReference Update="NUnit" Version="4.4.0" />
-    <PackageReference Update="NUnit3TestAdapter" Version="4.6.0" />
-    <PackageReference Update="NUnit.Analyzers" Version="4.5.0" />
   </ItemGroup>
 </Project>
