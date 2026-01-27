@@ -384,7 +384,8 @@
     <!-- General testing infrastructure  -->
     <PackageReference Update="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
     <PackageReference Update="NSubstitute" Version="5.3.0" />
-    <PackageReference Update="NUnit" Version="$(NUnitVersion)" />    <PackageReference Update="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Update="NUnit" Version="$(NUnitVersion)" />
+    <PackageReference Update="NUnit3TestAdapter" Version="4.6.0" />
     <PackageReference Update="Microsoft.NET.Sdk.Functions" Version="4.6.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="18.0.1" />
 
@@ -575,19 +576,27 @@
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="4.12.0" />
   </ItemGroup>
 
-  <!-- The unbranded test framework is the first to use NUnit 4; the repository will migrate fully in the near future -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
     <PackageReference Update="Castle.Core" Version="$(CastleCoreVersion)" />
-    <PackageReference Update="NUnit" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
   </ItemGroup>
 
-
-  <!-- NUnit 4 migration: core, template, storage, storagecache, storageactions, storagemover, storagepool, storagesync, storagediscovery, identity, keyvault, entra -->
-  <ItemGroup Condition="$(MSBuildProjectDirectory.Contains('\sdk\core\')) or $(MSBuildProjectDirectory.Contains('\sdk\template\')) or $(MSBuildProjectDirectory.Contains('\sdk\storage\')) or $(MSBuildProjectDirectory.Contains('\sdk\storagecache\')) or $(MSBuildProjectDirectory.Contains('\sdk\storageactions\')) or $(MSBuildProjectDirectory.Contains('\sdk\storagemover\')) or $(MSBuildProjectDirectory.Contains('\sdk\storagepool\')) or $(MSBuildProjectDirectory.Contains('\sdk\storagesync\')) or $(MSBuildProjectDirectory.Contains('\sdk\storagediscovery\')) or $(MSBuildProjectDirectory.Contains('\sdk\identity\')) or $(MSBuildProjectDirectory.Contains('\sdk\keyvault\')) or $(MSBuildProjectDirectory.Contains('\sdk\entra\'))">
+  <!-- Temporary section for phased NUnit 4 migration -->
+  <ItemGroup Condition="$(MSBuildProjectDirectory.Contains('\sdk\core\'))
+    or $(MSBuildProjectDirectory.Contains('\sdk\template\'))
+    or $(MSBuildProjectDirectory.Contains('\sdk\storage\'))
+    or $(MSBuildProjectDirectory.Contains('\sdk\storagecache\'))
+    or $(MSBuildProjectDirectory.Contains('\sdk\storageactions\'))
+    or $(MSBuildProjectDirectory.Contains('\sdk\storagemover\'))
+    or $(MSBuildProjectDirectory.Contains('\sdk\storagepool\'))
+    or $(MSBuildProjectDirectory.Contains('\sdk\storagesync\'))
+    or $(MSBuildProjectDirectory.Contains('\sdk\storagediscovery\'))
+    or $(MSBuildProjectDirectory.Contains('\sdk\identity\'))
+    or $(MSBuildProjectDirectory.Contains('\sdk\keyvault\'))
+    or $(MSBuildProjectDirectory.Contains('\sdk\entra\'))">
     <PackageReference Update="NUnit" Version="4.4.0" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.6.0" />
     <PackageReference Update="NUnit.Analyzers" Version="4.5.0" />
