@@ -826,7 +826,7 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset? copyCompletedOn = default,
             DateTimeOffset? deletedOn = default,
             DateTimeOffset? accessTierChangedOn = default,
-            string smartAccessTier = default)
+            AccessTier? smartAccessTier = default)
         {
             return new BlobItemProperties()
             {
