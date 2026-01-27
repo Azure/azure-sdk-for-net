@@ -11,10 +11,10 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         [TestCase("PlaywrightQuota", "PlaywrightQuota")]
         [TestCase("PlaywrightWorkspaceQuota", "PlaywrightWorkspaceQuota")]
         [TestCase("ChaosTargetMetadata", "ChaosTargetMetadata")]
-        public void PluralizeResourceName_ReturnsExpectedPluralizedName(string input, string expected)
+        public void PluralizeLastWord_ReturnsExpectedPluralizedName(string input, string expected)
         {
             // Act
-            var result = input.PluralizeResourceName();
+            var result = input.PluralizeLastWord();
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -22,10 +22,10 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 
         [TestCase("", "")]
         [TestCase(null, null)]
-        public void PluralizeResourceName_HandlesEmptyAndNullStrings(string input, string expected)
+        public void PluralizeLastWord_HandlesEmptyAndNullStrings(string input, string expected)
         {
             // Act
-            var result = input.PluralizeResourceName();
+            var result = input.PluralizeLastWord();
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -34,10 +34,10 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         [TestCase("Resource", "Resources")]
         [TestCase("VirtualMachine", "VirtualMachines")]
         [TestCase("Policy", "Policies")]
-        public void PluralizeResourceName_PluralizesSingleAndMultiWordNames(string input, string expected)
+        public void PluralizeLastWord_PluralizesSingleAndMultiWordNames(string input, string expected)
         {
             // Act
-            var result = input.PluralizeResourceName();
+            var result = input.PluralizeLastWord();
 
             // Assert
             Assert.AreEqual(expected, result);

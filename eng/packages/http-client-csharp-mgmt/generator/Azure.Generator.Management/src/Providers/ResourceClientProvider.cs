@@ -152,7 +152,7 @@ namespace Azure.Generator.Management.Providers
             if (ResourceCollection != null)
             {
                 // we have the collection, we are not a singleton resource
-                var pluralOfResourceName = ResourceName.PluralizeResourceName();
+                var pluralOfResourceName = ResourceName.PluralizeLastWord();
                 return new MethodSignature(
                     $"Get{pluralOfResourceName}",
                     $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",
