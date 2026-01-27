@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch.Models
                 throw new FormatException($"The model {nameof(BatchIPRule)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("action"u8);
-            writer.WriteStringValue(Action.ToSerialString());
+            writer.WriteStringValue(Action.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 if (prop.NameEquals("action"u8))
                 {
-                    action = prop.Value.GetString().ToBatchIPRuleAction();
+                    action = new BatchIPRuleAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))

@@ -53,14 +53,5 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Accelerated networking enables single root I/O virtualization (SR-IOV) to a VM, which may lead to improved networking performance. For more details, see: https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview. </summary>
         public bool? EnableAcceleratedNetworking { get; set; }
-
-        /// <summary> The maximum number of inbound NAT pools per Batch pool is 5. If the maximum number of inbound NAT pools is exceeded the request fails with HTTP status code 400. This cannot be specified if the IPAddressProvisioningType is NoPublicIPAddresses. </summary>
-        public IList<BatchInboundNatPool> EndpointInboundNatPools
-        {
-            get
-            {
-                return EndpointConfiguration is null ? default : EndpointConfiguration.InboundNatPools;
-            }
-        }
     }
 }

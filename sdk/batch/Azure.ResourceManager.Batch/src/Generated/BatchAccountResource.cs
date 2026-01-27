@@ -1015,39 +1015,6 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Gets a collection of BatchPrivateEndpointConnections in the <see cref="BatchAccountResource"/>. </summary>
-        /// <returns> An object representing collection of BatchPrivateEndpointConnections and their operations over a BatchPrivateEndpointConnectionResource. </returns>
-        public virtual BatchPrivateEndpointConnectionCollection GetBatchPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new BatchPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary> Gets information about the specified private endpoint connection. </summary>
-        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BatchPrivateEndpointConnectionResource>> GetBatchPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return await GetBatchPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets information about the specified private endpoint connection. </summary>
-        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BatchPrivateEndpointConnectionResource> GetBatchPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return GetBatchPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of BatchAccountDetectors in the <see cref="BatchAccountResource"/>. </summary>
         /// <returns> An object representing collection of BatchAccountDetectors and their operations over a BatchAccountDetectorResource. </returns>
         public virtual BatchAccountDetectorCollection GetBatchAccountDetectors()
@@ -1178,6 +1145,39 @@ namespace Azure.ResourceManager.Batch
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             return GetBatchPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BatchPrivateEndpointConnections in the <see cref="BatchAccountResource"/>. </summary>
+        /// <returns> An object representing collection of BatchPrivateEndpointConnections and their operations over a BatchPrivateEndpointConnectionResource. </returns>
+        public virtual BatchPrivateEndpointConnectionCollection GetBatchPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new BatchPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Gets information about the specified private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BatchPrivateEndpointConnectionResource>> GetBatchPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetBatchPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets information about the specified private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BatchPrivateEndpointConnectionResource> GetBatchPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetBatchPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BatchAccountPools in the <see cref="BatchAccountResource"/>. </summary>

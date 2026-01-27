@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="id"> The resource ID of the Azure key vault associated with the Batch account. </param>
         /// <param name="uri"> The URL of the Azure key vault associated with the Batch account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="uri"/> is null. </exception>
-        public BatchKeyVaultReference(ResourceIdentifier id, string uri)
+        public BatchKeyVaultReference(ResourceIdentifier id, Uri uri)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(uri, nameof(uri));
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="id"> The resource ID of the Azure key vault associated with the Batch account. </param>
         /// <param name="uri"> The URL of the Azure key vault associated with the Batch account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchKeyVaultReference(ResourceIdentifier id, string uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchKeyVaultReference(ResourceIdentifier id, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Uri = uri;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Batch.Models
         public ResourceIdentifier Id { get; set; }
 
         /// <summary> The URL of the Azure key vault associated with the Batch account. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
     }
 }

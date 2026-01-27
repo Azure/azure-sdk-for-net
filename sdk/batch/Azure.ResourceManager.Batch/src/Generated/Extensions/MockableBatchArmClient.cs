@@ -35,15 +35,6 @@ namespace Azure.ResourceManager.Batch.Mocking
             return new BatchAccountResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="BatchPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual BatchPrivateEndpointConnectionResource GetBatchPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            BatchPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new BatchPrivateEndpointConnectionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="BatchAccountDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BatchAccountDetectorResource"/> object. </returns>
@@ -87,6 +78,15 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
             BatchPrivateLinkResource.ValidateResourceId(id);
             return new BatchPrivateLinkResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BatchPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BatchPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual BatchPrivateEndpointConnectionResource GetBatchPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            BatchPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new BatchPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BatchAccountPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>

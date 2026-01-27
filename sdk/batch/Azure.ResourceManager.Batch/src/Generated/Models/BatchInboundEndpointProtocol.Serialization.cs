@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchInboundEndpointProtocol value) => value switch
         {
-            BatchInboundEndpointProtocol.TCP => "TCP",
-            BatchInboundEndpointProtocol.UDP => "UDP",
+            BatchInboundEndpointProtocol.Tcp => "TCP",
+            BatchInboundEndpointProtocol.Udp => "UDP",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchInboundEndpointProtocol value.")
         };
 
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Batch.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "TCP"))
             {
-                return BatchInboundEndpointProtocol.TCP;
+                return BatchInboundEndpointProtocol.Tcp;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "UDP"))
             {
-                return BatchInboundEndpointProtocol.UDP;
+                return BatchInboundEndpointProtocol.Udp;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchInboundEndpointProtocol value.");
         }
