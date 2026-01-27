@@ -48,12 +48,11 @@ ResponseResult response = responseClient.CreateResponse([request]);
 Asynchronous sample:
 ```C# Snippet:Sample_CreateConversation_MemoryTool_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-
 ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
 ResponseResult response = await responseClient.CreateResponseAsync([request]);
 ```
 
-5. Make sure the repone has completed and record the response items to `MemoryUpdateOptions` object.
+5. Make sure the repone has completed, create new response item with the agent response and put it to the `MemoryUpdateOptions` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_WriteOutput_MemoryTool_Sync
@@ -61,10 +60,9 @@ string scope = "Joke";
 MemoryUpdateOptions memoryOptions = new(scope);
 memoryOptions.Items.Add(request);
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-foreach (ResponseItem item in response.OutputItems)
-{
-    memoryOptions.Items.Add(item);
-}
+// We cannot use the output items as an input so we will need to
+// create a new user item.
+memoryOptions.Items.Add(ResponseItem.CreateUserMessageItem($"Agent answered: {response.GetOutputText()}"));
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -74,10 +72,9 @@ string scope = "Joke";
 MemoryUpdateOptions memoryOptions = new(scope);
 memoryOptions.Items.Add(request);
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-foreach (ResponseItem item in response.OutputItems)
-{
-    memoryOptions.Items.Add(item);
-}
+// We cannot use the output items as an input so we will need to
+// create a new user item.
+memoryOptions.Items.Add(ResponseItem.CreateUserMessageItem($"Agent answered: {response.GetOutputText()}"));
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -167,7 +164,7 @@ agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent capable to access memorized conversation.",
 };
-agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
+agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
 AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent2",
     options: new(agentDefinition));
@@ -179,7 +176,7 @@ agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent capable to access memorized conversation.",
 };
-agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
+agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
 AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent2",
     options: new(agentDefinition));

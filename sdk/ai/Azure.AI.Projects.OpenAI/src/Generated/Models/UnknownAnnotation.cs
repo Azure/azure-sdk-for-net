@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class UnknownAnnotation : InternalAnnotation
     {

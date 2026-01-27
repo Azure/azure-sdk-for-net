@@ -4,16 +4,20 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Type. </summary>
     internal partial class Type : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="Type"/>. </summary>
         /// <param name="text"> The text to type. </param>
-        internal Type(string text) : base(ComputerActionType.Type)
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public Type(string text) : base(ComputerActionType.Type)
         {
+            Argument.AssertNotNull(text, nameof(text));
+
             Text = text;
         }
 

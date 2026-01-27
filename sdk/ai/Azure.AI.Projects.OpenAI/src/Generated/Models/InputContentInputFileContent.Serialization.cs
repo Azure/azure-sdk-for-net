@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Input file. </summary>
     internal partial class InputContentInputFileContent : InputContent, IJsonModel<InputContentInputFileContent>
@@ -45,7 +44,7 @@ namespace OpenAI
             if (Optional.IsDefined(FileUrl))
             {
                 writer.WritePropertyName("file_url"u8);
-                writer.WriteStringValue(FileUrl);
+                writer.WriteStringValue(FileUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(FileData))
             {
@@ -83,7 +82,7 @@ namespace OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string fileId = default;
             string filename = default;
-            string fileUrl = default;
+            Uri fileUrl = default;
             string fileData = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -109,7 +108,11 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("file_url"u8))
                 {
-                    fileUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("file_data"u8))

@@ -33,7 +33,7 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateAgent_CustomBingSearch_Async
         AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
-        BingCustomSearchAgentTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
+        BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
             searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
             )
         );
@@ -81,7 +81,7 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgent_CustomBingSearch_Sync
         AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-        BingCustomSearchAgentTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
+        BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
             searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
             )
         );

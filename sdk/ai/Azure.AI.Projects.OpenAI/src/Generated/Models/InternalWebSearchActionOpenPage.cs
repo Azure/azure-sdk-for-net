@@ -14,7 +14,7 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionOpenPage"/>. </summary>
         /// <param name="url"> The URL opened by the model. </param>
-        internal InternalWebSearchActionOpenPage(Uri url)
+        public InternalWebSearchActionOpenPage(Uri url)
         {
             Url = url;
         }

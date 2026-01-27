@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -50,6 +49,16 @@ namespace Azure.AI.Projects.OpenAI
             {
                 writer.WritePropertyName("created_by"u8);
                 writer.WriteObjectValue(ItemSource, options);
+            }
+            if (Optional.IsDefined(AgentReference))
+            {
+                writer.WritePropertyName("agent_reference"u8);
+                writer.WriteObjectValue(AgentReference, options);
+            }
+            if (Optional.IsDefined(ResponseId))
+            {
+                writer.WritePropertyName("response_id"u8);
+                writer.WriteStringValue(ResponseId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,6 +112,8 @@ namespace Azure.AI.Projects.OpenAI
                         return AgentWorkflowActionResponseItem.DeserializeAgentWorkflowActionResponseItem(element, options);
                     case "oauth_consent_request":
                         return OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem(element, options);
+                    case "memory_search_call":
+                        return MemorySearchToolCallResponseItem.DeserializeMemorySearchToolCallResponseItem(element, options);
                     case "message":
                         return InternalInputMessageResource.DeserializeInternalInputMessageResource(element, options);
                     case "output_message":
@@ -143,8 +154,6 @@ namespace Azure.AI.Projects.OpenAI
                         return InternalItemResourceMcpApprovalResponseResource.DeserializeInternalItemResourceMcpApprovalResponseResource(element, options);
                     case "mcp_call":
                         return InternalItemResourceMcpToolCall.DeserializeInternalItemResourceMcpToolCall(element, options);
-                    case "memory_search_call":
-                        return MemorySearchToolCallResponseItem.DeserializeMemorySearchToolCallResponseItem(element, options);
                 }
             }
             return UnknownAgentResponseItem.DeserializeUnknownAgentResponseItem(element, options);

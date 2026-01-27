@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> URL citation. </summary>
     internal partial class UrlCitationBody : InternalAnnotation
@@ -15,8 +16,12 @@ namespace OpenAI
         /// <param name="startIndex"> The index of the first character of the URL citation in the message. </param>
         /// <param name="endIndex"> The index of the last character of the URL citation in the message. </param>
         /// <param name="title"> The title of the web resource. </param>
-        internal UrlCitationBody(string url, long startIndex, long endIndex, string title) : base(AnnotationType.UrlCitation)
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="title"/> is null. </exception>
+        public UrlCitationBody(Uri url, long startIndex, long endIndex, string title) : base(AnnotationType.UrlCitation)
         {
+            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(title, nameof(title));
+
             Url = url;
             StartIndex = startIndex;
             EndIndex = endIndex;
@@ -30,7 +35,7 @@ namespace OpenAI
         /// <param name="startIndex"> The index of the first character of the URL citation in the message. </param>
         /// <param name="endIndex"> The index of the last character of the URL citation in the message. </param>
         /// <param name="title"> The title of the web resource. </param>
-        internal UrlCitationBody(AnnotationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string url, long startIndex, long endIndex, string title) : base(@type, additionalBinaryDataProperties)
+        internal UrlCitationBody(AnnotationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri url, long startIndex, long endIndex, string title) : base(@type, additionalBinaryDataProperties)
         {
             Url = url;
             StartIndex = startIndex;
@@ -39,7 +44,7 @@ namespace OpenAI
         }
 
         /// <summary> The URL of the web resource. </summary>
-        public string Url { get; }
+        public Uri Url { get; }
 
         /// <summary> The index of the first character of the URL citation in the message. </summary>
         public long StartIndex { get; }

@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceFileSearchToolCall : AgentResponseItem, IJsonModel<InternalItemResourceFileSearchToolCall>
     {
@@ -90,8 +89,10 @@ namespace OpenAI
             AgentResponseItemKind @type = default;
             string id = default;
             AgentItemSource itemSource = default;
+            AgentReference agentReference = default;
+            string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OutputItemFileSearchToolCallStatus status = default;
+            ItemResourceFileSearchToolCallStatus status = default;
             IList<string> queries = default;
             IList<FileSearchToolCallResults> results = default;
             foreach (var prop in element.EnumerateObject())
@@ -115,9 +116,23 @@ namespace OpenAI
                     itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("agent_reference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemFileSearchToolCallStatus();
+                    status = prop.Value.GetString().ToItemResourceFileSearchToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("queries"u8))
@@ -160,6 +175,8 @@ namespace OpenAI
                 @type,
                 id,
                 itemSource,
+                agentReference,
+                responseId,
                 additionalBinaryDataProperties,
                 status,
                 queries,

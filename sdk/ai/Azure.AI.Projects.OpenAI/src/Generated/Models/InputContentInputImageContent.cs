@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Input image. </summary>
     internal partial class InputContentInputImageContent : InputContent
@@ -23,7 +23,7 @@ namespace OpenAI
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </param>
-        internal InputContentInputImageContent(InputContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string imageUrl, string fileId, ImageDetail detail) : base(@type, additionalBinaryDataProperties)
+        internal InputContentInputImageContent(InputContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri imageUrl, string fileId, ImageDetail detail) : base(@type, additionalBinaryDataProperties)
         {
             ImageUrl = imageUrl;
             FileId = fileId;
@@ -31,7 +31,7 @@ namespace OpenAI
         }
 
         /// <summary> Gets or sets the ImageUrl. </summary>
-        public string ImageUrl { get; set; }
+        public Uri ImageUrl { get; set; }
 
         /// <summary> Gets or sets the FileId. </summary>
         public string FileId { get; set; }

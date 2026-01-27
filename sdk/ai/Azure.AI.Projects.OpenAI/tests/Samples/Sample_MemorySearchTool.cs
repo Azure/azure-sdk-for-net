@@ -43,20 +43,25 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateConversation_MemoryTool_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-
         ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
         ResponseResult response = await responseClient.CreateResponseAsync([request]);
         #endregion
-
+        try
+        {
+            await projectClient.MemoryStores.DeleteMemoryStoreAsync("jokeMemory");
+        }
+        catch
+        {
+            // Nothing here.
+        }
         #region Snippet:Sample_WriteOutput_MemoryTool_Async
         string scope = "Joke";
         MemoryUpdateOptions memoryOptions = new(scope);
         memoryOptions.Items.Add(request);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-        foreach (ResponseItem item in response.OutputItems)
-        {
-            memoryOptions.Items.Add(item);
-        }
+        // We cannot use the output items as an input so we will need to
+        // create a new user item.
+        memoryOptions.Items.Add(ResponseItem.CreateUserMessageItem($"Agent answered: {response.GetOutputText()}"));
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:CreateMemoryStore_MemoryTool_Async
@@ -97,7 +102,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         {
             Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
-        agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
+        agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
         AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent2",
             options: new(agentDefinition));
@@ -142,7 +147,14 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-
+        try
+        {
+            projectClient.MemoryStores.DeleteMemoryStore("jokeMemory");
+        }
+        catch
+        {
+            // Nothing here.
+        }
         #region Snippet:Sample_CreateConversation_MemoryTool_Sync
 
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
@@ -156,10 +168,9 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         MemoryUpdateOptions memoryOptions = new(scope);
         memoryOptions.Items.Add(request);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-        foreach (ResponseItem item in response.OutputItems)
-        {
-            memoryOptions.Items.Add(item);
-        }
+        // We cannot use the output items as an input so we will need to
+        // create a new user item.
+        memoryOptions.Items.Add(ResponseItem.CreateUserMessageItem($"Agent answered: {response.GetOutputText()}"));
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:CreateMemoryStore_MemoryTool_Sync
@@ -200,7 +211,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         {
             Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
-        agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
+        agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
         AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent2",
             options: new(agentDefinition));

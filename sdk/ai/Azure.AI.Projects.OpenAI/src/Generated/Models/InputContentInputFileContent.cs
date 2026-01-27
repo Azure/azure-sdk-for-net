@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Input file. </summary>
     internal partial class InputContentInputFileContent : InputContent
@@ -22,7 +22,7 @@ namespace OpenAI
         /// <param name="filename"> The name of the file to be sent to the model. </param>
         /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
         /// <param name="fileData"> The content of the file to be sent to the model. </param>
-        internal InputContentInputFileContent(InputContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fileId, string filename, string fileUrl, string fileData) : base(@type, additionalBinaryDataProperties)
+        internal InputContentInputFileContent(InputContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fileId, string filename, Uri fileUrl, string fileData) : base(@type, additionalBinaryDataProperties)
         {
             FileId = fileId;
             Filename = filename;
@@ -37,7 +37,7 @@ namespace OpenAI
         public string Filename { get; set; }
 
         /// <summary> The URL of the file to be sent to the model. </summary>
-        public string FileUrl { get; set; }
+        public Uri FileUrl { get; set; }
 
         /// <summary> The content of the file to be sent to the model. </summary>
         public string FileData { get; set; }

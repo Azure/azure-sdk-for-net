@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> A pending safety check for the computer call. </summary>
     internal partial class ComputerCallSafetyCheckParam
@@ -15,8 +15,11 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ComputerCallSafetyCheckParam"/>. </summary>
         /// <param name="id"> The ID of the pending safety check. </param>
-        internal ComputerCallSafetyCheckParam(string id)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public ComputerCallSafetyCheckParam(string id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             Id = id;
         }
 
@@ -36,10 +39,10 @@ namespace OpenAI
         /// <summary> The ID of the pending safety check. </summary>
         public string Id { get; }
 
-        /// <summary> Gets the Code. </summary>
-        public string Code { get; }
+        /// <summary> Gets or sets the Code. </summary>
+        public string Code { get; set; }
 
-        /// <summary> Gets the Message. </summary>
-        public string Message { get; }
+        /// <summary> Gets or sets the Message. </summary>
+        public string Message { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Apply patch delete file operation. </summary>
     internal partial class ApplyPatchDeleteFileOperation : InternalApplyPatchFileOperation

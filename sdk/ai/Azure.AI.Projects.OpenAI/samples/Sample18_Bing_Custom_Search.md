@@ -16,7 +16,7 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-BingCustomSearchAgentTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
+BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
     searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
@@ -33,7 +33,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Async
 AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
-BingCustomSearchAgentTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
+BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
     searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );

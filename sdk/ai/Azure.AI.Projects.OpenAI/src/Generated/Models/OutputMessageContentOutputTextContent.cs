@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.OpenAI;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Output text. </summary>
     internal partial class OutputMessageContentOutputTextContent : OutputMessageContent
@@ -15,8 +15,12 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentOutputTextContent"/>. </summary>
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
-        internal OutputMessageContentOutputTextContent(string text, IEnumerable<InternalAnnotation> annotations) : base(OutputMessageContentType.OutputText)
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="annotations"/> is null. </exception>
+        public OutputMessageContentOutputTextContent(string text, IEnumerable<InternalAnnotation> annotations) : base(OutputMessageContentType.OutputText)
         {
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(annotations, nameof(annotations));
+
             Text = text;
             Annotations = annotations.ToList();
             Logprobs = new ChangeTrackingList<InternalLogProb>();

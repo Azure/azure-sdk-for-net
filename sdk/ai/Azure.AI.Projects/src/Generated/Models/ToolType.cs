@@ -23,16 +23,16 @@ namespace Azure.AI.Projects
         private const string CustomValue = "custom";
         private const string WebSearchPreviewValue = "web_search_preview";
         private const string ApplyPatchValue = "apply_patch";
-        private const string BingGroundingValue = "bing_grounding";
+        private const string A2aPreviewValue = "a2a_preview";
+        private const string BingCustomSearchPreviewValue = "bing_custom_search_preview";
         private const string BrowserAutomationPreviewValue = "browser_automation_preview";
         private const string FabricDataagentPreviewValue = "fabric_dataagent_preview";
         private const string SharepointGroundingPreviewValue = "sharepoint_grounding_preview";
         private const string AzureAiSearchValue = "azure_ai_search";
-        private const string OpenapiValue = "openapi";
-        private const string BingCustomSearchPreviewValue = "bing_custom_search_preview";
-        private const string CaptureStructuredOutputsValue = "capture_structured_outputs";
-        private const string A2aPreviewValue = "a2a_preview";
         private const string AzureFunctionValue = "azure_function";
+        private const string BingGroundingValue = "bing_grounding";
+        private const string CaptureStructuredOutputsValue = "capture_structured_outputs";
+        private const string OpenapiValue = "openapi";
         private const string MemorySearchValue = "memory_search";
 
         /// <summary> Initializes a new instance of <see cref="ToolType"/>. </summary>
@@ -81,8 +81,11 @@ namespace Azure.AI.Projects
         /// <summary> Gets the ApplyPatch. </summary>
         public static ToolType ApplyPatch { get; } = new ToolType(ApplyPatchValue);
 
-        /// <summary> Gets the BingGrounding. </summary>
-        public static ToolType BingGrounding { get; } = new ToolType(BingGroundingValue);
+        /// <summary> Gets the A2aPreview. </summary>
+        public static ToolType A2aPreview { get; } = new ToolType(A2aPreviewValue);
+
+        /// <summary> Gets the BingCustomSearchPreview. </summary>
+        public static ToolType BingCustomSearchPreview { get; } = new ToolType(BingCustomSearchPreviewValue);
 
         /// <summary> Gets the BrowserAutomationPreview. </summary>
         public static ToolType BrowserAutomationPreview { get; } = new ToolType(BrowserAutomationPreviewValue);
@@ -96,20 +99,17 @@ namespace Azure.AI.Projects
         /// <summary> Gets the AzureAiSearch. </summary>
         public static ToolType AzureAiSearch { get; } = new ToolType(AzureAiSearchValue);
 
-        /// <summary> Gets the Openapi. </summary>
-        public static ToolType Openapi { get; } = new ToolType(OpenapiValue);
+        /// <summary> Gets the AzureFunction. </summary>
+        public static ToolType AzureFunction { get; } = new ToolType(AzureFunctionValue);
 
-        /// <summary> Gets the BingCustomSearchPreview. </summary>
-        public static ToolType BingCustomSearchPreview { get; } = new ToolType(BingCustomSearchPreviewValue);
+        /// <summary> Gets the BingGrounding. </summary>
+        public static ToolType BingGrounding { get; } = new ToolType(BingGroundingValue);
 
         /// <summary> Gets the CaptureStructuredOutputs. </summary>
         public static ToolType CaptureStructuredOutputs { get; } = new ToolType(CaptureStructuredOutputsValue);
 
-        /// <summary> Gets the A2aPreview. </summary>
-        public static ToolType A2aPreview { get; } = new ToolType(A2aPreviewValue);
-
-        /// <summary> Gets the AzureFunction. </summary>
-        public static ToolType AzureFunction { get; } = new ToolType(AzureFunctionValue);
+        /// <summary> Gets the Openapi. </summary>
+        public static ToolType Openapi { get; } = new ToolType(OpenapiValue);
 
         /// <summary> Gets the MemorySearch. </summary>
         public static ToolType MemorySearch { get; } = new ToolType(MemorySearchValue);

@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceComputerToolCallOutputResource : AgentResponseItem
     {
@@ -24,6 +23,8 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callId"> The ID of the computer tool call that produced the output. </param>
         /// <param name="acknowledgedSafetyChecks">
@@ -35,7 +36,7 @@ namespace OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InternalItemResourceComputerToolCallOutputResource(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, ComputerScreenshotImage output, ItemResourceComputerToolCallOutputResourceStatus? status) : base(@type, id, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceComputerToolCallOutputResource(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, ComputerScreenshotImage output, ItemResourceComputerToolCallOutputResourceStatus? status) : base(@type, id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             AcknowledgedSafetyChecks = acknowledgedSafetyChecks;

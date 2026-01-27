@@ -2,13 +2,58 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> The prompt agent definition. </summary>
     public partial class PromptAgentDefinition : AgentDefinition
     {
+        /// <summary> Initializes a new instance of <see cref="PromptAgentDefinition"/>. </summary>
+        /// <param name="kind"></param>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="model"> The model deployment to use for this agent. </param>
+        /// <param name="instructions"> A system (or developer) message inserted into the model's context. </param>
+        /// <param name="temperature">
+        /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// We generally recommend altering this or `top_p` but not both.
+        /// </param>
+        /// <param name="topP">
+        /// An alternative to sampling with temperature, called nucleus sampling,
+        /// where the model considers the results of the tokens with top_p probability
+        /// mass. So 0.1 means only the tokens comprising the top 10% probability mass
+        /// are considered.
+        /// 
+        /// We generally recommend altering this or `temperature` but not both.
+        /// </param>
+        /// <param name="reasoningOptions"></param>
+        /// <param name="tools">
+        /// An array of tools the model may call while generating a response. You
+        /// can specify which tool to use by setting the `tool_choice` parameter.
+        /// </param>
+        /// <param name="toolChoice">
+        /// How the model should select which tool (or tools) to use when generating a response. 
+        /// See the `tools` parameter to see how to specify which tools the model can call.
+        /// </param>
+        /// <param name="textOptions"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
+        /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
+        internal PromptAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, global::OpenAI.Responses.ResponseReasoningOptions reasoningOptions, IList<global::OpenAI.Responses.ResponseTool> tools, BinaryData toolChoice, global::OpenAI.Responses.ResponseTextOptions textOptions, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        {
+            Model = model;
+            Instructions = instructions;
+            Temperature = temperature;
+            TopP = topP;
+            ReasoningOptions = reasoningOptions;
+            Tools = tools;
+            ToolChoice = toolChoice;
+            TextOptions = textOptions;
+            StructuredInputs = structuredInputs;
+        }
+
         /// <summary> The model deployment to use for this agent. </summary>
         public string Model { get; set; }
 
@@ -30,6 +75,48 @@ namespace Azure.AI.Projects.OpenAI
         /// We generally recommend altering this or `temperature` but not both.
         /// </summary>
         public float? TopP { get; set; }
+
+        /// <summary>
+        /// How the model should select which tool (or tools) to use when generating a response. 
+        /// See the `tools` parameter to see how to specify which tools the model can call.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="string"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="ToolChoiceParam"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData ToolChoice { get; set; }
 
         /// <summary> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </summary>
         public IDictionary<string, StructuredInputDefinition> StructuredInputs { get; }

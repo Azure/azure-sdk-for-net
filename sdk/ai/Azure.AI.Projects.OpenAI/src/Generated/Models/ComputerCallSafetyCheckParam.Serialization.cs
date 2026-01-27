@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> A pending safety check for the computer call. </summary>
     internal partial class ComputerCallSafetyCheckParam : IJsonModel<ComputerCallSafetyCheckParam>

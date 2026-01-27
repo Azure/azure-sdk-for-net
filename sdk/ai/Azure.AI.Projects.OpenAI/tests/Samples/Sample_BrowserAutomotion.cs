@@ -58,7 +58,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateAgent_BrowserAutomotion_Async
         AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-        BrowserAutomationAgentTool playwrightTool = new(
+        BrowserAutomationPreviewTool playwrightTool = new(
             new BrowserAutomationToolParameters(
                 new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
             ));
@@ -122,7 +122,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         #region Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
         AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
-        BrowserAutomationAgentTool playwrightTool = new(
+        BrowserAutomationPreviewTool playwrightTool = new(
             new BrowserAutomationToolParameters(
                 new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
             ));

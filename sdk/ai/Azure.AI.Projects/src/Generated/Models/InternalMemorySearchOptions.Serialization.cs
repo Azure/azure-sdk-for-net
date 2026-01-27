@@ -41,7 +41,7 @@ namespace Azure.AI.Projects
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
-                foreach (Item item in Items)
+                foreach (InputItem item in Items)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -100,7 +100,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             string scope = default;
-            IList<Item> items = default;
+            IList<InputItem> items = default;
             string previousSearchId = default;
             MemorySearchResultOptions options0 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -117,10 +117,10 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    List<Item> array = new List<Item>();
+                    List<InputItem> array = new List<InputItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Item.DeserializeItem(item, options));
+                        array.Add(InputItem.DeserializeInputItem(item, options));
                     }
                     items = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalMemorySearchOptions(scope, items ?? new ChangeTrackingList<Item>(), previousSearchId, options0, additionalBinaryDataProperties);
+            return new InternalMemorySearchOptions(scope, items ?? new ChangeTrackingList<InputItem>(), previousSearchId, options0, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

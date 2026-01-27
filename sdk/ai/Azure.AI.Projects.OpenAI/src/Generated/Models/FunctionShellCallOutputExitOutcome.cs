@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Shell call exit outcome. </summary>
     internal partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome

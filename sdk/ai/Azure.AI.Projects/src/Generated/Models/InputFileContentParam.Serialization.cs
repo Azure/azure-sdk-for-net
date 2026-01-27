@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(FileUrl))
             {
                 writer.WritePropertyName("file_url"u8);
-                writer.WriteStringValue(FileUrl);
+                writer.WriteStringValue(FileUrl.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.AI.Projects
             string fileId = default;
             string filename = default;
             string fileData = default;
-            string fileUrl = default;
+            Uri fileUrl = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.AI.Projects
                         fileUrl = null;
                         continue;
                     }
-                    fileUrl = prop.Value.GetString();
+                    fileUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

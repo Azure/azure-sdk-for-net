@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> The MCPListToolsToolAnnotations. </summary>
     internal partial class MCPListToolsToolAnnotations
@@ -14,7 +14,7 @@ namespace OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MCPListToolsToolAnnotations"/>. </summary>
-        internal MCPListToolsToolAnnotations()
+        public MCPListToolsToolAnnotations()
         {
         }
 

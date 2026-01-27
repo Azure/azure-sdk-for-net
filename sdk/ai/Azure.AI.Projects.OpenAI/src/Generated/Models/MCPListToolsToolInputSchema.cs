@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> The MCPListToolsToolInputSchema. </summary>
     internal partial class MCPListToolsToolInputSchema
@@ -14,7 +14,7 @@ namespace OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MCPListToolsToolInputSchema"/>. </summary>
-        internal MCPListToolsToolInputSchema()
+        public MCPListToolsToolInputSchema()
         {
         }
 

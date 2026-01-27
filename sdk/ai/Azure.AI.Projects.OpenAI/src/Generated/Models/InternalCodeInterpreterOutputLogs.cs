@@ -14,7 +14,7 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputLogs"/>. </summary>
         /// <param name="logs"> The logs output from the code interpreter. </param>
-        internal InternalCodeInterpreterOutputLogs(string logs)
+        public InternalCodeInterpreterOutputLogs(string logs)
         {
             Logs = logs;
         }

@@ -828,7 +828,7 @@ AzureAISearchToolIndex index = new()
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
-    Tools = { new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [index])) }
+    Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -935,7 +935,7 @@ create the `BingGroundingAgentTool` and use it in `PromptAgentDefinition` object
 
 ```C# Snippet:Sample_CreateAgent_BingGrounding_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-BingGroundingAgentTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
+BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
     searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
@@ -1004,7 +1004,7 @@ en.wikipedia.org. This configuration is called "wikipedia" its search URL is con
 
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Async
 AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
-BingCustomSearchAgentTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
+BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
     searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
@@ -1117,7 +1117,7 @@ OpenAPIFunctionDefinition toolDefinition = new(
     auth: new OpenAPIAnonymousAuthenticationDetails()
 );
 toolDefinition.Description = "Retrieve weather information for a location.";
-OpenAPIAgentTool openapiTool = new(toolDefinition);
+OpenAPITool openapiTool = new(toolDefinition);
 
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -1157,7 +1157,7 @@ OpenAPIFunctionDefinition toolDefinition = new(
     ))
 );
 toolDefinition.Description = "Trip Advisor API to get travel information.";
-OpenAPIAgentTool openapiTool = new(toolDefinition);
+OpenAPITool openapiTool = new(toolDefinition);
 
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -1224,7 +1224,7 @@ To use Azure Playwright workspace we need to create agent with `BrowserAutomatio
 
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-BrowserAutomationAgentTool playwrightTool = new(
+BrowserAutomationPreviewTool playwrightTool = new(
     new BrowserAutomationToolParameters(
         new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
@@ -1277,7 +1277,7 @@ SharePointGroundingToolOptions sharepointToolOption = new()
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { new SharepointAgentTool(sharepointToolOption), }
+    Tools = { new SharepointPreviewTool(sharepointToolOption), }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -1380,7 +1380,7 @@ FabricDataAgentToolOptions fabricToolOption = new()
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { new MicrosoftFabricAgentTool(fabricToolOption), }
+    Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -1423,7 +1423,7 @@ To use the Agent with A2A tool, we need to include `A2ATool` into `PromptAgentDe
 
 ```C# Snippet:Sample_CreateAgent_AgentToAgent_Async
 AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
-A2ATool a2aTool = new()
+A2APreviewTool a2aTool = new()
 {
     ProjectConnectionId = a2aConnection.Id
 };

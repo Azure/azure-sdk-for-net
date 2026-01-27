@@ -14,7 +14,7 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputImage"/>. </summary>
         /// <param name="url"> The URL of the image output from the code interpreter. </param>
-        internal InternalCodeInterpreterOutputImage(string url)
+        public InternalCodeInterpreterOutputImage(Uri url)
         {
             Url = url;
         }
@@ -23,7 +23,7 @@ namespace OpenAI
         /// <param name="type"> The type of the output. Always `image`. </param>
         /// <param name="url"> The URL of the image output from the code interpreter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCodeInterpreterOutputImage(string @type, string url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalCodeInterpreterOutputImage(string @type, Uri url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Url = url;
@@ -34,6 +34,6 @@ namespace OpenAI
         internal string Type { get; } = "image";
 
         /// <summary> The URL of the image output from the code interpreter. </summary>
-        public string Url { get; }
+        public Uri Url { get; }
     }
 }

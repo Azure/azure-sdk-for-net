@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceComputerToolCall : AgentResponseItem, IJsonModel<InternalItemResourceComputerToolCall>
     {
@@ -79,11 +79,13 @@ namespace OpenAI
             AgentResponseItemKind @type = default;
             string id = default;
             AgentItemSource itemSource = default;
+            AgentReference agentReference = default;
+            string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
             InternalComputerAction action = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
-            OutputItemComputerToolCallStatus status = default;
+            ItemResourceComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -103,6 +105,20 @@ namespace OpenAI
                         continue;
                     }
                     itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("agent_reference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("call_id"u8))
@@ -127,7 +143,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemComputerToolCallStatus();
+                    status = prop.Value.GetString().ToItemResourceComputerToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,6 +155,8 @@ namespace OpenAI
                 @type,
                 id,
                 itemSource,
+                agentReference,
+                responseId,
                 additionalBinaryDataProperties,
                 callId,
                 action,

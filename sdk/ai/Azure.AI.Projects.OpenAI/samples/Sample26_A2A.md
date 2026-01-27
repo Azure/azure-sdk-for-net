@@ -48,7 +48,7 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_AgentToAgent_Sync
 AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
-A2ATool a2aTool = new()
+A2APreviewTool a2aTool = new()
 {
     ProjectConnectionId = a2aConnection.Id
 };
@@ -73,7 +73,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_AgentToAgent_Async
 AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
-A2ATool a2aTool = new()
+A2APreviewTool a2aTool = new()
 {
     ProjectConnectionId = a2aConnection.Id
 };
