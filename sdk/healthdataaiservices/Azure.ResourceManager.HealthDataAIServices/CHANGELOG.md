@@ -4,6 +4,12 @@
 
 ### Features Added
 
+- Added support for API version 2026-02-01-preview
+- Added HealthDataAIServicesSku model with Name, Tier, and Capacity properties
+- Added HealthDataAIServicesSkuTier enum with Free, Basic, and Standard values
+- Added Sku property to DeidServiceData for configuring service SKU
+- Added Sku property to DeidServicePatch for updating service SKU
+
 ### Breaking Changes
 
 ### Bugs Fixed
