@@ -153,9 +153,8 @@ namespace Azure.Generator.Management.Providers
             {
                 // we have the collection, we are not a singleton resource
                 var pluralOfResourceName = ResourceName.PluralizeResourceName();
-                var methodName = BuildFactoryMethodName();
                 return new MethodSignature(
-                    methodName,
+                    $"Get{pluralOfResourceName}",
                     $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                     ResourceCollection.Type,
@@ -175,11 +174,6 @@ namespace Azure.Generator.Management.Providers
                     []
                     );
             }
-        }
-
-        private string BuildFactoryMethodName()
-        {
-            return $"Get{ResourceName.PluralizeResourceName()}";
         }
 
         protected override FieldProvider[] BuildFields()
