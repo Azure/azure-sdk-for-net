@@ -13,39 +13,25 @@ TranscriptionClientOptions options = new TranscriptionClientOptions(Transcriptio
 TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
 ```
 
-## Transcribe from URL (Synchronous)
+## Transcribe from URL
 
-Transcribe an audio file directly from a public URL without downloading it first:
+Transcribe an audio file directly from a publicly accessible URL:
 
-```C# Snippet:TranscribeFromUrlSync
-TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
-Uri audioUrl = new Uri("https://your-domain.com/your-file.wav");
-// Transcribe directly from URL - the service fetches the audio
-var options = new TranscriptionOptions(audioUrl);
-var response = client.Transcribe(options);
+```C# Snippet:TranscribeFromUrl
+// Specify the URL of the audio file to transcribe
+Uri audioUrl = new Uri("https://example.com/audio/sample.wav");
 
-Console.WriteLine($"File Duration: {response.Value.Duration}");
-foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
-{
-    Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
-}
-```
+// Configure transcription to use the remote URL
+TranscriptionOptions options = new TranscriptionOptions(audioUrl);
 
-## Transcribe from URL (Asynchronous)
+// No audio stream needed - the service fetches the file from the URL
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+TranscriptionResult result = response.Value;
 
-```C# Snippet:TranscribeFromUrlAsync
-TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
-Uri audioUrl = new Uri("https://your-domain.com/your-file.wav");
-// Transcribe directly from URL - the service fetches the audio
-var options = new TranscriptionOptions(audioUrl);
-var response = await client.TranscribeAsync(options);
+Console.WriteLine($"Transcribed audio from URL: {audioUrl}");
+Console.WriteLine($"Duration: {result.Duration}");
 
-Console.WriteLine($"File Duration: {response.Value.Duration}");
-foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
-{
-    Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
-}
-```
-}
+var channelPhrases = result.PhrasesByChannel.First();
+Console.WriteLine($"\nTranscription:\n{channelPhrases.Text}");
 ```
 

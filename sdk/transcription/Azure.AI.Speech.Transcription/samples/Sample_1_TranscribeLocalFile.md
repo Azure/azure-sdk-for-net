@@ -13,43 +13,34 @@ TranscriptionClientOptions options = new TranscriptionClientOptions(Transcriptio
 TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
 ```
 
-## Transcribe Local File (Synchronous)
+## Transcribe Local File
 
-To transcribe a local file synchronously, create a stream from the file and call `Transcribe` on the `TranscriptionClient`, which returns the transcribed phrases and total duration of the file.
+To transcribe a local file, create a stream from the file and call `Transcribe` or `TranscribeAsync` on the `TranscriptionClient`, which returns the transcribed phrases and total duration of the file.
 
-```C# Snippet:TranscribeLocalFileSync
-string filePath = "path/to/audio.wav";
-TranscriptionClient client = CreateTranscriptionClient();
-using (FileStream fileStream = File.Open(filePath, FileMode.Open))
+```C# Snippet:TranscribeLocalFile
+// Path to your local audio file
+string audioFilePath = "path/to/audio.wav";
+
+// Open the audio file as a stream
+using FileStream audioStream = File.OpenRead(audioFilePath);
+
+// Create the transcription request
+TranscriptionOptions options = new TranscriptionOptions(audioStream);
+
+// Perform synchronous transcription
+ClientResult<TranscriptionResult> response = client.Transcribe(options);
+TranscriptionResult result = response.Value;
+
+// Display the transcription results
+Console.WriteLine($"Total audio duration: {result.Duration}");
+Console.WriteLine("\nTranscription:");
+
+// Get the first channel's phrases (most audio files have a single channel)
+var channelPhrases = result.PhrasesByChannel.First();
+foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
 {
-    var options = new TranscriptionOptions(fileStream);
-    var response = client.Transcribe(options);
-
-    Console.WriteLine($"File Duration: {response.Value.Duration}");
-    foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
-    {
-        Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
-    }
-}
-```
-
-## Transcribe Local File (Asynchronous)
-
-To transcribe a local file asynchronously, create a stream from the file and call `TranscribeAsync` on the `TranscriptionClient`, which returns the transcribed phrases and total duration of the file.
-
-```C# Snippet:TranscribeLocalFileAsync
-string filePath = "path/to/audio.wav";
-TranscriptionClient client = CreateTranscriptionClient();
-using (FileStream fileStream = File.Open(filePath, FileMode.Open))
-{
-    var options = new TranscriptionOptions(fileStream);
-    var response = await client.TranscribeAsync(options);
-
-    Console.WriteLine($"File Duration: {response.Value.Duration}");
-    foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
-    {
-        Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
-    }
+    Console.WriteLine($"[{phrase.Offset} - {phrase.Offset + phrase.Duration}] {phrase.Text}");
+    Console.WriteLine($"  Confidence: {phrase.Confidence:F2}");
 }
 ```
 

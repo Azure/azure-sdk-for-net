@@ -140,129 +140,203 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
+- [Create a TranscriptionClient](#create-a-transcriptionclient)
+- [Transcribe a local audio file](#transcribe-a-local-audio-file)
+- [Transcribe audio from a URL](#transcribe-audio-from-a-url)
+- [Access individual transcribed words](#access-individual-transcribed-words)
+- [Identify speakers with diarization](#identify-speakers-with-diarization)
+- [Filter profanity](#filter-profanity)
+- [Improve accuracy with custom phrases](#improve-accuracy-with-custom-phrases)
+- [Transcribe with a known language](#transcribe-with-a-known-language)
+- [Use Enhanced Mode for highest accuracy](#use-enhanced-mode-for-highest-accuracy)
+- [Combine multiple options](#combine-multiple-options)
+
 ### Create a TranscriptionClient
 
 Create a `TranscriptionClient` using your Speech service endpoint and API key:
 
-```C# Snippet:CreateTranscriptionClient
-// Get the endpoint and API key from your Speech resource in the Azure portal
+```csharp
+using System;
+using System.ClientModel;
+using Azure.AI.Speech.Transcription;
+
 Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
 ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
-
-// Create the TranscriptionClient
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 ```
 
 ### Transcribe a local audio file
 
-Transcribe audio from a local file using the synchronous API:
+The most basic operation is to transcribe an audio file from your local filesystem:
 
-```C# Snippet:TranscribeLocalFileSync
-string filePath = "path/to/audio.wav";
-TranscriptionClient client = CreateTranscriptionClient();
-using (FileStream fileStream = File.Open(filePath, FileMode.Open))
-{
-    var options = new TranscriptionOptions(fileStream);
-    var response = client.Transcribe(options);
+```csharp Snippet:TranscribeLocalFile
+string audioFilePath = "path/to/audio.wav";
+using FileStream audioStream = File.OpenRead(audioFilePath);
 
-    Console.WriteLine($"File Duration: {response.Value.Duration}");
-    foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
-    {
-        Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
-    }
-}
+TranscriptionOptions options = new TranscriptionOptions(audioStream);
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+
+// Get the transcribed text
+var channelPhrases = response.Value.PhrasesByChannel.First();
+Console.WriteLine(channelPhrases.Text);
 ```
 
-Or use the asynchronous API:
+For synchronous transcription, use the `Transcribe` method instead of `TranscribeAsync`.
 
-```C# Snippet:TranscribeLocalFileAsync
-string filePath = "path/to/audio.wav";
-TranscriptionClient client = CreateTranscriptionClient();
-using (FileStream fileStream = File.Open(filePath, FileMode.Open))
-{
-    var options = new TranscriptionOptions(fileStream);
-    var response = await client.TranscribeAsync(options);
+### Transcribe audio from a URL
 
-    Console.WriteLine($"File Duration: {response.Value.Duration}");
-    foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
-    {
-        Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
-    }
-}
-```
+You can transcribe audio directly from a publicly accessible URL without downloading the file first:
 
-### Transcribe from URL
-
-Transcribe audio directly from a publicly accessible URL:
-
-```C# Snippet:TranscribeFromUrl
-// Specify the URL of the audio file to transcribe
+```csharp Snippet:TranscribeFromUrl
 Uri audioUrl = new Uri("https://example.com/audio/sample.wav");
-
-// Configure transcription to use the remote URL
 TranscriptionOptions options = new TranscriptionOptions(audioUrl);
 
-// No audio stream needed - the service fetches the file from the URL
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
 Console.WriteLine($"Transcribed audio from URL: {audioUrl}");
-Console.WriteLine($"Duration: {result.Duration}");
-
 var channelPhrases = result.PhrasesByChannel.First();
 Console.WriteLine($"\nTranscription:\n{channelPhrases.Text}");
 ```
 
-### Transcribe with options
+### Access individual transcribed words
 
-Configure transcription options like locale, profanity filtering, and speaker diarization:
+To access word-level details including timestamps, confidence scores, and individual words:
 
-```C# Snippet:TranscribeWithMultipleOptions
-string audioFilePath = "path/to/meeting.wav";
+```csharp Snippet:AccessTranscribedWords
+string audioFilePath = "path/to/audio.wav";
 using FileStream audioStream = File.OpenRead(audioFilePath);
 
-// Create TranscriptionOptions with audio stream
 TranscriptionOptions options = new TranscriptionOptions(audioStream);
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 
-// Enable speaker diarization to identify different speakers
-options.DiarizationOptions = new TranscriptionDiarizationOptions
+// Access the first channel's phrases
+var channelPhrases = response.Value.PhrasesByChannel.First();
+
+// Iterate through each phrase (typically sentences or segments)
+foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
 {
-    MaxSpeakers = 5 // Enabled is automatically set to true
+    Console.WriteLine($"\nPhrase: {phrase.Text}");
+    Console.WriteLine($"  Offset: {phrase.Offset} | Duration: {phrase.Duration}");
+    Console.WriteLine($"  Confidence: {phrase.Confidence:F2}");
+    
+    // Access individual words in the phrase
+    foreach (TranscribedWord word in phrase.Words)
+    {
+        Console.WriteLine($"    Word: '{word.Text}' | Confidence: {word.Confidence:F2} | Offset: {word.Offset}");
+    }
+}
+```
+
+### Identify speakers with diarization
+
+Speaker diarization identifies who spoke when in multi-speaker conversations:
+
+```csharp Snippet:TranscribeWithDiarizationSample
+string audioFilePath = "path/to/conversation.wav";
+using FileStream audioStream = File.OpenRead(audioFilePath);
+
+TranscriptionOptions options = new TranscriptionOptions(audioStream)
+{
+    DiarizationOptions = new TranscriptionDiarizationOptions
+    {
+        MaxSpeakers = 4 // Expect up to 4 speakers in the conversation
+    }
 };
-
-// Mask profanity in the transcription
-options.ProfanityFilterMode = ProfanityFilterMode.Masked;
-
-// Add custom phrases to improve recognition of domain-specific terms
-// These phrases help the service correctly recognize words that might be misheard
-options.PhraseList = new PhraseListProperties();
-options.PhraseList.Phrases.Add("action items");
-options.PhraseList.Phrases.Add("Q4");
-options.PhraseList.Phrases.Add("KPIs");
 
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
-// Display results
-Console.WriteLine($"Duration: {result.DurationMilliseconds / 1000.0:F1}s | Speakers: {result.PhrasesByChannel.First().Phrases.Select(p => p.Speaker).Distinct().Count()}");
-Console.WriteLine();
-Console.WriteLine("Full Transcript:");
-Console.WriteLine(result.CombinedPhrases.First().Text);
+Console.WriteLine("Transcription with speaker diarization:");
+var channelPhrases = result.PhrasesByChannel.First();
+foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
+{
+    Console.WriteLine($"Speaker {phrase.Speaker}: {phrase.Text}");
+}
 ```
 
-### Enhanced Mode with Translation
+### Filter profanity
 
-Use LLM-powered Enhanced Mode to translate speech during transcription. Enhanced mode is automatically enabled when you create an `EnhancedModeProperties` object:
+Control how profanity appears in your transcriptions using different filter modes:
 
-```C# Snippet:TranslateWithEnhancedMode
-string audioFilePath = "path/to/chinese-audio.wav";
+```csharp Snippet:TranscribeWithProfanityFilter
+string audioFilePath = "path/to/audio-with-profanity.wav";
 using FileStream audioStream = File.OpenRead(audioFilePath);
 
-// Translate Chinese speech to Korean
+TranscriptionOptions options = new TranscriptionOptions(audioStream)
+{
+    ProfanityFilterMode = ProfanityFilterMode.Masked // Default - profanity replaced with asterisks
+};
+
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+TranscriptionResult result = response.Value;
+
+var channelPhrases = result.PhrasesByChannel.First();
+Console.WriteLine(channelPhrases.Text); // Profanity will appear as "f***"
+```
+
+Available modes:
+- `None`: No filtering - profanity appears as spoken
+- `Masked`: Profanity replaced with asterisks (e.g., "f***")
+- `Removed`: Profanity completely removed from text
+- `Tags`: Profanity wrapped in XML tags (e.g., "<profanity>word</profanity>")
+
+### Improve accuracy with custom phrases
+
+Add custom phrases to help the service correctly recognize domain-specific terms, names, and acronyms:
+
+```csharp Snippet:TranscribeWithPhraseListSample
+string audioFilePath = "path/to/audio.wav";
+using FileStream audioStream = File.OpenRead(audioFilePath);
+
+TranscriptionOptions options = new TranscriptionOptions(audioStream)
+{
+    PhraseList = new PhraseListProperties()
+};
+
+// Add names, locations, and terms that might be misrecognized
+options.PhraseList.Phrases.Add("Contoso");
+options.PhraseList.Phrases.Add("Jessie");
+options.PhraseList.Phrases.Add("Rehaan");
+
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+TranscriptionResult result = response.Value;
+
+var channelPhrases = result.PhrasesByChannel.First();
+Console.WriteLine(channelPhrases.Text);
+```
+
+### Transcribe with a known language
+
+When you know the language of the audio, specifying a single locale improves accuracy and reduces latency:
+
+```csharp Snippet:TranscribeWithKnownLocale
+string audioFilePath = "path/to/english-audio.mp3";
+using FileStream audioStream = File.OpenRead(audioFilePath);
+
+TranscriptionOptions options = new TranscriptionOptions(audioStream);
+options.Locales.Add("en-US");
+
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+TranscriptionResult result = response.Value;
+
+var channelPhrases = result.PhrasesByChannel.First();
+Console.WriteLine(channelPhrases.Text);
+```
+
+For language identification when you're unsure of the language, specify multiple candidate locales and the service will automatically detect the language. See [Sample08_TranscribeWithLocales.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/tests/Samples/Sample08_TranscribeWithLocales.cs) for details.
+
+### Use Enhanced Mode for highest accuracy
+
+Enhanced Mode uses LLM-powered processing for the highest accuracy transcription and translation:
+
+```csharp Snippet:TranscribeWithEnhancedMode
+string audioFilePath = "path/to/audio.wav";
+using FileStream audioStream = File.OpenRead(audioFilePath);
+
 EnhancedModeProperties enhancedMode = new EnhancedModeProperties
 {
-    Task = "translate",
-    TargetLanguage = "ko"  // Translate to Korean
+    Task = "transcribe"
 };
 
 TranscriptionOptions options = new TranscriptionOptions(audioStream)
@@ -273,44 +347,79 @@ TranscriptionOptions options = new TranscriptionOptions(audioStream)
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
-Console.WriteLine("Translated to Korean:");
 var channelPhrases = result.PhrasesByChannel.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
-For more examples, see the [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/transcription/Azure.AI.Speech.Transcription/samples) directory.
+Enhanced Mode also supports translation. See [Sample04_EnhancedMode.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/tests/Samples/Sample04_EnhancedMode.cs) for translation examples.
+
+### Combine multiple options
+
+You can combine multiple transcription features for complex scenarios:
+
+```csharp Snippet:TranscribeWithMultipleOptions
+string audioFilePath = "path/to/meeting.wav";
+using FileStream audioStream = File.OpenRead(audioFilePath);
+
+TranscriptionOptions options = new TranscriptionOptions(audioStream);
+
+// Enable speaker diarization to identify different speakers
+options.DiarizationOptions = new TranscriptionDiarizationOptions
+{
+    MaxSpeakers = 5
+};
+
+// Mask profanity in the transcription
+options.ProfanityFilterMode = ProfanityFilterMode.Masked;
+
+// Add custom phrases to improve recognition of domain-specific terms
+options.PhraseList = new PhraseListProperties();
+options.PhraseList.Phrases.Add("action items");
+options.PhraseList.Phrases.Add("Q4");
+options.PhraseList.Phrases.Add("KPIs");
+
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+TranscriptionResult result = response.Value;
+
+// Display results
+var channelPhrases = result.PhrasesByChannel.First();
+Console.WriteLine("Full Transcript:");
+Console.WriteLine(result.CombinedPhrases.First().Text);
+```
 
 ## Troubleshooting
 
-### Enable client logging
-
-You can enable logging to debug issues with the client library. For more information, see the [logging documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
-
 ### Common issues
 
-#### Authentication errors
+- **Authentication failures**: Verify your API key or Entra ID credentials are correct and that your Speech resource is active.
+- **Unsupported audio format**: Ensure your audio is in a supported format (WAV, MP3, OGG, FLAC, etc.). The service automatically handles format detection.
+- **Slow transcription**: For large files, consider using asynchronous transcription or ensure your network connection is stable.
+- **Poor accuracy**: Try specifying the correct locale, adding custom phrases for domain-specific terms, or using Enhanced Mode.
 
-- Verify that your API key is correct
-- Ensure your endpoint URL matches your Azure resource region
+### Exceptions
 
-#### Audio format errors
+The library throws exceptions for various error conditions:
+- `RequestFailedException`: The service returned an error response (check `Status` and `ErrorCode` for details)
+- `ArgumentException`: Invalid parameters were provided to a method
+- `InvalidOperationException`: The operation cannot be performed in the current state
 
-- Verify your audio file is in a supported format
-- Ensure the audio file size is under 250 MB and duration is under 2 hours
+### Enable client logging
 
-### Getting help
-
-If you encounter issues:
-
-- Check the [troubleshooting guide](https://learn.microsoft.com/azure/ai-services/speech-service/troubleshooting)
-- Search for existing issues or create a new one on [GitHub](https://github.com/Azure/azure-sdk-for-net/issues)
-- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/.net+azure-sdk) with the `.net` and `azure-sdk` tags
+You can enable logging to debug issues with the client library. For more information, see the [diagnostics documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
 ## Next steps
 
-- Explore the [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/transcription/Azure.AI.Speech.Transcription/samples) for more examples
-- Learn more about [Azure Speech Service](https://learn.microsoft.com/azure/ai-services/speech-service/)
-- Review the [API reference documentation](https://azure.github.io/azure-sdk-for-net) for detailed information about classes and methods
+Explore additional samples to learn more about advanced features:
+
+- [Sample01_BasicTranscription.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/tests/Samples/Sample01_BasicTranscription.cs) - Create clients and basic transcription
+- [Sample02_TranscriptionOptions.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/tests/Samples/Sample02_TranscriptionOptions.cs) - Combine multiple transcription features
+- [Sample03_TranscribeFromUrl.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/tests/Samples/Sample03_TranscribeFromUrl.cs) - Transcribe from remote URLs
+- [Sample04_EnhancedMode.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/tests/Samples/Sample04_EnhancedMode.cs) - LLM-powered transcription and translation
+- [Sample05_TranscribeWithProfanityFilter.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/tests/Samples/Sample05_TranscribeWithProfanityFilter.cs) - All profanity filtering modes
+- [Sample06_TranscribeWithDiarization.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/tests/Samples/Sample06_TranscribeWithDiarization.cs) - Speaker identification
+- [Sample07_TranscribeWithPhraseList.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/tests/Samples/Sample07_TranscribeWithPhraseList.cs) - Custom vocabulary
+- [Sample08_TranscribeWithLocales.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/tests/Samples/Sample08_TranscribeWithLocales.cs) - Language specification and detection
+- [Sample09_MultilingualTranscription.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/tests/Samples/Sample09_MultilingualTranscription.cs) - Multilingual content
 
 ## Contributing
 
