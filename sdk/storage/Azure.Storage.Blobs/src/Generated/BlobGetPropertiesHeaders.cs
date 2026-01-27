@@ -88,7 +88,7 @@ namespace Azure.Storage.Blobs
         public string ArchiveStatus => _response.Headers.TryGetValue("x-ms-archive-status", out string value) ? value : null;
         /// <summary> The time the tier was changed on the object. This is only returned if the tier on the block blob was ever set. </summary>
         public DateTimeOffset? AccessTierChangeTime => _response.Headers.TryGetValue("x-ms-access-tier-change-time", out DateTimeOffset? value) ? value : null;
-        /// <summary> The tier of page blob on a premium storage account or tier of block blob on blob storage LRS accounts. Only returned if the blob is in Smart tier. </summary>
+        /// <summary> The underlying tier of a smart tier blob. Only returned if the blob is in Smart tier. </summary>
         public string SmartAccessTier => _response.Headers.TryGetValue("x-ms-smart-access-tier", out string value) ? value : null;
         /// <summary> A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob. </summary>
         public string VersionId => _response.Headers.TryGetValue("x-ms-version-id", out string value) ? value : null;
