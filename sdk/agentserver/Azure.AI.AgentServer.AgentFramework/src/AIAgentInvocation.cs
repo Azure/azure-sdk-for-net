@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using Azure.AI.AgentServer.AgentFramework.Converters;
+using Azure.AI.AgentServer.AgentFramework.Persistence;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Core.Telemetry;
 using Azure.AI.AgentServer.Responses.Invocation;
@@ -15,7 +16,10 @@ namespace Azure.AI.AgentServer.AgentFramework;
 /// Provides an implementation of agent invocation using the Microsoft Agents AI framework.
 /// </summary>
 /// <param name="agent">The AI agent to invoke.</param>
-public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
+/// <param name="threadRepository">Optional repository for managing agent threads.</param>
+public class AIAgentInvocation(
+    AIAgent agent,
+    IAgentThreadRepository? threadRepository = null) : AgentInvocationBase
 {
     /// <summary>
     /// Invokes the agent asynchronously and returns a complete response.
@@ -31,7 +35,16 @@ public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
 
         var request = context.Request;
         var messages = request.GetInputMessages();
+        AgentThread? thread = null;
+        if (threadRepository != null)
+        {
+            thread = await threadRepository.Get(context.ConversationId).ConfigureAwait(false);
+        }
         var response = await agent.RunAsync(messages, cancellationToken: cancellationToken).ConfigureAwait(false);
+        if (threadRepository != null && thread != null)
+        {
+            await threadRepository.Set(context.ConversationId, thread).ConfigureAwait(false);
+        }
         return response.ToResponse(request, context);
     }
 
