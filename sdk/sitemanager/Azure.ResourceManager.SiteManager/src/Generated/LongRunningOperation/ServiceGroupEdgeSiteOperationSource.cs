@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SiteManager
 {
     /// <summary></summary>
-    internal partial class SiteOperationSource : IOperationSource<SiteResource>
+    internal partial class ServiceGroupEdgeSiteOperationSource : IOperationSource<ServiceGroupEdgeSiteResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal SiteOperationSource(ArmClient client)
+        internal ServiceGroupEdgeSiteOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SiteResource IOperationSource<SiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceGroupEdgeSiteResource IOperationSource<ServiceGroupEdgeSiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             EdgeSiteData data = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SiteResource(_client, data);
+            return new ServiceGroupEdgeSiteResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SiteResource> IOperationSource<SiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceGroupEdgeSiteResource> IOperationSource<ServiceGroupEdgeSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             EdgeSiteData data = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SiteResource(_client, data);
+            return new ServiceGroupEdgeSiteResource(_client, data);
         }
     }
 }

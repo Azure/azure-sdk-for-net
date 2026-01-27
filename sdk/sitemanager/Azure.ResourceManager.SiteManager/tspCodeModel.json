@@ -2114,16 +2114,16 @@
                 "methods": [
                   {
                     "$id": "173",
-                    "methodId": "Microsoft.Edge.Sites.get",
-                    "kind": "Read",
+                    "methodId": "Microsoft.Edge.Sites.createOrUpdate",
+                    "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}"
                   },
                   {
                     "$id": "174",
-                    "methodId": "Microsoft.Edge.Sites.createOrUpdate",
-                    "kind": "Create",
+                    "methodId": "Microsoft.Edge.Sites.get",
+                    "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}"
@@ -2153,21 +2153,21 @@
                   },
                   {
                     "$id": "178",
-                    "methodId": "Microsoft.Edge.SitesBySubscription.list",
-                    "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites",
-                    "operationScope": "Subscription"
-                  },
-                  {
-                    "$id": "179",
                     "methodId": "Microsoft.Edge.SitesByServiceGroup.listByServiceGroup",
                     "kind": "List",
                     "operationPath": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites",
                     "operationScope": "Tenant"
+                  },
+                  {
+                    "$id": "179",
+                    "methodId": "Microsoft.Edge.SitesBySubscription.list",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites",
+                    "operationScope": "Subscription"
                   }
                 ],
                 "resourceScope": "ResourceGroup",
-                "resourceName": "Site"
+                "resourceName": "ResourceGroupEdgeSite"
               },
               {
                 "resourceModelId": "Microsoft.Edge.Site",
@@ -2176,16 +2176,16 @@
                 "methods": [
                   {
                     "$id": "180",
-                    "methodId": "Microsoft.Edge.SitesBySubscription.get",
-                    "kind": "Read",
+                    "methodId": "Microsoft.Edge.SitesBySubscription.createOrUpdate",
+                    "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}",
                     "operationScope": "Subscription",
                     "resourceScope": "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}"
                   },
                   {
                     "$id": "181",
-                    "methodId": "Microsoft.Edge.SitesBySubscription.createOrUpdate",
-                    "kind": "Create",
+                    "methodId": "Microsoft.Edge.SitesBySubscription.get",
+                    "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}",
                     "operationScope": "Subscription",
                     "resourceScope": "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}"
@@ -2208,7 +2208,7 @@
                   }
                 ],
                 "resourceScope": "Subscription",
-                "resourceName": "SitesBySubscription"
+                "resourceName": "SubscriptionEdgeSite"
               },
               {
                 "resourceModelId": "Microsoft.Edge.Site",
@@ -2217,16 +2217,16 @@
                 "methods": [
                   {
                     "$id": "184",
-                    "methodId": "Microsoft.Edge.SitesByServiceGroup.get",
-                    "kind": "Read",
+                    "methodId": "Microsoft.Edge.SitesByServiceGroup.createOrUpdate",
+                    "kind": "Create",
                     "operationPath": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}",
                     "operationScope": "Tenant",
                     "resourceScope": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}"
                   },
                   {
                     "$id": "185",
-                    "methodId": "Microsoft.Edge.SitesByServiceGroup.createOrUpdate",
-                    "kind": "Create",
+                    "methodId": "Microsoft.Edge.SitesByServiceGroup.get",
+                    "kind": "Read",
                     "operationPath": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}",
                     "operationScope": "Tenant",
                     "resourceScope": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}"
@@ -2249,7 +2249,7 @@
                   }
                 ],
                 "resourceScope": "Tenant",
-                "resourceName": "SitesByServiceGroup"
+                "resourceName": "ServiceGroupEdgeSite"
               }
             ],
             "nonResourceMethods": []
@@ -2266,7 +2266,7 @@
         {
           "$id": "188",
           "kind": "client",
-          "name": "Sites",
+          "name": "ResourceGroupEdgeSite",
           "namespace": "Azure.ResourceManager.SiteManager",
           "methods": [
             {
@@ -5328,12 +5328,13 @@
           ],
           "parent": {
             "$ref": "163"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "459",
           "kind": "client",
-          "name": "SitesBySubscription",
+          "name": "SubscriptionEdgeSite",
           "namespace": "Azure.ResourceManager.SiteManager",
           "methods": [
             {
@@ -8158,12 +8159,13 @@
           ],
           "parent": {
             "$ref": "163"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "711",
           "kind": "client",
-          "name": "SitesByServiceGroup",
+          "name": "ServiceGroupEdgeSite",
           "namespace": "Azure.ResourceManager.SiteManager",
           "methods": [
             {
@@ -11029,9 +11031,11 @@
           ],
           "parent": {
             "$ref": "163"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ],
   "auth": {

@@ -26,31 +26,31 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="SiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ResourceGroupEdgeSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
-        public virtual SiteResource GetSiteResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupEdgeSiteResource"/> object. </returns>
+        public virtual ResourceGroupEdgeSiteResource GetResourceGroupEdgeSiteResource(ResourceIdentifier id)
         {
-            SiteResource.ValidateResourceId(id);
-            return new SiteResource(Client, id);
+            ResourceGroupEdgeSiteResource.ValidateResourceId(id);
+            return new ResourceGroupEdgeSiteResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SitesBySubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SubscriptionEdgeSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SitesBySubscriptionResource"/> object. </returns>
-        public virtual SitesBySubscriptionResource GetSitesBySubscriptionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionEdgeSiteResource"/> object. </returns>
+        public virtual SubscriptionEdgeSiteResource GetSubscriptionEdgeSiteResource(ResourceIdentifier id)
         {
-            SitesBySubscriptionResource.ValidateResourceId(id);
-            return new SitesBySubscriptionResource(Client, id);
+            SubscriptionEdgeSiteResource.ValidateResourceId(id);
+            return new SubscriptionEdgeSiteResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SitesByServiceGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceGroupEdgeSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SitesByServiceGroupResource"/> object. </returns>
-        public virtual SitesByServiceGroupResource GetSitesByServiceGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceGroupEdgeSiteResource"/> object. </returns>
+        public virtual ServiceGroupEdgeSiteResource GetServiceGroupEdgeSiteResource(ResourceIdentifier id)
         {
-            SitesByServiceGroupResource.ValidateResourceId(id);
-            return new SitesByServiceGroupResource(Client, id);
+            ServiceGroupEdgeSiteResource.ValidateResourceId(id);
+            return new ServiceGroupEdgeSiteResource(Client, id);
         }
     }
 }

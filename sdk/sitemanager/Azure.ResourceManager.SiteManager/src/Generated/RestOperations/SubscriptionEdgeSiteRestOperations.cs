@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.SiteManager
 {
-    internal partial class SitesBySubscription
+    internal partial class SubscriptionEdgeSite
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of SitesBySubscription for mocking. </summary>
-        protected SitesBySubscription()
+        /// <summary> Initializes a new instance of SubscriptionEdgeSite for mocking. </summary>
+        protected SubscriptionEdgeSite()
         {
         }
 
-        /// <summary> Initializes a new instance of SitesBySubscription. </summary>
+        /// <summary> Initializes a new instance of SubscriptionEdgeSite. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal SitesBySubscription(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal SubscriptionEdgeSite(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

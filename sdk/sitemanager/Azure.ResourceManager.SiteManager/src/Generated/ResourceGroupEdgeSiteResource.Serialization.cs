@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.SiteManager
 {
     /// <summary></summary>
-    public partial class SiteResource : IJsonModel<EdgeSiteData>
+    public partial class ResourceGroupEdgeSiteResource : IJsonModel<EdgeSiteData>
     {
         private static IJsonModel<EdgeSiteData> s_dataDeserializationInstance;
 

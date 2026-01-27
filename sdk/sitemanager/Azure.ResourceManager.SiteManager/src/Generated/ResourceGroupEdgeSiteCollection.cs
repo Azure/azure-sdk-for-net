@@ -20,36 +20,36 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SiteManager
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteResource"/> and their operations.
-    /// Each <see cref="SiteResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="SiteCollection"/> instance call the GetSites method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="ResourceGroupEdgeSiteResource"/> and their operations.
+    /// Each <see cref="ResourceGroupEdgeSiteResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ResourceGroupEdgeSiteCollection"/> instance call the GetResourceGroupEdgeSites method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class SiteCollection : ArmCollection, IEnumerable<SiteResource>, IAsyncEnumerable<SiteResource>
+    public partial class ResourceGroupEdgeSiteCollection : ArmCollection, IEnumerable<ResourceGroupEdgeSiteResource>, IAsyncEnumerable<ResourceGroupEdgeSiteResource>
     {
-        private readonly ClientDiagnostics _sitesClientDiagnostics;
-        private readonly Sites _sitesRestClient;
-        private readonly ClientDiagnostics _sitesBySubscriptionClientDiagnostics;
-        private readonly SitesBySubscription _sitesBySubscriptionRestClient;
-        private readonly ClientDiagnostics _sitesByServiceGroupClientDiagnostics;
-        private readonly SitesByServiceGroup _sitesByServiceGroupRestClient;
+        private readonly ClientDiagnostics _resourceGroupEdgeSiteClientDiagnostics;
+        private readonly ResourceGroupEdgeSite _resourceGroupEdgeSiteRestClient;
+        private readonly ClientDiagnostics _serviceGroupEdgeSiteClientDiagnostics;
+        private readonly ServiceGroupEdgeSite _serviceGroupEdgeSiteRestClient;
+        private readonly ClientDiagnostics _subscriptionEdgeSiteClientDiagnostics;
+        private readonly SubscriptionEdgeSite _subscriptionEdgeSiteRestClient;
 
-        /// <summary> Initializes a new instance of SiteCollection for mocking. </summary>
-        protected SiteCollection()
+        /// <summary> Initializes a new instance of ResourceGroupEdgeSiteCollection for mocking. </summary>
+        protected ResourceGroupEdgeSiteCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SiteCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupEdgeSiteCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ResourceGroupEdgeSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SiteResource.ResourceType, out string siteApiVersion);
-            _sitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", SiteResource.ResourceType.Namespace, Diagnostics);
-            _sitesRestClient = new Sites(_sitesClientDiagnostics, Pipeline, Endpoint, siteApiVersion ?? "2025-06-01");
-            _sitesBySubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", SiteResource.ResourceType.Namespace, Diagnostics);
-            _sitesBySubscriptionRestClient = new SitesBySubscription(_sitesBySubscriptionClientDiagnostics, Pipeline, Endpoint, siteApiVersion ?? "2025-06-01");
-            _sitesByServiceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", SiteResource.ResourceType.Namespace, Diagnostics);
-            _sitesByServiceGroupRestClient = new SitesByServiceGroup(_sitesByServiceGroupClientDiagnostics, Pipeline, Endpoint, siteApiVersion ?? "2025-06-01");
+            TryGetApiVersion(ResourceGroupEdgeSiteResource.ResourceType, out string resourceGroupEdgeSiteApiVersion);
+            _resourceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
+            _resourceGroupEdgeSiteRestClient = new ResourceGroupEdgeSite(_resourceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
+            _serviceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
+            _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
+            _subscriptionEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
+            _subscriptionEdgeSiteRestClient = new SubscriptionEdgeSite(_subscriptionEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceGroupEdgeSiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sitesClientDiagnostics.CreateScope("SiteCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                SiteManagerArmOperation<SiteResource> operation = new SiteManagerArmOperation<SiteResource>(
-                    new SiteOperationSource(Client),
-                    _sitesClientDiagnostics,
+                SiteManagerArmOperation<ResourceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ResourceGroupEdgeSiteResource>(
+                    new ResourceGroupEdgeSiteOperationSource(Client),
+                    _resourceGroupEdgeSiteClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SiteResource> CreateOrUpdate(WaitUntil waitUntil, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceGroupEdgeSiteResource> CreateOrUpdate(WaitUntil waitUntil, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sitesClientDiagnostics.CreateScope("SiteCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                SiteManagerArmOperation<SiteResource> operation = new SiteManagerArmOperation<SiteResource>(
-                    new SiteOperationSource(Client),
-                    _sitesClientDiagnostics,
+                SiteManagerArmOperation<ResourceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ResourceGroupEdgeSiteResource>(
+                    new ResourceGroupEdgeSiteOperationSource(Client),
+                    _resourceGroupEdgeSiteClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SiteResource>> GetAsync(string siteName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupEdgeSiteResource>> GetAsync(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using DiagnosticScope scope = _sitesClientDiagnostics.CreateScope("SiteCollection.Get");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Get");
             scope.Start();
             try
             {
@@ -212,14 +212,14 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SiteResource> Get(string siteName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupEdgeSiteResource> Get(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using DiagnosticScope scope = _sitesClientDiagnostics.CreateScope("SiteCollection.Get");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Get");
             scope.Start();
             try
             {
@@ -261,14 +261,14 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -295,14 +295,14 @@ namespace Azure.ResourceManager.SiteManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGroupEdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGroupEdgeSiteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSiteData, SiteResource>(new SitesGetByResourceGroupAsyncCollectionResultOfT(_sitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SiteResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new ResourceGroupEdgeSiteGetByResourceGroupAsyncCollectionResultOfT(_resourceGroupEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ResourceGroupEdgeSiteResource(Client, data));
         }
 
         /// <summary>
@@ -323,14 +323,14 @@ namespace Azure.ResourceManager.SiteManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGroupEdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGroupEdgeSiteResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSiteData, SiteResource>(new SitesGetByResourceGroupCollectionResultOfT(_sitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SiteResource(Client, data));
+            return new PageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new ResourceGroupEdgeSiteGetByResourceGroupCollectionResultOfT(_resourceGroupEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ResourceGroupEdgeSiteResource(Client, data));
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.SiteManager
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using DiagnosticScope scope = _sitesClientDiagnostics.CreateScope("SiteCollection.Exists");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Exists");
             scope.Start();
             try
             {
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.SiteManager
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using DiagnosticScope scope = _sitesClientDiagnostics.CreateScope("SiteCollection.Exists");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Exists");
             scope.Start();
             try
             {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -468,11 +468,11 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SiteResource>> GetIfExistsAsync(string siteName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ResourceGroupEdgeSiteResource>> GetIfExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using DiagnosticScope scope = _sitesClientDiagnostics.CreateScope("SiteCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -497,9 +497,9 @@ namespace Azure.ResourceManager.SiteManager
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SiteResource>(response.GetRawResponse());
+                    return new NoValueResponse<ResourceGroupEdgeSiteResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -529,11 +529,11 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SiteResource> GetIfExists(string siteName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ResourceGroupEdgeSiteResource> GetIfExists(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using DiagnosticScope scope = _sitesClientDiagnostics.CreateScope("SiteCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -558,9 +558,9 @@ namespace Azure.ResourceManager.SiteManager
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SiteResource>(response.GetRawResponse());
+                    return new NoValueResponse<ResourceGroupEdgeSiteResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.SiteManager
             }
         }
 
-        IEnumerator<SiteResource> IEnumerable<SiteResource>.GetEnumerator()
+        IEnumerator<ResourceGroupEdgeSiteResource> IEnumerable<ResourceGroupEdgeSiteResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<SiteResource> IAsyncEnumerable<SiteResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ResourceGroupEdgeSiteResource> IAsyncEnumerable<ResourceGroupEdgeSiteResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
