@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Task<Response<ChaosCapabilityTypeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ChaosCapabilityTypeResource> Get(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }

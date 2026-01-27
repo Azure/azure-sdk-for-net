@@ -21,9 +21,6 @@ namespace Azure.ResourceManager.Chaos
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ChaosCapabilityTypeCollection : ArmCollection, IEnumerable<ChaosCapabilityTypeResource>, IAsyncEnumerable<ChaosCapabilityTypeResource>
     {
-        private readonly ClientDiagnostics _chaosCapabilityTypeCapabilityTypesClientDiagnostics;
-        private readonly CapabilityTypes _chaosCapabilityTypeCapabilityTypesRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityTypeCollection"/> class for mocking. </summary>
         protected ChaosCapabilityTypeCollection()
         {
@@ -34,9 +31,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ChaosCapabilityTypeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _chaosCapabilityTypeCapabilityTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosCapabilityTypeResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ChaosCapabilityTypeResource.ResourceType, out string chaosCapabilityTypeCapabilityTypesApiVersion);
-            _chaosCapabilityTypeCapabilityTypesRestClient = new CapabilityTypes(_chaosCapabilityTypeCapabilityTypesClientDiagnostics, Pipeline, Endpoint, chaosCapabilityTypeCapabilityTypesApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -75,7 +70,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual Task<Response<ChaosCapabilityTypeResource>> GetAsync(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -105,7 +100,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual Response<ChaosCapabilityTypeResource> Get(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -134,7 +129,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="ChaosCapabilityTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ChaosCapabilityTypeResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -163,7 +158,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="ChaosCapabilityTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ChaosCapabilityTypeResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -193,7 +188,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual Task<Response<bool>> ExistsAsync(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -223,7 +218,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual Response<bool> Exists(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -253,7 +248,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual Task<NullableResponse<ChaosCapabilityTypeResource>> GetIfExistsAsync(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -283,7 +278,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
         public virtual NullableResponse<ChaosCapabilityTypeResource> GetIfExists(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         IEnumerator<ChaosCapabilityTypeResource> IEnumerable<ChaosCapabilityTypeResource>.GetEnumerator()

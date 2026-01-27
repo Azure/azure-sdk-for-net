@@ -173,10 +173,6 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of ChaosTargetMetadataResources and their operations over a ChaosTargetMetadataResource. </returns>
         public static ChaosTargetMetadataCollection GetAllChaosTargetMetadata(this SubscriptionResource subscriptionResource, AzureLocation location)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableChaosSubscriptionResource(subscriptionResource).GetAllChaosTargetMetadata(location);
-        }
+            => GetChaosTargetMetadatas(subscriptionResource, location);
     }
 }
