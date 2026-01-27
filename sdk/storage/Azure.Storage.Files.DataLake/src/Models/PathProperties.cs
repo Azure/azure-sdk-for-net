@@ -155,7 +155,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
-        /// The tier of block blob on blob storage LRS accounts. For blob storage LRS accounts, valid values are Hot/Cool/Archive.
+        /// The tier of block blob on blob storage LRS accounts. For blob storage LRS accounts, valid values are Hot/Cool/Archive/Smart.
         /// </summary>
         public string AccessTier { get; internal set; }
 
@@ -170,6 +170,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// The time the tier was changed on the object. This is only returned if the tier on the block blob was ever set.
         /// </summary>
         public DateTimeOffset AccessTierChangedOn { get; internal set; }
+
+        /// <summary>
+        /// The underlying tier of a smart tier blob. Only returned if the blob is in Smart tier.
+        /// For general purpose v2 and blob storage account types, the valid values are Hot/Cool/Cold.
+        /// </summary>
+        public string SmartAccessTier { get; internal set; }
 
         /// <summary>
         /// The time the path will be deleted.
