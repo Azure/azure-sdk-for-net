@@ -16,8 +16,8 @@
 - Total libraries: 401
 - Management Plane (MPG): 227
   - Autorest/Swagger: 148
-  - New Emitter (TypeSpec): 72
-  - Old TypeSpec: 7
+  - New Emitter (TypeSpec): 75
+  - Old TypeSpec: 4
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
   - New Emitter (TypeSpec): 27
@@ -145,7 +145,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 72 / 79 (91.1%)
+**Migration Status**: 75 / 79 (94.9%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -166,7 +166,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | connectedcache | Azure.ResourceManager.ConnectedCache | ✅ |
 | containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | ✅ |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | ✅ |
-| databox | Azure.ResourceManager.DataBox |  |
+| databox | Azure.ResourceManager.DataBox | ✅ |
 | dellstorage | Azure.ResourceManager.Dell.Storage | ✅ |
 | dependencymap | Azure.ResourceManager.DependencyMap | ✅ |
 | deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices |  |
@@ -179,7 +179,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | edgeorder | Azure.ResourceManager.EdgeOrder | ✅ |
 | edgezones | Azure.ResourceManager.EdgeZones | ✅ |
 | elastic | Azure.ResourceManager.Elastic | ✅ |
-| elasticsan | Azure.ResourceManager.ElasticSan |  |
+| elasticsan | Azure.ResourceManager.ElasticSan | ✅ |
 | fabric | Azure.ResourceManager.Fabric | ✅ |
 | fileshares | Azure.ResourceManager.FileShares | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
@@ -213,7 +213,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
 | resources | Azure.ResourceManager.Resources.Bicep | ✅ |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
-| selfhelp | Azure.ResourceManager.SelfHelp |  |
+| selfhelp | Azure.ResourceManager.SelfHelp | ✅ |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
 | servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
 | sitemanager | Azure.ResourceManager.SiteManager |  |

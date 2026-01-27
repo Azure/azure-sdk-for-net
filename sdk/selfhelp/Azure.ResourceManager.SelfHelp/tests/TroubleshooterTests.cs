@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.SelfHelp.Tests
                 { "UserIPAddress", "174.164.29.4" }
             };
 
-            List<SelfHelpSection> sections = new List< SelfHelpSection>();
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            var data = new SelfHelpTroubleshooterData(scope, null, resourceType, null, "e104dbdf-9e14-4c9f-bc78-21ac90382231", parameters, null, null, null);
+            TroubleshooterInstanceProperties properties = new TroubleshooterInstanceProperties("e104dbdf-9e14-4c9f-bc78-21ac90382231", parameters, null, null, null);
+            var data = new SelfHelpTroubleshooterData(scope, null, resourceType, null, null, properties);
 
             return data;
         }

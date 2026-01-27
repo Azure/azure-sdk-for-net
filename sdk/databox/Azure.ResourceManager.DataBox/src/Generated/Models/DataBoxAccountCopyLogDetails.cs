@@ -14,29 +14,29 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataBoxAccountCopyLogDetails : CopyLogDetails
     {
         /// <summary> Initializes a new instance of <see cref="DataBoxAccountCopyLogDetails"/>. </summary>
-        internal DataBoxAccountCopyLogDetails()
+        internal DataBoxAccountCopyLogDetails() : base(DataBoxOrderType.DataBox)
         {
-            CopyLogDetailsType = DataBoxOrderType.DataBox;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxAccountCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when LogCollectionLevel is set to Verbose. </param>
-        internal DataBoxAccountCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string accountName, string copyLogLink, string copyVerboseLogLink) : base(copyLogDetailsType, serializedAdditionalRawData)
+        internal DataBoxAccountCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string accountName, string copyLogLink, string copyVerboseLogLink) : base(copyLogDetailsType, additionalBinaryDataProperties)
         {
             AccountName = accountName;
             CopyLogLink = copyLogLink;
             CopyVerboseLogLink = copyVerboseLogLink;
-            CopyLogDetailsType = copyLogDetailsType;
         }
 
         /// <summary> Account name. </summary>
         public string AccountName { get; }
+
         /// <summary> Link for copy logs. </summary>
         public string CopyLogLink { get; }
+
         /// <summary> Link for copy verbose logs. This will be set only when LogCollectionLevel is set to Verbose. </summary>
         public string CopyVerboseLogLink { get; }
     }

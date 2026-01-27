@@ -589,9 +589,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetResourceTypeTestResources().Get(resourceTypeTestResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SampleDatas in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of SampleDatas and their operations over a SampleDataResource. </returns>
-        public virtual SampleDataCollection GetSampleDatas()
+        /// <summary> Gets a collection of SampleData in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SampleData and their operations over a SampleDataResource. </returns>
+        public virtual SampleDataCollection GetAllSampleData()
         {
             return GetCachedClient(client => new SampleDataCollection(client, Id));
         }
@@ -622,7 +622,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(sampleDataName, nameof(sampleDataName));
 
-            return await GetSampleDatas().GetAsync(sampleDataName, cancellationToken).ConfigureAwait(false);
+            return await GetAllSampleData().GetAsync(sampleDataName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -651,12 +651,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(sampleDataName, nameof(sampleDataName));
 
-            return GetSampleDatas().Get(sampleDataName, cancellationToken);
+            return GetAllSampleData().Get(sampleDataName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworks in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of WorkloadNetworks and their operations over a WorkloadNetworksResource. </returns>
-        public virtual WorkloadNetworksCollection GetWorkloadNetworks()
+        public virtual WorkloadNetworksCollection GetAllWorkloadNetworks()
         {
             return GetCachedClient(client => new WorkloadNetworksCollection(client, Id));
         }
@@ -687,7 +687,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(workloadNetworkName, nameof(workloadNetworkName));
 
-            return await GetWorkloadNetworks().GetAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetAllWorkloadNetworks().GetAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -716,7 +716,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(workloadNetworkName, nameof(workloadNetworkName));
 
-            return GetWorkloadNetworks().Get(workloadNetworkName, cancellationToken);
+            return GetAllWorkloadNetworks().Get(workloadNetworkName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkVmGroups in the <see cref="ResourceGroupResource"/>. </summary>

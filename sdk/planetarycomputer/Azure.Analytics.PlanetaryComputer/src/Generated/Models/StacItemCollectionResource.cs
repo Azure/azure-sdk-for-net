@@ -13,7 +13,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/itemcollection-spec.md
-    /// 
     /// Represents a collection of STAC Items as a GeoJSON FeatureCollection.
     /// </summary>
     public partial class StacItemCollectionResource : StacItemOrStacItemCollection

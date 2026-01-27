@@ -112,7 +112,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.multi",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.CollectionFormat.Query"
               },
               "parameters": [
                 {
@@ -187,7 +188,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.ssv",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.CollectionFormat.Query"
               },
               "parameters": [
                 {
@@ -262,7 +264,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.pipes",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.CollectionFormat.Query"
               },
               "parameters": [
                 {
@@ -337,7 +340,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.csv",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.CollectionFormat.Query"
               },
               "parameters": [
                 {
@@ -461,7 +465,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.csv",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.CollectionFormat.Header"
               },
               "parameters": [
                 {

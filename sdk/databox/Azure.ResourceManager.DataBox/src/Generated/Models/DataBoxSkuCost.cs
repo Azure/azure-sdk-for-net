@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Describes metadata for retrieving price info. </summary>
     public partial class DataBoxSkuCost
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxSkuCost"/>. </summary>
         internal DataBoxSkuCost()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="meterId"> Meter id of the Sku. </param>
         /// <param name="meterType"> The type of the meter. </param>
         /// <param name="multiplier"> Multiplier specifies the region specific value to be multiplied with 1$ guid. Eg: Our new regions will be using 1$ shipping guid with appropriate multiplier specific to region. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxSkuCost(Guid? meterId, string meterType, double? multiplier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxSkuCost(Guid? meterId, string meterType, double? multiplier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MeterId = meterId;
             MeterType = meterType;
             Multiplier = multiplier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Meter id of the Sku. </summary>
         public Guid? MeterId { get; }
+
         /// <summary> The type of the meter. </summary>
         public string MeterType { get; }
+
         /// <summary> Multiplier specifies the region specific value to be multiplied with 1$ guid. Eg: Our new regions will be using 1$ shipping guid with appropriate multiplier specific to region. </summary>
         public double? Multiplier { get; }
     }
