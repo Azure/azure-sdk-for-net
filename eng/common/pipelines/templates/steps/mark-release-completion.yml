@@ -4,13 +4,23 @@ parameters:
   SourceRootPath: $(Build.SourcesDirectory)
 
 steps:
+  - task: Powershell@2
+    displayName: 'Install Azure SDK MCP'
+    inputs:
+      targetType: 'inline'
+      script: >
+        ./eng/common/mcp/azure-sdk-mcp.ps1
+        -InstallDirectory $(Agent.TempDirectory)
+      pwsh: true
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+
   - task: AzureCLI@2
     inputs:
       azureSubscription: opensource-api-connection
       scriptType: pscore
       scriptLocation: scriptPath
       scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Mark-ReleasePlanCompletion.ps1
-      arguments: -PackageInfoFilePath '${{ parameters.ConfigFileDir }}/${{ parameters.PackageArtifactName }}.json'
+      arguments: -PackageInfoFilePath '${{ parameters.ConfigFileDir }}/${{ parameters.PackageArtifactName }}.json' -AzsdkExePath '$(Agent.TempDirectory)/azsdk'
       workingDirectory: $(Pipeline.Workspace)
     displayName: Mark package as released
     continueOnError: true
