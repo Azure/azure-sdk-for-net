@@ -236,10 +236,8 @@ namespace Azure.Storage.Blobs.Models
         public DateTimeOffset AccessTierChangedOn { get; }
 
         /// <summary>
-        /// The tier of page blob on a premium storage account or tier of block blob on blob storage LRS accounts. Only returned if the blob is in Smart tier.
-        /// For a list of allowed premium page blob tiers, see
-        /// <see href="https://docs.microsoft.com/azure/virtual-machines/windows/premium-storage#features" />. For general
-        /// purpose v2 and blob storage account types, the valid values are:
+        /// The underlying tier of a smart tier blob. Only returned if the blob is in Smart tier.
+        /// For general purpose v2 and blob storage account types, the valid values are:
         /// <list type="bullet">
         ///  <item><description>Hot</description></item>
         ///  <item><description>Cool</description></item>
