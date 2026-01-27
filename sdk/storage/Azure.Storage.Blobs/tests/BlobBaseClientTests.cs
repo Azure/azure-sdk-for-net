@@ -6433,6 +6433,51 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task SetTierAsync_Smart_Rehydrate()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            await blob.SetAccessTierAsync(AccessTier.Archive);
+
+            // Act
+            Response setTierResponse = await blob.SetAccessTierAsync(
+                accessTier: AccessTier.Smart,
+                rehydratePriority: RehydratePriority.High);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual("rehydrate-pending-to-smart", response.Value.ArchiveStatus);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task SetTierAsync_Smart_Rehydrate_GetBlobsAsync()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob1 = await GetNewBlobClient(test.Container, "smartBlob1");
+            BlobBaseClient blob2 = await GetNewBlobClient(test.Container, "smartBlob2");
+            await blob1.SetAccessTierAsync(AccessTier.Archive);
+            await blob2.SetAccessTierAsync(AccessTier.Archive);
+
+            // Act
+            await blob1.SetAccessTierAsync(
+                accessTier: AccessTier.Smart,
+                rehydratePriority: RehydratePriority.High);
+            await blob2.SetAccessTierAsync(
+                accessTier: AccessTier.Smart,
+                rehydratePriority: RehydratePriority.High);
+
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync())
+            {
+                // Assert
+                Assert.AreEqual(ArchiveStatus.RehydratePendingToSmart, blobItem.Properties.ArchiveStatus);
+            }
+        }
+
+        [RecordedTest]
         [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
         [TestCase(nameof(BlobRequestConditions.IfUnmodifiedSince))]
         [TestCase(nameof(BlobRequestConditions.IfMatch))]
