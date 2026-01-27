@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class SpotPriorityProfile : IUtf8JsonSerializable, IJsonModel<SpotPriorityProfile>
+    /// <summary> Configuration Options for Spot instances in Compute Fleet. </summary>
+    public partial class SpotPriorityProfile : IJsonModel<SpotPriorityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpotPriorityProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SpotPriorityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SpotPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SpotPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SpotPriorityProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("maintain"u8);
                 writer.WriteBooleanValue(IsMaintainEnabled.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +81,27 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        SpotPriorityProfile IJsonModel<SpotPriorityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SpotPriorityProfile IJsonModel<SpotPriorityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SpotPriorityProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SpotPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SpotPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SpotPriorityProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSpotPriorityProfile(document.RootElement, options);
         }
 
-        internal static SpotPriorityProfile DeserializeSpotPriorityProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SpotPriorityProfile DeserializeSpotPriorityProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,85 +111,86 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             float? maxPricePerVm = default;
             ComputeFleetEvictionPolicy? evictionPolicy = default;
             SpotAllocationStrategy? allocationStrategy = default;
-            bool? maintain = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isMaintainEnabled = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("capacity"u8))
+                if (prop.NameEquals("capacity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capacity = property.Value.GetInt32();
+                    capacity = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minCapacity"u8))
+                if (prop.NameEquals("minCapacity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minCapacity = property.Value.GetInt32();
+                    minCapacity = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPricePerVM"u8))
+                if (prop.NameEquals("maxPricePerVM"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxPricePerVm = property.Value.GetSingle();
+                    maxPricePerVm = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("evictionPolicy"u8))
+                if (prop.NameEquals("evictionPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    evictionPolicy = new ComputeFleetEvictionPolicy(property.Value.GetString());
+                    evictionPolicy = new ComputeFleetEvictionPolicy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allocationStrategy"u8))
+                if (prop.NameEquals("allocationStrategy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allocationStrategy = new SpotAllocationStrategy(property.Value.GetString());
+                    allocationStrategy = new SpotAllocationStrategy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maintain"u8))
+                if (prop.NameEquals("maintain"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maintain = property.Value.GetBoolean();
+                    isMaintainEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SpotPriorityProfile(
                 capacity,
                 minCapacity,
                 maxPricePerVm,
                 evictionPolicy,
                 allocationStrategy,
-                maintain,
-                serializedAdditionalRawData);
+                isMaintainEnabled,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SpotPriorityProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SpotPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SpotPriorityProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SpotPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -194,15 +200,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        SpotPriorityProfile IPersistableModel<SpotPriorityProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SpotPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SpotPriorityProfile IPersistableModel<SpotPriorityProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SpotPriorityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SpotPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSpotPriorityProfile(document.RootElement, options);
                     }
                 default:
@@ -210,6 +221,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SpotPriorityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

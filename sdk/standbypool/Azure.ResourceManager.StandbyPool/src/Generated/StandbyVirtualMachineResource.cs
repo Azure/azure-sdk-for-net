@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StandbyPool
 {
     /// <summary>
-    /// A Class representing a StandbyVirtualMachine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StandbyVirtualMachineResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetStandbyVirtualMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StandbyVirtualMachinePoolResource"/> using the GetStandbyVirtualMachine method.
+    /// A class representing a StandbyVirtualMachine along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StandbyVirtualMachineResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StandbyVirtualMachinePoolResource"/> using the GetStandbyVirtualMachines method.
     /// </summary>
     public partial class StandbyVirtualMachineResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="StandbyVirtualMachineResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="standbyVirtualMachinePoolName"> The standbyVirtualMachinePoolName. </param>
-        /// <param name="standbyVirtualMachineName"> The standbyVirtualMachineName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName, string standbyVirtualMachineName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}/standbyVirtualMachines/{standbyVirtualMachineName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _standbyVirtualMachineClientDiagnostics;
-        private readonly StandbyVirtualMachinesRestOperations _standbyVirtualMachineRestClient;
+        private readonly ClientDiagnostics _standbyVirtualMachinesClientDiagnostics;
+        private readonly StandbyVirtualMachines _standbyVirtualMachinesRestClient;
         private readonly StandbyVirtualMachineData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.StandbyPool/standbyVirtualMachinePools/standbyVirtualMachines";
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyVirtualMachineResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StandbyVirtualMachineResource for mocking. </summary>
         protected StandbyVirtualMachineResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyVirtualMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StandbyVirtualMachineResource(ArmClient client, StandbyVirtualMachineData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.StandbyPool
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyVirtualMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StandbyVirtualMachineResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _standbyVirtualMachineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string standbyVirtualMachineApiVersion);
-            _standbyVirtualMachineRestClient = new StandbyVirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyVirtualMachineApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _standbyVirtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", ResourceType.Namespace, Diagnostics);
+            _standbyVirtualMachinesRestClient = new StandbyVirtualMachines(_standbyVirtualMachinesClientDiagnostics, Pipeline, Endpoint, standbyVirtualMachineApiVersion ?? "2025-10-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual StandbyVirtualMachineData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="standbyVirtualMachinePoolName"> The standbyVirtualMachinePoolName. </param>
+        /// <param name="standbyVirtualMachineName"> The standbyVirtualMachineName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName, string standbyVirtualMachineName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}/standbyVirtualMachines/{standbyVirtualMachineName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a StandbyVirtualMachineResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}/standbyVirtualMachines/{standbyVirtualMachineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}/standbyVirtualMachines/{standbyVirtualMachineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachineResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyVirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyVirtualMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StandbyVirtualMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StandbyVirtualMachineResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyVirtualMachineClientDiagnostics.CreateScope("StandbyVirtualMachineResource.Get");
+            using DiagnosticScope scope = _standbyVirtualMachinesClientDiagnostics.CreateScope("StandbyVirtualMachineResource.Get");
             scope.Start();
             try
             {
-                var response = await _standbyVirtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _standbyVirtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StandbyVirtualMachineData> response = Response.FromValue(StandbyVirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StandbyVirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.StandbyPool
         /// Get a StandbyVirtualMachineResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}/standbyVirtualMachines/{standbyVirtualMachineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}/standbyVirtualMachines/{standbyVirtualMachineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachineResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyVirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyVirtualMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StandbyVirtualMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StandbyVirtualMachineResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyVirtualMachineClientDiagnostics.CreateScope("StandbyVirtualMachineResource.Get");
+            using DiagnosticScope scope = _standbyVirtualMachinesClientDiagnostics.CreateScope("StandbyVirtualMachineResource.Get");
             scope.Start();
             try
             {
-                var response = _standbyVirtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _standbyVirtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StandbyVirtualMachineData> response = Response.FromValue(StandbyVirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StandbyVirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

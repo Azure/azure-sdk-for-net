@@ -9,7 +9,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Quota
       safeName: AzureResourceManagerQuota
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Quota
-      ExpectedWarningsFilepath: None

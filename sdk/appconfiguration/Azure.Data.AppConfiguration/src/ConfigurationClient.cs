@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -29,20 +31,20 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("GetKeysAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CheckKeys", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CheckKeysAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetConfigurationSetting", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
-    [CodeGenSuppress("GetConfigurationSettingAsync", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
-    [CodeGenSuppress("GetConfigurationSettings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
-    [CodeGenSuppress("GetConfigurationSettingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
-    [CodeGenSuppress("CheckKeyValue", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(CancellationToken))]
-    [CodeGenSuppress("CheckKeyValueAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(CancellationToken))]
-    [CodeGenSuppress("CheckKeyValues", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
-    [CodeGenSuppress("CheckKeyValuesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
-    [CodeGenSuppress("SetConfigurationSettingInternal", typeof(string), typeof(PutKeyValueRequestContentType), typeof(ConfigurationSetting), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("SetConfigurationSettingInternalAsync", typeof(string), typeof(PutKeyValueRequestContentType), typeof(ConfigurationSetting), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteConfigurationSettingAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetSnapshot", typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetSnapshotAsync", typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetConfigurationSetting", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetConfigurationSettingAsync", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetConfigurationSettings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetConfigurationSettingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckKeyValue", typeof(string), typeof(string), typeof(string), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckKeyValueAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckKeyValues", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckKeyValuesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("SetConfigurationSettingInternal", typeof(string), typeof(PutKeyValueRequestContentType), typeof(ConfigurationSetting), typeof(string), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppress("SetConfigurationSettingInternalAsync", typeof(string), typeof(PutKeyValueRequestContentType), typeof(ConfigurationSetting), typeof(string), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(ETag?), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteConfigurationSettingAsync", typeof(string), typeof(string), typeof(string), typeof(ETag?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSnapshot", typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSnapshotAsync", typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
     [CodeGenSuppress("GetSnapshots", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetSnapshotsAsync", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CheckSnapshots", typeof(string), typeof(string), typeof(CancellationToken))]
@@ -51,16 +53,16 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("CreateSnapshotAsync", typeof(string), typeof(CreateSnapshotRequestContentType), typeof(ConfigurationSnapshot), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetOperationDetails", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetOperationDetailsAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateReadOnlyLock", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateReadOnlyLockAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteReadOnlyLock", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteReadOnlyLockAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateReadOnlyLock", typeof(string), typeof(string), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateReadOnlyLockAsync", typeof(string), typeof(string), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteReadOnlyLock", typeof(string), typeof(string), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteReadOnlyLockAsync", typeof(string), typeof(string), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
     [CodeGenSuppress("GetLabels", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(CancellationToken))]
     [CodeGenSuppress("GetLabelsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(CancellationToken))]
     [CodeGenSuppress("CheckLabels", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(CancellationToken))]
     [CodeGenSuppress("CheckLabelsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(CancellationToken))]
-    [CodeGenSuppress("CheckSnapshot", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("CheckSnapshotAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckSnapshot", typeof(string), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckSnapshotAsync", typeof(string), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
     [CodeGenSuppress("GetRevisions", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(CancellationToken))]
     [CodeGenSuppress("GetRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(CancellationToken))]
     [CodeGenSuppress("CheckRevisions", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(CancellationToken))]
@@ -69,18 +71,18 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("GetKeysAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("CheckKeys", typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("CheckKeysAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CheckKeyValues", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(RequestContext))]
-    [CodeGenSuppress("CheckKeyValuesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(RequestContext))]
-    [CodeGenSuppress("CheckKeyValue", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(RequestContext))]
-    [CodeGenSuppress("CheckKeyValueAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValues", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValuesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValue", typeof(string), typeof(string), typeof(string), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValueAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(RequestContext))]
     [CodeGenSuppress("CheckSnapshots", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("CheckSnapshotsAsync", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetOperationDetails", typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetOperationDetailsAsync", typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetSnapshots", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetSnapshotsAsync", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CheckSnapshot", typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CheckSnapshotAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CheckSnapshot", typeof(string), typeof(string), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("CheckSnapshotAsync", typeof(string), typeof(string), typeof(MatchConditions), typeof(RequestContext))]
     [CodeGenSuppress("GetLabels", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(RequestContext))]
     [CodeGenSuppress("GetLabelsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(RequestContext))]
     [CodeGenSuppress("CheckLabels", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(RequestContext))]
@@ -89,8 +91,8 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("GetRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(RequestContext))]
     [CodeGenSuppress("CheckRevisions", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(RequestContext))]
     [CodeGenSuppress("CheckRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(RequestContext))]
-    [CodeGenSuppress("GetConfigurationSettings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(RequestContext))]
-    [CodeGenSuppress("GetConfigurationSettingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("GetConfigurationSettings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("GetConfigurationSettingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
 
     public partial class ConfigurationClient
     {
@@ -749,6 +751,63 @@ namespace Azure.Data.AppConfiguration
             }
 
             return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
+        }
+
+        /// <summary>
+        /// Checks if one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/> have changed.
+        /// </summary>
+        /// <param name="selector">Options used to select a set of <see cref="ConfigurationSetting"/> entities from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A pageable collection of pages with empty values collections.</returns>
+        public virtual AsyncPageable<ConfigurationSetting> CheckConfigurationSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+
+            var pageableImplementation = CheckConfigurationSettingsPageableImplementation(selector, cancellationToken);
+
+            return new AsyncConditionalPageable(pageableImplementation);
+        }
+
+        /// <summary>
+        /// Checks if one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/> have changed.
+        /// </summary>
+        /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A pageable collection of pages with empty values collections.</returns>
+        public virtual Pageable<ConfigurationSetting> CheckConfigurationSettings(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+
+            var pageableImplementation = CheckConfigurationSettingsPageableImplementation(selector, cancellationToken);
+
+            return new ConditionalPageable(pageableImplementation);
+        }
+
+        private ConditionalPageableImplementation CheckConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
+        {
+            var key = selector.KeyFilter;
+            var label = selector.LabelFilter;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+            var tags = selector.TagsFilter;
+
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            IEnumerable<string> fieldsString = selector.Fields.Split();
+
+            context.AddClassifier(304, false);
+
+            HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
+            {
+                return CreateCheckKeyValuesRequest(key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
+            }
+
+            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
+            {
+                HttpMessage message = CreateNextGetConfigurationSettingsRequest(nextLink, key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
+                message.Request.Method = RequestMethod.Head;
+                return message;
+            }
+
+            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseCheckConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
         }
 
         /// <summary>
@@ -1510,6 +1569,22 @@ namespace Azure.Data.AppConfiguration
             // The "Link" header is formatted as:
             // <nextLink>; rel="next"
             if (nextLink == null && response.Headers.TryGetValue("Link", out string linkHeader))
+            {
+                int nextLinkEndIndex = linkHeader.IndexOf('>');
+                nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
+            }
+
+            return (values, nextLink);
+        }
+
+        private (List<ConfigurationSetting> Values, string NextLink) ParseCheckConfigurationSettingsResponse(Response response)
+        {
+            var values = new List<ConfigurationSetting>();
+            string nextLink = null;
+
+            // The "Link" header is formatted as:
+            // <nextLink>; rel="next"
+            if (response.Headers.TryGetValue("Link", out string linkHeader))
             {
                 int nextLinkEndIndex = linkHeader.IndexOf('>');
                 nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);

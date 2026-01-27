@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// <summary> Describes a virtual machine scale set data disk. </summary>
     public partial class ComputeFleetVmssDataDisk
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssDataDisk"/>. </summary>
         /// <param name="lun">
@@ -97,8 +68,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// this value is used, the data disk is retained after VMSS Flex VM is
         /// deleted.&lt;br&gt;&lt;br&gt; The default value is set to **Delete**.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssDataDisk(string name, int lun, ComputeFleetCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeFleetDiskCreateOptionType createOption, int? diskSizeGB, ComputeFleetVmssManagedDisk managedDisk, long? diskIopsReadWrite, long? diskMbpsReadWrite, ComputeFleetDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmssDataDisk(string name, int lun, ComputeFleetCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeFleetDiskCreateOptionType createOption, int? diskSizeGB, ComputeFleetVmssManagedDisk managedDisk, long? diskIopsReadWrite, long? diskMbpsReadWrite, ComputeFleetDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Lun = lun;
@@ -110,32 +81,32 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             DiskIopsReadWrite = diskIopsReadWrite;
             DiskMbpsReadWrite = diskMbpsReadWrite;
             DeleteOption = deleteOption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssDataDisk"/> for deserialization. </summary>
-        internal ComputeFleetVmssDataDisk()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The disk name. </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// Specifies the logical unit number of the data disk. This value is used to
         /// identify data disks within the VM and therefore must be unique for each data
         /// disk attached to a VM.
         /// </summary>
         public int Lun { get; set; }
+
         /// <summary>
         /// Specifies the caching requirements. Possible values are: **None,**
         /// **ReadOnly,** **ReadWrite.** The default values are: **None for Standard
         /// storage. ReadOnly for Premium storage.**
         /// </summary>
         public ComputeFleetCachingType? Caching { get; set; }
+
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? IsWriteAcceleratorEnabled { get; set; }
+
         /// <summary> The create option. </summary>
         public ComputeFleetDiskCreateOptionType CreateOption { get; set; }
+
         /// <summary>
         /// Specifies the size of an empty data disk in gigabytes. This element can be used
         /// to overwrite the size of the disk in a virtual machine image. The property
@@ -143,20 +114,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// larger than 1023.
         /// </summary>
         public int? DiskSizeGB { get; set; }
+
         /// <summary> The managed disk parameters. </summary>
         public ComputeFleetVmssManagedDisk ManagedDisk { get; set; }
+
         /// <summary>
         /// Specifies the Read-Write IOPS for the managed disk. Should be used only when
         /// StorageAccountType is UltraSSD_LRS. If not specified, a default value would be
         /// assigned based on diskSizeGB.
         /// </summary>
         public long? DiskIopsReadWrite { get; set; }
+
         /// <summary>
         /// Specifies the bandwidth in MB per second for the managed disk. Should be used
         /// only when StorageAccountType is UltraSSD_LRS. If not specified, a default value
         /// would be assigned based on diskSizeGB.
         /// </summary>
         public long? DiskMbpsReadWrite { get; set; }
+
         /// <summary>
         /// Specifies whether data disk should be deleted or detached upon VMSS Flex
         /// deletion (This feature is available for VMSS with Flexible OrchestrationMode

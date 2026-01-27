@@ -9,14 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MySql;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerStorage : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerStorage>
+    /// <summary> Storage Profile properties of a server. </summary>
+    public partial class MySqlFlexibleServerStorage : IJsonModel<MySqlFlexibleServerStorage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerStorage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerStorage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(StorageSizeInGB))
             {
                 writer.WritePropertyName("storageSizeGB"u8);
@@ -69,15 +70,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("storageRedundancy"u8);
                 writer.WriteStringValue(StorageRedundancy.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,117 +87,123 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
         }
 
-        MySqlFlexibleServerStorage IJsonModel<MySqlFlexibleServerStorage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServerStorage IJsonModel<MySqlFlexibleServerStorage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MySqlFlexibleServerStorage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMySqlFlexibleServerStorage(document.RootElement, options);
         }
 
-        internal static MySqlFlexibleServerStorage DeserializeMySqlFlexibleServerStorage(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MySqlFlexibleServerStorage DeserializeMySqlFlexibleServerStorage(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? storageSizeGB = default;
+            int? storageSizeInGB = default;
             int? iops = default;
             MySqlFlexibleServerEnableStatusEnum? autoGrow = default;
             MySqlFlexibleServerEnableStatusEnum? logOnDisk = default;
             string storageSku = default;
             MySqlFlexibleServerEnableStatusEnum? autoIoScaling = default;
             MySqlFlexibleServerStorageRedundancyType? storageRedundancy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("storageSizeGB"u8))
+                if (prop.NameEquals("storageSizeGB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageSizeGB = property.Value.GetInt32();
+                    storageSizeInGB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("iops"u8))
+                if (prop.NameEquals("iops"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    iops = property.Value.GetInt32();
+                    iops = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("autoGrow"u8))
+                if (prop.NameEquals("autoGrow"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoGrow = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
+                    autoGrow = new MySqlFlexibleServerEnableStatusEnum(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("logOnDisk"u8))
+                if (prop.NameEquals("logOnDisk"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    logOnDisk = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
+                    logOnDisk = new MySqlFlexibleServerEnableStatusEnum(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageSku"u8))
+                if (prop.NameEquals("storageSku"u8))
                 {
-                    storageSku = property.Value.GetString();
+                    storageSku = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoIoScaling"u8))
+                if (prop.NameEquals("autoIoScaling"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoIoScaling = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
+                    autoIoScaling = new MySqlFlexibleServerEnableStatusEnum(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageRedundancy"u8))
+                if (prop.NameEquals("storageRedundancy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageRedundancy = new MySqlFlexibleServerStorageRedundancyType(property.Value.GetString());
+                    storageRedundancy = new MySqlFlexibleServerStorageRedundancyType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlFlexibleServerStorage(
-                storageSizeGB,
+                storageSizeInGB,
                 iops,
                 autoGrow,
                 logOnDisk,
                 storageSku,
                 autoIoScaling,
                 storageRedundancy,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<MySqlFlexibleServerStorage>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MySqlFlexibleServerStorage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -206,15 +213,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
         }
 
-        MySqlFlexibleServerStorage IPersistableModel<MySqlFlexibleServerStorage>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServerStorage IPersistableModel<MySqlFlexibleServerStorage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MySqlFlexibleServerStorage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlFlexibleServerStorage(document.RootElement, options);
                     }
                 default:
@@ -222,6 +234,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServerStorage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

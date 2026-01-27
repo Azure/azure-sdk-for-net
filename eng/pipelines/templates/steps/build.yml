@@ -11,12 +11,6 @@ parameters:
   - name: SDKType
     type: string
     default: all
-  - name: CheckAOTCompat
-    type: boolean
-    default: false
-  - name: AOTTestInputs
-    type: object
-    default: []
   - name: BuildSnippets
     type: boolean
     default: true
@@ -153,12 +147,11 @@ steps:
       LibType: 'client'
       PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
-  - ${{ if eq(parameters.CheckAOTCompat, 'true') }}:
-    - template: /eng/pipelines/templates/steps/aot-compatibility.yml
-      parameters:
-        ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        AOTTestInputs: ${{ parameters.AOTTestInputs }}
-        PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+  - template: /eng/pipelines/templates/steps/aot-compatibility.yml
+    parameters:
+      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      Artifacts: ${{ parameters.Artifacts }}
+      PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
     displayName: "Component Detection"

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -17,41 +18,62 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetNetworkInterfaceAuxiliaryMode : IEquatable<ComputeFleetNetworkInterfaceAuxiliaryMode>
     {
         private readonly string _value;
+        /// <summary> None Mode. </summary>
+        private const string NoneValue = "None";
+        /// <summary> AcceleratedConnections Mode. </summary>
+        private const string AcceleratedConnectionsValue = "AcceleratedConnections";
+        /// <summary> Floating Mode. </summary>
+        private const string FloatingValue = "Floating";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetNetworkInterfaceAuxiliaryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetNetworkInterfaceAuxiliaryMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string AcceleratedConnectionsValue = "AcceleratedConnections";
-        private const string FloatingValue = "Floating";
+            _value = value;
+        }
 
         /// <summary> None Mode. </summary>
         public static ComputeFleetNetworkInterfaceAuxiliaryMode None { get; } = new ComputeFleetNetworkInterfaceAuxiliaryMode(NoneValue);
+
         /// <summary> AcceleratedConnections Mode. </summary>
         public static ComputeFleetNetworkInterfaceAuxiliaryMode AcceleratedConnections { get; } = new ComputeFleetNetworkInterfaceAuxiliaryMode(AcceleratedConnectionsValue);
+
         /// <summary> Floating Mode. </summary>
         public static ComputeFleetNetworkInterfaceAuxiliaryMode Floating { get; } = new ComputeFleetNetworkInterfaceAuxiliaryMode(FloatingValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetNetworkInterfaceAuxiliaryMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetNetworkInterfaceAuxiliaryMode left, ComputeFleetNetworkInterfaceAuxiliaryMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetNetworkInterfaceAuxiliaryMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetNetworkInterfaceAuxiliaryMode left, ComputeFleetNetworkInterfaceAuxiliaryMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetNetworkInterfaceAuxiliaryMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetNetworkInterfaceAuxiliaryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetNetworkInterfaceAuxiliaryMode(string value) => new ComputeFleetNetworkInterfaceAuxiliaryMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetNetworkInterfaceAuxiliaryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetNetworkInterfaceAuxiliaryMode?(string value) => value == null ? null : new ComputeFleetNetworkInterfaceAuxiliaryMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetNetworkInterfaceAuxiliaryMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetNetworkInterfaceAuxiliaryMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

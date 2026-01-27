@@ -2056,7 +2056,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2169,7 +2170,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2282,7 +2284,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2395,7 +2398,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2508,7 +2512,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2621,7 +2626,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2734,7 +2740,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2847,7 +2854,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2960,7 +2968,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -3120,7 +3129,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Payload.MultiPart.FormData.HttpParts"
                   },
                   "parameters": [
                     {
@@ -3280,7 +3290,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Payload.MultiPart.FormData.HttpParts.ContentType"
                       },
                       "parameters": [
                         {
@@ -3393,7 +3404,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Payload.MultiPart.FormData.HttpParts.ContentType"
                       },
                       "parameters": [
                         {
@@ -3506,7 +3518,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Payload.MultiPart.FormData.HttpParts.ContentType"
                       },
                       "parameters": [
                         {
@@ -3667,7 +3680,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Payload.MultiPart.FormData.HttpParts.NonString"
                       },
                       "parameters": [
                         {

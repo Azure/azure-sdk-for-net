@@ -12,12 +12,12 @@
     <MicrosoftAspNetCoreHttpVersion>2.3.0</MicrosoftAspNetCoreHttpVersion>
     <MicrosoftAspNetCoreVersion>2.3.0</MicrosoftAspNetCoreVersion>
     <MicrosoftExtensionsAzureVersion>1.13.1</MicrosoftExtensionsAzureVersion>
-    <MicrosoftExtensionsConfigurationAbstractionsVersion>10.0.1</MicrosoftExtensionsConfigurationAbstractionsVersion>
-    <MicrosoftExtensionsConfigurationBinderVersion>10.0.1</MicrosoftExtensionsConfigurationBinderVersion>
-    <MicrosoftExtensionsConfigurationVersion>10.0.1</MicrosoftExtensionsConfigurationVersion>
-    <MicrosoftExtensionsDependencyInjectionAbstractionsVersion>10.0.1</MicrosoftExtensionsDependencyInjectionAbstractionsVersion>
-    <MicrosoftExtensionsHostingVersion>10.0.1</MicrosoftExtensionsHostingVersion>
-    <MicrosoftExtensionsLoggingVersion>10.0.1</MicrosoftExtensionsLoggingVersion>
+    <MicrosoftExtensionsConfigurationAbstractionsVersion>10.0.2</MicrosoftExtensionsConfigurationAbstractionsVersion>
+    <MicrosoftExtensionsConfigurationBinderVersion>10.0.2</MicrosoftExtensionsConfigurationBinderVersion>
+    <MicrosoftExtensionsConfigurationVersion>10.0.2</MicrosoftExtensionsConfigurationVersion>
+    <MicrosoftExtensionsDependencyInjectionAbstractionsVersion>10.0.2</MicrosoftExtensionsDependencyInjectionAbstractionsVersion>
+    <MicrosoftExtensionsHostingVersion>10.0.2</MicrosoftExtensionsHostingVersion>
+    <MicrosoftExtensionsLoggingVersion>10.0.2</MicrosoftExtensionsLoggingVersion>
     <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
     <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
     <MSTestVersion>1.3.2</MSTestVersion>
@@ -27,8 +27,8 @@
 
     <!-- Internal tooling from the Azure Development Feed -->
     <TestProxyVersion>1.0.0-dev.20251209.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20260116.3</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20260115.2</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260126.1</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20260121.1</AzureGeneratorVersion>
 
     <!-- Legacy package use only -->
     <MicrosoftRestClientRuntimeVersion>[2.3.24, 3.0.0)</MicrosoftRestClientRuntimeVersion>
@@ -130,12 +130,14 @@
       or '$(IsStressProject)' == 'true'">
 
     <!-- BCL packages -->
-    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="10.0.1" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="10.0.2" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
     <PackageReference Update="System.Buffers" Version="4.5.1" />
     <PackageReference Update="System.ClientModel" Version="1.8.1" />
-    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="10.0.1" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="10.0.2" />
     <PackageReference Update="System.IO.Hashing" Version="10.0.1" />
     <PackageReference Update="System.Memory" Version="4.6.3" />
     <PackageReference Update="System.Memory.Data" Version="10.0.1" />
@@ -328,7 +330,7 @@
     <PackageReference Update="CoreWCF.Primitives" Version="1.7.0" />
     <PackageReference Update="CoreWCF.Queue" Version="1.7.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.1" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.2" />
     <PackageReference Update="Microsoft.Extensions.Http" Version="10.0.1" />
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" />
     <PackageReference Update="System.Formats.Asn1" Version="10.0.1" />
@@ -348,7 +350,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20250715.1" PrivateAssets="All" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260123.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="6.0.4" PrivateAssets="All" />
     <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20251023.1" PrivateAssets="All" />
 
@@ -453,15 +455,15 @@
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftExtensionsConfigurationAbstractionsVersion)" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.1" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="10.0.1" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
     <PackageReference Update="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
     <PackageReference Update="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Console" Version="10.0.1"/>
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Console" Version="10.0.2"/>
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Primitives" Version="10.0.1"/>
+    <PackageReference Update="Microsoft.Extensions.Primitives" Version="10.0.2"/>
     <PackageReference Update="Microsoft.Graph" Version="5.100.0" />
     <PackageReference Update="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" />
     <PackageReference Update="Mono.Posix" Version="7.0.0-alpha8.21302.6" />

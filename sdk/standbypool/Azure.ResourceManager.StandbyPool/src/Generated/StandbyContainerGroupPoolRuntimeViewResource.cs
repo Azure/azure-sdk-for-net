@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StandbyPool
 {
     /// <summary>
-    /// A Class representing a StandbyContainerGroupPoolRuntimeView along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StandbyContainerGroupPoolRuntimeViewResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetStandbyContainerGroupPoolRuntimeViewResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StandbyContainerGroupPoolResource"/> using the GetStandbyContainerGroupPoolRuntimeView method.
+    /// A class representing a StandbyContainerGroupPoolRuntimeView along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StandbyContainerGroupPoolResource"/> using the GetStandbyContainerGroupPoolRuntimeViews method.
     /// </summary>
     public partial class StandbyContainerGroupPoolRuntimeViewResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="standbyContainerGroupPoolName"> The standbyContainerGroupPoolName. </param>
-        /// <param name="runtimeView"> The runtimeView. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string standbyContainerGroupPoolName, string runtimeView)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _standbyContainerGroupPoolRuntimeViewClientDiagnostics;
-        private readonly StandbyContainerGroupPoolRuntimeViewsRestOperations _standbyContainerGroupPoolRuntimeViewRestClient;
+        private readonly ClientDiagnostics _standbyContainerGroupPoolRuntimeViewsClientDiagnostics;
+        private readonly StandbyContainerGroupPoolRuntimeViews _standbyContainerGroupPoolRuntimeViewsRestClient;
         private readonly StandbyContainerGroupPoolRuntimeViewData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.StandbyPool/standbyContainerGroupPools/runtimeViews";
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StandbyContainerGroupPoolRuntimeViewResource for mocking. </summary>
         protected StandbyContainerGroupPoolRuntimeViewResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StandbyContainerGroupPoolRuntimeViewResource(ArmClient client, StandbyContainerGroupPoolRuntimeViewData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.StandbyPool
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StandbyContainerGroupPoolRuntimeViewResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _standbyContainerGroupPoolRuntimeViewClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string standbyContainerGroupPoolRuntimeViewApiVersion);
-            _standbyContainerGroupPoolRuntimeViewRestClient = new StandbyContainerGroupPoolRuntimeViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyContainerGroupPoolRuntimeViewApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _standbyContainerGroupPoolRuntimeViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", ResourceType.Namespace, Diagnostics);
+            _standbyContainerGroupPoolRuntimeViewsRestClient = new StandbyContainerGroupPoolRuntimeViews(_standbyContainerGroupPoolRuntimeViewsClientDiagnostics, Pipeline, Endpoint, standbyContainerGroupPoolRuntimeViewApiVersion ?? "2025-10-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual StandbyContainerGroupPoolRuntimeViewData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="standbyContainerGroupPoolName"> The standbyContainerGroupPoolName. </param>
+        /// <param name="runtimeView"> The runtimeView. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string standbyContainerGroupPoolName, string runtimeView)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a StandbyContainerGroupPoolRuntimeViewResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViewResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPoolRuntimeViews_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolRuntimeViewResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StandbyContainerGroupPoolRuntimeViewResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StandbyContainerGroupPoolRuntimeViewResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewResource.Get");
+            using DiagnosticScope scope = _standbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewResource.Get");
             scope.Start();
             try
             {
-                var response = await _standbyContainerGroupPoolRuntimeViewRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StandbyContainerGroupPoolRuntimeViewData> response = Response.FromValue(StandbyContainerGroupPoolRuntimeViewData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StandbyContainerGroupPoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.StandbyPool
         /// Get a StandbyContainerGroupPoolRuntimeViewResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViewResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPoolRuntimeViews_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolRuntimeViewResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StandbyContainerGroupPoolRuntimeViewResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StandbyContainerGroupPoolRuntimeViewResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewResource.Get");
+            using DiagnosticScope scope = _standbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewResource.Get");
             scope.Start();
             try
             {
-                var response = _standbyContainerGroupPoolRuntimeViewRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StandbyContainerGroupPoolRuntimeViewData> response = Response.FromValue(StandbyContainerGroupPoolRuntimeViewData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StandbyContainerGroupPoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

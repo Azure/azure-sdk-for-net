@@ -28,7 +28,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
         /// The final status of the response.
-        /// 
         /// One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
         /// </param>
         /// <param name="statusDetails"> Additional details about the status. </param>
@@ -83,7 +82,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// The final status of the response.
-        /// 
         /// One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
         /// </summary>
         public SessionResponseStatus? Status { get; }

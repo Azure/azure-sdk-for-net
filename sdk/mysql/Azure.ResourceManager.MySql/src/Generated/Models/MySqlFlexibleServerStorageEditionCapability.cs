@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> storage edition capability. </summary>
     public partial class MySqlFlexibleServerStorageEditionCapability
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerStorageEditionCapability"/>. </summary>
         internal MySqlFlexibleServerStorageEditionCapability()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="maxBackupRetentionDays"> Maximum backup retention days. </param>
         /// <param name="minBackupIntervalHours"> Minimal backup interval hours. </param>
         /// <param name="maxBackupIntervalHours"> Maximum backup interval hours. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerStorageEditionCapability(string name, long? minStorageSize, long? maxStorageSize, long? minBackupRetentionDays, long? maxBackupRetentionDays, long? minBackupIntervalHours, long? maxBackupIntervalHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerStorageEditionCapability(string name, long? minStorageSize, long? maxStorageSize, long? minBackupRetentionDays, long? maxBackupRetentionDays, long? minBackupIntervalHours, long? maxBackupIntervalHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             MinStorageSize = minStorageSize;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             MaxBackupRetentionDays = maxBackupRetentionDays;
             MinBackupIntervalHours = minBackupIntervalHours;
             MaxBackupIntervalHours = maxBackupIntervalHours;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> storage edition name. </summary>
         public string Name { get; }
+
         /// <summary> The minimal supported storage size. </summary>
         public long? MinStorageSize { get; }
+
         /// <summary> The maximum supported storage size. </summary>
         public long? MaxStorageSize { get; }
+
         /// <summary> Minimal backup retention days. </summary>
         public long? MinBackupRetentionDays { get; }
+
         /// <summary> Maximum backup retention days. </summary>
         public long? MaxBackupRetentionDays { get; }
+
         /// <summary> Minimal backup interval hours. </summary>
         public long? MinBackupIntervalHours { get; }
+
         /// <summary> Maximum backup interval hours. </summary>
         public long? MaxBackupIntervalHours { get; }
     }

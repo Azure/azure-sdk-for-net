@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
-    internal class DataReplicationFabricAgentOperationSource : IOperationSource<DataReplicationFabricAgentResource>
+    /// <summary></summary>
+    internal partial class DataReplicationFabricAgentOperationSource : IOperationSource<DataReplicationFabricAgentResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DataReplicationFabricAgentOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DataReplicationFabricAgentResource IOperationSource<DataReplicationFabricAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataReplicationFabricAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DataReplicationFabricAgentData data = DataReplicationFabricAgentData.DeserializeDataReplicationFabricAgentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DataReplicationFabricAgentResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DataReplicationFabricAgentResource> IOperationSource<DataReplicationFabricAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataReplicationFabricAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-            return await Task.FromResult(new DataReplicationFabricAgentResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DataReplicationFabricAgentData data = DataReplicationFabricAgentData.DeserializeDataReplicationFabricAgentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DataReplicationFabricAgentResource(_client, data);
         }
     }
 }

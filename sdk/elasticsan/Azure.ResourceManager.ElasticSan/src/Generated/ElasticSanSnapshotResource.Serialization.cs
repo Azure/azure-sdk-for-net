@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ElasticSan
 {
+    /// <summary></summary>
     public partial class ElasticSanSnapshotResource : IJsonModel<ElasticSanSnapshotData>
     {
-        private static ElasticSanSnapshotData s_dataDeserializationInstance;
-        private static ElasticSanSnapshotData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ElasticSanSnapshotData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ElasticSanSnapshotData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ElasticSanSnapshotData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticSanSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanSnapshotData>)Data).Write(writer, options);
 
-        ElasticSanSnapshotData IJsonModel<ElasticSanSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanSnapshotData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticSanSnapshotData IJsonModel<ElasticSanSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ElasticSanSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticSanSnapshotData>(Data, options, AzureResourceManagerElasticSanContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ElasticSanSnapshotData IPersistableModel<ElasticSanSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticSanSnapshotData>(data, options, AzureResourceManagerElasticSanContext.Default);
 
-        string IPersistableModel<ElasticSanSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanSnapshotData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ElasticSanSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

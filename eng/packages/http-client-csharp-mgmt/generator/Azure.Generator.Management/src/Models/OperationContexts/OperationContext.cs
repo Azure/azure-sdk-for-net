@@ -80,12 +80,25 @@ internal class OperationContext
     /// <returns></returns>
     private static IReadOnlyList<ContextualParameter> BuildContextualParameters(RequestPathPattern contextualPath)
     {
-        // we use a stack here because we are building the contextual parameters in reverse order.
-        var result = new Stack<ContextualParameter>();
+        try
+        {
+            // we use a stack here because we are building the contextual parameters in reverse order.
+            var result = new Stack<ContextualParameter>();
 
-        BuildContextualParameterHierarchy(contextualPath, result, 0);
+            BuildContextualParameterHierarchy(contextualPath, result, 0);
 
-        return [.. result];
+            return [.. result];
+        }
+        catch (InvalidOperationException ex)
+        {
+            // Report diagnostic for malformed resource structure
+            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                code: "malformed-resource-detected",
+                message: $"The request path '{contextualPath}' has a malformed structure: {ex.Message}"
+            );
+            // Return empty list to allow graceful degradation
+            return [];
+        }
     }
 
     private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, int parentLayerCount)
@@ -131,8 +144,19 @@ internal class OperationContext
                 // we have a pair of segment, key and value
                 // In majority of cases, the key is a constant segment. In some rare scenarios, the key could be a variable.
                 // The value could be a constant or a variable segment.
-                // TODO -- we did not consider the case that key would be a variable here.
-                if (!value.IsConstant)
+                if (!key.IsConstant)
+                {
+                    // Handle the case when key is a variable
+                    // we have to reassign the value of parentLayerCount to a local variable to avoid the closure to wrap the parentLayerCount variable which changes during recursion.
+                    int currentParentCount = parentLayerCount;
+                    parameterStack.Push(new ContextualParameter(key.VariableName, key.VariableName, id => BuildParentInvocation(currentParentCount, id).ResourceType().Type()));
+                    if (!value.IsConstant)
+                    {
+                        parameterStack.Push(new ContextualParameter(value.VariableName, value.VariableName, id => BuildParentInvocation(currentParentCount, id).Name()));
+                    }
+                    appendParent = true;
+                }
+                else if (!value.IsConstant)
                 {
                     if (key.IsProvidersSegment) // if the key is `providers` and the value is a parameter
                     {
@@ -158,7 +182,7 @@ internal class OperationContext
                         appendParent = true;
                     }
                 }
-                else // in this branch value is a constant
+                else // in this branch both key and value are constants
                 {
                     if (!key.IsProvidersSegment)
                     {
@@ -190,7 +214,11 @@ internal class OperationContext
         static IReadOnlyList<KeyValuePair<RequestPathSegment, RequestPathSegment>> ReverselySplitIntoPairs(IReadOnlyList<RequestPathSegment> requestPath)
         {
             // in our current cases, we will always have even segments.
-            Debug.Assert(requestPath.Count % 2 == 0, "The request path should always have an even number of segments for pairing.");
+            if (requestPath.Count % 2 != 0)
+            {
+                throw new InvalidOperationException($"The request path should have an even number of segments for pairing, but got {requestPath.Count} segments.");
+            }
+
             int maxNumberOfPairs = requestPath.Count / 2;
             var pairs = new KeyValuePair<RequestPathSegment, RequestPathSegment>[maxNumberOfPairs];
 
@@ -209,9 +237,22 @@ internal class OperationContext
 
     private static IReadOnlyList<ContextualParameter> BuildSecondaryContextualParameters(RequestPathPattern contextualPath, RequestPathPattern secondaryContextualPath, Func<string, FieldProvider> fieldSelector)
     {
-        // for secondary contextual path, we first trim off the main contextual path part from it
-        var extraContextualPath = contextualPath.TrimAncestorFrom(secondaryContextualPath);
-        return BuildSecondaryContextualParametersCore(extraContextualPath, fieldSelector);
+        try
+        {
+            // for secondary contextual path, we first trim off the main contextual path part from it
+            var extraContextualPath = contextualPath.TrimAncestorFrom(secondaryContextualPath);
+            return BuildSecondaryContextualParametersCore(extraContextualPath, fieldSelector);
+        }
+        catch (InvalidOperationException ex)
+        {
+            // Report diagnostic for malformed resource structure
+            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                code: "malformed-resource-detected",
+                message: $"The secondary request path '{secondaryContextualPath}' has a malformed structure: {ex.Message}"
+            );
+            // Return empty list to allow graceful degradation
+            return [];
+        }
 
         static List<ContextualParameter> BuildSecondaryContextualParametersCore(RequestPathPattern extraPath, Func<string, FieldProvider> fieldSelector)
         {
@@ -226,8 +267,19 @@ internal class OperationContext
                 {
                     continue;
                 }
-                // TODO -- we did not consider the case that key would be a variable here.
-                if (!value.IsConstant)
+                if (!key.IsConstant)
+                {
+                    // Handle the case when key is a variable
+                    var keyContextualParameter = new ContextualParameter(key.VariableName, key.VariableName, _ => fieldSelector(key.VariableName));
+                    result.Add(keyContextualParameter);
+                    if (!value.IsConstant)
+                    {
+                        // in this case we need to build a contextual parameter for the value too
+                        var valueContextualParameter = new ContextualParameter(value.VariableName, value.VariableName, _ => fieldSelector(value.VariableName));
+                        result.Add(valueContextualParameter);
+                    }
+                }
+                else if (!value.IsConstant)
                 {
                     // in this case we need to build a contextual parameter
                     var contextualParameter = new ContextualParameter(key.Value, value.VariableName, _ => fieldSelector(value.VariableName));

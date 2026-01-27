@@ -194,7 +194,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.Recursive"
           },
           "parameters": [
             {
@@ -290,7 +291,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.get",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.Recursive"
           },
           "parameters": [
             {

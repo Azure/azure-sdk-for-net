@@ -414,19 +414,21 @@ namespace Azure.Generator.Management
                         return;
                     }
 
-                    if (!operationSources.ContainsKey(returnCSharpType))
+                    // Find all resource providers that use this data type
+                    var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType));
+
+                    if (resourceProviders.Any())
                     {
-                        var resourceProvider = ResourceProviders.FirstOrDefault(r => r.ResourceData.Type.Equals(returnCSharpType));
-                        if (resourceProvider is not null)
+                        // For each resource provider, create an OperationSource keyed by the resource type
+                        foreach (var resourceProvider in resourceProviders)
                         {
-                            // This is a resource model - use the resource-based constructor
-                            operationSources.Add(returnCSharpType, new OperationSourceProvider(resourceProvider));
+                            operationSources.TryAdd(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
                         }
-                        else
-                        {
-                            // This is a non-resource model - use the CSharpType-based constructor
-                            operationSources.Add(returnCSharpType, new OperationSourceProvider(returnCSharpType));
-                        }
+                    }
+                    else
+                    {
+                        // This is a non-resource model - use the data type as the key
+                        operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
                     }
                 }
             }
