@@ -10,14 +10,17 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxCopyProgress : IUtf8JsonSerializable, IJsonModel<DataBoxCopyProgress>
+    /// <summary> Copy progress. </summary>
+    public partial class DataBoxCopyProgress : IJsonModel<DataBoxCopyProgress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxCopyProgress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxCopyProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +32,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxCopyProgress)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
@@ -119,21 +121,21 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Actions)
+                foreach (CustomerResolutionCode item in Actions)
                 {
                     writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -142,22 +144,27 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxCopyProgress IJsonModel<DataBoxCopyProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxCopyProgress IJsonModel<DataBoxCopyProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxCopyProgress JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxCopyProgress)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxCopyProgress(document.RootElement, options);
         }
 
-        internal static DataBoxCopyProgress DeserializeDataBoxCopyProgress(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxCopyProgress DeserializeDataBoxCopyProgress(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -179,158 +186,157 @@ namespace Azure.ResourceManager.DataBox.Models
             bool? isEnumerationInProgress = default;
             ResponseError error = default;
             IReadOnlyList<CustomerResolutionCode> actions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountName"u8))
+                if (prop.NameEquals("storageAccountName"u8))
                 {
-                    storageAccountName = property.Value.GetString();
+                    storageAccountName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transferType"u8))
+                if (prop.NameEquals("transferType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transferType = property.Value.GetString().ToDataBoxJobTransferType();
+                    transferType = prop.Value.GetString().ToDataBoxJobTransferType();
                     continue;
                 }
-                if (property.NameEquals("dataAccountType"u8))
+                if (prop.NameEquals("dataAccountType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataAccountType = property.Value.GetString().ToDataAccountType();
+                    dataAccountType = prop.Value.GetString().ToDataAccountType();
                     continue;
                 }
-                if (property.NameEquals("accountId"u8))
+                if (prop.NameEquals("accountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accountId = new ResourceIdentifier(property.Value.GetString());
+                    accountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("bytesProcessed"u8))
+                if (prop.NameEquals("bytesProcessed"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bytesProcessed = property.Value.GetInt64();
+                    bytesProcessed = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalBytesToProcess"u8))
+                if (prop.NameEquals("totalBytesToProcess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalBytesToProcess = property.Value.GetInt64();
+                    totalBytesToProcess = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("filesProcessed"u8))
+                if (prop.NameEquals("filesProcessed"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    filesProcessed = property.Value.GetInt64();
+                    filesProcessed = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalFilesToProcess"u8))
+                if (prop.NameEquals("totalFilesToProcess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalFilesToProcess = property.Value.GetInt64();
+                    totalFilesToProcess = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("invalidFilesProcessed"u8))
+                if (prop.NameEquals("invalidFilesProcessed"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    invalidFilesProcessed = property.Value.GetInt64();
+                    invalidFilesProcessed = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("invalidFileBytesUploaded"u8))
+                if (prop.NameEquals("invalidFileBytesUploaded"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    invalidFileBytesUploaded = property.Value.GetInt64();
+                    invalidFileBytesUploaded = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("renamedContainerCount"u8))
+                if (prop.NameEquals("renamedContainerCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    renamedContainerCount = property.Value.GetInt64();
+                    renamedContainerCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("filesErroredOut"u8))
+                if (prop.NameEquals("filesErroredOut"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    filesErroredOut = property.Value.GetInt64();
+                    filesErroredOut = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("directoriesErroredOut"u8))
+                if (prop.NameEquals("directoriesErroredOut"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    directoriesErroredOut = property.Value.GetInt64();
+                    directoriesErroredOut = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("invalidDirectoriesProcessed"u8))
+                if (prop.NameEquals("invalidDirectoriesProcessed"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    invalidDirectoriesProcessed = property.Value.GetInt64();
+                    invalidDirectoriesProcessed = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("isEnumerationInProgress"u8))
+                if (prop.NameEquals("isEnumerationInProgress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isEnumerationInProgress = property.Value.GetBoolean();
+                    isEnumerationInProgress = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataBoxContext.Default);
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxContext.Default);
                     continue;
                 }
-                if (property.NameEquals("actions"u8))
+                if (prop.NameEquals("actions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CustomerResolutionCode> array = new List<CustomerResolutionCode>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetString().ToCustomerResolutionCode());
                     }
@@ -339,10 +345,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxCopyProgress(
                 storageAccountName,
                 transferType,
@@ -361,13 +366,16 @@ namespace Azure.ResourceManager.DataBox.Models
                 isEnumerationInProgress,
                 error,
                 actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataBoxCopyProgress>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxCopyProgress>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -377,15 +385,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxCopyProgress IPersistableModel<DataBoxCopyProgress>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxCopyProgress IPersistableModel<DataBoxCopyProgress>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxCopyProgress PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxCopyProgress(document.RootElement, options);
                     }
                 default:
@@ -393,6 +406,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxCopyProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxOrderPreferences : IUtf8JsonSerializable, IJsonModel<DataBoxOrderPreferences>
+    /// <summary> Preferences related to the order. </summary>
+    public partial class DataBoxOrderPreferences : IJsonModel<DataBoxOrderPreferences>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxOrderPreferences>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxOrderPreferences>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +29,22 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(PreferredDataCenterRegion))
             {
                 writer.WritePropertyName("preferredDataCenterRegion"u8);
                 writer.WriteStartArray();
-                foreach (var item in PreferredDataCenterRegion)
+                foreach (string item in PreferredDataCenterRegion)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -63,21 +68,26 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 writer.WritePropertyName("storageAccountAccessTierPreferences"u8);
                 writer.WriteStartArray();
-                foreach (var item in StorageAccountAccessTierPreferences)
+                foreach (string item in StorageAccountAccessTierPreferences)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +96,27 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxOrderPreferences IJsonModel<DataBoxOrderPreferences>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxOrderPreferences IJsonModel<DataBoxOrderPreferences>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxOrderPreferences JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxOrderPreferences(document.RootElement, options);
         }
 
-        internal static DataBoxOrderPreferences DeserializeDataBoxOrderPreferences(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxOrderPreferences DeserializeDataBoxOrderPreferences(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,84 +126,99 @@ namespace Azure.ResourceManager.DataBox.Models
             TransportPreferences reverseTransportPreferences = default;
             DataBoxEncryptionPreferences encryptionPreferences = default;
             IList<string> storageAccountAccessTierPreferences = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("preferredDataCenterRegion"u8))
+                if (prop.NameEquals("preferredDataCenterRegion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     preferredDataCenterRegion = array;
                     continue;
                 }
-                if (property.NameEquals("transportPreferences"u8))
+                if (prop.NameEquals("transportPreferences"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
+                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("reverseTransportPreferences"u8))
+                if (prop.NameEquals("reverseTransportPreferences"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reverseTransportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
+                    reverseTransportPreferences = TransportPreferences.DeserializeTransportPreferences(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("encryptionPreferences"u8))
+                if (prop.NameEquals("encryptionPreferences"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryptionPreferences = DataBoxEncryptionPreferences.DeserializeDataBoxEncryptionPreferences(property.Value, options);
+                    encryptionPreferences = DataBoxEncryptionPreferences.DeserializeDataBoxEncryptionPreferences(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storageAccountAccessTierPreferences"u8))
+                if (prop.NameEquals("storageAccountAccessTierPreferences"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     storageAccountAccessTierPreferences = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxOrderPreferences(
                 preferredDataCenterRegion ?? new ChangeTrackingList<string>(),
                 transportPreferences,
                 reverseTransportPreferences,
                 encryptionPreferences,
                 storageAccountAccessTierPreferences ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataBoxOrderPreferences>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxOrderPreferences>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -198,15 +228,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxOrderPreferences IPersistableModel<DataBoxOrderPreferences>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxOrderPreferences IPersistableModel<DataBoxOrderPreferences>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxOrderPreferences PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxOrderPreferences(document.RootElement, options);
                     }
                 default:
@@ -214,6 +249,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxOrderPreferences>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

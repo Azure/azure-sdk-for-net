@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxJobStage : IUtf8JsonSerializable, IJsonModel<DataBoxJobStage>
+    /// <summary> Job stages. </summary>
+    public partial class DataBoxJobStage : IJsonModel<DataBoxJobStage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobStage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxJobStage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(StageName))
             {
                 writer.WritePropertyName("stageName"u8);
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 writer.WritePropertyName("jobStageDetails"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(JobStageDetails);
+                writer.WriteRawValue(JobStageDetails);
 #else
-                using (JsonDocument document = JsonDocument.Parse(JobStageDetails, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(JobStageDetails))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -70,21 +70,21 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 writer.WritePropertyName("delayInformation"u8);
                 writer.WriteStartArray();
-                foreach (var item in DelayInformation)
+                foreach (JobDelayDetails item in DelayInformation)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -93,22 +93,27 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxJobStage IJsonModel<DataBoxJobStage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxJobStage IJsonModel<DataBoxJobStage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxJobStage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxJobStage(document.RootElement, options);
         }
 
-        internal static DataBoxJobStage DeserializeDataBoxJobStage(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxJobStage DeserializeDataBoxJobStage(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -119,59 +124,58 @@ namespace Azure.ResourceManager.DataBox.Models
             DateTimeOffset? stageTime = default;
             BinaryData jobStageDetails = default;
             IReadOnlyList<JobDelayDetails> delayInformation = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("stageName"u8))
+                if (prop.NameEquals("stageName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stageName = new DataBoxStageName(property.Value.GetString());
+                    stageName = new DataBoxStageName(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stageStatus"u8))
+                if (prop.NameEquals("stageStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stageStatus = property.Value.GetString().ToDataBoxStageStatus();
+                    stageStatus = prop.Value.GetString().ToDataBoxStageStatus();
                     continue;
                 }
-                if (property.NameEquals("stageTime"u8))
+                if (prop.NameEquals("stageTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stageTime = property.Value.GetDateTimeOffset("O");
+                    stageTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("jobStageDetails"u8))
+                if (prop.NameEquals("jobStageDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    jobStageDetails = BinaryData.FromString(property.Value.GetRawText());
+                    jobStageDetails = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("delayInformation"u8))
+                if (prop.NameEquals("delayInformation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<JobDelayDetails> array = new List<JobDelayDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(JobDelayDetails.DeserializeJobDelayDetails(item, options));
                     }
@@ -180,10 +184,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxJobStage(
                 stageName,
                 displayName,
@@ -191,13 +194,16 @@ namespace Azure.ResourceManager.DataBox.Models
                 stageTime,
                 jobStageDetails,
                 delayInformation ?? new ChangeTrackingList<JobDelayDetails>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataBoxJobStage>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxJobStage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -207,15 +213,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxJobStage IPersistableModel<DataBoxJobStage>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxJobStage IPersistableModel<DataBoxJobStage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxJobStage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxJobStage(document.RootElement, options);
                     }
                 default:
@@ -223,6 +234,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxJobStage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
