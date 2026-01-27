@@ -130,7 +130,7 @@ namespace Azure.Analytics.OnlineExperimentation
             uri.Reset(nextPage);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

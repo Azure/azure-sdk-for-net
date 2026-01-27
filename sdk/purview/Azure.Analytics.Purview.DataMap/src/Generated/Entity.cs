@@ -1436,16 +1436,13 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
-        /// 
         /// In
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following format:
         /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The
         /// attrName and attrValue should be unique across entities, eg.
         /// qualifiedName.
-        /// 
         /// The REST request would look something like this:
         /// GET
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -1487,16 +1484,13 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
-        /// 
         /// In
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following format:
         /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The
         /// attrName and attrValue should be unique across entities, eg.
         /// qualifiedName.
-        /// 
         /// The REST request would look something like this:
         /// GET
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -1538,16 +1532,13 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// Get complete definition of an entity given its type and unique attribute.
-        /// 
         /// In
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following format:
         /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The
         /// attrName and attrValue should be unique across entities, eg.
         /// qualifiedName.
-        /// 
         /// The REST request would look something like this:
         /// GET
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -1573,16 +1564,13 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// Get complete definition of an entity given its type and unique attribute.
-        /// 
         /// In
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following format:
         /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The
         /// attrName and attrValue should be unique across entities, eg.
         /// qualifiedName.
-        /// 
         /// The REST request would look something like this:
         /// GET
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -1610,15 +1598,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// [Protocol Method] Update entity partially - Allow a subset of attributes to be updated on an
         /// entity which is identified by its type and unique attribute eg:
         /// Referenceable.qualifiedName. Null updates are not possible.
-        /// 
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format:
-        /// 
         /// attr:&lt;attrName&gt;=&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this:
         /// PUT
@@ -1663,15 +1648,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// [Protocol Method] Update entity partially - Allow a subset of attributes to be updated on an
         /// entity which is identified by its type and unique attribute eg:
         /// Referenceable.qualifiedName. Null updates are not possible.
-        /// 
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format:
-        /// 
         /// attr:&lt;attrName&gt;=&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this:
         /// PUT
@@ -1716,15 +1698,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// Update entity partially - Allow a subset of attributes to be updated on an
         /// entity which is identified by its type and unique attribute eg:
         /// Referenceable.qualifiedName. Null updates are not possible.
-        /// 
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format:
-        /// 
         /// attr:&lt;attrName&gt;=&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this:
         /// PUT
@@ -1753,15 +1732,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// Update entity partially - Allow a subset of attributes to be updated on an
         /// entity which is identified by its type and unique attribute eg:
         /// Referenceable.qualifiedName. Null updates are not possible.
-        /// 
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format:
-        /// 
         /// attr:&lt;attrName&gt;=&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this:
         /// PUT
@@ -1794,7 +1770,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this:
         /// DELETE
@@ -1841,7 +1816,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this:
         /// DELETE
@@ -1888,7 +1862,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this:
         /// DELETE
@@ -1919,7 +1892,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this:
         /// DELETE
@@ -2414,17 +2386,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following
         /// format
-        /// 
         /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
-        /// 
         /// NOTE:
         /// The attrName should be an unique attribute for the given entity-type.
         /// The REST
         /// request would look something like this
-        /// 
         /// GET
         /// /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_1:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
-        /// 
         /// Note:
         /// at least one unique attribute must be provided.
         /// <list type="bullet">
@@ -2470,17 +2438,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following
         /// format
-        /// 
         /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
-        /// 
         /// NOTE:
         /// The attrName should be an unique attribute for the given entity-type.
         /// The REST
         /// request would look something like this
-        /// 
         /// GET
         /// /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_1:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
-        /// 
         /// Note:
         /// at least one unique attribute must be provided.
         /// <list type="bullet">
@@ -2526,17 +2490,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following
         /// format
-        /// 
         /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
-        /// 
         /// NOTE:
         /// The attrName should be an unique attribute for the given entity-type.
         /// The REST
         /// request would look something like this
-        /// 
         /// GET
         /// /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_1:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
-        /// 
         /// Note:
         /// at least one unique attribute must be provided.
         /// </summary>
@@ -2566,17 +2526,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following
         /// format
-        /// 
         /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
-        /// 
         /// NOTE:
         /// The attrName should be an unique attribute for the given entity-type.
         /// The REST
         /// request would look something like this
-        /// 
         /// GET
         /// /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_1:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
-        /// 
         /// Note:
         /// at least one unique attribute must be provided.
         /// </summary>
@@ -3551,9 +3507,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Delete given labels to a given entity identified by its type and unique
         /// attribute.
-        /// 
         /// If labels is null/empty, no labels will be removed.
-        /// 
         /// If any labels
         /// in labels set are non-existing labels, they will be ignored, only existing
         /// labels will be removed. In addition to the typeName path parameter, attribute
@@ -3600,9 +3554,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Delete given labels to a given entity identified by its type and unique
         /// attribute.
-        /// 
         /// If labels is null/empty, no labels will be removed.
-        /// 
         /// If any labels
         /// in labels set are non-existing labels, they will be ignored, only existing
         /// labels will be removed. In addition to the typeName path parameter, attribute
@@ -3649,9 +3601,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Delete given labels to a given entity identified by its type and unique
         /// attribute.
-        /// 
         /// If labels is null/empty, no labels will be removed.
-        /// 
         /// If any labels
         /// in labels set are non-existing labels, they will be ignored, only existing
         /// labels will be removed. In addition to the typeName path parameter, attribute
@@ -3682,9 +3632,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Delete given labels to a given entity identified by its type and unique
         /// attribute.
-        /// 
         /// If labels is null/empty, no labels will be removed.
-        /// 
         /// If any labels
         /// in labels set are non-existing labels, they will be ignored, only existing
         /// labels will be removed. In addition to the typeName path parameter, attribute
@@ -3714,17 +3662,13 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// [Protocol Method] Set labels to a given entity identified by its type and unique attributes.
-        /// 
         /// If
         /// labels is null/empty, existing labels will all be removed.
-        /// 
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this: POST
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3765,17 +3709,13 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// [Protocol Method] Set labels to a given entity identified by its type and unique attributes.
-        /// 
         /// If
         /// labels is null/empty, existing labels will all be removed.
-        /// 
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this: POST
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3816,17 +3756,13 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// Set labels to a given entity identified by its type and unique attributes.
-        /// 
         /// If
         /// labels is null/empty, existing labels will all be removed.
-        /// 
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this: POST
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3851,17 +3787,13 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// Set labels to a given entity identified by its type and unique attributes.
-        /// 
         /// If
         /// labels is null/empty, existing labels will all be removed.
-        /// 
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this: POST
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3887,16 +3819,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Add given labels to a given entity identified by its type and unique
         /// attributes.
-        /// 
         /// If labels is null/empty, no labels will be added.
-        /// 
         /// In addition to
         /// the typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this: PUT
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3938,16 +3866,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Add given labels to a given entity identified by its type and unique
         /// attributes.
-        /// 
         /// If labels is null/empty, no labels will be added.
-        /// 
         /// In addition to
         /// the typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this: PUT
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3989,16 +3913,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Add given labels to a given entity identified by its type and unique
         /// attributes.
-        /// 
         /// If labels is null/empty, no labels will be added.
-        /// 
         /// In addition to
         /// the typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this: PUT
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -4024,16 +3944,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Add given labels to a given entity identified by its type and unique
         /// attributes.
-        /// 
         /// If labels is null/empty, no labels will be added.
-        /// 
         /// In addition to
         /// the typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// 
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
-        /// 
         /// The REST
         /// request would look something like this: PUT
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
