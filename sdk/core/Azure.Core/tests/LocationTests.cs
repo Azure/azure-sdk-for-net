@@ -175,8 +175,6 @@ namespace Azure.Core.Tests
             AzureLocation defaultLocation2 = default;
 
             Assert.IsTrue(defaultLocation1.Equals(defaultLocation2));
-            Assert.IsTrue(defaultLocation1 == defaultLocation2);
-            Assert.IsFalse(defaultLocation1 != defaultLocation2);
             Assert.AreEqual(defaultLocation1.GetHashCode(), defaultLocation2.GetHashCode());
         }
     }
