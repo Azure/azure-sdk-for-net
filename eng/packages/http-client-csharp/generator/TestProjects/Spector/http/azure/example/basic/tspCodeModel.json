@@ -583,7 +583,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction",
-            "decorators": []
+            "decorators": [],
+            "namespace": "AzureExampleBasicClient"
           },
           "parameters": [
             {

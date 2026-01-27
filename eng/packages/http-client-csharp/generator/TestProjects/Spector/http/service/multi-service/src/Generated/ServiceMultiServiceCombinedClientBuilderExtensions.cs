@@ -8,17 +8,18 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
+using Service.MultiService.Combined;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class ServiceMultiServiceServiceAClientBuilderExtensions
+    public static partial class ServiceMultiServiceCombinedClientBuilderExtensions
     {
-        public static IAzureClientBuilder<Service.MultiService._Combined.Combined, Service.MultiService._Combined.CombinedOptions> AddCombined<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<CombinedClient, CombinedClientOptions> AddCombinedClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<Service.MultiService._Combined.Combined, Service.MultiService._Combined.CombinedOptions> AddCombined<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<CombinedClient, CombinedClientOptions> AddCombinedClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

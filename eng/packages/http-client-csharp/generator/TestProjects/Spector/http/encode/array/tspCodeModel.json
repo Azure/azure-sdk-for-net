@@ -414,7 +414,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Array.Property.commaDelimited",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
               },
               "parameters": [
                 {
@@ -570,7 +571,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Array.Property.spaceDelimited",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
               },
               "parameters": [
                 {
@@ -726,7 +728,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Array.Property.pipeDelimited",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
               },
               "parameters": [
                 {
@@ -882,7 +885,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Array.Property.newlineDelimited",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
               },
               "parameters": [
                 {
