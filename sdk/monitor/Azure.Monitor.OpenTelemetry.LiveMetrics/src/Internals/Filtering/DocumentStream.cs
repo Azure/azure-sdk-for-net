@@ -31,6 +31,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         private readonly List<FilterConjunctionGroup<Trace>> traceFilterGroups = new List<FilterConjunctionGroup<Trace>>();
 
+        private readonly List<FilterConjunctionGroup<Event>> eventFilterGroups = new List<FilterConjunctionGroup<Event>>();
+
         public DocumentStream(
             DocumentStreamInfo info,
             out CollectionConfigurationError[] errors,
@@ -87,6 +89,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         public bool CheckFilters(Trace document, out CollectionConfigurationError[] errors)
         {
             return CheckFilters(traceFilterGroups, document, out errors);
+        }
+
+        public bool CheckFilters(Event document, out CollectionConfigurationError[] errors)
+        {
+            return CheckFilters(eventFilterGroups, document, out errors);
         }
 
         private static bool CheckFilters<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TTelemetry>(
@@ -175,6 +182,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                                 break;
                             case TelemetryType.Trace:
                                 traceFilterGroups.Add(new FilterConjunctionGroup<Trace>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
+                                break;
+                            case TelemetryType.Event:
+                                eventFilterGroups.Add(new FilterConjunctionGroup<Event>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Unsupported TelemetryType: '{0}'", documentFilterConjunctionGroupInfo.TelemetryType));
