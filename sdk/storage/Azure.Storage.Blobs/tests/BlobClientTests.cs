@@ -396,6 +396,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual(AccessTier.Smart.ToString(), response.Value.AccessTier);
+            Assert.NotNull(response.Value.SmartAccessTier);
         }
 
         [RecordedTest]
