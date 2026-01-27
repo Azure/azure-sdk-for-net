@@ -28,10 +28,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 LoggerMessage.Define<string, string, string, string, string, BlobTriggerScanSource>(LogLevel.Debug, new EventId(103, nameof(BlobMessageEnqueued)),
                     "Blob '{blobName}' is ready for processing by function '{functionName}'. A message with id '{messageId}' has been added to queue '{queueName}'. This message will be dequeued and processed by the BlobTrigger. PollId: '{pollId}'. Source: '{triggerSource}'.");
 
-            private static readonly Action<ILogger<BlobListener>, string, string, string, string, string, BlobTriggerScanSource, Exception> _blobProcessingWithAuth =
-                LoggerMessage.Define<string, string, string, string, string, BlobTriggerScanSource>(LogLevel.Debug, new EventId(104, nameof(BlobProcessingWithAuth)),
-                    "Processing blob '{blobName}' (Uri: '{blobUri}') for function '{functionName}' using authentication type '{authenticationType}' on connection '{connectionName}'. Source: '{triggerSource}'.");
-
             public static void BlobDoesNotMatchPattern(ILogger<BlobListener> logger, string functionName, string blobName, string pattern, string pollId, BlobTriggerScanSource triggerSource) =>
                 _blobDoesNotMatchPattern(logger, blobName, functionName, pattern, pollId, triggerSource, null);
 
@@ -43,9 +39,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             public static void BlobMessageEnqueued(ILogger<BlobListener> logger, string functionName, string blobName, string queueMessageId, string queueName, string pollId, BlobTriggerScanSource triggerSource) =>
                 _blobMessageEnqueued(logger, blobName, functionName, queueMessageId, queueName, pollId, triggerSource, null);
-
-            public static void BlobProcessingWithAuth(ILogger<BlobListener> logger, string functionName, string blobName, string blobUri, string authenticationType, string connectionName, BlobTriggerScanSource triggerSource) =>
-                _blobProcessingWithAuth(logger, blobName, blobUri, functionName, authenticationType, connectionName, triggerSource, null);
         }
     }
 }
