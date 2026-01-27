@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsTestProject>true</IsTestProject>
+
+    <!-- We don't care about XML doc comments on test types and members -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- Reference the Client Library -->
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.AI.Speech.Transcription.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Test Framework - same as OpenAI.dotnet uses -->
+    <ProjectReference Include="..\..\..\core\Microsoft.ClientModel.TestFramework\src\Microsoft.ClientModel.TestFramework.csproj" />
+
+    <!-- NUnit packages - let TestFramework control NUnit version -->
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+  </ItemGroup>
+
+  <!-- Include .env file for local testing (not published) -->
+  <ItemGroup>
+    <None Include=".env" CopyToOutputDirectory="PreserveNewest" Condition="Exists('.env')" />
+    <None Include=".env.sample" CopyToOutputDirectory="Never" />
+  </ItemGroup>
+
+  <!-- Required for test recording - specifies source path for session files -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>SourcePath</_Parameter1>
+      <_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+</Project>
