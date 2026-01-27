@@ -90,6 +90,7 @@ namespace Azure.AI.ContentSafety.Tests
         }
 
         [RecordedTest]
+        [Ignore("Service bug: pagination may fail due to nextLink returning wrong API version.")]
         public async Task TestGetTextBlocklists()
         {
             var client = CreateBlocklistClient();
@@ -167,6 +168,7 @@ namespace Azure.AI.ContentSafety.Tests
         }
 
         [RecordedTest]
+        [Ignore("Service bug: nextLink returns wrong API version during pagination causing 404.")]
         public async Task TestGetTextBlocklistItems()
         {
             var client = CreateBlocklistClient();
