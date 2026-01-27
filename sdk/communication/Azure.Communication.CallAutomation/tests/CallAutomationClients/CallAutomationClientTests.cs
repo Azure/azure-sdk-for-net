@@ -335,6 +335,126 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.AreEqual(ex?.Status, 404);
         }
 
+        [TestCaseSource(nameof(TestData_CreateCall_MicrosoftTeamsApp))]
+        public async Task CreateCallAsync_MicrosoftTeamsAppIdentifier_201Created(CallInvite target, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
+
+            var options = new CreateCallOptions(target, callbackUri);
+            var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.Null(response.Value.CallConnectionProperties.MediaStreamingSubscription);
+            Assert.Null(response.Value.CallConnectionProperties.TranscriptionSubscription);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+
+            // Verify the target is correctly typed as MicrosoftTeamsAppIdentifier
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(target.Target);
+            var teamsApp = target.Target as MicrosoftTeamsAppIdentifier;
+            Assert.IsNotNull(teamsApp);
+            Assert.AreEqual("testAppId", teamsApp!.AppId);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall_MicrosoftTeamsApp))]
+        public void CreateCall_MicrosoftTeamsAppIdentifier_201Created(CallInvite target, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
+
+            var options = new CreateCallOptions(target, callbackUri);
+            var response = callAutomationClient.CreateCall(options);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.Null(response.Value.CallConnectionProperties.MediaStreamingSubscription);
+            Assert.Null(response.Value.CallConnectionProperties.TranscriptionSubscription);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+
+            // Verify the target is correctly typed as MicrosoftTeamsAppIdentifier
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(target.Target);
+            var teamsApp = target.Target as MicrosoftTeamsAppIdentifier;
+            Assert.IsNotNull(teamsApp);
+            Assert.AreEqual("testAppId", teamsApp!.AppId);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall_MicrosoftTeamsApp))]
+        public async Task CreateCallWithOptionsAsync_MicrosoftTeamsAppIdentifier_201Created(CallInvite target, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload);
+            CreateCallOptions options = new CreateCallOptions(
+                callInvite: target,
+                callbackUri: callbackUri)
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration,
+                TranscriptionOptions = _transcriptionConfiguration,
+                OperationContext = "teams-app-context"
+            };
+
+            var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+            Assert.NotNull(response.Value.CallConnectionProperties.MediaStreamingSubscription);
+            Assert.NotNull(response.Value.CallConnectionProperties.TranscriptionSubscription);
+
+            // Verify all optional properties can be set
+            Assert.AreEqual("teams-app-context", options.OperationContext);
+            Assert.IsNotNull(options.MediaStreamingOptions);
+            Assert.IsNotNull(options.TranscriptionOptions);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall_MicrosoftTeamsApp))]
+        public void CreateCallWithOptions_MicrosoftTeamsAppIdentifier_201Created(CallInvite target, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload);
+            CreateCallOptions options = new CreateCallOptions(
+                callInvite: target,
+                callbackUri: callbackUri)
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration,
+                TranscriptionOptions = _transcriptionConfiguration,
+                OperationContext = "teams-app-context"
+            };
+
+            var response = callAutomationClient.CreateCall(options);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+            Assert.NotNull(response.Value.CallConnectionProperties.MediaStreamingSubscription);
+            Assert.NotNull(response.Value.CallConnectionProperties.TranscriptionSubscription);
+
+            // Verify all optional properties can be set
+            Assert.AreEqual("teams-app-context", options.OperationContext);
+            Assert.IsNotNull(options.MediaStreamingOptions);
+            Assert.IsNotNull(options.TranscriptionOptions);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall_MicrosoftTeamsApp))]
+        public void CreateCallAsync_MicrosoftTeamsAppIdentifier_404NotFound(CallInvite target, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callAutomationClient.CreateCallAsync(new CreateCallOptions(target, callbackUri)).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall_MicrosoftTeamsApp))]
+        public void CreateCall_MicrosoftTeamsAppIdentifier_404NotFound(CallInvite target, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.CreateCall(new CreateCallOptions(target, callbackUri)));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
         [TestCaseSource(nameof(TestData_ConnectCall))]
         public async Task ConnectCallAsync_200OK(CallLocator callLocator, Uri callbackUri)
         {
@@ -476,6 +596,21 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 },
             };
         }
+
+        private static IEnumerable<object?[]> TestData_CreateCall_MicrosoftTeamsApp()
+        {
+            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId"));
+            callInvite.CustomCallingContext.AddVoip("key1", "value1");
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite,
+                    new Uri("https://bot.contoso.com/callback")
+                },
+            };
+        }
+
         private static IEnumerable<object?[]> TestData_RedirectCall()
         {
             return new[]
