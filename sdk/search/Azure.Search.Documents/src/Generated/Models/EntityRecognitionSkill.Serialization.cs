@@ -13,7 +13,7 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> This skill is deprecated. Use the V3.EntityRecognitionSkill instead. </summary>
+    /// <summary> Using the Text Analytics API, extracts entities of different types from text. </summary>
     public partial class EntityRecognitionSkill : SearchIndexerSkill, IJsonModel<EntityRecognitionSkill>
     {
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkill"/> for deserialization. </summary>
@@ -44,26 +44,31 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
-                foreach (EntityCategory item in Categories)
+                foreach (string item in Categories)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DefaultLanguageCode))
             {
                 writer.WritePropertyName("defaultLanguageCode"u8);
-                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
-            }
-            if (Optional.IsDefined(IncludeTypelessEntities))
-            {
-                writer.WritePropertyName("includeTypelessEntities"u8);
-                writer.WriteBooleanValue(IncludeTypelessEntities.Value);
+                writer.WriteStringValue(DefaultLanguageCode);
             }
             if (Optional.IsDefined(MinimumPrecision))
             {
                 writer.WritePropertyName("minimumPrecision"u8);
                 writer.WriteNumberValue(MinimumPrecision.Value);
+            }
+            if (Optional.IsDefined(ModelVersion))
+            {
+                writer.WritePropertyName("modelVersion"u8);
+                writer.WriteStringValue(ModelVersion);
             }
         }
 
@@ -92,17 +97,17 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            string odataType = "#Microsoft.Skills.Text.EntityRecognitionSkill";
+            string odataType = "#Microsoft.Skills.Text.V3.EntityRecognitionSkill";
             string name = default;
             string description = default;
             string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<EntityCategory> categories = default;
-            EntityRecognitionSkillLanguage? defaultLanguageCode = default;
-            bool? includeTypelessEntities = default;
+            IList<string> categories = default;
+            string defaultLanguageCode = default;
             double? minimumPrecision = default;
+            string modelVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -151,10 +156,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    List<EntityCategory> array = new List<EntityCategory>();
+                    List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new EntityCategory(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     categories = array;
                     continue;
@@ -163,29 +175,29 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        defaultLanguageCode = null;
                         continue;
                     }
-                    defaultLanguageCode = new EntityRecognitionSkillLanguage(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("includeTypelessEntities"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        includeTypelessEntities = null;
-                        continue;
-                    }
-                    includeTypelessEntities = prop.Value.GetBoolean();
+                    defaultLanguageCode = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("minimumPrecision"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        minimumPrecision = null;
                         continue;
                     }
                     minimumPrecision = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("modelVersion"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        modelVersion = null;
+                        continue;
+                    }
+                    modelVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -201,10 +213,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 inputs,
                 outputs,
                 additionalBinaryDataProperties,
-                categories ?? new ChangeTrackingList<EntityCategory>(),
+                categories ?? new ChangeTrackingList<string>(),
                 defaultLanguageCode,
-                includeTypelessEntities,
-                minimumPrecision);
+                minimumPrecision,
+                modelVersion);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

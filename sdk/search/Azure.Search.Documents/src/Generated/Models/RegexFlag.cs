@@ -11,7 +11,7 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Defines flags that can be combined to control how regular expressions are used in the pattern analyzer and pattern tokenizer. </summary>
+    /// <summary> Defines a regular expression flag that can be used in the pattern analyzer and pattern tokenizer. </summary>
     public readonly partial struct RegexFlag : IEquatable<RegexFlag>
     {
         private readonly string _value;

@@ -12,7 +12,5 @@ namespace Azure.Search.Documents
     /// <summary> Client options for clients in this library. </summary>
     public partial class SearchClientOptions : ClientOptions
     {
-        /// <summary> Gets the Version. </summary>
-        internal string Version { get; }
     }
 }

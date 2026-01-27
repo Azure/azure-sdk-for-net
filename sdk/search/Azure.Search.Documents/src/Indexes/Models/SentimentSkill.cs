@@ -10,12 +10,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    // Hide the versioned SentimentSkill. We unify all within a single type.
-    [CodeGenType("SentimentSkillV3")]
-    internal partial class SentimentSkillV3 { }
-
     /// <summary> Evaluates unstructured text and for each record, provides sentiment labels (such as "negative", "neutral" and "positive")
     /// based on the highest confidence score found by the service at a sentence and document-level using the Text Analytics API. </summary>
+    [CodeGenType("SentimentSkillV3")]
+
     public partial class SentimentSkill
     {
         private readonly SkillVersion _skillVersion = SkillVersion.V1;
@@ -45,9 +43,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
             OdataType = "#Microsoft.Skills.Text.SentimentSkill";
         }
-
-        /// <summary> A value indicating which language code to use. Default is <see cref="SentimentSkillLanguage.En"/>. </summary>
-        public SentimentSkillLanguage? DefaultLanguageCode { get; set; } = SentimentSkillLanguage.En;
 
         /// <summary> If set to true, the skill output will include information from Text Analytics for opinion mining,
         /// namely targets (nouns or verbs) and their associated assessment (adjective) in the text. Default is <c>false</c>. </summary>

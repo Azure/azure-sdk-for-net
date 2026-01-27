@@ -34,10 +34,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(WebApiVectorizerParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Url.AbsoluteUri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(HttpHeaders))
             {
@@ -117,7 +117,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Uri url = default;
+            Uri uri = default;
             IDictionary<string, string> httpHeaders = default;
             string httpMethod = default;
             TimeSpan? timeout = default;
@@ -132,7 +132,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("httpHeaders"u8))
@@ -196,7 +196,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new WebApiVectorizerParameters(
-                url,
+                uri,
                 httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 httpMethod,
                 timeout,

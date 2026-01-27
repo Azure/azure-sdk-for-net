@@ -20,11 +20,6 @@ namespace Azure.Search.Documents.Indexes.Models
     [PersistableModelProxy(typeof(UnknownSearchIndexerDataIdentity))]
     public abstract partial class SearchIndexerDataIdentity : IJsonModel<SearchIndexerDataIdentity>
     {
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/> for deserialization. </summary>
-        internal SearchIndexerDataIdentity()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchIndexerDataIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

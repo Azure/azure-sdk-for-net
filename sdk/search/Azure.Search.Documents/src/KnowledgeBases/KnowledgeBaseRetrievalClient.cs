@@ -4,9 +4,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.KnowledgeBases
 {
@@ -16,7 +17,6 @@ namespace Azure.Search.Documents.KnowledgeBases
     public partial class KnowledgeBaseRetrievalClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly SearchClientOptions.ServiceVersion _version;
 
         /// <summary>
         /// Gets the URI endpoint of the Search service.  This is likely
@@ -97,7 +97,7 @@ namespace Azure.Search.Documents.KnowledgeBases
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
             KnowledgeBaseName = knowledgeBaseName;
-            _version = options.Version.ToServiceVersion();
+            _apiVersion = options.Version.ToVersionString();
 
             RestClient = new KnowledgeBaseRetrievalClient(
                 endpoint,
@@ -129,13 +129,51 @@ namespace Azure.Search.Documents.KnowledgeBases
             Endpoint = endpoint;
             KnowledgeBaseName = knowledgeBaseName;
             _pipeline = options.Build(tokenCredential);
-            _version = options.Version.ToServiceVersion();
+            _apiVersion = options.Version.ToVersionString();
 
             RestClient = new KnowledgeBaseRetrievalClient(
                 endpoint,
                 knowledgeBaseName,
                 tokenCredential,
                 options);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public KnowledgeBaseRetrievalClient(Uri endpoint, AzureKeyCredential credential, SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options ??= new SearchClientOptions();
+
+            _endpoint = endpoint;
+            _keyCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+            _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public KnowledgeBaseRetrievalClient(Uri endpoint, TokenCredential credential, SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options ??= new SearchClientOptions();
+
+            _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
         #endregion ctors
 

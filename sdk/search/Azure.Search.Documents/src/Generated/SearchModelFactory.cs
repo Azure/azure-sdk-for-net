@@ -209,7 +209,7 @@ namespace Azure.Search.Documents.Models
         /// The query parameters for vector and hybrid search queries.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VectorizedQuery"/>, <see cref="Models.VectorizableTextQuery"/>, <see cref="Models.VectorizableImageUrlQuery"/>, and <see cref="Models.VectorizableImageBinaryQuery"/>.
         /// </summary>
-        /// <param name="kNearestNeighbors"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
         /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
@@ -219,10 +219,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
         /// <param name="kind"> Type of query. </param>
         /// <returns> A new <see cref="Models.VectorQuery"/> instance for mocking. </returns>
-        public static VectorQuery VectorQuery(int? kNearestNeighbors = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, string kind = default)
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, string kind = default)
         {
             return new UnknownVectorQuery(
-                kNearestNeighbors,
+                kNearestNeighborsCount,
                 fieldsRaw,
                 exhaustive,
                 oversampling,
@@ -262,7 +262,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>
-        /// <param name="kNearestNeighbors"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
         /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
@@ -272,10 +272,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
         /// <param name="vector"> The vector representation of a search query. </param>
         /// <returns> A new <see cref="Models.VectorizedQuery"/> instance for mocking. </returns>
-        public static VectorizedQuery VectorizedQuery(int? kNearestNeighbors = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, ReadOnlyMemory<float> vector = default)
+        public static VectorizedQuery VectorizedQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, ReadOnlyMemory<float> vector = default)
         {
             return new VectorizedQuery(
-                kNearestNeighbors,
+                kNearestNeighborsCount,
                 fieldsRaw,
                 exhaustive,
                 oversampling,
@@ -289,7 +289,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The query parameters to use for vector search when a text value that needs to be vectorized is provided. </summary>
-        /// <param name="kNearestNeighbors"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
         /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
@@ -300,10 +300,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="text"> The text to be vectorized to perform a vector search query. </param>
         /// <param name="queryRewrites"> Can be configured to let a generative model rewrite the query before sending it to be vectorized. </param>
         /// <returns> A new <see cref="Models.VectorizableTextQuery"/> instance for mocking. </returns>
-        public static VectorizableTextQuery VectorizableTextQuery(int? kNearestNeighbors = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, string text = default, QueryRewritesType? queryRewrites = default)
+        public static VectorizableTextQuery VectorizableTextQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, string text = default, QueryRewritesType? queryRewrites = default)
         {
             return new VectorizableTextQuery(
-                kNearestNeighbors,
+                kNearestNeighborsCount,
                 fieldsRaw,
                 exhaustive,
                 oversampling,
@@ -318,7 +318,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The query parameters to use for vector search when an url that represents an image value that needs to be vectorized is provided. </summary>
-        /// <param name="kNearestNeighbors"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
         /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
@@ -328,10 +328,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
         /// <param name="url"> The URL of an image to be vectorized to perform a vector search query. </param>
         /// <returns> A new <see cref="Models.VectorizableImageUrlQuery"/> instance for mocking. </returns>
-        public static VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighbors = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, string url = default)
+        public static VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, string url = default)
         {
             return new VectorizableImageUrlQuery(
-                kNearestNeighbors,
+                kNearestNeighborsCount,
                 fieldsRaw,
                 exhaustive,
                 oversampling,
@@ -345,7 +345,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The query parameters to use for vector search when a base 64 encoded binary of an image that needs to be vectorized is provided. </summary>
-        /// <param name="kNearestNeighbors"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
         /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
@@ -355,10 +355,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
         /// <param name="base64Image"> The base 64 encoded binary of an image to be vectorized to perform a vector search query. </param>
         /// <returns> A new <see cref="Models.VectorizableImageBinaryQuery"/> instance for mocking. </returns>
-        public static VectorizableImageBinaryQuery VectorizableImageBinaryQuery(int? kNearestNeighbors = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, string base64Image = default)
+        public static VectorizableImageBinaryQuery VectorizableImageBinaryQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, string base64Image = default)
         {
             return new VectorizableImageBinaryQuery(
-                kNearestNeighbors,
+                kNearestNeighborsCount,
                 fieldsRaw,
                 exhaustive,
                 oversampling,
@@ -906,7 +906,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="lowerCaseTerms"> A value indicating whether terms should be lower-cased. Default is true. </param>
         /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </param>
-        /// <param name="flagsInternal"> Regular expression flags. </param>
+        /// <param name="flagsInternal"> Regular expression flags, specified as a '|' separated string of RegexFlags values. </param>
         /// <param name="stopwords"> A list of stopwords. </param>
         /// <returns> A new <see cref="Indexes.Models.PatternAnalyzer"/> instance for mocking. </returns>
         public static PatternAnalyzer PatternAnalyzer(string name = default, bool? lowerCaseTerms = default, string pattern = default, string flagsInternal = default, IEnumerable<string> stopwords = default)
@@ -1060,7 +1060,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Tokenizer that uses regex pattern matching to construct distinct tokens. This tokenizer is implemented using Apache Lucene. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </param>
-        /// <param name="flagsInternal"> Regular expression flags. </param>
+        /// <param name="flagsInternal"> Regular expression flags, specified as a '|' separated string of RegexFlags values. </param>
         /// <param name="group"> The zero-based ordinal of the matching group in the regular expression pattern to extract into tokens. Use -1 if you want to use the entire pattern to split the input into tokens, irrespective of matching groups. Default is -1. </param>
         /// <returns> A new <see cref="Indexes.Models.PatternTokenizer"/> instance for mocking. </returns>
         public static PatternTokenizer PatternTokenizer(string name = default, string pattern = default, string flagsInternal = default, int? @group = default)
@@ -1482,7 +1482,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Legacy similarity algorithm which uses the Lucene TFIDFSimilarity implementation of TF-IDF. This variation of TF-IDF introduces static document length normalization as well as coordinating factors that penalize documents that only partially match the searched queries. </summary>
-        /// <returns> A new <see cref="Indexes.Models.ClassicSimilarity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ClassicSimilarity"/> instance for mocking. </returns>
         public static ClassicSimilarity ClassicSimilarity()
         {
             return new ClassicSimilarity("#Microsoft.Azure.Search.ClassicSimilarity", additionalBinaryDataProperties: null);
@@ -1491,7 +1491,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Ranking function based on the Okapi BM25 similarity algorithm. BM25 is a TF-IDF-like algorithm that includes length normalization (controlled by the 'b' parameter) as well as term frequency saturation (controlled by the 'k1' parameter). </summary>
         /// <param name="k1"> This property controls the scaling function between the term frequency of each matching terms and the final relevance score of a document-query pair. By default, a value of 1.2 is used. A value of 0.0 means the score does not scale with an increase in term frequency. </param>
         /// <param name="b"> This property controls how the length of a document affects the relevance score. By default, a value of 0.75 is used. A value of 0.0 means no length normalization is applied, while a value of 1.0 means the score is fully normalized by the length of the document. </param>
-        /// <returns> A new <see cref="Indexes.Models.BM25Similarity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.BM25Similarity"/> instance for mocking. </returns>
         public static BM25Similarity BM25Similarity(double? k1 = default, double? b = default)
         {
             return new BM25Similarity("#Microsoft.Azure.Search.BM25Similarity", additionalBinaryDataProperties: null, k1, b);
@@ -1665,19 +1665,19 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Specifies the properties for connecting to a user-defined vectorizer. </summary>
-        /// <param name="url"> The URI of the Web API providing the vectorizer. </param>
+        /// <param name="uri"> The URI of the Web API providing the vectorizer. </param>
         /// <param name="httpHeaders"> The headers required to make the HTTP request. </param>
         /// <param name="httpMethod"> The method for the HTTP request. </param>
         /// <param name="timeout"> The desired timeout for the request. Default is 30 seconds. </param>
         /// <param name="authResourceId"> Applies to custom endpoints that connect to external code in an Azure function or some other application that provides the transformations. This value should be the application ID created for the function or app when it was registered with Azure Active Directory. When specified, the vectorization connects to the function or app using a managed ID (either system or user-assigned) of the search service and the access token of the function or app, using this value as the resource id for creating the scope of the access token. </param>
         /// <param name="authIdentity"> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
         /// <returns> A new <see cref="Indexes.Models.WebApiVectorizerParameters"/> instance for mocking. </returns>
-        public static WebApiVectorizerParameters WebApiVectorizerParameters(Uri url = default, IDictionary<string, string> httpHeaders = default, string httpMethod = default, TimeSpan? timeout = default, string authResourceId = default, SearchIndexerDataIdentity authIdentity = default)
+        public static WebApiVectorizerParameters WebApiVectorizerParameters(Uri uri = default, IDictionary<string, string> httpHeaders = default, string httpMethod = default, TimeSpan? timeout = default, string authResourceId = default, SearchIndexerDataIdentity authIdentity = default)
         {
             httpHeaders ??= new ChangeTrackingDictionary<string, string>();
 
             return new WebApiVectorizerParameters(
-                url,
+                uri,
                 httpHeaders,
                 httpMethod,
                 timeout,
@@ -2982,59 +2982,32 @@ namespace Azure.Search.Documents.Models
                 insertPostTag);
         }
 
-        /// <summary> This skill is deprecated. Use the V3.EntityRecognitionSkill instead. </summary>
-        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
-        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
-        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
-        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
-        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="categories"> A list of entity categories that should be extracted. </param>
-        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
-        /// <param name="includeTypelessEntities"> Determines whether or not to include entities which are well known but don't conform to a pre-defined type. If this configuration is not set (default), set to null or set to false, entities which don't conform to one of the pre-defined types will not be surfaced. </param>
-        /// <param name="minimumPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
-        /// <returns> A new <see cref="Indexes.Models.EntityRecognitionSkill"/> instance for mocking. </returns>
-        public static EntityRecognitionSkill EntityRecognitionSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, IEnumerable<EntityCategory> categories = default, EntityRecognitionSkillLanguage? defaultLanguageCode = default, bool? includeTypelessEntities = default, double? minimumPrecision = default)
-        {
-            inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
-            outputs ??= new ChangeTrackingList<OutputFieldMappingEntry>();
-            categories ??= new ChangeTrackingList<EntityCategory>();
-
-            return new EntityRecognitionSkill(
-                "#Microsoft.Skills.Text.EntityRecognitionSkill",
-                name,
-                description,
-                context,
-                inputs.ToList(),
-                outputs.ToList(),
-                additionalBinaryDataProperties: null,
-                categories.ToList(),
-                defaultLanguageCode,
-                includeTypelessEntities,
-                minimumPrecision);
-        }
-
-        /// <summary> This skill is deprecated. Use the V3.SentimentSkill instead. </summary>
+        /// <summary> Using the Text Analytics API, evaluates unstructured text and for each record, provides sentiment labels (such as "negative", "neutral" and "positive") based on the highest confidence score found by the service at a sentence and document-level. </summary>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
+        /// <param name="includeOpinionMining"> If set to true, the skill output will include information from Text Analytics for opinion mining, namely targets (nouns or verbs) and their associated assessment (adjective) in the text. Default is false. </param>
+        /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
         /// <returns> A new <see cref="Indexes.Models.SentimentSkill"/> instance for mocking. </returns>
-        public static SentimentSkill SentimentSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, SentimentSkillLanguage? defaultLanguageCode = default)
+        public static SentimentSkill SentimentSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, string defaultLanguageCode = default, bool? includeOpinionMining = default, string modelVersion = default)
         {
             inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
             outputs ??= new ChangeTrackingList<OutputFieldMappingEntry>();
 
             return new SentimentSkill(
-                "#Microsoft.Skills.Text.SentimentSkill",
+                "#Microsoft.Skills.Text.V3.SentimentSkill",
                 name,
                 description,
                 context,
                 inputs.ToList(),
                 outputs.ToList(),
                 additionalBinaryDataProperties: null,
-                defaultLanguageCode);
+                defaultLanguageCode,
+                includeOpinionMining,
+                modelVersion);
         }
 
         /// <summary> Using the Text Analytics API, extracts linked entities from text. </summary>
@@ -3065,6 +3038,37 @@ namespace Azure.Search.Documents.Models
                 modelVersion);
         }
 
+        /// <summary> Using the Text Analytics API, extracts entities of different types from text. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="categories"> A list of entity categories that should be extracted. </param>
+        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
+        /// <param name="minimumPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
+        /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics API. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
+        /// <returns> A new <see cref="Indexes.Models.EntityRecognitionSkill"/> instance for mocking. </returns>
+        public static EntityRecognitionSkill EntityRecognitionSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, IEnumerable<string> categories = default, string defaultLanguageCode = default, double? minimumPrecision = default, string modelVersion = default)
+        {
+            inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
+            outputs ??= new ChangeTrackingList<OutputFieldMappingEntry>();
+            categories ??= new ChangeTrackingList<string>();
+
+            return new EntityRecognitionSkill(
+                "#Microsoft.Skills.Text.V3.EntityRecognitionSkill",
+                name,
+                description,
+                context,
+                inputs.ToList(),
+                outputs.ToList(),
+                additionalBinaryDataProperties: null,
+                categories.ToList(),
+                defaultLanguageCode,
+                minimumPrecision,
+                modelVersion);
+        }
+
         /// <summary> Using the Text Analytics API, extracts personal information from an input text and gives you the option of masking it. </summary>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -3072,14 +3076,14 @@ namespace Azure.Search.Documents.Models
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
-        /// <param name="minimumPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
+        /// <param name="minPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
         /// <param name="maskingMode"> A parameter that provides various ways to mask the personal information detected in the input text. Default is 'none'. </param>
         /// <param name="mask"> The character used to mask the text if the maskingMode parameter is set to replace. Default is '*'. </param>
         /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
         /// <param name="piiCategories"> A list of PII entity categories that should be extracted and masked. </param>
         /// <param name="domain"> If specified, will set the PII domain to include only a subset of the entity categories. Possible values include: 'phi', 'none'. Default is 'none'. </param>
         /// <returns> A new <see cref="Indexes.Models.PiiDetectionSkill"/> instance for mocking. </returns>
-        public static PiiDetectionSkill PiiDetectionSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, string defaultLanguageCode = default, double? minimumPrecision = default, PiiDetectionSkillMaskingMode? maskingMode = default, string mask = default, string modelVersion = default, IEnumerable<string> piiCategories = default, string domain = default)
+        public static PiiDetectionSkill PiiDetectionSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, string defaultLanguageCode = default, double? minPrecision = default, PiiDetectionSkillMaskingMode? maskingMode = default, string mask = default, string modelVersion = default, IEnumerable<string> piiCategories = default, string domain = default)
         {
             inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
             outputs ??= new ChangeTrackingList<OutputFieldMappingEntry>();
@@ -3094,7 +3098,7 @@ namespace Azure.Search.Documents.Models
                 outputs.ToList(),
                 additionalBinaryDataProperties: null,
                 defaultLanguageCode,
-                minimumPrecision,
+                minPrecision,
                 maskingMode,
                 mask,
                 modelVersion,

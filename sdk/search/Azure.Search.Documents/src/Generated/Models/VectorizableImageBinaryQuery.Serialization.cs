@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            int? kNearestNeighbors = default;
+            int? kNearestNeighborsCount = default;
             string fieldsRaw = default;
             bool? exhaustive = default;
             double? oversampling = default;
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    kNearestNeighbors = prop.Value.GetInt32();
+                    kNearestNeighborsCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("fields"u8))
@@ -160,7 +160,7 @@ namespace Azure.Search.Documents.Models
                 }
             }
             return new VectorizableImageBinaryQuery(
-                kNearestNeighbors,
+                kNearestNeighborsCount,
                 fieldsRaw,
                 exhaustive,
                 oversampling,

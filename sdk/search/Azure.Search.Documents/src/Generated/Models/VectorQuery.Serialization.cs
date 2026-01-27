@@ -42,10 +42,10 @@ namespace Azure.Search.Documents.Models
             {
                 throw new FormatException($"The model {nameof(VectorQuery)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(KNearestNeighbors))
+            if (Optional.IsDefined(KNearestNeighborsCount))
             {
                 writer.WritePropertyName("k"u8);
-                writer.WriteNumberValue(KNearestNeighbors.Value);
+                writer.WriteNumberValue(KNearestNeighborsCount.Value);
             }
             if (Optional.IsDefined(FieldsRaw))
             {

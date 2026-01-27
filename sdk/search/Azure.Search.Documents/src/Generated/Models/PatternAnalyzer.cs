@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lowerCaseTerms"> A value indicating whether terms should be lower-cased. Default is true. </param>
         /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </param>
-        /// <param name="flagsInternal"> Regular expression flags. </param>
+        /// <param name="flagsInternal"> Regular expression flags, specified as a '|' separated string of RegexFlags values. </param>
         /// <param name="stopwords"> A list of stopwords. </param>
         internal PatternAnalyzer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? lowerCaseTerms, string pattern, string flagsInternal, IList<string> stopwords) : base(odataType, name, additionalBinaryDataProperties)
         {

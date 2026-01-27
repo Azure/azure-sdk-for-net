@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> This skill is deprecated. Use the V3.EntityRecognitionSkill instead. </summary>
+    /// <summary> Using the Text Analytics API, extracts entities of different types from text. </summary>
     public partial class EntityRecognitionSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkill"/>. </summary>
@@ -23,21 +23,18 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="categories"> A list of entity categories that should be extracted. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
-        /// <param name="includeTypelessEntities"> Determines whether or not to include entities which are well known but don't conform to a pre-defined type. If this configuration is not set (default), set to null or set to false, entities which don't conform to one of the pre-defined types will not be surfaced. </param>
         /// <param name="minimumPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
-        internal EntityRecognitionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<EntityCategory> categories, EntityRecognitionSkillLanguage? defaultLanguageCode, bool? includeTypelessEntities, double? minimumPrecision) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics API. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
+        internal EntityRecognitionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> categories, string defaultLanguageCode, double? minimumPrecision, string modelVersion) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             Categories = categories;
             DefaultLanguageCode = defaultLanguageCode;
-            IncludeTypelessEntities = includeTypelessEntities;
             MinimumPrecision = minimumPrecision;
+            ModelVersion = modelVersion;
         }
 
-        /// <summary> A list of entity categories that should be extracted. </summary>
-        public IList<EntityCategory> Categories { get; }
-
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
-        public EntityRecognitionSkillLanguage? DefaultLanguageCode { get; set; }
+        public string DefaultLanguageCode { get; set; }
 
         /// <summary> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </summary>
         public double? MinimumPrecision { get; set; }

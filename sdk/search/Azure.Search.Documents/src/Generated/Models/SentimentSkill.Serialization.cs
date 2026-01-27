@@ -13,7 +13,7 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> This skill is deprecated. Use the V3.SentimentSkill instead. </summary>
+    /// <summary> Using the Text Analytics API, evaluates unstructured text and for each record, provides sentiment labels (such as "negative", "neutral" and "positive") based on the highest confidence score found by the service at a sentence and document-level. </summary>
     public partial class SentimentSkill : SearchIndexerSkill, IJsonModel<SentimentSkill>
     {
         /// <summary> Initializes a new instance of <see cref="SentimentSkill"/> for deserialization. </summary>
@@ -43,7 +43,17 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(DefaultLanguageCode))
             {
                 writer.WritePropertyName("defaultLanguageCode"u8);
-                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                writer.WriteStringValue(DefaultLanguageCode);
+            }
+            if (Optional.IsDefined(IncludeOpinionMining))
+            {
+                writer.WritePropertyName("includeOpinionMining"u8);
+                writer.WriteBooleanValue(IncludeOpinionMining.Value);
+            }
+            if (Optional.IsDefined(ModelVersion))
+            {
+                writer.WritePropertyName("modelVersion"u8);
+                writer.WriteStringValue(ModelVersion);
             }
         }
 
@@ -72,14 +82,16 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            string odataType = "#Microsoft.Skills.Text.SentimentSkill";
+            string odataType = "#Microsoft.Skills.Text.V3.SentimentSkill";
             string name = default;
             string description = default;
             string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SentimentSkillLanguage? defaultLanguageCode = default;
+            string defaultLanguageCode = default;
+            bool? includeOpinionMining = default;
+            string modelVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -126,9 +138,29 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        defaultLanguageCode = null;
                         continue;
                     }
-                    defaultLanguageCode = new SentimentSkillLanguage(prop.Value.GetString());
+                    defaultLanguageCode = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("includeOpinionMining"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeOpinionMining = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("modelVersion"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        modelVersion = null;
+                        continue;
+                    }
+                    modelVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +176,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 inputs,
                 outputs,
                 additionalBinaryDataProperties,
-                defaultLanguageCode);
+                defaultLanguageCode,
+                includeOpinionMining,
+                modelVersion);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -101,8 +101,8 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
             ClientDiagnostics = new ClientDiagnostics(options);
             _keyCredential = credential;
             Pipeline = options.Build(credential);
-            _apiVersion = options.Version;
-            _version = options.Version.ToServiceVersion();
+            _apiVersion = options.Version.ToVersionString();
+            _version = options.Version;
         }
 
         /// <summary>
@@ -131,8 +131,8 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
             _tokenCredential = tokenCredential;
             _endpoint = Endpoint; // TODO: See if we can just change endpoint to be public
             Pipeline = options.Build(tokenCredential);
-            _apiVersion = options.Version;
-            _version = options.Version.ToServiceVersion();
+            _apiVersion = options.Version.ToVersionString();
+            _version = options.Version;
         }
     }
 }

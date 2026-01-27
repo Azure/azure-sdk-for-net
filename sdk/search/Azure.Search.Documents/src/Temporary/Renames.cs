@@ -904,18 +904,6 @@ namespace Azure.Search.Documents.Indexes.Models
     {
     }
 
-    /// <summary> EntityCategory namespace customization. </summary>
-    [CodeGenType("EntityCategory")]
-    public readonly partial struct EntityCategory
-    {
-    }
-
-    /// <summary> EntityRecognitionSkill namespace customization. </summary>
-    [CodeGenType("EntityRecognitionSkill")]
-    public partial class EntityRecognitionSkill
-    {
-    }
-
     /// <summary> EntityRecognitionSkillLanguage namespace customization. </summary>
     [CodeGenType("EntityRecognitionSkillLanguage")]
     public readonly partial struct EntityRecognitionSkillLanguage
@@ -1503,13 +1491,6 @@ namespace Azure.Search.Documents.Indexes.Models
     {
     }
 
-    // Identity types
-    /// <summary> SearchIndexerDataIdentity namespace customization. </summary>
-    [CodeGenType("SearchIndexerDataIdentity")]
-    public partial class SearchIndexerDataIdentity
-    {
-    }
-
     /// <summary> SearchIndexerDataNoneIdentity namespace customization. </summary>
     [CodeGenType("SearchIndexerDataNoneIdentity")]
     public partial class SearchIndexerDataNoneIdentity
@@ -1581,12 +1562,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> MergeSkill namespace customization. </summary>
     [CodeGenType("MergeSkill")]
     public partial class MergeSkill
-    {
-    }
-
-    /// <summary> SentimentSkill namespace customization. </summary>
-    [CodeGenType("SentimentSkill")]
-    public partial class SentimentSkill
     {
     }
 
@@ -2107,12 +2082,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> RankingOrder namespace customization. </summary>
     [CodeGenType("RankingOrder")]
     public readonly partial struct RankingOrder
-    {
-    }
-
-    /// <summary> SearchOptions namespace customization. </summary>
-    [CodeGenType("SearchOptions")]
-    public partial class SearchOptions
     {
     }
 

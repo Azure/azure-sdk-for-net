@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
+using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents
 {
@@ -53,12 +54,6 @@ namespace Azure.Search.Documents
         /// customize the serialization of strongly typed models.
         /// </summary>
         internal ObjectSerializer Serializer { get; private set; }
-
-        /// <summary>
-        /// Gets the REST API version of the Search Service to use when making
-        /// requests.
-        /// </summary>
-        private SearchClientOptions.ServiceVersion Version { get; set; }
 
         #region ctors
         /// <summary>
@@ -184,7 +179,7 @@ namespace Azure.Search.Documents
             _endpoint = endpoint;
             _indexName = indexName;
             Serializer = options.Serializer;
-            Version = options.Version.ToServiceVersion();
+            _apiVersion = options.Version.ToVersionString();
         }
 
         /// <summary>
@@ -232,7 +227,59 @@ namespace Azure.Search.Documents
             _endpoint = endpoint;
             _indexName = indexName;
             Serializer = options.Serializer;
-            Version = options.Version.ToServiceVersion();
+            _apiVersion = options.Version.ToVersionString();
+        }
+
+        /// <summary> Initializes a new instance of SearchClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="indexName"> The name of the index. </param>
+        /// <param name="name"> The name of the index. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/>, <paramref name="name"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="indexName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public SearchClient(Uri endpoint, string indexName, string name, AzureKeyCredential credential, SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options ??= new SearchClientOptions();
+
+            _endpoint = endpoint;
+            _indexName = indexName;
+            _name = name;
+            _keyCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+            _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of SearchClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="indexName"> The name of the index. </param>
+        /// <param name="name"> The name of the index. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/>, <paramref name="name"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="indexName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public SearchClient(Uri endpoint, string indexName, string name, TokenCredential credential, SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options ??= new SearchClientOptions();
+
+            _endpoint = endpoint;
+            _indexName = indexName;
+            _name = name;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary>
@@ -284,7 +331,7 @@ namespace Azure.Search.Documents
             Serializer = serializer;
             ClientDiagnostics = diagnostics;
             Pipeline = pipeline;
-            Version = version;
+            _apiVersion = version.ToVersionString();
         }
 
         /// <summary>
@@ -297,7 +344,7 @@ namespace Azure.Search.Documents
                 Serializer,
                 Pipeline,
                 ClientDiagnostics,
-                Version);
+                _apiVersion.ToServiceVersion());
         #endregion ctors
 
         #region GetDocument
@@ -1994,7 +2041,7 @@ namespace Azure.Search.Documents
                     uri.AppendRaw(IndexName, true);
                     uri.AppendRaw("')", false);
                     uri.AppendPath("/docs/search.index", false);
-                    uri.AppendQuery("api-version", Version.ToVersionString(), true);
+                    uri.AppendQuery("api-version", _apiVersion, true);
                     request.Uri = uri;
                     request.Headers.Add("Accept", "application/json; odata.metadata=none");
                     request.Headers.Add("Content-Type", "application/json");

@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenType("ClassicSimilarityAlgorithm")]
-    public partial class ClassicSimilarity
+    public partial class ContentUnderstandingSkill
     {
+        internal new string OdataType { get; set; } = "#Microsoft.Skills.Util.ContentUnderstandingSkill";
     }
 }

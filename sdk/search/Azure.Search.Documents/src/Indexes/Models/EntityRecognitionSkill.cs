@@ -10,13 +10,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    // Hide the versioned EntityRecognitionSkill. We unify all within a single type.
-    [CodeGenType("EntityRecognitionSkillV3")]
-    internal partial class EntityRecognitionSkillV3 { }
-
     /// <summary>
     /// Extracts entities of different types from text using the Text Analytics API.
     /// </summary>
+    [CodeGenType("EntityRecognitionSkillV3")]
     public partial class EntityRecognitionSkill
     {
         private readonly SkillVersion _skillVersion = SkillVersion.V1;
@@ -43,9 +40,13 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            Categories = new ChangeTrackingList<EntityCategory>();
             OdataType = "#Microsoft.Skills.Text.EntityRecognitionSkill";
         }
+
+        // Work around for generator still generating deprecated type
+        /// <summary> A list of entity categories that should be extracted. </summary>
+        [CodeGenMember("Categories")]
+        public IList<string> Categories { get; }
 
         /// <summary> Determines whether or not to include entities which are well known but don't conform to a predefined type.
         /// If this configuration is not set (default), set to null or set to false,

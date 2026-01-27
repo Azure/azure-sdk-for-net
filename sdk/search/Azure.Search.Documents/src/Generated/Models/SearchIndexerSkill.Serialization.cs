@@ -130,16 +130,12 @@ namespace Azure.Search.Documents.Indexes.Models
                         return ShaperSkill.DeserializeShaperSkill(element, options);
                     case "#Microsoft.Skills.Text.MergeSkill":
                         return MergeSkill.DeserializeMergeSkill(element, options);
-                    case "#Microsoft.Skills.Text.EntityRecognitionSkill":
-                        return EntityRecognitionSkill.DeserializeEntityRecognitionSkill(element, options);
-                    case "#Microsoft.Skills.Text.SentimentSkill":
-                        return SentimentSkill.DeserializeSentimentSkill(element, options);
                     case "#Microsoft.Skills.Text.V3.SentimentSkill":
-                        return SentimentSkillV3.DeserializeSentimentSkillV3(element, options);
+                        return SentimentSkill.DeserializeSentimentSkill(element, options);
                     case "#Microsoft.Skills.Text.V3.EntityLinkingSkill":
                         return EntityLinkingSkill.DeserializeEntityLinkingSkill(element, options);
                     case "#Microsoft.Skills.Text.V3.EntityRecognitionSkill":
-                        return EntityRecognitionSkillV3.DeserializeEntityRecognitionSkillV3(element, options);
+                        return EntityRecognitionSkill.DeserializeEntityRecognitionSkill(element, options);
                     case "#Microsoft.Skills.Text.PIIDetectionSkill":
                         return PiiDetectionSkill.DeserializePiiDetectionSkill(element, options);
                     case "#Microsoft.Skills.Text.SplitSkill":

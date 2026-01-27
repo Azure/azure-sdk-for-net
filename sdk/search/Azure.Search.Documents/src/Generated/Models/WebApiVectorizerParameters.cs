@@ -24,16 +24,16 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebApiVectorizerParameters"/>. </summary>
-        /// <param name="url"> The URI of the Web API providing the vectorizer. </param>
+        /// <param name="uri"> The URI of the Web API providing the vectorizer. </param>
         /// <param name="httpHeaders"> The headers required to make the HTTP request. </param>
         /// <param name="httpMethod"> The method for the HTTP request. </param>
         /// <param name="timeout"> The desired timeout for the request. Default is 30 seconds. </param>
         /// <param name="authResourceId"> Applies to custom endpoints that connect to external code in an Azure function or some other application that provides the transformations. This value should be the application ID created for the function or app when it was registered with Azure Active Directory. When specified, the vectorization connects to the function or app using a managed ID (either system or user-assigned) of the search service and the access token of the function or app, using this value as the resource id for creating the scope of the access token. </param>
         /// <param name="authIdentity"> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebApiVectorizerParameters(Uri url, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, string authResourceId, SearchIndexerDataIdentity authIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebApiVectorizerParameters(Uri uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, string authResourceId, SearchIndexerDataIdentity authIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Url = url;
+            Uri = uri;
             HttpHeaders = httpHeaders;
             HttpMethod = httpMethod;
             Timeout = timeout;
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The URI of the Web API providing the vectorizer. </summary>
-        public Uri Url { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> The headers required to make the HTTP request. </summary>
         public IDictionary<string, string> HttpHeaders { get; }

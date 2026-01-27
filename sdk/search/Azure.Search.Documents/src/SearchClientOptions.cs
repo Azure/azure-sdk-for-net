@@ -67,6 +67,17 @@ namespace Azure.Search.Documents
         /// </summary>
         internal const ServiceVersion ContinuationTokenVersion = ServiceVersion.V2020_06_30;
 
+        [CodeGenMember("Version")]
+        internal string RawVersion { get; }
+
+        /// <summary>
+        /// Gets the <see cref="ServiceVersion"/> of the service API used when
+        /// making requests.  For more, see
+        /// <see href="https://docs.microsoft.com/azure/search/search-api-versions">
+        /// API versions in Azure Cognitive Search</see>.
+        /// </summary>
+        public ServiceVersion Version { get; }
+
         /// <summary>
         /// Gets or sets an <see cref="ObjectSerializer"/> that can be used to
         /// customize the serialization of strongly typed models.  The
@@ -102,7 +113,7 @@ namespace Azure.Search.Documents
         /// </exception>
         public SearchClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version.Validate().ToVersionString();
+            Version = version.Validate();
             AddLoggingHeaders();
             AddLoggingQueryParameters();
         }

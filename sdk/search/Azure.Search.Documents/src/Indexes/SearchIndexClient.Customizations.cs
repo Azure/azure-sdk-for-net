@@ -101,8 +101,8 @@ namespace Azure.Search.Documents.Indexes
             _serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(credential);
-            _version = options.Version.ToServiceVersion();
-            _apiVersion = options.Version;
+            _version = options.Version;
+            _apiVersion = options.Version.ToVersionString();
         }
 
         /// <summary>
@@ -131,8 +131,8 @@ namespace Azure.Search.Documents.Indexes
             _serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(tokenCredential);
-            _version = options.Version.ToServiceVersion();
-            _apiVersion = options.Version;
+            _version = options.Version;
+            _apiVersion = options.Version.ToVersionString();
         }
 
         /// <summary>

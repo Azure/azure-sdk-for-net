@@ -45,10 +45,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("defaultLanguageCode"u8);
                 writer.WriteStringValue(DefaultLanguageCode);
             }
-            if (Optional.IsDefined(MinimumPrecision))
+            if (Optional.IsDefined(MinPrecision))
             {
                 writer.WritePropertyName("minimumPrecision"u8);
-                writer.WriteNumberValue(MinimumPrecision.Value);
+                writer.WriteNumberValue(MinPrecision.Value);
             }
             if (Optional.IsDefined(MaskingMode))
             {
@@ -120,7 +120,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string defaultLanguageCode = default;
-            double? minimumPrecision = default;
+            double? minPrecision = default;
             PiiDetectionSkillMaskingMode? maskingMode = default;
             string mask = default;
             string modelVersion = default;
@@ -184,7 +184,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    minimumPrecision = prop.Value.GetDouble();
+                    minPrecision = prop.Value.GetDouble();
                     continue;
                 }
                 if (prop.NameEquals("maskingMode"u8))
@@ -256,7 +256,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 outputs,
                 additionalBinaryDataProperties,
                 defaultLanguageCode,
-                minimumPrecision,
+                minPrecision,
                 maskingMode,
                 mask,
                 modelVersion,

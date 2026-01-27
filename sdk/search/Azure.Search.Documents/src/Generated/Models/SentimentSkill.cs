@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> This skill is deprecated. Use the V3.SentimentSkill instead. </summary>
+    /// <summary> Using the Text Analytics API, evaluates unstructured text and for each record, provides sentiment labels (such as "negative", "neutral" and "positive") based on the highest confidence score found by the service at a sentence and document-level. </summary>
     public partial class SentimentSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of <see cref="SentimentSkill"/>. </summary>
@@ -22,9 +22,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
-        internal SentimentSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, SentimentSkillLanguage? defaultLanguageCode) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        /// <param name="includeOpinionMining"> If set to true, the skill output will include information from Text Analytics for opinion mining, namely targets (nouns or verbs) and their associated assessment (adjective) in the text. Default is false. </param>
+        /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
+        internal SentimentSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string defaultLanguageCode, bool? includeOpinionMining, string modelVersion) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             DefaultLanguageCode = defaultLanguageCode;
+            IncludeOpinionMining = includeOpinionMining;
+            ModelVersion = modelVersion;
         }
+
+        /// <summary> A value indicating which language code to use. Default is `en`. </summary>
+        public string DefaultLanguageCode { get; set; }
     }
 }

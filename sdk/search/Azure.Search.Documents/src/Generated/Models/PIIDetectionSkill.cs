@@ -35,16 +35,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
-        /// <param name="minimumPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
+        /// <param name="minPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
         /// <param name="maskingMode"> A parameter that provides various ways to mask the personal information detected in the input text. Default is 'none'. </param>
         /// <param name="mask"> The character used to mask the text if the maskingMode parameter is set to replace. Default is '*'. </param>
         /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
         /// <param name="piiCategories"> A list of PII entity categories that should be extracted and masked. </param>
         /// <param name="domain"> If specified, will set the PII domain to include only a subset of the entity categories. Possible values include: 'phi', 'none'. Default is 'none'. </param>
-        internal PiiDetectionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string defaultLanguageCode, double? minimumPrecision, PiiDetectionSkillMaskingMode? maskingMode, string mask, string modelVersion, IList<string> piiCategories, string domain) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal PiiDetectionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string defaultLanguageCode, double? minPrecision, PiiDetectionSkillMaskingMode? maskingMode, string mask, string modelVersion, IList<string> piiCategories, string domain) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             DefaultLanguageCode = defaultLanguageCode;
-            MinimumPrecision = minimumPrecision;
+            MinPrecision = minPrecision;
             MaskingMode = maskingMode;
             Mask = mask;
             ModelVersion = modelVersion;
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </summary>
-        public double? MinimumPrecision { get; set; }
+        public double? MinPrecision { get; set; }
 
         /// <summary> A parameter that provides various ways to mask the personal information detected in the input text. Default is 'none'. </summary>
         public PiiDetectionSkillMaskingMode? MaskingMode { get; set; }

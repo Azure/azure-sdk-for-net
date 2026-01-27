@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </param>
-        /// <param name="flagsInternal"> Regular expression flags. </param>
+        /// <param name="flagsInternal"> Regular expression flags, specified as a '|' separated string of RegexFlags values. </param>
         /// <param name="group"> The zero-based ordinal of the matching group in the regular expression pattern to extract into tokens. Use -1 if you want to use the entire pattern to split the input into tokens, irrespective of matching groups. Default is -1. </param>
         internal PatternTokenizer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, string pattern, string flagsInternal, int? @group) : base(odataType, name, additionalBinaryDataProperties)
         {
