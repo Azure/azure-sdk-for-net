@@ -225,7 +225,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Service.MultiService.ServiceA.Foo.test",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Service.MultiService.ServiceA"
               },
               "parameters": [],
               "response": {},
@@ -368,7 +369,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Service.MultiService.ServiceB.Bar.test",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Service.MultiService.ServiceB"
               },
               "parameters": [],
               "response": {},
