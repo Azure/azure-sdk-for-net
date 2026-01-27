@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Status values reported for shell tool calls. </summary>
     internal enum FunctionShellCallItemStatus

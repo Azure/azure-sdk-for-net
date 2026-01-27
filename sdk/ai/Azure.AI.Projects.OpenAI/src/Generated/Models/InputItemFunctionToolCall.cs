@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Function tool call. </summary>
     internal partial class InputItemFunctionToolCall : InputItem
@@ -38,7 +37,7 @@ namespace OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InputItemFunctionToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, string name, string arguments, OutputItemFunctionToolCallStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal InputItemFunctionToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, string name, string arguments, ItemResourceFunctionToolCallResourceStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -63,6 +62,6 @@ namespace OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public OutputItemFunctionToolCallStatus? Status { get; set; }
+        public ItemResourceFunctionToolCallResourceStatus? Status { get; set; }
     }
 }

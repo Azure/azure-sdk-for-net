@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Apply patch delete file operation. </summary>
     internal partial class ApplyPatchDeleteFileOperationParam : ApplyPatchOperationParam, IJsonModel<ApplyPatchDeleteFileOperationParam>

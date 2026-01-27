@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.OpenAI;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> File citation. </summary>
     internal partial class FileCitationBody : InternalAnnotation

@@ -5,9 +5,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     [PersistableModelProxy(typeof(UnknownInternalFunctionAndCustomToolCallOutput))]
     internal abstract partial class InternalFunctionAndCustomToolCallOutput : IJsonModel<InternalFunctionAndCustomToolCallOutput>

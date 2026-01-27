@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Outcome values reported for apply_patch tool call outputs. </summary>
     internal enum ApplyPatchCallOutputStatusParam

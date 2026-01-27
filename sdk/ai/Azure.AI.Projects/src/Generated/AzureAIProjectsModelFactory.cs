@@ -1349,6 +1349,144 @@ namespace Azure.AI.Projects
             return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// How the model should select which tool (or tools) to use when generating
+        /// a response. See the `tools` parameter to see how to specify which tools
+        /// the model can call.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ToolChoiceAllowed"/>, <see cref="Projects.ToolChoiceFunction"/>, <see cref="Projects.ToolChoiceMCP"/>, <see cref="Projects.ToolChoiceCustom"/>, <see cref="Projects.SpecificApplyPatchParam"/>, <see cref="Projects.SpecificFunctionShellParam"/>, <see cref="Projects.ToolChoiceFileSearch"/>, <see cref="Projects.ToolChoiceWebSearchPreview"/>, <see cref="Projects.ToolChoiceComputerUsePreview"/>, <see cref="Projects.ToolChoiceWebSearchPreview20250311"/>, <see cref="Projects.ToolChoiceImageGeneration"/>, and <see cref="Projects.ToolChoiceCodeInterpreter"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.ToolChoiceParam"/> instance for mocking. </returns>
+        public static ToolChoiceParam ToolChoiceParam(string @type = default)
+        {
+            return new UnknownToolChoiceParam(new ToolChoiceParamType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Allowed tools. </summary>
+        /// <param name="mode">
+        /// Constrains the tools available to the model to a pre-defined set.
+        ///   `auto` allows the model to pick from among the allowed tools and generate a
+        ///   message.
+        ///   `required` requires the model to call one or more of the allowed tools.
+        /// </param>
+        /// <param name="tools">
+        /// A list of tool definitions that the model should be allowed to call.
+        ///   For the Responses API, the list of tool definitions might look like:
+        ///   ```json
+        ///   [
+        ///     { "type": "function", "name": "get_weather" },
+        ///     { "type": "mcp", "server_label": "deepwiki" },
+        ///     { "type": "image_generation" }
+        ///   ]
+        ///   ```
+        /// </param>
+        /// <returns> A new <see cref="Projects.ToolChoiceAllowed"/> instance for mocking. </returns>
+        public static ToolChoiceAllowed ToolChoiceAllowed(ToolChoiceAllowedMode mode = default, IEnumerable<IDictionary<string, BinaryData>> tools = default)
+        {
+            tools ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
+
+            return new ToolChoiceAllowed(ToolChoiceParamType.AllowedTools, additionalBinaryDataProperties: null, mode, tools.ToList());
+        }
+
+        /// <summary> Function tool. </summary>
+        /// <param name="name"> The name of the function to call. </param>
+        /// <returns> A new <see cref="Projects.ToolChoiceFunction"/> instance for mocking. </returns>
+        public static ToolChoiceFunction ToolChoiceFunction(string name = default)
+        {
+            return new ToolChoiceFunction(ToolChoiceParamType.Function, additionalBinaryDataProperties: null, name);
+        }
+
+        /// <summary> MCP tool. </summary>
+        /// <param name="serverLabel"> The label of the MCP server to use. </param>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Projects.ToolChoiceMCP"/> instance for mocking. </returns>
+        public static ToolChoiceMCP ToolChoiceMCP(string serverLabel = default, string name = default)
+        {
+            return new ToolChoiceMCP(ToolChoiceParamType.Mcp, additionalBinaryDataProperties: null, serverLabel, name);
+        }
+
+        /// <summary> Custom tool. </summary>
+        /// <param name="name"> The name of the custom tool to call. </param>
+        /// <returns> A new <see cref="Projects.ToolChoiceCustom"/> instance for mocking. </returns>
+        public static ToolChoiceCustom ToolChoiceCustom(string name = default)
+        {
+            return new ToolChoiceCustom(ToolChoiceParamType.Custom, additionalBinaryDataProperties: null, name);
+        }
+
+        /// <summary> Specific apply patch tool choice. </summary>
+        /// <returns> A new <see cref="Projects.SpecificApplyPatchParam"/> instance for mocking. </returns>
+        public static SpecificApplyPatchParam SpecificApplyPatchParam()
+        {
+            return new SpecificApplyPatchParam(ToolChoiceParamType.ApplyPatch, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specific shell tool choice. </summary>
+        /// <returns> A new <see cref="Projects.SpecificFunctionShellParam"/> instance for mocking. </returns>
+        public static SpecificFunctionShellParam SpecificFunctionShellParam()
+        {
+            return new SpecificFunctionShellParam(ToolChoiceParamType.Shell, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="Projects.ToolChoiceFileSearch"/> instance for mocking. </returns>
+        public static ToolChoiceFileSearch ToolChoiceFileSearch()
+        {
+            return new ToolChoiceFileSearch(ToolChoiceParamType.FileSearch, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="Projects.ToolChoiceWebSearchPreview"/> instance for mocking. </returns>
+        public static ToolChoiceWebSearchPreview ToolChoiceWebSearchPreview()
+        {
+            return new ToolChoiceWebSearchPreview(ToolChoiceParamType.WebSearchPreview, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="Projects.ToolChoiceComputerUsePreview"/> instance for mocking. </returns>
+        public static ToolChoiceComputerUsePreview ToolChoiceComputerUsePreview()
+        {
+            return new ToolChoiceComputerUsePreview(ToolChoiceParamType.ComputerUsePreview, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="Projects.ToolChoiceWebSearchPreview20250311"/> instance for mocking. </returns>
+        public static ToolChoiceWebSearchPreview20250311 ToolChoiceWebSearchPreview20250311()
+        {
+            return new ToolChoiceWebSearchPreview20250311(ToolChoiceParamType.WebSearchPreview20250311, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="Projects.ToolChoiceImageGeneration"/> instance for mocking. </returns>
+        public static ToolChoiceImageGeneration ToolChoiceImageGeneration()
+        {
+            return new ToolChoiceImageGeneration(ToolChoiceParamType.ImageGeneration, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="Projects.ToolChoiceCodeInterpreter"/> instance for mocking. </returns>
+        public static ToolChoiceCodeInterpreter ToolChoiceCodeInterpreter()
+        {
+            return new ToolChoiceCodeInterpreter(ToolChoiceParamType.CodeInterpreter, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The AgentManifestOptions. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be

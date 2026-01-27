@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Input image. </summary>
     internal partial class FunctionAndCustomToolCallOutputInputImageContent : InternalFunctionAndCustomToolCallOutput

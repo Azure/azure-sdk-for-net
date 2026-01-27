@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> A computer screenshot image used with the computer use tool. </summary>
     internal partial class ComputerScreenshotImage

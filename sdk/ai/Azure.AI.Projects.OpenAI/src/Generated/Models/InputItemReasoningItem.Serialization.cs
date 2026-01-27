@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Reasoning. </summary>
     internal partial class InputItemReasoningItem : InputItem, IJsonModel<InputItemReasoningItem>
@@ -99,7 +98,7 @@ namespace OpenAI
             string encryptedContent = default;
             IList<Summary> summary = default;
             IList<ReasoningTextContent> content = default;
-            OutputItemReasoningItemStatus? status = default;
+            ItemReasoningItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -152,7 +151,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToOutputItemReasoningItemStatus();
+                    status = prop.Value.GetString().ToItemReasoningItemStatus();
                     continue;
                 }
                 if (options.Format != "W")

@@ -4,7 +4,7 @@
 
 using System;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal static partial class FunctionCallItemStatusExtensions
     {

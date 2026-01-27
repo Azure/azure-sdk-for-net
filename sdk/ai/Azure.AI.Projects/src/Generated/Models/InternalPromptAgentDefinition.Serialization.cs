@@ -68,6 +68,18 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ToolChoice))
+            {
+                writer.WritePropertyName("tool_choice"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(ToolChoice);
+#else
+                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
@@ -120,6 +132,7 @@ namespace Azure.AI.Projects
             float? topP = default;
             InternalReasoning reasoning = default;
             IList<InternalTool> tools = default;
+            BinaryData toolChoice = default;
             PromptAgentDefinitionText text = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             foreach (var prop in element.EnumerateObject())
@@ -197,6 +210,15 @@ namespace Azure.AI.Projects
                     tools = array;
                     continue;
                 }
+                if (prop.NameEquals("tool_choice"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
                 if (prop.NameEquals("text"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -235,6 +257,7 @@ namespace Azure.AI.Projects
                 topP,
                 reasoning,
                 tools ?? new ChangeTrackingList<InternalTool>(),
+                toolChoice,
                 text,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>());
         }

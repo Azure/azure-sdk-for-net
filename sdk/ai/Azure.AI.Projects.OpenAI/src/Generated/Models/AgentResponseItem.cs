@@ -29,16 +29,26 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;
             ItemSource = itemSource;
+            AgentReference = agentReference;
+            ResponseId = responseId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Type. </summary>
         internal AgentResponseItemKind Type { get; set; }
+
+        /// <summary> The agent that created the item. </summary>
+        public AgentReference AgentReference { get; }
+
+        /// <summary> The response on which the item is created. </summary>
+        public string ResponseId { get; }
     }
 }

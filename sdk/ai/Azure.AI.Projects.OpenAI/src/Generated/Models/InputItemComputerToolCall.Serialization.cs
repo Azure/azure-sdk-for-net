@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Computer tool call. </summary>
     internal partial class InputItemComputerToolCall : InputItem, IJsonModel<InputItemComputerToolCall>
@@ -85,7 +85,7 @@ namespace OpenAI
             string callId = default;
             InternalComputerAction action = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
-            OutputItemComputerToolCallStatus status = default;
+            ItemResourceComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -120,7 +120,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemComputerToolCallStatus();
+                    status = prop.Value.GetString().ToItemResourceComputerToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")

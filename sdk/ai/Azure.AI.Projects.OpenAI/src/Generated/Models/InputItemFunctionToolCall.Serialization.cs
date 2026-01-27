@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Function tool call. </summary>
     internal partial class InputItemFunctionToolCall : InputItem, IJsonModel<InputItemFunctionToolCall>
@@ -86,7 +85,7 @@ namespace OpenAI
             string callId = default;
             string name = default;
             string arguments = default;
-            OutputItemFunctionToolCallStatus? status = default;
+            ItemResourceFunctionToolCallResourceStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -120,7 +119,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToOutputItemFunctionToolCallStatus();
+                    status = prop.Value.GetString().ToItemResourceFunctionToolCallResourceStatus();
                     continue;
                 }
                 if (options.Format != "W")

@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -50,6 +49,16 @@ namespace Azure.AI.Projects.OpenAI
             {
                 writer.WritePropertyName("created_by"u8);
                 writer.WriteObjectValue(ItemSource, options);
+            }
+            if (Optional.IsDefined(AgentReference))
+            {
+                writer.WritePropertyName("agent_reference"u8);
+                writer.WriteObjectValue(AgentReference, options);
+            }
+            if (Optional.IsDefined(ResponseId))
+            {
+                writer.WritePropertyName("response_id"u8);
+                writer.WriteStringValue(ResponseId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

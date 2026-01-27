@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> A computer screenshot image used with the computer use tool. </summary>
     internal partial class ComputerScreenshotImage : IJsonModel<ComputerScreenshotImage>

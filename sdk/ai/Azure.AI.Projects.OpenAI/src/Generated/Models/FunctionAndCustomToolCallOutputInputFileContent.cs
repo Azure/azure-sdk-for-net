@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Input file. </summary>
     internal partial class FunctionAndCustomToolCallOutputInputFileContent : InternalFunctionAndCustomToolCallOutput

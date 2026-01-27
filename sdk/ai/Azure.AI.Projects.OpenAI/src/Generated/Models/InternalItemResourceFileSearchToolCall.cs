@@ -5,9 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceFileSearchToolCall : AgentResponseItem
     {
@@ -17,7 +16,7 @@ namespace OpenAI
         ///   `searching`, `incomplete` or `failed`,
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
-        internal InternalItemResourceFileSearchToolCall(OutputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(AgentResponseItemKind.FileSearchCall)
+        internal InternalItemResourceFileSearchToolCall(ItemResourceFileSearchToolCallStatus status, IEnumerable<string> queries) : base(AgentResponseItemKind.FileSearchCall)
         {
             Status = status;
             Queries = queries.ToList();
@@ -28,6 +27,8 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status">
         /// The status of the file search tool call. One of `in_progress`,
@@ -35,7 +36,7 @@ namespace OpenAI
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <param name="results"></param>
-        internal InternalItemResourceFileSearchToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, id, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceFileSearchToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ItemResourceFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Queries = queries;
@@ -46,7 +47,7 @@ namespace OpenAI
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </summary>
-        public OutputItemFileSearchToolCallStatus Status { get; }
+        public ItemResourceFileSearchToolCallStatus Status { get; }
 
         /// <summary> The queries used to search for files. </summary>
         public IList<string> Queries { get; }

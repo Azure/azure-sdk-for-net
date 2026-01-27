@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceCodeInterpreterToolCall : AgentResponseItem
     {
@@ -17,7 +17,7 @@ namespace OpenAI
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        internal InternalItemResourceCodeInterpreterToolCall(OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(AgentResponseItemKind.CodeInterpreterCall)
+        internal InternalItemResourceCodeInterpreterToolCall(ItemResourceCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(AgentResponseItemKind.CodeInterpreterCall)
         {
             Status = status;
             ContainerId = containerId;
@@ -29,12 +29,14 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </param>
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        internal InternalItemResourceCodeInterpreterToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, id, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceCodeInterpreterToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ItemResourceCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             ContainerId = containerId;
@@ -43,7 +45,7 @@ namespace OpenAI
         }
 
         /// <summary> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </summary>
-        public OutputItemCodeInterpreterToolCallStatus Status { get; }
+        public ItemResourceCodeInterpreterToolCallStatus Status { get; }
 
         /// <summary> The ID of the container used to run the code. </summary>
         public string ContainerId { get; }

@@ -4,16 +4,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceImageGenToolCall : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceImageGenToolCall"/>. </summary>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal InternalItemResourceImageGenToolCall(OutputItemImageGenToolCallStatus status, string result) : base(AgentResponseItemKind.ImageGenerationCall)
+        internal InternalItemResourceImageGenToolCall(ItemResourceImageGenToolCallStatus status, string result) : base(AgentResponseItemKind.ImageGenerationCall)
         {
             Status = status;
             Result = result;
@@ -23,17 +22,19 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal InternalItemResourceImageGenToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemImageGenToolCallStatus status, string result) : base(@type, id, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceImageGenToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ItemResourceImageGenToolCallStatus status, string result) : base(@type, id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Result = result;
         }
 
         /// <summary> The status of the image generation call. </summary>
-        public OutputItemImageGenToolCallStatus Status { get; }
+        public ItemResourceImageGenToolCallStatus Status { get; }
 
         /// <summary> Gets the Result. </summary>
         public string Result { get; }

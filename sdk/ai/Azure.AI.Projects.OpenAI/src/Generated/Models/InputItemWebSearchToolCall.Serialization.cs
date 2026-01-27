@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Web search tool call. </summary>
     internal partial class InputItemWebSearchToolCall : InputItem, IJsonModel<InputItemWebSearchToolCall>
@@ -80,7 +79,7 @@ namespace OpenAI
             InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            OutputItemWebSearchToolCallStatus status = default;
+            ItemResourceWebSearchToolCallStatus status = default;
             BinaryData action = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,7 +95,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemWebSearchToolCallStatus();
+                    status = prop.Value.GetString().ToItemResourceWebSearchToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("action"u8))

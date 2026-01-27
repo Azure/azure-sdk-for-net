@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Output message. </summary>
     internal partial class InputItemOutputMessage : InputItem, IJsonModel<InputItemOutputMessage>
@@ -82,7 +81,7 @@ namespace OpenAI
             string id = default;
             string role = default;
             IList<OutputMessageContent> content = default;
-            OutputItemOutputMessageStatus status = default;
+            ItemResourceOutputMessageStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -112,7 +111,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemOutputMessageStatus();
+                    status = prop.Value.GetString().ToItemResourceOutputMessageStatus();
                     continue;
                 }
                 if (options.Format != "W")

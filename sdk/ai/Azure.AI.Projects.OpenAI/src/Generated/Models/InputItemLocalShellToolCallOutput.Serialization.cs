@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Local shell call output. </summary>
     internal partial class InputItemLocalShellToolCallOutput : InputItem, IJsonModel<InputItemLocalShellToolCallOutput>
@@ -77,7 +76,7 @@ namespace OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string output = default;
-            InputItemLocalShellToolCallOutputStatus? status = default;
+            ItemResourceLocalShellToolCallOutputStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -102,7 +101,7 @@ namespace OpenAI
                         status = null;
                         continue;
                     }
-                    status = prop.Value.GetString().ToInputItemLocalShellToolCallOutputStatus();
+                    status = prop.Value.GetString().ToItemResourceLocalShellToolCallOutputStatus();
                     continue;
                 }
                 if (options.Format != "W")

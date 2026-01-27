@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Local shell call. </summary>
     internal partial class InputItemLocalShellToolCall : InputItem, IJsonModel<InputItemLocalShellToolCall>
@@ -77,7 +76,7 @@ namespace OpenAI
             string id = default;
             string callId = default;
             LocalShellExecAction action = default;
-            OutputItemLocalShellToolCallStatus status = default;
+            ItemResourceLocalShellToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -102,7 +101,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemLocalShellToolCallStatus();
+                    status = prop.Value.GetString().ToItemResourceLocalShellToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")
