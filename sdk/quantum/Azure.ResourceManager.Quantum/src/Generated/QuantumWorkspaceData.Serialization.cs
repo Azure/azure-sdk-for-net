@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Quantum
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            WorkspaceResourceProperties properties = default;
+            QuantumWorkspaceProperties properties = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Quantum
                     {
                         continue;
                     }
-                    properties = WorkspaceResourceProperties.DeserializeWorkspaceResourceProperties(prop.Value, options);
+                    properties = QuantumWorkspaceProperties.DeserializeQuantumWorkspaceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

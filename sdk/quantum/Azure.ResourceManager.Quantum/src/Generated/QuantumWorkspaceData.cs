@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Gets or sets the properties. Define quantum workspace's specific properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal QuantumWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, WorkspaceResourceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal QuantumWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, QuantumWorkspaceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Gets or sets the properties. Define quantum workspace's specific properties. </summary>
-        public WorkspaceResourceProperties Properties { get; set; }
+        public QuantumWorkspaceProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }

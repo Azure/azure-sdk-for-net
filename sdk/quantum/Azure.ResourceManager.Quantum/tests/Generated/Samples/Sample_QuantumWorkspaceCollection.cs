@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Quantum.Samples
             string workspaceName = "quantumworkspace1";
             QuantumWorkspaceData data = new QuantumWorkspaceData(new AzureLocation("West US"))
             {
-                Properties = new WorkspaceResourceProperties
+                Properties = new QuantumWorkspaceProperties
                 {
                     Providers =
                     {

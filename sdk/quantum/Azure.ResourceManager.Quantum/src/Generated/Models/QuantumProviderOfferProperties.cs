@@ -12,13 +12,13 @@ using Azure.ResourceManager.Quantum;
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Provider properties. </summary>
-    public partial class QuantumProviderProperties
+    public partial class QuantumProviderOfferProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuantumProviderProperties"/>. </summary>
-        internal QuantumProviderProperties()
+        /// <summary> Initializes a new instance of <see cref="QuantumProviderOfferProperties"/>. </summary>
+        internal QuantumProviderOfferProperties()
         {
             Targets = new ChangeTrackingList<ProviderTargetDescription>();
             Skus = new ChangeTrackingList<ProviderSkuDescription>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Quantum.Models
             PricingDimensions = new ChangeTrackingList<ProviderPricingDimension>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuantumProviderProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumProviderOfferProperties"/>. </summary>
         /// <param name="description"> A description about this provider. </param>
         /// <param name="providerType"> Provider type. </param>
         /// <param name="company"> Company name. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="quotaDimensions"> The list of quota dimensions from the provider. </param>
         /// <param name="pricingDimensions"> The list of pricing dimensions from the provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuantumProviderProperties(string description, string providerType, string company, string defaultEndpoint, ProviderAadInfo aad, ProviderApplicationInfo managedApplication, IList<ProviderTargetDescription> targets, IList<ProviderSkuDescription> skus, IList<QuantumQuotaDimension> quotaDimensions, IList<ProviderPricingDimension> pricingDimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuantumProviderOfferProperties(string description, string providerType, string company, string defaultEndpoint, ProviderAadInfo aad, ProviderApplicationInfo managedApplication, IList<ProviderTargetDescription> targets, IList<ProviderSkuDescription> skus, IList<QuantumQuotaDimension> quotaDimensions, IList<ProviderPricingDimension> pricingDimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ProviderType = providerType;

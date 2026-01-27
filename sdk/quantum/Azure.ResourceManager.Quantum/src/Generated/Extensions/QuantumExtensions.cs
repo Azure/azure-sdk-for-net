@@ -151,36 +151,36 @@ namespace Azure.ResourceManager.Quantum
         /// Returns the SuiteOffer resource associated with the given name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetBySubscriptionAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetSuiteOfferAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<QuantumSuiteOffer> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<QuantumSuiteOffer> GetSuiteOfferAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(cancellationToken);
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetSuiteOfferAsync(cancellationToken);
         }
 
         /// <summary>
         /// Returns the SuiteOffer resource associated with the given name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetBySubscription(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetSuiteOffer(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<QuantumSuiteOffer> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<QuantumSuiteOffer> GetSuiteOffer(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetBySubscription(cancellationToken);
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetSuiteOffer(cancellationToken);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Quantum
         /// Returns the list of all provider offerings available for the given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetAllAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetProviderOfferingsAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -233,19 +233,19 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=kind eq 'v1'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuantumProviderDescription"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<QuantumProviderDescription> GetAllAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuantumProviderOffer"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<QuantumProviderOffer> GetProviderOfferingsAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetAllAsync(locationName, filter, cancellationToken);
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetProviderOfferingsAsync(locationName, filter, cancellationToken);
         }
 
         /// <summary>
         /// Returns the list of all provider offerings available for the given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetAll(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetProviderOfferings(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -253,12 +253,12 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=kind eq 'v1'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuantumProviderDescription"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<QuantumProviderDescription> GetAll(this SubscriptionResource subscriptionResource, AzureLocation locationName, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuantumProviderOffer"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<QuantumProviderOffer> GetProviderOfferings(this SubscriptionResource subscriptionResource, AzureLocation locationName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetAll(locationName, filter, cancellationToken);
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetProviderOfferings(locationName, filter, cancellationToken);
         }
     }
 }

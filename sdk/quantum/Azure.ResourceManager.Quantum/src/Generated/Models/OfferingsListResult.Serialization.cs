@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Quantum.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (QuantumProviderDescription item in Value)
+            foreach (QuantumProviderOffer item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            IList<QuantumProviderDescription> value = default;
+            IList<QuantumProviderOffer> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<QuantumProviderDescription> array = new List<QuantumProviderDescription>();
+                    List<QuantumProviderOffer> array = new List<QuantumProviderOffer>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QuantumProviderDescription.DeserializeQuantumProviderDescription(item, options));
+                        array.Add(QuantumProviderOffer.DeserializeQuantumProviderOffer(item, options));
                     }
                     value = array;
                     continue;

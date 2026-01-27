@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Quantum.Samples
 
             // invoke the operation and iterate over the result
             string locationName = "westus2";
-            await foreach (QuantumProviderDescription item in subscriptionResource.GetAllAsync(new AzureLocation(locationName)))
+            await foreach (QuantumProviderOffer item in subscriptionResource.GetProviderOfferingsAsync(new AzureLocation(locationName)))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

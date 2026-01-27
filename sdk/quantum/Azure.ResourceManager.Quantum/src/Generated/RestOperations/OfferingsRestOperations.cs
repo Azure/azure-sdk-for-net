@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Quantum
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, AzureLocation locationName, string filter, RequestContext context)
+        internal HttpMessage CreateGetProviderOfferingsRequest(Guid subscriptionId, AzureLocation locationName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Quantum
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetProviderOfferingsRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

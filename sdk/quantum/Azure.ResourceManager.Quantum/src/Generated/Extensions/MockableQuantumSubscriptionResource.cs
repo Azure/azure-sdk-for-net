@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuantumSuiteOffer> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QuantumSuiteOffer> GetSuiteOfferAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SuiteOffersGetBySubscriptionAsyncCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new SuiteOffersGetSuiteOfferAsyncCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context);
         }
 
         /// <summary>
@@ -155,13 +155,13 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuantumSuiteOffer> GetBySubscription(CancellationToken cancellationToken = default)
+        public virtual Pageable<QuantumSuiteOffer> GetSuiteOffer(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SuiteOffersGetBySubscriptionCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new SuiteOffersGetSuiteOfferCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context);
         }
 
         /// <summary>
@@ -282,14 +282,14 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <param name="locationName"> Location. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=kind eq 'v1'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuantumProviderDescription"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuantumProviderDescription> GetAllAsync(AzureLocation locationName, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuantumProviderOffer"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QuantumProviderOffer> GetProviderOfferingsAsync(AzureLocation locationName, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new OfferingsGetAllAsyncCollectionResultOfT(OfferingsRestClient, Guid.Parse(Id.SubscriptionId), locationName, filter, context);
+            return new OfferingsGetProviderOfferingsAsyncCollectionResultOfT(OfferingsRestClient, Guid.Parse(Id.SubscriptionId), locationName, filter, context);
         }
 
         /// <summary>
@@ -312,14 +312,14 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <param name="locationName"> Location. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=kind eq 'v1'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuantumProviderDescription"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuantumProviderDescription> GetAll(AzureLocation locationName, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuantumProviderOffer"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuantumProviderOffer> GetProviderOfferings(AzureLocation locationName, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new OfferingsGetAllCollectionResultOfT(OfferingsRestClient, Guid.Parse(Id.SubscriptionId), locationName, filter, context);
+            return new OfferingsGetProviderOfferingsCollectionResultOfT(OfferingsRestClient, Guid.Parse(Id.SubscriptionId), locationName, filter, context);
         }
     }
 }

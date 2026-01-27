@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.WorkspaceNameAvailabilityResult"/> instance for mocking. </returns>
-        public static WorkspaceNameAvailabilityResult WorkspaceNameAvailabilityResult(bool? isNameAvailable = default, CheckNameAvailabilityReason? reason = default, string message = default)
+        public static WorkspaceNameAvailabilityResult WorkspaceNameAvailabilityResult(bool? isNameAvailable = default, WorkspaceNameUnavailableReason? reason = default, string message = default)
         {
             return new WorkspaceNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="properties"> Gets or sets the properties. Define quantum workspace's specific properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Quantum.QuantumWorkspaceData"/> instance for mocking. </returns>
-        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkspaceResourceProperties properties = default, ManagedServiceIdentity identity = default)
+        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, QuantumWorkspaceProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="isApiKeyEnabled"> Indicator of enablement of the Quantum workspace Api keys. </param>
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <param name="managedStorageAccount"> ARM Resource Id of the managed storage account associated with this workspace. </param>
-        /// <returns> A new <see cref="Models.WorkspaceResourceProperties"/> instance for mocking. </returns>
-        public static WorkspaceResourceProperties WorkspaceResourceProperties(IEnumerable<QuantumProvider> providers = default, WorkspaceUsableStatus? usable = default, ProviderProvisioningStatus? provisioningState = default, ResourceIdentifier storageAccount = default, QuantumWorkspaceKind? workspaceKind = default, Uri endpointUri = default, bool? isApiKeyEnabled = default, IEnumerable<MoboBrokerInfo> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier managedStorageAccount = default)
+        /// <returns> A new <see cref="Models.QuantumWorkspaceProperties"/> instance for mocking. </returns>
+        public static QuantumWorkspaceProperties QuantumWorkspaceProperties(IEnumerable<QuantumProvider> providers = default, WorkspaceUsableStatus? usable = default, ProviderProvisioningStatus? provisioningState = default, ResourceIdentifier storageAccount = default, QuantumWorkspaceKind? workspaceKind = default, Uri endpointUri = default, bool? isApiKeyEnabled = default, IEnumerable<MoboBrokerInfo> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier managedStorageAccount = default)
         {
             providers ??= new ChangeTrackingList<QuantumProvider>();
 
-            return new WorkspaceResourceProperties(
+            return new QuantumWorkspaceProperties(
                 providers.ToList(),
                 usable,
                 provisioningState,
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="id"> Unique provider's id. </param>
         /// <param name="name"> Provider's display name. </param>
         /// <param name="properties"> Provider properties. </param>
-        /// <returns> A new <see cref="Models.QuantumProviderDescription"/> instance for mocking. </returns>
-        public static QuantumProviderDescription QuantumProviderDescription(string id = default, string name = default, QuantumProviderProperties properties = default)
+        /// <returns> A new <see cref="Models.QuantumProviderOffer"/> instance for mocking. </returns>
+        public static QuantumProviderOffer QuantumProviderOffer(string id = default, string name = default, QuantumProviderOfferProperties properties = default)
         {
-            return new QuantumProviderDescription(id, name, properties, additionalBinaryDataProperties: null);
+            return new QuantumProviderOffer(id, name, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Provider properties. </summary>
@@ -196,15 +196,15 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="skus"> The list of skus available from this provider. </param>
         /// <param name="quotaDimensions"> The list of quota dimensions from the provider. </param>
         /// <param name="pricingDimensions"> The list of pricing dimensions from the provider. </param>
-        /// <returns> A new <see cref="Models.QuantumProviderProperties"/> instance for mocking. </returns>
-        public static QuantumProviderProperties QuantumProviderProperties(string description = default, string providerType = default, string company = default, string defaultEndpoint = default, ProviderAadInfo aad = default, ProviderApplicationInfo managedApplication = default, IEnumerable<ProviderTargetDescription> targets = default, IEnumerable<ProviderSkuDescription> skus = default, IEnumerable<QuantumQuotaDimension> quotaDimensions = default, IEnumerable<ProviderPricingDimension> pricingDimensions = default)
+        /// <returns> A new <see cref="Models.QuantumProviderOfferProperties"/> instance for mocking. </returns>
+        public static QuantumProviderOfferProperties QuantumProviderOfferProperties(string description = default, string providerType = default, string company = default, string defaultEndpoint = default, ProviderAadInfo aad = default, ProviderApplicationInfo managedApplication = default, IEnumerable<ProviderTargetDescription> targets = default, IEnumerable<ProviderSkuDescription> skus = default, IEnumerable<QuantumQuotaDimension> quotaDimensions = default, IEnumerable<ProviderPricingDimension> pricingDimensions = default)
         {
             targets ??= new ChangeTrackingList<ProviderTargetDescription>();
             skus ??= new ChangeTrackingList<ProviderSkuDescription>();
             quotaDimensions ??= new ChangeTrackingList<QuantumQuotaDimension>();
             pricingDimensions ??= new ChangeTrackingList<ProviderPricingDimension>();
 
-            return new QuantumProviderProperties(
+            return new QuantumProviderOfferProperties(
                 description,
                 providerType,
                 company,

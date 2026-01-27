@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 return null;
             }
             bool? isNameAvailable = default;
-            CheckNameAvailabilityReason? reason = default;
+            WorkspaceNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    reason = new CheckNameAvailabilityReason(prop.Value.GetString());
+                    reason = new WorkspaceNameUnavailableReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("message"u8))

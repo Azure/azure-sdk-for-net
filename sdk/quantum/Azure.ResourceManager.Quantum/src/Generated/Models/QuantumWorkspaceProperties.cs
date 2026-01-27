@@ -13,18 +13,18 @@ using Azure.ResourceManager.Quantum;
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Properties of a Workspace. </summary>
-    public partial class WorkspaceResourceProperties
+    public partial class QuantumWorkspaceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WorkspaceResourceProperties"/>. </summary>
-        public WorkspaceResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="QuantumWorkspaceProperties"/>. </summary>
+        public QuantumWorkspaceProperties()
         {
             Providers = new ChangeTrackingList<QuantumProvider>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkspaceResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumWorkspaceProperties"/>. </summary>
         /// <param name="providers"> List of Providers selected for this Workspace. </param>
         /// <param name="usable"> Whether the current workspace is ready to accept Jobs. </param>
         /// <param name="provisioningState"> Provisioning status field. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="managedOnBehalfOfConfiguration"> Managed On Behalf Of configuration. </param>
         /// <param name="managedStorageAccount"> ARM Resource Id of the managed storage account associated with this workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceResourceProperties(IList<QuantumProvider> providers, WorkspaceUsableStatus? usable, ProviderProvisioningStatus? provisioningState, ResourceIdentifier storageAccount, QuantumWorkspaceKind? workspaceKind, Uri endpointUri, bool? isApiKeyEnabled, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, ResourceIdentifier managedStorageAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuantumWorkspaceProperties(IList<QuantumProvider> providers, WorkspaceUsableStatus? usable, ProviderProvisioningStatus? provisioningState, ResourceIdentifier storageAccount, QuantumWorkspaceKind? workspaceKind, Uri endpointUri, bool? isApiKeyEnabled, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, ResourceIdentifier managedStorageAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Providers = providers;
             Usable = usable;

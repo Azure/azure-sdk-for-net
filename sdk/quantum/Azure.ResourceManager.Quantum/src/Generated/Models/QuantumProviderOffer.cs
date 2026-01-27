@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Information about an offering. A provider offering is an entity that offers Targets to run Azure Quantum Jobs. </summary>
-    public partial class QuantumProviderDescription
+    public partial class QuantumProviderOffer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuantumProviderDescription"/>. </summary>
-        internal QuantumProviderDescription()
+        /// <summary> Initializes a new instance of <see cref="QuantumProviderOffer"/>. </summary>
+        internal QuantumProviderOffer()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuantumProviderDescription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumProviderOffer"/>. </summary>
         /// <param name="id"> Unique provider's id. </param>
         /// <param name="name"> Provider's display name. </param>
         /// <param name="properties"> Provider properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuantumProviderDescription(string id, string name, QuantumProviderProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuantumProviderOffer(string id, string name, QuantumProviderOfferProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Quantum.Models
         public string Name { get; }
 
         /// <summary> Provider properties. </summary>
-        public QuantumProviderProperties Properties { get; }
+        public QuantumProviderOfferProperties Properties { get; }
     }
 }
