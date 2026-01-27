@@ -354,7 +354,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Numeric.Property.safeintAsString",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Numeric.Property"
               },
               "parameters": [
                 {
@@ -510,7 +511,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Numeric.Property.uint32AsStringOptional",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Numeric.Property"
               },
               "parameters": [
                 {
@@ -666,7 +668,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Numeric.Property.uint8AsString",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Numeric.Property"
               },
               "parameters": [
                 {
@@ -771,9 +774,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "22"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

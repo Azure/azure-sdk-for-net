@@ -3094,7 +3094,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknown.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -3196,7 +3197,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknown.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -3281,7 +3283,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "299",
@@ -3342,7 +3345,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknownDerived.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -3444,7 +3448,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknownDerived.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -3529,7 +3534,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "313",
@@ -3590,7 +3596,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknownDiscriminated.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -3692,7 +3699,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknownDiscriminated.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -3777,7 +3785,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "327",
@@ -3838,7 +3847,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknown.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -3940,7 +3950,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknown.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -4025,7 +4036,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "341",
@@ -4086,7 +4098,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknownDerived.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -4188,7 +4201,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknownDerived.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -4273,7 +4287,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "355",
@@ -4334,7 +4349,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknownDiscriminated.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -4436,7 +4452,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknownDiscriminated.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -4521,7 +4538,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "369",
@@ -4582,7 +4600,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsString.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -4684,7 +4703,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsString.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -4769,7 +4789,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "383",
@@ -4830,7 +4851,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsString.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -4932,7 +4954,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsString.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -5017,7 +5040,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "397",
@@ -5078,7 +5102,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadString.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -5180,7 +5205,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadString.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -5265,7 +5291,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "411",
@@ -5326,7 +5353,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsFloat.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -5428,7 +5456,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsFloat.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -5513,7 +5542,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "425",
@@ -5574,7 +5604,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsFloat.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -5676,7 +5707,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsFloat.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -5761,7 +5793,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "439",
@@ -5822,7 +5855,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadFloat.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -5924,7 +5958,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadFloat.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -6009,7 +6044,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "453",
@@ -6070,7 +6106,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsModel.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -6172,7 +6209,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsModel.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -6257,7 +6295,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "467",
@@ -6318,7 +6357,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsModel.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -6420,7 +6460,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsModel.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -6505,7 +6546,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "481",
@@ -6566,7 +6608,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadModel.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -6668,7 +6711,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadModel.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -6753,7 +6797,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "495",
@@ -6814,7 +6859,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsModelArray.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -6916,7 +6962,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsModelArray.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -7001,7 +7048,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "509",
@@ -7062,7 +7110,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsModelArray.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -7164,7 +7213,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsModelArray.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -7249,7 +7299,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "523",
@@ -7310,7 +7361,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadModelArray.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -7412,7 +7464,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadModelArray.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -7497,7 +7550,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "537",
@@ -7558,7 +7612,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentString.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -7660,7 +7715,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentString.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -7745,7 +7801,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "551",
@@ -7806,7 +7863,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentFloat.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -7908,7 +7966,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentFloat.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -7993,7 +8052,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "565",
@@ -8054,7 +8114,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentModel.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -8156,7 +8217,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentModel.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -8241,7 +8303,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "579",
@@ -8302,7 +8365,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentModelArray.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -8404,7 +8468,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentModelArray.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -8489,7 +8554,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "593",
@@ -8550,7 +8616,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadString.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -8652,7 +8719,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadString.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -8737,7 +8805,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "607",
@@ -8798,7 +8867,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadFloat.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -8900,7 +8970,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadFloat.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -8985,7 +9056,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "621",
@@ -9046,7 +9118,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModel.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -9148,7 +9221,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModel.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -9233,7 +9307,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "635",
@@ -9294,7 +9369,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModelArray.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -9396,7 +9472,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModelArray.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -9481,7 +9558,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "649",
@@ -9542,7 +9620,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.MultipleSpread.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -9644,7 +9723,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.MultipleSpread.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -9729,7 +9809,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "663",
@@ -9790,7 +9871,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordUnion.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -9892,7 +9974,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordUnion.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -9977,7 +10060,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "677",
@@ -10038,7 +10122,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -10140,7 +10225,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -10225,7 +10311,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "691",
@@ -10286,7 +10373,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion2.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -10388,7 +10476,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion2.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -10473,7 +10562,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "705",
@@ -10534,7 +10624,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion3.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -10636,7 +10727,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion3.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.AdditionalProperties"
               },
               "parameters": [
                 {
@@ -10721,9 +10813,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="infrastructureConfigProvider"> Information about the connected appliance. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="ResourceConnector.ResourceConnectorApplianceData"/> instance for mocking. </returns>
-        public static ResourceConnectorApplianceData ResourceConnectorApplianceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceConnectorDistro? distro = default, string provisioningState = default, string publicKey = default, ResourceConnectorStatus? status = default, string version = default, IEnumerable<ResourceConnectorEvent> events = default, ResourceConnectorNetworkProfile networkProfile = default, ApplianceProvider? infrastructureConfigProvider = default, ManagedServiceIdentity identity = default)
+        public static ResourceConnectorApplianceData ResourceConnectorApplianceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApplianceDistro? distro = default, string provisioningState = default, string publicKey = default, ApplianceStatus? status = default, string version = default, IEnumerable<ApplianceEvent> events = default, ApplianceNetworkProfile networkProfile = default, ApplianceProvider? infrastructureConfigProvider = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     publicKey,
                     status,
                     version,
-                    (events ?? new ChangeTrackingList<ResourceConnectorEvent>()).ToList(),
+                    (events ?? new ChangeTrackingList<ApplianceEvent>()).ToList(),
                     networkProfile,
                     null),
                 identity);
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="message"> Message is intended to be actionable and should be used to inform the user of the event. </param>
         /// <param name="severity"> Severity is the classification of the event to relay the importance of the event. </param>
         /// <param name="timestamp"> Timestamp is the time the event occurred. </param>
-        /// <returns> A new <see cref="Models.ResourceConnectorEvent"/> instance for mocking. </returns>
-        public static ResourceConnectorEvent ResourceConnectorEvent(string @type = default, string code = default, string status = default, string message = default, string severity = default, DateTimeOffset? timestamp = default)
+        /// <returns> A new <see cref="Models.ApplianceEvent"/> instance for mocking. </returns>
+        public static ApplianceEvent ApplianceEvent(string @type = default, string code = default, string status = default, string message = default, string severity = default, DateTimeOffset? timestamp = default)
         {
-            return new ResourceConnectorEvent(
+            return new ApplianceEvent(
                 @type,
                 code,
                 status,
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <summary> The List Cluster User Credential appliance. </summary>
         /// <param name="hybridConnectionConfig"> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
-        /// <returns> A new <see cref="Models.ApplianceClusterUserCredentialResult"/> instance for mocking. </returns>
-        public static ApplianceClusterUserCredentialResult ApplianceClusterUserCredentialResult(HybridConnectionConfig hybridConnectionConfig = default, IEnumerable<ApplianceCredentialKubeconfig> kubeconfigs = default)
+        /// <returns> A new <see cref="Models.ApplianceListCredentialResult"/> instance for mocking. </returns>
+        public static ApplianceListCredentialResult ApplianceListCredentialResult(HybridConnectionConfig hybridConnectionConfig = default, IEnumerable<ApplianceCredentialKubeconfig> kubeconfigs = default)
         {
             kubeconfigs ??= new ChangeTrackingList<ApplianceCredentialKubeconfig>();
 
-            return new ApplianceClusterUserCredentialResult(hybridConnectionConfig, kubeconfigs.ToList(), additionalBinaryDataProperties: null);
+            return new ApplianceListCredentialResult(hybridConnectionConfig, kubeconfigs.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </summary>
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="artifactProfiles"> Map of artifacts that contains a list of ArtifactProfile used to upload artifacts such as logs. </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
         /// <param name="sshKeys"> Map of Customer User Public, Private SSH Keys and Certificate when available. </param>
-        /// <returns> A new <see cref="Models.ApplianceClusterUserKeysResult"/> instance for mocking. </returns>
-        public static ApplianceClusterUserKeysResult ApplianceClusterUserKeysResult(IReadOnlyDictionary<string, ApplianceArtifactProfile> artifactProfiles = default, IEnumerable<ApplianceCredentialKubeconfig> kubeconfigs = default, IReadOnlyDictionary<string, ApplianceSshKey> sshKeys = default)
+        /// <returns> A new <see cref="Models.ApplianceListKeysResult"/> instance for mocking. </returns>
+        public static ApplianceListKeysResult ApplianceListKeysResult(IReadOnlyDictionary<string, ApplianceArtifactProfile> artifactProfiles = default, IEnumerable<ApplianceCredentialKubeconfig> kubeconfigs = default, IReadOnlyDictionary<string, ApplianceSshKey> sshKeys = default)
         {
             artifactProfiles ??= new ChangeTrackingDictionary<string, ApplianceArtifactProfile>();
             kubeconfigs ??= new ChangeTrackingList<ApplianceCredentialKubeconfig>();
             sshKeys ??= new ChangeTrackingDictionary<string, ApplianceSshKey>();
 
-            return new ApplianceClusterUserKeysResult(artifactProfiles, kubeconfigs.ToList(), sshKeys, additionalBinaryDataProperties: null);
+            return new ApplianceListKeysResult(artifactProfiles, kubeconfigs.ToList(), sshKeys, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Appliance ArtifactProfile definition. </summary>

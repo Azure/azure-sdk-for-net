@@ -516,7 +516,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Query.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Query"
               },
               "parameters": [
                 {
@@ -612,7 +613,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Query.rfc3339",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Query"
               },
               "parameters": [
                 {
@@ -708,7 +710,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Query.rfc7231",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Query"
               },
               "parameters": [
                 {
@@ -804,7 +807,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Query.unixTimestamp",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Query"
               },
               "parameters": [
                 {
@@ -889,7 +893,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Query.unixTimestampArray",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Query"
               },
               "parameters": [
                 {
@@ -955,7 +960,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "44"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "88",
@@ -1053,7 +1059,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Property.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Property"
               },
               "parameters": [
                 {
@@ -1209,7 +1216,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Property.rfc3339",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Property"
               },
               "parameters": [
                 {
@@ -1365,7 +1373,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Property.rfc7231",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Property"
               },
               "parameters": [
                 {
@@ -1521,7 +1530,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Property.unixTimestamp",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Property"
               },
               "parameters": [
                 {
@@ -1677,7 +1687,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Property.unixTimestampArray",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Property"
               },
               "parameters": [
                 {
@@ -1782,7 +1793,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "44"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "132",
@@ -1847,7 +1859,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Header.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Header"
               },
               "parameters": [
                 {
@@ -1943,7 +1956,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Header.rfc3339",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Header"
               },
               "parameters": [
                 {
@@ -2039,7 +2053,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Header.rfc7231",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Header"
               },
               "parameters": [
                 {
@@ -2135,7 +2150,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Header.unixTimestamp",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Header"
               },
               "parameters": [
                 {
@@ -2221,7 +2237,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.Header.unixTimestampArray",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.Header"
               },
               "parameters": [
                 {
@@ -2287,7 +2304,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "44"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "172",
@@ -2343,7 +2361,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.ResponseHeader.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.ResponseHeader"
               },
               "parameters": [],
               "response": {},
@@ -2400,7 +2419,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.ResponseHeader.rfc3339",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.ResponseHeader"
               },
               "parameters": [],
               "response": {},
@@ -2457,7 +2477,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.ResponseHeader.rfc7231",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.ResponseHeader"
               },
               "parameters": [],
               "response": {},
@@ -2514,7 +2535,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Datetime.ResponseHeader.unixTimestamp",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Datetime.ResponseHeader"
               },
               "parameters": [],
               "response": {},
@@ -2562,9 +2584,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "44"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

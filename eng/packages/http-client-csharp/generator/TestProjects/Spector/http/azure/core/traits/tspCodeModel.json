@@ -851,7 +851,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Traits"
           },
           "parameters": [
             {
@@ -1267,7 +1268,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Traits"
           },
           "parameters": [
             {
@@ -1477,7 +1479,8 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

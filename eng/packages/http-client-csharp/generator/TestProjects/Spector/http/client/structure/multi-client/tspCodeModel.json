@@ -125,7 +125,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedOne",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -162,7 +163,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedThree",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -199,7 +201,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedFive",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -253,7 +256,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     },
     {
       "$id": "18",
@@ -289,7 +293,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedTwo",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -326,7 +331,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedFour",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -363,7 +369,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedSix",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -417,7 +424,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

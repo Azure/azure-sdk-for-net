@@ -249,6 +249,7 @@ namespace Azure.IoT.ModelsRepository.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/55075")]
         public async Task GetModelDependenciesUseMetadataEnsureTryFromExpanded()
         {
             const string dtmi = "dtmi:com:example:DanglingExpanded;1";

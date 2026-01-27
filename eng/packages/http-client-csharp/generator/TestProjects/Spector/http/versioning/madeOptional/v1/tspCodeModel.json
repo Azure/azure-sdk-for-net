@@ -257,7 +257,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.MadeOptional.test",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.MadeOptional"
           },
           "parameters": [
             {
@@ -400,7 +401,8 @@
       "crossLanguageDefinitionId": "Versioning.MadeOptional",
       "apiVersions": [
         "v1"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             // validation request.
             if (RequestValidator.IsValidationRequest(
                     request.Method,
-                    request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.WebHookRequestOrigin),
+                    request.Headers[Constants.Headers.WebHookRequestOrigin],
                     out var requestHosts) == true)
             {
                 return new PreflightRequest(validator.IsValidHost(requestHosts));

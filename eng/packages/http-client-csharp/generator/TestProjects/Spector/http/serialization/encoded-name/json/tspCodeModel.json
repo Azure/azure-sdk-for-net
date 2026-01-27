@@ -194,7 +194,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Serialization.EncodedName.Json.Property"
               },
               "parameters": [
                 {
@@ -290,7 +291,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Serialization.EncodedName.Json.Property"
               },
               "parameters": [
                 {
@@ -360,9 +362,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

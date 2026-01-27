@@ -182,7 +182,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Parameters.BodyOptionality.requiredExplicit",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Parameters.BodyOptionality"
           },
           "parameters": [
             {
@@ -295,7 +296,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Parameters.BodyOptionality.requiredImplicit",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Parameters.BodyOptionality"
           },
           "parameters": [
             {
@@ -456,7 +458,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.set",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.BodyOptionality.OptionalExplicit"
               },
               "parameters": [
                 {
@@ -569,7 +572,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.omit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.BodyOptionality.OptionalExplicit"
               },
               "parameters": [
                 {
@@ -653,9 +657,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "12"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

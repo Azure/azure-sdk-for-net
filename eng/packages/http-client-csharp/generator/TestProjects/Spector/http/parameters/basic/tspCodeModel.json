@@ -230,7 +230,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Basic"
               },
               "parameters": [
                 {
@@ -314,7 +315,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "11"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "25",
@@ -390,7 +392,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Basic"
               },
               "parameters": [
                 {
@@ -478,9 +481,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "11"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

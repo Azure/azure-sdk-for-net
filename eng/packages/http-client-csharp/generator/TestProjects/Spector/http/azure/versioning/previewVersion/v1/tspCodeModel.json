@@ -445,7 +445,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Versioning.PreviewVersion"
           },
           "parameters": [
             {
@@ -650,7 +651,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": false,
             "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Versioning.PreviewVersion"
           },
           "parameters": [
             {
@@ -863,7 +865,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Versioning.PreviewVersion"
           },
           "parameters": [
             {
@@ -1007,7 +1010,8 @@
         "2024-01-01",
         "2024-06-01",
         "2024-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

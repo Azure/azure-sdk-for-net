@@ -125,7 +125,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedOne",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -162,7 +163,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedThree",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -199,7 +201,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedFive",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -289,7 +292,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedTwo",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -326,7 +330,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedFour",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -363,7 +368,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedSix",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -420,9 +426,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

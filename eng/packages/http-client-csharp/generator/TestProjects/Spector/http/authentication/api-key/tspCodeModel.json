@@ -79,7 +79,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.ApiKey.valid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.ApiKey"
           },
           "parameters": [],
           "response": {},
@@ -118,7 +119,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.ApiKey.invalid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.ApiKey"
           },
           "parameters": [],
           "response": {},
@@ -163,7 +165,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.ApiKey",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ],
   "auth": {

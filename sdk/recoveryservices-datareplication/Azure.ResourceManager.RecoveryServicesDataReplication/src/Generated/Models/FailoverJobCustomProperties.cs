@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -14,21 +15,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public partial class FailoverJobCustomProperties : DataReplicationJobCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="FailoverJobCustomProperties"/>. </summary>
-        internal FailoverJobCustomProperties()
+        internal FailoverJobCustomProperties() : base("FailoverJobDetails")
         {
             ProtectedItemDetails = new ChangeTrackingList<FailoverProtectedItemProperties>();
-            InstanceType = "FailoverJobDetails";
         }
 
         /// <summary> Initializes a new instance of <see cref="FailoverJobCustomProperties"/>. </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationJobCustomProperties. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="protectedItemDetails"> Gets or sets the failed over protected item details. </param>
-        internal FailoverJobCustomProperties(string instanceType, AffectedObjectDetails affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<FailoverProtectedItemProperties> protectedItemDetails) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
+        internal FailoverJobCustomProperties(string instanceType, AffectedObjectDetails affectedObjectDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<FailoverProtectedItemProperties> protectedItemDetails) : base(instanceType, affectedObjectDetails, additionalBinaryDataProperties)
         {
             ProtectedItemDetails = protectedItemDetails;
-            InstanceType = instanceType ?? "FailoverJobDetails";
         }
 
         /// <summary> Gets or sets the failed over protected item details. </summary>

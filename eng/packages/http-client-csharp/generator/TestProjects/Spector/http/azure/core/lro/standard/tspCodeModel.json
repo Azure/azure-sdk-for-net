@@ -1154,7 +1154,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.createOrReplace",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Lro.Standard"
           },
           "parameters": [
             {
@@ -1385,7 +1386,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.delete",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Lro.Standard"
           },
           "parameters": [
             {
@@ -1594,7 +1596,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.export",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Lro.Standard"
           },
           "parameters": [
             {
@@ -1753,7 +1756,8 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

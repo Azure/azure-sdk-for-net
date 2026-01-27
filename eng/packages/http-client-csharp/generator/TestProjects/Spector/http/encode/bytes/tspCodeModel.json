@@ -686,7 +686,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Query.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Query"
               },
               "parameters": [
                 {
@@ -768,7 +769,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Query.base64",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Query"
               },
               "parameters": [
                 {
@@ -850,7 +852,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Query.base64url",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Query"
               },
               "parameters": [
                 {
@@ -928,7 +931,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Query.base64urlArray",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Query"
               },
               "parameters": [
                 {
@@ -994,7 +998,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "67"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "97",
@@ -1092,7 +1097,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Property.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Property"
               },
               "parameters": [
                 {
@@ -1248,7 +1254,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Property.base64",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Property"
               },
               "parameters": [
                 {
@@ -1404,7 +1411,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Property.base64url",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Property"
               },
               "parameters": [
                 {
@@ -1560,7 +1568,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Property.base64urlArray",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Property"
               },
               "parameters": [
                 {
@@ -1665,7 +1674,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "67"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "133",
@@ -1723,7 +1733,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Header.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Header"
               },
               "parameters": [
                 {
@@ -1805,7 +1816,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Header.base64",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Header"
               },
               "parameters": [
                 {
@@ -1887,7 +1899,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Header.base64url",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Header"
               },
               "parameters": [
                 {
@@ -1966,7 +1979,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.Header.base64urlArray",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.Header"
               },
               "parameters": [
                 {
@@ -2032,7 +2046,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "67"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "159",
@@ -2112,7 +2127,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.RequestBody"
               },
               "parameters": [
                 {
@@ -2232,7 +2248,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.octetStream",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.RequestBody"
               },
               "parameters": [
                 {
@@ -2351,7 +2368,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.customContentType",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.RequestBody"
               },
               "parameters": [
                 {
@@ -2471,7 +2489,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.base64",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.RequestBody"
               },
               "parameters": [
                 {
@@ -2592,7 +2611,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.base64url",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.RequestBody"
               },
               "parameters": [
                 {
@@ -2680,7 +2700,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "67"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "203",
@@ -2743,7 +2764,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.ResponseBody"
               },
               "parameters": [
                 {
@@ -2837,7 +2859,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.octetStream",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.ResponseBody"
               },
               "parameters": [
                 {
@@ -2931,7 +2954,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.customContentType",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.ResponseBody"
               },
               "parameters": [
                 {
@@ -3026,7 +3050,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.base64",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.ResponseBody"
               },
               "parameters": [
                 {
@@ -3129,7 +3154,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.base64url",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Bytes.ResponseBody"
               },
               "parameters": [
                 {
@@ -3199,9 +3225,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "67"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

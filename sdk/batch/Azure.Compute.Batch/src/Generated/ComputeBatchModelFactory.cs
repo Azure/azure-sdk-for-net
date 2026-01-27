@@ -144,11 +144,9 @@ namespace Azure.Compute.Batch
         /// should only be used when you hold valid on-premises licenses for the Compute
         /// Nodes which will be deployed. If omitted, no on-premises licensing discount is
         /// applied. Values are:
-        /// 
         ///  Windows_Server - The on-premises license is for Windows
         /// Server.
         ///  Windows_Client - The on-premises license is for Windows Client.
-        /// 
         /// </param>
         /// <param name="containerConfiguration"> The container configuration for the Pool. If specified, setup is performed on each Compute Node in the Pool to allow Tasks to run in containers. All regular Tasks and Job manager Tasks run on this Pool must specify the containerSettings property, and all other Tasks may specify it. </param>
         /// <param name="diskEncryptionConfiguration"> The disk encryption configuration for the pool. If specified, encryption is performed on each node in the pool during node provisioning. </param>
@@ -255,8 +253,8 @@ namespace Azure.Compute.Batch
             return new DiskEncryptionSetParameters(id, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Specifies the security profile settings for the managed disk. **Note**: It can only be set for Confidential VMs and required when using Confidential VMs. </summary>
-        /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. **Note**: It can be set for only Confidential VMs and is required when using Confidential VMs. </param>
+        /// <summary> Specifies the security profile settings for the managed disk. <b>Note</b>: It can only be set for Confidential VMs and required when using Confidential VMs. </summary>
+        /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. <b>Note</b>: It can be set for only Confidential VMs and is required when using Confidential VMs. </param>
         /// <returns> A new <see cref="Batch.BatchVmDiskSecurityProfile"/> instance for mocking. </returns>
         public static BatchVmDiskSecurityProfile BatchVmDiskSecurityProfile(SecurityEncryptionTypes? securityEncryptionType = default)
         {
@@ -509,7 +507,7 @@ namespace Azure.Compute.Batch
         /// <param name="priority"> The priority for this rule. Priorities within a Pool must be unique and are evaluated in order of priority. The lower the number the higher the priority. For example, rules could be specified with order numbers of 150, 250, and 350. The rule with the order number of 150 takes precedence over the rule that has an order of 250. Allowed priorities are 150 to 4096. If any reserved or duplicate values are provided the request fails with HTTP status code 400. </param>
         /// <param name="access"> The action that should be taken for a specified IP address, subnet range or tag. </param>
         /// <param name="sourceAddressPrefix"> The source address prefix or tag to match for the rule. Valid values are a single IP address (i.e. 10.10.10.10), IP subnet (i.e. 192.168.1.0/24), default tag, or * (for all addresses).  If any other values are provided the request fails with HTTP status code 400. </param>
-        /// <param name="sourcePortRanges"> The source port ranges to match for the rule. Valid values are '*' (for all ports 0 - 65535), a specific port (i.e. 22), or a port range (i.e. 100-200). The ports must be in the range of 0 to 65535. Each entry in this collection must not overlap any other entry (either a range or an individual port). If any other values are provided the request fails with HTTP status code 400. The default value is '*'. </param>
+        /// <param name="sourcePortRanges"> The source port ranges to match for the rule. Valid values are '<i>' (for all ports 0 - 65535), a specific port (i.e. 22), or a port range (i.e. 100-200). The ports must be in the range of 0 to 65535. Each entry in this collection must not overlap any other entry (either a range or an individual port). If any other values are provided the request fails with HTTP status code 400. The default value is '</i>'. </param>
         /// <returns> A new <see cref="Batch.NetworkSecurityGroupRule"/> instance for mocking. </returns>
         public static NetworkSecurityGroupRule NetworkSecurityGroupRule(int priority = default, NetworkSecurityGroupRuleAccess access = default, string sourceAddressPrefix = default, IEnumerable<string> sourcePortRanges = default)
         {
@@ -808,7 +806,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Describes an upgrade policy - automatic, manual, or rolling. </summary>
-        /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; **Automatic** - All virtual machines in the scale set are automatically updated at the same time.&lt;br /&gt;&lt;br /&gt; **Rolling** - Scale set performs updates in batches with an optional pause time in between. </param>
+        /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>Manual</b> - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; <b>Automatic</b> - All virtual machines in the scale set are automatically updated at the same time.&lt;br /&gt;&lt;br /&gt; <b>Rolling</b> - Scale set performs updates in batches with an optional pause time in between. </param>
         /// <param name="automaticOsUpgradePolicy"> Configuration parameters used for performing automatic OS Upgrade. The configuration parameters used for performing automatic OS upgrade. </param>
         /// <param name="rollingUpgradePolicy"> The configuration parameters used while performing a rolling upgrade. </param>
         /// <returns> A new <see cref="Batch.UpgradePolicy"/> instance for mocking. </returns>
@@ -1376,7 +1374,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> On every file uploads, Batch service writes two log files to the compute node, 'fileuploadout.txt' and 'fileuploaderr.txt'. These log files are used to learn more about a specific failure. </summary>
-        /// <param name="filePattern"> A pattern indicating which file(s) to upload. Both relative and absolute paths are supported. Relative paths are relative to the Task working directory. The following wildcards are supported: * matches 0 or more characters (for example pattern abc* would match abc or abcdef), ** matches any directory, ? matches any single character, [abc] matches one character in the brackets, and [a-c] matches one character in the range. Brackets can include a negation to match any character not specified (for example [!abc] matches any character but a, b, or c). If a file name starts with "." it is ignored by default but may be matched by specifying it explicitly (for example *.gif will not match .a.gif, but .*.gif will). A simple example: **\*.txt matches any file that does not start in '.' and ends with .txt in the Task working directory or any subdirectory. If the filename contains a wildcard character it can be escaped using brackets (for example abc[*] would match a file named abc*). Note that both \ and / are treated as directory separators on Windows, but only / is on Linux. Environment variables (%var% on Windows or $var on Linux) are expanded prior to the pattern being applied. </param>
+        /// <param name="filePattern"> A pattern indicating which file(s) to upload. Both relative and absolute paths are supported. Relative paths are relative to the Task working directory. The following wildcards are supported: <i> matches 0 or more characters (for example pattern abc</i> would match abc or abcdef), ** matches any directory, ? matches any single character, [abc] matches one character in the brackets, and [a-c] matches one character in the range. Brackets can include a negation to match any character not specified (for example [!abc] matches any character but a, b, or c). If a file name starts with "." it is ignored by default but may be matched by specifying it explicitly (for example <i>.gif will not match .a.gif, but .</i>.gif will). A simple example: **\<i>.txt matches any file that does not start in '.' and ends with .txt in the Task working directory or any subdirectory. If the filename contains a wildcard character it can be escaped using brackets (for example abc[</i>] would match a file named abc*). Note that both \ and / are treated as directory separators on Windows, but only / is on Linux. Environment variables (%var% on Windows or $var on Linux) are expanded prior to the pattern being applied. </param>
         /// <param name="destination"> The destination for the output file(s). </param>
         /// <param name="uploadOptions"> Additional options for the upload operation, including under what conditions to perform the upload. </param>
         /// <returns> A new <see cref="Batch.OutputFile"/> instance for mocking. </returns>

@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxSecret : IUtf8JsonSerializable, IJsonModel<DataBoxSecret>
+    /// <summary> The secrets related to a DataBox. </summary>
+    public partial class DataBoxSecret : IJsonModel<DataBoxSecret>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSecret>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxSecret>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSecret>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxSecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxSecret)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(DeviceSerialNumber))
             {
                 writer.WritePropertyName("deviceSerialNumber"u8);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 writer.WritePropertyName("networkConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (var item in NetworkConfigurations)
+                foreach (ApplianceNetworkConfiguration item in NetworkConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 writer.WritePropertyName("accountCredentialDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in AccountCredentialDetails)
+                foreach (DataBoxAccountCredentialDetails item in AccountCredentialDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +86,27 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxSecret IJsonModel<DataBoxSecret>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxSecret IJsonModel<DataBoxSecret>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxSecret JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSecret>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxSecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxSecret)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxSecret(document.RootElement, options);
         }
 
-        internal static DataBoxSecret DeserializeDataBoxSecret(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxSecret DeserializeDataBoxSecret(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,47 +116,46 @@ namespace Azure.ResourceManager.DataBox.Models
             IReadOnlyList<ApplianceNetworkConfiguration> networkConfigurations = default;
             string encodedValidationCertPubKey = default;
             IReadOnlyList<DataBoxAccountCredentialDetails> accountCredentialDetails = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceSerialNumber"u8))
+                if (prop.NameEquals("deviceSerialNumber"u8))
                 {
-                    deviceSerialNumber = property.Value.GetString();
+                    deviceSerialNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("devicePassword"u8))
+                if (prop.NameEquals("devicePassword"u8))
                 {
-                    devicePassword = property.Value.GetString();
+                    devicePassword = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkConfigurations"u8))
+                if (prop.NameEquals("networkConfigurations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ApplianceNetworkConfiguration> array = new List<ApplianceNetworkConfiguration>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ApplianceNetworkConfiguration.DeserializeApplianceNetworkConfiguration(item, options));
                     }
                     networkConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("encodedValidationCertPubKey"u8))
+                if (prop.NameEquals("encodedValidationCertPubKey"u8))
                 {
-                    encodedValidationCertPubKey = property.Value.GetString();
+                    encodedValidationCertPubKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountCredentialDetails"u8))
+                if (prop.NameEquals("accountCredentialDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataBoxAccountCredentialDetails> array = new List<DataBoxAccountCredentialDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataBoxAccountCredentialDetails.DeserializeDataBoxAccountCredentialDetails(item, options));
                     }
@@ -160,23 +164,25 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxSecret(
                 deviceSerialNumber,
                 devicePassword,
                 networkConfigurations ?? new ChangeTrackingList<ApplianceNetworkConfiguration>(),
                 encodedValidationCertPubKey,
                 accountCredentialDetails ?? new ChangeTrackingList<DataBoxAccountCredentialDetails>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataBoxSecret>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSecret>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxSecret>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxSecret>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -186,15 +192,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxSecret IPersistableModel<DataBoxSecret>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSecret>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxSecret IPersistableModel<DataBoxSecret>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxSecret PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxSecret>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxSecret(document.RootElement, options);
                     }
                 default:
@@ -202,6 +213,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxSecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -583,7 +583,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction",
-            "decorators": []
+            "decorators": [],
+            "namespace": "AzureExampleBasicClient"
           },
           "parameters": [
             {
@@ -760,7 +761,8 @@
       "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

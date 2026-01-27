@@ -520,7 +520,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.String.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -625,7 +626,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.String.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -713,7 +715,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "72",
@@ -786,7 +789,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.Boolean.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -891,7 +895,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.Boolean.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -979,7 +984,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "89",
@@ -1052,7 +1058,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.Unknown.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -1157,7 +1164,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.Unknown.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -1245,7 +1253,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "106",
@@ -1317,7 +1326,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.DecimalType.responseBody",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -1419,7 +1429,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.DecimalType.requestBody",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -1516,7 +1527,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.DecimalType.requestParameter",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -1586,7 +1598,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "129",
@@ -1658,7 +1671,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.responseBody",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -1760,7 +1774,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.requestBody",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -1857,7 +1872,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.requestParameter",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -1927,7 +1943,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "152",
@@ -1998,7 +2015,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.DecimalVerify.prepareVerify",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -2100,7 +2118,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.DecimalVerify.verify",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -2187,7 +2206,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "170",
@@ -2247,7 +2267,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.Decimal128Verify.prepareVerify",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -2349,7 +2370,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Scalar.Decimal128Verify.verify",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Scalar"
               },
               "parameters": [
                 {
@@ -2404,9 +2426,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -12,13 +12,10 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Choices for filter-lang value in a POST request.
-    /// 
     /// Based on
     /// https://github.com/stac-api-extensions/filter#queryables
-    /// 
     /// Note the addition of cql2-json, which is used by the pgstac backend,
     /// but is not included in the spec above.
-    /// 
     /// Defines the supported filter languages for STAC API queries.
     /// </summary>
     public readonly partial struct FilterLanguage : IEquatable<FilterLanguage>

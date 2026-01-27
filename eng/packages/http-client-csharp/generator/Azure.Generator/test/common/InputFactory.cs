@@ -592,6 +592,7 @@ namespace Azure.Generator.Tests.Common
         /// <param name="requestMediaTypes"></param>
         /// <param name="path"></param>
         /// <param name="decorators"></param>
+        /// <param name="ns"></param>
         /// <returns></returns>
         public static InputOperation Operation(
             string name,
@@ -600,7 +601,8 @@ namespace Azure.Generator.Tests.Common
             IEnumerable<InputOperationResponse>? responses = null,
             IEnumerable<string>? requestMediaTypes = null,
             string? path = null,
-            IReadOnlyList<InputDecoratorInfo>? decorators = null)
+            IReadOnlyList<InputDecoratorInfo>? decorators = null,
+            string? ns = null)
         {
             var operation = new InputOperation(
                 name,
@@ -619,7 +621,8 @@ namespace Azure.Generator.Tests.Common
                 false,
                 true,
                 true,
-                name);
+                name,
+                ns);
             if (decorators is not null)
             {
                 var decoratorProperty = typeof(InputOperation).GetProperty(nameof(InputOperation.Decorators));
@@ -657,8 +660,9 @@ namespace Azure.Generator.Tests.Common
         /// <param name="parent"></param>
         /// <param name="decorators"></param>
         /// <param name="crossLanguageDefinitionId"></param>
+        /// <param name="isMultiServiceClient"></param>
         /// <returns></returns>
-        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null, bool isMultiServiceClient = false)
         {
             // when this client has parent, we add the constructed client into the `children` list of the parent
             var clientChildren = new List<InputClient>();
@@ -668,12 +672,12 @@ namespace Azure.Generator.Tests.Common
                 crossLanguageDefinitionId ?? $"{clientNamespace}.{name}",
                 string.Empty,
                 doc ?? $"{name} description",
+                isMultiServiceClient,
                 methods is null ? [] : [.. methods],
                 parameters is null ? [] : [.. parameters],
                 parent,
                 clientChildren,
-                []
-                );
+                []);
             _childClientsCache[client] = clientChildren;
             // when we have a parent, we need to find the children list of this parent client and update accordingly.
             if (parent != null && _childClientsCache.TryGetValue(parent, out var children))

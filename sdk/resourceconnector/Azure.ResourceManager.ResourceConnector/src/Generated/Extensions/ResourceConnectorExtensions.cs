@@ -151,34 +151,34 @@ namespace Azure.ResourceManager.ResourceConnector
         /// Gets the telemetry config.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetTelemetryConfigApplianceAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetApplianceTelemetryConfigAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplianceTelemetryConfigResult>> GetApplianceTelemetryConfigAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetTelemetryConfigApplianceAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetApplianceTelemetryConfigAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the telemetry config.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetTelemetryConfigAppliance(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetApplianceTelemetryConfig(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<ApplianceTelemetryConfigResult> GetApplianceTelemetryConfig(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetTelemetryConfigAppliance(cancellationToken);
+            return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetApplianceTelemetryConfig(cancellationToken);
         }
     }
 }

@@ -17,7 +17,6 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -32,7 +31,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         public bool IsFakeLongRunningOperation { get; }
 
         protected readonly TypeProvider _enclosingType;
-        protected readonly RequestPathPattern _contextualPath;
+        protected readonly OperationContext _operationContext;
         protected readonly ClientProvider _restClient;
         protected readonly InputServiceMethod _serviceMethod;
         protected readonly MethodProvider _convenienceMethod;
@@ -48,11 +47,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private protected readonly ResourceClientProvider? _returnBodyResourceClient;
         private readonly FormattableString? _description;
 
+        private readonly ParameterContextRegistry _parameterMappings;
+
         /// <summary>
         /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
         /// </summary>
         /// <param name="enclosingType">The enclosing type of this operation. </param>
-        /// <param name="contextualPath">The contextual path of the enclosing type. </param>
+        /// <param name="operationContext">The contextual path of the enclosing type. </param>
         /// <param name="restClientInfo">The rest client information containing the client provider and related fields. </param>
         /// <param name="method">The input service method that we are building from. </param>
         /// <param name="isAsync">Whether this method is an async method. </param>
@@ -61,7 +62,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
-            RequestPathPattern contextualPath,
+            OperationContext operationContext,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
@@ -70,9 +71,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             bool forceLro = false)
         {
             _enclosingType = enclosingType;
-            _contextualPath = contextualPath;
+            _operationContext = operationContext;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
+            _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _isAsync = isAsync;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             bool isLongRunningOperation = false;
@@ -197,7 +199,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _contextualPath, _enclosingType, IsFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMappings, _enclosingType, IsFakeLongRunningOperation);
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -227,7 +229,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
 
             // Populate arguments for the REST client method call
-            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType);
+            var arguments = _parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
@@ -416,7 +418,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             if (_returnBodyResourceClient != null)
             {
                 // Resource type - pass client to operation source constructor
-                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_returnBodyResourceClient.ResourceData.Type].Type;
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_returnBodyResourceClient.Type].Type;
                 operationSourceInstance = New.Instance(operationSourceType, This.As<ArmResource>().Client());
             }
             else if (_originalBodyType != null)

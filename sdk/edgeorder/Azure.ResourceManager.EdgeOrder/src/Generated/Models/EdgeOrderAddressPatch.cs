@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> The Address update parameters. </summary>
     public partial class EdgeOrderAddressPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressPatch"/>. </summary>
         public EdgeOrderAddressPatch()
@@ -52,23 +24,54 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressPatch"/>. </summary>
+        /// <param name="properties"> Properties of an address to be updated. </param>
         /// <param name="tags"> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </param>
-        /// <param name="shippingAddress"> Shipping details for the address. </param>
-        /// <param name="contactDetails"> Contact details for the address. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderAddressPatch(IDictionary<string, string> tags, EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderAddressPatch(AddressUpdateProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Tags = tags;
-            ShippingAddress = shippingAddress;
-            ContactDetails = contactDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of an address to be updated. </summary>
+        internal AddressUpdateProperties Properties { get; set; }
 
         /// <summary> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Shipping details for the address. </summary>
-        public EdgeOrderShippingAddress ShippingAddress { get; set; }
+        public EdgeOrderShippingAddress ShippingAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShippingAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AddressUpdateProperties();
+                }
+                Properties.ShippingAddress = value;
+            }
+        }
+
         /// <summary> Contact details for the address. </summary>
-        public EdgeOrderAddressContactDetails ContactDetails { get; set; }
+        public EdgeOrderAddressContactDetails ContactDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContactDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AddressUpdateProperties();
+                }
+                Properties.ContactDetails = value;
+            }
+        }
     }
 }

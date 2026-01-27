@@ -502,7 +502,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Visibility.getModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Visibility"
           },
           "parameters": [
             {
@@ -657,7 +658,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Visibility.headModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Visibility"
           },
           "parameters": [
             {
@@ -770,7 +772,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Visibility.putModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Visibility"
           },
           "parameters": [
             {
@@ -883,7 +886,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": false,
             "crossLanguageDefinitionId": "Type.Model.Visibility.patchModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Visibility"
           },
           "parameters": [
             {
@@ -996,7 +1000,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Visibility.postModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Visibility"
           },
           "parameters": [
             {
@@ -1109,7 +1114,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Visibility.deleteModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Visibility"
           },
           "parameters": [
             {
@@ -1244,7 +1250,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Visibility.putReadOnlyModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Visibility"
           },
           "parameters": [
             {
@@ -1346,7 +1353,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Visibility",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

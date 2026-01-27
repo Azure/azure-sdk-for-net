@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b6472ffd34d5d4a155101b41b4eb1f356abff600/specification/storage/data-plane/Microsoft.BlobStorage/stable/2026-02-06/blob.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be46becafeb29aa993898709e35759d3643b2809/specification/storage/data-plane/Microsoft.BlobStorage/stable/2026-04-06/blob.json
 generation1-convenience-client: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
@@ -34,7 +34,7 @@ directive:
         if (property.includes('/{containerName}/{blob}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ContainerName") && false == param['$ref'].endsWith("#/parameters/Blob"))});
-        } 
+        }
         else if (property.includes('/{containerName}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ContainerName"))});
@@ -135,6 +135,17 @@ directive:
     delete $.EncryptionScope["x-ms-parameter-grouping"];
 ```
 
+### Remove source CPK parameter grouping
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.SourceEncryptionKey["x-ms-parameter-grouping"];
+    delete $.SourceEncryptionKeySha256["x-ms-parameter-grouping"];
+    delete $.SourceEncryptionAlgorithm["x-ms-parameter-grouping"];
+```
+
 ### Fix 304s
 ``` yaml
 directive:
@@ -162,7 +173,7 @@ directive:
             var newName = property.replace('/{containerName}/{blob}', '');
             $[newName] = $[oldName];
             delete $[oldName];
-        } 
+        }
         else if (property.includes('/{containerName}'))
         {
             var oldName = property;

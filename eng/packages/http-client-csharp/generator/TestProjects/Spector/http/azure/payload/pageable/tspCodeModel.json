@@ -216,7 +216,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Payload.Pageable"
           },
           "parameters": [
             {
@@ -322,7 +323,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

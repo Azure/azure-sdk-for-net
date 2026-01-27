@@ -547,7 +547,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
               },
               "parameters": [
                 {
@@ -705,7 +706,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
               },
               "parameters": [
                 {
@@ -810,7 +812,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "38"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "62",
@@ -910,7 +913,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
               },
               "parameters": [
                 {
@@ -1068,7 +1072,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
               },
               "parameters": [
                 {
@@ -1173,7 +1178,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "38"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "82",
@@ -1273,7 +1279,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
               },
               "parameters": [
                 {
@@ -1378,9 +1385,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "38"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }
