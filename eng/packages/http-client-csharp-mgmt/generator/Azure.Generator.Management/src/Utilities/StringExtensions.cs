@@ -44,10 +44,6 @@ namespace Azure.Generator.Management.Utilities
             }
 
             var words = resourceName.SplitByCamelCase().ToArray();
-            if (words.Length == 0)
-            {
-                return resourceName;
-            }
 
             // Pluralize only the last word
             words[words.Length - 1] = words[words.Length - 1].Pluralize(inputIsKnownToBeSingular: false);
