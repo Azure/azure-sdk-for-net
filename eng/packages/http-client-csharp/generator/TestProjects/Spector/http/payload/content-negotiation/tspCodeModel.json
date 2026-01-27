@@ -386,7 +386,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsPng",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.ContentNegotiation.SameBody"
               },
               "parameters": [
                 {
@@ -480,7 +481,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsJpeg",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.ContentNegotiation.SameBody"
               },
               "parameters": [
                 {
@@ -622,7 +624,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsPng",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.ContentNegotiation.DifferentBody"
               },
               "parameters": [
                 {
@@ -712,7 +715,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsJson",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.ContentNegotiation.DifferentBody"
               },
               "parameters": [
                 {

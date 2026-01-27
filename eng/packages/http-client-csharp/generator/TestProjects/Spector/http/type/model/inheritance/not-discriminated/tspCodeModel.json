@@ -263,7 +263,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NotDiscriminated"
           },
           "parameters": [
             {
@@ -359,7 +360,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NotDiscriminated"
           },
           "parameters": [
             {
@@ -480,7 +482,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NotDiscriminated"
           },
           "parameters": [
             {

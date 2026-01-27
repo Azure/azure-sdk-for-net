@@ -565,7 +565,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {
@@ -664,7 +665,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {
@@ -760,7 +762,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getRecursiveModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {
@@ -859,7 +862,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {
@@ -955,7 +959,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getMissingDiscriminator",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {
@@ -1037,7 +1042,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getWrongDiscriminator",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {

@@ -257,7 +257,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Usage.input",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Usage"
           },
           "parameters": [
             {
@@ -353,7 +354,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Usage.output",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Usage"
           },
           "parameters": [
             {
@@ -474,7 +476,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Usage"
           },
           "parameters": [
             {

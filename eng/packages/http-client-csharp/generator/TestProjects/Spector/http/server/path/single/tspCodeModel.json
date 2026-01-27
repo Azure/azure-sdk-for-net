@@ -40,7 +40,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Path.Single.myOp",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Path.Single"
           },
           "parameters": [],
           "response": {},

@@ -55,24 +55,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.FeedbackRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Format : System.IEquatable<Azure.AI.Language.QuestionAnswering.Authoring.Format>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Format(string value) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.Format Excel { get { throw null; } }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.Format Json { get { throw null; } }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.Format Tsv { get { throw null; } }
-        public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.Format other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.Format left, Azure.AI.Language.QuestionAnswering.Authoring.Format right) { throw null; }
-        public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.Format (string value) { throw null; }
-        public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.Format? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Language.QuestionAnswering.Authoring.Format left, Azure.AI.Language.QuestionAnswering.Authoring.Format right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImportContentType : System.IEquatable<Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType>
     {
         private readonly object _dummy;
@@ -146,6 +128,24 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.JobStatus (string value) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.JobStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus left, Azure.AI.Language.QuestionAnswering.Authoring.JobStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KnowledgeBaseFormat : System.IEquatable<Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KnowledgeBaseFormat(string value) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat Excel { get { throw null; } }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat Json { get { throw null; } }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat Tsv { get { throw null; } }
+        public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat left, Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat right) { throw null; }
+        public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat (string value) { throw null; }
+        public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat left, Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
     public static partial class LanguageQuestionAnsweringAuthoringModelFactory
@@ -328,9 +328,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public virtual Azure.Operation DeployProject(Azure.WaitUntil waitUntil, string projectName, string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeployProjectAsync(Azure.WaitUntil waitUntil, string projectName, string deploymentName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeployProjectAsync(Azure.WaitUntil waitUntil, string projectName, string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation Export(Azure.WaitUntil waitUntil, string projectName, Azure.AI.Language.QuestionAnswering.Authoring.Format? format = default(Azure.AI.Language.QuestionAnswering.Authoring.Format?), Azure.AI.Language.QuestionAnswering.Authoring.AssetKind? assetKind = default(Azure.AI.Language.QuestionAnswering.Authoring.AssetKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation Export(Azure.WaitUntil waitUntil, string projectName, Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat? format = default(Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat?), Azure.AI.Language.QuestionAnswering.Authoring.AssetKind? assetKind = default(Azure.AI.Language.QuestionAnswering.Authoring.AssetKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation Export(Azure.WaitUntil waitUntil, string projectName, string format, string assetKind, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation> ExportAsync(Azure.WaitUntil waitUntil, string projectName, Azure.AI.Language.QuestionAnswering.Authoring.Format? format = default(Azure.AI.Language.QuestionAnswering.Authoring.Format?), Azure.AI.Language.QuestionAnswering.Authoring.AssetKind? assetKind = default(Azure.AI.Language.QuestionAnswering.Authoring.AssetKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> ExportAsync(Azure.WaitUntil waitUntil, string projectName, Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat? format = default(Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat?), Azure.AI.Language.QuestionAnswering.Authoring.AssetKind? assetKind = default(Azure.AI.Language.QuestionAnswering.Authoring.AssetKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> ExportAsync(Azure.WaitUntil waitUntil, string projectName, string format, string assetKind, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetDeleteStatus(string jobId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeletionJobState> GetDeleteStatus(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -380,9 +380,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState> GetUpdateSourcesStatus(string projectName, string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState>> GetUpdateSourcesStatusAsync(string projectName, string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation Import(Azure.WaitUntil waitUntil, string projectName, Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions body = null, Azure.AI.Language.QuestionAnswering.Authoring.Format? format = default(Azure.AI.Language.QuestionAnswering.Authoring.Format?), Azure.AI.Language.QuestionAnswering.Authoring.AssetKind? assetKind = default(Azure.AI.Language.QuestionAnswering.Authoring.AssetKind?), Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType? contentType = default(Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation Import(Azure.WaitUntil waitUntil, string projectName, Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions body = null, Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat? format = default(Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat?), Azure.AI.Language.QuestionAnswering.Authoring.AssetKind? assetKind = default(Azure.AI.Language.QuestionAnswering.Authoring.AssetKind?), Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType? contentType = default(Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation Import(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, string format = null, string assetKind = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportAsync(Azure.WaitUntil waitUntil, string projectName, Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions body = null, Azure.AI.Language.QuestionAnswering.Authoring.Format? format = default(Azure.AI.Language.QuestionAnswering.Authoring.Format?), Azure.AI.Language.QuestionAnswering.Authoring.AssetKind? assetKind = default(Azure.AI.Language.QuestionAnswering.Authoring.AssetKind?), Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType? contentType = default(Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportAsync(Azure.WaitUntil waitUntil, string projectName, Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions body = null, Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat? format = default(Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseFormat?), Azure.AI.Language.QuestionAnswering.Authoring.AssetKind? assetKind = default(Azure.AI.Language.QuestionAnswering.Authoring.AssetKind?), Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType? contentType = default(Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> ImportAsync(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, string format = null, string assetKind = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation ImportFromFiles(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, string contentType, string assetKind = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> ImportFromFilesAsync(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, string contentType, string assetKind = null, Azure.RequestContext context = null) { throw null; }

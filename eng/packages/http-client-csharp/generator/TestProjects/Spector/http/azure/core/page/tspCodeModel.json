@@ -1234,7 +1234,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithPage",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Page"
           },
           "parameters": [
             {
@@ -1422,7 +1423,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithParameters",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Page"
           },
           "parameters": [
             {
@@ -1607,7 +1609,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithCustomPageModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Page"
           },
           "parameters": [
             {
@@ -1748,7 +1751,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.withParameterizedNextLink",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Page"
           },
           "parameters": [
             {
@@ -2003,7 +2007,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.listFirstItem",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Page"
               },
               "parameters": [
                 {
@@ -2134,7 +2139,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.listSecondItem",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Page"
               },
               "parameters": [
                 {

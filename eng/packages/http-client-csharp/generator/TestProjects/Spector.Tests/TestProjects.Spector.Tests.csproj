@@ -55,8 +55,8 @@
     <ProjectReference Include="..\Spector\http\client\structure\multi-client\src\Client.Structure.Service.Multi.Client.csproj" Aliases="ClientStructureMultiClient" />
     <ProjectReference Include="..\Spector\http\client\structure\renamed-operation\src\Client.Structure.Service.Renamed.Operation.csproj" Aliases="ClientStructureRenamedOperation" />
     <ProjectReference Include="..\Spector\http\client\structure\two-operation-group\src\Client.Structure.Service.TwoOperationGroup.csproj" Aliases="ClientStructureTwoOperationGroup" />
-		<ProjectReference Include="..\Spector\http\documentation\src\Documentation.csproj" />
-		<ProjectReference Include="..\Spector\http\encode\array\src\Encode.Array.csproj" />
+    <ProjectReference Include="..\Spector\http\documentation\src\Documentation.csproj" />
+    <ProjectReference Include="..\Spector\http\encode\array\src\Encode.Array.csproj" />
     <ProjectReference Include="..\Spector\http\encode\bytes\src\Encode.Bytes.csproj" />
     <ProjectReference Include="..\Spector\http\encode\datetime\src\Encode.Datetime.csproj" />
     <ProjectReference Include="..\Spector\http\encode\duration\src\Encode.Duration.csproj" />
@@ -80,6 +80,7 @@
     <ProjectReference Include="..\Spector\http\server\path\single\src\Server.Path.Single.csproj" />
     <ProjectReference Include="..\Spector\http\server\versions\not-versioned\src\Server.Versions.NotVersioned.csproj" />
     <ProjectReference Include="..\Spector\http\server\versions\versioned\src\Server.Versions.Versioned.csproj" />
+    <ProjectReference Include="..\Spector\http\service\multi-service\src\Service.MultiService.Combined.csproj" />
     <ProjectReference Include="..\Spector\http\special-headers\conditional-request\src\SpecialHeaders.ConditionalRequest.csproj" />
     <ProjectReference Include="..\Spector\http\special-headers\repeatability\src\SpecialHeaders.Repeatability.csproj" />
     <ProjectReference Include="..\Spector\http\special-words\src\SpecialWords.csproj" />

@@ -1338,7 +1338,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1422,7 +1423,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1523,7 +1525,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1638,7 +1641,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1784,7 +1788,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1868,7 +1873,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1969,7 +1975,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2084,7 +2091,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2230,7 +2238,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2314,7 +2323,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2415,7 +2425,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2530,7 +2541,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2676,7 +2688,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2760,7 +2773,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2861,7 +2875,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2976,7 +2991,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3122,7 +3138,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3206,7 +3223,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3307,7 +3325,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3422,7 +3441,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3568,7 +3588,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3652,7 +3673,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3753,7 +3775,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3868,7 +3891,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -4014,7 +4038,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -4098,7 +4123,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -4199,7 +4225,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -4314,7 +4341,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {

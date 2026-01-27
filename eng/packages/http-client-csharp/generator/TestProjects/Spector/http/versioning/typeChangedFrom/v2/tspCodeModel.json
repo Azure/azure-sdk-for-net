@@ -273,7 +273,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.TypeChangedFrom.test",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.TypeChangedFrom"
           },
           "parameters": [
             {

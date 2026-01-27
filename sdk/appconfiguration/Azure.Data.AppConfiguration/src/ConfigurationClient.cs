@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -749,6 +751,63 @@ namespace Azure.Data.AppConfiguration
             }
 
             return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
+        }
+
+        /// <summary>
+        /// Checks if one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/> have changed.
+        /// </summary>
+        /// <param name="selector">Options used to select a set of <see cref="ConfigurationSetting"/> entities from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A pageable collection of pages with empty values collections.</returns>
+        public virtual AsyncPageable<ConfigurationSetting> CheckConfigurationSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+
+            var pageableImplementation = CheckConfigurationSettingsPageableImplementation(selector, cancellationToken);
+
+            return new AsyncConditionalPageable(pageableImplementation);
+        }
+
+        /// <summary>
+        /// Checks if one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/> have changed.
+        /// </summary>
+        /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A pageable collection of pages with empty values collections.</returns>
+        public virtual Pageable<ConfigurationSetting> CheckConfigurationSettings(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+
+            var pageableImplementation = CheckConfigurationSettingsPageableImplementation(selector, cancellationToken);
+
+            return new ConditionalPageable(pageableImplementation);
+        }
+
+        private ConditionalPageableImplementation CheckConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
+        {
+            var key = selector.KeyFilter;
+            var label = selector.LabelFilter;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+            var tags = selector.TagsFilter;
+
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            IEnumerable<string> fieldsString = selector.Fields.Split();
+
+            context.AddClassifier(304, false);
+
+            HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
+            {
+                return CreateCheckKeyValuesRequest(key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
+            }
+
+            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
+            {
+                HttpMessage message = CreateNextGetConfigurationSettingsRequest(nextLink, key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
+                message.Request.Method = RequestMethod.Head;
+                return message;
+            }
+
+            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseCheckConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
         }
 
         /// <summary>
@@ -1510,6 +1569,22 @@ namespace Azure.Data.AppConfiguration
             // The "Link" header is formatted as:
             // <nextLink>; rel="next"
             if (nextLink == null && response.Headers.TryGetValue("Link", out string linkHeader))
+            {
+                int nextLinkEndIndex = linkHeader.IndexOf('>');
+                nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
+            }
+
+            return (values, nextLink);
+        }
+
+        private (List<ConfigurationSetting> Values, string NextLink) ParseCheckConfigurationSettingsResponse(Response response)
+        {
+            var values = new List<ConfigurationSetting>();
+            string nextLink = null;
+
+            // The "Link" header is formatted as:
+            // <nextLink>; rel="next"
+            if (response.Headers.TryGetValue("Link", out string linkHeader))
             {
                 int nextLinkEndIndex = linkHeader.IndexOf('>');
                 nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);

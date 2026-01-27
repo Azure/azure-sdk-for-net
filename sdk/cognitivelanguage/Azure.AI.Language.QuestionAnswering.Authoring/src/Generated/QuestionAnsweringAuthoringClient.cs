@@ -514,7 +514,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation Export(WaitUntil waitUntil, string projectName, Format? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
+        public virtual Operation Export(WaitUntil waitUntil, string projectName, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -529,7 +529,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, Format? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -710,7 +710,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation Import(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, Format? format = default, AssetKind? assetKind = default, ImportContentType? contentType = default, CancellationToken cancellationToken = default)
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, ImportContentType? contentType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -727,7 +727,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, Format? format = default, AssetKind? assetKind = default, ImportContentType? contentType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, ImportContentType? contentType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 

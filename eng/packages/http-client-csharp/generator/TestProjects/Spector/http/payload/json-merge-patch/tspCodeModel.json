@@ -693,7 +693,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Payload.JsonMergePatch.createResource",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Payload.JsonMergePatch"
           },
           "parameters": [
             {
@@ -850,7 +851,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": false,
             "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Payload.JsonMergePatch"
           },
           "parameters": [
             {
@@ -1006,7 +1008,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": false,
             "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateOptionalResource",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Payload.JsonMergePatch"
           },
           "parameters": [
             {

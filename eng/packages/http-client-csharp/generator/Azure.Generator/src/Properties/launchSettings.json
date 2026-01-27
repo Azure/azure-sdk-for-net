@@ -345,6 +345,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-service-multi-service": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/service/multi-service -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-special-headers-conditional-request": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/special-headers/conditional-request -g AzureStubGenerator",
       "commandName": "Executable",
