@@ -152,8 +152,11 @@ namespace Azure.Generator.Management.Providers
             if (ResourceCollection != null)
             {
                 // we have the collection, we are not a singleton resource
-                var pluralOfResourceName = ResourceName.PluralizeLastWord();
-                var methodName = BuildFactoryMethodName(pluralOfResourceName);
+                var methodName = ResourceName.GetCollectionMethodName();
+                // Use inputIsKnownToBeSingular: false because some words like "Quota" and "Metadata"
+                // are treated by Humanizer as already plural (from Latin), and we want to preserve
+                // them unchanged rather than incorrectly pluralizing them.
+                var pluralOfResourceName = ResourceName.PluralizeLastWord(inputIsKnownToBeSingular: false);
                 return new MethodSignature(
                     methodName,
                     $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",
@@ -175,17 +178,6 @@ namespace Azure.Generator.Management.Providers
                     []
                     );
             }
-        }
-
-        private string BuildFactoryMethodName(string pluralOfResourceName)
-        {
-            // If the pluralized name is the same as the original (e.g., "Quota" -> "Quota"),
-            // use "GetAll{ResourceName}" to avoid having a method named "GetQuota" for a collection
-            if (pluralOfResourceName == ResourceName)
-            {
-                return $"GetAll{ResourceName}";
-            }
-            return $"Get{pluralOfResourceName}";
         }
 
         protected override FieldProvider[] BuildFields()

@@ -35,8 +35,12 @@ namespace Azure.Generator.Management.Utilities
         /// and joining them back together.
         /// </summary>
         /// <param name="value">The PascalCase string to pluralize.</param>
+        /// <param name="inputIsKnownToBeSingular">
+        /// When true, Humanizer assumes the input is singular and always pluralizes it.
+        /// When false, Humanizer checks if the word might already be plural and leaves it unchanged if so.
+        /// </param>
         /// <returns>The pluralized string.</returns>
-        public static string PluralizeLastWord(this string value)
+        public static string PluralizeLastWord(this string value, bool inputIsKnownToBeSingular)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -46,9 +50,38 @@ namespace Azure.Generator.Management.Utilities
             var words = value.SplitByCamelCase().ToArray();
 
             // Pluralize only the last word
-            words[words.Length - 1] = words[words.Length - 1].Pluralize(inputIsKnownToBeSingular: false);
+            words[words.Length - 1] = words[words.Length - 1].Pluralize(inputIsKnownToBeSingular);
 
             return string.Concat(words);
+        }
+
+        /// <summary>
+        /// Gets the collection method name for a resource based on its name.
+        /// If the pluralized name is the same as the original (e.g., "Quota" stays "Quota"),
+        /// returns "GetAll{resourceName}" to clearly indicate a collection.
+        /// Otherwise, returns "Get{pluralizedName}" (e.g., "GetVirtualMachines").
+        /// </summary>
+        /// <param name="resourceName">The PascalCase resource name.</param>
+        /// <returns>The collection method name.</returns>
+        public static string GetCollectionMethodName(this string resourceName)
+        {
+            if (string.IsNullOrEmpty(resourceName))
+            {
+                return resourceName;
+            }
+
+            // Use inputIsKnownToBeSingular: false because some words like "Quota" and "Metadata"
+            // are treated by Humanizer as already plural (from Latin), and we want to preserve
+            // them unchanged rather than incorrectly pluralizing them (e.g., "Quotas" would be wrong).
+            var pluralOfResourceName = resourceName.PluralizeLastWord(inputIsKnownToBeSingular: false);
+
+            // If the pluralized name is the same as the original (e.g., "Quota" -> "Quota"),
+            // use "GetAll{ResourceName}" to avoid having a method named "GetQuota" for a collection
+            if (pluralOfResourceName == resourceName)
+            {
+                return $"GetAll{resourceName}";
+            }
+            return $"Get{pluralOfResourceName}";
         }
     }
 }

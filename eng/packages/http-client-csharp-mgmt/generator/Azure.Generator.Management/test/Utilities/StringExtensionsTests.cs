@@ -8,13 +8,25 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 {
     public class StringExtensionsTests
     {
-        [TestCase("PlaywrightQuota", "PlaywrightQuota")]
-        [TestCase("PlaywrightWorkspaceQuota", "PlaywrightWorkspaceQuota")]
-        [TestCase("ChaosTargetMetadata", "ChaosTargetMetadata")]
-        public void PluralizeLastWord_ReturnsExpectedPluralizedName(string input, string expected)
+        [TestCase("PlaywrightQuota", "GetAllPlaywrightQuota")]
+        [TestCase("PlaywrightWorkspaceQuota", "GetAllPlaywrightWorkspaceQuota")]
+        [TestCase("ChaosTargetMetadata", "GetAllChaosTargetMetadata")]
+        public void GetCollectionMethodName_ReturnsGetAllPrefix_WhenPluralUnchanged(string input, string expected)
         {
             // Act
-            var result = input.PluralizeLastWord();
+            var result = input.GetCollectionMethodName();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestCase("Resource", "GetResources")]
+        [TestCase("VirtualMachine", "GetVirtualMachines")]
+        [TestCase("Policy", "GetPolicies")]
+        public void GetCollectionMethodName_ReturnsGetPrefix_WhenPluralChanged(string input, string expected)
+        {
+            // Act
+            var result = input.GetCollectionMethodName();
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -22,22 +34,10 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 
         [TestCase("", "")]
         [TestCase(null, null)]
-        public void PluralizeLastWord_HandlesEmptyAndNullStrings(string input, string expected)
+        public void GetCollectionMethodName_HandlesEmptyAndNullStrings(string input, string expected)
         {
             // Act
-            var result = input.PluralizeLastWord();
-
-            // Assert
-            Assert.AreEqual(expected, result);
-        }
-
-        [TestCase("Resource", "Resources")]
-        [TestCase("VirtualMachine", "VirtualMachines")]
-        [TestCase("Policy", "Policies")]
-        public void PluralizeLastWord_PluralizesSingleAndMultiWordNames(string input, string expected)
-        {
-            // Act
-            var result = input.PluralizeLastWord();
+            var result = input.GetCollectionMethodName();
 
             // Assert
             Assert.AreEqual(expected, result);
