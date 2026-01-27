@@ -1464,7 +1464,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathAccessControl> response = await file.GetAccessControlAsync();
+            Response<PathSystemProperties> response2 = await file.GetSystemPropertiesAsync();
+
             AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
+            AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response2.Value.Permissions);
         }
 
         [RecordedTest]
@@ -1610,7 +1613,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathAccessControl> response = await directory.GetAccessControlAsync();
+            Response<PathSystemProperties> response2 = await directory.GetSystemPropertiesAsync();
+
             AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
+            AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response2.Value.Permissions);
         }
 
         [RecordedTest]
