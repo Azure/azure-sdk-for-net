@@ -10,23 +10,13 @@ using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    /// <summary> Client options for Azure.AI.ContentSafety library clients. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class ContentSafetyClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_09_01;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2023-10-01". </summary>
-            V2023_10_01 = 1,
-            /// <summary> Service version "2024-09-01". </summary>
-            V2024_09_01 = 2,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of ContentSafetyClientOptions. </summary>
+        /// <summary> Initializes a new instance of ContentSafetyClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public ContentSafetyClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -35,6 +25,18 @@ namespace Azure.AI.ContentSafety
                 ServiceVersion.V2024_09_01 => "2024-09-01",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> V2023_10_01. </summary>
+            V2023_10_01 = 1,
+            /// <summary> V2024_09_01. </summary>
+            V2024_09_01 = 2
         }
     }
 }
