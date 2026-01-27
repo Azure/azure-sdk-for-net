@@ -7,56 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServices.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
     /// <summary>
-    /// A Class representing a RecoveryServicesVault along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoveryServicesVaultResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRecoveryServicesVaultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetRecoveryServicesVault method.
+    /// A class representing a RecoveryServicesVault along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoveryServicesVaultResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetRecoveryServicesVaults method.
     /// </summary>
     public partial class RecoveryServicesVaultResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RecoveryServicesVaultResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="vaultName"> The vaultName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _recoveryServicesVaultVaultsClientDiagnostics;
-        private readonly VaultsRestOperations _recoveryServicesVaultVaultsRestClient;
-        private readonly ClientDiagnostics _vaultCertificatesClientDiagnostics;
-        private readonly VaultCertificatesRestOperations _vaultCertificatesRestClient;
-        private readonly ClientDiagnostics _registeredIdentitiesClientDiagnostics;
-        private readonly RegisteredIdentitiesRestOperations _registeredIdentitiesRestClient;
-        private readonly ClientDiagnostics _replicationUsagesClientDiagnostics;
-        private readonly ReplicationUsagesRestOperations _replicationUsagesRestClient;
-        private readonly ClientDiagnostics _usagesClientDiagnostics;
-        private readonly UsagesRestOperations _usagesRestClient;
+        private readonly ClientDiagnostics _vaultsClientDiagnostics;
+        private readonly Vaults _vaultsRestClient;
         private readonly RecoveryServicesVaultData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults";
 
-        /// <summary> Initializes a new instance of the <see cref="RecoveryServicesVaultResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RecoveryServicesVaultResource for mocking. </summary>
         protected RecoveryServicesVaultResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecoveryServicesVaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RecoveryServicesVaultResource(ArmClient client, RecoveryServicesVaultData data) : this(client, data.Id)
@@ -65,155 +46,92 @@ namespace Azure.ResourceManager.RecoveryServices
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecoveryServicesVaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RecoveryServicesVaultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recoveryServicesVaultVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string recoveryServicesVaultVaultsApiVersion);
-            _recoveryServicesVaultVaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesVaultVaultsApiVersion);
-            _vaultCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _vaultCertificatesRestClient = new VaultCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _registeredIdentitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _registeredIdentitiesRestClient = new RegisteredIdentitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _replicationUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _replicationUsagesRestClient = new ReplicationUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _usagesRestClient = new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string recoveryServicesVaultApiVersion);
+            _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
+            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultApiVersion ?? "2025-08-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual RecoveryServicesVaultData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of RecoveryServicesPrivateLinkResources in the RecoveryServicesVault. </summary>
-        /// <returns> An object representing collection of RecoveryServicesPrivateLinkResources and their operations over a RecoveryServicesPrivateLinkResource. </returns>
-        public virtual RecoveryServicesPrivateLinkResourceCollection GetRecoveryServicesPrivateLinkResources()
-        {
-            return GetCachedClient(client => new RecoveryServicesPrivateLinkResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns a specified private link resource that need to be created for Backup and SiteRecovery
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateLinkResources/{privateLinkResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesPrivateLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkResourceName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RecoveryServicesPrivateLinkResource>> GetRecoveryServicesPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetRecoveryServicesPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a specified private link resource that need to be created for Backup and SiteRecovery
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateLinkResources/{privateLinkResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesPrivateLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkResourceName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RecoveryServicesPrivateLinkResource> GetRecoveryServicesPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            return GetRecoveryServicesPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a RecoveryServicesVaultExtendedInfoResource along with the instance operations that can be performed on it in the RecoveryServicesVault. </summary>
-        /// <returns> Returns a <see cref="RecoveryServicesVaultExtendedInfoResource"/> object. </returns>
-        public virtual RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfo()
-        {
-            return new RecoveryServicesVaultExtendedInfoResource(Client, Id.AppendChildResource("extendedInformation", "vaultExtendedInfo"));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get the Vault details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RecoveryServicesVaultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Get");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Get");
             scope.Start();
             try
             {
-                var response = await _recoveryServicesVaultVaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RecoveryServicesVaultData> response = Response.FromValue(RecoveryServicesVaultData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecoveryServicesVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -227,34 +145,162 @@ namespace Azure.ResourceManager.RecoveryServices
         /// Get the Vault details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RecoveryServicesVaultResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Get");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Get");
             scope.Start();
             try
             {
-                var response = _recoveryServicesVaultVaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RecoveryServicesVaultData> response = Response.FromValue(RecoveryServicesVaultData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecoveryServicesVaultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Recovery Services Vault to be created. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<RecoveryServicesVaultResource>> UpdateAsync(WaitUntil waitUntil, RecoveryServicesVaultPatch patch, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RecoveryServicesVaultPatch.ToRequestContent(patch), xMsAuthorizationAuxiliary, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesArmOperation<RecoveryServicesVaultResource> operation = new RecoveryServicesArmOperation<RecoveryServicesVaultResource>(
+                    new RecoveryServicesVaultOperationSource(Client),
+                    _vaultsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Recovery Services Vault to be created. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<RecoveryServicesVaultResource> Update(WaitUntil waitUntil, RecoveryServicesVaultPatch patch, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RecoveryServicesVaultPatch.ToRequestContent(patch), xMsAuthorizationAuxiliary, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesArmOperation<RecoveryServicesVaultResource> operation = new RecoveryServicesArmOperation<RecoveryServicesVaultResource>(
+                    new RecoveryServicesVaultOperationSource(Client),
+                    _vaultsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -267,20 +313,20 @@ namespace Azure.ResourceManager.RecoveryServices
         /// Deletes a vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,14 +334,21 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Delete");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Delete");
             scope.Start();
             try
             {
-                var response = await _recoveryServicesVaultVaultsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesArmOperation(_recoveryServicesVaultVaultsClientDiagnostics, Pipeline, _recoveryServicesVaultVaultsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vaultsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesArmOperation operation = new RecoveryServicesArmOperation(_vaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -309,20 +362,20 @@ namespace Azure.ResourceManager.RecoveryServices
         /// Deletes a vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,269 +383,22 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Delete");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Delete");
             scope.Start();
             try
             {
-                var response = _recoveryServicesVaultVaultsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesArmOperation(_recoveryServicesVaultVaultsClientDiagnostics, Pipeline, _recoveryServicesVaultVaultsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vaultsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesArmOperation operation = new RecoveryServicesArmOperation(_vaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Recovery Services Vault to be created. </param>
-        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<RecoveryServicesVaultResource>> UpdateAsync(WaitUntil waitUntil, RecoveryServicesVaultPatch patch, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _recoveryServicesVaultVaultsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesArmOperation<RecoveryServicesVaultResource>(new RecoveryServicesVaultOperationSource(Client), _recoveryServicesVaultVaultsClientDiagnostics, Pipeline, _recoveryServicesVaultVaultsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Recovery Services Vault to be created. </param>
-        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<RecoveryServicesVaultResource> Update(WaitUntil waitUntil, RecoveryServicesVaultPatch patch, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _recoveryServicesVaultVaultsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, xMsAuthorizationAuxiliary, cancellationToken);
-                var operation = new RecoveryServicesArmOperation<RecoveryServicesVaultResource>(new RecoveryServicesVaultOperationSource(Client), _recoveryServicesVaultVaultsClientDiagnostics, Pipeline, _recoveryServicesVaultVaultsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Uploads a certificate for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/certificates/{certificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="certificateName"> Certificate friendly name. </param>
-        /// <param name="content"> Input parameters for uploading the vault certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<VaultCertificateResult>> CreateVaultCertificateAsync(string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _vaultCertificatesClientDiagnostics.CreateScope("RecoveryServicesVaultResource.CreateVaultCertificate");
-            scope.Start();
-            try
-            {
-                var response = await _vaultCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Uploads a certificate for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/certificates/{certificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="certificateName"> Certificate friendly name. </param>
-        /// <param name="content"> Input parameters for uploading the vault certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<VaultCertificateResult> CreateVaultCertificate(string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _vaultCertificatesClientDiagnostics.CreateScope("RecoveryServicesVaultResource.CreateVaultCertificate");
-            scope.Start();
-            try
-            {
-                var response = _vaultCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Unregisters the given container from your Recovery Services vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/registeredIdentities/{identityName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_DeleteRegisteredIdentity</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="identityName"> Name of the protection container to unregister. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="identityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="identityName"/> is null. </exception>
-        public virtual async Task<Response> DeleteRegisteredIdentityAsync(string identityName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(identityName, nameof(identityName));
-
-            using var scope = _registeredIdentitiesClientDiagnostics.CreateScope("RecoveryServicesVaultResource.DeleteRegisteredIdentity");
-            scope.Start();
-            try
-            {
-                var response = await _registeredIdentitiesRestClient.DeleteRegisteredIdentityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Unregisters the given container from your Recovery Services vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/registeredIdentities/{identityName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_DeleteRegisteredIdentity</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="identityName"> Name of the protection container to unregister. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="identityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="identityName"/> is null. </exception>
-        public virtual Response DeleteRegisteredIdentity(string identityName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(identityName, nameof(identityName));
-
-            using var scope = _registeredIdentitiesClientDiagnostics.CreateScope("RecoveryServicesVaultResource.DeleteRegisteredIdentity");
-            scope.Start();
-            try
-            {
-                var response = _registeredIdentitiesRestClient.DeleteRegisteredIdentity(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityName, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {
@@ -605,42 +411,52 @@ namespace Azure.ResourceManager.RecoveryServices
         /// Fetches the replication usages of the vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/replicationUsages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/replicationUsages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReplicationUsage"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReplicationUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReplicationUsage> GetReplicationUsagesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ReplicationUsage.DeserializeReplicationUsage(e), _replicationUsagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetReplicationUsages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new VaultsGetReplicationUsagesAsyncCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
         /// Fetches the replication usages of the vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/replicationUsages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/replicationUsages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -648,51 +464,63 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> A collection of <see cref="ReplicationUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReplicationUsage> GetReplicationUsages(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ReplicationUsage.DeserializeReplicationUsage(e), _replicationUsagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetReplicationUsages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new VaultsGetReplicationUsagesCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
         /// Fetches the usages of the vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_ListByVaults</description>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_ListByVaults. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VaultUsage"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VaultUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VaultUsage> GetUsagesByVaultsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByVaultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _usagesRestClient.CreateListByVaultsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => VaultUsage.DeserializeVaultUsage(e), _usagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetUsagesByVaults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new VaultsGetUsagesByVaultsAsyncCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
         /// Fetches the usages of the vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_ListByVaults</description>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_ListByVaults. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -700,32 +528,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> A collection of <see cref="VaultUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VaultUsage> GetUsagesByVaults(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByVaultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _usagesRestClient.CreateListByVaultsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => VaultUsage.DeserializeVaultUsage(e), _usagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetUsagesByVaults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new VaultsGetUsagesByVaultsCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -735,28 +545,34 @@ namespace Azure.ResourceManager.RecoveryServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.AddTag");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _recoveryServicesVaultVaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new RecoveryServicesVaultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<RecoveryServicesVaultData> response = Response.FromValue(RecoveryServicesVaultData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryServicesVaultResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new RecoveryServicesVaultPatch(current.Location);
-                    foreach (var tag in current.Tags)
+                    RecoveryServicesVaultData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<RecoveryServicesVaultResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -767,27 +583,7 @@ namespace Azure.ResourceManager.RecoveryServices
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -797,28 +593,34 @@ namespace Azure.ResourceManager.RecoveryServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.AddTag");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _recoveryServicesVaultVaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new RecoveryServicesVaultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<RecoveryServicesVaultData> response = Response.FromValue(RecoveryServicesVaultData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryServicesVaultResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new RecoveryServicesVaultPatch(current.Location);
-                    foreach (var tag in current.Tags)
+                    RecoveryServicesVaultData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<RecoveryServicesVaultResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -829,53 +631,39 @@ namespace Azure.ResourceManager.RecoveryServices
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<RecoveryServicesVaultResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.SetTags");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _recoveryServicesVaultVaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new RecoveryServicesVaultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<RecoveryServicesVaultData> response = Response.FromValue(RecoveryServicesVaultData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryServicesVaultResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new RecoveryServicesVaultPatch(current.Location);
+                    RecoveryServicesVaultData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<RecoveryServicesVaultResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -886,53 +674,39 @@ namespace Azure.ResourceManager.RecoveryServices
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<RecoveryServicesVaultResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.SetTags");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _recoveryServicesVaultVaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new RecoveryServicesVaultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<RecoveryServicesVaultData> response = Response.FromValue(RecoveryServicesVaultData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryServicesVaultResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new RecoveryServicesVaultPatch(current.Location);
+                    RecoveryServicesVaultData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<RecoveryServicesVaultResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -943,27 +717,7 @@ namespace Azure.ResourceManager.RecoveryServices
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -971,28 +725,34 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.RemoveTag");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _recoveryServicesVaultVaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new RecoveryServicesVaultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<RecoveryServicesVaultData> response = Response.FromValue(RecoveryServicesVaultData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryServicesVaultResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new RecoveryServicesVaultPatch(current.Location);
-                    foreach (var tag in current.Tags)
+                    RecoveryServicesVaultData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<RecoveryServicesVaultResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1003,27 +763,7 @@ namespace Azure.ResourceManager.RecoveryServices
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1031,28 +771,34 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.RemoveTag");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _recoveryServicesVaultVaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new RecoveryServicesVaultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<RecoveryServicesVaultData> response = Response.FromValue(RecoveryServicesVaultData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryServicesVaultResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new RecoveryServicesVaultPatch(current.Location);
-                    foreach (var tag in current.Tags)
+                    RecoveryServicesVaultData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<RecoveryServicesVaultResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1061,6 +807,46 @@ namespace Azure.ResourceManager.RecoveryServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of RecoveryServicesPrivateLinkResources in the <see cref="RecoveryServicesVaultResource"/>. </summary>
+        /// <returns> An object representing collection of RecoveryServicesPrivateLinkResources and their operations over a RecoveryServicesPrivateLinkResource. </returns>
+        public virtual RecoveryServicesPrivateLinkResourceCollection GetRecoveryServicesPrivateLinkResources()
+        {
+            return GetCachedClient(client => new RecoveryServicesPrivateLinkResourceCollection(client, Id));
+        }
+
+        /// <summary> Returns a specified private link resource that need to be created for Backup and SiteRecovery. </summary>
+        /// <param name="privateLinkResourceName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RecoveryServicesPrivateLinkResource>> GetRecoveryServicesPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return await GetRecoveryServicesPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns a specified private link resource that need to be created for Backup and SiteRecovery. </summary>
+        /// <param name="privateLinkResourceName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RecoveryServicesPrivateLinkResource> GetRecoveryServicesPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return GetRecoveryServicesPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RecoveryServicesVaultExtendedInfoResource"/> along with the instance operations that can be performed on it in the <see cref="RecoveryServicesVaultResource"/>. </summary>
+        /// <returns> Returns a <see cref="RecoveryServicesVaultExtendedInfoResource"/> object. </returns>
+        public virtual RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfo()
+        {
+            return new RecoveryServicesVaultExtendedInfoResource(Client, Id.AppendChildResource("extendedInformation", "vaultExtendedInfo"));
         }
     }
 }

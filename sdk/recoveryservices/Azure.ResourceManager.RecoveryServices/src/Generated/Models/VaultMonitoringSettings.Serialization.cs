@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultMonitoringSettings : IUtf8JsonSerializable, IJsonModel<VaultMonitoringSettings>
+    /// <summary> Monitoring Settings of the vault. </summary>
+    public partial class VaultMonitoringSettings : IJsonModel<VaultMonitoringSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultMonitoringSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VaultMonitoringSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VaultMonitoringSettings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("classicAlertSettings"u8);
                 writer.WriteObjectValue(ClassicAlertSettings, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,63 +61,69 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        VaultMonitoringSettings IJsonModel<VaultMonitoringSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VaultMonitoringSettings IJsonModel<VaultMonitoringSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VaultMonitoringSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VaultMonitoringSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVaultMonitoringSettings(document.RootElement, options);
         }
 
-        internal static VaultMonitoringSettings DeserializeVaultMonitoringSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VaultMonitoringSettings DeserializeVaultMonitoringSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             RecoveryServicesAzureMonitorAlertSettings azureMonitorAlertSettings = default;
             RecoveryServicesClassicAlertSettings classicAlertSettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("azureMonitorAlertSettings"u8))
+                if (prop.NameEquals("azureMonitorAlertSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureMonitorAlertSettings = RecoveryServicesAzureMonitorAlertSettings.DeserializeRecoveryServicesAzureMonitorAlertSettings(property.Value, options);
+                    azureMonitorAlertSettings = RecoveryServicesAzureMonitorAlertSettings.DeserializeRecoveryServicesAzureMonitorAlertSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("classicAlertSettings"u8))
+                if (prop.NameEquals("classicAlertSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    classicAlertSettings = RecoveryServicesClassicAlertSettings.DeserializeRecoveryServicesClassicAlertSettings(property.Value, options);
+                    classicAlertSettings = RecoveryServicesClassicAlertSettings.DeserializeRecoveryServicesClassicAlertSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new VaultMonitoringSettings(azureMonitorAlertSettings, classicAlertSettings, serializedAdditionalRawData);
+            return new VaultMonitoringSettings(azureMonitorAlertSettings, classicAlertSettings, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<VaultMonitoringSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VaultMonitoringSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -127,15 +133,20 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        VaultMonitoringSettings IPersistableModel<VaultMonitoringSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VaultMonitoringSettings IPersistableModel<VaultMonitoringSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VaultMonitoringSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVaultMonitoringSettings(document.RootElement, options);
                     }
                 default:
@@ -143,6 +154,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VaultMonitoringSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
