@@ -29,5 +29,30 @@ namespace Azure.Generator.Management.Utilities
 
             return char.ToUpper(str[0]) + str.Substring(1);
         }
+
+        /// <summary>
+        /// Pluralizes a PascalCase resource name by splitting it into words, pluralizing only the last word,
+        /// and joining them back together.
+        /// </summary>
+        /// <param name="resourceName">The PascalCase resource name to pluralize.</param>
+        /// <returns>The pluralized resource name.</returns>
+        public static string PluralizeResourceName(this string resourceName)
+        {
+            if (string.IsNullOrEmpty(resourceName))
+            {
+                return resourceName;
+            }
+
+            var words = resourceName.SplitByCamelCase().ToArray();
+            if (words.Length == 0)
+            {
+                return resourceName;
+            }
+
+            // Pluralize only the last word
+            words[words.Length - 1] = words[words.Length - 1].Pluralize(inputIsKnownToBeSingular: false);
+
+            return string.Concat(words);
+        }
     }
 }

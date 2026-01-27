@@ -177,20 +177,9 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        // TODO: Temporary workaround for recent breaking changes in converting Playwright service.
-        // This special-casing will be replaced by a generalized naming strategy in a follow-up PR.
         private string BuildFactoryMethodName()
         {
-            var ResourceNamesHavingIrregularPlural = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "PlaywrightQuota", "PlaywrightWorkspaceQuota" };
-
-            if (ResourceNamesHavingIrregularPlural.Contains(ResourceName))
-            {
-                return $"GetAll{ResourceName}";
-            }
-            else
-            {
-                return $"Get{ResourceName.Pluralize()}";
-            }
+            return $"Get{ResourceName.PluralizeResourceName()}";
         }
 
         protected override FieldProvider[] BuildFields()

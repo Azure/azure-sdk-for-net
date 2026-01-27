@@ -591,7 +591,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets a collection of SampleDatas in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of SampleDatas and their operations over a SampleDataResource. </returns>
-        public virtual SampleDataCollection GetSampleDatas()
+        public virtual SampleDataCollection GetSampleData()
         {
             return GetCachedClient(client => new SampleDataCollection(client, Id));
         }
@@ -622,7 +622,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(sampleDataName, nameof(sampleDataName));
 
-            return await GetSampleDatas().GetAsync(sampleDataName, cancellationToken).ConfigureAwait(false);
+            return await GetSampleData().GetAsync(sampleDataName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -651,7 +651,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(sampleDataName, nameof(sampleDataName));
 
-            return GetSampleDatas().Get(sampleDataName, cancellationToken);
+            return GetSampleData().Get(sampleDataName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworks in the <see cref="ResourceGroupResource"/>. </summary>
