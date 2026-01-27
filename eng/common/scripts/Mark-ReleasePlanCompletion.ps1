@@ -49,6 +49,11 @@ function Process-Package([string]$packageInfoPath)
 
     Write-Host "Marking release completion for package, name: $PackageName"
     $releaseInfo = &$AzsdkExePath release-plan update-release-status -p $PackageName -l $LanguageDisplayName -s "Released"
+    if ($LASTEXITCODE -ne 0)
+    {
+        Write-Error "Failed to mark release completion for package '$PackageName' using azsdk. Exit code: $LASTEXITCODE"
+        exit $LASTEXITCODE
+    }
     Write-Host "Details: $releaseInfo"
 }
 
