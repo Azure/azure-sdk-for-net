@@ -40,7 +40,9 @@ public class AIAgentInvocation(
         {
             thread = await threadRepository.Get(context.ConversationId).ConfigureAwait(false);
         }
-        var response = await agent.RunAsync(messages, cancellationToken: cancellationToken).ConfigureAwait(false);
+        var response = await agent.RunAsync(
+            messages, thread: thread,
+            cancellationToken: cancellationToken).ConfigureAwait(false);
         if (threadRepository != null && thread != null)
         {
             await threadRepository.Set(context.ConversationId, thread).ConfigureAwait(false);
