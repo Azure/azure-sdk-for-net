@@ -49,11 +49,6 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(DeleteRetentionPolicy))
-            {
-                writer.WritePropertyName("deleteRetentionPolicy"u8);
-                writer.WriteObjectValue(DeleteRetentionPolicy, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -88,7 +83,6 @@ namespace Azure.ResourceManager.ElasticSan
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ManagedServiceIdentity identity = default;
             VolumeGroupProperties properties = default;
-            ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -141,15 +135,6 @@ namespace Azure.ResourceManager.ElasticSan
                     properties = VolumeGroupProperties.DeserializeVolumeGroupProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("deleteRetentionPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deleteRetentionPolicy = ElasticSanDeleteRetentionPolicy.DeserializeElasticSanDeleteRetentionPolicy(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -162,8 +147,7 @@ namespace Azure.ResourceManager.ElasticSan
                 systemData,
                 additionalBinaryDataProperties,
                 identity,
-                properties,
-                deleteRetentionPolicy);
+                properties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

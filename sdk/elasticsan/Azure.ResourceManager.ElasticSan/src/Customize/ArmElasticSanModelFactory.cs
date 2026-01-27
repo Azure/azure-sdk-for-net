@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticSanVolumeGroupData ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections)
         {
-            return ElasticSanVolumeGroupData(id, name, resourceType, systemData, identity, provisioningState, protocolType,encryption, encryptionProperties, virtualNetworkRules, privateEndpointConnections, enforceDataIntegrityCheckForIscsi:default);
+            return ElasticSanVolumeGroupData(id, name, resourceType, systemData, identity, provisioningState, protocolType, encryption, encryptionProperties, virtualNetworkRules, privateEndpointConnections, enforceDataIntegrityCheckForIscsi:default);
         }
     }
 }
