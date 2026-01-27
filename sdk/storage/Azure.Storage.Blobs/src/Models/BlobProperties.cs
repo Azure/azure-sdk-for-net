@@ -243,7 +243,7 @@ namespace Azure.Storage.Blobs.Models
         /// <list type="bullet">
         ///  <item><description>Hot</description></item>
         ///  <item><description>Cool</description></item>
-        ///  <item><description>Archive</description></item>
+        ///  <item><description>Cold</description></item>
         /// </list>
         /// </summary>
         public string SmartAccessTier { get; }
