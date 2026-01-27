@@ -216,7 +216,7 @@ namespace Azure.Generator.Management.Providers
             // (e.g., operation "listDependencies" -> convenience method "GetDependencies" -> request method "CreateGetDependenciesRequest")
             var convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, _isAsync);
             var originalMethodName = convenienceMethod.Signature.Name;
-            var baseName = originalMethodName.EndsWith("Async") && _isAsync ? originalMethodName.Substring(0, originalMethodName.Length - 5) : originalMethodName;
+            var baseName = originalMethodName.EndsWith("Async") ? originalMethodName.Substring(0, originalMethodName.Length - 5) : originalMethodName;
             var createRequestMethodName = $"Create{baseName}Request";
 
             var requestArgs = new List<ValueExpression>();
