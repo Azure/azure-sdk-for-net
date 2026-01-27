@@ -136,7 +136,7 @@
     <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.2" />
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
     <PackageReference Update="System.Buffers" Version="4.5.1" />
-    <PackageReference Update="System.ClientModel" Version="1.8.1" />
+    <PackageReference Update="System.ClientModel" Version="1.9.0" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="10.0.2" />
     <PackageReference Update="System.IO.Hashing" Version="10.0.1" />
     <PackageReference Update="System.Memory" Version="4.6.3" />
