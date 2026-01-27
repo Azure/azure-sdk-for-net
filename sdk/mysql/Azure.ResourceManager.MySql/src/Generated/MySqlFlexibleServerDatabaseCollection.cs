@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// </summary>
     public partial class MySqlFlexibleServerDatabaseCollection : ArmCollection, IEnumerable<MySqlFlexibleServerDatabaseResource>, IAsyncEnumerable<MySqlFlexibleServerDatabaseResource>
     {
-        private readonly ClientDiagnostics _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics;
-        private readonly DatabasesRestOperations _mySqlFlexibleServerDatabaseDatabasesRestClient;
+        private readonly ClientDiagnostics _databasesClientDiagnostics;
+        private readonly Databases _databasesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerDatabaseCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServerDatabaseCollection for mocking. </summary>
         protected MySqlFlexibleServerDatabaseCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerDatabaseCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDatabaseCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MySqlFlexibleServerDatabaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerDatabaseResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MySqlFlexibleServerDatabaseResource.ResourceType, out string mySqlFlexibleServerDatabaseDatabasesApiVersion);
-            _mySqlFlexibleServerDatabaseDatabasesRestClient = new DatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerDatabaseDatabasesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(MySqlFlexibleServerDatabaseResource.ResourceType, out string mySqlFlexibleServerDatabaseApiVersion);
+            _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerDatabaseResource.ResourceType.Namespace, Diagnostics);
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerDatabaseApiVersion ?? "2024-12-30");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != MySqlFlexibleServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates a new database or updates an existing database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Database_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="data"> The required parameters for creating or updating a database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MySqlFlexibleServerDatabaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseName, MySqlFlexibleServerDatabaseData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(new MySqlFlexibleServerDatabaseOperationSource(Client), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, MySqlFlexibleServerDatabaseData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(
+                    new MySqlFlexibleServerDatabaseOperationSource(Client),
+                    _databasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Creates a new database or updates an existing database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Database_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="data"> The required parameters for creating or updating a database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MySqlFlexibleServerDatabaseResource> CreateOrUpdate(WaitUntil waitUntil, string databaseName, MySqlFlexibleServerDatabaseData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(new MySqlFlexibleServerDatabaseOperationSource(Client), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, MySqlFlexibleServerDatabaseData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(
+                    new MySqlFlexibleServerDatabaseOperationSource(Client),
+                    _databasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Gets information about a database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Database_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MySqlFlexibleServerDatabaseResource>> GetAsync(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.Get");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.Get");
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServerDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MySqlFlexibleServerDatabaseData> response = Response.FromValue(MySqlFlexibleServerDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MySqlFlexibleServerDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Gets information about a database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Database_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MySqlFlexibleServerDatabaseResource> Get(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.Get");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.Get");
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServerDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MySqlFlexibleServerDatabaseData> response = Response.FromValue(MySqlFlexibleServerDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MySqlFlexibleServerDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// List all the databases in a given server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Database_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlFlexibleServerDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlFlexibleServerDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlFlexibleServerDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerDatabaseResource(Client, MySqlFlexibleServerDatabaseData.DeserializeMySqlFlexibleServerDatabaseData(e)), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MySqlFlexibleServerDatabaseData, MySqlFlexibleServerDatabaseResource>(new DatabasesGetByServerAsyncCollectionResultOfT(_databasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerDatabaseResource(Client, data));
         }
 
         /// <summary>
         /// List all the databases in a given server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Database_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> A collection of <see cref="MySqlFlexibleServerDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlFlexibleServerDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerDatabaseResource(Client, MySqlFlexibleServerDatabaseData.DeserializeMySqlFlexibleServerDatabaseData(e)), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MySqlFlexibleServerDatabaseData, MySqlFlexibleServerDatabaseResource>(new DatabasesGetByServerCollectionResultOfT(_databasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerDatabaseResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Database_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.Exists");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServerDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MySqlFlexibleServerDatabaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MySqlFlexibleServerDatabaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MySqlFlexibleServerDatabaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +385,50 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Database_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.Exists");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServerDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MySqlFlexibleServerDatabaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MySqlFlexibleServerDatabaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MySqlFlexibleServerDatabaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +442,54 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Database_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MySqlFlexibleServerDatabaseResource>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.GetIfExists");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServerDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MySqlFlexibleServerDatabaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MySqlFlexibleServerDatabaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MySqlFlexibleServerDatabaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MySqlFlexibleServerDatabaseResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MySqlFlexibleServerDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +503,54 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Database_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MySqlFlexibleServerDatabaseResource> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.GetIfExists");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("MySqlFlexibleServerDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServerDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MySqlFlexibleServerDatabaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MySqlFlexibleServerDatabaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MySqlFlexibleServerDatabaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MySqlFlexibleServerDatabaseResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MySqlFlexibleServerDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MySqlFlexibleServerDatabaseResource> IAsyncEnumerable<MySqlFlexibleServerDatabaseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

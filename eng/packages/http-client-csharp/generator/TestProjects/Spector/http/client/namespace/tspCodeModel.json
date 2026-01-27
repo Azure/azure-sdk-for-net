@@ -198,7 +198,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst",
-            "decorators": []
+            "decorators": [],
+            "namespace": "ClientNameSpaceClient"
           },
           "parameters": [
             {
@@ -325,7 +326,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond",
-            "decorators": []
+            "decorators": [],
+            "namespace": "client.clientnamespace.second"
           },
           "parameters": [
             {

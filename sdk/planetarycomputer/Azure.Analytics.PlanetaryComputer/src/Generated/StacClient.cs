@@ -1420,9 +1420,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// [Protocol Method] Updates partition type for a GeoCatalog Collection. This will
         /// determine the partitioning scheme for items within the database,
         /// and can only be set before any items are loaded.
-        /// 
         /// Ideal partitioning schemes result in partitions of roughly 100k items each.
-        /// 
         /// The default partitioning scheme is "none" which does not partition items.
         /// <list type="bullet">
         /// <item>
@@ -1460,9 +1458,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// [Protocol Method] Updates partition type for a GeoCatalog Collection. This will
         /// determine the partitioning scheme for items within the database,
         /// and can only be set before any items are loaded.
-        /// 
         /// Ideal partitioning schemes result in partitions of roughly 100k items each.
-        /// 
         /// The default partitioning scheme is "none" which does not partition items.
         /// <list type="bullet">
         /// <item>
@@ -1500,9 +1496,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Updates partition type for a GeoCatalog Collection. This will
         /// determine the partitioning scheme for items within the database,
         /// and can only be set before any items are loaded.
-        /// 
         /// Ideal partitioning schemes result in partitions of roughly 100k items each.
-        /// 
         /// The default partitioning scheme is "none" which does not partition items.
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
@@ -1523,9 +1517,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Updates partition type for a GeoCatalog Collection. This will
         /// determine the partitioning scheme for items within the database,
         /// and can only be set before any items are loaded.
-        /// 
         /// Ideal partitioning schemes result in partitions of roughly 100k items each.
-        /// 
         /// The default partitioning scheme is "none" which does not partition items.
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
@@ -2541,16 +2533,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="body">
         /// STAC Item or StacItemCollection
-        /// 
         /// Represents a STAC Item or StacItemCollection as defined by the STAC 1.0.0 standard.
-        /// 
-        /// **Item**: A GeoJSON Feature that represents a single spatiotemporal asset.
+        /// <b>Item</b>: A GeoJSON Feature that represents a single spatiotemporal asset.
         /// It includes metadata such as geometry, datetime, and links to related assets.
         /// Example: A satellite image with its metadata.
-        /// 
-        /// **StacItemCollection**: A GeoJSON FeatureCollection that contains multiple Items.
+        /// <b>StacItemCollection</b>: A GeoJSON FeatureCollection that contains multiple Items.
         /// It is used to group multiple related Items together, such as a collection of satellite images.
-        /// 
         /// This union allows the request body to accept either a single Item or a collection of Items.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -2569,16 +2557,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="body">
         /// STAC Item or StacItemCollection
-        /// 
         /// Represents a STAC Item or StacItemCollection as defined by the STAC 1.0.0 standard.
-        /// 
-        /// **Item**: A GeoJSON Feature that represents a single spatiotemporal asset.
+        /// <b>Item</b>: A GeoJSON Feature that represents a single spatiotemporal asset.
         /// It includes metadata such as geometry, datetime, and links to related assets.
         /// Example: A satellite image with its metadata.
-        /// 
-        /// **StacItemCollection**: A GeoJSON FeatureCollection that contains multiple Items.
+        /// <b>StacItemCollection</b>: A GeoJSON FeatureCollection that contains multiple Items.
         /// It is used to group multiple related Items together, such as a collection of satellite images.
-        /// 
         /// This union allows the request body to accept either a single Item or a collection of Items.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -2870,7 +2854,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Fetch features of the feature collection with id `collectionId`.
-        /// 
         /// Every feature in a dataset belongs to a collection. A dataset may
         /// consist of multiple feature collections. A feature collection is often a
         /// collection of features of a similar type, based on a common schema.
@@ -2883,38 +2866,25 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="limit">
         /// The optional limit parameter recommends the number of items that should be present in the response document.
-        /// 
         /// If the limit parameter value is greater than advertised limit maximum, the server must return the
         /// maximum possible number of items, rather than responding with an error.
-        /// 
         /// Only items are counted that are on the first level of the collection in the response document.
         /// Nested objects contained within the explicitly requested items must not be counted.
-        /// 
         /// Minimum = 1. Maximum = 10000. Default = 10.
         /// </param>
         /// <param name="boundingBox">
         /// Only features that have a geometry that intersects the bounding box are selected.
         /// The bounding box is provided as four or six numbers, depending on whether the
         /// coordinate reference system includes a vertical axis (height or depth):
-        /// 
-        /// - Lower left corner, coordinate axis 1
-        /// - Lower left corner, coordinate axis 2
-        /// - Minimum value, coordinate axis 3 (optional)
-        /// - Upper right corner, coordinate axis 1
-        /// - Upper right corner, coordinate axis 2
-        /// - Maximum value, coordinate axis 3 (optional)
-        /// 
+        /// <list type="bullet"><item><description>Lower left corner, coordinate axis 1</description></item><item><description>Lower left corner, coordinate axis 2</description></item><item><description>Minimum value, coordinate axis 3 (optional)</description></item><item><description>Upper right corner, coordinate axis 1</description></item><item><description>Upper right corner, coordinate axis 2</description></item><item><description>Maximum value, coordinate axis 3 (optional)</description></item></list>
         /// The coordinate reference system of the values is WGS 84 longitude/latitude
         /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
-        /// 
         /// For WGS 84 longitude/latitude the values are in most cases the sequence of
         /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
         /// However, in cases where the box spans the antimeridian the first value
         /// (west-most box edge) is larger than the third value (east-most box edge).
-        /// 
         /// If the vertical axis is included, the third and the sixth number are
         /// the bottom and the top of the 3-dimensional bounding box.
-        /// 
         /// If a feature has multiple spatial geometry properties, it is the decision of the
         /// server whether only a single spatial geometry property is used to determine
         /// the extent or all relevant geometries.
@@ -2922,16 +2892,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="datetime">
         /// Either a date-time or an interval, open or closed. Date and time expressions
         /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// 
         /// Examples:
-        /// 
-        /// - A date-time: "2018-02-12T23:20:50Z"
-        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
-        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
-        /// 
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
         /// Only features that have a temporal property that intersects the value of
         /// `datetime` are selected.
-        /// 
         /// If a feature has multiple temporal properties, it is the decision of the
         /// server whether only a single temporal property is used to determine
         /// the extent or all relevant temporal properties.
@@ -2961,7 +2925,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Fetch features of the feature collection with id `collectionId`.
-        /// 
         /// Every feature in a dataset belongs to a collection. A dataset may
         /// consist of multiple feature collections. A feature collection is often a
         /// collection of features of a similar type, based on a common schema.
@@ -2974,38 +2937,25 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="limit">
         /// The optional limit parameter recommends the number of items that should be present in the response document.
-        /// 
         /// If the limit parameter value is greater than advertised limit maximum, the server must return the
         /// maximum possible number of items, rather than responding with an error.
-        /// 
         /// Only items are counted that are on the first level of the collection in the response document.
         /// Nested objects contained within the explicitly requested items must not be counted.
-        /// 
         /// Minimum = 1. Maximum = 10000. Default = 10.
         /// </param>
         /// <param name="boundingBox">
         /// Only features that have a geometry that intersects the bounding box are selected.
         /// The bounding box is provided as four or six numbers, depending on whether the
         /// coordinate reference system includes a vertical axis (height or depth):
-        /// 
-        /// - Lower left corner, coordinate axis 1
-        /// - Lower left corner, coordinate axis 2
-        /// - Minimum value, coordinate axis 3 (optional)
-        /// - Upper right corner, coordinate axis 1
-        /// - Upper right corner, coordinate axis 2
-        /// - Maximum value, coordinate axis 3 (optional)
-        /// 
+        /// <list type="bullet"><item><description>Lower left corner, coordinate axis 1</description></item><item><description>Lower left corner, coordinate axis 2</description></item><item><description>Minimum value, coordinate axis 3 (optional)</description></item><item><description>Upper right corner, coordinate axis 1</description></item><item><description>Upper right corner, coordinate axis 2</description></item><item><description>Maximum value, coordinate axis 3 (optional)</description></item></list>
         /// The coordinate reference system of the values is WGS 84 longitude/latitude
         /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
-        /// 
         /// For WGS 84 longitude/latitude the values are in most cases the sequence of
         /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
         /// However, in cases where the box spans the antimeridian the first value
         /// (west-most box edge) is larger than the third value (east-most box edge).
-        /// 
         /// If the vertical axis is included, the third and the sixth number are
         /// the bottom and the top of the 3-dimensional bounding box.
-        /// 
         /// If a feature has multiple spatial geometry properties, it is the decision of the
         /// server whether only a single spatial geometry property is used to determine
         /// the extent or all relevant geometries.
@@ -3013,16 +2963,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="datetime">
         /// Either a date-time or an interval, open or closed. Date and time expressions
         /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// 
         /// Examples:
-        /// 
-        /// - A date-time: "2018-02-12T23:20:50Z"
-        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
-        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
-        /// 
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
         /// Only features that have a temporal property that intersects the value of
         /// `datetime` are selected.
-        /// 
         /// If a feature has multiple temporal properties, it is the decision of the
         /// server whether only a single temporal property is used to determine
         /// the extent or all relevant temporal properties.
@@ -3052,7 +2996,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Fetch features of the feature collection with id `collectionId`.
-        /// 
         /// Every feature in a dataset belongs to a collection. A dataset may
         /// consist of multiple feature collections. A feature collection is often a
         /// collection of features of a similar type, based on a common schema.
@@ -3060,38 +3003,25 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="limit">
         /// The optional limit parameter recommends the number of items that should be present in the response document.
-        /// 
         /// If the limit parameter value is greater than advertised limit maximum, the server must return the
         /// maximum possible number of items, rather than responding with an error.
-        /// 
         /// Only items are counted that are on the first level of the collection in the response document.
         /// Nested objects contained within the explicitly requested items must not be counted.
-        /// 
         /// Minimum = 1. Maximum = 10000. Default = 10.
         /// </param>
         /// <param name="boundingBox">
         /// Only features that have a geometry that intersects the bounding box are selected.
         /// The bounding box is provided as four or six numbers, depending on whether the
         /// coordinate reference system includes a vertical axis (height or depth):
-        /// 
-        /// - Lower left corner, coordinate axis 1
-        /// - Lower left corner, coordinate axis 2
-        /// - Minimum value, coordinate axis 3 (optional)
-        /// - Upper right corner, coordinate axis 1
-        /// - Upper right corner, coordinate axis 2
-        /// - Maximum value, coordinate axis 3 (optional)
-        /// 
+        /// <list type="bullet"><item><description>Lower left corner, coordinate axis 1</description></item><item><description>Lower left corner, coordinate axis 2</description></item><item><description>Minimum value, coordinate axis 3 (optional)</description></item><item><description>Upper right corner, coordinate axis 1</description></item><item><description>Upper right corner, coordinate axis 2</description></item><item><description>Maximum value, coordinate axis 3 (optional)</description></item></list>
         /// The coordinate reference system of the values is WGS 84 longitude/latitude
         /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
-        /// 
         /// For WGS 84 longitude/latitude the values are in most cases the sequence of
         /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
         /// However, in cases where the box spans the antimeridian the first value
         /// (west-most box edge) is larger than the third value (east-most box edge).
-        /// 
         /// If the vertical axis is included, the third and the sixth number are
         /// the bottom and the top of the 3-dimensional bounding box.
-        /// 
         /// If a feature has multiple spatial geometry properties, it is the decision of the
         /// server whether only a single spatial geometry property is used to determine
         /// the extent or all relevant geometries.
@@ -3099,16 +3029,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="datetime">
         /// Either a date-time or an interval, open or closed. Date and time expressions
         /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// 
         /// Examples:
-        /// 
-        /// - A date-time: "2018-02-12T23:20:50Z"
-        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
-        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
-        /// 
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
         /// Only features that have a temporal property that intersects the value of
         /// `datetime` are selected.
-        /// 
         /// If a feature has multiple temporal properties, it is the decision of the
         /// server whether only a single temporal property is used to determine
         /// the extent or all relevant temporal properties.
@@ -3127,7 +3051,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Fetch features of the feature collection with id `collectionId`.
-        /// 
         /// Every feature in a dataset belongs to a collection. A dataset may
         /// consist of multiple feature collections. A feature collection is often a
         /// collection of features of a similar type, based on a common schema.
@@ -3135,38 +3058,25 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="limit">
         /// The optional limit parameter recommends the number of items that should be present in the response document.
-        /// 
         /// If the limit parameter value is greater than advertised limit maximum, the server must return the
         /// maximum possible number of items, rather than responding with an error.
-        /// 
         /// Only items are counted that are on the first level of the collection in the response document.
         /// Nested objects contained within the explicitly requested items must not be counted.
-        /// 
         /// Minimum = 1. Maximum = 10000. Default = 10.
         /// </param>
         /// <param name="boundingBox">
         /// Only features that have a geometry that intersects the bounding box are selected.
         /// The bounding box is provided as four or six numbers, depending on whether the
         /// coordinate reference system includes a vertical axis (height or depth):
-        /// 
-        /// - Lower left corner, coordinate axis 1
-        /// - Lower left corner, coordinate axis 2
-        /// - Minimum value, coordinate axis 3 (optional)
-        /// - Upper right corner, coordinate axis 1
-        /// - Upper right corner, coordinate axis 2
-        /// - Maximum value, coordinate axis 3 (optional)
-        /// 
+        /// <list type="bullet"><item><description>Lower left corner, coordinate axis 1</description></item><item><description>Lower left corner, coordinate axis 2</description></item><item><description>Minimum value, coordinate axis 3 (optional)</description></item><item><description>Upper right corner, coordinate axis 1</description></item><item><description>Upper right corner, coordinate axis 2</description></item><item><description>Maximum value, coordinate axis 3 (optional)</description></item></list>
         /// The coordinate reference system of the values is WGS 84 longitude/latitude
         /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
-        /// 
         /// For WGS 84 longitude/latitude the values are in most cases the sequence of
         /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
         /// However, in cases where the box spans the antimeridian the first value
         /// (west-most box edge) is larger than the third value (east-most box edge).
-        /// 
         /// If the vertical axis is included, the third and the sixth number are
         /// the bottom and the top of the 3-dimensional bounding box.
-        /// 
         /// If a feature has multiple spatial geometry properties, it is the decision of the
         /// server whether only a single spatial geometry property is used to determine
         /// the extent or all relevant geometries.
@@ -3174,16 +3084,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="datetime">
         /// Either a date-time or an interval, open or closed. Date and time expressions
         /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// 
         /// Examples:
-        /// 
-        /// - A date-time: "2018-02-12T23:20:50Z"
-        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
-        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
-        /// 
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
         /// Only features that have a temporal property that intersects the value of
         /// `datetime` are selected.
-        /// 
         /// If a feature has multiple temporal properties, it is the decision of the
         /// server whether only a single temporal property is used to determine
         /// the extent or all relevant temporal properties.

@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    public partial class PartnerOrganizationProperties : IUtf8JsonSerializable, IJsonModel<PartnerOrganizationProperties>
+    /// <summary> Properties specific to Partner's organization. </summary>
+    public partial class PartnerOrganizationProperties : IJsonModel<PartnerOrganizationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerOrganizationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PartnerOrganizationProperties"/> for deserialization. </summary>
+        internal PartnerOrganizationProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PartnerOrganizationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PartnerOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PartnerOrganizationProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(OrganizationId))
             {
                 writer.WritePropertyName("organizationId"u8);
@@ -46,15 +51,15 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("singleSignOnProperties"u8);
                 writer.WriteObjectValue(SingleSignOnProperties, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,22 +68,27 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
-        PartnerOrganizationProperties IJsonModel<PartnerOrganizationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PartnerOrganizationProperties IJsonModel<PartnerOrganizationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PartnerOrganizationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PartnerOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PartnerOrganizationProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePartnerOrganizationProperties(document.RootElement, options);
         }
 
-        internal static PartnerOrganizationProperties DeserializePartnerOrganizationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PartnerOrganizationProperties DeserializePartnerOrganizationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,42 +96,43 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             string organizationId = default;
             string organizationName = default;
             NeonSingleSignOnProperties singleSignOnProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("organizationId"u8))
+                if (prop.NameEquals("organizationId"u8))
                 {
-                    organizationId = property.Value.GetString();
+                    organizationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("organizationName"u8))
+                if (prop.NameEquals("organizationName"u8))
                 {
-                    organizationName = property.Value.GetString();
+                    organizationName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("singleSignOnProperties"u8))
+                if (prop.NameEquals("singleSignOnProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    singleSignOnProperties = NeonSingleSignOnProperties.DeserializeNeonSingleSignOnProperties(property.Value, options);
+                    singleSignOnProperties = NeonSingleSignOnProperties.DeserializeNeonSingleSignOnProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PartnerOrganizationProperties(organizationId, organizationName, singleSignOnProperties, serializedAdditionalRawData);
+            return new PartnerOrganizationProperties(organizationId, organizationName, singleSignOnProperties, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PartnerOrganizationProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PartnerOrganizationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PartnerOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -131,15 +142,20 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
-        PartnerOrganizationProperties IPersistableModel<PartnerOrganizationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PartnerOrganizationProperties IPersistableModel<PartnerOrganizationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PartnerOrganizationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PartnerOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePartnerOrganizationProperties(document.RootElement, options);
                     }
                 default:
@@ -147,6 +163,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PartnerOrganizationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

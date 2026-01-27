@@ -16,7 +16,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md
-    /// 
     /// Represents a STAC collection.
     /// </summary>
     public partial class StacCollectionResource : IJsonModel<StacCollectionResource>

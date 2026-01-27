@@ -179,7 +179,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Empty.putEmpty",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Empty"
           },
           "parameters": [
             {
@@ -275,7 +276,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Empty.getEmpty",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Empty"
           },
           "parameters": [
             {
@@ -396,7 +398,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Empty.postRoundTripEmpty",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Empty"
           },
           "parameters": [
             {

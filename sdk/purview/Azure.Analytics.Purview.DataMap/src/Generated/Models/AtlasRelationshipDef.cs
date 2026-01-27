@@ -32,19 +32,15 @@ namespace Azure.Analytics.Purview.DataMap
     /// RelationshipDefs introduce new attributes to the entity
     /// instances. For example
     /// EntityDef A might have attributes attr1,attr2,attr3
-    /// 
     /// EntityDef B might have attributes attr4,attr5,attr6 
     /// RelationshipDef
     /// AtoB might define 2 ends 
-    /// 
     /// end1:  type A, name attr7
     /// end2:  type B, name attr8 
-    /// 
     /// When an instance of EntityDef A is created, it
     /// will have attributes attr1,attr2,attr3,attr7 
     /// When an instance of EntityDef
     /// B is created, it will have attributes attr4,attr5,attr6,attr8
-    /// 
     /// In this way
     /// relationshipDefs can be authored separately from entityDefs and can inject
     /// relationship attributes into

@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecretAttributes(bool? enabled, DateTimeOffset? notBefore, DateTimeOffset? expires, DateTimeOffset? created, DateTimeOffset? updated, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(enabled, notBefore, expires, created, updated, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecretAttributes(bool? enabled, DateTimeOffset? notBefore, DateTimeOffset? expires, DateTimeOffset? created, DateTimeOffset? updated, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(enabled, notBefore, expires, created, updated, additionalBinaryDataProperties)
         {
         }
     }
