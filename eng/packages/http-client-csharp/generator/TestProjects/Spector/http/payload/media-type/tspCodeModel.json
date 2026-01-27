@@ -255,7 +255,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MediaType.StringBody.sendAsText",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MediaType.StringBody"
               },
               "parameters": [
                 {
@@ -366,7 +367,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MediaType.StringBody.getAsText",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MediaType.StringBody"
               },
               "parameters": [
                 {
@@ -468,7 +470,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MediaType.StringBody.sendAsJson",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MediaType.StringBody"
               },
               "parameters": [
                 {
@@ -579,7 +582,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MediaType.StringBody.getAsJson",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MediaType.StringBody"
               },
               "parameters": [
                 {

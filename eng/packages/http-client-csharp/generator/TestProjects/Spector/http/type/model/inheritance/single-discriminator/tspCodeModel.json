@@ -674,7 +674,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -773,7 +774,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -869,7 +871,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -968,7 +971,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -1064,7 +1068,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -1146,7 +1151,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -1228,7 +1234,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getLegacyModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {

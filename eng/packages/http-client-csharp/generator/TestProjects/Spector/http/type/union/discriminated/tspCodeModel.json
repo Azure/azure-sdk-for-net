@@ -546,7 +546,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
@@ -688,7 +689,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
@@ -885,7 +887,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
@@ -1027,7 +1030,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
@@ -1276,7 +1280,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
@@ -1418,7 +1423,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
@@ -1615,7 +1621,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
@@ -1757,7 +1764,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
