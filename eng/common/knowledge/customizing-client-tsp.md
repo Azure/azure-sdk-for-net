@@ -473,3 +473,38 @@ interface MyClient {
 ```
 
 This reference provides the essential patterns and decorators for TypeSpec client customizations. Focus on the core decorators (`@client`, `@operationGroup`, `@@clientLocation`, `@@clientName`, `@@access`) for most scenarios, and use advanced features selectively.
+---
+
+## When TypeSpec Isn't Enough: Code Customizations
+
+TypeSpec customizations (`client.tsp`) should be your **first choice** for SDK customization - they're clean, documented, and survive regeneration.
+
+For scenarios that TypeSpec cannot express, each language has its own post-generation code customization approach. Refer to the language-specific documentation below.
+
+### Language-Specific Code Customization Guides
+
+When you need post-generation customizations, refer to the language-specific documentation:
+
+| Language | Documentation | Pattern |
+|----------|--------------|---------|
+| **C#** | [C# Customization Guide](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/.tspd/docs/customization.md) | Partial classes with `[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSerialization]` attributes |
+| **Python** | [Python Customization Guide](https://github.com/Azure/autorest.python/blob/main/docs/customizations.md) | `_patch.py` files at models, operations, and client levels |
+| **Java** | [Java Customization Guide](https://github.com/Azure/autorest.java/blob/main/customization-base/README.md) | `Customization` class with `customizeAst()` method |
+| **JavaScript** | [JS Customization Guide](https://github.com/Azure/azure-sdk-for-js/wiki/Modular-(DPG)-Customization-Guide) | Copy `src/` to `generated/`, add customizations in `src/` |
+| **Go** | [Go Customization Guide](https://github.com/Azure/azure-sdk-for-go/blob/main/documentation/development/generate.md) | Prefer TypeSpec; use custom wrapper files for advanced cases |
+
+### Decision Flow
+
+```
+Need to customize SDK?
+         │
+         ▼
+   Can it be done in TypeSpec?
+         │
+    ┌────┴────┐
+    Yes       No
+    │         │
+    ▼         ▼
+Use client.tsp    Use code customization
+decorators        (see language guide above)
+```

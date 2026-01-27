@@ -144,8 +144,19 @@ internal class OperationContext
                 // we have a pair of segment, key and value
                 // In majority of cases, the key is a constant segment. In some rare scenarios, the key could be a variable.
                 // The value could be a constant or a variable segment.
-                // TODO -- we did not consider the case that key would be a variable here.
-                if (!value.IsConstant)
+                if (!key.IsConstant)
+                {
+                    // Handle the case when key is a variable
+                    // we have to reassign the value of parentLayerCount to a local variable to avoid the closure to wrap the parentLayerCount variable which changes during recursion.
+                    int currentParentCount = parentLayerCount;
+                    parameterStack.Push(new ContextualParameter(key.VariableName, key.VariableName, id => BuildParentInvocation(currentParentCount, id).ResourceType().Type()));
+                    if (!value.IsConstant)
+                    {
+                        parameterStack.Push(new ContextualParameter(value.VariableName, value.VariableName, id => BuildParentInvocation(currentParentCount, id).Name()));
+                    }
+                    appendParent = true;
+                }
+                else if (!value.IsConstant)
                 {
                     if (key.IsProvidersSegment) // if the key is `providers` and the value is a parameter
                     {
@@ -171,7 +182,7 @@ internal class OperationContext
                         appendParent = true;
                     }
                 }
-                else // in this branch value is a constant
+                else // in this branch both key and value are constants
                 {
                     if (!key.IsProvidersSegment)
                     {
@@ -256,8 +267,19 @@ internal class OperationContext
                 {
                     continue;
                 }
-                // TODO -- we did not consider the case that key would be a variable here.
-                if (!value.IsConstant)
+                if (!key.IsConstant)
+                {
+                    // Handle the case when key is a variable
+                    var keyContextualParameter = new ContextualParameter(key.VariableName, key.VariableName, _ => fieldSelector(key.VariableName));
+                    result.Add(keyContextualParameter);
+                    if (!value.IsConstant)
+                    {
+                        // in this case we need to build a contextual parameter for the value too
+                        var valueContextualParameter = new ContextualParameter(value.VariableName, value.VariableName, _ => fieldSelector(value.VariableName));
+                        result.Add(valueContextualParameter);
+                    }
+                }
+                else if (!value.IsConstant)
                 {
                     // in this case we need to build a contextual parameter
                     var contextualParameter = new ContextualParameter(key.Value, value.VariableName, _ => fieldSelector(value.VariableName));

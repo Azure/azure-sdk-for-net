@@ -21,7 +21,6 @@ namespace Azure.AI.Translation.Text
         /// <param name="mtSystem">
         /// Specifies the system type that was used for translation for each 'to' language requested for translation. 
         /// The value is a comma-separated list of strings. Each string indicates a type:
-        /// 
         /// * Custom - Request includes a custom system and at least one custom system was used during translation.
         /// * Team - All other requests
         /// </param>
@@ -44,7 +43,6 @@ namespace Azure.AI.Translation.Text
         /// <param name="mtSystem">
         /// Specifies the system type that was used for translation for each 'to' language requested for translation. 
         /// The value is a comma-separated list of strings. Each string indicates a type:
-        /// 
         /// * Custom - Request includes a custom system and at least one custom system was used during translation.
         /// * Team - All other requests
         /// </param>
@@ -72,7 +70,6 @@ namespace Azure.AI.Translation.Text
         /// <summary>
         /// Specifies the system type that was used for translation for each 'to' language requested for translation. 
         /// The value is a comma-separated list of strings. Each string indicates a type:
-        /// 
         /// * Custom - Request includes a custom system and at least one custom system was used during translation.
         /// * Team - All other requests
         /// </summary>

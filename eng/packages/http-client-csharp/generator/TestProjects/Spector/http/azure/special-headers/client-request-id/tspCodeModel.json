@@ -63,7 +63,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.get",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Azure.SpecialHeaders.XmsClientRequestId"
           },
           "parameters": [
             {

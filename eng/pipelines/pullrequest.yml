@@ -35,7 +35,6 @@ extends:
       ServiceDirectory: template
     ${{ else }}:
       ServiceDirectory: ${{ parameters.Service }}
-    CheckAOTCompat: true
     BuildSnippets: true
     ExcludePaths:
       - eng/packages/http-client-csharp/

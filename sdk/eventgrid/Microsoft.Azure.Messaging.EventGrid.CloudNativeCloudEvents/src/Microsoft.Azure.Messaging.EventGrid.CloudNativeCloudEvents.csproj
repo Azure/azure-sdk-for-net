@@ -20,5 +20,11 @@
     <PackageReference Include="Azure.Messaging.EventGrid" />
     <PackageReference Include="CloudNative.CloudEvents" />
     <PackageReference Include="CloudNative.CloudEvents.SystemTextJson" />
+
+    <!-- 
+      A direct reference is needed to hoist the transitive dependency in CloudNative.CloudEvents.SystemTextJson 
+      The latest release (2.8.0) references a vulnerable System.Text.Json (8.0.4).
+    -->
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 </Project>

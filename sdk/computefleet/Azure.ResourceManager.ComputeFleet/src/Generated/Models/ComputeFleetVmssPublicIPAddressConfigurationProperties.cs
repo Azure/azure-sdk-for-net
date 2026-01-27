@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -18,37 +18,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// </summary>
     public partial class ComputeFleetVmssPublicIPAddressConfigurationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssPublicIPAddressConfigurationProperties"/>. </summary>
         public ComputeFleetVmssPublicIPAddressConfigurationProperties()
@@ -67,8 +38,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// values are: 'IPv4' and 'IPv6'.
         /// </param>
         /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssPublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, ComputeFleetVmssPublicIPAddressDnsSettings dnsSettings, IList<ComputeFleetVmssIPTag> ipTags, WritableSubResource publicIPPrefix, ComputeFleetIPVersion? publicIPAddressVersion, ComputeFleetVmDeleteOption? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmssPublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, ComputeFleetVmssPublicIPAddressDnsSettings dnsSettings, IList<ComputeFleetVmssIPTag> ipTags, SubResource publicIPPrefix, ComputeFleetIPVersion? publicIPAddressVersion, ComputeFleetVmDeleteOption? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DnsSettings = dnsSettings;
@@ -76,28 +47,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
             DeleteOption = deleteOption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
+
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
         public ComputeFleetVmssPublicIPAddressDnsSettings DnsSettings { get; set; }
+
         /// <summary> The list of IP tags associated with the public IP address. </summary>
         public IList<ComputeFleetVmssIPTag> IPTags { get; }
+
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
-        internal WritableSubResource PublicIPPrefix { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier PublicIPPrefixId
-        {
-            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
-            set
-            {
-                if (PublicIPPrefix is null)
-                    PublicIPPrefix = new WritableSubResource();
-                PublicIPPrefix.Id = value;
-            }
-        }
+        internal SubResource PublicIPPrefix { get; set; }
 
         /// <summary>
         /// Available from Api-Version 2019-07-01 onwards, it represents whether the
@@ -105,7 +68,25 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// values are: 'IPv4' and 'IPv6'.
         /// </summary>
         public ComputeFleetIPVersion? PublicIPAddressVersion { get; set; }
+
         /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>
         public ComputeFleetVmDeleteOption? DeleteOption { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public ResourceIdentifier PublicIPPrefixId
+        {
+            get
+            {
+                return PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            }
+            set
+            {
+                if (PublicIPPrefix is null)
+                {
+                    PublicIPPrefix = new SubResource();
+                }
+                PublicIPPrefix.Id = value;
+            }
+        }
     }
 }
