@@ -172,6 +172,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="location"> The name of the Azure region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of ChaosTargetMetadataResources and their operations over a ChaosTargetMetadataResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChaosTargetMetadataCollection GetAllChaosTargetMetadata(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
