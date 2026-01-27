@@ -6,71 +6,30 @@ using NUnit.Framework;
 using System;
 using System.ClientModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Speech.Transcription.Tests
 {
     /// <summary>
-    /// Unit and validation tests for the <see cref="TranscriptionClient"/> class (sync methods).
-    /// Tests client construction, validation, and error handling.
+    /// Async tests for the <see cref="TranscriptionClient"/> class.
+    /// Tests audio transcription functionality against the live service.
     /// </summary>
-    [TestFixture(false)]  // Run sync tests only
+    [TestFixture(true)]
     [Category("Transcription")]
-    public class TranscriptionClientTests : TranscriptionRecordedTestBase
+    public class TranscriptionClientAsyncTests : TranscriptionRecordedTestBase
     {
         private const string SampleAudioFile = "sample-whatstheweatherlike-en.mp3";
         private const string SampleProfanityFile = "sample-profanity.wav";
 
-        public TranscriptionClientTests(bool isAsync) : base(isAsync)
+        public TranscriptionClientAsyncTests(bool isAsync) : base(isAsync)
         {
         }
-
-        #region Client Construction Tests
-
-        /// <summary>
-        /// Tests that the client can be created successfully.
-        /// </summary>
-        [RecordedTest]
-        public void CanCreateClient()
-        {
-            TranscriptionClient client = CreateClient();
-            Assert.That(client, Is.Not.Null);
-        }
-
-        /// <summary>
-        /// Tests that the client options can be configured.
-        /// </summary>
-        [Test]
-        public void ClientOptionsCanBeConfigured()
-        {
-            var options = new TranscriptionClientOptions();
-            Assert.That(options, Is.Not.Null);
-        }
-
-        /// <summary>
-        /// Tests that the client constructor validates arguments.
-        /// </summary>
-        [Test]
-        public void ClientConstructorValidatesArguments()
-        {
-            Uri validEndpoint = new Uri("https://test.cognitiveservices.azure.com");
-            ApiKeyCredential validCredential = new ApiKeyCredential("test-key");
-
-            // Test null endpoint
-            Assert.Throws<ArgumentNullException>(() =>
-                new TranscriptionClient(null, validCredential));
-
-            // Test null credential
-            Assert.Throws<ArgumentNullException>(() =>
-                new TranscriptionClient(validEndpoint, (ApiKeyCredential)null));
-        }
-
-        #endregion
 
         #region Basic Transcription Tests
 
         [RecordedTest]
-        public async Task TranscribeAudioStream()
+        public async Task TranscribeAudioStreamAsync()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleAudioFile);
@@ -88,7 +47,7 @@ namespace Azure.AI.Speech.Transcription.Tests
         }
 
         [RecordedTest]
-        public async Task TranscribeAudioStreamWithMultipleLocales()
+        public async Task TranscribeAudioStreamWithMultipleLocalesAsync()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleAudioFile);
@@ -110,7 +69,7 @@ namespace Azure.AI.Speech.Transcription.Tests
         #region Profanity Filter Tests
 
         [RecordedTest]
-        public async Task TranscribeWithProfanityFilterMasked()
+        public async Task TranscribeWithProfanityFilterMaskedAsync()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleProfanityFile);
@@ -127,7 +86,7 @@ namespace Azure.AI.Speech.Transcription.Tests
         }
 
         [RecordedTest]
-        public async Task TranscribeWithProfanityFilterRemoved()
+        public async Task TranscribeWithProfanityFilterRemovedAsync()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleProfanityFile);
@@ -148,7 +107,7 @@ namespace Azure.AI.Speech.Transcription.Tests
         #region Diarization Tests
 
         [RecordedTest]
-        public async Task TranscribeWithDiarization()
+        public async Task TranscribeWithDiarizationAsync()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleAudioFile);
@@ -168,7 +127,7 @@ namespace Azure.AI.Speech.Transcription.Tests
         }
 
         [RecordedTest]
-        public async Task TranscribeWithDiarizationMaxSpeakers()
+        public async Task TranscribeWithDiarizationMaxSpeakersAsync()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleAudioFile);
@@ -192,7 +151,7 @@ namespace Azure.AI.Speech.Transcription.Tests
         #region Phrase List Tests
 
         [RecordedTest]
-        public async Task TranscribeWithPhraseList()
+        public async Task TranscribeWithPhraseListAsync()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleAudioFile);
@@ -215,7 +174,7 @@ namespace Azure.AI.Speech.Transcription.Tests
         #region Combined Options Tests
 
         [RecordedTest]
-        public async Task TranscribeWithMultipleOptions()
+        public async Task TranscribeWithMultipleOptionsAsync()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleAudioFile);
@@ -242,7 +201,7 @@ namespace Azure.AI.Speech.Transcription.Tests
         #region TranscriptionResult Tests
 
         [RecordedTest]
-        public async Task TranscriptionResultHasDuration()
+        public async Task TranscriptionResultHasDurationAsync()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleAudioFile);
@@ -258,7 +217,7 @@ namespace Azure.AI.Speech.Transcription.Tests
         }
 
         [RecordedTest]
-        public async Task TranscriptionResultHasCombinedPhrases()
+        public async Task TranscriptionResultHasCombinedPhrasesAsync()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleAudioFile);
@@ -272,10 +231,11 @@ namespace Azure.AI.Speech.Transcription.Tests
 
             Assert.That(transcription.CombinedPhrases, Is.Not.Null);
             Assert.That(transcription.CombinedPhrases.Count, Is.GreaterThan(0));
+            Assert.That(transcription.CombinedPhrases.First().Text, Is.Not.Empty);
         }
 
         [RecordedTest]
-        public async Task TranscriptionResultHasPhrasesByChannel()
+        public async Task TranscriptionResultHasPhrasesByChannelAsync()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleAudioFile);
@@ -289,32 +249,23 @@ namespace Azure.AI.Speech.Transcription.Tests
 
             var phrasesByChannel = transcription.PhrasesByChannel;
             Assert.That(phrasesByChannel, Is.Not.Null);
-        }
+            Assert.That(phrasesByChannel.Count(), Is.GreaterThan(0));
 
-        #endregion
-
-        #region Validation Tests
-
-        /// <summary>
-        /// Tests that Transcribe (sync) validates null options parameter.
-        /// </summary>
-        [RecordedTest]
-        public async Task TranscribeValidatesNullOptions()
-        {
-            TranscriptionClient client = CreateClient();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.TranscribeAsync((TranscriptionOptions)null));
+            foreach (var channelPhrases in phrasesByChannel)
+            {
+                Assert.That(channelPhrases, Is.Not.Null);
+                Assert.That(channelPhrases.Phrases, Is.Not.Null);
+                Assert.That(channelPhrases.Text, Is.Not.Empty);
+            }
         }
 
         #endregion
 
         #region Helper Methods
 
-        /// <summary>
-        /// Gets the full path to an asset file in the samples/assets directory.
-        /// </summary>
         private string GetAssetPath(string fileName)
         {
-            string assemblyLocation = typeof(TranscriptionClientTests).Assembly.Location;
+            string assemblyLocation = typeof(TranscriptionClientAsyncTests).Assembly.Location;
             string assemblyDir = Path.GetDirectoryName(assemblyLocation);
             string repoRoot = Path.GetFullPath(Path.Combine(assemblyDir, "..", "..", "..", "..", ".."));
             string assetsPath = Path.Combine(repoRoot, "sdk", "transcription", "Azure.AI.Speech.Transcription", "samples", "assets", fileName);
