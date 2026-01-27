@@ -22,6 +22,13 @@ param(
 Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
 
+#Validate azsdk executable path
+if (-Not (Test-Path $AzsdkExePath))
+{
+    Write-Error "The azsdk executable was not found at path '$AzsdkExePath'. Please ensure the executable exists and the path is correct."
+    exit 1
+}
+
 #Get package properties
 if (-Not (Test-Path $PackageInfoFilePath))
 {

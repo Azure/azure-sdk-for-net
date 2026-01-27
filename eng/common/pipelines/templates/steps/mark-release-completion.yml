@@ -6,6 +6,8 @@ parameters:
 steps:
   - task: Powershell@2
     displayName: 'Install Azure SDK MCP'
+    continueOnError: true
+    condition: and(succeeded(), ne(variables['Skip.MarkReleaseCompletion'], 'true'))
     inputs:
       targetType: 'inline'
       script: >
