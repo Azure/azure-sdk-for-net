@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public readonly partial struct ElasticSanSkuName : IEquatable<ElasticSanSkuName>
     {
         private readonly string _value;
+        /// <summary> Premium locally redundant storage. </summary>
+        private const string PremiumLrsValue = "Premium_LRS";
+        /// <summary> Premium zone redundant storage. </summary>
+        private const string PremiumZrsValue = "Premium_ZRS";
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticSanSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PremiumLrsValue = "Premium_LRS";
-        private const string PremiumZrsValue = "Premium_ZRS";
+            _value = value;
+        }
 
         /// <summary> Premium locally redundant storage. </summary>
         public static ElasticSanSkuName PremiumLrs { get; } = new ElasticSanSkuName(PremiumLrsValue);
+
         /// <summary> Premium zone redundant storage. </summary>
         public static ElasticSanSkuName PremiumZrs { get; } = new ElasticSanSkuName(PremiumZrsValue);
+
         /// <summary> Determines if two <see cref="ElasticSanSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticSanSkuName left, ElasticSanSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticSanSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticSanSkuName left, ElasticSanSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticSanSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticSanSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticSanSkuName(string value) => new ElasticSanSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticSanSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticSanSkuName?(string value) => value == null ? null : new ElasticSanSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticSanSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticSanSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
