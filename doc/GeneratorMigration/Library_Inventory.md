@@ -13,9 +13,9 @@
 
 ## Summary
 
-- Total libraries: 403
-- Management Plane (MPG): 229
-  - Autorest/Swagger: 150
+- Total libraries: 401
+- Management Plane (MPG): 227
+  - Autorest/Swagger: 148
   - New Emitter (TypeSpec): 74
   - Old TypeSpec: 5
 - Data Plane (DPG): 143
@@ -179,7 +179,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | edgeorder | Azure.ResourceManager.EdgeOrder | ✅ |
 | edgezones | Azure.ResourceManager.EdgeZones | ✅ |
 | elastic | Azure.ResourceManager.Elastic | ✅ |
-| elasticsan | Azure.ResourceManager.ElasticSan |  |
+| elasticsan | Azure.ResourceManager.ElasticSan | ✅ |
 | fabric | Azure.ResourceManager.Fabric | ✅ |
 | fileshares | Azure.ResourceManager.FileShares | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
@@ -232,7 +232,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 150
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 148
 
 | Service | Library |
 | ------- | ------- |

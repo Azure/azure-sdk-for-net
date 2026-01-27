@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public readonly partial struct ElasticSanProvisioningState : IEquatable<ElasticSanProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticSanProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ElasticSanProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
@@ -32,47 +25,77 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private const string DeletingValue = "Deleting";
         private const string DeletedValue = "Deleted";
         private const string RestoringValue = "Restoring";
-        private const string SoftDeletingValue = "SoftDeleting";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ElasticSanProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static ElasticSanProvisioningState Invalid { get; } = new ElasticSanProvisioningState(InvalidValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static ElasticSanProvisioningState Succeeded { get; } = new ElasticSanProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ElasticSanProvisioningState Failed { get; } = new ElasticSanProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static ElasticSanProvisioningState Canceled { get; } = new ElasticSanProvisioningState(CanceledValue);
-        /// <summary> Pending. </summary>
+
+        /// <summary> Gets the Pending. </summary>
         public static ElasticSanProvisioningState Pending { get; } = new ElasticSanProvisioningState(PendingValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static ElasticSanProvisioningState Creating { get; } = new ElasticSanProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static ElasticSanProvisioningState Updating { get; } = new ElasticSanProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static ElasticSanProvisioningState Deleting { get; } = new ElasticSanProvisioningState(DeletingValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static ElasticSanProvisioningState Deleted { get; } = new ElasticSanProvisioningState(DeletedValue);
-        /// <summary> Restoring. </summary>
+
+        /// <summary> Gets the Restoring. </summary>
         public static ElasticSanProvisioningState Restoring { get; } = new ElasticSanProvisioningState(RestoringValue);
-        /// <summary> SoftDeleting. </summary>
-        public static ElasticSanProvisioningState SoftDeleting { get; } = new ElasticSanProvisioningState(SoftDeletingValue);
+
         /// <summary> Determines if two <see cref="ElasticSanProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticSanProvisioningState left, ElasticSanProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticSanProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticSanProvisioningState left, ElasticSanProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticSanProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticSanProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticSanProvisioningState(string value) => new ElasticSanProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticSanProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticSanProvisioningState?(string value) => value == null ? null : new ElasticSanProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticSanProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticSanProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

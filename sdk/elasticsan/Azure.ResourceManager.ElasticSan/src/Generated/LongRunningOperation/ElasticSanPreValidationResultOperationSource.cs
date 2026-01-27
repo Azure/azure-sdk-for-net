@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    internal class ElasticSanPreValidationResultOperationSource : IOperationSource<ElasticSanPreValidationResult>
+    /// <summary></summary>
+    internal partial class ElasticSanPreValidationResultOperationSource : IOperationSource<ElasticSanPreValidationResult>
     {
-        ElasticSanPreValidationResult IOperationSource<ElasticSanPreValidationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal ElasticSanPreValidationResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ElasticSanPreValidationResult.DeserializeElasticSanPreValidationResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        ElasticSanPreValidationResult IOperationSource<ElasticSanPreValidationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ElasticSanPreValidationResult result = ElasticSanPreValidationResult.DeserializeElasticSanPreValidationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ElasticSanPreValidationResult> IOperationSource<ElasticSanPreValidationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ElasticSanPreValidationResult.DeserializeElasticSanPreValidationResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ElasticSanPreValidationResult result = ElasticSanPreValidationResult.DeserializeElasticSanPreValidationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }
