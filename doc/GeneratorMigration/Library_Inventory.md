@@ -16,8 +16,8 @@
 - Total libraries: 403
 - Management Plane (MPG): 229
   - Autorest/Swagger: 150
-  - New Emitter (TypeSpec): 72
-  - Old TypeSpec: 7
+  - New Emitter (TypeSpec): 73
+  - Old TypeSpec: 6
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
   - New Emitter (TypeSpec): 27
@@ -145,7 +145,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 72 / 79 (91.1%)
+**Migration Status**: 73 / 79 (92.4%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -157,7 +157,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | azurelargeinstance | Azure.ResourceManager.LargeInstance | ✅ |
 | azurestackhci | Azure.ResourceManager.Hci.Vm | ✅ |
 | carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
-| chaos | Azure.ResourceManager.Chaos |  |
+| chaos | Azure.ResourceManager.Chaos | ✅ |
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | computefleet | Azure.ResourceManager.ComputeFleet | ✅ |
 | computelimit | Azure.ResourceManager.ComputeLimit | ✅ |
