@@ -164,9 +164,7 @@ namespace Azure.Core.Tests
         [Test]
         public void DefaultLocationGetHashCode()
         {
-            // Test that default(AzureLocation).GetHashCode() does not throw NullReferenceException
             AzureLocation defaultLocation = default(AzureLocation);
-            Assert.DoesNotThrow(() => defaultLocation.GetHashCode());
             Assert.AreEqual(0, defaultLocation.GetHashCode());
         }
     }
