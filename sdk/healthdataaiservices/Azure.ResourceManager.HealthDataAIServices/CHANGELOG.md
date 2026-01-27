@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Added SKU support for DeidService with `HealthDataAIServicesSku` model
+- Added `SkuTier` union with Free, Basic, and Standard tiers
+- Added `Sku` property to `DeidServiceData` and `DeidServicePatch` for API version 2026-02-01-preview
+
 ### Breaking Changes
 
 ### Bugs Fixed
