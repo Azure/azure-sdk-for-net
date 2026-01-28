@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Batch
 namespace: Azure.ResourceManager.Batch
-require: https://github.com/Azure/azure-rest-api-specs/blob/d85634405ec3b905f1b0bfc350e47cb704aedb61/specification/batch/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0e54210c791ab8a18f9b9f821163580116e624b5/specification/batch/resource-manager/Microsoft.Batch/Batch/readme.md
 #tag: package-2024-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -214,18 +214,21 @@ rename-mapping:
 
 directive:
 # TODO -- remove this and use rename-mapping when it is supported
-  - from: BatchManagement.json
+  - from: openapi.json
     where: $.definitions.PublicIPAddressConfiguration.properties.ipAddressIds.items
     transform: $["x-ms-format"] = "arm-id"
 # resume the setter on tags of BatchAccountData
-  - from: BatchManagement.json
+  - from: openapi.json
     where: $.definitions.BatchAccount
     transform: $["x-csharp-usage"] = "model,input,output"
 # change the type to extensible so that the BatchPoolIdentity could be replaced
-  - from: BatchManagement.json
+  - from: openapi.json
+    where: $.definitions.PoolIdentityType
+    transform: >
+      $["x-ms-enum"].modelAsString = true;
+  - from: openapi.json
     where: $.definitions.BatchPoolIdentity.properties
     transform: >
-      $.type["x-ms-enum"].modelAsString = true;
       $["principalId"] = {
         "type": "string",
         "readOnly": true
@@ -235,15 +238,17 @@ directive:
         "readOnly": true
       };
 # make provisioning state enumerations all extensible because they are meant to be extensible
-  - from: BatchManagement.json
-    where: $.definitions
-    transform: >
-      $.BatchAccountProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
-      $.CertificateProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
-      $.PrivateEndpointConnectionProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
-      $.PoolProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
+  - from: openapi.json
+    where: $.definitions.ProvisioningState
+    transform: $["x-ms-enum"].modelAsString = true
+  - from: openapi.json
+    where: $.definitions.PrivateEndpointConnectionProvisioningState
+    transform: $["x-ms-enum"].modelAsString = true
+  - from: openapi.json
+    where: $.definitions.PoolProvisioningState
+    transform: $["x-ms-enum"].modelAsString = true
 # add some missing properties to ResizeError so that it could be replaced by Azure.ResponseError
-  - from: BatchManagement.json
+  - from: openapi.json
     where: $.definitions.ResizeError.properties
     transform: >
       $.code["readOnly"] = true;
@@ -255,7 +260,7 @@ directive:
           "description": "The error target."
         };
 # add some missing properties to AutoScaleRunError so that it could be replaced by Azure.ResponseError
-  - from: BatchManagement.json
+  - from: openapi.json
     where: $.definitions.AutoScaleRunError.properties
     transform: >
       $.code["readOnly"] = true;
@@ -266,7 +271,67 @@ directive:
           "type": "string",
           "description": "The error target."
         };
-  - from: BatchManagement.json
+  - from: openapi.json
     where: $.definitions.CheckNameAvailabilityParameters.properties.type
     transform: $["x-ms-constant"] = true;
+  - from: swagger-document
+    where: $.definitions.AccessRuleProperties.properties
+    transform: >
+      $.phoneNumbers["readOnly"] = true;
+      $.emailAddresses["readOnly"] = true;
+      $.addressPrefixes["readOnly"] = true;
+      $.subscriptions["readOnly"] = true;
+      $.networkSecurityPerimeters["readOnly"] = true;
+      $.networkSecurityPerimeters["readOnly"] = true;
+  - from: swagger-document
+    where: $.definitions.NetworkSecurityProfile.properties
+    transform: >
+      $.enabledLogCategories["readOnly"] = true;
+      $.accessRules["readOnly"] = true;
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.AzureResource = {
+          "type": "object",
+          "properties": {
+            "id": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The ID of the resource."
+            },
+            "name": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The name of the resource."
+            },
+            "type": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The type of the resource."
+            },
+            "location": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The location of the resource."
+            },
+            "tags": {
+              "readOnly": true,
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "The tags of the resource."
+            }
+          },
+          "description": "A definition of an Azure resource.",
+          "x-ms-azure-resource": true
+        };
+  - from: swagger-document
+    where: $.definitions.BatchAccount
+    transform: >
+      $['allOf'] = [
+        {
+          "$ref": "#/definitions/AzureResource"
+        }
+      ];
 ```

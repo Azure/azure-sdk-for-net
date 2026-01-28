@@ -62,26 +62,30 @@ namespace Azure.ResourceManager.Batch
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="state"> The current state of the application package. </param>
         /// <param name="format"> The format of the application package, if the package is active. </param>
         /// <param name="storageUri"> The URL for the application package in Azure Storage. </param>
         /// <param name="storageUriExpireOn"> The UTC time at which the Azure Storage URL will expire. </param>
         /// <param name="lastActivatedOn"> The time at which the package was last activated, if the package is active. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchApplicationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, ETag? etag, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BatchApplicationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
+            Tags = tags;
             State = state;
             Format = format;
             StorageUri = storageUri;
             StorageUriExpireOn = storageUriExpireOn;
             LastActivatedOn = lastActivatedOn;
-            ETag = etag;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The ETag of the resource, used for concurrency statements. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The tags of the resource. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The current state of the application package. </summary>
         public BatchApplicationPackageState? State { get; }
         /// <summary> The format of the application package, if the package is active. </summary>
@@ -92,9 +96,5 @@ namespace Azure.ResourceManager.Batch
         public DateTimeOffset? StorageUriExpireOn { get; }
         /// <summary> The time at which the package was last activated, if the package is active. </summary>
         public DateTimeOffset? LastActivatedOn { get; }
-        /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The tags of the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }

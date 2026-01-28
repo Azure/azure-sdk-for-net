@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.Batch
                 name,
                 type,
                 systemData,
-                value,
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                value,
                 serializedAdditionalRawData);
         }
 

@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.Batch
                 name,
                 type,
                 systemData,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 provisioningState,
                 privateEndpoint,
                 groupIds ?? new ChangeTrackingList<string>(),
                 privateLinkServiceConnectionState,
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 
