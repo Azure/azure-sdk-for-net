@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
 
         private Experiments ExperimentsRestClient => _experimentsRestClient ??= new Experiments(ExperimentsClientDiagnostics, Pipeline, Endpoint, "2025-01-01");
 
-        /// <summary> Gets a collection of ChaosTargetMetadatas in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of ChaosTargetMetadata in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of ChaosTargetMetadatas and their operations over a ChaosTargetMetadataResource. </returns>
-        public virtual ChaosTargetMetadataCollection GetChaosTargetMetadatas(AzureLocation location)
+        /// <returns> An object representing collection of ChaosTargetMetadata and their operations over a ChaosTargetMetadataResource. </returns>
+        public virtual ChaosTargetMetadataCollection GetAllChaosTargetMetadata(AzureLocation location)
         {
             return GetCachedClient(client => new ChaosTargetMetadataCollection(client, Id, location));
         }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            return await GetChaosTargetMetadatas(location).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetAllChaosTargetMetadata(location).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            return GetChaosTargetMetadatas(location).Get(targetTypeName, cancellationToken);
+            return GetAllChaosTargetMetadata(location).Get(targetTypeName, cancellationToken);
         }
 
         /// <summary>

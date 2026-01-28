@@ -265,21 +265,21 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary>
-        /// Gets a collection of ChaosTargetMetadatas in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of ChaosTargetMetadata in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetChaosTargetMetadatas(AzureLocation)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetAllChaosTargetMetadata(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of ChaosTargetMetadatas and their operations over a ChaosTargetMetadataResource. </returns>
-        public static ChaosTargetMetadataCollection GetChaosTargetMetadatas(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of ChaosTargetMetadata and their operations over a ChaosTargetMetadataResource. </returns>
+        public static ChaosTargetMetadataCollection GetAllChaosTargetMetadata(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosTargetMetadatas(location);
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetAllChaosTargetMetadata(location);
         }
 
         /// <summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Chaos
     /// <summary>
     /// A class representing a ChaosTargetMetadata along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ChaosTargetMetadataResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetChaosTargetMetadatas method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetAllChaosTargetMetadata method.
     /// </summary>
     public partial class ChaosTargetMetadataResource : ArmResource
     {
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary> Gets a collection of ChaosCapabilityMetadatas in the <see cref="ChaosTargetMetadataResource"/>. </summary>
-        /// <returns> An object representing collection of ChaosCapabilityMetadatas and their operations over a ChaosCapabilityMetadataResource. </returns>
-        public virtual ChaosCapabilityMetadataCollection GetChaosCapabilityMetadatas()
+        /// <summary> Gets a collection of ChaosCapabilityMetadata in the <see cref="ChaosTargetMetadataResource"/>. </summary>
+        /// <returns> An object representing collection of ChaosCapabilityMetadata and their operations over a ChaosCapabilityMetadataResource. </returns>
+        public virtual ChaosCapabilityMetadataCollection GetAllChaosCapabilityMetadata()
         {
             return GetCachedClient(client => new ChaosCapabilityMetadataCollection(client, Id));
         }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(capabilityTypeName, nameof(capabilityTypeName));
 
-            return await GetChaosCapabilityMetadatas().GetAsync(capabilityTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetAllChaosCapabilityMetadata().GetAsync(capabilityTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Capability Type resource for given Target Type and location. </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(capabilityTypeName, nameof(capabilityTypeName));
 
-            return GetChaosCapabilityMetadatas().Get(capabilityTypeName, cancellationToken);
+            return GetAllChaosCapabilityMetadata().Get(capabilityTypeName, cancellationToken);
         }
     }
 }
