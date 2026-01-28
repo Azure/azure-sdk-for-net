@@ -51,7 +51,7 @@ steps:
             -ArtifactPath '${{parameters.ArtifactPath}}'
             -ArtifactName ${{ parameters.ArtifactName }}
             -PackageName '${{parameters.PackageName}}'
-            -SourceBranch '$(Build.SourceBranchName)'
+            -SourceBranch '$(Build.SourceBranch)'
             -DefaultBranch '$(DefaultBranch)'
             -ConfigFileDir '${{parameters.ConfigFileDir}}'
             -BuildId '$(Build.BuildId)'
