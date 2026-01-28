@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Attestation.Models
 {
     /// <summary> The response of a PrivateLinkResource list operation. </summary>
-    public partial class AttestationPrivateLinkResourceListResult
+    internal partial class AttestationPrivateLinkResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

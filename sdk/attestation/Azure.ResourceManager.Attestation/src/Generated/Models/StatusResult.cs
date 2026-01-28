@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Attestation.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StatusResult"/>. </summary>
-        internal StatusResult()
+        public StatusResult()
         {
             PrivateEndpointConnections = new ChangeTrackingList<AttestationPrivateEndpointConnectionData>();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the attestation provider. </param>
         /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StatusResult(string trustModel, AttestationServiceStatus? status, Uri attestUri, PublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StatusResult(string trustModel, AttestationServiceStatus? status, Uri attestUri, AttestationPublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TrustModel = trustModel;
             Status = status;
@@ -43,21 +43,21 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <summary> Trust model for the attestation provider. </summary>
-        public string TrustModel { get; }
+        public string TrustModel { get; set; }
 
         /// <summary> Status of attestation service. </summary>
-        public AttestationServiceStatus? Status { get; }
+        public AttestationServiceStatus? Status { get; set; }
 
         /// <summary> Gets the uri of attestation service. </summary>
-        public Uri AttestUri { get; }
+        public Uri AttestUri { get; set; }
 
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess { get; }
+        public AttestationPublicNetworkAccessType? PublicNetworkAccess { get; set; }
 
         /// <summary> List of private endpoint connections associated with the attestation provider. </summary>
         public IReadOnlyList<AttestationPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<AttestationPrivateEndpointConnectionData>();
 
         /// <summary> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </summary>
-        public TpmAttestationAuthenticationType? TpmAttestationAuthentication { get; }
+        public TpmAttestationAuthenticationType? TpmAttestationAuthentication { get; set; }
     }
 }

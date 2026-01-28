@@ -7,38 +7,50 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Attestation;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> Attestation Providers List. </summary>
+    /// <summary> Parameters for creating an attestation provider. </summary>
     public partial class AttestationProviderCreateOrUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AttestationProviderCreateOrUpdateContent"/>. </summary>
-        internal AttestationProviderCreateOrUpdateContent()
+        /// <param name="location"> The supported Azure location where the attestation provider should be created. </param>
+        /// <param name="properties"> Properties of the attestation provider. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public AttestationProviderCreateOrUpdateContent(AzureLocation location, AttestationServiceCreationSpecificParams properties)
         {
-            Value = new ChangeTrackingList<AttestationProviderData>();
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="AttestationProviderCreateOrUpdateContent"/>. </summary>
-        /// <param name="systemData"> The system metadata relating to this resource. </param>
-        /// <param name="value"> Attestation Provider array. </param>
+        /// <param name="location"> The supported Azure location where the attestation provider should be created. </param>
+        /// <param name="tags"> The tags that will be assigned to the attestation provider. </param>
+        /// <param name="properties"> Properties of the attestation provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationProviderCreateOrUpdateContent(SystemData systemData, IList<AttestationProviderData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestationProviderCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, AttestationServiceCreationSpecificParams properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SystemData = systemData;
-            Value = value;
+            Location = location;
+            Tags = tags;
+            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The system metadata relating to this resource. </summary>
-        public SystemData SystemData { get; }
+        /// <summary> The supported Azure location where the attestation provider should be created. </summary>
+        public AzureLocation Location { get; }
 
-        /// <summary> Attestation Provider array. </summary>
-        public IList<AttestationProviderData> Value { get; }
+        /// <summary> The tags that will be assigned to the attestation provider. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Properties of the attestation provider. </summary>
+        public AttestationServiceCreationSpecificParams Properties { get; }
     }
 }

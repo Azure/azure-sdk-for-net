@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="policySigningCertificates"> JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations. </param>
         /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationServiceCreationSpecificParams(PublicNetworkAccessType? publicNetworkAccess, JsonWebKeySet policySigningCertificates, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestationServiceCreationSpecificParams(AttestationPublicNetworkAccessType? publicNetworkAccess, JsonWebKeySet policySigningCertificates, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicNetworkAccess = publicNetworkAccess;
             PolicySigningCertificates = policySigningCertificates;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+        public AttestationPublicNetworkAccessType? PublicNetworkAccess { get; set; }
 
         /// <summary> JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations. </summary>
         internal JsonWebKeySet PolicySigningCertificates { get; set; }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
         /// </summary>
-        public IList<JsonWebKey> PolicySigningCertificatesKeys
+        public IList<AttestationJsonWebKey> PolicySigningCertificatesKeys
         {
             get
             {

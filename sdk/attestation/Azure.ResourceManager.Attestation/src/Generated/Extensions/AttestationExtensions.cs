@@ -139,11 +139,12 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AttestationProviderCreateOrUpdateContent>> GetAttestationProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AttestationProviderResource> GetAttestationProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAttestationSubscriptionResource(subscriptionResource).GetAttestationProvidersAsync(cancellationToken).ConfigureAwait(false);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetAttestationProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -156,7 +157,8 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AttestationProviderCreateOrUpdateContent> GetAttestationProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AttestationProviderResource> GetAttestationProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -167,70 +169,70 @@ namespace Azure.ResourceManager.Attestation
         /// Get the default provider
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultAttestationProviderAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AttestationProviderCreateOrUpdateContent>> GetDefaultAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<AttestationProviderListResult>> GetDefaultAttestationProviderAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultAttestationProviderAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the default provider
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefault(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultAttestationProvider(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AttestationProviderCreateOrUpdateContent> GetDefault(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<AttestationProviderListResult> GetDefaultAttestationProvider(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefault(cancellationToken);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultAttestationProvider(cancellationToken);
         }
 
         /// <summary>
         /// Get the default provider by location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultByLocationAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocationAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AttestationProviderResource>> GetDefaultByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static async Task<Response<AttestationProviderResource>> GetDefaultAttestationProviderByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultByLocationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultAttestationProviderByLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the default provider by location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultByLocation(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocation(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AttestationProviderResource> GetDefaultByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Response<AttestationProviderResource> GetDefaultAttestationProviderByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultByLocation(location, cancellationToken);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultAttestationProviderByLocation(location, cancellationToken);
         }
     }
 }

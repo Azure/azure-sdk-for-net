@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            AttestationServicePatchSpecificParams properties = default;
+            AttestationProviderPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    properties = AttestationServicePatchSpecificParams.DeserializeAttestationServicePatchSpecificParams(prop.Value, options);
+                    properties = AttestationProviderPatchProperties.DeserializeAttestationProviderPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

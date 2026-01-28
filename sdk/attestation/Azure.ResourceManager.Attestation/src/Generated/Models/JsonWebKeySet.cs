@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Initializes a new instance of <see cref="JsonWebKeySet"/>. </summary>
         public JsonWebKeySet()
         {
-            Keys = new ChangeTrackingList<JsonWebKey>();
+            Keys = new ChangeTrackingList<AttestationJsonWebKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="JsonWebKeySet"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// desired.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JsonWebKeySet(IList<JsonWebKey> keys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JsonWebKeySet(IList<AttestationJsonWebKey> keys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Keys = keys;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Attestation.Models
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
         /// </summary>
-        public IList<JsonWebKey> Keys { get; }
+        public IList<AttestationJsonWebKey> Keys { get; }
     }
 }

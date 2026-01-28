@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Attestation
 
         /// <summary> Initializes a new instance of <see cref="AttestationProviderData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal AttestationProviderData(AzureLocation location) : base(location)
+        public AttestationProviderData(AzureLocation location) : base(location)
         {
         }
 
@@ -41,14 +41,22 @@ namespace Azure.ResourceManager.Attestation
         }
 
         /// <summary> Describes Attestation service status. </summary>
-        internal StatusResult Properties { get; }
+        internal StatusResult Properties { get; set; }
 
         /// <summary> Trust model for the attestation provider. </summary>
         public string TrustModel
         {
             get
             {
-                return Properties.TrustModel;
+                return Properties is null ? default : Properties.TrustModel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StatusResult();
+                }
+                Properties.TrustModel = value;
             }
         }
 
@@ -57,7 +65,15 @@ namespace Azure.ResourceManager.Attestation
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StatusResult();
+                }
+                Properties.Status = value.Value;
             }
         }
 
@@ -66,16 +82,32 @@ namespace Azure.ResourceManager.Attestation
         {
             get
             {
-                return Properties.AttestUri;
+                return Properties is null ? default : Properties.AttestUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StatusResult();
+                }
+                Properties.AttestUri = value;
             }
         }
 
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess
+        public AttestationPublicNetworkAccessType? PublicNetworkAccess
         {
             get
             {
-                return Properties.PublicNetworkAccess;
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StatusResult();
+                }
+                Properties.PublicNetworkAccess = value.Value;
             }
         }
 
@@ -84,6 +116,10 @@ namespace Azure.ResourceManager.Attestation
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new StatusResult();
+                }
                 return Properties.PrivateEndpointConnections;
             }
         }
@@ -93,7 +129,15 @@ namespace Azure.ResourceManager.Attestation
         {
             get
             {
-                return Properties.TpmAttestationAuthentication;
+                return Properties is null ? default : Properties.TpmAttestationAuthentication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StatusResult();
+                }
+                Properties.TpmAttestationAuthentication = value.Value;
             }
         }
     }

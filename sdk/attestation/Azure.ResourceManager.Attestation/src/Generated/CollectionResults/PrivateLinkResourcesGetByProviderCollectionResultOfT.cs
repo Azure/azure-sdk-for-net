@@ -14,35 +14,38 @@ using Azure.ResourceManager.Attestation.Models;
 
 namespace Azure.ResourceManager.Attestation
 {
-    internal partial class AttestationProvidersGetByResourceGroupCollectionResultOfT : Pageable<AttestationProviderData>
+    internal partial class PrivateLinkResourcesGetByProviderCollectionResultOfT : Pageable<AttestationPrivateLinkResource>
     {
-        private readonly AttestationProviders _client;
+        private readonly PrivateLinkResources _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
+        private readonly string _providerName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of AttestationProvidersGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The AttestationProviders client used to send requests. </param>
+        /// <summary> Initializes a new instance of PrivateLinkResourcesGetByProviderCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The PrivateLinkResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="providerName"> Name of the attestation provider. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AttestationProvidersGetByResourceGroupCollectionResultOfT(AttestationProviders client, string subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public PrivateLinkResourcesGetByProviderCollectionResultOfT(PrivateLinkResources client, string subscriptionId, string resourceGroupName, string providerName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
+            _providerName = providerName;
             _context = context;
         }
 
-        /// <summary> Gets the pages of AttestationProvidersGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PrivateLinkResourcesGetByProviderCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AttestationProvidersGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AttestationProviderData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of PrivateLinkResourcesGetByProviderCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<AttestationPrivateLinkResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
-            AttestationProviderListResult result = AttestationProviderListResult.FromResponse(response);
-            yield return Page<AttestationProviderData>.FromValues((IReadOnlyList<AttestationProviderData>)result.Value, null, response);
+            AttestationPrivateLinkResourceListResult result = AttestationPrivateLinkResourceListResult.FromResponse(response);
+            yield return Page<AttestationPrivateLinkResource>.FromValues((IReadOnlyList<AttestationPrivateLinkResource>)result.Value, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -50,8 +53,8 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AttestationProviderCollection.GetAll");
+            HttpMessage message = _client.CreateGetByProviderRequest(_subscriptionId, _resourceGroupName, _providerName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AttestationProviderResource.GetByProvider");
             scope.Start();
             try
             {

@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Attestation
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultRequest(string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetDefaultAttestationProviderRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Attestation
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultByLocationRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetDefaultAttestationProviderByLocationRequest(string subscriptionId, string location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

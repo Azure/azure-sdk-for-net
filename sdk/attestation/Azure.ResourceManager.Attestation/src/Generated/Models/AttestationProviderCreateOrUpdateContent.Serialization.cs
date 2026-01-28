@@ -8,17 +8,20 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Attestation;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> Attestation Providers List. </summary>
+    /// <summary> Parameters for creating an attestation provider. </summary>
     public partial class AttestationProviderCreateOrUpdateContent : IJsonModel<AttestationProviderCreateOrUpdateContent>
     {
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderCreateOrUpdateContent"/> for deserialization. </summary>
+        internal AttestationProviderCreateOrUpdateContent()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AttestationProviderCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -37,21 +40,26 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 throw new FormatException($"The model {nameof(AttestationProviderCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("systemData"u8);
-                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
-            }
-            if (Optional.IsCollectionDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (AttestationProviderData item in Value)
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteEndArray();
+                writer.WriteEndObject();
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -94,32 +102,41 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            SystemData systemData = default;
-            IList<AttestationProviderData> value = default;
+            AzureLocation location = default;
+            IDictionary<string, string> tags = default;
+            AttestationServiceCreationSpecificParams properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("systemData"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAttestationContext.Default);
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("value"u8))
+                if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<AttestationProviderData> array = new List<AttestationProviderData>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        array.Add(AttestationProviderData.DeserializeAttestationProviderData(item, options));
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
-                    value = array;
+                    tags = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = AttestationServiceCreationSpecificParams.DeserializeAttestationServiceCreationSpecificParams(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,7 +144,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AttestationProviderCreateOrUpdateContent(systemData, value ?? new ChangeTrackingList<AttestationProviderData>(), additionalBinaryDataProperties);
+            return new AttestationProviderCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -170,11 +187,16 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AttestationProviderCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AttestationProviderCreateOrUpdateContent"/> from. </param>
-        internal static AttestationProviderCreateOrUpdateContent FromResponse(Response response)
+        /// <param name="attestationProviderCreateOrUpdateContent"> The <see cref="AttestationProviderCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AttestationProviderCreateOrUpdateContent attestationProviderCreateOrUpdateContent)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAttestationProviderCreateOrUpdateContent(document.RootElement, ModelSerializationExtensions.WireOptions);
+            if (attestationProviderCreateOrUpdateContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(attestationProviderCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

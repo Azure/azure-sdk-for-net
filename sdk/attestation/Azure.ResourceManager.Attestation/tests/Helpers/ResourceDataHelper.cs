@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Attestation.Tests.Helpers
         #endregion
 
         #region Provider
-        public static AttestationServiceCreationParams GetProviderData(AzureLocation location)
+        public static AttestationProviderCreateOrUpdateContent GetProviderData(AzureLocation location)
         {
-            return new AttestationServiceCreationParams(location.Name, new AttestationServiceCreationSpecificParams()
+            return new AttestationProviderCreateOrUpdateContent(location, new AttestationServiceCreationSpecificParams()
             {
-                PublicNetworkAccess = PublicNetworkAccessType.Enabled,
+                PublicNetworkAccess = AttestationPublicNetworkAccessType.Enabled,
             })
             {
                 Tags =

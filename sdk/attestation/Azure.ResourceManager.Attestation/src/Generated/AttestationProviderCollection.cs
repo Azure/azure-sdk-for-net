@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.Attestation
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="creationParams"> Client supplied parameters. </param>
+        /// <param name="content"> Client supplied parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> or <paramref name="creationParams"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AttestationProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerName, AttestationServiceCreationParams creationParams, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AttestationProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerName, AttestationProviderCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNull(creationParams, nameof(creationParams));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _attestationProvidersClientDiagnostics.CreateScope("AttestationProviderCollection.CreateOrUpdate");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, AttestationServiceCreationParams.ToRequestContent(creationParams), context);
+                HttpMessage message = _attestationProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, AttestationProviderCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.Attestation
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="creationParams"> Client supplied parameters. </param>
+        /// <param name="content"> Client supplied parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> or <paramref name="creationParams"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AttestationProviderResource> CreateOrUpdate(WaitUntil waitUntil, string providerName, AttestationServiceCreationParams creationParams, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AttestationProviderResource> CreateOrUpdate(WaitUntil waitUntil, string providerName, AttestationProviderCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNull(creationParams, nameof(creationParams));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _attestationProvidersClientDiagnostics.CreateScope("AttestationProviderCollection.CreateOrUpdate");
             scope.Start();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, AttestationServiceCreationParams.ToRequestContent(creationParams), context);
+                HttpMessage message = _attestationProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, AttestationProviderCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

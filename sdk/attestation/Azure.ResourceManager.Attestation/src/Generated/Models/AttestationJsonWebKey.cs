@@ -11,13 +11,13 @@ using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> The JsonWebKey. </summary>
-    public partial class JsonWebKey
+    /// <summary> The AttestationJsonWebKey. </summary>
+    public partial class AttestationJsonWebKey
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationJsonWebKey"/>. </summary>
         /// <param name="kty">
         /// The "kty" (key type) parameter identifies the cryptographic algorithm
         /// family used with the key, such as "RSA" or "EC". "kty" values should
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// Resistant Name.  The "kty" value is a case-sensitive string.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kty"/> is null. </exception>
-        public JsonWebKey(string kty)
+        public AttestationJsonWebKey(string kty)
         {
             Argument.AssertNotNull(kty, nameof(kty));
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Attestation.Models
             X5C = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationJsonWebKey"/>. </summary>
         /// <param name="alg">
         /// The "alg" (algorithm) parameter identifies the algorithm intended for
         /// use with the key.  The values used should either be registered in the
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5C, string y, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestationJsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5C, string y, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Alg = alg;
             Crv = crv;

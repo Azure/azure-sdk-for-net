@@ -58,30 +58,14 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AttestationProviderCreateOrUpdateContent>> GetAttestationProvidersAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetAttestationProviders");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetAllRequest(Id.SubscriptionId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AttestationProviderCreateOrUpdateContent> response = Response.FromValue(AttestationProviderCreateOrUpdateContent.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetAllAsyncCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -102,30 +86,14 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AttestationProviderCreateOrUpdateContent> GetAttestationProviders(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AttestationProviderResource> GetAttestationProviders(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetAttestationProviders");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetAllRequest(Id.SubscriptionId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AttestationProviderCreateOrUpdateContent> response = Response.FromValue(AttestationProviderCreateOrUpdateContent.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetAllCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -146,9 +114,9 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AttestationProviderCreateOrUpdateContent>> GetDefaultAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AttestationProviderListResult>> GetDefaultAttestationProviderAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefault");
+            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProvider");
             scope.Start();
             try
             {
@@ -156,9 +124,9 @@ namespace Azure.ResourceManager.Attestation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultRequest(Id.SubscriptionId, context);
+                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AttestationProviderCreateOrUpdateContent> response = Response.FromValue(AttestationProviderCreateOrUpdateContent.FromResponse(result), result);
+                Response<AttestationProviderListResult> response = Response.FromValue(AttestationProviderListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -190,9 +158,9 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AttestationProviderCreateOrUpdateContent> GetDefault(CancellationToken cancellationToken = default)
+        public virtual Response<AttestationProviderListResult> GetDefaultAttestationProvider(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefault");
+            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProvider");
             scope.Start();
             try
             {
@@ -200,9 +168,9 @@ namespace Azure.ResourceManager.Attestation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultRequest(Id.SubscriptionId, context);
+                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AttestationProviderCreateOrUpdateContent> response = Response.FromValue(AttestationProviderCreateOrUpdateContent.FromResponse(result), result);
+                Response<AttestationProviderListResult> response = Response.FromValue(AttestationProviderListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -237,11 +205,11 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AttestationProviderResource>> GetDefaultByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AttestationProviderResource>> GetDefaultAttestationProviderByLocationAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultByLocation");
+            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocation");
             scope.Start();
             try
             {
@@ -249,7 +217,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultByLocationRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,11 +254,11 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AttestationProviderResource> GetDefaultByLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Response<AttestationProviderResource> GetDefaultAttestationProviderByLocation(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultByLocation");
+            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocation");
             scope.Start();
             try
             {
@@ -298,7 +266,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultByLocationRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 if (response.Value == null)

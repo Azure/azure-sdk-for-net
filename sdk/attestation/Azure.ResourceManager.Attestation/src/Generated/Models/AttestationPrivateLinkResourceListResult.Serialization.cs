@@ -15,7 +15,7 @@ using Azure.ResourceManager.Attestation;
 namespace Azure.ResourceManager.Attestation.Models
 {
     /// <summary> The response of a PrivateLinkResource list operation. </summary>
-    public partial class AttestationPrivateLinkResourceListResult : IJsonModel<AttestationPrivateLinkResourceListResult>
+    internal partial class AttestationPrivateLinkResourceListResult : IJsonModel<AttestationPrivateLinkResourceListResult>
     {
         /// <summary> Initializes a new instance of <see cref="AttestationPrivateLinkResourceListResult"/> for deserialization. </summary>
         internal AttestationPrivateLinkResourceListResult()

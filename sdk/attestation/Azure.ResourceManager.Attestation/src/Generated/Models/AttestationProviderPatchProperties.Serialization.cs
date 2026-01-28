@@ -14,11 +14,11 @@ using Azure.ResourceManager.Attestation;
 namespace Azure.ResourceManager.Attestation.Models
 {
     /// <summary> Client supplied parameters used to patch an existing attestation provider. </summary>
-    public partial class AttestationServicePatchSpecificParams : IJsonModel<AttestationServicePatchSpecificParams>
+    public partial class AttestationProviderPatchProperties : IJsonModel<AttestationProviderPatchProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AttestationServicePatchSpecificParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AttestationProviderPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestationServicePatchSpecificParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationProviderPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationServicePatchSpecificParams)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationProviderPatchProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -63,30 +63,30 @@ namespace Azure.ResourceManager.Attestation.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AttestationServicePatchSpecificParams IJsonModel<AttestationServicePatchSpecificParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AttestationProviderPatchProperties IJsonModel<AttestationProviderPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AttestationServicePatchSpecificParams JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AttestationProviderPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestationServicePatchSpecificParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationProviderPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationServicePatchSpecificParams)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationProviderPatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAttestationServicePatchSpecificParams(document.RootElement, options);
+            return DeserializeAttestationProviderPatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AttestationServicePatchSpecificParams DeserializeAttestationServicePatchSpecificParams(JsonElement element, ModelReaderWriterOptions options)
+        internal static AttestationProviderPatchProperties DeserializeAttestationProviderPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PublicNetworkAccessType? publicNetworkAccess = default;
+            AttestationPublicNetworkAccessType? publicNetworkAccess = default;
             TpmAttestationAuthenticationType? tpmAttestationAuthentication = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccessType(prop.Value.GetString());
+                    publicNetworkAccess = new AttestationPublicNetworkAccessType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tpmAttestationAuthentication"u8))
@@ -114,47 +114,47 @@ namespace Azure.ResourceManager.Attestation.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AttestationServicePatchSpecificParams(publicNetworkAccess, tpmAttestationAuthentication, additionalBinaryDataProperties);
+            return new AttestationProviderPatchProperties(publicNetworkAccess, tpmAttestationAuthentication, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AttestationServicePatchSpecificParams>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AttestationProviderPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestationServicePatchSpecificParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationProviderPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAttestationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AttestationServicePatchSpecificParams)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationProviderPatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AttestationServicePatchSpecificParams IPersistableModel<AttestationServicePatchSpecificParams>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AttestationProviderPatchProperties IPersistableModel<AttestationProviderPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AttestationServicePatchSpecificParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AttestationProviderPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestationServicePatchSpecificParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationProviderPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAttestationServicePatchSpecificParams(document.RootElement, options);
+                        return DeserializeAttestationProviderPatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttestationServicePatchSpecificParams)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationProviderPatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AttestationServicePatchSpecificParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AttestationProviderPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

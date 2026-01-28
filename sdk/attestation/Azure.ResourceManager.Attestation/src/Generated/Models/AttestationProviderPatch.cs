@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="tags"> The tags that will be assigned to the attestation provider. </param>
         /// <param name="properties"> Properties of the attestation provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationProviderPatch(IDictionary<string, string> tags, AttestationServicePatchSpecificParams properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestationProviderPatch(IDictionary<string, string> tags, AttestationProviderPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Attestation.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Properties of the attestation provider. </summary>
-        public AttestationServicePatchSpecificParams Properties { get; set; }
+        public AttestationProviderPatchProperties Properties { get; set; }
     }
 }

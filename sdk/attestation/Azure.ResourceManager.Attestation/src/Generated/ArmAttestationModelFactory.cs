@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the attestation provider. </param>
         /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <returns> A new <see cref="Attestation.AttestationProviderData"/> instance for mocking. </returns>
-        public static AttestationProviderData AttestationProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string trustModel = default, AttestationServiceStatus? status = default, Uri attestUri = default, PublicNetworkAccessType? publicNetworkAccess = default, IEnumerable<AttestationPrivateEndpointConnectionData> privateEndpointConnections = default, TpmAttestationAuthenticationType? tpmAttestationAuthentication = default)
+        public static AttestationProviderData AttestationProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string trustModel = default, AttestationServiceStatus? status = default, Uri attestUri = default, AttestationPublicNetworkAccessType? publicNetworkAccess = default, IEnumerable<AttestationPrivateEndpointConnectionData> privateEndpointConnections = default, TpmAttestationAuthenticationType? tpmAttestationAuthentication = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="location"> The supported Azure location where the attestation provider should be created. </param>
         /// <param name="tags"> The tags that will be assigned to the attestation provider. </param>
         /// <param name="properties"> Properties of the attestation provider. </param>
-        /// <returns> A new <see cref="Models.AttestationServiceCreationParams"/> instance for mocking. </returns>
-        public static AttestationServiceCreationParams AttestationServiceCreationParams(string location = default, IDictionary<string, string> tags = default, AttestationServiceCreationSpecificParams properties = default)
+        /// <returns> A new <see cref="Models.AttestationProviderCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AttestationProviderCreateOrUpdateContent AttestationProviderCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = default, AttestationServiceCreationSpecificParams properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AttestationServiceCreationParams(location, tags, properties, additionalBinaryDataProperties: null);
+            return new AttestationProviderCreateOrUpdateContent(location, tags, properties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The JsonWebKey. </summary>
+        /// <summary> The AttestationJsonWebKey. </summary>
         /// <param name="alg">
         /// The "alg" (algorithm) parameter identifies the algorithm intended for
         /// use with the key.  The values used should either be registered in the
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.Attestation.Models
         /// certificate.
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
-        /// <returns> A new <see cref="Models.JsonWebKey"/> instance for mocking. </returns>
-        public static JsonWebKey JsonWebKey(string alg = default, string crv = default, string d = default, string dp = default, string dq = default, string e = default, string k = default, string kid = default, string kty = default, string n = default, string p = default, string q = default, string qi = default, string use = default, string x = default, IEnumerable<string> x5C = default, string y = default)
+        /// <returns> A new <see cref="Models.AttestationJsonWebKey"/> instance for mocking. </returns>
+        public static AttestationJsonWebKey AttestationJsonWebKey(string alg = default, string crv = default, string d = default, string dp = default, string dq = default, string e = default, string k = default, string kid = default, string kty = default, string n = default, string p = default, string q = default, string qi = default, string use = default, string x = default, IEnumerable<string> x5C = default, string y = default)
         {
             x5C ??= new ChangeTrackingList<string>();
 
-            return new JsonWebKey(
+            return new AttestationJsonWebKey(
                 alg,
                 crv,
                 d,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="tags"> The tags that will be assigned to the attestation provider. </param>
         /// <param name="properties"> Properties of the attestation provider. </param>
         /// <returns> A new <see cref="Models.AttestationProviderPatch"/> instance for mocking. </returns>
-        public static AttestationProviderPatch AttestationProviderPatch(IDictionary<string, string> tags = default, AttestationServicePatchSpecificParams properties = default)
+        public static AttestationProviderPatch AttestationProviderPatch(IDictionary<string, string> tags = default, AttestationProviderPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -177,23 +177,12 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Attestation Providers List. </summary>
         /// <param name="systemData"> The system metadata relating to this resource. </param>
         /// <param name="value"> Attestation Provider array. </param>
-        /// <returns> A new <see cref="Models.AttestationProviderCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static AttestationProviderCreateOrUpdateContent AttestationProviderCreateOrUpdateContent(SystemData systemData = default, IEnumerable<AttestationProviderData> value = default)
+        /// <returns> A new <see cref="Models.AttestationProviderListResult"/> instance for mocking. </returns>
+        public static AttestationProviderListResult AttestationProviderListResult(SystemData systemData = default, IEnumerable<AttestationProviderData> value = default)
         {
             value ??= new ChangeTrackingList<AttestationProviderData>();
 
-            return new AttestationProviderCreateOrUpdateContent(systemData, value.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The response of a PrivateLinkResource list operation. </summary>
-        /// <param name="value"> The PrivateLinkResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.AttestationPrivateLinkResourceListResult"/> instance for mocking. </returns>
-        public static AttestationPrivateLinkResourceListResult AttestationPrivateLinkResourceListResult(IEnumerable<AttestationPrivateLinkResource> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<AttestationPrivateLinkResource>();
-
-            return new AttestationPrivateLinkResourceListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+            return new AttestationProviderListResult(systemData, value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A private link resource. </summary>

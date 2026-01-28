@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
-                foreach (JsonWebKey item in Keys)
+                foreach (AttestationJsonWebKey item in Keys)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            IList<JsonWebKey> keys = default;
+            IList<AttestationJsonWebKey> keys = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    List<JsonWebKey> array = new List<JsonWebKey>();
+                    List<AttestationJsonWebKey> array = new List<AttestationJsonWebKey>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(JsonWebKey.DeserializeJsonWebKey(item, options));
+                        array.Add(AttestationJsonWebKey.DeserializeAttestationJsonWebKey(item, options));
                     }
                     keys = array;
                     continue;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JsonWebKeySet(keys ?? new ChangeTrackingList<JsonWebKey>(), additionalBinaryDataProperties);
+            return new JsonWebKeySet(keys ?? new ChangeTrackingList<AttestationJsonWebKey>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Attestation.Tests
                     ["UpdateKey1"] = "UpdateValue1",
                     ["UpdateKey1"] = "UpdateValue1"
                 },
-                Properties = new AttestationServicePatchSpecificParams
+                Properties = new AttestationProviderPatchProperties
                 {
-                    PublicNetworkAccess = PublicNetworkAccessType.Disabled
+                    PublicNetworkAccess = AttestationPublicNetworkAccessType.Disabled
                 }
             };
             var providerResource4 =(await providerResource3.UpdateAsync(patch)).Value;
