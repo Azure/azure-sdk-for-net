@@ -4,17 +4,9 @@ parameters:
   SourceRootPath: $(Build.SourcesDirectory)
 
 steps:
-  - task: Powershell@2
-    displayName: 'Install Azure SDK MCP'
-    continueOnError: true
-    condition: and(succeeded(), ne(variables['Skip.MarkReleaseCompletion'], 'true'))
-    inputs:
-      targetType: 'inline'
-      script: >
-        ./eng/common/mcp/azure-sdk-mcp.ps1
-        -InstallDirectory $(Agent.TempDirectory)
-      pwsh: true
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
+    parameters:
+      InstallDirectory: $(Agent.TempDirectory)
 
   - task: AzureCLI@2
     inputs:
