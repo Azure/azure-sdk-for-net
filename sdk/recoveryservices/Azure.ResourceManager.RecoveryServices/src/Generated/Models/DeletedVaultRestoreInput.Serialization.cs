@@ -9,21 +9,22 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Input definition for DeletedVault undelete properties. </summary>
-    internal partial class DeletedVaultUndeleteInputProperties : IJsonModel<DeletedVaultUndeleteInputProperties>
+    /// <summary> Input definition for DeletedVault undelete. </summary>
+    public partial class DeletedVaultRestoreInput : IJsonModel<DeletedVaultRestoreInput>
     {
-        /// <summary> Initializes a new instance of <see cref="DeletedVaultUndeleteInputProperties"/> for deserialization. </summary>
-        internal DeletedVaultUndeleteInputProperties()
+        /// <summary> Initializes a new instance of <see cref="DeletedVaultRestoreInput"/> for deserialization. </summary>
+        internal DeletedVaultRestoreInput()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeletedVaultUndeleteInputProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeletedVaultRestoreInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,13 +35,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedVaultUndeleteInputProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeletedVaultRestoreInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedVaultUndeleteInputProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedVaultRestoreInput)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("recoveryResourceGroupId"u8);
-            writer.WriteStringValue(RecoveryResourceGroupId);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -60,36 +61,36 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedVaultUndeleteInputProperties IJsonModel<DeletedVaultUndeleteInputProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeletedVaultRestoreInput IJsonModel<DeletedVaultRestoreInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeletedVaultUndeleteInputProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DeletedVaultRestoreInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedVaultUndeleteInputProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeletedVaultRestoreInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedVaultUndeleteInputProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedVaultRestoreInput)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeletedVaultUndeleteInputProperties(document.RootElement, options);
+            return DeserializeDeletedVaultRestoreInput(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeletedVaultUndeleteInputProperties DeserializeDeletedVaultUndeleteInputProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeletedVaultRestoreInput DeserializeDeletedVaultRestoreInput(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string recoveryResourceGroupId = default;
+            DeletedVaultRestoreInputProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("recoveryResourceGroupId"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    recoveryResourceGroupId = prop.Value.GetString();
+                    properties = DeletedVaultRestoreInputProperties.DeserializeDeletedVaultRestoreInputProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,47 +98,59 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeletedVaultUndeleteInputProperties(recoveryResourceGroupId, additionalBinaryDataProperties);
+            return new DeletedVaultRestoreInput(properties, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeletedVaultUndeleteInputProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeletedVaultRestoreInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedVaultUndeleteInputProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeletedVaultRestoreInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeletedVaultUndeleteInputProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedVaultRestoreInput)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedVaultUndeleteInputProperties IPersistableModel<DeletedVaultUndeleteInputProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeletedVaultRestoreInput IPersistableModel<DeletedVaultRestoreInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeletedVaultUndeleteInputProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DeletedVaultRestoreInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedVaultUndeleteInputProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeletedVaultRestoreInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeletedVaultUndeleteInputProperties(document.RootElement, options);
+                        return DeserializeDeletedVaultRestoreInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeletedVaultUndeleteInputProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedVaultRestoreInput)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeletedVaultUndeleteInputProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeletedVaultRestoreInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="deletedVaultRestoreInput"> The <see cref="DeletedVaultRestoreInput"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeletedVaultRestoreInput deletedVaultRestoreInput)
+        {
+            if (deletedVaultRestoreInput == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deletedVaultRestoreInput, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

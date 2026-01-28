@@ -464,11 +464,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new DeletedVaultProperties(vaultId, vaultDeletionOn, purgeOn, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="deletedVaultUndeleteInputRecoveryResourceGroupId"> Recovery resource group Id. </param>
-        /// <returns> A new <see cref="Models.DeletedVaultRestoreContent"/> instance for mocking. </returns>
-        public static DeletedVaultRestoreContent DeletedVaultRestoreContent(string deletedVaultUndeleteInputRecoveryResourceGroupId = default)
+        /// <param name="deletedVaultRestoreInputRecoveryResourceGroupId"> Recovery resource group Id. </param>
+        /// <returns> A new <see cref="Models.DeletedVaultRestoreInput"/> instance for mocking. </returns>
+        public static DeletedVaultRestoreInput DeletedVaultRestoreInput(string deletedVaultRestoreInputRecoveryResourceGroupId = default)
         {
-            return new DeletedVaultRestoreContent(deletedVaultUndeleteInputRecoveryResourceGroupId is null ? default : new DeletedVaultUndeleteInputProperties(deletedVaultUndeleteInputRecoveryResourceGroupId, null), additionalBinaryDataProperties: null);
+            return new DeletedVaultRestoreInput(deletedVaultRestoreInputRecoveryResourceGroupId is null ? default : new DeletedVaultRestoreInputProperties(deletedVaultRestoreInputRecoveryResourceGroupId, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VaultCertificateResult"/>. </summary>
