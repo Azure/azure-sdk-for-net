@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: ContainerService
 namespace: Azure.ResourceManager.ContainerService
-require: https://github.com/Azure/azure-rest-api-specs/blob/18609d68cf243ee3ce35d7c005ff3c7dd2cd9477/specification/containerservice/resource-manager/Microsoft.ContainerService/aks/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/49c01c8ca5ac61de4e4f238d76a77b3e0fd7ac2d/specification/containerservice/resource-manager/Microsoft.ContainerService/aks/readme.md
 #tag: package-2025-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -118,6 +118,18 @@ rename-mapping:
   AdvancedNetworkingSecurity.enabled: IsEnabled
   ManagedClusterIngressProfileWebAppRouting.enabled: IsEnabled
   ContainerServiceNetworkProfile.ipFamilies: NetworkIPFamilies
+  AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem: AgentPoolAvailableVersion
+  AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.default: IsDefault
+  ManagedClusterAgentPoolProfileProperties.osDiskSizeGB: OSDiskSizeInGB
+  Ossku: ContainerServiceOSSku
+  MaintenanceConfiguration.properties.timeInWeek: TimesInWeek
+  MaintenanceConfiguration.properties.notAllowedTime: NotAllowedTimes
+  PrivateLinkResource.id: -|arm-id
+  ManagedClusterPropertiesAutoScalerProfile.scan-interval: ScanIntervalInSeconds
+  ManagedClusterWindowsProfile.enableCSIProxy: IsCsiProxyEnabled
+  ManagedClusterAADProfile.adminGroupObjectIDs: -|uuid
+  IPFamily: ContainerServiceIPFamily
+  AgentPool.properties.osDiskSizeGB: OSDiskSizeInGB
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -188,7 +200,6 @@ prepend-rp-prefix:
   - WeekDay
   - OSType
   - OSDiskType
-  - OSSku
   - UserAssignedIdentity
   - AgentPool
   - MaintenanceConfiguration
@@ -220,30 +231,12 @@ prepend-rp-prefix:
   - MachineProperties
   - ArtifactSource
   - MachineIpAddress
-  - IpFamily
 
 directive:
   - from: managedClusters.json
-    where: $.definitions.AgentPoolAvailableVersionsProperties.properties.agentPoolVersions.items
-    transform: >
-      $['x-ms-client-name'] = 'AgentPoolAvailableVersion';
-      $.properties.default['x-ms-client-name'] = 'IsDefault';
-  - from: managedClusters.json
-    where: $.definitions.ManagedClusterAgentPoolProfileProperties.properties.osDiskSizeGB
-    transform: >
-      $['x-ms-client-name'] = 'OSDiskSizeInGB';
-  - from: managedClusters.json
-    where: $.definitions.ContainerServiceMasterProfile.properties.osDiskSizeGB
-    transform: >
-      $['x-ms-client-name'] = 'OSDiskSizeInGB';
-  - from: managedClusters.json
     where: $.definitions
     transform: >
-      $.OSSKU['x-ms-enum'].name = 'OSSku';
-      $.MaintenanceConfigurationProperties.properties.timeInWeek['x-ms-client-name'] = 'TimesInWeek';
-      $.MaintenanceConfigurationProperties.properties.notAllowedTime['x-ms-client-name'] = 'NotAllowedTimes';
-      $.PrivateLinkResource.properties.id['x-ms-format'] = 'arm-id';
-      $.ManagedClusterProperties.properties.autoScalerProfile.properties['scan-interval']['x-ms-client-name'] = 'ScanIntervalInSeconds';
-      $.ManagedClusterWindowsProfile.properties.enableCSIProxy['x-ms-client-name'] = 'IsCsiProxyEnabled';
-      $.ManagedClusterAADProfile.properties.adminGroupObjectIDs.items.format = 'uuid';
+      $.ManagedClusterPoolUpgradeProfile.properties.upgrades['readOnly'] = true;
+      $.ManagedClusterUpgradeProfileProperties.properties.agentPoolProfiles['readOnly'] = true;
+      $.AgentPoolUpgradeProfileProperties.properties.upgrades['readOnly'] = true;
 ```

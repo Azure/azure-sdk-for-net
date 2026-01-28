@@ -36,20 +36,17 @@ namespace Azure.ResourceManager.ContainerService.Models
                 throw new FormatException($"The model {nameof(MachineListResult)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
-            }
-            if (Optional.IsCollectionDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,12 +85,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Uri nextLink = default;
             IReadOnlyList<ContainerServiceMachineData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("value"u8))
+                {
+                    List<ContainerServiceMachineData> array = new List<ContainerServiceMachineData>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerServiceMachineData.DeserializeContainerServiceMachineData(item, options));
+                    }
+                    value = array;
+                    continue;
+                }
                 if (property.NameEquals("nextLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -103,27 +110,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                     nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ContainerServiceMachineData> array = new List<ContainerServiceMachineData>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ContainerServiceMachineData.DeserializeContainerServiceMachineData(item, options));
-                    }
-                    value = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineListResult(nextLink, value ?? new ChangeTrackingList<ContainerServiceMachineData>(), serializedAdditionalRawData);
+            return new MachineListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -136,21 +129,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nextLink: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NextLink))
-                {
-                    builder.Append("  nextLink: ");
-                    builder.AppendLine($"'{NextLink.AbsoluteUri}'");
-                }
-            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
             if (hasPropertyOverride)
@@ -172,6 +150,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                         }
                         builder.AppendLine("  ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nextLink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextLink))
+                {
+                    builder.Append("  nextLink: ");
+                    builder.AppendLine($"'{NextLink.AbsoluteUri}'");
                 }
             }
 

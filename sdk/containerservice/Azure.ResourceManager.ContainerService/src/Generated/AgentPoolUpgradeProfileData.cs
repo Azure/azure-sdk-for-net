@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: AgentPoolUpgradeProfile.properties.osType
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
-        internal AgentPoolUpgradeProfileData(string kubernetesVersion, ContainerServiceOSType osType)
+        public AgentPoolUpgradeProfileData(string kubernetesVersion, ContainerServiceOSType osType)
         {
             Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
 
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: AgentPoolUpgradeProfile.properties.kubernetesVersion
         /// </summary>
         [WirePath("properties.kubernetesVersion")]
-        public string KubernetesVersion { get; }
+        public string KubernetesVersion { get; set; }
         /// <summary>
         /// The operating system type. The default is Linux.
         /// Serialized Name: AgentPoolUpgradeProfile.properties.osType
         /// </summary>
         [WirePath("properties.osType")]
-        public ContainerServiceOSType OSType { get; }
+        public ContainerServiceOSType OSType { get; set; }
         /// <summary>
         /// List of orchestrator types and versions available for upgrade.
         /// Serialized Name: AgentPoolUpgradeProfile.properties.upgrades
@@ -130,6 +130,6 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: AgentPoolUpgradeProfile.properties.latestNodeImageVersion
         /// </summary>
         [WirePath("properties.latestNodeImageVersion")]
-        public string LatestNodeImageVersion { get; }
+        public string LatestNodeImageVersion { get; set; }
     }
 }

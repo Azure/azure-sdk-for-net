@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary>
-    /// The response from the List Snapshots operation.
+    /// The response of a Snapshot list operation.
     /// Serialized Name: SnapshotListResult
     /// </summary>
     internal partial class AgentPoolSnapshotListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolSnapshotListResult"/>. </summary>
-        internal AgentPoolSnapshotListResult()
+        /// <param name="value">
+        /// The Snapshot items on this page
+        /// Serialized Name: SnapshotListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AgentPoolSnapshotListResult(IEnumerable<AgentPoolSnapshotData> value)
         {
-            Value = new ChangeTrackingList<AgentPoolSnapshotData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolSnapshotListResult"/>. </summary>
         /// <param name="value">
-        /// The list of snapshots.
+        /// The Snapshot items on this page
         /// Serialized Name: SnapshotListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// The URL to get the next set of snapshot results.
+        /// The link to the next page of items
         /// Serialized Name: SnapshotListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolSnapshotListResult(IReadOnlyList<AgentPoolSnapshotData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentPoolSnapshotListResult(IReadOnlyList<AgentPoolSnapshotData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AgentPoolSnapshotListResult"/> for deserialization. </summary>
+        internal AgentPoolSnapshotListResult()
+        {
+        }
+
         /// <summary>
-        /// The list of snapshots.
+        /// The Snapshot items on this page
         /// Serialized Name: SnapshotListResult.value
         /// </summary>
         public IReadOnlyList<AgentPoolSnapshotData> Value { get; }
         /// <summary>
-        /// The URL to get the next set of snapshot results.
+        /// The link to the next page of items
         /// Serialized Name: SnapshotListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

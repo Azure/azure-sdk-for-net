@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MeshUpgradeProfileList"/>. </summary>
-        internal MeshUpgradeProfileList()
+        /// <param name="value">
+        /// The MeshUpgradeProfile items on this page
+        /// Serialized Name: MeshUpgradeProfileList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal MeshUpgradeProfileList(IEnumerable<MeshUpgradeProfileData> value)
         {
-            Value = new ChangeTrackingList<MeshUpgradeProfileData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MeshUpgradeProfileList"/>. </summary>
         /// <param name="value">
-        /// Array of supported service mesh add-on upgrade profiles.
+        /// The MeshUpgradeProfile items on this page
         /// Serialized Name: MeshUpgradeProfileList.value
         /// </param>
         /// <param name="nextLink">
-        /// The URL to get the next set of mesh upgrade profile.
+        /// The link to the next page of items
         /// Serialized Name: MeshUpgradeProfileList.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MeshUpgradeProfileList(IReadOnlyList<MeshUpgradeProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MeshUpgradeProfileList(IReadOnlyList<MeshUpgradeProfileData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MeshUpgradeProfileList"/> for deserialization. </summary>
+        internal MeshUpgradeProfileList()
+        {
+        }
+
         /// <summary>
-        /// Array of supported service mesh add-on upgrade profiles.
+        /// The MeshUpgradeProfile items on this page
         /// Serialized Name: MeshUpgradeProfileList.value
         /// </summary>
         public IReadOnlyList<MeshUpgradeProfileData> Value { get; }
         /// <summary>
-        /// The URL to get the next set of mesh upgrade profile.
+        /// The link to the next page of items
         /// Serialized Name: MeshUpgradeProfileList.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

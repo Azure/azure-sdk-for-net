@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.nodePublicIPPrefixID
         /// </param>
         /// <param name="scaleSetPriority">
-        /// The Virtual Machine Scale Set priority. If not specified, the default is 'Regular'.
+        /// The Virtual Machine Scale Set priority.
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetPriority
         /// </param>
         /// <param name="scaleSetEvictionPolicy">
-        /// The Virtual Machine Scale Set eviction policy to use. This cannot be specified unless the scaleSetPriority is 'Spot'. If not specified, the default is 'Delete'.
+        /// The Virtual Machine Scale Set eviction policy. The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms)
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetEvictionPolicy
         /// </param>
         /// <param name="spotMaxPrice">
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.creationData
         /// </param>
         /// <param name="capacityReservationGroupId">
-        /// AKS will associate the specified agent pool with the Capacity Reservation Group.
+        /// The fully qualified resource ID of the Capacity Reservation Group to provide virtual machines from a reserved group of Virtual Machines. This is of the form: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}' Customers use it to create an agentpool with a specified CRG. For more information see [Capacity Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview)
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.capacityReservationGroupID
         /// </param>
         /// <param name="hostGroupId">
@@ -526,13 +526,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("nodePublicIPPrefixID")]
         public ResourceIdentifier NodePublicIPPrefixId { get; set; }
         /// <summary>
-        /// The Virtual Machine Scale Set priority. If not specified, the default is 'Regular'.
+        /// The Virtual Machine Scale Set priority.
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetPriority
         /// </summary>
         [WirePath("scaleSetPriority")]
         public ScaleSetPriority? ScaleSetPriority { get; set; }
         /// <summary>
-        /// The Virtual Machine Scale Set eviction policy to use. This cannot be specified unless the scaleSetPriority is 'Spot'. If not specified, the default is 'Delete'.
+        /// The Virtual Machine Scale Set eviction policy. The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms)
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetEvictionPolicy
         /// </summary>
         [WirePath("scaleSetEvictionPolicy")]
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary>
-        /// AKS will associate the specified agent pool with the Capacity Reservation Group.
+        /// The fully qualified resource ID of the Capacity Reservation Group to provide virtual machines from a reserved group of Virtual Machines. This is of the form: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}' Customers use it to create an agentpool with a specified CRG. For more information see [Capacity Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview)
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.capacityReservationGroupID
         /// </summary>
         [WirePath("capacityReservationGroupID")]

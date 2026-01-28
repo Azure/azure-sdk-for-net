@@ -62,11 +62,10 @@ namespace Azure.ResourceManager.ContainerService
         /// The list of available upgrade versions for agent pools.
         /// Serialized Name: ManagedClusterUpgradeProfile.properties.agentPoolProfiles
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> or <paramref name="agentPoolProfiles"/> is null. </exception>
-        internal ManagedClusterUpgradeProfileData(ManagedClusterPoolUpgradeProfile controlPlaneProfile, IEnumerable<ManagedClusterPoolUpgradeProfile> agentPoolProfiles)
+        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> is null. </exception>
+        public ManagedClusterUpgradeProfileData(ManagedClusterPoolUpgradeProfile controlPlaneProfile, IEnumerable<ManagedClusterPoolUpgradeProfile> agentPoolProfiles)
         {
             Argument.AssertNotNull(controlPlaneProfile, nameof(controlPlaneProfile));
-            Argument.AssertNotNull(agentPoolProfiles, nameof(agentPoolProfiles));
 
             ControlPlaneProfile = controlPlaneProfile;
             AgentPoolProfiles = agentPoolProfiles.ToList();
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: ManagedClusterUpgradeProfile.properties.controlPlaneProfile
         /// </summary>
         [WirePath("properties.controlPlaneProfile")]
-        public ManagedClusterPoolUpgradeProfile ControlPlaneProfile { get; }
+        public ManagedClusterPoolUpgradeProfile ControlPlaneProfile { get; set; }
         /// <summary>
         /// The list of available upgrade versions for agent pools.
         /// Serialized Name: ManagedClusterUpgradeProfile.properties.agentPoolProfiles

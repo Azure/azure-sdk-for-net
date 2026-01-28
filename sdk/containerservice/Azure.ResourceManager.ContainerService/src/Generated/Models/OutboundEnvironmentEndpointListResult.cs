@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointListResult"/>. </summary>
         /// <param name="value">
-        /// Collection of resources.
+        /// The OutboundEnvironmentEndpoint items on this page
         /// Serialized Name: OutboundEnvironmentEndpointCollection.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointListResult"/>. </summary>
         /// <param name="value">
-        /// Collection of resources.
+        /// The OutboundEnvironmentEndpoint items on this page
         /// Serialized Name: OutboundEnvironmentEndpointCollection.value
         /// </param>
         /// <param name="nextLink">
-        /// Link to next page of resources.
+        /// The link to the next page of items
         /// Serialized Name: OutboundEnvironmentEndpointCollection.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OutboundEnvironmentEndpointListResult(IReadOnlyList<ContainerServiceOutboundEnvironmentEndpoint> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OutboundEnvironmentEndpointListResult(IReadOnlyList<ContainerServiceOutboundEnvironmentEndpoint> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary>
-        /// Collection of resources.
+        /// The OutboundEnvironmentEndpoint items on this page
         /// Serialized Name: OutboundEnvironmentEndpointCollection.value
         /// </summary>
         public IReadOnlyList<ContainerServiceOutboundEnvironmentEndpoint> Value { get; }
         /// <summary>
-        /// Link to next page of resources.
+        /// The link to the next page of items
         /// Serialized Name: OutboundEnvironmentEndpointCollection.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }
