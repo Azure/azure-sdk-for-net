@@ -14,7 +14,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Stored search query
-    /// 
     /// See:
     /// https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915
     /// </summary>

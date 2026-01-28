@@ -20,12 +20,10 @@ namespace Azure.Health.Deidentification
         /// <param name="location"> URL to storage location. </param>
         /// <param name="prefix">
         /// Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.
-        /// 
         /// Example:
         /// File full path: documents/user/note.txt
         /// Input Prefix: "documents/user/"
         /// Output Prefix: "output_docs/"
-        /// 
         /// Output file: "output_docs/note.txt"
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="prefix"/> is null. </exception>
@@ -42,12 +40,10 @@ namespace Azure.Health.Deidentification
         /// <param name="location"> URL to storage location. </param>
         /// <param name="prefix">
         /// Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.
-        /// 
         /// Example:
         /// File full path: documents/user/note.txt
         /// Input Prefix: "documents/user/"
         /// Output Prefix: "output_docs/"
-        /// 
         /// Output file: "output_docs/note.txt"
         /// </param>
         /// <param name="overwrite"> When set to true during a job, the service will overwrite the output location if it already exists. </param>
@@ -65,12 +61,10 @@ namespace Azure.Health.Deidentification
 
         /// <summary>
         /// Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.
-        /// 
         /// Example:
         /// File full path: documents/user/note.txt
         /// Input Prefix: "documents/user/"
         /// Output Prefix: "output_docs/"
-        /// 
         /// Output file: "output_docs/note.txt"
         /// </summary>
         public string Prefix { get; set; }

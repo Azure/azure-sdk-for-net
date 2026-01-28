@@ -357,9 +357,7 @@ namespace Azure.Health.Deidentification
 
         /// <summary>
         /// [Protocol Method] Cancels a job that is in progress. 
-        /// 
         /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any documents that have already been processed.
-        /// 
         /// If the job is already complete, this will have no effect. 
         /// <list type="bullet">
         /// <item>
@@ -393,9 +391,7 @@ namespace Azure.Health.Deidentification
 
         /// <summary>
         /// [Protocol Method] Cancels a job that is in progress. 
-        /// 
         /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any documents that have already been processed.
-        /// 
         /// If the job is already complete, this will have no effect. 
         /// <list type="bullet">
         /// <item>
@@ -429,9 +425,7 @@ namespace Azure.Health.Deidentification
 
         /// <summary>
         /// Cancels a job that is in progress. 
-        /// 
         /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any documents that have already been processed.
-        /// 
         /// If the job is already complete, this will have no effect. 
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>
@@ -449,9 +443,7 @@ namespace Azure.Health.Deidentification
 
         /// <summary>
         /// Cancels a job that is in progress. 
-        /// 
         /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any documents that have already been processed.
-        /// 
         /// If the job is already complete, this will have no effect. 
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>

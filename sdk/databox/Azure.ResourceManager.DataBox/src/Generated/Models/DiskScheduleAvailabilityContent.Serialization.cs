@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DiskScheduleAvailabilityContent : IUtf8JsonSerializable, IJsonModel<DiskScheduleAvailabilityContent>
+    /// <summary> Request body to get the availability for scheduling disk orders. </summary>
+    public partial class DiskScheduleAvailabilityContent : ScheduleAvailabilityContent, IJsonModel<DiskScheduleAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskScheduleAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DiskScheduleAvailabilityContent"/> for deserialization. </summary>
+        internal DiskScheduleAvailabilityContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiskScheduleAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,94 +35,99 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiskScheduleAvailabilityContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
             writer.WriteNumberValue(ExpectedDataSizeInTerabytes);
         }
 
-        DiskScheduleAvailabilityContent IJsonModel<DiskScheduleAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskScheduleAvailabilityContent IJsonModel<DiskScheduleAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DiskScheduleAvailabilityContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ScheduleAvailabilityContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiskScheduleAvailabilityContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDiskScheduleAvailabilityContent(document.RootElement, options);
         }
 
-        internal static DiskScheduleAvailabilityContent DeserializeDiskScheduleAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DiskScheduleAvailabilityContent DeserializeDiskScheduleAvailabilityContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int expectedDataSizeInTeraBytes = default;
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
             string country = default;
             DeviceModelName? model = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int expectedDataSizeInTerabytes = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("expectedDataSizeInTeraBytes"u8))
+                if (prop.NameEquals("storageLocation"u8))
                 {
-                    expectedDataSizeInTeraBytes = property.Value.GetInt32();
+                    storageLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageLocation"u8))
+                if (prop.NameEquals("skuName"u8))
                 {
-                    storageLocation = new AzureLocation(property.Value.GetString());
+                    skuName = prop.Value.GetString().ToDataBoxSkuName();
                     continue;
                 }
-                if (property.NameEquals("skuName"u8))
+                if (prop.NameEquals("country"u8))
                 {
-                    skuName = property.Value.GetString().ToDataBoxSkuName();
+                    country = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"u8))
+                if (prop.NameEquals("model"u8))
                 {
-                    country = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("model"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    model = property.Value.GetString().ToDeviceModelName();
+                    model = prop.Value.GetString().ToDeviceModelName();
+                    continue;
+                }
+                if (prop.NameEquals("expectedDataSizeInTeraBytes"u8))
+                {
+                    expectedDataSizeInTerabytes = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DiskScheduleAvailabilityContent(
                 storageLocation,
                 skuName,
                 country,
                 model,
-                serializedAdditionalRawData,
-                expectedDataSizeInTeraBytes);
+                additionalBinaryDataProperties,
+                expectedDataSizeInTerabytes);
         }
 
-        BinaryData IPersistableModel<DiskScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DiskScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiskScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -125,15 +137,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DiskScheduleAvailabilityContent IPersistableModel<DiskScheduleAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskScheduleAvailabilityContent IPersistableModel<DiskScheduleAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (DiskScheduleAvailabilityContent)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ScheduleAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiskScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDiskScheduleAvailabilityContent(document.RootElement, options);
                     }
                 default:
@@ -141,6 +158,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DiskScheduleAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
