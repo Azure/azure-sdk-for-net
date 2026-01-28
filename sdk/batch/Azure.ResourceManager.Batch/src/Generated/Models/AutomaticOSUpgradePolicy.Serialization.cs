@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("useRollingUpgradePolicy"u8);
                 writer.WriteBooleanValue(UseRollingUpgradePolicy.Value);
             }
-            if (Optional.IsDefined(OsRollingUpgradeDeferral))
+            if (Optional.IsDefined(OSRollingUpgradeDeferral))
             {
                 writer.WritePropertyName("osRollingUpgradeDeferral"u8);
-                writer.WriteBooleanValue(OsRollingUpgradeDeferral.Value);
+                writer.WriteBooleanValue(OSRollingUpgradeDeferral.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

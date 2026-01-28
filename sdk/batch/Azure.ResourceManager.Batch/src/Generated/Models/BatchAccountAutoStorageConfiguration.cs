@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -17,8 +18,11 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of <see cref="BatchAccountAutoStorageConfiguration"/>. </summary>
         /// <param name="storageAccountId"> The resource ID of the storage account to be used for auto-storage account. </param>
         /// <param name="lastKeySyncedOn"> The UTC time at which storage keys were last synchronized with the Batch account. </param>
-        internal BatchAccountAutoStorageConfiguration(ResourceIdentifier storageAccountId, DateTimeOffset lastKeySyncedOn) : base(storageAccountId)
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> is null. </exception>
+        public BatchAccountAutoStorageConfiguration(ResourceIdentifier storageAccountId, DateTimeOffset lastKeySyncedOn) : base(storageAccountId)
         {
+            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+
             LastKeySyncedOn = lastKeySyncedOn;
         }
 
@@ -34,6 +38,6 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> The UTC time at which storage keys were last synchronized with the Batch account. </summary>
-        public DateTimeOffset LastKeySyncedOn { get; }
+        public DateTimeOffset LastKeySyncedOn { get; set; }
     }
 }

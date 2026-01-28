@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
             DisableAutomaticRollback = disableAutomaticRollback;
             EnableAutomaticOSUpgrade = enableAutomaticOSUpgrade;
             UseRollingUpgradePolicy = useRollingUpgradePolicy;
-            OsRollingUpgradeDeferral = osRollingUpgradeDeferral;
+            OSRollingUpgradeDeferral = osRollingUpgradeDeferral;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Batch.Models
         public bool? UseRollingUpgradePolicy { get; set; }
 
         /// <summary> Defer OS upgrades on the TVMs if they are running tasks. </summary>
-        public bool? OsRollingUpgradeDeferral { get; set; }
+        public bool? OSRollingUpgradeDeferral { get; set; }
     }
 }

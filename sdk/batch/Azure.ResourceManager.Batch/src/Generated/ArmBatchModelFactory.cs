@@ -140,16 +140,6 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchPrivateLinkServiceConnectionState(status, description, actionRequired, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="storageAccountId"> The resource ID of the storage account to be used for auto-storage account. </param>
-        /// <param name="authenticationMode"> The authentication mode which the Batch service will use to manage the auto-storage account. </param>
-        /// <param name="nodeIdentityResourceId"> The ARM resource id of the user assigned identity. </param>
-        /// <param name="lastKeySyncedOn"> The UTC time at which storage keys were last synchronized with the Batch account. </param>
-        /// <returns> A new <see cref="Models.BatchAccountAutoStorageConfiguration"/> instance for mocking. </returns>
-        public static BatchAccountAutoStorageConfiguration BatchAccountAutoStorageConfiguration(ResourceIdentifier storageAccountId = default, BatchAutoStorageAuthenticationMode? authenticationMode = default, ResourceIdentifier nodeIdentityResourceId = default, DateTimeOffset lastKeySyncedOn = default)
-        {
-            return new BatchAccountAutoStorageConfiguration(storageAccountId, authenticationMode, nodeIdentityResourceId is null ? default : new ComputeNodeIdentityReference(nodeIdentityResourceId, null), additionalBinaryDataProperties: null, lastKeySyncedOn);
-        }
-
         /// <summary> A VM Family and its associated core quota for the Batch account. </summary>
         /// <param name="name"> The Virtual Machine family name. </param>
         /// <param name="coreQuota"> The core quota for the VM family for the Batch account. </param>
@@ -334,7 +324,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchAccountCertificateData"/> instance for mocking. </returns>
-        public static BatchAccountCertificateData BatchAccountCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string thumbprintAlgorithm = default, string thumbprintString = default, BatchAccountCertificateFormat? format = default, BatchAccountCertificateProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountCertificateProvisioningState? previousProvisioningState = default, DateTimeOffset? previousProvisioningStateTransitOn = default, string publicData = default, DeleteCertificateError deleteCertificateError = default, string etag = default, IDictionary<string, string> tags = default)
+        public static BatchAccountCertificateData BatchAccountCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string thumbprintAlgorithm = default, string thumbprintString = default, BatchAccountCertificateFormat? format = default, BatchAccountCertificateProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountCertificateProvisioningState? previousProvisioningState = default, DateTimeOffset? previousProvisioningStateTransitOn = default, string publicData = default, DeleteCertificateError deleteCertificateError = default, ETag? etag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
