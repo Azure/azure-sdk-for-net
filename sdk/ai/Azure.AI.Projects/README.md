@@ -42,6 +42,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
     - [Using custom prompt-based evaluator](#using-custom-prompt-based-evaluator)
     - [Using custom code-based evaluator](#using-custom-code-based-evaluator)
     - [Evaluating responses](#evaluating-responses)
+    - [Evaluation rules](#evaluation-rules)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -1119,6 +1120,34 @@ private static BinaryData GetRunData(string agentName, string responseId, string
         }
     );
 }
+```
+
+#### Evaluation rules
+
+Evaluation rules allow subscribing the evaluation to a specific event.
+In the example below we create evaluation rule, which launches evaluation each time the Agent sends the response.
+
+```C# Snippet:Sample_CreateRule_EvaluationRules
+ContinuousEvaluationRuleAction continuousAction = new(evaluationId)
+{
+    MaxHourlyRuns = 100,
+};
+EvaluationRule continuousRule = new(
+    action: continuousAction, eventType: EvaluationRuleEventType.ResponseCompleted, enabled: true)
+{
+    Filter = new EvaluationRuleFilter(agentName: agentVersion.Name),
+    DisplayName = "Continuous evaluation rule."
+};
+```
+
+Apply the rule.
+
+```C# Snippet:Sample_CreateRuleOnAzure_EvaluationRules_Async
+EvaluationRule continuousEvalRule = await projectClient.EvaluationRules.CreateOrUpdateAsync(
+    id: "my-continuous-eval-rule",
+    evaluationRule: continuousRule
+);
+Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
 ```
 
 ## Troubleshooting
