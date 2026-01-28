@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetRecoveryServicesVaults_ListOfRecoveryServicesResourcesInSubscriptionId()
         {
-            // Generated from example definition: 2025-02-01/ListBySubscriptionIds.json
+            // Generated from example definition: 2025-08-01/ListBySubscriptionIds.json
             // this example is just showing the usage of "Vault_ListBySubscriptionId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,6 +40,38 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
                 RecoveryServicesVaultData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetRecoveryServicesDeletedVaults_ListDeletedVaultsInASubscription()
+        {
+            // Generated from example definition: 2025-08-01/DeletedVaults_ListBySubscriptionId.json
+            // this example is just showing the usage of "DeletedVault_ListBySubscriptionId" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("westus");
+            await foreach (RecoveryServicesDeletedVaultResource item in subscriptionResource.GetRecoveryServicesDeletedVaultsAsync(location))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                RecoveryServicesDeletedVaultData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

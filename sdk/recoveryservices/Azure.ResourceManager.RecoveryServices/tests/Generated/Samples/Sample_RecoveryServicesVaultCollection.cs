@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateRecoveryServicesVault()
         {
-            // Generated from example definition: 2025-02-01/PUTVault.json
+            // Generated from example definition: 2025-08-01/PUTVault.json
             // this example is just showing the usage of "Vault_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateVaultPerformingCriticalOperationWithMUA()
         {
-            // Generated from example definition: 2025-02-01/PUTVault_ResourceGuardEnabled.json
+            // Generated from example definition: 2025-08-01/PUTVault_ResourceGuardEnabled.json
             // this example is just showing the usage of "Vault_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateVaultWithCustomerManagedKeys()
         {
-            // Generated from example definition: 2025-02-01/PUTVault_WithCMK.json
+            // Generated from example definition: 2025-08-01/PUTVault_WithCMK.json
             // this example is just showing the usage of "Vault_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateVaultWithMonitoringSetting()
         {
-            // Generated from example definition: 2025-02-01/PUTVault_WithMonitoringSettings.json
+            // Generated from example definition: 2025-08-01/PUTVault_WithMonitoringSettings.json
             // this example is just showing the usage of "Vault_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateVaultWithRedundancySetting()
         {
-            // Generated from example definition: 2025-02-01/PUTVault_WithRedundancySettings.json
+            // Generated from example definition: 2025-08-01/PUTVault_WithRedundancySettings.json
             // this example is just showing the usage of "Vault_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateVaultWithSourceScanConfiguration()
         {
-            // Generated from example definition: 2025-02-01/PUTVault_WithSourceScanConfiguration.json
+            // Generated from example definition: 2025-08-01/PUTVault_WithSourceScanConfiguration.json
             // this example is just showing the usage of "Vault_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateVaultWithUserAssignedIdentity()
         {
-            // Generated from example definition: 2025-02-01/PUTVault_WithUserAssignedIdentity.json
+            // Generated from example definition: 2025-08-01/PUTVault_WithUserAssignedIdentity.json
             // this example is just showing the usage of "Vault_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRecoveryServicesResource()
         {
-            // Generated from example definition: 2025-02-01/GETVault.json
+            // Generated from example definition: 2025-08-01/GETVault.json
             // this example is just showing the usage of "Vault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListOfRecoveryServicesResourcesInResourceGroup()
         {
-            // Generated from example definition: 2025-02-01/ListResources.json
+            // Generated from example definition: 2025-08-01/ListResources.json
             // this example is just showing the usage of "Vault_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRecoveryServicesResource()
         {
-            // Generated from example definition: 2025-02-01/GETVault.json
+            // Generated from example definition: 2025-08-01/GETVault.json
             // this example is just showing the usage of "Vault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRecoveryServicesResource()
         {
-            // Generated from example definition: 2025-02-01/GETVault.json
+            // Generated from example definition: 2025-08-01/GETVault.json
             // this example is just showing the usage of "Vault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
