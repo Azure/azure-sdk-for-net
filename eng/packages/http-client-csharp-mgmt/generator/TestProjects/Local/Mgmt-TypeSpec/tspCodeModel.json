@@ -14351,7 +14351,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "MgmtTypeSpec.previewActions",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
           },
           "parameters": [
             {
@@ -15675,7 +15676,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -15919,7 +15921,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -16236,7 +16239,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.PrivateEndpointConnections.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -16643,7 +16647,8 @@
                       "finalState": "location"
                     }
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -17017,7 +17022,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -17400,7 +17406,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -17691,7 +17698,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -17945,7 +17953,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -18152,7 +18161,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -18341,7 +18351,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -18640,7 +18651,8 @@
                     "name": "Azure.ResourceManager.@armResourceAction",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -18938,7 +18950,8 @@
                     "name": "Azure.ResourceManager.@armResourceAction",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -19219,7 +19232,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -19470,7 +19484,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -19744,7 +19759,8 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -19963,7 +19979,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -20225,7 +20242,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -20586,7 +20604,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -20933,7 +20952,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -21349,7 +21369,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -21686,7 +21707,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -22057,7 +22079,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -22457,7 +22480,8 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -22873,7 +22897,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -23293,7 +23318,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -23584,7 +23610,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -23838,7 +23865,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -24141,7 +24169,8 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -24408,7 +24437,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -24617,7 +24647,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -24992,7 +25023,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -25283,7 +25315,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -25537,7 +25570,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -25840,7 +25874,8 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -26107,7 +26142,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -26296,7 +26332,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -26531,7 +26568,8 @@
                     "name": "Azure.ResourceManager.@armResourceAction",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -26826,7 +26864,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -27079,7 +27118,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -27368,7 +27408,8 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -27602,7 +27643,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -27770,7 +27812,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -28029,7 +28072,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.SolutionResources.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -28309,7 +28353,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.CheckNameAvailabilityOperationGroup.checkNameAvailability",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -28623,7 +28668,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -28853,7 +28899,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -29153,7 +29200,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -29518,7 +29566,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -29877,7 +29926,8 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -30196,7 +30246,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -30440,7 +30491,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaSubscriptionRequestStatuses.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -30761,7 +30813,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaLimitLists.list",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -31172,7 +31225,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaLimitLists.createOrUpdate",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -31659,7 +31713,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaLimitLists.update",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -32144,7 +32199,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.SubscriptionQuotaAllocationsLists.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -32509,7 +32565,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.NetworkProviderActions.queryNetworkSiblingSet",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -32880,7 +32937,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -33160,7 +33218,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -33414,7 +33473,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -33706,7 +33766,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -34028,7 +34089,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -34342,7 +34404,8 @@
                     "name": "Azure.ResourceManager.@armResourceAction",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -34609,7 +34672,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPractices.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -34824,7 +34888,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPractices.createOrUpdate",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -35062,7 +35127,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPractices.update",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -35245,7 +35311,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPractices.delete",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -35362,7 +35429,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPractices.list",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -35600,7 +35668,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -35861,7 +35930,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.createOrUpdate",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -36145,7 +36215,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.update",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -36374,7 +36445,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.delete",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -36537,7 +36609,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.list",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -36832,7 +36905,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -37129,7 +37203,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -37548,7 +37623,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -37839,7 +37915,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -38093,7 +38170,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -38300,7 +38378,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -38543,7 +38622,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -38838,7 +38918,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -39160,7 +39241,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -39461,7 +39543,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -39668,7 +39751,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -40044,7 +40128,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -40407,7 +40492,8 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -40674,7 +40760,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -41050,7 +41137,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -41413,7 +41501,8 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -41680,7 +41769,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -42050,7 +42140,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -42485,7 +42576,8 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -42888,7 +42980,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -43246,7 +43339,8 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -43656,7 +43750,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -43986,7 +44081,8 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -44344,7 +44440,8 @@
                     "name": "Azure.ResourceManager.@armResourceAction",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -44644,7 +44741,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -44898,7 +44996,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -45129,7 +45228,8 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
@@ -45383,7 +45483,8 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
                 {
