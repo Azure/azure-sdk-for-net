@@ -6,17 +6,41 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using static Azure.Core.Pipeline.TaskExtensions;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPostgreSqlFlexibleServersModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="principalType"> The principal type used to represent the type of Active Directory Administrator. </param>
+        /// <param name="principalName"> Active Directory administrator principal name. </param>
+        /// <param name="objectId"> The objectId of the Active Directory administrator. </param>
+        /// <param name="tenantId"> The tenantId of the Active Directory administrator. </param>
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This class is deprecated. Please use the new 'PostgreSqlFlexibleServerMicrosoftEntraAdministratorData' class instead.")]
+        public static PostgreSqlFlexibleServerActiveDirectoryAdministratorData PostgreSqlFlexibleServerActiveDirectoryAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlFlexibleServerPrincipalType? principalType = null, string principalName = null, Guid? objectId = null, Guid? tenantId = null)
+        {
+            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                principalType,
+                principalName,
+                objectId,
+                tenantId,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -176,7 +200,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedVersionsToUpgrade"> Supported servers versions to upgrade. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PostgreSqlFlexibleServerServerVersionCapability PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, IEnumerable<string> supportedVersionsToUpgrade)
+        public static PostgreSqlFlexibleServerServerVersionCapability PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus , string reason, string name, IEnumerable<string> supportedVersionsToUpgrade)
             => PostgreSqlFlexibleServerServerVersionCapability(capabilityStatus, reason, name, supportedVersionsToUpgrade, default);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
