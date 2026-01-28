@@ -35,11 +35,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal DeidServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DeidServiceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        internal DeidServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DeidServiceProperties properties, ManagedServiceIdentity identity, HealthDataAIServicesSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
+            Sku = sku;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -47,5 +49,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        public HealthDataAIServicesSku Sku { get; set; }
     }
 }

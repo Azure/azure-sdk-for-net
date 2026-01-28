@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -28,8 +29,9 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="HealthDataAIServices.DeidServiceData"/> instance for mocking. </returns>
-        public static DeidServiceData DeidServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeidServiceProperties properties = default, ManagedServiceIdentity identity = default)
+        public static DeidServiceData DeidServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeidServiceProperties properties = default, ManagedServiceIdentity identity = default, HealthDataAIServicesSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -42,7 +44,8 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 tags,
                 location,
                 properties,
-                identity);
+                identity,
+                sku);
         }
 
         /// <summary> Details of the HealthDataAIServices DeidService. </summary>
@@ -91,12 +94,13 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Updatable managed service identity. </param>
         /// <param name="deidPropertiesUpdatePublicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="Models.DeidServicePatch"/> instance for mocking. </returns>
-        public static DeidServicePatch DeidServicePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, HealthDataAIServicesPublicNetworkAccess? deidPropertiesUpdatePublicNetworkAccess = default)
+        public static DeidServicePatch DeidServicePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, HealthDataAIServicesPublicNetworkAccess? deidPropertiesUpdatePublicNetworkAccess = default, HealthDataAIServicesSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DeidServicePatch(tags, identity, deidPropertiesUpdatePublicNetworkAccess is null ? default : new DeidPropertiesUpdate(deidPropertiesUpdatePublicNetworkAccess, null), additionalBinaryDataProperties: null);
+            return new DeidServicePatch(tags, identity, deidPropertiesUpdatePublicNetworkAccess is null ? default : new DeidPropertiesUpdate(deidPropertiesUpdatePublicNetworkAccess, null), sku, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Holder for private endpoint connections. </summary>
@@ -146,6 +150,22 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
             return new HealthDataAIServicesPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthDataAIServices.DeidServiceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="HealthDataAIServices.DeidServiceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeidServiceData DeidServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DeidServiceProperties properties, ManagedServiceIdentity identity)
+        {
+            return DeidServiceData(id, name, resourceType, systemData, tags, location, properties, identity, sku: default);
         }
     }
 }
