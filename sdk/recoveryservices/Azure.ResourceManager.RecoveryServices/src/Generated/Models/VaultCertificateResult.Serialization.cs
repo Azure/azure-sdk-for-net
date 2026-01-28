@@ -39,11 +39,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 throw new FormatException($"The model {nameof(VaultCertificateResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -77,10 +72,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string name = default;
             ResourceCertificateDetails properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,6 +86,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -111,11 +111,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -132,10 +127,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             return new VaultCertificateResult(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                name,
                 properties);
         }
 

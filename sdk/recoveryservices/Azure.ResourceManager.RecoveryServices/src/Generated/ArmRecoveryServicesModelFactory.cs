@@ -235,6 +235,24 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 etag);
         }
 
+        /// <summary> Certificate corresponding to a vault that can be used by clients to register themselves with the vault. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Certificate details representing the Vault credentials. </param>
+        /// <returns> A new <see cref="Models.VaultCertificateResult"/> instance for mocking. </returns>
+        public static VaultCertificateResult VaultCertificateResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceCertificateDetails properties = default)
+        {
+            return new VaultCertificateResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
         /// <summary>
         /// Certificate details representing the Vault credentials.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceCertificateAndAadDetails"/> and <see cref="Models.ResourceCertificateAndAcsDetails"/>.
@@ -489,28 +507,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static DeletedVaultRestoreInput DeletedVaultRestoreInput(string deletedVaultRestoreInputRecoveryResourceGroupId = default)
         {
             return new DeletedVaultRestoreInput(deletedVaultRestoreInputRecoveryResourceGroupId is null ? default : new DeletedVaultRestoreInputProperties(deletedVaultRestoreInputRecoveryResourceGroupId, null), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VaultCertificateResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Certificate details representing the Vault credentials.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
-        /// </param>
-        /// <returns> A new <see cref="Models.VaultCertificateResult"/> instance for mocking. </returns>
-        public static VaultCertificateResult VaultCertificateResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceCertificateDetails properties = default)
-        {
-            return new VaultCertificateResult(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                name,
-                properties);
         }
     }
 }
