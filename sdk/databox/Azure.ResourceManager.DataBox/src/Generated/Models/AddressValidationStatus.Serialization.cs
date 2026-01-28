@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class AddressValidationStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AddressValidationStatus value) => value switch
         {
             AddressValidationStatus.Valid => "Valid",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AddressValidationStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AddressValidationStatus ToAddressValidationStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Valid")) return AddressValidationStatus.Valid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return AddressValidationStatus.Invalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ambiguous")) return AddressValidationStatus.Ambiguous;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Valid"))
+            {
+                return AddressValidationStatus.Valid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
+            {
+                return AddressValidationStatus.Invalid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ambiguous"))
+            {
+                return AddressValidationStatus.Ambiguous;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AddressValidationStatus value.");
         }
     }

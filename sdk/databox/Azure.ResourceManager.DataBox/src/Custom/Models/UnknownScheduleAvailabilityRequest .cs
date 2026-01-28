@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    [CodeGenModel("UnknownScheduleAvailabilityContent")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownScheduleAvailabilityContent")]
     internal partial class UnknownScheduleAvailabilityRequest : ScheduleAvailabilityContent
     {
     }

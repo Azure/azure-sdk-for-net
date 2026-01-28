@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DeviceModelNameExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DeviceModelName value) => value switch
         {
             DeviceModelName.DataBox => "DataBox",
@@ -22,14 +23,33 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeviceModelName value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DeviceModelName ToDeviceModelName(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBox")) return DeviceModelName.DataBox;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxDisk")) return DeviceModelName.DataBoxDisk;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxHeavy")) return DeviceModelName.DataBoxHeavy;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxCustomerDisk")) return DeviceModelName.DataBoxCustomerDisk;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureDataBox120")) return DeviceModelName.AzureDataBox120;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureDataBox525")) return DeviceModelName.AzureDataBox525;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBox"))
+            {
+                return DeviceModelName.DataBox;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxDisk"))
+            {
+                return DeviceModelName.DataBoxDisk;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxHeavy"))
+            {
+                return DeviceModelName.DataBoxHeavy;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxCustomerDisk"))
+            {
+                return DeviceModelName.DataBoxCustomerDisk;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureDataBox120"))
+            {
+                return DeviceModelName.AzureDataBox120;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureDataBox525"))
+            {
+                return DeviceModelName.AzureDataBox525;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeviceModelName value.");
         }
     }
