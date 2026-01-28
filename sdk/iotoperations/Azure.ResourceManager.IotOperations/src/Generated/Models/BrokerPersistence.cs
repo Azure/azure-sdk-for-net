@@ -13,13 +13,8 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// Disk persistence configuration.
-    /// 
     /// When persistence is enabled, certain items (non-performance-critical data) selected for persistence will reside only on disk. Below are the affected items: 
-    /// 
-    /// - Retained messages will be stored on disk only. 
-    /// - WILL messages will be stored on disk only. 
-    /// - DSS key/value pairs will be stored on disk only, except for performance-critical items like timed locks, which remain in both disk and memory for improved performance.
-    /// 
+    /// <list type="bullet"><item><description>Retained messages will be stored on disk only. </description></item><item><description>WILL messages will be stored on disk only. </description></item><item><description>DSS key/value pairs will be stored on disk only, except for performance-critical items like timed locks, which remain in both disk and memory for improved performance.</description></item></list>
     /// Optional. Everything is in-memory if not set. 
     /// Note: if configured, all MQTT session states are written to disk.
     /// </summary>
@@ -42,7 +37,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="maxSize"> The max size of the message buffer on disk. If a PVC template is specified using persistentVolumeClaimSpec Then this size is used as the request and limit sizes of that template. If a PVC template isn't specified Then local-path provisioner is requested with this size limit. Required. </param>
         /// <param name="persistentVolumeClaimSpec">
         /// Use the specified persistent volume claim template to mount a persistent volume. Same object as in diskBackedMessageBuffer, but with a limitation that access modes field must be set to `ReadWriteOncePod`.
-        /// 
         /// If unset, a default PVC with default properties will be used. Among other things this PVC will use the cluster default storage class, which may or may not be using a local path provisioner. User is opting in to sub-optimal behavior if they leave this unset or set it without the storage class field, and their cluster default is not a local path class.
         /// </param>
         /// <param name="retain"> Controls which topic's retained messages should be persisted to disk. </param>
@@ -66,7 +60,6 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// Use the specified persistent volume claim template to mount a persistent volume. Same object as in diskBackedMessageBuffer, but with a limitation that access modes field must be set to `ReadWriteOncePod`.
-        /// 
         /// If unset, a default PVC with default properties will be used. Among other things this PVC will use the cluster default storage class, which may or may not be using a local path provisioner. User is opting in to sub-optimal behavior if they leave this unset or set it without the storage class field, and their cluster default is not a local path class.
         /// </summary>
         public VolumeClaimSpec PersistentVolumeClaimSpec { get; set; }
