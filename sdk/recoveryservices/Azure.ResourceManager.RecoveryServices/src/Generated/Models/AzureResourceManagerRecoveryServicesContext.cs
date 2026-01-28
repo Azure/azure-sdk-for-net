@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(CrossSubscriptionRestoreSettings))]
     [ModelReaderWriterBuildable(typeof(DeletedVaultList))]
     [ModelReaderWriterBuildable(typeof(DeletedVaultProperties))]
-    [ModelReaderWriterBuildable(typeof(DeletedVaultUndeleteContent))]
+    [ModelReaderWriterBuildable(typeof(DeletedVaultRestoreContent))]
     [ModelReaderWriterBuildable(typeof(DeletedVaultUndeleteInputProperties))]
     [ModelReaderWriterBuildable(typeof(DnsZone))]
     [ModelReaderWriterBuildable(typeof(DnsZoneResult))]

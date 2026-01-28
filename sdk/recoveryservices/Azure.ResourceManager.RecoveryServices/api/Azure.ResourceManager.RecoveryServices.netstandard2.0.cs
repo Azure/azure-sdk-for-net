@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.RecoveryServices
         Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Undelete(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UndeleteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Undelete(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UndeleteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class RecoveryServicesExtensions
     {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public static partial class ArmRecoveryServicesModelFactory
     {
         public static Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties DeletedVaultProperties(string vaultId = null, System.DateTimeOffset? vaultDeletionOn = default(System.DateTimeOffset?), System.DateTimeOffset? purgeOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent DeletedVaultUndeleteContent(string deletedVaultUndeleteInputRecoveryResourceGroupId = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent DeletedVaultRestoreContent(string deletedVaultUndeleteInputRecoveryResourceGroupId = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult DnsZoneResult(Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType? subResource = default(Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType?), System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData RecoveryServicesDeletedVaultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties properties = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult RecoveryServicesNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
@@ -421,19 +421,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeletedVaultUndeleteContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>
+    public partial class DeletedVaultRestoreContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent>
     {
-        public DeletedVaultUndeleteContent(string deletedVaultUndeleteInputRecoveryResourceGroupId) { }
+        public DeletedVaultRestoreContent(string deletedVaultUndeleteInputRecoveryResourceGroupId) { }
         public string DeletedVaultUndeleteInputRecoveryResourceGroupId { get { throw null; } }
-        protected virtual Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultRestoreContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsZone : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DnsZone>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DnsZone>
     {

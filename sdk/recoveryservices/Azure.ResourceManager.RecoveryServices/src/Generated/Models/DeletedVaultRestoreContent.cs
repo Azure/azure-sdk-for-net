@@ -12,25 +12,25 @@ using Azure.ResourceManager.RecoveryServices;
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Input definition for DeletedVault undelete. </summary>
-    public partial class DeletedVaultUndeleteContent
+    public partial class DeletedVaultRestoreContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeletedVaultUndeleteContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedVaultRestoreContent"/>. </summary>
         /// <param name="deletedVaultUndeleteInputRecoveryResourceGroupId"> Recovery resource group Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultUndeleteInputRecoveryResourceGroupId"/> is null. </exception>
-        public DeletedVaultUndeleteContent(string deletedVaultUndeleteInputRecoveryResourceGroupId)
+        public DeletedVaultRestoreContent(string deletedVaultUndeleteInputRecoveryResourceGroupId)
         {
             Argument.AssertNotNull(deletedVaultUndeleteInputRecoveryResourceGroupId, nameof(deletedVaultUndeleteInputRecoveryResourceGroupId));
 
             Properties = new DeletedVaultUndeleteInputProperties(deletedVaultUndeleteInputRecoveryResourceGroupId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeletedVaultUndeleteContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedVaultRestoreContent"/>. </summary>
         /// <param name="properties"> Undelete input properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedVaultUndeleteContent(DeletedVaultUndeleteInputProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedVaultRestoreContent(DeletedVaultUndeleteInputProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
