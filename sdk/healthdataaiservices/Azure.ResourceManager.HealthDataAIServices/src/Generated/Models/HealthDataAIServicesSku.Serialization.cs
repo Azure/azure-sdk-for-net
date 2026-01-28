@@ -13,7 +13,7 @@ using Azure.ResourceManager.HealthDataAIServices;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
-    /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+    /// <summary> The resource model definition representing SKU. </summary>
     public partial class HealthDataAIServicesSku : IJsonModel<HealthDataAIServicesSku>
     {
         /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesSku"/> for deserialization. </summary>
@@ -44,7 +44,17 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
-                writer.WriteStringValue(Tier.Value.ToString());
+                writer.WriteStringValue(Tier.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Size))
+            {
+                writer.WritePropertyName("size"u8);
+                writer.WriteStringValue(Size);
+            }
+            if (Optional.IsDefined(Family))
+            {
+                writer.WritePropertyName("family"u8);
+                writer.WriteStringValue(Family);
             }
             if (Optional.IsDefined(Capacity))
             {
@@ -95,6 +105,8 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             }
             string name = default;
             HealthDataAIServicesSkuTier? tier = default;
+            string size = default;
+            string family = default;
             int? capacity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -110,7 +122,17 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     {
                         continue;
                     }
-                    tier = new HealthDataAIServicesSkuTier(prop.Value.GetString());
+                    tier = prop.Value.GetString().ToHealthDataAIServicesSkuTier();
+                    continue;
+                }
+                if (prop.NameEquals("size"u8))
+                {
+                    size = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("family"u8))
+                {
+                    family = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("capacity"u8))
@@ -127,7 +149,13 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HealthDataAIServicesSku(name, tier, capacity, additionalBinaryDataProperties);
+            return new HealthDataAIServicesSku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

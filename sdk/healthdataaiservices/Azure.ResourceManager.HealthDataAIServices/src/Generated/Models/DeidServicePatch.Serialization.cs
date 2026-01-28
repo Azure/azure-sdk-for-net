@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             DeidPropertiesUpdate properties = default;
-            HealthDataAIServicesSkuPatch sku = default;
+            HealthDataAIServicesSku sku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     {
                         continue;
                     }
-                    sku = HealthDataAIServicesSkuPatch.DeserializeHealthDataAIServicesSkuPatch(prop.Value, options);
+                    sku = HealthDataAIServicesSku.DeserializeHealthDataAIServicesSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

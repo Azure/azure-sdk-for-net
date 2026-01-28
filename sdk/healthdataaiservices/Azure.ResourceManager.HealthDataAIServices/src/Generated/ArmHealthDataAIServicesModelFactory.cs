@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="deidPropertiesUpdatePublicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="Models.DeidServicePatch"/> instance for mocking. </returns>
-        public static DeidServicePatch DeidServicePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, HealthDataAIServicesPublicNetworkAccess? deidPropertiesUpdatePublicNetworkAccess = default, HealthDataAIServicesSkuPatch sku = default)
+        public static DeidServicePatch DeidServicePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, HealthDataAIServicesPublicNetworkAccess? deidPropertiesUpdatePublicNetworkAccess = default, HealthDataAIServicesSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

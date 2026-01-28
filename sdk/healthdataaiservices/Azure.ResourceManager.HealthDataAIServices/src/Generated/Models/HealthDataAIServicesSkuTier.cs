@@ -5,72 +5,18 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-using Azure.ResourceManager.HealthDataAIServices;
-
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
-    /// <summary> The tier of the SKU. </summary>
-    public readonly partial struct HealthDataAIServicesSkuTier : IEquatable<HealthDataAIServicesSkuTier>
+    /// <summary> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </summary>
+    public enum HealthDataAIServicesSkuTier
     {
-        private readonly string _value;
-        /// <summary> Free tier. </summary>
-        private const string FreeValue = "Free";
-        /// <summary> Basic tier. </summary>
-        private const string BasicValue = "Basic";
-        /// <summary> Standard tier. </summary>
-        private const string StandardValue = "Standard";
-
-        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesSkuTier"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HealthDataAIServicesSkuTier(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Free tier. </summary>
-        public static HealthDataAIServicesSkuTier Free { get; } = new HealthDataAIServicesSkuTier(FreeValue);
-
-        /// <summary> Basic tier. </summary>
-        public static HealthDataAIServicesSkuTier Basic { get; } = new HealthDataAIServicesSkuTier(BasicValue);
-
-        /// <summary> Standard tier. </summary>
-        public static HealthDataAIServicesSkuTier Standard { get; } = new HealthDataAIServicesSkuTier(StandardValue);
-
-        /// <summary> Determines if two <see cref="HealthDataAIServicesSkuTier"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(HealthDataAIServicesSkuTier left, HealthDataAIServicesSkuTier right) => left.Equals(right);
-
-        /// <summary> Determines if two <see cref="HealthDataAIServicesSkuTier"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(HealthDataAIServicesSkuTier left, HealthDataAIServicesSkuTier right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="HealthDataAIServicesSkuTier"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator HealthDataAIServicesSkuTier(string value) => new HealthDataAIServicesSkuTier(value);
-
-        /// <summary> Converts a string to a <see cref="HealthDataAIServicesSkuTier"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator HealthDataAIServicesSkuTier?(string value) => value == null ? null : new HealthDataAIServicesSkuTier(value);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HealthDataAIServicesSkuTier other && Equals(other);
-
-        /// <inheritdoc/>
-        public bool Equals(HealthDataAIServicesSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
-        public override string ToString() => _value;
+        /// <summary> The Free service tier. </summary>
+        Free,
+        /// <summary> The Basic service tier. </summary>
+        Basic,
+        /// <summary> The Standard service tier. </summary>
+        Standard,
+        /// <summary> The Premium service tier. </summary>
+        Premium
     }
 }
