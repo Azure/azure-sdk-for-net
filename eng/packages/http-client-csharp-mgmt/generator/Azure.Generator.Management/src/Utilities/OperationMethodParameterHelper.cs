@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -37,11 +36,6 @@ namespace Azure.Generator.Management.Utilities
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
-            // Build a dictionary of input parameters by serialized name for looking up additional info (like IsRequired)
-            var inputParamsBySerializedName = serviceMethod.Operation.Parameters
-                .Where(p => p.Scope == InputParameterScope.Method)
-                .ToDictionary(p => p.SerializedName, p => p);
-
             // Iterate through the convenience method parameters directly
             // The convenience method has already been processed by visitors (e.g., MatchConditionsHeadersVisitor)
             // and contains the correct types (e.g., MatchConditions instead of separate ifMatch/ifNoneMatch)
@@ -67,39 +61,29 @@ namespace Azure.Generator.Management.Utilities
 
                 ParameterProvider outputParameter = convenienceParam;
 
-                // Look up corresponding input parameter for additional transformations
-                InputParameter? inputParameter = null;
-                if (serializedName != null)
+                // Rename body parameters to "data" if the parameter type is a resource model
+                if (convenienceParam.Location == ParameterLocation.Body)
                 {
-                    inputParamsBySerializedName.TryGetValue(serializedName, out inputParameter);
-                }
-
-                // Rename resource model parameters to "data"
-                if (inputParameter?.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
-                {
-                    outputParameter = RenameWithNewInstance(outputParameter, "data");
+                    // Rename body parameters for Resource/ResourceCollection/MockableArmClient/MockableResource operations
+                    if (enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider or MockableArmClientProvider or MockableResourceProvider &&
+                        (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
+                    {
+                        var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);
+                        if (normalizedName != null)
+                        {
+                            outputParameter = RenameWithNewInstance(outputParameter, normalizedName);
+                        }
+                    }
                 }
 
                 // Apply name transformations as needed
                 // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope
                 if (enclosingTypeProvider is MockableArmClientProvider &&
                     !scopeParameterTransformed &&
-                    inputParameter?.Type is InputPrimitiveType primitiveType &&
-                    primitiveType.Kind == InputPrimitiveTypeKind.String)
+                    convenienceParam.Type.Equals(typeof(string)))
                 {
                     outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
                     scopeParameterTransformed = true;
-                }
-
-                // Rename body parameters for Resource/ResourceCollection/MockableArmClient/MockableResource operations
-                if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider or MockableArmClientProvider or MockableResourceProvider) &&
-                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
-                {
-                    var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);
-                    if (normalizedName != null)
-                    {
-                        outputParameter = RenameWithNewInstance(outputParameter, normalizedName);
-                    }
                 }
 
                 // Determine if required based on whether parameter has a default value
