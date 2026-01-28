@@ -212,6 +212,7 @@ namespace Azure.Storage.Blobs.Models
         ///  <item><description>Hot</description></item>
         ///  <item><description>Cool</description></item>
         ///  <item><description>Archive</description></item>
+        ///  <item><description>Smart</description></item>
         /// </list>
         /// </summary>
         public string AccessTier { get; }
@@ -233,6 +234,17 @@ namespace Azure.Storage.Blobs.Models
         /// The time the tier was changed on the object. This is only returned if the tier on the block blob was ever set.
         /// </summary>
         public DateTimeOffset AccessTierChangedOn { get; }
+
+        /// <summary>
+        /// The underlying tier of a smart tier blob. Only returned if the blob is in Smart tier.
+        /// For general purpose v2 and blob storage account types, the valid values are:
+        /// <list type="bullet">
+        ///  <item><description>Hot</description></item>
+        ///  <item><description>Cool</description></item>
+        ///  <item><description>Cold</description></item>
+        /// </list>
+        /// </summary>
+        public string SmartAccessTier { get; }
 
         /// <summary>
         /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header
@@ -336,7 +348,8 @@ namespace Azure.Storage.Blobs.Models
             string rehydratePriority,
             DateTimeOffset lastAccessed,
             BlobImmutabilityPolicy immutabilityPolicy,
-            bool hasLegalHold)
+            bool hasLegalHold,
+            string smartAccessTier)
         {
             LastModified = lastModified;
             LeaseStatus = leaseStatus;
@@ -382,6 +395,7 @@ namespace Azure.Storage.Blobs.Models
             LastAccessed = lastAccessed;
             ImmutabilityPolicy = immutabilityPolicy;
             HasLegalHold = hasLegalHold;
+            SmartAccessTier = smartAccessTier;
         }
     }
 }
