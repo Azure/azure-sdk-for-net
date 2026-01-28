@@ -8,230 +8,31 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Runtime.ConstrainedExecution;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServices;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Certificate details representing the Vault credentials for ACS. </summary>
-    public partial class ResourceCertificateAndAcsDetails : ResourceCertificateDetails, IJsonModel<ResourceCertificateAndAcsDetails>
+    [CodeGenSerialization(nameof(Certificate), DeserializationValueHook = nameof(DeserializeCertificate))]
+    public partial class ResourceCertificateAndAcsDetails
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAcsDetails"/> for deserialization. </summary>
-        internal ResourceCertificateAndAcsDetails()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void DeserializeCertificate(JsonProperty prop, ref byte[] certificate)
         {
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResourceCertificateAndAcsDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAcsDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            if (prop.Value.ValueKind == JsonValueKind.Null)
             {
-                throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support writing '{format}' format.");
+                return;
             }
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("globalAcsNamespace"u8);
-            writer.WriteStringValue(GlobalAcsNamespace);
-            writer.WritePropertyName("globalAcsHostName"u8);
-            writer.WriteStringValue(GlobalAcsHostName);
-            writer.WritePropertyName("globalAcsRPRealm"u8);
-            writer.WriteStringValue(GlobalAcsRPRealm);
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceCertificateAndAcsDetails IJsonModel<ResourceCertificateAndAcsDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResourceCertificateAndAcsDetails)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceCertificateDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAcsDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            List<byte> array = new List<byte>();
+            foreach (var item in prop.Value.EnumerateArray())
             {
-                throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support reading '{format}' format.");
+                array.Add(item.GetByte());
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceCertificateAndAcsDetails(document.RootElement, options);
+            certificate = array.ToArray();
         }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourceCertificateAndAcsDetails DeserializeResourceCertificateAndAcsDetails(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string authType = "AccessControlService";
-            byte[] certificate = default;
-            string friendlyName = default;
-            string issuer = default;
-            long? resourceId = default;
-            string subject = default;
-            BinaryData thumbprint = default;
-            DateTimeOffset? validStartOn = default;
-            DateTimeOffset? validEndOn = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string globalAcsNamespace = default;
-            string globalAcsHostName = default;
-            string globalAcsRPRealm = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("authType"u8))
-                {
-                    authType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("certificate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<byte> array = new List<byte>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetByte());
-                    }
-                    certificate = array.ToArray();
-                    continue;
-                }
-                if (prop.NameEquals("friendlyName"u8))
-                {
-                    friendlyName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("issuer"u8))
-                {
-                    issuer = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("resourceId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceId = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("subject"u8))
-                {
-                    subject = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("thumbprint"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    thumbprint = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
-                if (prop.NameEquals("validFrom"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    validStartOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("validTo"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    validEndOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("globalAcsNamespace"u8))
-                {
-                    globalAcsNamespace = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("globalAcsHostName"u8))
-                {
-                    globalAcsHostName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("globalAcsRPRealm"u8))
-                {
-                    globalAcsRPRealm = prop.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new ResourceCertificateAndAcsDetails(
-                authType,
-                certificate,
-                friendlyName,
-                issuer,
-                resourceId,
-                subject,
-                thumbprint,
-                validStartOn,
-                validEndOn,
-                additionalBinaryDataProperties,
-                globalAcsNamespace,
-                globalAcsHostName,
-                globalAcsRPRealm);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceCertificateAndAcsDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAcsDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceCertificateAndAcsDetails IPersistableModel<ResourceCertificateAndAcsDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceCertificateAndAcsDetails)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceCertificateDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAcsDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResourceCertificateAndAcsDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceCertificateAndAcsDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,202 +8,31 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Runtime.ConstrainedExecution;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServices;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class UnknownResourceCertificateDetails : ResourceCertificateDetails, IJsonModel<ResourceCertificateDetails>
+    [CodeGenSerialization(nameof(Certificate), DeserializationValueHook = nameof(DeserializeCertificate))]
+    internal partial class UnknownResourceCertificateDetails
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownResourceCertificateDetails"/> for deserialization. </summary>
-        internal UnknownResourceCertificateDetails()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void DeserializeCertificate(JsonProperty prop, ref byte[] certificate)
         {
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResourceCertificateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            if (prop.Value.ValueKind == JsonValueKind.Null)
             {
-                throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support writing '{format}' format.");
+                return;
             }
-            base.JsonModelWriteCore(writer, options);
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceCertificateDetails IJsonModel<ResourceCertificateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceCertificateDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            List<byte> array = new List<byte>();
+            foreach (var item in prop.Value.EnumerateArray())
             {
-                throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support reading '{format}' format.");
+                array.Add(item.GetByte());
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceCertificateDetails(document.RootElement, options);
+            certificate = array.ToArray();
         }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownResourceCertificateDetails DeserializeUnknownResourceCertificateDetails(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string authType = "unknown";
-            byte[] certificate = default;
-            string friendlyName = default;
-            string issuer = default;
-            long? resourceId = default;
-            string subject = default;
-            BinaryData thumbprint = default;
-            DateTimeOffset? validStartOn = default;
-            DateTimeOffset? validEndOn = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("authType"u8))
-                {
-                    authType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("certificate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<byte> array = new List<byte>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetByte());
-                    }
-                    certificate = array.ToArray();
-                    continue;
-                }
-                if (prop.NameEquals("friendlyName"u8))
-                {
-                    friendlyName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("issuer"u8))
-                {
-                    issuer = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("resourceId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceId = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("subject"u8))
-                {
-                    subject = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("thumbprint"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    thumbprint = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
-                if (prop.NameEquals("validFrom"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    validStartOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("validTo"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    validEndOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new UnknownResourceCertificateDetails(
-                authType,
-                certificate,
-                friendlyName,
-                issuer,
-                resourceId,
-                subject,
-                thumbprint,
-                validStartOn,
-                validEndOn,
-                additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceCertificateDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceCertificateDetails IPersistableModel<ResourceCertificateDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceCertificateDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResourceCertificateDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceCertificateDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
