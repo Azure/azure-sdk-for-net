@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.Intrinsics.X86;
 using Azure.AI.AgentServer.AgentFramework.Persistence;
 using Azure.AI.AgentServer.Core.Context;
 using Azure.AI.AgentServer.Responses.Invocation;
