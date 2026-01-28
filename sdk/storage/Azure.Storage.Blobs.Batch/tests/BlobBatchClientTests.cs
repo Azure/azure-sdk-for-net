@@ -814,6 +814,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
         public async Task SetBlobAccessTier_Smart()
         {
             await using TestScenario scenario = Scenario();
