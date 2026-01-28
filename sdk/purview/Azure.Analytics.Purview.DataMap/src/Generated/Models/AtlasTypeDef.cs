@@ -47,25 +47,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// Specifying a list of entityType names in the classificationDef, ensures that
         /// classifications can
         /// only be applied to those entityTypes.
-        /// 
         /// Any subtypes of the entity types inherit the restriction.
-        /// 
         /// Any classificationDef subtypes inherit the parents entityTypes restrictions.
-        /// 
         /// Any classificationDef subtypes can further restrict the parents entityTypes
         /// restrictions by specifying a subset of the entityTypes.
-        /// 
         /// An empty entityTypes list when there are no parent restrictions means there are no
         /// restrictions.
-        /// 
         /// An empty entityTypes list when there are parent
         /// restrictions means that the subtype picks up the parents
         /// restrictions.
-        /// 
         /// If a list of entityTypes are supplied, where one inherits
         /// from another, this will be rejected. This should encourage cleaner
         /// classificationsDefs.
-        /// 
         /// </param>
         /// <param name="subTypes"> An array of sub types. </param>
         /// <param name="superTypes"> An array of super types. </param>
@@ -88,10 +81,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// The Relationship category determines the style of relationship around
         /// containment and lifecycle.
         /// UML terminology is used for the values.
-        /// 
         /// ASSOCIATION is a relationship with no containment. 
         /// COMPOSITION and AGGREGATION are containment relationships.
-        /// 
         /// The difference being in the lifecycles of the container and its children. 
         /// In the COMPOSITION case, the children cannot exist without the container. 
         /// For AGGREGATION, the life cycles of the container and children are totally independent.
@@ -175,25 +166,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// Specifying a list of entityType names in the classificationDef, ensures that
         /// classifications can
         /// only be applied to those entityTypes.
-        /// 
         /// Any subtypes of the entity types inherit the restriction.
-        /// 
         /// Any classificationDef subtypes inherit the parents entityTypes restrictions.
-        /// 
         /// Any classificationDef subtypes can further restrict the parents entityTypes
         /// restrictions by specifying a subset of the entityTypes.
-        /// 
         /// An empty entityTypes list when there are no parent restrictions means there are no
         /// restrictions.
-        /// 
         /// An empty entityTypes list when there are parent
         /// restrictions means that the subtype picks up the parents
         /// restrictions.
-        /// 
         /// If a list of entityTypes are supplied, where one inherits
         /// from another, this will be rejected. This should encourage cleaner
         /// classificationsDefs.
-        /// 
         /// </summary>
         public IList<string> EntityTypes { get; }
 
@@ -232,10 +216,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// The Relationship category determines the style of relationship around
         /// containment and lifecycle.
         /// UML terminology is used for the values.
-        /// 
         /// ASSOCIATION is a relationship with no containment. 
         /// COMPOSITION and AGGREGATION are containment relationships.
-        /// 
         /// The difference being in the lifecycles of the container and its children. 
         /// In the COMPOSITION case, the children cannot exist without the container. 
         /// For AGGREGATION, the life cycles of the container and children are totally independent.

@@ -943,7 +943,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": false,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -1196,7 +1197,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -1396,7 +1398,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.get",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -1682,7 +1685,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -1961,7 +1965,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.delete",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -2125,7 +2130,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -2308,7 +2314,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.exportAllUsers",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {

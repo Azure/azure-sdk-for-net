@@ -111,7 +111,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.headerApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.AlternateApiVersion.Service.Header"
           },
           "parameters": [],
           "response": {},

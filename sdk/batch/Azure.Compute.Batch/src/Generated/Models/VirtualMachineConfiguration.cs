@@ -44,11 +44,9 @@ namespace Azure.Compute.Batch
         /// should only be used when you hold valid on-premises licenses for the Compute
         /// Nodes which will be deployed. If omitted, no on-premises licensing discount is
         /// applied. Values are:
-        /// 
         ///  Windows_Server - The on-premises license is for Windows
         /// Server.
         ///  Windows_Client - The on-premises license is for Windows Client.
-        /// 
         /// </param>
         /// <param name="containerConfiguration"> The container configuration for the Pool. If specified, setup is performed on each Compute Node in the Pool to allow Tasks to run in containers. All regular Tasks and Job manager Tasks run on this Pool must specify the containerSettings property, and all other Tasks may specify it. </param>
         /// <param name="diskEncryptionConfiguration"> The disk encryption configuration for the pool. If specified, encryption is performed on each node in the pool during node provisioning. </param>
@@ -92,11 +90,9 @@ namespace Azure.Compute.Batch
         /// should only be used when you hold valid on-premises licenses for the Compute
         /// Nodes which will be deployed. If omitted, no on-premises licensing discount is
         /// applied. Values are:
-        /// 
         ///  Windows_Server - The on-premises license is for Windows
         /// Server.
         ///  Windows_Client - The on-premises license is for Windows Client.
-        /// 
         /// </summary>
         public string LicenseType { get; set; }
 

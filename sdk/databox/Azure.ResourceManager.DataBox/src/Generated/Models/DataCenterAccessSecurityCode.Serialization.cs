@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataCenterAccessSecurityCode : IUtf8JsonSerializable, IJsonModel<DataCenterAccessSecurityCode>
+    /// <summary> Dc access security code. </summary>
+    public partial class DataCenterAccessSecurityCode : IJsonModel<DataCenterAccessSecurityCode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCenterAccessSecurityCode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataCenterAccessSecurityCode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAccessSecurityCode>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCenterAccessSecurityCode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataCenterAccessSecurityCode)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ReverseDataCenterAccessCode))
             {
                 writer.WritePropertyName("reverseDCAccessCode"u8);
@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("forwardDCAccessCode"u8);
                 writer.WriteStringValue(ForwardDataCenterAccessCode);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,55 +61,61 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataCenterAccessSecurityCode IJsonModel<DataCenterAccessSecurityCode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCenterAccessSecurityCode IJsonModel<DataCenterAccessSecurityCode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataCenterAccessSecurityCode JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAccessSecurityCode>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCenterAccessSecurityCode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataCenterAccessSecurityCode)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataCenterAccessSecurityCode(document.RootElement, options);
         }
 
-        internal static DataCenterAccessSecurityCode DeserializeDataCenterAccessSecurityCode(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataCenterAccessSecurityCode DeserializeDataCenterAccessSecurityCode(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string reverseDCAccessCode = default;
-            string forwardDCAccessCode = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string reverseDataCenterAccessCode = default;
+            string forwardDataCenterAccessCode = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("reverseDCAccessCode"u8))
+                if (prop.NameEquals("reverseDCAccessCode"u8))
                 {
-                    reverseDCAccessCode = property.Value.GetString();
+                    reverseDataCenterAccessCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("forwardDCAccessCode"u8))
+                if (prop.NameEquals("forwardDCAccessCode"u8))
                 {
-                    forwardDCAccessCode = property.Value.GetString();
+                    forwardDataCenterAccessCode = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataCenterAccessSecurityCode(reverseDCAccessCode, forwardDCAccessCode, serializedAdditionalRawData);
+            return new DataCenterAccessSecurityCode(reverseDataCenterAccessCode, forwardDataCenterAccessCode, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataCenterAccessSecurityCode>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAccessSecurityCode>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataCenterAccessSecurityCode>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataCenterAccessSecurityCode>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -119,15 +125,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataCenterAccessSecurityCode IPersistableModel<DataCenterAccessSecurityCode>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAccessSecurityCode>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCenterAccessSecurityCode IPersistableModel<DataCenterAccessSecurityCode>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataCenterAccessSecurityCode PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataCenterAccessSecurityCode>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataCenterAccessSecurityCode(document.RootElement, options);
                     }
                 default:
@@ -135,6 +146,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataCenterAccessSecurityCode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

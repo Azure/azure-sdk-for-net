@@ -13,93 +13,106 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Information of the sku. </summary>
     public partial class DataBoxSkuInformation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxSkuInformation"/>. </summary>
         internal DataBoxSkuInformation()
         {
-            DataLocationToServiceLocationMap = new ChangeTrackingList<DataLocationToServiceLocationMap>();
-            Costs = new ChangeTrackingList<DataBoxSkuCost>();
-            ApiVersions = new ChangeTrackingList<string>();
-            CountriesWithinCommerceBoundary = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxSkuInformation"/>. </summary>
         /// <param name="sku"> The Sku. </param>
         /// <param name="isEnabled"> The sku is enabled or not. </param>
-        /// <param name="dataLocationToServiceLocationMap"> The map of data location to service location. </param>
-        /// <param name="capacity"> Capacity of the Sku. </param>
-        /// <param name="costs"> Cost of the Sku. </param>
-        /// <param name="apiVersions"> Api versions that support this Sku. </param>
-        /// <param name="disabledReason"> Reason why the Sku is disabled. </param>
-        /// <param name="disabledReasonMessage"> Message for why the Sku is disabled. </param>
-        /// <param name="requiredFeature"> Required feature to access the sku. </param>
-        /// <param name="countriesWithinCommerceBoundary"> List of all the Countries in the SKU specific commerce boundary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxSkuInformation(DataBoxSku sku, bool? isEnabled, IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap, DataBoxSkuCapacity capacity, IReadOnlyList<DataBoxSkuCost> costs, IReadOnlyList<string> apiVersions, SkuDisabledReason? disabledReason, string disabledReasonMessage, string requiredFeature, IReadOnlyList<string> countriesWithinCommerceBoundary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the sku. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxSkuInformation(DataBoxSku sku, bool? isEnabled, SkuProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             IsEnabled = isEnabled;
-            DataLocationToServiceLocationMap = dataLocationToServiceLocationMap;
-            Capacity = capacity;
-            Costs = costs;
-            ApiVersions = apiVersions;
-            DisabledReason = disabledReason;
-            DisabledReasonMessage = disabledReasonMessage;
-            RequiredFeature = requiredFeature;
-            CountriesWithinCommerceBoundary = countriesWithinCommerceBoundary;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Sku. </summary>
         public DataBoxSku Sku { get; }
+
         /// <summary> The sku is enabled or not. </summary>
         public bool? IsEnabled { get; }
+
+        /// <summary> Properties of the sku. </summary>
+        internal SkuProperties Properties { get; }
+
         /// <summary> The map of data location to service location. </summary>
-        public IReadOnlyList<DataLocationToServiceLocationMap> DataLocationToServiceLocationMap { get; }
+        public IReadOnlyList<DataLocationToServiceLocationMap> DataLocationToServiceLocationMap
+        {
+            get
+            {
+                return Properties.DataLocationToServiceLocationMap;
+            }
+        }
+
         /// <summary> Capacity of the Sku. </summary>
-        public DataBoxSkuCapacity Capacity { get; }
+        public DataBoxSkuCapacity Capacity
+        {
+            get
+            {
+                return Properties.Capacity;
+            }
+        }
+
         /// <summary> Cost of the Sku. </summary>
-        public IReadOnlyList<DataBoxSkuCost> Costs { get; }
+        public IReadOnlyList<DataBoxSkuCost> Costs
+        {
+            get
+            {
+                return Properties.Costs;
+            }
+        }
+
         /// <summary> Api versions that support this Sku. </summary>
-        public IReadOnlyList<string> ApiVersions { get; }
+        public IReadOnlyList<string> ApiVersions
+        {
+            get
+            {
+                return Properties.ApiVersions;
+            }
+        }
+
         /// <summary> Reason why the Sku is disabled. </summary>
-        public SkuDisabledReason? DisabledReason { get; }
+        public SkuDisabledReason? DisabledReason
+        {
+            get
+            {
+                return Properties.DisabledReason;
+            }
+        }
+
         /// <summary> Message for why the Sku is disabled. </summary>
-        public string DisabledReasonMessage { get; }
+        public string DisabledReasonMessage
+        {
+            get
+            {
+                return Properties.DisabledReasonMessage;
+            }
+        }
+
         /// <summary> Required feature to access the sku. </summary>
-        public string RequiredFeature { get; }
+        public string RequiredFeature
+        {
+            get
+            {
+                return Properties.RequiredFeature;
+            }
+        }
+
         /// <summary> List of all the Countries in the SKU specific commerce boundary. </summary>
-        public IReadOnlyList<string> CountriesWithinCommerceBoundary { get; }
+        public IReadOnlyList<string> CountriesWithinCommerceBoundary
+        {
+            get
+            {
+                return Properties.CountriesWithinCommerceBoundary;
+            }
+        }
     }
 }

@@ -13,7 +13,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-api-spec/blob/master/api-spec.md#ogc-api---features-endpoints
-    /// 
     /// Represents the OGC API conformance declaration.
     /// </summary>
     public partial class StacConformanceClasses
