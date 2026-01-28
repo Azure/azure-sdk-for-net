@@ -6,7 +6,6 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
@@ -17,19 +16,6 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class OperationMethodParameterHelper
     {
-        // Set of header names that correspond to conditional request headers (used by MatchConditions/RequestConditions)
-        private static readonly HashSet<string> _conditionalHeaders = new(StringComparer.OrdinalIgnoreCase)
-        {
-            "If-Match",
-            "ifMatch",
-            "If-None-Match",
-            "ifNoneMatch",
-            "If-Modified-Since",
-            "ifModifiedSince",
-            "If-Unmodified-Since",
-            "ifUnmodifiedSince",
-        };
-
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             MethodProvider convenienceMethod,
@@ -59,7 +45,7 @@ namespace Azure.Generator.Management.Utilities
             ParameterProvider? matchConditionsParam = null;
             foreach (var param in convenienceMethod.Signature.Parameters)
             {
-                if (IsMatchConditionsType(param.Type))
+                if (MatchConditionsHelper.IsMatchConditionsType(param.Type))
                 {
                     matchConditionsParam = param;
                     break;
@@ -79,13 +65,14 @@ namespace Azure.Generator.Management.Utilities
                 var tempParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(inputParameter)!;
 
                 // Skip contextual parameters
-                if (parameterMapping.TryGetValue(tempParameter.WireInfo.SerializedName, out var mapping) && mapping.ContextualParameter is not null)
+                var serializedName = tempParameter.WireInfo?.SerializedName;
+                if (serializedName != null && parameterMapping.TryGetValue(serializedName, out var mapping) && mapping.ContextualParameter is not null)
                 {
                     continue;
                 }
 
                 // Check if this is a conditional header parameter (If-Match, If-None-Match, etc.)
-                bool isConditionalHeaderParam = IsConditionalHeader(tempParameter.WireInfo.SerializedName);
+                bool isConditionalHeaderParam = MatchConditionsHelper.IsConditionalHeader(serializedName);
 
                 // If this is a conditional header and we have a MatchConditions parameter, use it instead
                 if (isConditionalHeaderParam && matchConditionsParam != null)
@@ -155,23 +142,6 @@ namespace Azure.Generator.Management.Utilities
             optionalParameters.Add(KnownParameters.CancellationTokenParameter);
 
             return [.. requiredParameters, .. optionalParameters];
-        }
-
-        /// <summary>
-        /// Checks if the given header name is a conditional request header.
-        /// </summary>
-        private static bool IsConditionalHeader(string headerName)
-        {
-            return _conditionalHeaders.Contains(headerName);
-        }
-
-        /// <summary>
-        /// Checks if the given type is a MatchConditions or RequestConditions type.
-        /// </summary>
-        private static bool IsMatchConditionsType(CSharpType type)
-        {
-            var underlyingType = type.IsNullable ? type.WithNullable(false) : type;
-            return underlyingType.Equals(typeof(MatchConditions)) || underlyingType.Equals(typeof(RequestConditions));
         }
 
         private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null)

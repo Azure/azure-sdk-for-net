@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -80,7 +81,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
         // Pre-scan for MatchConditions/RequestConditions parameter in method parameters
         foreach (var param in methodParameters)
         {
-            if (IsMatchConditionsType(param.Type))
+            if (MatchConditionsHelper.IsMatchConditionsType(param.Type))
             {
                 matchConditionsParam = param;
                 break;
@@ -136,24 +137,19 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             ParameterProvider? matchConditionsParam,
             ref bool matchConditionsAdded)
         {
-            var methodParam = parameters.SingleOrDefault(p => p.WireInfo?.SerializedName == parameterToFind.WireInfo.SerializedName);
+            var serializedName = parameterToFind.WireInfo?.SerializedName;
+            var methodParam = parameters.SingleOrDefault(p => p.WireInfo?.SerializedName == serializedName);
             if (methodParam != null)
             {
                 return Convert(methodParam, methodParam.Type, parameterToFind.Type);
             }
 
             // Check if this is a conditional header parameter (If-Match, If-None-Match, etc.)
-            // that should be mapped to a MatchConditions/RequestConditions parameter
-            if (matchConditionsParam != null && IsConditionalHeader(parameterToFind.WireInfo.SerializedName))
+            // that should be mapped to a MatchConditions/RequestConditions parameter.
+            // When the MatchConditionsHeadersVisitor transforms If-Match + If-None-Match into a single
+            // MatchConditions parameter, we need to use that parameter for both headers.
+            if (matchConditionsParam != null && !matchConditionsAdded && MatchConditionsHelper.IsConditionalHeader(serializedName))
             {
-                // If we already added the matchConditions argument, skip this parameter
-                // This handles the case where both If-Match and If-None-Match are mapped to a single MatchConditions param
-                if (matchConditionsAdded)
-                {
-                    // Return a special marker that signals this argument should be skipped
-                    // Actually, we can't skip - the REST client expects both parameters
-                    // So we return the same MatchConditions parameter again
-                }
                 matchConditionsAdded = true;
                 return Convert(matchConditionsParam, matchConditionsParam.Type, parameterToFind.Type);
             }
@@ -187,35 +183,5 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             // other unhandled cases, we will add when we need them in the future.
             return expression;
         }
-    }
-
-    // Set of header names that correspond to conditional request headers (used by MatchConditions/RequestConditions)
-    private static readonly HashSet<string> _conditionalHeaders = new(StringComparer.OrdinalIgnoreCase)
-    {
-        "If-Match",
-        "ifMatch",
-        "If-None-Match",
-        "ifNoneMatch",
-        "If-Modified-Since",
-        "ifModifiedSince",
-        "If-Unmodified-Since",
-        "ifUnmodifiedSince",
-    };
-
-    /// <summary>
-    /// Checks if the given header name is a conditional request header.
-    /// </summary>
-    private static bool IsConditionalHeader(string headerName)
-    {
-        return _conditionalHeaders.Contains(headerName);
-    }
-
-    /// <summary>
-    /// Checks if the given type is a MatchConditions or RequestConditions type.
-    /// </summary>
-    private static bool IsMatchConditionsType(CSharpType type)
-    {
-        var underlyingType = type.IsNullable ? type.WithNullable(false) : type;
-        return underlyingType.Equals(typeof(MatchConditions)) || underlyingType.Equals(typeof(RequestConditions));
     }
 }
