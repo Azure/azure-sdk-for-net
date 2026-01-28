@@ -51,8 +51,8 @@ function Process-Package([string]$packageInfoPath)
     $releaseInfo = & $AzsdkExePath release-plan update-release-status --package-name $PackageName --language $LanguageDisplayName --status "Released"
     if ($LASTEXITCODE -ne 0)
     {
-        Write-Error "Failed to mark release completion for package '$PackageName' using azsdk. Exit code: $LASTEXITCODE"
-        exit $LASTEXITCODE
+        ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.
+        Write-Host "Failed to mark release completion for package '$PackageName' using azsdk. Exit code: $LASTEXITCODE"
     }
     Write-Host "Details: $releaseInfo"
 }
