@@ -1,0 +1,132 @@
+<Project>
+  <!-- THIS FILE CONTAINS CENTRAL VERSIONS FOR ALL TRACK 1 AND LEGACY PACKAGES.
+       CURRENT GENERATION CAN BE FOUND IN DIRECTORY.PACKAGES.PROPS -->
+
+  <!--
+    Shared version stamps; these packages are intentionally scoped but
+    should generally sync to the same version.
+  -->
+  <PropertyGroup>
+    <!-- Legacy package use only -->
+    <MicrosoftRestClientRuntimeVersion>[2.3.24, 3.0.0)</MicrosoftRestClientRuntimeVersion>
+    <MicrosoftRestClientRuntimeAzureVersion>[3.3.19, 4.0.0)</MicrosoftRestClientRuntimeAzureVersion>
+    <MicrosoftRestClientRuntimeAzureAuthenticationVersion>[2.4.1]</MicrosoftRestClientRuntimeAzureAuthenticationVersion>
+    <MicrosoftRestClientRuntimeAzureTestFrameworkVersion>[1.7.7, 2.0.0)</MicrosoftRestClientRuntimeAzureTestFrameworkVersion>
+  </PropertyGroup>
+
+  <!-- Dependencies for packages prior to Track 1 -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+    <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' != 'netstandard1.4' ">
+    <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+  </ItemGroup>
+
+  <!--
+    Dependencies for legacy (Track 1) libraries.
+  -->
+  <ItemGroup Condition="'$(IsClientLibrary)' != 'true' and $(MSBuildProjectName.StartsWith('Microsoft.Azure'))">
+    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
+    <PackageVersion Include="Microsoft.Azure.Amqp" Version="2.4.11" />
+    <PackageVersion Include="Microsoft.Azure.Batch" Version="16.3.1" />
+    <PackageVersion Include="Microsoft.Azure.Devices" Version="1.19.0" />
+    <PackageVersion Include="Microsoft.Azure.Devices.Client" Version="1.23.2" />
+    <PackageVersion Include="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
+    <PackageVersion Include="Microsoft.Azure.Management.Batch" Version="4.2.0" />
+    <PackageVersion Include="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
+    <PackageVersion Include="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
+    <PackageVersion Include="Microsoft.Rest.ClientRuntime" Version="$(MicrosoftRestClientRuntimeVersion)" />
+    <PackageVersion Include="Microsoft.Rest.ClientRuntime.Azure" Version="$(MicrosoftRestClientRuntimeAzureVersion)" />
+    <PackageVersion Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="$(MicrosoftRestClientRuntimeAzureAuthenticationVersion)" />
+    <PackageVersion Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="$(MicrosoftRestClientRuntimeAzureTestFrameworkVersion)" />
+    <PackageVersion Include="Microsoft.Spatial" Version="7.5.3" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
+    <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+    <PackageVersion Include="System.Linq" Version="4.3.0" />
+    <PackageVersion Include="System.Memory.Data" Version="1.0.2" />
+    <PackageVersion Include="System.Net.Http" Version="4.3.4" />
+    <PackageVersion Include="System.Reflection.TypeExtensions" Version="[4.5.1, 4.9.0)" />
+    <PackageVersion Include="System.Runtime" Version="4.3.0" />
+    <PackageVersion Include="System.Security.Cryptography.Cng" Version="4.3.0" />
+    <PackageVersion Include="System.Text.Encodings.Web" Version="4.5.1" />
+    <PackageVersion Include="System.Text.Json" Version="4.7.2" />
+    <PackageVersion Include="System.ValueTuple" Version="4.6.1" />
+    <PackageVersion Include="WindowsAzure.Storage" Version="9.3.3" />
+  </ItemGroup>
+
+  <!--
+    Microsoft.Azure.Batch walks the line between T1 and T2, using some updated references
+    but is still considered a legacy package.  Treat the modern dependencies as special
+    cases and use a frozen versioning strategy as the package is not actively developed.
+  -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))">
+    <PackageVersion Include="Azure.Storage.Blobs" Version="12.26.0" />
+  </ItemGroup>
+
+    <!--
+    xunit is only approved for legacy use. Azure SDK test projects should use NUnit.
+  -->
+  <ItemGroup Condition="
+      ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true')
+      and (
+        $(MSBuildProjectName.StartsWith('Azure.Compute.Batch'))
+        or $(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))
+        or $(MSBuildProjectName.StartsWith('AzureSamples.Security.KeyVault.Proxy'))
+        or $(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))
+        or $(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.SignalRService'))
+        or $(MSBuildProjectName.StartsWith('Microsoft.Azure.CognitiveServices'))
+        or $(MSBuildProjectName.StartsWith('Microsoft.Azure.HDInsight'))
+      )">
+    <PackageVersion Include="FsCheck.Xunit" Version="2.16.6" />
+    <PackageVersion Include="xunit" Version="2.4.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.2" />
+  </ItemGroup>
+
+  <!--
+    Specific dependency versions for legacy Azure testing, sample, and support
+    projects. Only packages that are specific to those areas and are otherwise
+    NOT approved for use in published packages should go here.
+
+    These dependencies are not intended for use in current generation test projects.
+  -->
+
+  <!--
+    FluentAssertions is approved only for legacy use. Azure SDK test projects should
+    use NUnit assertions.
+  -->
+  <ItemGroup Condition="
+      ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsPerfProject)' == 'true')
+      and (
+        $(MSBuildProjectName.StartsWith('Azure.DigitalTwins.Core'))
+        or $(MSBuildProjectName.StartsWith('Azure.ResourceManager.NetApp'))
+        or $(MSBuildProjectName.StartsWith('Azure.IoT.TimeSeriesInsights'))
+        or $(MSBuildProjectName.StartsWith('Azure.ResourceManager.IotFirmwareDefense'))
+        or $(MSBuildProjectName.StartsWith('Azure.IoT.Hub.Service'))
+        or $(MSBuildProjectName.StartsWith('Azure.IoT.ModelsRepository'))
+        or $(MSBuildProjectName.StartsWith('Azure.Analytics.OnlineExperimentation'))
+      )">
+    <PackageVersion Include="FluentAssertions" Version="5.10.3" />
+  </ItemGroup>
+
+  <!--
+    BouncyCastle is approved only for legacy use.
+  -->
+  <ItemGroup Condition="
+      ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true')
+      and (
+        $(MSBuildProjectName.StartsWith('Azure.Compute.Batch'))
+        or $(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))
+        or $(MSBuildProjectName.StartsWith('Azure.Security.KeyVault.Certificates'))
+      )">
+    <PackageVersion Include="Portable.BouncyCastle" Version="1.9.0" />
+  </ItemGroup>
+
+  <!-- Legacy Batch tests require ADAL and specific MSAL versions -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))">
+    <PackageVersion Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.2, 4.0.0)" />
+    <PackageVersion Update="Microsoft.Identity.Client" Version="4.61.3" />
+  </ItemGroup>
+</Project>

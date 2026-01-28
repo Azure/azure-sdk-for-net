@@ -41,14 +41,6 @@
 
   <Import Project="$(RepoEngPath)\Directory.Build.Common.props" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
 
-    <!--
-    Central Package Management (CPM) - located in eng folder
-    See: https://learn.microsoft.com/nuget/consume-packages/Central-Package-Management
-    
-    Since the file is not at the standard location (repo root), we must set
-    DirectoryPackagesPropsPath to tell NuGet where to find it.
-    NuGet will automatically import the file; no explicit Import is needed.
-  -->
   <PropertyGroup>
     <DirectoryPackagesPropsPath>$(MSBuildThisFileDirectory)eng\Directory.Packages.props</DirectoryPackagesPropsPath>
   </PropertyGroup>
