@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// <summary>
     /// Specifies the behavior of the managed disk when the VM gets deleted, for
     /// example whether the managed disk is deleted or detached. Supported values are:
-    /// **Delete.** If this value is used, the managed disk is deleted when VM gets
-    /// deleted. **Detach.** If this value is used, the managed disk is retained after
+    /// <b>Delete.</b> If this value is used, the managed disk is deleted when VM gets
+    /// deleted. <b>Detach.</b> If this value is used, the managed disk is retained after
     /// VM gets deleted. Minimum api-version: 2021-03-01.
     /// </summary>
     public readonly partial struct ComputeFleetDiskDeleteOptionType : IEquatable<ComputeFleetDiskDeleteOptionType>
