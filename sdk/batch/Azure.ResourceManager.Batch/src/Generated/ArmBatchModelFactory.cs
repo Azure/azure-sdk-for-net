@@ -804,11 +804,11 @@ namespace Azure.ResourceManager.Batch.Models
                 id,
                 name,
                 resourceType,
-                systemData,
                 additionalBinaryDataProperties: null,
                 default,
                 identity,
                 tags,
+                systemData,
                 location);
         }
 

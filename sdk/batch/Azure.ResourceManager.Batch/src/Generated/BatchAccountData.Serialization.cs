@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -100,11 +105,11 @@ namespace Azure.ResourceManager.Batch
             ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
-            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BatchAccountProperties properties = default;
             ManagedServiceIdentity identity = default;
             IReadOnlyDictionary<string, string> tags = default;
+            SystemData systemData = default;
             AzureLocation? location = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -129,15 +134,6 @@ namespace Azure.ResourceManager.Batch
                         continue;
                     }
                     resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -179,6 +175,15 @@ namespace Azure.ResourceManager.Batch
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("location"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -197,11 +202,11 @@ namespace Azure.ResourceManager.Batch
                 id,
                 name,
                 resourceType,
-                systemData,
                 additionalBinaryDataProperties,
                 properties,
                 identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                systemData,
                 location);
         }
 
