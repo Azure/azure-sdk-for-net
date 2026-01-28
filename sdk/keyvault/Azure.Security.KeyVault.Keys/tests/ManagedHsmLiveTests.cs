@@ -50,10 +50,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             RSA rsaKey = key.Key.ToRSA();
             RSAParameters rsaParams = rsaKey.ExportParameters(false);
-            Assert.AreEqual(256, rsaParams.Modulus.Length);
+            Assert.That(rsaParams.Modulus.Length, Is.EqualTo(256));
 
             int publicExponent = rsaParams.Exponent.ToInt32();
-            Assert.AreEqual(3, publicExponent);
+            Assert.That(publicExponent, Is.EqualTo(3));
         }
 
         [RecordedTest]
@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task GetRandomBytes(int count)
         {
             byte[] rand = await Client.GetRandomBytesAsync(count);
-            Assert.AreEqual(count, rand.Length);
+            Assert.That(rand.Length, Is.EqualTo(count));
         }
 
         [RecordedTest]
@@ -114,12 +114,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(key.Name);
 
             JwtSecurityToken jws = await ReleaseKeyAsync(keyName);
-            Assert.IsTrue(jws.Payload.TryGetValue("response", out object response));
+            Assert.That(jws.Payload.TryGetValue("response", out object response), Is.True);
 
             JsonDocument doc = JsonDocument.Parse(response.ToString());
             JsonElement keyElement = doc.RootElement.GetProperty("key").GetProperty("key");
-            Assert.AreEqual(key.Id, keyElement.GetProperty("kid").GetString());
-            Assert.AreEqual(JsonValueKind.String, keyElement.GetProperty("key_hsm").ValueKind);
+            Assert.That(keyElement.GetProperty("kid").GetString(), Is.EqualTo(key.Id));
+            Assert.That(keyElement.GetProperty("key_hsm").ValueKind, Is.EqualTo(JsonValueKind.String));
         }
 
         [RecordedTest]
@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(key.Name);
 
             // Attestation details shouldn't be included unless requested
-            Assert.IsNull(key.Properties.Attestation);
+            Assert.That(key.Properties.Attestation, Is.Null);
 
             KeyVaultKey keyWithAttestation = await Client.GetKeyAttestationAsync(keyName);
             AssertKeyVaultKeysEqual(key, keyWithAttestation);

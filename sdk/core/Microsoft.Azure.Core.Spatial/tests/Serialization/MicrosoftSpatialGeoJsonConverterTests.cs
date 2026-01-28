@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
         {
             MicrosoftSpatialGeoJsonConverter converter = new MicrosoftSpatialGeoJsonConverter();
 
-            Assert.IsFalse(converter.CanConvert(typeof(Geography)));
+            Assert.That(converter.CanConvert(typeof(Geography)), Is.False);
 
             // This list is the implementation types. CanConvert will see these when serializing.
             List<Type> types = (from p in GeographyGeoJsons
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 
             foreach (Type type in types)
             {
-                Assert.IsTrue(converter.CanConvert(type));
+                Assert.That(converter.CanConvert(type), Is.True);
             }
 
             // During a deserialization request, you pass the base classes, so these also must pass.
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 
             foreach (Type type in types)
             {
-                Assert.IsTrue(converter.CanConvert(type));
+                Assert.That(converter.CanConvert(type), Is.True);
             }
         }
 
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
             {
                 object geography = JsonSerializer.Deserialize(geographyGeoJson.GeoJson, geographyGeoJson.Geography.GetType().BaseType, options);
 
-                Assert.AreEqual(geography, geographyGeoJson.Geography);
+                Assert.That(geographyGeoJson.Geography, Is.EqualTo(geography));
             }
         }
 
@@ -116,11 +116,11 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 
             GeographyPoint point = JsonSerializer.Deserialize<GeographyPoint>(json, options);
 
-            Assert.AreEqual(46.879967, point.Latitude);
-            Assert.AreEqual(-121.726906, point.Longitude);
+            Assert.That(point.Latitude, Is.EqualTo(46.879967));
+            Assert.That(point.Longitude, Is.EqualTo(-121.726906));
 
             // Not currently supported.
-            Assert.IsNull(point.Z);
+            Assert.That(point.Z, Is.Null);
         }
 
         [Test]
@@ -136,8 +136,8 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 
             GeographyPoint point = JsonSerializer.Deserialize<GeographyPoint>(@"{""type"":""Point"",""coordinates"":[-121,46]}", options);
 
-            Assert.AreEqual(46.0, point.Latitude);
-            Assert.AreEqual(-121.0, point.Longitude);
+            Assert.That(point.Latitude, Is.EqualTo(46.0));
+            Assert.That(point.Longitude, Is.EqualTo(-121.0));
         }
 
         [TestCaseSource(nameof(ReadBadJsonData))]
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
             };
 
             JsonException expectedException = Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<GeographyPoint>(json, options));
-            Assert.AreEqual(expectedExceptionMessage, expectedException.Message);
+            Assert.That(expectedException.Message, Is.EqualTo(expectedExceptionMessage));
         }
 
         private static IEnumerable<TestCaseData> ReadBadJsonData => new[]
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
                 // as the typeToConvert, which actually needs to return false.
                 string geoJson = JsonSerializer.Serialize(geographyGeoJson.Geography, geographyGeoJson.Geography.GetType(), options);
 
-                Assert.AreEqual(geographyGeoJson.GeoJson, geoJson);
+                Assert.That(geoJson, Is.EqualTo(geographyGeoJson.GeoJson));
             }
         }
 
@@ -212,9 +212,9 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
             };
 
             JsonException expectedException = Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<GeographyPoint>(json, options));
-            Assert.AreEqual("$", expectedException.Path);
-            Assert.AreEqual(3, expectedException.BytePositionInLine);
-            Assert.AreEqual(4, expectedException.LineNumber);
+            Assert.That(expectedException.Path, Is.EqualTo("$"));
+            Assert.That(expectedException.BytePositionInLine, Is.EqualTo(3));
+            Assert.That(expectedException.LineNumber, Is.EqualTo(4));
         }
     }
 }

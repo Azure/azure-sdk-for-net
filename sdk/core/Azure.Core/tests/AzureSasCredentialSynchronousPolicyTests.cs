@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, sasPolicy);
 
-            Assert.AreEqual("?sig=test_signature_value", transport.SingleRequest.Uri.Query);
+            Assert.That(transport.SingleRequest.Uri.Query, Is.EqualTo("?sig=test_signature_value"));
         }
 
         [TestCase("sig=test_signature_value")]
@@ -40,7 +40,7 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, sasPolicy, query: query);
 
-            Assert.AreEqual($"?foo=bar&sig=test_signature_value", transport.SingleRequest.Uri.Query);
+            Assert.That(transport.SingleRequest.Uri.Query, Is.EqualTo($"?foo=bar&sig=test_signature_value"));
         }
 
         [TestCase("sig=test_signature_value")]
@@ -58,7 +58,7 @@ namespace Azure.Core.Tests
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
 
-            Assert.AreEqual("?sig=test_signature_value", transport.Requests[0].Uri.Query);
+            Assert.That(transport.Requests[0].Uri.Query, Is.EqualTo("?sig=test_signature_value"));
         }
 
         [TestCase("sig=test_signature_value")]
@@ -78,7 +78,7 @@ namespace Azure.Core.Tests
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
 
-            Assert.AreEqual("?foo=bar&sig=test_signature_value", transport.Requests[0].Uri.Query);
+            Assert.That(transport.Requests[0].Uri.Query, Is.EqualTo("?foo=bar&sig=test_signature_value"));
         }
 
         [TestCase("sig=test_signature_value")]
@@ -97,7 +97,7 @@ namespace Azure.Core.Tests
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
 
-            Assert.AreEqual(query, transport.Requests[0].Uri.Query);
+            Assert.That(transport.Requests[0].Uri.Query, Is.EqualTo(query));
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace Azure.Core.Tests
 
             var transport = new MockTransport((req) =>
             {
-                Assert.AreEqual($"{INITIAL_QUERY_URI}&{signatures[callCount]}", req.Uri.Query);
+                Assert.That(req.Uri.Query, Is.EqualTo($"{INITIAL_QUERY_URI}&{signatures[callCount]}"));
                 if (callCount < 2)
                 {
                     azureSasCredential.Update(signatures[callCount + 1]);
@@ -129,7 +129,7 @@ namespace Azure.Core.Tests
                 var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { new RetryPolicy(delayStrategy: DelayStrategy.CreateExponentialDelayStrategy(TimeSpan.FromMilliseconds(100))), sasPolicy });
 
                 Response response = await pipeline.SendRequestAsync(request, CancellationToken.None).ConfigureAwait(false);
-                Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.OK));
             }
         }
     }

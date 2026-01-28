@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var result = await jobHost.RunTriggerAsync<QueueMessage>();
 
             // Assert
-            Assert.AreEqual(expectedGuid, result.MessageText);
+            Assert.That(result.MessageText, Is.EqualTo(expectedGuid));
         }
 
         private class InstanceProgram : IProgramWithResult<QueueMessage>
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var result = await jobHost.RunTriggerAsync<QueueMessage>();
 
             // Assert
-            Assert.AreEqual(expectedGuid, result.MessageText);
+            Assert.That(result.MessageText, Is.EqualTo(expectedGuid));
         }
 
         private class InstanceAsyncProgram : IProgramWithResult<QueueMessage>
@@ -158,12 +158,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             // Act
             var jobHost = host.GetJobHost<InstanceCustomActivatorProgram>();
-            Assert.NotNull(jobHost);
+            Assert.That(jobHost, Is.Not.Null);
 
             var result = await jobHost.RunTriggerAsync<string>(InstanceCustomActivatorProgram.TaskSource);
 
             // Assert
-            Assert.AreSame(expectedResult, result);
+            Assert.That(result, Is.SameAs(expectedResult));
         }
 
         private static async Task AddQueueMessageAsync(QueueServiceClient client, string message, string queueName)

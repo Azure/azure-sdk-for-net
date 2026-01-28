@@ -27,8 +27,8 @@ namespace Azure.Storage.Tests
                 MaximumTransferSize = realSize
             };
 
-            Assert.AreEqual(options.MaximumTransferSize, realSize);
-            Assert.AreEqual(options.MaximumTransferLength, realSize);
+            Assert.That(realSize, Is.EqualTo(options.MaximumTransferSize));
+            Assert.That(realSize, Is.EqualTo(options.MaximumTransferLength));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Azure.Storage.Tests
                 MaximumTransferSize = realSize
             };
 
-            Assert.AreEqual(options.MaximumTransferSize, realSize);
+            Assert.That(realSize, Is.EqualTo(options.MaximumTransferSize));
             Assert.Throws<OverflowException>(() => _ = options.MaximumTransferLength);
         }
 
@@ -64,8 +64,8 @@ namespace Azure.Storage.Tests
                 InitialTransferSize = realSize
             };
 
-            Assert.AreEqual(options.InitialTransferSize, realSize);
-            Assert.AreEqual(options.InitialTransferLength, realSize);
+            Assert.That(realSize, Is.EqualTo(options.InitialTransferSize));
+            Assert.That(realSize, Is.EqualTo(options.InitialTransferLength));
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Azure.Storage.Tests
                 InitialTransferSize = realSize
             };
 
-            Assert.AreEqual(options.InitialTransferSize, realSize);
+            Assert.That(realSize, Is.EqualTo(options.InitialTransferSize));
             Assert.Throws<OverflowException>(() => _ = options.InitialTransferLength);
         }
     }

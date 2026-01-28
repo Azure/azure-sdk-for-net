@@ -94,8 +94,8 @@ namespace System.ClientModel.Tests.Internal
             ClientLoggingOptions options = new();
             PipelineMessageSanitizer sanitizer = options.GetPipelineMessageSanitizer();
 
-            Assert.AreEqual(s_expectedDefaultAllowedQueryParameters, sanitizer._allowedQueryParameters);
-            Assert.AreEqual(s_expectedDefaultAllowedHeaderNames, sanitizer._allowedHeaders);
+            Assert.That(sanitizer._allowedQueryParameters, Is.EqualTo(s_expectedDefaultAllowedQueryParameters));
+            Assert.That(sanitizer._allowedHeaders, Is.EqualTo(s_expectedDefaultAllowedHeaderNames));
         }
 
         [Test]
@@ -116,8 +116,8 @@ namespace System.ClientModel.Tests.Internal
                 "custom-query"
             };
 
-            Assert.AreEqual(customQueryParameters, sanitizer._allowedQueryParameters);
-            Assert.AreEqual(customAllowedHeaders, sanitizer._allowedHeaders);
+            Assert.That(sanitizer._allowedQueryParameters, Is.EqualTo(customQueryParameters));
+            Assert.That(sanitizer._allowedHeaders, Is.EqualTo(customAllowedHeaders));
         }
     }
 }

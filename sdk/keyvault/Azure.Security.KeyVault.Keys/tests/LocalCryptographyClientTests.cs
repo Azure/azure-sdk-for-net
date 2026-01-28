@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void CryptographyClientRequiresJsonWebKey()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CryptographyClient(null));
-            Assert.AreEqual("key", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("key"));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             CryptographyClient client = new CryptographyClient(jwk);
 
-            Assert.AreEqual(nameof(KeyIdFromJsonWebKey), client.KeyId);
+            Assert.That(client.KeyId, Is.EqualTo(nameof(KeyIdFromJsonWebKey)));
         }
 
         #region Encrypt / Decrypt
@@ -136,7 +136,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             DecryptResult decrypted = await client.DecryptAsync(algorithm, encrypted.Ciphertext);
             string actual = Encoding.UTF8.GetString(decrypted.Plaintext);
 
-            Assert.AreEqual("test", actual);
+            Assert.That(actual, Is.EqualTo("test"));
         }
         #endregion
 
@@ -197,7 +197,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signed = await client.SignAsync(algorithm, digest);
 
             VerifyResult verified = await client.VerifyAsync(algorithm, digest, signed.Signature);
-            Assert.IsTrue(verified.IsValid);
+            Assert.That(verified.IsValid, Is.True);
         }
         #endregion
 
@@ -244,7 +244,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey jwk = KeyUtilities.CreateKey(algorithm, keyOps: new[] { KeyOperation.Sign, KeyOperation.Verify });
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
 
-            Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)) , async () => await client.SignDataAsync(algorithm, TestData));
+            Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)), async () => await client.SignDataAsync(algorithm, TestData));
         }
 
         [Test]
@@ -256,7 +256,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signed = await client.SignDataAsync(algorithm, TestData);
 
             VerifyResult verified = await client.VerifyDataAsync(algorithm, TestData, signed.Signature);
-            Assert.IsTrue(verified.IsValid);
+            Assert.That(verified.IsValid, Is.True);
         }
         #endregion
 
@@ -315,9 +315,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signed = await client.SignDataAsync(algorithm, TestStream);
 
             VerifyResult verified = await client.VerifyDataAsync(algorithm, TestStream, signed.Signature);
-            Assert.IsTrue(verified.IsValid);
+            Assert.That(verified.IsValid, Is.True);
         }
-#endregion
+        #endregion
 
         #region WrapKey / UnwrapKey
         [Test]
@@ -376,7 +376,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             WrapResult wrapped = await client.WrapKeyAsync(algorithm, TestKey);
             UnwrapResult unwrapped = await client.UnwrapKeyAsync(algorithm, wrapped.EncryptedKey);
 
-            CollectionAssert.AreEqual(TestKey, unwrapped.Key);
+            Assert.That(unwrapped.Key, Is.EqualTo(TestKey).AsCollection);
         }
         #endregion
 

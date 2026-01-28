@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Storage.Models;
-using NUnit.Framework;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
+using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
@@ -102,28 +102,28 @@ namespace Azure.ResourceManager.Storage.Tests
 
         public static void VerifyAccountProperties(StorageAccountResource account, bool useDefaults)
         {
-            Assert.NotNull(account);
-            Assert.NotNull(account.Id);
-            Assert.NotNull(account.Id.Name);
-            Assert.NotNull(account.Data.Location);
-            Assert.NotNull(account.Data);
-            Assert.NotNull(account.Data.CreatedOn);
-            Assert.NotNull(account.Data.Sku);
-            Assert.NotNull(account.Data.Sku.Name);
-            Assert.NotNull(account.Data.Sku.Tier);
-            Assert.NotNull(account.Data.PrimaryEndpoints);
+            Assert.That(account, Is.Not.Null);
+            Assert.That(account.Id, Is.Not.Null);
+            Assert.That(account.Id.Name, Is.Not.Null);
+            Assert.That(account.Data.Location, Is.Not.Null);
+            Assert.That(account.Data, Is.Not.Null);
+            Assert.That(account.Data.CreatedOn, Is.Not.Null);
+            Assert.That(account.Data.Sku, Is.Not.Null);
+            Assert.That(account.Data.Sku.Name, Is.Not.Null);
+            Assert.That(account.Data.Sku.Tier, Is.Not.Null);
+            Assert.That(account.Data.PrimaryEndpoints, Is.Not.Null);
 
             if (useDefaults)
             {
-                Assert.AreEqual(DefaultLocation, account.Data.Location);
-                Assert.AreEqual(DefaultSkuNameStandardGRS.Name, account.Data.Sku.Name);
-                Assert.AreEqual(StorageSkuTier.Standard, account.Data.Sku.Tier);
-                Assert.AreEqual(DefaultKindStorage, account.Data.Kind);
+                Assert.That(account.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(account.Data.Sku.Name, Is.EqualTo(DefaultSkuNameStandardGRS.Name));
+                Assert.That(account.Data.Sku.Tier, Is.EqualTo(StorageSkuTier.Standard));
+                Assert.That(account.Data.Kind, Is.EqualTo(DefaultKindStorage));
 
-                Assert.NotNull(account.Data.Tags);
-                Assert.AreEqual(2, account.Data.Tags.Count);
-                Assert.AreEqual("value1", account.Data.Tags["key1"]);
-                Assert.AreEqual("value2", account.Data.Tags["key2"]);
+                Assert.That(account.Data.Tags, Is.Not.Null);
+                Assert.That(account.Data.Tags.Count, Is.EqualTo(2));
+                Assert.That(account.Data.Tags["key1"], Is.EqualTo("value1"));
+                Assert.That(account.Data.Tags["key2"], Is.EqualTo("value2"));
             }
         }
 
@@ -254,32 +254,32 @@ namespace Azure.ResourceManager.Storage.Tests
 
         public static void AssertStorageAccountEqual(StorageAccountResource account1, StorageAccountResource account2)
         {
-            Assert.AreEqual(account1.Id.Name, account2.Id.Name);
-            Assert.AreEqual(account1.Id.Location, account2.Id.Location);
+            Assert.That(account2.Id.Name, Is.EqualTo(account1.Id.Name));
+            Assert.That(account2.Id.Location, Is.EqualTo(account1.Id.Location));
         }
 
         public static void AssertBlobContainerEqual(BlobContainerResource blobContainer1, BlobContainerResource blobContainer2)
         {
-            Assert.AreEqual(blobContainer1.Id.Name, blobContainer2.Id.Name);
-            Assert.AreEqual(blobContainer1.Id.Location, blobContainer2.Id.Location);
+            Assert.That(blobContainer2.Id.Name, Is.EqualTo(blobContainer1.Id.Name));
+            Assert.That(blobContainer2.Id.Location, Is.EqualTo(blobContainer1.Id.Location));
         }
 
         public static void AssertFileShareEqual(FileShareResource fileShare1, FileShareResource fileShare2)
         {
-            Assert.AreEqual(fileShare1.Id.Name, fileShare2.Id.Name);
-            Assert.AreEqual(fileShare1.Id.Location, fileShare2.Id.Location);
+            Assert.That(fileShare2.Id.Name, Is.EqualTo(fileShare1.Id.Name));
+            Assert.That(fileShare2.Id.Location, Is.EqualTo(fileShare1.Id.Location));
         }
 
         public static void AssertStorageQueueEqual(StorageQueueResource storageQueue1, StorageQueueResource storageQueue2)
         {
-            Assert.AreEqual(storageQueue1.Id.Name, storageQueue2.Id.Name);
-            Assert.AreEqual(storageQueue1.Id.Location, storageQueue2.Id.Location);
+            Assert.That(storageQueue2.Id.Name, Is.EqualTo(storageQueue1.Id.Name));
+            Assert.That(storageQueue2.Id.Location, Is.EqualTo(storageQueue1.Id.Location));
         }
 
         public static void AssertTableEqual(TableResource table1, TableResource table2)
         {
-            Assert.AreEqual(table1.Id.Name, table2.Id.Name);
-            Assert.AreEqual(table1.Id.Location, table2.Id.Location);
+            Assert.That(table2.Id.Name, Is.EqualTo(table1.Id.Name));
+            Assert.That(table2.Id.Location, Is.EqualTo(table1.Id.Location));
         }
     }
 }

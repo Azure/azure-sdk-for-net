@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System.Security.Cryptography;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
@@ -25,10 +25,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             KeyCurveName actual = name;
 
-            Assert.AreEqual(name, actual.ToString());
-            Assert.AreEqual(expectedOidValue, actual.Oid?.Value);
-            Assert.AreEqual(expectedKeySize, actual.KeySize);
-            Assert.AreEqual(expectedKeyParameterSize, actual.KeyParameterSize);
+            Assert.That(actual.ToString(), Is.EqualTo(name));
+            Assert.That(actual.Oid?.Value, Is.EqualTo(expectedOidValue));
+            Assert.That(actual.KeySize, Is.EqualTo(expectedKeySize));
+            Assert.That(actual.KeyParameterSize, Is.EqualTo(expectedKeyParameterSize));
         }
 
         [TestCase("1.2.840.10045.3.1.7", "P-256")]
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Oid oid = new Oid(oidValue);
             KeyCurveName actual = KeyCurveName.FromOid(oid, 0);
 
-            Assert.AreEqual(expectedName, actual.ToString());
+            Assert.That(actual.ToString(), Is.EqualTo(expectedName));
         }
 
         [TestCase("nistP521", 521, "P-521")]
@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Oid oid = new Oid(null, oidFriendlyName);
             KeyCurveName actual = KeyCurveName.FromOid(oid, keySize);
 
-            Assert.AreEqual(expectedName, actual.ToString());
+            Assert.That(actual.ToString(), Is.EqualTo(expectedName));
         }
     }
 }

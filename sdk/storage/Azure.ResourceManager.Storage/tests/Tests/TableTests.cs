@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Storage.Models;
 using System;
-using System.Threading;
 using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
@@ -74,23 +74,23 @@ namespace Azure.ResourceManager.Storage.Tests
                 }
             };
             TableResource table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName, data)).Value;
-            Assert.IsNotNull(table1);
-            Assert.AreEqual(table1.Id.Name, tableName);
-            Assert.AreEqual(2, table1.Data.SignedIdentifiers.Count);
+            Assert.That(table1, Is.Not.Null);
+            Assert.That(tableName, Is.EqualTo(table1.Id.Name));
+            Assert.That(table1.Data.SignedIdentifiers.Count, Is.EqualTo(2));
 
             //validate if created successfully
             TableResource table2 = await _tableCollection.GetAsync(tableName);
             AssertTableEqual(table1, table2);
-            Assert.IsTrue(await _tableCollection.ExistsAsync(tableName));
-            Assert.IsFalse(await _tableCollection.ExistsAsync(tableName + "1"));
+            Assert.That((bool)await _tableCollection.ExistsAsync(tableName), Is.True);
+            Assert.That((bool)await _tableCollection.ExistsAsync(tableName + "1"), Is.False);
 
             //delete table
             await table1.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            Assert.IsFalse(await _tableCollection.ExistsAsync(tableName));
+            Assert.That((bool)await _tableCollection.ExistsAsync(tableName), Is.False);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _tableCollection.GetAsync(tableName); });
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Storage.Tests
                     table4 = table;
                 }
             }
-            Assert.AreEqual(count, 2);
-            Assert.IsNotNull(table3);
-            Assert.IsNotNull(table4);
+            Assert.That(count, Is.EqualTo(2));
+            Assert.That(table3, Is.Not.Null);
+            Assert.That(table4, Is.Not.Null);
         }
 
         [Test]
@@ -131,7 +131,8 @@ namespace Azure.ResourceManager.Storage.Tests
             //update cors
             TableServiceData parameter = new TableServiceData()
             {
-                Cors = new StorageCorsRules() {
+                Cors = new StorageCorsRules()
+                {
                     CorsRules =
                     {
                         new StorageCorsRule(
@@ -153,17 +154,17 @@ namespace Azure.ResourceManager.Storage.Tests
             _tableService = (await _tableService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
             //Validate CORS Rules
-            Assert.AreEqual(parameter.Cors.CorsRules.Count, _tableService.Data.Cors.CorsRules.Count);
+            Assert.That(_tableService.Data.Cors.CorsRules.Count, Is.EqualTo(parameter.Cors.CorsRules.Count));
             for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
             {
                 StorageCorsRule getRule = _tableService.Data.Cors.CorsRules[i];
                 StorageCorsRule putRule = parameter.Cors.CorsRules[i];
 
-                Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
-                Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
-                Assert.AreEqual(putRule.AllowedOrigins, getRule.AllowedOrigins);
-                Assert.AreEqual(putRule.ExposedHeaders, getRule.ExposedHeaders);
-                Assert.AreEqual(putRule.MaxAgeInSeconds, getRule.MaxAgeInSeconds);
+                Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
+                Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
+                Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
+                Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
+                Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
             }
 
             // Get the result ASAP will not have rule
@@ -174,17 +175,17 @@ namespace Azure.ResourceManager.Storage.Tests
             _tableService = (await _tableService.GetAsync()).Value;
 
             //Validate CORS Rules
-            Assert.AreEqual(parameter.Cors.CorsRules.Count, _tableService.Data.Cors.CorsRules.Count);
+            Assert.That(_tableService.Data.Cors.CorsRules.Count, Is.EqualTo(parameter.Cors.CorsRules.Count));
             for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
             {
                 StorageCorsRule getRule = _tableService.Data.Cors.CorsRules[i];
                 StorageCorsRule putRule = parameter.Cors.CorsRules[i];
 
-                Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
-                Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
-                Assert.AreEqual(putRule.AllowedOrigins, getRule.AllowedOrigins);
-                Assert.AreEqual(putRule.ExposedHeaders, getRule.ExposedHeaders);
-                Assert.AreEqual(putRule.MaxAgeInSeconds, getRule.MaxAgeInSeconds);
+                Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
+                Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
+                Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
+                Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
+                Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
             }
         }
     }

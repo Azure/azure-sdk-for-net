@@ -21,20 +21,20 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void ToStringTest()
         {
-            Assert.AreEqual("mask::rwx", new PathAccessControlItem(
+            Assert.That(new PathAccessControlItem(
                 AccessControlType.Mask,
-                permissions: _rolePermissions).ToString());
+                permissions: _rolePermissions).ToString(), Is.EqualTo("mask::rwx"));
 
-            Assert.AreEqual("user:entityId:rwx", new PathAccessControlItem(
+            Assert.That(new PathAccessControlItem(
                 AccessControlType.User,
                 permissions: _rolePermissions,
-                entityId: _entityId).ToString());
+                entityId: _entityId).ToString(), Is.EqualTo("user:entityId:rwx"));
 
-            Assert.AreEqual("default:user:entityId:rwx", new PathAccessControlItem(
+            Assert.That(new PathAccessControlItem(
                 AccessControlType.User,
                 permissions: _rolePermissions,
                 defaultScope: true,
-                entityId: _entityId).ToString());
+                entityId: _entityId).ToString(), Is.EqualTo("default:user:entityId:rwx"));
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void Parse_Invalid()
         {
-            Assert.AreEqual(null, PathAccessControlItem.Parse(null));
+            Assert.That(PathAccessControlItem.Parse(null), Is.EqualTo(null));
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlItem.Parse("a:b"),

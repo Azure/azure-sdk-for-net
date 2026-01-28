@@ -26,7 +26,7 @@ namespace Azure.Identity.Tests
             };
 
             var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
-            Assert.IsNull(authRecord, "Authentication record should be null when JSON is invalid");
+            Assert.That(authRecord, Is.Null, "Authentication record should be null when JSON is invalid");
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Azure.Identity.Tests
             };
 
             var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
-            Assert.IsNull(authRecord, "Authentication record should be null when JSON is empty");
+            Assert.That(authRecord, Is.Null, "Authentication record should be null when JSON is empty");
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Azure.Identity.Tests
             };
 
             var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
-            Assert.IsNull(authRecord, "Authentication record should be null when required fields are missing");
+            Assert.That(authRecord, Is.Null, "Authentication record should be null when required fields are missing");
         }
 
         [Test]
@@ -95,9 +95,9 @@ namespace Azure.Identity.Tests
             };
 
             var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
-            Assert.IsNotNull(authRecord, "Authentication record should not be null with valid JSON");
-            Assert.AreEqual("test-tenant-id", authRecord.TenantId);
-            Assert.AreEqual("test-home-account-id.test-tenant-id", authRecord.HomeAccountId);
+            Assert.That(authRecord, Is.Not.Null, "Authentication record should not be null with valid JSON");
+            Assert.That(authRecord.TenantId, Is.EqualTo("test-tenant-id"));
+            Assert.That(authRecord.HomeAccountId, Is.EqualTo("test-home-account-id.test-tenant-id"));
         }
 
         [Test]
@@ -132,7 +132,8 @@ namespace Azure.Identity.Tests
                     }
                     return false;
                 },
-                GetFileStreamHandler = _ => {
+                GetFileStreamHandler = _ =>
+                {
                     var tempFilePath = Path.GetTempFileName();
                     File.WriteAllText(tempFilePath, validJson);
                     return new FileStream(tempFilePath, FileMode.Open, FileAccess.Read);
@@ -141,9 +142,9 @@ namespace Azure.Identity.Tests
 
             var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
 
-            Assert.IsTrue(lowerCaseChecked, "Lower case path should be checked first");
-            Assert.IsTrue(upperCaseChecked, "Upper case path should be checked when lower case doesn't exist");
-            Assert.IsNotNull(authRecord, "Authentication record should be found in upper case path");
+            Assert.That(lowerCaseChecked, Is.True, "Lower case path should be checked first");
+            Assert.That(upperCaseChecked, Is.True, "Upper case path should be checked when lower case doesn't exist");
+            Assert.That(authRecord, Is.Not.Null, "Authentication record should be found in upper case path");
         }
 
         [Test]
@@ -156,7 +157,7 @@ namespace Azure.Identity.Tests
             };
 
             var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
-            Assert.IsNull(authRecord, "Authentication record should be null when IOException occurs");
+            Assert.That(authRecord, Is.Null, "Authentication record should be null when IOException occurs");
         }
 
         [Test]
@@ -168,7 +169,7 @@ namespace Azure.Identity.Tests
             };
 
             var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
-            Assert.IsNull(authRecord, "Authentication record should be null when file doesn't exist");
+            Assert.That(authRecord, Is.Null, "Authentication record should be null when file doesn't exist");
         }
 
         [Test]

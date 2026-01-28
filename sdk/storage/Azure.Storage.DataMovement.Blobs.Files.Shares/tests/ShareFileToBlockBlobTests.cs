@@ -1,28 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseShares;
 extern alias DMBlob;
 extern alias DMShare;
-extern alias BaseShares;
-
 using System;
-using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using BaseShares::Azure.Storage.Files.Shares;
-using Azure.Storage.Test.Shared;
-using Azure.Storage.Blobs.Specialized;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using DMShare::Azure.Storage.DataMovement.Files.Shares;
-using DMBlob::Azure.Storage.DataMovement.Blobs;
-using NUnit.Framework;
-using BaseShares::Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
+using DMBlob::Azure.Storage.DataMovement.Blobs;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
+using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
@@ -258,36 +257,36 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             CancellationToken cancellationToken)
         {
             // Verify completion
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer, Is.Not.Null);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             // Verify Copy - using original source File and Copying the destination
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync();
             using Stream destinationStream = await destinationClient.OpenReadAsync();
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.That(destinationStream, Is.EqualTo(sourceStream));
 
             if (transferPropertiesTestType == TransferPropertiesTestType.NoPreserve)
             {
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-                Assert.IsNull(destinationProperties.ContentDisposition);
-                Assert.IsNull(destinationProperties.ContentLanguage);
-                Assert.IsNull(destinationProperties.CacheControl);
-                Assert.IsEmpty(destinationProperties.Metadata);
+                Assert.That(destinationProperties.ContentDisposition, Is.Null);
+                Assert.That(destinationProperties.ContentLanguage, Is.Null);
+                Assert.That(destinationProperties.CacheControl, Is.Null);
+                Assert.That(destinationProperties.Metadata, Is.Empty);
 
                 GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
-                Assert.IsEmpty(destinationTags.Tags);
+                Assert.That(destinationTags.Tags, Is.Empty);
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.NewProperties)
             {
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(_defaultContentLanguageBlob, destinationProperties.ContentLanguage);
-                Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(_defaultContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(_defaultContentLanguageBlob));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(_defaultCacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(_defaultContentType));
             }
             else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
                  //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
@@ -296,10 +295,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(string.Join(",", sourceProperties.ContentLanguage), destinationProperties.ContentLanguage);
-                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(sourceProperties.ContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(string.Join(",", sourceProperties.ContentLanguage)));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(sourceProperties.CacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
             }
         }
     }

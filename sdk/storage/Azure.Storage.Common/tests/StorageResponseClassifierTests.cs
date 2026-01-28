@@ -22,7 +22,7 @@ namespace Azure.Storage.Tests
             HttpMessage message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound), MockSecondaryUri);
             message.Request.Uri.Host = MockSecondaryUri.Host;
 
-            Assert.IsTrue(classifier.IsRetriableResponse(message));
+            Assert.That(classifier.IsRetriableResponse(message), Is.True);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Azure.Storage.Tests
             HttpMessage message = BuildMessage(new MockResponse(statusCode), MockSecondaryUri);
             message.Request.Uri.Host = MockSecondaryUri.Host;
 
-            Assert.AreEqual(new ResponseClassifier().IsRetriableResponse(message), classifier.IsRetriableResponse(message));
+            Assert.That(classifier.IsRetriableResponse(message), Is.EqualTo(new ResponseClassifier().IsRetriableResponse(message)));
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Azure.Storage.Tests
             HttpMessage message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound), MockSecondaryUri);
             message.Request.Uri.Host = MockPrimaryUri.Host;
 
-            Assert.IsFalse(classifier.IsRetriableResponse(message));
+            Assert.That(classifier.IsRetriableResponse(message), Is.False);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Azure.Storage.Tests
             var response = new MockResponse(Constants.HttpStatusCode.NotFound);
             response.AddHeader(new HttpHeader(Constants.HeaderNames.ErrorCode, errorCode));
             HttpMessage message = BuildMessage(response);
-            Assert.IsTrue(classifier.IsRetriableResponse(message));
+            Assert.That(classifier.IsRetriableResponse(message), Is.True);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Azure.Storage.Tests
             var response = new MockResponse(Constants.HttpStatusCode.NotFound);
             response.AddHeader(new HttpHeader(Constants.HeaderNames.ErrorCode, errorCode));
             HttpMessage message = BuildMessage(response, MockSecondaryUri);
-            Assert.IsTrue(classifier.IsRetriableResponse(message));
+            Assert.That(classifier.IsRetriableResponse(message), Is.True);
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace Azure.Storage.Tests
             var response = new MockResponse(Constants.HttpStatusCode.NotFound);
             response.AddHeader(new HttpHeader(Constants.HeaderNames.CopySourceErrorCode, errorCode));
             HttpMessage message = BuildMessage(response);
-            Assert.IsTrue(classifier.IsRetriableResponse(message));
+            Assert.That(classifier.IsRetriableResponse(message), Is.True);
         }
 
         [Test]
@@ -91,13 +91,13 @@ namespace Azure.Storage.Tests
             var response = new MockResponse(Constants.HttpStatusCode.NotFound);
             response.AddHeader(new HttpHeader(Constants.HeaderNames.CopySourceErrorCode, errorCode));
             HttpMessage message = BuildMessage(response, MockSecondaryUri);
-            Assert.IsTrue(classifier.IsRetriableResponse(message));
+            Assert.That(classifier.IsRetriableResponse(message), Is.True);
         }
 
         [TestCase("ContainerAlreadyExists", "If-Match", false)]
-        [TestCase("ContainerAlreadyExists","If-None-Match", false)]
-        [TestCase("ContainerAlreadyExists","If-Unmodified-Since", false)]
-        [TestCase("ContainerAlreadyExists","If-Modified-Since", false)]
+        [TestCase("ContainerAlreadyExists", "If-None-Match", false)]
+        [TestCase("ContainerAlreadyExists", "If-Unmodified-Since", false)]
+        [TestCase("ContainerAlreadyExists", "If-Modified-Since", false)]
         [TestCase("BlobAlreadyExists", "If-Match", false)]
         [TestCase("BlobAlreadyExists", "If-None-Match", false)]
         [TestCase("BlobAlreadyExists", "If-Unmodified-Since", false)]
@@ -114,7 +114,7 @@ namespace Azure.Storage.Tests
             mockResponse.AddHeader("x-ms-error-code", code);
             httpMessage.Response = mockResponse;
 
-            Assert.AreEqual(isError, classifier.IsErrorResponse(httpMessage));
+            Assert.That(classifier.IsErrorResponse(httpMessage), Is.EqualTo(isError));
         }
 
         private HttpMessage BuildMessage(Response response, Uri secondaryUri = default)

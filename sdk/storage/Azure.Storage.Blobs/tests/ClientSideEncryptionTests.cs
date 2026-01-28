@@ -179,8 +179,8 @@ namespace Azure.Storage.Blobs.Test
 #pragma warning disable CS0618 // obsolete
         private async Task<byte[]> ReplicateEncryptionV1_0(byte[] plaintext, EncryptionData encryptionMetadata, IKeyEncryptionKey keyEncryptionKey)
         {
-            Assert.NotNull(encryptionMetadata, "Never encrypted data.");
-            Assert.AreEqual(ClientSideEncryptionVersionInternal.V1_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
+            Assert.That(encryptionMetadata, Is.Not.Null, "Never encrypted data.");
+            Assert.That(encryptionMetadata.EncryptionAgent.EncryptionVersion, Is.EqualTo(ClientSideEncryptionVersionInternal.V1_0));
 
             var explicitlyUnwrappedKey = IsAsync // can't instrument this
                 ? await keyEncryptionKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
@@ -195,8 +195,8 @@ namespace Azure.Storage.Blobs.Test
 
         private async Task<byte[]> ReplicateEncryptionV2_0(byte[] plaintext, EncryptionData encryptionMetadata, IKeyEncryptionKey keyEncryptionKey)
         {
-            Assert.NotNull(encryptionMetadata, "Never encrypted data.");
-            Assert.AreEqual(ClientSideEncryptionVersionInternal.V2_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
+            Assert.That(encryptionMetadata, Is.Not.Null, "Never encrypted data.");
+            Assert.That(encryptionMetadata.EncryptionAgent.EncryptionVersion, Is.EqualTo(ClientSideEncryptionVersionInternal.V2_0));
 
             var explicitlyUnwrappedContent = IsAsync // can't instrument this
                 ? await keyEncryptionKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
@@ -205,7 +205,7 @@ namespace Azure.Storage.Blobs.Test
             var explicitlyUnwrappedVersion = new ReadOnlySpan<byte>(explicitlyUnwrappedContent).Slice(0, V2.WrappedDataVersionLength).ToArray();
             var explicitlyUnwrappedKey = new ReadOnlySpan<byte>(explicitlyUnwrappedContent).Slice(V2.WrappedDataVersionLength).ToArray();
 
-            Assert.AreEqual("2.0", Encoding.UTF8.GetString(explicitlyUnwrappedVersion).Trim('\0'));
+            Assert.That(Encoding.UTF8.GetString(explicitlyUnwrappedVersion).Trim('\0'), Is.EqualTo("2.0"));
 
             return EncryptDataV2_0(
                 plaintext,
@@ -278,15 +278,15 @@ namespace Azure.Storage.Blobs.Test
                 ClientSideEncryption = options1,
             });
 
-            Assert.AreEqual(options1.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
-            Assert.AreEqual(options1.KeyResolver, client.ClientSideEncryption.KeyResolver);
-            Assert.AreEqual(options1.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
+            Assert.That(client.ClientSideEncryption.KeyEncryptionKey, Is.EqualTo(options1.KeyEncryptionKey));
+            Assert.That(client.ClientSideEncryption.KeyResolver, Is.EqualTo(options1.KeyResolver));
+            Assert.That(client.ClientSideEncryption.KeyWrapAlgorithm, Is.EqualTo(options1.KeyWrapAlgorithm));
 
             client = client.WithClientSideEncryptionOptions(options2);
 
-            Assert.AreEqual(options2.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
-            Assert.AreEqual(options2.KeyResolver, client.ClientSideEncryption.KeyResolver);
-            Assert.AreEqual(options2.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
+            Assert.That(client.ClientSideEncryption.KeyEncryptionKey, Is.EqualTo(options2.KeyEncryptionKey));
+            Assert.That(client.ClientSideEncryption.KeyResolver, Is.EqualTo(options2.KeyResolver));
+            Assert.That(client.ClientSideEncryption.KeyWrapAlgorithm, Is.EqualTo(options2.KeyWrapAlgorithm));
         }
 
 #pragma warning disable CS0618 // obsolete
@@ -323,7 +323,7 @@ namespace Azure.Storage.Blobs.Test
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
-                Assert.AreEqual(expectedEncryptedData, encryptedData);
+                Assert.That(encryptedData, Is.EqualTo(expectedEncryptedData));
             }
         }
 
@@ -373,7 +373,7 @@ namespace Azure.Storage.Blobs.Test
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
-                Assert.AreEqual(expectedEncryptedData, encryptedData);
+                Assert.That(encryptedData, Is.EqualTo(expectedEncryptedData));
 
                 // can't get a block blob client with CSE enabled. Get fresh client without CSE options.
                 BlockBlobClient asBlockBlob = InstrumentClient(BlobsClientBuilder.GetServiceClient_SharedKey()
@@ -426,7 +426,7 @@ namespace Azure.Storage.Blobs.Test
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
-                Assert.AreEqual(expectedEncryptedData, encryptedData);
+                Assert.That(encryptedData, Is.EqualTo(expectedEncryptedData));
             }
         }
 
@@ -460,7 +460,7 @@ namespace Azure.Storage.Blobs.Test
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
-                Assert.AreEqual(expectedEncryptedData, encryptedData);
+                Assert.That(encryptedData, Is.EqualTo(expectedEncryptedData));
             }
         }
 
@@ -503,7 +503,7 @@ namespace Azure.Storage.Blobs.Test
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
-                Assert.AreEqual(expectedEncryptedData, encryptedData);
+                Assert.That(encryptedData, Is.EqualTo(expectedEncryptedData));
             }
         }
 
@@ -549,7 +549,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // compare data
-                Assert.AreEqual(data, downloadData);
+                Assert.That(downloadData, Is.EqualTo(data));
                 VerifyUnwrappedKeyWasCached(mockKey);
             }
         }
@@ -597,7 +597,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // compare data
-                Assert.AreEqual(data, downloadData);
+                Assert.That(downloadData, Is.EqualTo(data));
                 VerifyUnwrappedKeyWasCached(mockKey);
             }
         }
@@ -637,7 +637,8 @@ namespace Azure.Storage.Blobs.Test
                     if (IsAsync)
                     {
                         await blobStream.CopyToAsync(stream, bufferSize, s_cancellationToken);
-                    } else
+                    }
+                    else
                     {
                         blobStream.CopyTo(stream, bufferSize);
                     }
@@ -645,7 +646,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // compare data
-                Assert.AreEqual(data, downloadData);
+                Assert.That(downloadData, Is.EqualTo(data));
                 VerifyUnwrappedKeyWasCached(mockKey);
             }
         }
@@ -681,21 +682,21 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
 
                 // caller-provided metadata unchanged after upload
-                Assert.AreEqual(2, metadata.Count);
-                Assert.AreEqual("bar", metadata["foo"]);
-                Assert.AreEqual("buzz", metadata["fizz"]);
+                Assert.That(metadata.Count, Is.EqualTo(2));
+                Assert.That(metadata["foo"], Is.EqualTo("bar"));
+                Assert.That(metadata["fizz"], Is.EqualTo("buzz"));
 
                 // downloaded content and metadata as expected
                 var result = await blob.DownloadContentAsync(cancellationToken: s_cancellationToken);
-                Assert.AreEqual(data, result.Value.Content.ToArray());
+                Assert.That(result.Value.Content.ToArray(), Is.EqualTo(data));
                 IDictionary<string, string> downloadedMetadata = result.Value.Details.Metadata;
-                Assert.AreEqual(metadata.Count + 1, downloadedMetadata.Count);
+                Assert.That(downloadedMetadata.Count, Is.EqualTo(metadata.Count + 1));
                 foreach (var kvp in metadata)
                 {
-                    Assert.IsTrue(downloadedMetadata.ContainsKey(kvp.Key));
-                    Assert.AreEqual(metadata[kvp.Key], downloadedMetadata[kvp.Key]);
+                    Assert.That(downloadedMetadata.ContainsKey(kvp.Key), Is.True);
+                    Assert.That(downloadedMetadata[kvp.Key], Is.EqualTo(metadata[kvp.Key]));
                 }
-                Assert.IsTrue(downloadedMetadata.ContainsKey(EncryptionDataKey));
+                Assert.That(downloadedMetadata.ContainsKey(EncryptionDataKey), Is.True);
 
                 ClientSideEncryptionVersionInternal versionInternal = ClientSideEncryptionVersionInternal.V2_0;
                 switch (version)
@@ -711,7 +712,7 @@ namespace Azure.Storage.Blobs.Test
                     default:
                         throw new ArgumentException("Bad version in EncryptionData");
                 }
-                Assert.AreEqual(versionInternal, EncryptionDataSerializer.Deserialize(downloadedMetadata[EncryptionDataKey]).EncryptionAgent.EncryptionVersion);
+                Assert.That(EncryptionDataSerializer.Deserialize(downloadedMetadata[EncryptionDataKey]).EncryptionAgent.EncryptionVersion, Is.EqualTo(versionInternal));
             }
         }
 
@@ -747,7 +748,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // compare data
-                Assert.AreEqual(data, downloadData);
+                Assert.That(downloadData, Is.EqualTo(data));
             }
         }
 
@@ -820,7 +821,7 @@ namespace Azure.Storage.Blobs.Test
                     ? slice.Take(count.Value)
                     : slice;
                 var sliceArray = slice.ToArray();
-                Assert.AreEqual(sliceArray, downloadData);
+                Assert.That(downloadData, Is.EqualTo(sliceArray));
             }
         }
 
@@ -868,7 +869,7 @@ namespace Azure.Storage.Blobs.Test
                 await track2Blob.DownloadToAsync(downloadStream, cancellationToken: s_cancellationToken);
 
                 // compare original data to downloaded data
-                Assert.AreEqual(data, downloadStream.ToArray());
+                Assert.That(downloadStream.ToArray(), Is.EqualTo(data));
             }
         }
 
@@ -917,7 +918,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // compare original data to downloaded data
-                Assert.AreEqual(data, downloadData);
+                Assert.That(downloadData, Is.EqualTo(data));
             }
         }
 
@@ -948,7 +949,7 @@ namespace Azure.Storage.Blobs.Test
             await blob.UploadAsync(data.ToStream(), cancellationToken: s_cancellationToken);
 
             // tamper metadata json key casing
-            Assert.IsTrue((await blob.GetPropertiesAsync()).Value.Metadata.TryGetValue(EncryptionDataKey, out string rawEncryptionData));
+            Assert.That((await blob.GetPropertiesAsync()).Value.Metadata.TryGetValue(EncryptionDataKey, out string rawEncryptionData), Is.True);
             // pattern to match restated without string literal escapes: /"(\w+)"\s*:/
             // matches json property key and captures the text inside the quotations
             // (regex not perfect but will capture in our scenario)
@@ -982,13 +983,13 @@ namespace Azure.Storage.Blobs.Test
                 var downloadStream = new MemoryStream();
                 await blob.DownloadToAsync(downloadStream, cancellationToken: s_cancellationToken);
 
-                Assert.AreEqual(data, downloadStream.ToArray());
+                Assert.That(downloadStream.ToArray(), Is.EqualTo(data));
             }
         }
 
 #pragma warning disable CS0618 // obsolete
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64*Constants.KB)]
-        [TestCase(ClientSideEncryptionVersion.V2_0,  Constants.MB, 64 * Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64 * Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, Constants.MB, 64 * Constants.KB)]
         [LiveOnly] // need access to keyvault service && cannot seed content encryption key
 #pragma warning restore CS0618 // obsolete
         public async Task RoundtripWithKeyvaultProviderOpenRead(ClientSideEncryptionVersion version, long dataSize, int bufferSize)
@@ -1007,10 +1008,10 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
 
                 var downloadStream = new MemoryStream();
-                using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize});
+                using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize });
                 await blobStream.CopyToAsync(downloadStream);
 
-                Assert.AreEqual(data, downloadStream.ToArray());
+                Assert.That(downloadStream.ToArray(), Is.EqualTo(data));
             }
         }
 
@@ -1057,9 +1058,9 @@ namespace Azure.Storage.Blobs.Test
                 }
                 finally
                 {
-                    Assert.IsTrue(threw);
+                    Assert.That(threw, Is.True);
                     // we already asserted the correct method was called in `catch (MockException e)`
-                    Assert.AreEqual(1, resolver.Invocations.Count);
+                    Assert.That(resolver.Invocations.Count, Is.EqualTo(1));
                 }
             }
         }
@@ -1098,10 +1099,10 @@ namespace Azure.Storage.Blobs.Test
                 var memoryStream = new MemoryStream();
                 await response.Value.Content.CopyToAsync(memoryStream);
                 var recievedData = memoryStream.ToArray();
-                Assert.AreEqual(expectedLength, recievedData.Length);
+                Assert.That(recievedData.Length, Is.EqualTo(expectedLength));
                 for (int i = 0; i < recievedData.Length; i++)
                 {
-                    Assert.AreEqual(data[i + rangeOffset], recievedData[i]);
+                    Assert.That(recievedData[i], Is.EqualTo(data[i + rangeOffset]));
                 }
             }
         }
@@ -1148,7 +1149,7 @@ namespace Azure.Storage.Blobs.Test
 
                 foreach (byte[] downloadData in downloads)
                 {
-                    Assert.AreEqual(data, downloadData);
+                    Assert.That(downloadData, Is.EqualTo(data));
                 }
             }
         }
@@ -1191,7 +1192,7 @@ namespace Azure.Storage.Blobs.Test
                     downloadResult = downloadStream.ToArray();
                 }
 
-                Assert.AreEqual(data, downloadResult);
+                Assert.That(downloadResult, Is.EqualTo(data));
             }
         }
 
@@ -1223,9 +1224,9 @@ namespace Azure.Storage.Blobs.Test
 
                 // download with decryption
                 var downloadResult = await encryptedBlobClient.DownloadAsync(cancellationToken: s_cancellationToken);
-                Assert.AreEqual(2, downloadResult.Value.Details.Metadata.Count);
-                Assert.IsTrue(downloadResult.Value.Details.Metadata.ContainsKey(originalMetadata.Key));
-                Assert.IsTrue(downloadResult.Value.Details.Metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
+                Assert.That(downloadResult.Value.Details.Metadata.Count, Is.EqualTo(2));
+                Assert.That(downloadResult.Value.Details.Metadata.ContainsKey(originalMetadata.Key), Is.True);
+                Assert.That(downloadResult.Value.Details.Metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey), Is.True);
                 var firstDownloadEncryptionData = downloadResult.Value.Details.Metadata[Constants.ClientSideEncryption.EncryptionDataKey];
 
                 // reupload edited blob, maintaining metadata as we recommend to customers
@@ -1240,10 +1241,10 @@ namespace Azure.Storage.Blobs.Test
                 // if we didn't throw, success in reuploading with new encryption metadata
                 // download edited blob to assert expected data was uploaded
                 downloadResult = await encryptedBlobClient.DownloadAsync(cancellationToken: s_cancellationToken);
-                Assert.AreEqual(2, downloadResult.Value.Details.Metadata.Count);
-                Assert.IsTrue(downloadResult.Value.Details.Metadata.ContainsKey(originalMetadata.Key));
-                Assert.IsTrue(downloadResult.Value.Details.Metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
-                Assert.AreNotEqual(firstDownloadEncryptionData, downloadResult.Value.Details.Metadata[Constants.ClientSideEncryption.EncryptionDataKey]);
+                Assert.That(downloadResult.Value.Details.Metadata.Count, Is.EqualTo(2));
+                Assert.That(downloadResult.Value.Details.Metadata.ContainsKey(originalMetadata.Key), Is.True);
+                Assert.That(downloadResult.Value.Details.Metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey), Is.True);
+                Assert.That(downloadResult.Value.Details.Metadata[Constants.ClientSideEncryption.EncryptionDataKey], Is.Not.EqualTo(firstDownloadEncryptionData));
             }
         }
 
@@ -1290,18 +1291,18 @@ namespace Azure.Storage.Blobs.Test
                 cancellationToken: s_cancellationToken);
 
             // Assert
-            Assert.IsTrue(await blob.ExistsAsync());
-            Assert.Greater((await blob.GetPropertiesAsync()).Value.ContentLength, 0);
+            Assert.That((bool)await blob.ExistsAsync(), Is.True);
+            Assert.That((await blob.GetPropertiesAsync()).Value.ContentLength, Is.GreaterThan(0));
             // block list will return empty when putblob was used
             BlockList blockList = await BlobsClientBuilder.ToBlockBlobClient(blob).GetBlockListAsync();
-            Assert.IsEmpty(blockList.UncommittedBlocks);
+            Assert.That(blockList.UncommittedBlocks, Is.Empty);
             if (oneshot)
             {
-                Assert.IsEmpty(blockList.CommittedBlocks);
+                Assert.That(blockList.CommittedBlocks, Is.Empty);
             }
             else
             {
-                Assert.IsNotEmpty(blockList.CommittedBlocks);
+                Assert.That(blockList.CommittedBlocks, Is.Not.Empty);
             }
         }
 
@@ -1328,13 +1329,13 @@ namespace Azure.Storage.Blobs.Test
                 connectionString,
                 GetNewContainerName(),
                 GetNewBlobName()));
-            Assert.IsTrue(blob.CanGenerateSasUri);
+            Assert.That(blob.CanGenerateSasUri, Is.True);
 
             // Act
             BlobClient blobEncrypted = blob.WithClientSideEncryptionOptions(options);
 
             // Assert
-            Assert.IsTrue(blobEncrypted.CanGenerateSasUri);
+            Assert.That(blobEncrypted.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -1356,22 +1357,22 @@ namespace Azure.Storage.Blobs.Test
             BlobClient blob = InstrumentClient(new BlobClient(
                 blobEndpoint,
                 GetOptions()));
-            Assert.IsFalse(blob.CanGenerateSasUri);
+            Assert.That(blob.CanGenerateSasUri, Is.False);
 
             // Act
             BlobClient blobEncrypted = blob.WithClientSideEncryptionOptions(options);
 
             // Assert
-            Assert.IsFalse(blobEncrypted.CanGenerateSasUri);
+            Assert.That(blobEncrypted.CanGenerateSasUri, Is.False);
         }
         [Test]
         public void CanParseLargeContentRange()
         {
             long compareValue = (long)Int32.MaxValue + 1; //Increase max int32 by one
             ContentRange contentRange = ContentRange.Parse($"bytes 0 {compareValue} {compareValue}");
-            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.TotalResourceLength);
-            Assert.AreEqual(0, contentRange.Start);
-            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.End);
+            Assert.That(contentRange.TotalResourceLength, Is.EqualTo((long)Int32.MaxValue + 1));
+            Assert.That(contentRange.Start, Is.EqualTo(0));
+            Assert.That(contentRange.End, Is.EqualTo((long)Int32.MaxValue + 1));
         }
 
         [RecordedTest]
@@ -1415,9 +1416,9 @@ namespace Azure.Storage.Blobs.Test
                 var mockKey1_firstInvocation = mockKey1.Invocations.First();
                 var mockKey1_lastInvocation = mockKey1.Invocations.Last();
                 var mockKey2_firstInvocation = mockKey2.Invocations.First();
-                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKeyAsync), mockKey1_firstInvocation.Method.Name);
-                Assert.AreEqual(nameof(IKeyEncryptionKey.UnwrapKeyAsync), mockKey1_lastInvocation.Method.Name);
-                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKeyAsync), mockKey2_firstInvocation.Method.Name);
+                Assert.That(mockKey1_firstInvocation.Method.Name, Is.EqualTo(nameof(IKeyEncryptionKey.WrapKeyAsync)));
+                Assert.That(mockKey1_lastInvocation.Method.Name, Is.EqualTo(nameof(IKeyEncryptionKey.UnwrapKeyAsync)));
+                Assert.That(mockKey2_firstInvocation.Method.Name, Is.EqualTo(nameof(IKeyEncryptionKey.WrapKeyAsync)));
             }
             else
             {
@@ -1428,9 +1429,9 @@ namespace Azure.Storage.Blobs.Test
                 var mockKey1_firstInvocation = mockKey1.Invocations.First();
                 var mockKey1_lastInvocation = mockKey1.Invocations.Last();
                 var mockKey2_firstInvocation = mockKey2.Invocations.First();
-                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKey), mockKey1_firstInvocation.Method.Name);
-                Assert.AreEqual(nameof(IKeyEncryptionKey.UnwrapKey), mockKey1_lastInvocation.Method.Name);
-                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKey), mockKey2_firstInvocation.Method.Name);
+                Assert.That(mockKey1_firstInvocation.Method.Name, Is.EqualTo(nameof(IKeyEncryptionKey.WrapKey)));
+                Assert.That(mockKey1_lastInvocation.Method.Name, Is.EqualTo(nameof(IKeyEncryptionKey.UnwrapKey)));
+                Assert.That(mockKey2_firstInvocation.Method.Name, Is.EqualTo(nameof(IKeyEncryptionKey.WrapKey)));
             }
             await AssertKeyAsync(blob, mockKey2.Object, cek);
         }
@@ -1500,7 +1501,7 @@ namespace Azure.Storage.Blobs.Test
             // if it doesn't throw, consider upping `optionalDelay` on mockKey2 creation as a sanity check
             // though current value (1 sec) should be more than enough
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await updateResult);
-            Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo(BlobErrorCode.ConditionNotMet.ToString()));
         }
 
         [Test]
@@ -1546,7 +1547,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DownloadToAsync(stream, cancellationToken: s_cancellationToken);
                 downloadData = stream.ToArray();
             }
-            Assert.AreEqual(data, downloadData);
+            Assert.That(downloadData, Is.EqualTo(data));
         }
 
         [Test]
@@ -1587,7 +1588,7 @@ namespace Azure.Storage.Blobs.Test
             decryptingReadStream.CopyTo(new MemoryStream(roundtrippedPlaintext));
 
             // Assert
-            CollectionAssert.AreEqual(plaintext.ToArray(), roundtrippedPlaintext);
+            Assert.That(roundtrippedPlaintext, Is.EqualTo(plaintext.ToArray()).AsCollection);
         }
 
         [Test]
@@ -1615,14 +1616,14 @@ namespace Azure.Storage.Blobs.Test
 
             // change casing of encryptiondata key
             string rawEncryptiondata = (await standardBlobClient.GetPropertiesAsync()).Value.Metadata[EncryptionDataKey];
-            Assert.IsNotEmpty(rawEncryptiondata); // quick check we're testing the right thing
+            Assert.That(rawEncryptiondata, Is.Not.Empty); // quick check we're testing the right thing
             await standardBlobClient.SetMetadataAsync(new Dictionary<string, string> { { newKey, rawEncryptiondata } });
 
             // Act
             ReadOnlyMemory<byte> downloadedContent = (await encryptedBlobClient.DownloadContentAsync(s_cancellationToken)).Value.Content.ToMemory();
 
             // Assert
-            Assert.IsTrue(data.Span.SequenceEqual(downloadedContent.Span));
+            Assert.That(data.Span.SequenceEqual(downloadedContent.Span), Is.True);
         }
 
         /// <summary>
@@ -1707,14 +1708,14 @@ namespace Azure.Storage.Blobs.Test
             }
             var wrappedCek = EncryptionDataSerializer.Deserialize(encryptionDataString).WrappedContentKey;
 
-            Assert.AreEqual(kek.KeyId, wrappedCek.KeyId);
+            Assert.That(wrappedCek.KeyId, Is.EqualTo(kek.KeyId));
             if (knownCek != default)
             {
-                Assert.AreEqual(
-                    knownCek,
+                Assert.That(
                     IsAsync
                         ? await kek.UnwrapKeyAsync(wrappedCek.Algorithm, wrappedCek.EncryptedKey, s_cancellationToken)
-                        : kek.UnwrapKey(wrappedCek.Algorithm, wrappedCek.EncryptedKey, s_cancellationToken));
+                        : kek.UnwrapKey(wrappedCek.Algorithm, wrappedCek.EncryptedKey, s_cancellationToken),
+                    Is.EqualTo(knownCek));
             }
         }
     }

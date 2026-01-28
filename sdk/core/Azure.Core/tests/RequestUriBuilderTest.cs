@@ -33,13 +33,13 @@ namespace Azure.Core.Tests
             var uriBuilder = new RequestUriBuilder();
             uriBuilder.Reset(uri);
 
-            Assert.AreEqual(uri.Scheme, uriBuilder.Scheme);
-            Assert.AreEqual(uri.Host, uriBuilder.Host);
-            Assert.AreEqual(uri.Port, uriBuilder.Port);
-            Assert.AreEqual(uri.AbsolutePath, uriBuilder.Path);
-            Assert.AreEqual(uri.Query, uriBuilder.Query);
-            Assert.AreEqual(uri, uriBuilder.ToUri());
-            Assert.AreSame(uri, uriBuilder.ToUri());
+            Assert.That(uriBuilder.Scheme, Is.EqualTo(uri.Scheme));
+            Assert.That(uriBuilder.Host, Is.EqualTo(uri.Host));
+            Assert.That(uriBuilder.Port, Is.EqualTo(uri.Port));
+            Assert.That(uriBuilder.Path, Is.EqualTo(uri.AbsolutePath));
+            Assert.That(uriBuilder.Query, Is.EqualTo(uri.Query));
+            Assert.That(uriBuilder.ToUri(), Is.EqualTo(uri));
+            Assert.That(uriBuilder.ToUri(), Is.SameAs(uri));
         }
 
         [TestCase("", "http://localhost/")]
@@ -56,7 +56,7 @@ namespace Azure.Core.Tests
                 Path = path
             };
 
-            Assert.AreEqual(expected, uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo(expected));
         }
 
         [TestCase("", "http://localhost/")]
@@ -73,7 +73,7 @@ namespace Azure.Core.Tests
                 Query = query
             };
 
-            Assert.AreEqual(expected, uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo(expected));
         }
 
         [TestCase(null)]
@@ -88,11 +88,11 @@ namespace Azure.Core.Tests
                 Query = "a"
             };
 
-            Assert.AreEqual("http://localhost/?a", uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo("http://localhost/?a"));
 
             uriBuilder.Query = query;
 
-            Assert.AreEqual("http://localhost/", uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo("http://localhost/"));
         }
 
         [TestCase("\u1234\u2345")]
@@ -110,7 +110,7 @@ namespace Azure.Core.Tests
                 Path = path
             };
 
-            Assert.AreEqual("http://localhost/" + path, uriBuilder.ToUri().OriginalString);
+            Assert.That(uriBuilder.ToUri().OriginalString, Is.EqualTo("http://localhost/" + path));
         }
 
         [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
@@ -129,7 +129,7 @@ namespace Azure.Core.Tests
 
             uriBuilder.AppendPath(path);
 
-            Assert.AreEqual("http://localhost/" + expected, uriBuilder.ToUri().OriginalString);
+            Assert.That(uriBuilder.ToUri().OriginalString, Is.EqualTo("http://localhost/" + expected));
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace Azure.Core.Tests
                 Query = "\u1234"
             };
 
-            Assert.AreEqual("http://localhost/?\u1234", uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo("http://localhost/?\u1234"));
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace Azure.Core.Tests
             };
             uriBuilder.AppendQuery("a", null);
 
-            Assert.AreEqual("http://localhost/?a=", uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo("http://localhost/?a="));
         }
 
         [TestCase(null, "http://localhost/?a=b&c=d")]
@@ -178,31 +178,31 @@ namespace Azure.Core.Tests
             uriBuilder.AppendQuery("a", "b");
             uriBuilder.AppendQuery("c", "d");
 
-            Assert.AreEqual(expectedResult, uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo(expectedResult));
         }
 
-        [TestCase(null, new[] {""}, "q", "http://localhost/?q")]
-        [TestCase("/", new[] {"/"}, "q", "http://localhost/?q")]
-        [TestCase(null, new[] {"p"}, "q", "http://localhost/p?q")]
-        [TestCase("/", new[] {"p"}, "q", "http://localhost/p?q")]
-        [TestCase("/", new[] {"ā","p"}, "q", "http://localhost/%C4%81p?q", true)]
-        [TestCase("/", new[] {"ā","p"}, "q", "http://localhost/āp?q", false)]
-        [TestCase("/", new[] {"/p"}, "q", "http://localhost/p?q")]
-        [TestCase("", new[] {"\u1234"}, "q", "http://localhost/\u1234?q", false)]
-        [TestCase("", new[] {"%E1%88%B4"}, "q", "http://localhost/%E1%88%B4?q", false)]
-        [TestCase("", new[] {"\u1234"}, "q", "http://localhost/%E1%88%B4?q", true)]
-        [TestCase("", new[] {"%E1%88%B4"}, "q", "http://localhost/%25E1%2588%25B4?q", true)]
-        [TestCase(null, new[] {""}, "", "http://localhost/")]
-        [TestCase("/", new[] {"/"}, "", "http://localhost/")]
-        [TestCase(null, new[] {"p"}, "", "http://localhost/p")]
-        [TestCase("/", new[] {"p"}, "", "http://localhost/p")]
-        [TestCase("/", new[] {"ā","p"}, "", "http://localhost/%C4%81p", true)]
-        [TestCase("/", new[] {"ā","p"}, "", "http://localhost/āp", false)]
-        [TestCase("/", new[] {"/p"}, "", "http://localhost/p")]
-        [TestCase("", new[] {"\u1234"}, "", "http://localhost/\u1234", false)]
-        [TestCase("", new[] {"%E1%88%B4"}, "", "http://localhost/%E1%88%B4", false)]
-        [TestCase("", new[] {"\u1234"}, "", "http://localhost/%E1%88%B4", true)]
-        [TestCase("", new[] {"%E1%88%B4"}, "", "http://localhost/%25E1%2588%25B4", true)]
+        [TestCase(null, new[] { "" }, "q", "http://localhost/?q")]
+        [TestCase("/", new[] { "/" }, "q", "http://localhost/?q")]
+        [TestCase(null, new[] { "p" }, "q", "http://localhost/p?q")]
+        [TestCase("/", new[] { "p" }, "q", "http://localhost/p?q")]
+        [TestCase("/", new[] { "ā", "p" }, "q", "http://localhost/%C4%81p?q", true)]
+        [TestCase("/", new[] { "ā", "p" }, "q", "http://localhost/āp?q", false)]
+        [TestCase("/", new[] { "/p" }, "q", "http://localhost/p?q")]
+        [TestCase("", new[] { "\u1234" }, "q", "http://localhost/\u1234?q", false)]
+        [TestCase("", new[] { "%E1%88%B4" }, "q", "http://localhost/%E1%88%B4?q", false)]
+        [TestCase("", new[] { "\u1234" }, "q", "http://localhost/%E1%88%B4?q", true)]
+        [TestCase("", new[] { "%E1%88%B4" }, "q", "http://localhost/%25E1%2588%25B4?q", true)]
+        [TestCase(null, new[] { "" }, "", "http://localhost/")]
+        [TestCase("/", new[] { "/" }, "", "http://localhost/")]
+        [TestCase(null, new[] { "p" }, "", "http://localhost/p")]
+        [TestCase("/", new[] { "p" }, "", "http://localhost/p")]
+        [TestCase("/", new[] { "ā", "p" }, "", "http://localhost/%C4%81p", true)]
+        [TestCase("/", new[] { "ā", "p" }, "", "http://localhost/āp", false)]
+        [TestCase("/", new[] { "/p" }, "", "http://localhost/p")]
+        [TestCase("", new[] { "\u1234" }, "", "http://localhost/\u1234", false)]
+        [TestCase("", new[] { "%E1%88%B4" }, "", "http://localhost/%E1%88%B4", false)]
+        [TestCase("", new[] { "\u1234" }, "", "http://localhost/%E1%88%B4", true)]
+        [TestCase("", new[] { "%E1%88%B4" }, "", "http://localhost/%25E1%2588%25B4", true)]
         public void AppendPathWorks(string initialPath, string[] appends, string initialQuery, string expectedResult, bool escape = false)
         {
             var uriBuilder = new RequestUriBuilder
@@ -219,7 +219,7 @@ namespace Azure.Core.Tests
                 uriBuilder.AppendPath(append, escape);
             }
 
-            Assert.AreEqual(expectedResult, uriBuilder.ToUri().OriginalString);
+            Assert.That(uriBuilder.ToUri().OriginalString, Is.EqualTo(expectedResult));
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace Azure.Core.Tests
             uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("a", "b");
 
-            Assert.AreEqual("http://localhost/?a=b", uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo("http://localhost/?a=b"));
         }
 
         [Test]
@@ -239,7 +239,7 @@ namespace Azure.Core.Tests
             uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendPath("a");
 
-            Assert.AreEqual("http://localhost/a", uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo("http://localhost/a"));
         }
 
         [Test]
@@ -252,7 +252,7 @@ namespace Azure.Core.Tests
             uriBuilder.AppendPath("b");
             uriBuilder.AppendQuery("c", "d");
 
-            Assert.AreEqual("http://localhost/ab?query=value&c=d", uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo("http://localhost/ab?query=value&c=d"));
         }
 
         [Test]
@@ -264,11 +264,11 @@ namespace Azure.Core.Tests
             uriBuilder.AppendPath("~!@#$%^&*()_+");
             uriBuilder.AppendPath("b/");
 
-            Assert.AreEqual("http://localhost/~%21%40%23%24%25%5E%26%2A%28%29_%2Bb%2F", uriBuilder.ToString());
+            Assert.That(uriBuilder.ToString(), Is.EqualTo("http://localhost/~%21%40%23%24%25%5E%26%2A%28%29_%2Bb%2F"));
 #if NETCOREAPP
-            Assert.AreEqual("http://localhost/~%21%40%23%24%25^%26%2A%28%29_%2Bb%2F", uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo("http://localhost/~%21%40%23%24%25^%26%2A%28%29_%2Bb%2F"));
 #else
-            Assert.AreEqual("http://localhost/~!%40%23%24%25^%26*()_%2Bb%2F", uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo("http://localhost/~!%40%23%24%25^%26*()_%2Bb%2F"));
 #endif
         }
 
@@ -279,11 +279,11 @@ namespace Azure.Core.Tests
             uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("a", "~!@#$%^&*()_+");
 
-            Assert.AreEqual("http://localhost/?a=~%21%40%23%24%25%5E%26%2A%28%29_%2B", uriBuilder.ToString());
+            Assert.That(uriBuilder.ToString(), Is.EqualTo("http://localhost/?a=~%21%40%23%24%25%5E%26%2A%28%29_%2B"));
 #if NETCOREAPP
-            Assert.AreEqual("http://localhost/?a=~%21%40%23%24%25^%26%2A%28%29_%2B", uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo("http://localhost/?a=~%21%40%23%24%25^%26%2A%28%29_%2B"));
 #else
-            Assert.AreEqual("http://localhost/?a=~!%40%23%24%25^%26*()_%2B", uriBuilder.ToUri().ToString());
+            Assert.That(uriBuilder.ToUri().ToString(), Is.EqualTo("http://localhost/?a=~!%40%23%24%25^%26*()_%2B"));
 #endif
         }
     }

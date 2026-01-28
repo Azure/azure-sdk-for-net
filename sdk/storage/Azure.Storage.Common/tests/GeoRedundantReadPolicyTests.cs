@@ -29,9 +29,9 @@ namespace Azure.Storage.Tests
 
             policy.OnSendingRequest(message);
 
-            Assert.AreEqual(MockPrimaryUri.Host, message.Request.Uri.Host);
-            Assert.IsTrue(message.TryGetProperty(Constants.GeoRedundantRead.AlternateHostKey, out object val)
-                && (string) val == MockSecondaryUri.Host);
+            Assert.That(message.Request.Uri.Host, Is.EqualTo(MockPrimaryUri.Host));
+            Assert.That(message.TryGetProperty(Constants.GeoRedundantRead.AlternateHostKey, out object val)
+                && (string)val == MockSecondaryUri.Host, Is.True);
         }
 
         [Test]
@@ -49,9 +49,9 @@ namespace Azure.Storage.Tests
 
             policy.OnSendingRequest(message);
 
-            Assert.AreEqual(MockSecondaryUri.Host, message.Request.Uri.Host);
-            Assert.IsTrue(message.TryGetProperty(Constants.GeoRedundantRead.AlternateHostKey, out object val)
-                && (string)val == MockPrimaryUri.Host);
+            Assert.That(message.Request.Uri.Host, Is.EqualTo(MockSecondaryUri.Host));
+            Assert.That(message.TryGetProperty(Constants.GeoRedundantRead.AlternateHostKey, out object val)
+                && (string)val == MockPrimaryUri.Host, Is.True);
         }
 
         [Test]
@@ -69,9 +69,9 @@ namespace Azure.Storage.Tests
 
             policy.OnSendingRequest(message);
 
-            Assert.AreEqual(MockPrimaryUri.Host, message.Request.Uri.Host);
-            Assert.IsTrue(message.TryGetProperty(Constants.GeoRedundantRead.AlternateHostKey, out object val)
-                && (string)val == MockSecondaryUri.Host);
+            Assert.That(message.Request.Uri.Host, Is.EqualTo(MockPrimaryUri.Host));
+            Assert.That(message.TryGetProperty(Constants.GeoRedundantRead.AlternateHostKey, out object val)
+                && (string)val == MockSecondaryUri.Host, Is.True);
         }
 
         [Test]
@@ -83,17 +83,17 @@ namespace Azure.Storage.Tests
                 {
                     SecondaryStorageUri = MockSecondaryUri
                 })
-                {
-                    Response = new MockResponse(Constants.HttpStatusCode.NotFound)
-                };
+            {
+                Response = new MockResponse(Constants.HttpStatusCode.NotFound)
+            };
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockSecondaryUri.Host);
             var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
 
             policy.OnSendingRequest(message);
 
-            Assert.AreEqual(MockSecondaryUri.Host, message.Request.Uri.Host);
-            Assert.IsTrue(message.TryGetProperty(Constants.GeoRedundantRead.ResourceNotReplicated, out object val)
-                && (bool) val);
+            Assert.That(message.Request.Uri.Host, Is.EqualTo(MockSecondaryUri.Host));
+            Assert.That(message.TryGetProperty(Constants.GeoRedundantRead.ResourceNotReplicated, out object val)
+                && (bool)val, Is.True);
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Azure.Storage.Tests
 
             policy.OnSendingRequest(message);
 
-            Assert.AreEqual(MockPrimaryUri.Host, message.Request.Uri.Host);
+            Assert.That(message.Request.Uri.Host, Is.EqualTo(MockPrimaryUri.Host));
         }
 
         [Test]
@@ -131,9 +131,9 @@ namespace Azure.Storage.Tests
 
             policy.OnSendingRequest(message);
 
-            Assert.AreEqual(MockPrimaryUri.Host, message.Request.Uri.Host);
-            Assert.IsFalse(message.TryGetProperty(Constants.GeoRedundantRead.AlternateHostKey, out object val)
-                && (string)val == MockSecondaryUri.Host);
+            Assert.That(message.Request.Uri.Host, Is.EqualTo(MockPrimaryUri.Host));
+            Assert.That(message.TryGetProperty(Constants.GeoRedundantRead.AlternateHostKey, out object val)
+                && (string)val == MockSecondaryUri.Host, Is.False);
         }
 
         private MockRequest CreateMockRequest(Uri uri)

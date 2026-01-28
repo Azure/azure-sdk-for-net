@@ -1,19 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Tests;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Tests;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -36,28 +35,28 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         private void AssertCredPresent(BlobClientConfiguration clientConfig, CredType credType)
         {
-            Assert.IsNotNull(clientConfig);
+            Assert.That(clientConfig, Is.Not.Null);
             switch (credType)
             {
                 case CredType.SharedKey:
-                    Assert.IsNotNull(clientConfig.SharedKeyCredential);
-                    Assert.IsNull(clientConfig.TokenCredential);
-                    Assert.IsNull(clientConfig.SasCredential);
+                    Assert.That(clientConfig.SharedKeyCredential, Is.Not.Null);
+                    Assert.That(clientConfig.TokenCredential, Is.Null);
+                    Assert.That(clientConfig.SasCredential, Is.Null);
                     break;
                 case CredType.Token:
-                    Assert.IsNull(clientConfig.SharedKeyCredential);
-                    Assert.IsNotNull(clientConfig.TokenCredential);
-                    Assert.IsNull(clientConfig.SasCredential);
+                    Assert.That(clientConfig.SharedKeyCredential, Is.Null);
+                    Assert.That(clientConfig.TokenCredential, Is.Not.Null);
+                    Assert.That(clientConfig.SasCredential, Is.Null);
                     break;
                 case CredType.Sas:
-                    Assert.IsNull(clientConfig.SharedKeyCredential);
-                    Assert.IsNull(clientConfig.TokenCredential);
-                    Assert.IsNotNull(clientConfig.SasCredential);
+                    Assert.That(clientConfig.SharedKeyCredential, Is.Null);
+                    Assert.That(clientConfig.TokenCredential, Is.Null);
+                    Assert.That(clientConfig.SasCredential, Is.Not.Null);
                     break;
                 case CredType.None:
-                    Assert.IsNull(clientConfig.SharedKeyCredential);
-                    Assert.IsNull(clientConfig.TokenCredential);
-                    Assert.IsNull(clientConfig.SasCredential);
+                    Assert.That(clientConfig.SharedKeyCredential, Is.Null);
+                    Assert.That(clientConfig.TokenCredential, Is.Null);
+                    Assert.That(clientConfig.SasCredential, Is.Null);
                     break;
                 default:
                     throw new ArgumentException("No assertion support for cred type " + credType.ToString());
@@ -69,26 +68,26 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobType blobType,
             out BlobBaseClient underlyingClient)
         {
-            Assert.IsNotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             switch (blobType)
             {
                 case BlobType.Unspecified:
                 case BlobType.Block:
                     Assert.That(resource, Is.InstanceOf<BlockBlobStorageResource>());
                     BlockBlobStorageResource blockResource = resource as BlockBlobStorageResource;
-                    Assert.IsNotNull(blockResource.BlobClient);
+                    Assert.That(blockResource.BlobClient, Is.Not.Null);
                     underlyingClient = blockResource.BlobClient;
                     break;
                 case BlobType.Page:
                     Assert.That(resource, Is.InstanceOf<PageBlobStorageResource>());
                     PageBlobStorageResource pageResource = resource as PageBlobStorageResource;
-                    Assert.IsNotNull(pageResource.BlobClient);
+                    Assert.That(pageResource.BlobClient, Is.Not.Null);
                     underlyingClient = pageResource.BlobClient;
                     break;
                 case BlobType.Append:
                     Assert.That(resource, Is.InstanceOf<AppendBlobStorageResource>());
                     AppendBlobStorageResource appendResource = resource as AppendBlobStorageResource;
-                    Assert.IsNotNull(appendResource.BlobClient);
+                    Assert.That(appendResource.BlobClient, Is.Not.Null);
                     underlyingClient = appendResource.BlobClient;
                     break;
                 default:
@@ -125,9 +124,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             };
             BlobStorageResourceContainer resource = await provider.FromContainerAsync(uri) as BlobStorageResourceContainer;
 
-            Assert.IsNotNull(resource);
-            Assert.AreEqual(uri, resource.Uri);
-            Assert.AreEqual(uri, resource.BlobContainerClient.Uri);
+            Assert.That(resource, Is.Not.Null);
+            Assert.That(resource.Uri, Is.EqualTo(uri));
+            Assert.That(resource.BlobContainerClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(resource.BlobContainerClient.ClientConfiguration, credType);
         }
 
@@ -160,10 +159,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 _ => throw new ArgumentException("Bad blob type")
             };
 
-            Assert.IsNotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             AssertBlobStorageResourceType(resource, blobType, out BlobBaseClient underlyingClient);
-            Assert.AreEqual(uri, resource.Uri);
-            Assert.AreEqual(uri, underlyingClient.Uri);
+            Assert.That(resource.Uri, Is.EqualTo(uri));
+            Assert.That(underlyingClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(underlyingClient.ClientConfiguration, credType);
         }
 
@@ -193,10 +192,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             };
             StorageResource resource = await provider.FromBlobAsync(uri);
 
-            Assert.IsNotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             AssertBlobStorageResourceType(resource, BlobType.Block, out BlobBaseClient underlyingClient);
-            Assert.AreEqual(uri, resource.Uri);
-            Assert.AreEqual(uri, underlyingClient.Uri);
+            Assert.That(resource.Uri, Is.EqualTo(uri));
+            Assert.That(underlyingClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(underlyingClient.ClientConfiguration, credType);
         }
     }

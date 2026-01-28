@@ -20,8 +20,8 @@ public class RequestOptionsTests
         options.AddHeader("MockHeader", "MockValue");
         message.Apply(options);
 
-        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
-        Assert.AreEqual("MockValue", value);
+        Assert.That(message.Request.Headers.TryGetValue("MockHeader", out string? value), Is.True);
+        Assert.That(value, Is.EqualTo("MockValue"));
     }
 
     [Test]
@@ -35,8 +35,8 @@ public class RequestOptionsTests
         options.AddHeader("MockHeader", "MockValue2");
         message.Apply(options);
 
-        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
-        Assert.AreEqual("MockValue1,MockValue2", value);
+        Assert.That(message.Request.Headers.TryGetValue("MockHeader", out string? value), Is.True);
+        Assert.That(value, Is.EqualTo("MockValue1,MockValue2"));
     }
 
     [Test]
@@ -49,8 +49,8 @@ public class RequestOptionsTests
         options.SetHeader("MockHeader", "MockValue");
         message.Apply(options);
 
-        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
-        Assert.AreEqual("MockValue", value);
+        Assert.That(message.Request.Headers.TryGetValue("MockHeader", out string? value), Is.True);
+        Assert.That(value, Is.EqualTo("MockValue"));
     }
 
     [Test]
@@ -64,8 +64,8 @@ public class RequestOptionsTests
         options.SetHeader("MockHeader", "MockValue2");
         message.Apply(options);
 
-        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
-        Assert.AreEqual("MockValue2", value);
+        Assert.That(message.Request.Headers.TryGetValue("MockHeader", out string? value), Is.True);
+        Assert.That(value, Is.EqualTo("MockValue2"));
     }
 
     [Test]
@@ -80,8 +80,8 @@ public class RequestOptionsTests
         options.AddHeader("MockHeader", "RequestOptions Value");
         message.Apply(options);
 
-        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
-        Assert.AreEqual("Message.Request Value,RequestOptions Value", value);
+        Assert.That(message.Request.Headers.TryGetValue("MockHeader", out string? value), Is.True);
+        Assert.That(value, Is.EqualTo("Message.Request Value,RequestOptions Value"));
     }
 
     [Test]
@@ -96,8 +96,8 @@ public class RequestOptionsTests
         options.SetHeader("MockHeader", "RequestOptions Value");
         message.Apply(options);
 
-        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
-        Assert.AreEqual("RequestOptions Value", value);
+        Assert.That(message.Request.Headers.TryGetValue("MockHeader", out string? value), Is.True);
+        Assert.That(value, Is.EqualTo("RequestOptions Value"));
     }
 
     [Test]
@@ -122,14 +122,14 @@ public class RequestOptionsTests
 
         message.Apply(options);
 
-        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader1", out string? value1));
-        Assert.AreEqual("RequestOptions SetHeader Value 2", value1);
+        Assert.That(message.Request.Headers.TryGetValue("MockHeader1", out string? value1), Is.True);
+        Assert.That(value1, Is.EqualTo("RequestOptions SetHeader Value 2"));
 
-        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader2", out string? value2));
-        Assert.AreEqual("RequestOptions SetHeader Value 1,RequestOptions AddHeader Value 2", value2);
+        Assert.That(message.Request.Headers.TryGetValue("MockHeader2", out string? value2), Is.True);
+        Assert.That(value2, Is.EqualTo("RequestOptions SetHeader Value 1,RequestOptions AddHeader Value 2"));
 
-        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader3", out string? value3));
-        Assert.AreEqual("Message.Request Value", value3);
+        Assert.That(message.Request.Headers.TryGetValue("MockHeader3", out string? value3), Is.True);
+        Assert.That(value3, Is.EqualTo("Message.Request Value"));
     }
 
     [Test]
@@ -173,12 +173,12 @@ public class RequestOptionsTests
         message.BufferResponse = false;
         message.Apply(bufferTrueOptions);
 
-        Assert.IsTrue(message.BufferResponse);
+        Assert.That(message.BufferResponse, Is.True);
 
         RequestOptions bufferFalseOptions = new() { BufferResponse = false };
         message.BufferResponse = true;
         message.Apply(bufferFalseOptions);
 
-        Assert.IsFalse(message.BufferResponse);
+        Assert.That(message.BufferResponse, Is.False);
     }
 }

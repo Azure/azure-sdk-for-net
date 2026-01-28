@@ -13,18 +13,18 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void MapAndStaticPropertySameObject()
         {
-            Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.Json, ModelReaderWriterOptions.Json));
-            Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.Xml, ModelReaderWriterOptions.Xml));
+            Assert.That(ReferenceEquals(ModelReaderWriterOptions.Json, ModelReaderWriterOptions.Json), Is.True);
+            Assert.That(ReferenceEquals(ModelReaderWriterOptions.Xml, ModelReaderWriterOptions.Xml), Is.True);
         }
 
         [Test]
         public void MapShouldHaveRightValues()
         {
             var options = _wireOptions;
-            Assert.AreEqual("W", options.Format);
+            Assert.That(options.Format, Is.EqualTo("W"));
 
             options = ModelReaderWriterOptions.Json;
-            Assert.AreEqual("J", options.Format);
+            Assert.That(options.Format, Is.EqualTo("J"));
         }
     }
 }

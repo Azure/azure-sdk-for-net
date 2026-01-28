@@ -32,16 +32,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override void CompareModels(BaseModel model, BaseModel model2, string format)
         {
-            Assert.AreEqual(model.Name, model2.Name);
-            Assert.AreEqual(model.Kind, model2.Kind);
+            Assert.That(model2.Name, Is.EqualTo(model.Name));
+            Assert.That(model2.Kind, Is.EqualTo(model.Kind));
             if (format == "J")
             {
                 var rawData = GetRawData(model);
                 var rawData2 = GetRawData(model2);
-                Assert.IsNotNull(rawData);
-                Assert.IsNotNull(rawData2);
-                Assert.AreEqual(rawData.Count, rawData2.Count);
-                Assert.AreEqual(rawData["extra"].ToObjectFromJson<string>(), rawData2["extra"].ToObjectFromJson<string>());
+                Assert.That(rawData, Is.Not.Null);
+                Assert.That(rawData2, Is.Not.Null);
+                Assert.That(rawData2.Count, Is.EqualTo(rawData.Count));
+                Assert.That(rawData2["extra"].ToObjectFromJson<string>(), Is.EqualTo(rawData["extra"].ToObjectFromJson<string>()));
             }
         }
 
@@ -58,13 +58,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override void VerifyModel(BaseModel model, string format)
         {
-            Assert.AreEqual("X", model.Kind);
-            Assert.AreEqual("xmodel", model.Name);
+            Assert.That(model.Kind, Is.EqualTo("X"));
+            Assert.That(model.Name, Is.EqualTo("xmodel"));
             var rawData = GetRawData(model);
-            Assert.IsNotNull(rawData);
+            Assert.That(rawData, Is.Not.Null);
             if (format == "J")
             {
-                Assert.AreEqual("stuff", rawData["extra"].ToObjectFromJson<string>());
+                Assert.That(rawData["extra"].ToObjectFromJson<string>(), Is.EqualTo("stuff"));
             }
         }
     }

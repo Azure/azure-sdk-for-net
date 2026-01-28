@@ -28,7 +28,7 @@ namespace System.ClientModel.Tests.Internal
         {
             var sanitizer = new PipelineMessageSanitizer(["A", "a1", "a-2"], [], "*");
 
-            Assert.AreEqual("http://localhost/" + expected, sanitizer.SanitizeUrl("http://localhost/" + input));
+            Assert.That(sanitizer.SanitizeUrl("http://localhost/" + input), Is.EqualTo("http://localhost/" + expected));
         }
 
         [Test]
@@ -36,8 +36,8 @@ namespace System.ClientModel.Tests.Internal
         {
             var sanitizer = new PipelineMessageSanitizer([], [ "header-1" ], "*");
 
-            Assert.AreEqual("value1", sanitizer.SanitizeHeader("header-1", "value1"));
-            Assert.AreEqual("*", sanitizer.SanitizeHeader("header-2", "value2"));
+            Assert.That(sanitizer.SanitizeHeader("header-1", "value1"), Is.EqualTo("value1"));
+            Assert.That(sanitizer.SanitizeHeader("header-2", "value2"), Is.EqualTo("*"));
         }
 
         [Test]
@@ -47,8 +47,8 @@ namespace System.ClientModel.Tests.Internal
 
             var uri = new Uri("http://localhost/?a=b");
 
-            Assert.AreEqual("http://localhost/?a=*", sanitizer.SanitizeUrl(uri.ToString()));
-            Assert.AreEqual("*", sanitizer.SanitizeHeader("header", "value"));
+            Assert.That(sanitizer.SanitizeUrl(uri.ToString()), Is.EqualTo("http://localhost/?a=*"));
+            Assert.That(sanitizer.SanitizeHeader("header", "value"), Is.EqualTo("*"));
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [SetUp]
         public async Task ClearChallengeCacheforRecord()
         {
-                await Initialize().ConfigureAwait(false);
+            await Initialize().ConfigureAwait(false);
         }
 
         [RecordedTest]
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             // get
             privateEndpoint = (await privateEndpointCollection.GetAsync(privateEndpointName)).Value;
-            Assert.AreEqual(privateEndpoint.Data.Name, privateEndpointName);
-            Assert.AreEqual(privateEndpoint.Data.Location, Location);
-            Assert.IsEmpty(privateEndpoint.Data.Tags);
+            Assert.That(privateEndpointName, Is.EqualTo(privateEndpoint.Data.Name));
+            Assert.That(Location, Is.EqualTo(privateEndpoint.Data.Location));
+            Assert.That(privateEndpoint.Data.Tags, Is.Empty);
 
             // update
             privateEndpointData.Tags.Add("test", "test");
             privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpoint.Data.Name, privateEndpointData)).Value;
-            Assert.AreEqual(privateEndpoint.Data.Name, privateEndpointName);
-            Assert.AreEqual(privateEndpoint.Data.Location, Location);
+            Assert.That(privateEndpointName, Is.EqualTo(privateEndpoint.Data.Name));
+            Assert.That(Location, Is.EqualTo(privateEndpoint.Data.Location));
             Assert.That(privateEndpoint.Data.Tags, Has.Count.EqualTo(1));
             Assert.That(privateEndpoint.Data.Tags, Does.ContainKey("test").WithValue("test"));
 
             // list
             List<PrivateEndpointResource> privateEndpoints = (await privateEndpointCollection.GetAllAsync().ToEnumerableAsync());
             Assert.That(privateEndpoints, Has.Count.EqualTo(1));
-            Assert.AreEqual(privateEndpointName, privateEndpoint.Data.Name);
+            Assert.That(privateEndpoint.Data.Name, Is.EqualTo(privateEndpointName));
 
             // delete
             await privateEndpoint.DeleteAsync(WaitUntil.Completed);

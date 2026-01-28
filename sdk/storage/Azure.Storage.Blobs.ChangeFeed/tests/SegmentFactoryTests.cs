@@ -96,15 +96,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             SegmentCursor actualSegmentCursor = segment.GetCursor();
 
             // Assert
-            Assert.AreEqual(expectedSegmentCursor.SegmentPath, actualSegmentCursor.SegmentPath);
-            Assert.AreEqual(expectedSegmentCursor.ShardCursors.Count, actualSegmentCursor.ShardCursors.Count);
+            Assert.That(actualSegmentCursor.SegmentPath, Is.EqualTo(expectedSegmentCursor.SegmentPath));
+            Assert.That(actualSegmentCursor.ShardCursors.Count, Is.EqualTo(expectedSegmentCursor.ShardCursors.Count));
             for (int i = 0; i < 3; i++)
             {
-                Assert.AreEqual(expectedSegmentCursor.ShardCursors[i].BlockOffset, actualSegmentCursor.ShardCursors[i].BlockOffset);
-                Assert.AreEqual(expectedSegmentCursor.ShardCursors[i].CurrentChunkPath, actualSegmentCursor.ShardCursors[i].CurrentChunkPath);
-                Assert.AreEqual(expectedSegmentCursor.ShardCursors[i].EventIndex, actualSegmentCursor.ShardCursors[i].EventIndex);
+                Assert.That(actualSegmentCursor.ShardCursors[i].BlockOffset, Is.EqualTo(expectedSegmentCursor.ShardCursors[i].BlockOffset));
+                Assert.That(actualSegmentCursor.ShardCursors[i].CurrentChunkPath, Is.EqualTo(expectedSegmentCursor.ShardCursors[i].CurrentChunkPath));
+                Assert.That(actualSegmentCursor.ShardCursors[i].EventIndex, Is.EqualTo(expectedSegmentCursor.ShardCursors[i].EventIndex));
             }
-            Assert.AreEqual("log/00/2020/03/25/0200/", actualSegmentCursor.CurrentShardPath);
+            Assert.That(actualSegmentCursor.CurrentShardPath, Is.EqualTo("log/00/2020/03/25/0200/"));
 
             containerClient.Verify(r => r.GetBlobClient(manifestPath));
 

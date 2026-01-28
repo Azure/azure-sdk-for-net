@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             if (success == false)
             {
                 var ex = Assert.Throws<AuthenticationEventTriggerRequestValidationException>(() => AuthenticationEventBinding.GetEventAndValidateSchema(payload));
-                Assert.AreEqual(exceptionMessage, ex.Message);
+                Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
             }
             else
             {
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
         private static IEnumerable<object[]> TestPayloadScenarios()
         {
-#region Invalid
+            #region Invalid
             yield return new TestCaseStructure()
             {
                 Test = string.Empty,
@@ -41,16 +41,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 Message = "Testing request with XML payload throws an error",
                 ExceptionMessage = "Invalid Json Payload: '<' is an invalid start of a value. LineNumber: 0 | BytePositionInLine: 0."
             }.ToArray;
-#endregion
+            #endregion
 
-#region Valid
+            #region Valid
             yield return new TestCaseStructure()
             {
                 Test = Payload.TokenIssuanceStart.ValidRequestPayload,
                 Message = "Testing valid full request payload",
                 Success = true,
             }.ToArray;
-#endregion
+            #endregion
         }
     }
 }

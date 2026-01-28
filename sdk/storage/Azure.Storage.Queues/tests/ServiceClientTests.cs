@@ -43,10 +43,10 @@ namespace Azure.Storage.Queues.Test
 
             var builder1 = new QueueUriBuilder(client1.Uri);
             var builder2 = new QueueUriBuilder(client2.Uri);
-            Assert.IsEmpty(builder1.QueueName);
-            Assert.AreEqual(accountName, builder1.AccountName);
-            Assert.IsEmpty(builder2.QueueName);
-            Assert.AreEqual(accountName, builder2.AccountName);
+            Assert.That(builder1.QueueName, Is.Empty);
+            Assert.That(builder1.AccountName, Is.EqualTo(accountName));
+            Assert.That(builder2.QueueName, Is.Empty);
+            Assert.That(builder2.AccountName, Is.EqualTo(accountName));
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueServiceClient service = new QueueServiceClient(connectionString.ToString(true));
 
-            Assert.AreEqual(accountName, service.AccountName);
+            Assert.That(service.AccountName, Is.EqualTo(accountName));
         }
 
         [RecordedTest]
@@ -90,8 +90,8 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = InstrumentClient(new QueueServiceClient(queueEndpoint, credentials));
             var builder = new QueueUriBuilder(service.Uri);
 
-            Assert.IsEmpty(builder.QueueName);
-            Assert.AreEqual(accountName, builder.AccountName);
+            Assert.That(builder.QueueName, Is.Empty);
+            Assert.That(builder.AccountName, Is.EqualTo(accountName));
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueServiceClient service = new QueueServiceClient(queueEndpoint, credentials);
 
-            Assert.AreEqual(accountName, service.AccountName);
+            Assert.That(service.AccountName, Is.EqualTo(accountName));
         }
 
         [RecordedTest]
@@ -121,7 +121,7 @@ namespace Azure.Storage.Queues.Test
             QueueServiceProperties properties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -151,7 +151,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -170,7 +170,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -189,7 +189,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -206,7 +206,7 @@ namespace Azure.Storage.Queues.Test
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadContainer.GetPropertiesAsync(),
-                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("InvalidAuthenticationInfo")));
         }
 
         [RecordedTest]
@@ -216,7 +216,7 @@ namespace Azure.Storage.Queues.Test
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
             IList<QueueItem> queues = await service.GetQueuesAsync().ToListAsync();
-            Assert.IsTrue(queues.Count >= 1);
+            Assert.That(queues.Count >= 1, Is.True);
 
             var accountName = new QueueUriBuilder(service.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
@@ -236,9 +236,9 @@ namespace Azure.Storage.Queues.Test
                 continuationToken = page.ContinuationToken;
             }
 
-            Assert.AreNotEqual(0, queues.Count);
-            Assert.AreEqual(queues.Count, queues.Select(c => c.Name).Distinct().Count());
-            Assert.IsTrue(queues.Any(c => test.Queue.Uri == InstrumentClient(service.GetQueueClient(c.Name)).Uri));
+            Assert.That(queues.Count, Is.Not.EqualTo(0));
+            Assert.That(queues.Select(c => c.Name).Distinct().Count(), Is.EqualTo(queues.Count));
+            Assert.That(queues.Any(c => test.Queue.Uri == InstrumentClient(service.GetQueueClient(c.Name)).Uri), Is.True);
         }
 
         [RecordedTest]
@@ -253,7 +253,7 @@ namespace Azure.Storage.Queues.Test
                 service.GetQueuesAsync()
                 .AsPages(pageSizeHint: 1)
                 .FirstAsync();
-            Assert.AreEqual(1, page.Values.Count);
+            Assert.That(page.Values.Count, Is.EqualTo(1));
         }
 
         [RecordedTest]
@@ -268,9 +268,9 @@ namespace Azure.Storage.Queues.Test
                 AsyncPageable<QueueItem> queues = service.GetQueuesAsync(prefix: prefix);
                 IList<QueueItem> items = await queues.ToListAsync();
 
-                Assert.AreNotEqual(0, items.Count());
-                Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
-                Assert.IsNotNull(items.Single(c => c.Name == queueName));
+                Assert.That(items.Count(), Is.Not.EqualTo(0));
+                Assert.That(items.All(c => c.Name.StartsWith(prefix)), Is.True);
+                Assert.That(items.Single(c => c.Name == queueName), Is.Not.Null);
             }
             finally
             {
@@ -287,7 +287,7 @@ namespace Azure.Storage.Queues.Test
             IDictionary<string, string> metadata = BuildMetadata();
             await test.Queue.SetMetadataAsync(metadata);
             QueueItem first = await service.GetQueuesAsync(QueueTraits.Metadata).FirstAsync();
-            Assert.IsNotNull(first.Metadata);
+            Assert.That(first.Metadata, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -297,7 +297,7 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_SharedKey();
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetQueuesAsync().AsPages(continuationToken: "garbage").FirstAsync(),
-                e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("OutOfRangeInput")));
         }
 
         [RecordedTest]
@@ -313,7 +313,7 @@ namespace Azure.Storage.Queues.Test
                 options: options);
 
             // Assert
-            Assert.IsNotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -327,7 +327,7 @@ namespace Azure.Storage.Queues.Test
             QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetUserDelegationKeyAsync(options: options),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
         }
 
         [RecordedTest]
@@ -347,7 +347,7 @@ namespace Azure.Storage.Queues.Test
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 service.GetUserDelegationKeyAsync(
                     options: options),
-                e => Assert.AreEqual("expiresOn must be UTC", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("expiresOn must be UTC")));
             ;
         }
 
@@ -404,7 +404,7 @@ namespace Azure.Storage.Queues.Test
             Response<QueueServiceProperties> response = await service.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.Logging.RetentionPolicy);
+            Assert.That(response.Value.Logging.RetentionPolicy, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -437,28 +437,28 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             QueueServiceProperties responseProperties = await service.GetPropertiesAsync();
-            Assert.AreEqual(properties.Cors.Count, responseProperties.Cors.Count);
-            Assert.AreEqual(properties.Cors[0].AllowedHeaders, responseProperties.Cors[0].AllowedHeaders);
-            Assert.AreEqual(properties.Cors[0].AllowedMethods, responseProperties.Cors[0].AllowedMethods);
-            Assert.AreEqual(properties.Cors[0].AllowedOrigins, responseProperties.Cors[0].AllowedOrigins);
-            Assert.AreEqual(properties.Cors[0].ExposedHeaders, responseProperties.Cors[0].ExposedHeaders);
-            Assert.AreEqual(properties.Cors[0].MaxAgeInSeconds, responseProperties.Cors[0].MaxAgeInSeconds);
-            Assert.AreEqual(properties.Logging.Read, responseProperties.Logging.Read);
-            Assert.AreEqual(properties.Logging.Write, responseProperties.Logging.Write);
-            Assert.AreEqual(properties.Logging.Delete, responseProperties.Logging.Delete);
-            Assert.AreEqual(properties.Logging.Version, responseProperties.Logging.Version);
-            Assert.AreEqual(properties.Logging.RetentionPolicy.Days, responseProperties.Logging.RetentionPolicy.Days);
-            Assert.AreEqual(properties.Logging.RetentionPolicy.Enabled, responseProperties.Logging.RetentionPolicy.Enabled);
-            Assert.AreEqual(properties.HourMetrics.Enabled, responseProperties.HourMetrics.Enabled);
-            Assert.AreEqual(properties.HourMetrics.IncludeApis, responseProperties.HourMetrics.IncludeApis);
-            Assert.AreEqual(properties.HourMetrics.Version, responseProperties.HourMetrics.Version);
-            Assert.AreEqual(properties.HourMetrics.RetentionPolicy.Days, responseProperties.HourMetrics.RetentionPolicy.Days);
-            Assert.AreEqual(properties.HourMetrics.RetentionPolicy.Enabled, responseProperties.HourMetrics.RetentionPolicy.Enabled);
-            Assert.AreEqual(properties.MinuteMetrics.Enabled, responseProperties.MinuteMetrics.Enabled);
-            Assert.AreEqual(properties.MinuteMetrics.IncludeApis, responseProperties.MinuteMetrics.IncludeApis);
-            Assert.AreEqual(properties.MinuteMetrics.Version, responseProperties.MinuteMetrics.Version);
-            Assert.AreEqual(properties.MinuteMetrics.RetentionPolicy.Days, responseProperties.MinuteMetrics.RetentionPolicy.Days);
-            Assert.AreEqual(properties.MinuteMetrics.RetentionPolicy.Enabled, responseProperties.MinuteMetrics.RetentionPolicy.Enabled);
+            Assert.That(responseProperties.Cors.Count, Is.EqualTo(properties.Cors.Count));
+            Assert.That(responseProperties.Cors[0].AllowedHeaders, Is.EqualTo(properties.Cors[0].AllowedHeaders));
+            Assert.That(responseProperties.Cors[0].AllowedMethods, Is.EqualTo(properties.Cors[0].AllowedMethods));
+            Assert.That(responseProperties.Cors[0].AllowedOrigins, Is.EqualTo(properties.Cors[0].AllowedOrigins));
+            Assert.That(responseProperties.Cors[0].ExposedHeaders, Is.EqualTo(properties.Cors[0].ExposedHeaders));
+            Assert.That(responseProperties.Cors[0].MaxAgeInSeconds, Is.EqualTo(properties.Cors[0].MaxAgeInSeconds));
+            Assert.That(responseProperties.Logging.Read, Is.EqualTo(properties.Logging.Read));
+            Assert.That(responseProperties.Logging.Write, Is.EqualTo(properties.Logging.Write));
+            Assert.That(responseProperties.Logging.Delete, Is.EqualTo(properties.Logging.Delete));
+            Assert.That(responseProperties.Logging.Version, Is.EqualTo(properties.Logging.Version));
+            Assert.That(responseProperties.Logging.RetentionPolicy.Days, Is.EqualTo(properties.Logging.RetentionPolicy.Days));
+            Assert.That(responseProperties.Logging.RetentionPolicy.Enabled, Is.EqualTo(properties.Logging.RetentionPolicy.Enabled));
+            Assert.That(responseProperties.HourMetrics.Enabled, Is.EqualTo(properties.HourMetrics.Enabled));
+            Assert.That(responseProperties.HourMetrics.IncludeApis, Is.EqualTo(properties.HourMetrics.IncludeApis));
+            Assert.That(responseProperties.HourMetrics.Version, Is.EqualTo(properties.HourMetrics.Version));
+            Assert.That(responseProperties.HourMetrics.RetentionPolicy.Days, Is.EqualTo(properties.HourMetrics.RetentionPolicy.Days));
+            Assert.That(responseProperties.HourMetrics.RetentionPolicy.Enabled, Is.EqualTo(properties.HourMetrics.RetentionPolicy.Enabled));
+            Assert.That(responseProperties.MinuteMetrics.Enabled, Is.EqualTo(properties.MinuteMetrics.Enabled));
+            Assert.That(responseProperties.MinuteMetrics.IncludeApis, Is.EqualTo(properties.MinuteMetrics.IncludeApis));
+            Assert.That(responseProperties.MinuteMetrics.Version, Is.EqualTo(properties.MinuteMetrics.Version));
+            Assert.That(responseProperties.MinuteMetrics.RetentionPolicy.Days, Is.EqualTo(properties.MinuteMetrics.RetentionPolicy.Days));
+            Assert.That(responseProperties.MinuteMetrics.RetentionPolicy.Enabled, Is.EqualTo(properties.MinuteMetrics.RetentionPolicy.Enabled));
 
             // Clean Up
             await service.SetPropertiesAsync(originalProperties);
@@ -488,14 +488,14 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             properties = await service.GetPropertiesAsync();
-            Assert.AreEqual(1, properties.Cors.Count());
-            Assert.IsTrue(properties.Cors[0].MaxAgeInSeconds == 1000);
+            Assert.That(properties.Cors.Count(), Is.EqualTo(1));
+            Assert.That(properties.Cors[0].MaxAgeInSeconds, Is.EqualTo(1000));
 
             // Cleanup
             properties.Cors = originalCors;
             await service.SetPropertiesAsync(properties);
             properties = await service.GetPropertiesAsync();
-            Assert.AreEqual(originalCors.Count(), properties.Cors.Count());
+            Assert.That(properties.Cors.Count(), Is.EqualTo(originalCors.Count()));
         }
 
         [RecordedTest]
@@ -530,26 +530,26 @@ namespace Azure.Storage.Queues.Test
             // Act - QueueServiceClient(string connectionString)
             QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(
                 connectionString));
-            Assert.IsTrue(serviceClient.CanGenerateAccountSasUri);
+            Assert.That(serviceClient.CanGenerateAccountSasUri, Is.True);
 
             // Act - QueueServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
             QueueServiceClient serviceClient2 = InstrumentClient(new QueueServiceClient(
                 connectionString,
                 GetOptions()));
-            Assert.IsTrue(serviceClient2.CanGenerateAccountSasUri);
+            Assert.That(serviceClient2.CanGenerateAccountSasUri, Is.True);
 
             // Act - QueueServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
             QueueServiceClient serviceClient3 = InstrumentClient(new QueueServiceClient(
                 blobEndpoint,
                 GetOptions()));
-            Assert.IsFalse(serviceClient3.CanGenerateAccountSasUri);
+            Assert.That(serviceClient3.CanGenerateAccountSasUri, Is.False);
 
             // Act - QueueServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             QueueServiceClient serviceClient4 = InstrumentClient(new QueueServiceClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
-            Assert.IsTrue(serviceClient4.CanGenerateAccountSasUri);
+            Assert.That(serviceClient4.CanGenerateAccountSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -566,21 +566,21 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(
                 connectionString));
             QueueClient queueClient = serviceClient.GetQueueClient(GetNewQueueName());
-            Assert.IsTrue(queueClient.CanGenerateSasUri);
+            Assert.That(queueClient.CanGenerateSasUri, Is.True);
 
             // Act - QueueServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
             QueueServiceClient serviceClient2 = InstrumentClient(new QueueServiceClient(
                 connectionString,
                 GetOptions()));
             QueueClient queueClient2 = serviceClient2.GetQueueClient(GetNewQueueName());
-            Assert.IsTrue(queueClient2.CanGenerateSasUri);
+            Assert.That(queueClient2.CanGenerateSasUri, Is.True);
 
             // Act - QueueServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
             QueueServiceClient serviceClient3 = InstrumentClient(new QueueServiceClient(
                 blobEndpoint,
                 GetOptions()));
             QueueClient queueClient3 = serviceClient3.GetQueueClient(GetNewQueueName());
-            Assert.IsFalse(queueClient3.CanGenerateSasUri);
+            Assert.That(queueClient3.CanGenerateSasUri, Is.False);
 
             // Act - QueueServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             QueueServiceClient serviceClient4 = InstrumentClient(new QueueServiceClient(
@@ -588,7 +588,7 @@ namespace Azure.Storage.Queues.Test
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             QueueClient queueClient4 = serviceClient4.GetQueueClient(GetNewQueueName());
-            Assert.IsTrue(queueClient4.CanGenerateSasUri);
+            Assert.That(queueClient4.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -599,13 +599,13 @@ namespace Azure.Storage.Queues.Test
             directory.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
 
             // Assert
-            Assert.IsFalse(directory.Object.CanGenerateAccountSasUri);
+            Assert.That(directory.Object.CanGenerateAccountSasUri, Is.False);
 
             // Act
             directory.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
 
             // Assert
-            Assert.IsTrue(directory.Object.CanGenerateAccountSasUri);
+            Assert.That(directory.Object.CanGenerateAccountSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -638,8 +638,8 @@ namespace Azure.Storage.Queues.Test
             {
                 Query = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString()
             };
-            Assert.AreEqual(expectedUri.Uri, sasUri);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.Uri));
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -671,8 +671,8 @@ namespace Azure.Storage.Queues.Test
             AccountSasBuilder sasBuilder2 = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
             UriBuilder expectedUri = new UriBuilder(serviceUri);
             expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
-            Assert.AreEqual(expectedUri.Uri, sasUri);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.Uri));
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]

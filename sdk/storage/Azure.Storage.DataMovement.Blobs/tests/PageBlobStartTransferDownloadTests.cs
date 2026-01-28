@@ -1,20 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Tests;
-using BaseBlobs::Azure.Storage.Blobs;
-using BaseBlobs::Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.Tests;
-using DMBlobs::Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.Test.Shared;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs.Tests;
+using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Shared;
+using Azure.Storage.Test.Shared;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Specialized;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
@@ -82,7 +81,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private async Task UploadPagesAsync(PageBlobClient blobClient, Stream contents)
         {
             long size = contents.Length;
-            Assert.IsTrue(size % (KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
+            Assert.That(size % (KB / 2), Is.EqualTo(0), "Cannot create page blob that's not a multiple of 512");
             await blobClient.CreateIfNotExistsAsync(size).ConfigureAwait(false);
             long offset = 0;
             long blockSize = Math.Min(DefaultBufferSize, size);

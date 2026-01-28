@@ -2,18 +2,17 @@
 // Licensed under the MIT License.
 extern alias BaseShares;
 extern alias DMShare;
-
 using System;
-using System.Threading.Tasks;
-using Azure.Storage.Test.Shared;
-using Azure.Storage.DataMovement.Tests;
-using BaseShares::Azure.Storage.Files.Shares;
 using System.IO;
-using NUnit.Framework;
-using BaseShares::Azure.Storage.Files.Shares.Models;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using System.Linq;
+using System.Threading.Tasks;
+using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Test.Shared;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
+using NUnit.Framework;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {

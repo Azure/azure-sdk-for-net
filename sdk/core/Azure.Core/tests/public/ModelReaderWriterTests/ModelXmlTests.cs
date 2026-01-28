@@ -62,21 +62,21 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override void VerifyModel(ModelXml model, string format)
         {
-            Assert.AreEqual("Color", model.Key);
-            Assert.AreEqual("Red", model.Value);
-            Assert.AreEqual("ReadOnly", model.ReadOnlyProperty);
-            Assert.IsNotNull(model.RenamedChildModelXml);
-            Assert.AreEqual("ChildRed", model.RenamedChildModelXml.ChildValue);
-            Assert.AreEqual("ChildReadOnly", model.RenamedChildModelXml.ChildReadOnlyProperty);
+            Assert.That(model.Key, Is.EqualTo("Color"));
+            Assert.That(model.Value, Is.EqualTo("Red"));
+            Assert.That(model.ReadOnlyProperty, Is.EqualTo("ReadOnly"));
+            Assert.That(model.RenamedChildModelXml, Is.Not.Null);
+            Assert.That(model.RenamedChildModelXml.ChildValue, Is.EqualTo("ChildRed"));
+            Assert.That(model.RenamedChildModelXml.ChildReadOnlyProperty, Is.EqualTo("ChildReadOnly"));
         }
 
         protected override void CompareModels(ModelXml model, ModelXml model2, string format)
         {
-            Assert.AreEqual(model.Key, model2.Key);
-            Assert.AreEqual(model.Value, model2.Value);
+            Assert.That(model.Key, Is.EqualTo(model2.Key));
+            Assert.That(model.Value, Is.EqualTo(model2.Value));
             if (format.Equals("J"))
-                Assert.AreEqual(model.ReadOnlyProperty, model2.ReadOnlyProperty);
-            Assert.AreEqual(model.RenamedChildModelXml.ChildValue, model2.RenamedChildModelXml.ChildValue);
+                Assert.That(model.ReadOnlyProperty, Is.EqualTo(model2.ReadOnlyProperty));
+            Assert.That(model.RenamedChildModelXml.ChildValue, Is.EqualTo(model2.RenamedChildModelXml.ChildValue));
             //TODO this is broken until we update the IXmlSerializable interface to include ModelSerializerOptions
             //if (format.Equals(ModelSerializerFormat.Json))
             //    Assert.AreEqual(model.RenamedChildModelXml.ChildReadOnlyProperty, model2.RenamedChildModelXml.ChildReadOnlyProperty);

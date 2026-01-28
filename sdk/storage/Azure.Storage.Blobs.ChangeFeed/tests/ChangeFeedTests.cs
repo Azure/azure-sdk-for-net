@@ -160,17 +160,17 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             ChangeFeedCursor actualCursor = changeFeed.GetCursor();
 
             // Assert
-            Assert.AreEqual(expectedCursor.CursorVersion, actualCursor.CursorVersion);
-            Assert.AreEqual(expectedCursor.EndTime, actualCursor.EndTime);
-            Assert.AreEqual(expectedCursor.UrlHost, actualCursor.UrlHost);
+            Assert.That(actualCursor.CursorVersion, Is.EqualTo(expectedCursor.CursorVersion));
+            Assert.That(actualCursor.EndTime, Is.EqualTo(expectedCursor.EndTime));
+            Assert.That(actualCursor.UrlHost, Is.EqualTo(expectedCursor.UrlHost));
 
-            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.SegmentPath, actualCursor.CurrentSegmentCursor.SegmentPath);
-            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.CurrentShardPath, actualCursor.CurrentSegmentCursor.CurrentShardPath);
-            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardCursors.Count, actualCursor.CurrentSegmentCursor.ShardCursors.Count);
+            Assert.That(actualCursor.CurrentSegmentCursor.SegmentPath, Is.EqualTo(expectedCursor.CurrentSegmentCursor.SegmentPath));
+            Assert.That(actualCursor.CurrentSegmentCursor.CurrentShardPath, Is.EqualTo(expectedCursor.CurrentSegmentCursor.CurrentShardPath));
+            Assert.That(actualCursor.CurrentSegmentCursor.ShardCursors.Count, Is.EqualTo(expectedCursor.CurrentSegmentCursor.ShardCursors.Count));
 
-            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardCursors[0].BlockOffset, actualCursor.CurrentSegmentCursor.ShardCursors[0].BlockOffset);
-            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardCursors[0].CurrentChunkPath, actualCursor.CurrentSegmentCursor.ShardCursors[0].CurrentChunkPath);
-            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardCursors[0].EventIndex, actualCursor.CurrentSegmentCursor.ShardCursors[0].EventIndex);
+            Assert.That(actualCursor.CurrentSegmentCursor.ShardCursors[0].BlockOffset, Is.EqualTo(expectedCursor.CurrentSegmentCursor.ShardCursors[0].BlockOffset));
+            Assert.That(actualCursor.CurrentSegmentCursor.ShardCursors[0].CurrentChunkPath, Is.EqualTo(expectedCursor.CurrentSegmentCursor.ShardCursors[0].CurrentChunkPath));
+            Assert.That(actualCursor.CurrentSegmentCursor.ShardCursors[0].EventIndex, Is.EqualTo(expectedCursor.CurrentSegmentCursor.ShardCursors[0].EventIndex));
 
             containerClient.Verify(r => r.Uri);
 
@@ -464,18 +464,18 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Page<BlobChangeFeedEvent> page1 = await changeFeed.GetPage(IsAsync);
 
             // Assert
-            Assert.AreEqual(JsonSerializer.Serialize(changeFeedCursor), page0.ContinuationToken);
+            Assert.That(page0.ContinuationToken, Is.EqualTo(JsonSerializer.Serialize(changeFeedCursor)));
 
             for (int i = 0; i < 3; i++)
             {
-                Assert.AreEqual(events[i].Id, page0.Values[i].Id);
+                Assert.That(page0.Values[i].Id, Is.EqualTo(events[i].Id));
             }
 
-            Assert.AreEqual(JsonSerializer.Serialize(changeFeedCursor), page1.ContinuationToken);
+            Assert.That(page1.ContinuationToken, Is.EqualTo(JsonSerializer.Serialize(changeFeedCursor)));
 
             for (int i = 3; i < events.Count; i++)
             {
-                Assert.AreEqual(events[i].Id, page1.Values[i - 3].Id);
+                Assert.That(page1.Values[i - 3].Id, Is.EqualTo(events[i].Id));
             }
 
             // ChangeFeedFactory.BuildChangeFeed() verifies
@@ -655,7 +655,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             bool hasNext = changeFeed.HasNext();
 
             // Assert
-            Assert.IsFalse(hasNext);
+            Assert.That(hasNext, Is.False);
 
             if (IsAsync)
             {
@@ -853,9 +853,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Page<BlobChangeFeedEvent> page = await changeFeed.GetPage(IsAsync);
 
             // Assert
-            Assert.AreEqual(2, page.Values.Count);
-            Assert.AreEqual(events[0].Id, page.Values[0].Id);
-            Assert.AreEqual(events[1].Id, page.Values[1].Id);
+            Assert.That(page.Values.Count, Is.EqualTo(2));
+            Assert.That(page.Values[0].Id, Is.EqualTo(events[0].Id));
+            Assert.That(page.Values[1].Id, Is.EqualTo(events[1].Id));
 
             containerClient.Verify(r => r.Uri);
 
@@ -952,7 +952,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             // Assert
             DateTimeOffset expectedLastConsumable = new DateTimeOffset(2020, 06, 01, 21, 0, 0, TimeSpan.Zero);
-            Assert.AreEqual(expectedLastConsumable, lastConsumable.Value);
+            Assert.That(lastConsumable.Value, Is.EqualTo(expectedLastConsumable));
         }
 
         public static Task<Page<BlobHierarchyItem>> GetYearsPathShortFuncAsync(string continuation, int? pageSizeHint)

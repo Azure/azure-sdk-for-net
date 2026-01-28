@@ -16,15 +16,15 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override void CompareModels(ResourceProviderData model, ResourceProviderData model2, string format)
         {
-            Assert.AreEqual(model.Id, model2.Id);
+            Assert.That(model.Id, Is.EqualTo(model2.Id));
         }
 
         protected override string GetExpectedResult(string format) => WirePayload;
 
         protected override void VerifyModel(ResourceProviderData model, string format)
         {
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(model.Id);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(model.Id, Is.Not.Null);
         }
     }
 }

@@ -14,13 +14,13 @@ namespace Azure.Core.Experimental.Tests
         public void SByteImplicit(sbyte testValue)
         {
             Variant value = testValue;
-            Assert.AreEqual(testValue, value.As<sbyte>());
-            Assert.AreEqual(typeof(sbyte), value.Type);
+            Assert.That(value.As<sbyte>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(sbyte)));
 
             sbyte? source = testValue;
             value = source;
-            Assert.AreEqual(source, value.As<sbyte?>());
-            Assert.AreEqual(typeof(sbyte), value.Type);
+            Assert.That(value.As<sbyte?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(sbyte)));
         }
 
         [TestCase(0)]
@@ -35,8 +35,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(testValue);
             }
 
-            Assert.AreEqual(testValue, value.As<sbyte>());
-            Assert.AreEqual(typeof(sbyte), value.Type);
+            Assert.That(value.As<sbyte>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(sbyte)));
 
             sbyte? source = testValue;
 
@@ -45,8 +45,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(source);
             }
 
-            Assert.AreEqual(source, value.As<sbyte?>());
-            Assert.AreEqual(typeof(sbyte), value.Type);
+            Assert.That(value.As<sbyte?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(sbyte)));
         }
 
         [TestCase(0)]
@@ -57,11 +57,11 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             bool success = value.TryGetValue(out sbyte result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<sbyte>());
-            Assert.AreEqual(testValue, (sbyte)value);
+            Assert.That(value.As<sbyte>(), Is.EqualTo(testValue));
+            Assert.That((sbyte)value, Is.EqualTo(testValue));
         }
 
         [TestCase(0)]
@@ -74,12 +74,12 @@ namespace Azure.Core.Experimental.Tests
             Variant value = new(source);
 
             bool success = value.TryGetValue(out sbyte result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<sbyte>());
+            Assert.That(value.As<sbyte>(), Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (sbyte)value);
+            Assert.That((sbyte)value, Is.EqualTo(testValue));
         }
 
         [TestCase(0)]
@@ -91,10 +91,10 @@ namespace Azure.Core.Experimental.Tests
             sbyte source = testValue;
             Variant value = new(source);
             bool success = value.TryGetValue(out sbyte? result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (sbyte?)value);
+            Assert.That((sbyte?)value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -102,9 +102,9 @@ namespace Azure.Core.Experimental.Tests
         {
             sbyte? source = null;
             Variant value = source;
-            Assert.Null(value.Type);
-            Assert.AreEqual(source, value.As<sbyte?>());
-            Assert.False(value.As<sbyte?>().HasValue);
+            Assert.That(value.Type, Is.Null);
+            Assert.That(value.As<sbyte?>(), Is.EqualTo(source));
+            Assert.That(value.As<sbyte?>().HasValue, Is.False);
         }
 
         [TestCase(0)]
@@ -115,14 +115,14 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             object o = value.As<object>();
-            Assert.AreEqual(typeof(sbyte), o.GetType());
-            Assert.AreEqual(testValue, (sbyte)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(sbyte)));
+            Assert.That((sbyte)o, Is.EqualTo(testValue));
 
             sbyte? n = testValue;
             value = new(n);
             o = value.As<object>();
-            Assert.AreEqual(typeof(sbyte), o.GetType());
-            Assert.AreEqual(testValue, (sbyte)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(sbyte)));
+            Assert.That((sbyte)o, Is.EqualTo(testValue));
         }
     }
 }

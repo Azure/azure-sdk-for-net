@@ -49,11 +49,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             executor.ExecuteLambda = (b) =>
             {
                 count++;
-                Assert.AreEqual(expectedBlobName, b.Name);
+                Assert.That(b.Name, Is.EqualTo(expectedBlobName));
                 return true;
             };
             product.Execute();
-            Assert.AreEqual(1, count);
+            Assert.That(count, Is.EqualTo(1));
 
             // Now run again; shouldn't show up.
             executor.ExecuteLambda = (_) =>

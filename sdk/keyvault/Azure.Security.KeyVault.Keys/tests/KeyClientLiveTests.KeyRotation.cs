@@ -34,8 +34,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             IgnoreIfNotSupported(ex);
 
-            Assert.AreEqual(404, ex.Status);
-            Assert.AreEqual("KeyNotFound", ex.ErrorCode);
+            Assert.That(ex.Status, Is.EqualTo(404));
+            Assert.That(ex.ErrorCode, Is.EqualTo("KeyNotFound"));
         }
 
         [RecordedTest]
@@ -50,9 +50,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             KeyVaultKey rotatedKey = await Client.RotateKeyAsync(name);
 
-            Assert.AreNotEqual(key.Id, rotatedKey.Id);
-            Assert.AreNotEqual(key.Properties.Version, rotatedKey.Properties.Version);
-            Assert.AreNotEqual(key.Key.N, rotatedKey.Key.N);
+            Assert.That(rotatedKey.Id, Is.Not.EqualTo(key.Id));
+            Assert.That(rotatedKey.Properties.Version, Is.Not.EqualTo(key.Properties.Version));
+            Assert.That(rotatedKey.Key.N, Is.Not.EqualTo(key.Key.N));
         }
 
         [RecordedTest]
@@ -79,12 +79,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             KeyRotationPolicy updatedPolicy = await Client.UpdateKeyRotationPolicyAsync(name, policy);
 
-            Assert.AreEqual(policy.ExpiresIn, updatedPolicy.ExpiresIn);
+            Assert.That(updatedPolicy.ExpiresIn, Is.EqualTo(policy.ExpiresIn));
 
             KeyRotationLifetimeAction rotateAction = updatedPolicy.LifetimeActions.Single(p => p.Action == KeyRotationPolicyAction.Rotate);
-            Assert.AreEqual(policy.LifetimeActions[0].Action, rotateAction.Action);
-            Assert.AreEqual(policy.LifetimeActions[0].TimeAfterCreate, rotateAction.TimeAfterCreate);
-            Assert.AreEqual(policy.LifetimeActions[0].TimeBeforeExpiry, rotateAction.TimeBeforeExpiry);
+            Assert.That(rotateAction.Action, Is.EqualTo(policy.LifetimeActions[0].Action));
+            Assert.That(rotateAction.TimeAfterCreate, Is.EqualTo(policy.LifetimeActions[0].TimeAfterCreate));
+            Assert.That(rotateAction.TimeBeforeExpiry, Is.EqualTo(policy.LifetimeActions[0].TimeBeforeExpiry));
         }
 
         [RecordedTest]
@@ -96,8 +96,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             IgnoreIfNotSupported(ex);
 
-            Assert.AreEqual(404, ex.Status);
-            Assert.AreEqual("KeyNotFound", ex.ErrorCode);
+            Assert.That(ex.Status, Is.EqualTo(404));
+            Assert.That(ex.ErrorCode, Is.EqualTo("KeyNotFound"));
         }
     }
 }

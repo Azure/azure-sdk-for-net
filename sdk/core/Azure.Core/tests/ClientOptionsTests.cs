@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
                 Core.ClientOptions.ResetDefaultOptions();
 
                 var testOptions = new TestClientOptions();
-                Assert.False(testOptions.Diagnostics.IsDistributedTracingEnabled);
+                Assert.That(testOptions.Diagnostics.IsDistributedTracingEnabled, Is.False);
             }
             finally
             {
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests
                 DiagnosticsOptions.DefaultApplicationId = "Global-application-id";
 
                 var testOptions = new TestClientOptions();
-                Assert.AreEqual("Global-application-id", testOptions.Diagnostics.ApplicationId);
+                Assert.That(testOptions.Diagnostics.ApplicationId, Is.EqualTo("Global-application-id"));
             }
             finally
             {
@@ -70,7 +70,7 @@ namespace Azure.Core.Tests
                 Core.ClientOptions.ResetDefaultOptions();
 
                 var testOptions = new TestClientOptions();
-                Assert.False(testOptions.Diagnostics.IsTelemetryEnabled);
+                Assert.That(testOptions.Diagnostics.IsTelemetryEnabled, Is.False);
             }
             finally
             {
@@ -84,7 +84,7 @@ namespace Azure.Core.Tests
         {
             var options = new TestClientOptions();
 
-            Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
+            Assert.That(options.Transport, Is.InstanceOf<HttpClientTransport>());
         }
 #else
         [Test]
@@ -92,8 +92,8 @@ namespace Azure.Core.Tests
         {
             var options = new TestClientOptions();
 
-            Assert.IsInstanceOf<HttpWebRequestTransport>(options.Transport);
-            Assert.IsFalse(options.IsCustomTransportSet);
+            Assert.That(options.Transport, Is.InstanceOf<HttpWebRequestTransport>());
+            Assert.That(options.IsCustomTransportSet, Is.False);
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace Azure.Core.Tests
             var options = new TestClientOptions();
             options.Transport = new MockTransport();
 
-            Assert.IsTrue(options.IsCustomTransportSet);
+            Assert.That(options.IsCustomTransportSet, Is.True);
         }
 
         [Test]
@@ -118,8 +118,8 @@ namespace Azure.Core.Tests
 
                 var options = new TestClientOptions();
 
-                Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
-                Assert.IsFalse(options.IsCustomTransportSet);
+                Assert.That(options.Transport, Is.InstanceOf<HttpClientTransport>());
+                Assert.That(options.IsCustomTransportSet, Is.False);
             }
             finally
             {
@@ -140,8 +140,8 @@ namespace Azure.Core.Tests
 
                 var options = new TestClientOptions();
 
-                Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
-                Assert.IsFalse(options.IsCustomTransportSet);
+                Assert.That(options.Transport, Is.InstanceOf<HttpClientTransport>());
+                Assert.That(options.IsCustomTransportSet, Is.False);
             }
             finally
             {
@@ -158,8 +158,8 @@ namespace Azure.Core.Tests
             var expected = set(Core.ClientOptions.Default);
             var testOptions = new TestClientOptions();
 
-            Assert.AreNotEqual(initial, expected);
-            Assert.AreEqual(expected, get(testOptions));
+            Assert.That(expected, Is.Not.EqualTo(initial));
+            Assert.That(get(testOptions), Is.EqualTo(expected));
         }
 
         public static IEnumerable<object[]> ClientOptionsTestValues()
@@ -223,13 +223,13 @@ namespace Azure.Core.Tests
 
             if (useCustomOptions)
             {
-                Assert.NotNull(target.Diagnostics);
+                Assert.That(target.Diagnostics, Is.Not.Null);
                 Assert.That(target.Diagnostics, Is.TypeOf(typeof(TestDiagnosticsOptions)));
-                Assert.AreNotEqual(target.Diagnostics, ClientOptions.Default.Diagnostics);
+                Assert.That(ClientOptions.Default.Diagnostics, Is.Not.EqualTo(target.Diagnostics));
             }
             else
             {
-                Assert.IsNull(target.Diagnostics);
+                Assert.That(target.Diagnostics, Is.Null);
             }
         }
 

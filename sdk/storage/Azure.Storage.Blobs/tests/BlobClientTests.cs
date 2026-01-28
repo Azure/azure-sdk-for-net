@@ -51,13 +51,13 @@ namespace Azure.Storage.Blobs.Test
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);
 
-            Assert.AreEqual(containerName, builder1.BlobContainerName);
-            Assert.AreEqual(blobName, builder1.BlobName);
-            Assert.AreEqual("accountName", builder1.AccountName);
+            Assert.That(builder1.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(builder1.BlobName, Is.EqualTo(blobName));
+            Assert.That(builder1.AccountName, Is.EqualTo("accountName"));
 
-            Assert.AreEqual(containerName, builder2.BlobContainerName);
-            Assert.AreEqual(blobName, builder2.BlobName);
-            Assert.AreEqual("accountName", builder2.AccountName);
+            Assert.That(builder2.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(builder2.BlobName, Is.EqualTo(blobName));
+            Assert.That(builder2.AccountName, Is.EqualTo("accountName"));
         }
 
         [RecordedTest]
@@ -73,8 +73,8 @@ namespace Azure.Storage.Blobs.Test
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);
 
-            Assert.AreEqual(accountName, builder1.AccountName);
-            Assert.AreEqual(accountName, builder2.AccountName);
+            Assert.That(builder1.AccountName, Is.EqualTo(accountName));
+            Assert.That(builder2.AccountName, Is.EqualTo(accountName));
         }
 
         [RecordedTest]
@@ -93,9 +93,9 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             BlobUriBuilder builder = new BlobUriBuilder(blobClient.Uri);
 
-            Assert.AreEqual(containerName, builder.BlobContainerName);
-            Assert.AreEqual(blobName, builder.BlobName);
-            Assert.AreEqual(accountName, builder.AccountName);
+            Assert.That(builder.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(builder.BlobName, Is.EqualTo(blobName));
+            Assert.That(builder.AccountName, Is.EqualTo(accountName));
         }
 
         [RecordedTest]
@@ -159,7 +159,7 @@ namespace Azure.Storage.Blobs.Test
             BlobProperties blobProperties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(blobProperties);
+            Assert.That(blobProperties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -193,7 +193,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetPropertiesAsync());
 
             // Act
-            StringAssert.Contains("ss=bqtf", transport.SingleRequest.Uri.ToString());
+            Assert.That(transport.SingleRequest.Uri.ToString(), Does.Contain("ss=bqtf"));
         }
 
         [RecordedTest]
@@ -225,7 +225,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             bool exists = await aadBlob.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -257,7 +257,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             bool exists = await aadBlob.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -289,7 +289,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             bool exists = await aadBlob.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -322,7 +322,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadBlob.ExistsAsync(),
-                e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.InvalidAuthenticationInfo.ToString())));
         }
 
         #region Upload
@@ -342,8 +342,8 @@ namespace Azure.Storage.Blobs.Test
             }
 
             System.Collections.Generic.IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
-            Assert.AreEqual(1, blobs.Count);
-            Assert.AreEqual(name, blobs.First().Name);
+            Assert.That(blobs.Count, Is.EqualTo(1));
+            Assert.That(blobs.First().Name, Is.EqualTo(name));
 
             Response<BlobDownloadInfo> download = await blob.DownloadAsync();
             using var actual = new MemoryStream();
@@ -372,7 +372,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            Assert.AreEqual("Cold", response.Value.AccessTier);
+            Assert.That(response.Value.AccessTier, Is.EqualTo("Cold"));
         }
 
         [RecordedTest]
@@ -387,8 +387,8 @@ namespace Azure.Storage.Blobs.Test
             await blob.UploadAsync(BinaryData.FromBytes(data));
 
             System.Collections.Generic.IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
-            Assert.AreEqual(1, blobs.Count);
-            Assert.AreEqual(name, blobs.First().Name);
+            Assert.That(blobs.Count, Is.EqualTo(1));
+            Assert.That(blobs.First().Name, Is.EqualTo(name));
 
             Response<BlobDownloadResult> download = await blob.DownloadContentAsync();
             TestHelper.AssertSequenceEqual(data, download.Value.Content.ToArray());
@@ -459,7 +459,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+            Assert.That(properties.Value.BlobType, Is.EqualTo(BlobType.Block));
         }
 
         [RecordedTest]
@@ -496,7 +496,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+            Assert.That(properties.Value.BlobType, Is.EqualTo(BlobType.Block));
         }
 
         [RecordedTest]
@@ -564,7 +564,7 @@ namespace Azure.Storage.Blobs.Test
                 // Check if the correct param name that is causing the error is being returned
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                     blob.UploadAsync(stream),
-                    e => Assert.AreEqual("content", e.ParamName));
+                    e => Assert.That(e.ParamName, Is.EqualTo("content")));
             }
         }
 
@@ -601,8 +601,8 @@ namespace Azure.Storage.Blobs.Test
             }
 
             System.Collections.Generic.IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
-            Assert.AreEqual(1, blobs.Count);
-            Assert.AreEqual(name, blobs.First().Name);
+            Assert.That(blobs.Count, Is.EqualTo(1));
+            Assert.That(blobs.First().Name, Is.EqualTo(name));
 
             Response<BlobDownloadInfo> download = await blob.DownloadAsync();
             using var actual = new MemoryStream();
@@ -683,7 +683,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+            Assert.That(properties.Value.BlobType, Is.EqualTo(BlobType.Block));
         }
 
         [RecordedTest]
@@ -704,7 +704,7 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 blob.UploadAsync(
                 content: stream),
-                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.")));
         }
 
         [RecordedTest]
@@ -821,7 +821,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+            Assert.That(properties.Value.BlobType, Is.EqualTo(BlobType.Block));
         }
 
         [RecordedTest]
@@ -855,7 +855,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-            Assert.AreEqual(AccessTier.Cool.ToString(), properties.Value.AccessTier);
+            Assert.That(properties.Value.AccessTier, Is.EqualTo(AccessTier.Cool.ToString()));
         }
 
         [RecordedTest]
@@ -883,7 +883,7 @@ namespace Azure.Storage.Blobs.Test
                         path,
                         transferOptions: options,
                         accessTier: AccessTier.P10),
-                        e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
+                        e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.InvalidHeaderValue.ToString())));
                 }
                 finally
                 {
@@ -1328,9 +1328,9 @@ namespace Azure.Storage.Blobs.Test
             await blob.UploadAsync(content: stream, progressHandler: progress, transferOptions: options);
 
             // Assert
-            Assert.IsFalse(progress.List.Count == 0);
+            Assert.That(progress.List.Count == 0, Is.False);
 
-            Assert.AreEqual(size, progress.List[progress.List.Count - 1]);
+            Assert.That(progress.List[progress.List.Count - 1], Is.EqualTo(size));
         }
 
         [RecordedTest]
@@ -1478,16 +1478,16 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(snapshotBlobClient.Uri);
 
             // Assert
-            Assert.AreEqual(accountName, snapshotBlobClient.AccountName);
-            Assert.AreEqual(containerName, snapshotBlobClient.BlobContainerName);
-            Assert.AreEqual(blobName, snapshotBlobClient.Name);
-            Assert.AreEqual(snapshotUri, snapshotBlobClient.Uri);
+            Assert.That(snapshotBlobClient.AccountName, Is.EqualTo(accountName));
+            Assert.That(snapshotBlobClient.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(snapshotBlobClient.Name, Is.EqualTo(blobName));
+            Assert.That(snapshotBlobClient.Uri, Is.EqualTo(snapshotUri));
 
-            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
-            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
-            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
-            Assert.AreEqual(snapshot, blobUriBuilder.Snapshot);
-            Assert.AreEqual(snapshotUri, blobUriBuilder.ToUri());
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo(accountName));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
+            Assert.That(blobUriBuilder.Snapshot, Is.EqualTo(snapshot));
+            Assert.That(blobUriBuilder.ToUri(), Is.EqualTo(snapshotUri));
         }
 
         [RecordedTest]
@@ -1507,16 +1507,16 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(versionBlobClient.Uri);
 
             // Assert
-            Assert.AreEqual(accountName, versionBlobClient.AccountName);
-            Assert.AreEqual(containerName, versionBlobClient.BlobContainerName);
-            Assert.AreEqual(blobName, versionBlobClient.Name);
-            Assert.AreEqual(versionUri, versionBlobClient.Uri);
+            Assert.That(versionBlobClient.AccountName, Is.EqualTo(accountName));
+            Assert.That(versionBlobClient.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(versionBlobClient.Name, Is.EqualTo(blobName));
+            Assert.That(versionBlobClient.Uri, Is.EqualTo(versionUri));
 
-            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
-            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
-            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
-            Assert.AreEqual(versionId, blobUriBuilder.VersionId);
-            Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo(accountName));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
+            Assert.That(blobUriBuilder.VersionId, Is.EqualTo(versionId));
+            Assert.That(blobUriBuilder.ToUri(), Is.EqualTo(versionUri));
         }
 
         [RecordedTest]

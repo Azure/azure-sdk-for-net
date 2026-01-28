@@ -20,13 +20,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             StorageAnalyticsLogEntry entry = StorageAnalyticsLogEntry.TryParse(fields);
 
-            Assert.NotNull(entry);
+            Assert.That(entry, Is.Not.Null);
             DateTime expectedRequestStartTime = new DateTime(635457986589681025L, DateTimeKind.Utc);
-            Assert.AreEqual(expectedRequestStartTime, entry.RequestStartTime);
-            Assert.AreEqual(DateTimeKind.Utc, entry.RequestStartTime.Kind);
-            Assert.AreEqual(StorageServiceOperationType.PutBlob, entry.OperationType);
-            Assert.AreEqual(StorageServiceType.Blob, entry.ServiceType);
-            Assert.AreEqual(requestedObjectKey, entry.RequestedObjectKey);
+            Assert.That(entry.RequestStartTime, Is.EqualTo(expectedRequestStartTime));
+            Assert.That(entry.RequestStartTime.Kind, Is.EqualTo(DateTimeKind.Utc));
+            Assert.That(entry.OperationType, Is.EqualTo(StorageServiceOperationType.PutBlob));
+            Assert.That(entry.ServiceType, Is.EqualTo(StorageServiceType.Blob));
+            Assert.That(entry.RequestedObjectKey, Is.EqualTo(requestedObjectKey));
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             StorageAnalyticsLogEntry entry = StorageAnalyticsLogEntry.TryParse(fields);
 
-            Assert.Null(entry);
+            Assert.That(entry, Is.Null);
         }
 
         [Test]
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             StorageAnalyticsLogEntry entry = StorageAnalyticsLogEntry.TryParse(fields);
 
-            Assert.NotNull(entry);
-            Assert.False(entry.ServiceType.HasValue);
+            Assert.That(entry, Is.Not.Null);
+            Assert.That(entry.ServiceType.HasValue, Is.False);
         }
 
         [Test]
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             StorageAnalyticsLogEntry entry = StorageAnalyticsLogEntry.TryParse(fields);
 
-            Assert.NotNull(entry);
-            Assert.False(entry.OperationType.HasValue);
+            Assert.That(entry, Is.Not.Null);
+            Assert.That(entry.OperationType.HasValue, Is.False);
         }
 
         [TestCase(StorageServiceOperationType.PutBlob, StorageServiceType.Blob, @"/storagesample/sample-container/""0x8D199A96CB71468""/sample-blob.txt", "sample-container", @"""0x8D199A96CB71468""/sample-blob.txt")]
@@ -67,14 +67,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             StorageAnalyticsLogEntry entry = CreateEntry(
                 "2014-09-08T18:44:18.9681025Z",
-                (StorageServiceOperationType) operationType,
-                (StorageServiceType) serviceType, requestedObjectKey);
+                (StorageServiceOperationType)operationType,
+                (StorageServiceType)serviceType, requestedObjectKey);
 
             BlobPath blobPath = entry.ToBlobPath();
 
-            Assert.NotNull(blobPath);
-            Assert.AreEqual(expectedContainerName, blobPath.ContainerName);
-            Assert.AreEqual(expectedBlobName, blobPath.BlobName);
+            Assert.That(blobPath, Is.Not.Null);
+            Assert.That(blobPath.ContainerName, Is.EqualTo(expectedContainerName));
+            Assert.That(blobPath.BlobName, Is.EqualTo(expectedBlobName));
         }
 
         [TestCase(@"random-string-with-no-slashes")]
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             StorageAnalyticsLogEntry entry = CreateEntry("2014-09-08T18:44:18.9681025Z", StorageServiceOperationType.PutBlob, StorageServiceType.Blob, requestedObjectKey);
 
             BlobPath blobPath = entry.ToBlobPath();
-            Assert.Null(blobPath);
+            Assert.That(blobPath, Is.Null);
         }
 
         [TestCase(@"http://random:aaa/path???qw")]
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             StorageAnalyticsLogEntry entry = CreateEntry("2014-09-08T18:44:18.9681025Z", StorageServiceOperationType.PutBlob, StorageServiceType.Blob, requestedObjectKey);
 
             BlobPath blob = entry.ToBlobPath();
-            Assert.Null(blob);
+            Assert.That(blob, Is.Null);
         }
 
         private static StorageAnalyticsLogEntry CreateEntry(string requestStartTime, StorageServiceOperationType operationType, StorageServiceType serviceType, string requestedObjectKey)

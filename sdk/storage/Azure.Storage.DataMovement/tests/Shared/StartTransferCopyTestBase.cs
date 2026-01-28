@@ -3,14 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core.TestFramework;
-using Azure.Core;
-using Azure.Storage.Test.Shared;
-using System.Threading.Tasks;
 using System.IO;
-using NUnit.Framework;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -268,7 +268,7 @@ namespace Azure.Storage.DataMovement.Tests
             else
             {
                 // If objectNames is populated make sure these number of objects match
-                Assert.AreEqual(objectCount, sourceObjectNames.Count);
+                Assert.That(sourceObjectNames.Count, Is.EqualTo(objectCount));
             }
 
             // Populate objectNames list for number of objects to be created
@@ -283,7 +283,7 @@ namespace Azure.Storage.DataMovement.Tests
             else
             {
                 // If objectNames is populated make sure these number of objects match
-                Assert.AreEqual(objectCount, destinationObjectNames.Count);
+                Assert.That(destinationObjectNames.Count, Is.EqualTo(objectCount));
             }
 
             // Populate Options and TestRaisedOptions
@@ -343,20 +343,20 @@ namespace Azure.Storage.DataMovement.Tests
             for (int i = 0; i < copyObjectInfo.Count; i++)
             {
                 // Assert
-                Assert.NotNull(copyObjectInfo[i].TransferOperation);
+                Assert.That(copyObjectInfo[i].TransferOperation, Is.Not.Null);
                 using CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                 await TestTransferWithTimeout.WaitForCompletionAsync(
                     copyObjectInfo[i].TransferOperation,
                     copyObjectInfo[i].testEventsRaised,
                     tokenSource.Token);
-                Assert.IsTrue(copyObjectInfo[i].TransferOperation.HasCompleted);
-                Assert.AreEqual(TransferState.Completed, copyObjectInfo[i].TransferOperation.Status.State);
+                Assert.That(copyObjectInfo[i].TransferOperation.HasCompleted, Is.True);
+                Assert.That(copyObjectInfo[i].TransferOperation.Status.State, Is.EqualTo(TransferState.Completed));
 
                 // Verify Copy - using original source File and Copying the destination
                 await copyObjectInfo[i].testEventsRaised.AssertSingleCompletedCheck();
                 using Stream sourceStream = await SourceOpenReadAsync(copyObjectInfo[i].SourceClient);
                 using Stream destinationStream = await DestinationOpenReadAsync(copyObjectInfo[i].DestinationClient);
-                Assert.AreEqual(sourceStream, destinationStream);
+                Assert.That(destinationStream, Is.EqualTo(sourceStream));
             }
         }
 
@@ -398,7 +398,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(0, 10)]
-        [TestCase(DataMovementTestConstants.KB/2, 10)]
+        [TestCase(DataMovementTestConstants.KB / 2, 10)]
         [TestCase(DataMovementTestConstants.KB, 10)]
         [TestCase(2 * DataMovementTestConstants.KB, 10)]
         public async Task SourceObjectToDestinationObject_SmallSize(long size, int waitTimeInSec)
@@ -439,8 +439,8 @@ namespace Azure.Storage.DataMovement.Tests
         [LiveOnly]
         [TestCase(2, 0, 30)]
         [TestCase(6, 0, 30)]
-        [TestCase(2, DataMovementTestConstants.KB/2, 30)]
-        [TestCase(6, DataMovementTestConstants.KB/2, 30)]
+        [TestCase(2, DataMovementTestConstants.KB / 2, 30)]
+        [TestCase(6, DataMovementTestConstants.KB / 2, 30)]
         [TestCase(2, DataMovementTestConstants.KB, 300)]
         [TestCase(6, DataMovementTestConstants.KB, 300)]
         public async Task SourceObjectToDestinationObject_SmallMultiple(int count, long size, int waitTimeInSec)
@@ -596,15 +596,15 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasSkippedItems);
+            Assert.That(transfer, Is.Not.Null);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
+            Assert.That(transfer.Status.HasSkippedItems, Is.EqualTo(true));
             await testEventsRaised.AssertSingleSkippedCheck();
-            Assert.IsTrue(await DestinationExistsAsync(destinationClient));
+            Assert.That(await DestinationExistsAsync(destinationClient), Is.True);
             // Verify Upload - That we skipped over and didn't reupload something new.
             using Stream destinationStream = await DestinationOpenReadAsync(destinationClient);
-            Assert.AreEqual(originalStream, destinationStream);
+            Assert.That(destinationStream, Is.EqualTo(originalStream));
         }
 
         [RecordedTest]
@@ -656,25 +656,25 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasFailedItems);
-            Assert.IsTrue(await DestinationExistsAsync(destinationClient));
+            Assert.That(transfer, Is.Not.Null);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
+            Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
+            Assert.That(await DestinationExistsAsync(destinationClient), Is.True);
             await testEventsRaised.AssertSingleFailedCheck(1);
             var testException = testEventsRaised.FailedEvents.First().Exception;
-            Assert.NotNull(testException, "Excepted failure: Overwrite failure was supposed to be raised during the test");
+            Assert.That(testException, Is.Not.Null, "Excepted failure: Overwrite failure was supposed to be raised during the test");
             if (testException is RequestFailedException rfe)
             {
                 Assert.That(rfe.ErrorCode, Does.Contain(_expectedOverwriteExceptionMessage));
             }
             else
             {
-                Assert.IsTrue(testException.Message.Contains(_expectedOverwriteExceptionMessage));
+                Assert.That(testException.Message.Contains(_expectedOverwriteExceptionMessage), Is.True);
             }
             // Verify Copy - That we skipped over and didn't reupload something new.
             using Stream destinationStream = await DestinationOpenReadAsync(destinationClient);
-            Assert.AreEqual(originalStream, destinationStream);
+            Assert.That(destinationStream, Is.EqualTo(originalStream));
         }
         #endregion
 
@@ -745,9 +745,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             await testEventsRaised.AssertSingleCompletedCheck();
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer, Is.Not.Null);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
         }
 
         [RecordedTest]
@@ -779,10 +779,10 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasFailedItems);
+            Assert.That(transfer, Is.Not.Null);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
+            Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
             await testEventsRaised.AssertSingleFailedCheck(1);
             var testException = testEventsRaised.FailedEvents.First().Exception;
             if (testException is RequestFailedException rfe)
@@ -791,7 +791,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
             else
             {
-                Assert.IsTrue(testException.Message.Contains(_expectedOverwriteExceptionMessage));
+                Assert.That(testException.Message.Contains(_expectedOverwriteExceptionMessage), Is.True);
             }
         }
 
@@ -826,10 +826,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             await testEventsRaised.AssertSingleSkippedCheck();
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasSkippedItems);
+            Assert.That(transfer, Is.Not.Null);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
+            Assert.That(transfer.Status.HasSkippedItems, Is.EqualTo(true));
         }
 
         private async Task CopyRemoteObjects_VerifyProperties(
@@ -935,10 +935,10 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase((int) TransferPropertiesTestType.Default)]
-        [TestCase((int) TransferPropertiesTestType.Preserve)]
-        [TestCase((int) TransferPropertiesTestType.NoPreserve)]
-        [TestCase((int) TransferPropertiesTestType.NewProperties)]
+        [TestCase((int)TransferPropertiesTestType.Default)]
+        [TestCase((int)TransferPropertiesTestType.Preserve)]
+        [TestCase((int)TransferPropertiesTestType.NoPreserve)]
+        [TestCase((int)TransferPropertiesTestType.NewProperties)]
         public virtual async Task SourceObjectToDestinationObject_VerifyProperties_Chunks(int propertiesType)
         {
             // Arrange
@@ -948,7 +948,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyRemoteObjects_VerifyProperties(
                 source.Container,
                 destination.Container,
-                (TransferPropertiesTestType) propertiesType,
+                (TransferPropertiesTestType)propertiesType,
                 size: Constants.KB,
                 chunkSize: Constants.KB / 2);
         }

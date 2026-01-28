@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             string servicePrincipalObjectId = _objectId;
 
             Guid roleAssignmentName = Recording.Random.NewGuid();
-            KeyVaultRoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Keys, definitionIdToAssign, servicePrincipalObjectId , roleAssignmentName).ConfigureAwait(false);
+            KeyVaultRoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Keys, definitionIdToAssign, servicePrincipalObjectId, roleAssignmentName).ConfigureAwait(false);
 #endif
             #endregion
 

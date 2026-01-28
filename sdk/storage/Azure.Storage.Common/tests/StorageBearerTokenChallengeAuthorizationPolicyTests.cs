@@ -33,8 +33,8 @@ namespace Azure.Storage.Tests
             {
                 GetTokenCallback = (trc, _) =>
                 {
-                    Assert.AreEqual(scopes, trc.Scopes);
-                    Assert.AreEqual(expectedTenantId, trc.TenantId);
+                    Assert.That(trc.Scopes, Is.EqualTo(scopes));
+                    Assert.That(trc.TenantId, Is.EqualTo(expectedTenantId));
                 }
             };
         }
@@ -47,7 +47,7 @@ namespace Azure.Storage.Tests
             MockTransport transport = CreateMockTransport(new MockResponse(200));
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
 
-            Assert.True(transport.SingleRequest.Headers.TryGetValue("Authorization", out _));
+            Assert.That(transport.SingleRequest.Headers.TryGetValue("Authorization", out _), Is.True);
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace Azure.Storage.Tests
             {
                 await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
             }
-            Assert.True(transport.Requests.All(r => r.Headers.TryGetValue("Authorization", out _)));
+            Assert.That(transport.Requests.All(r => r.Headers.TryGetValue("Authorization", out _)), Is.True);
         }
 
         [Test]
@@ -99,10 +99,10 @@ namespace Azure.Storage.Tests
             // if enableTeanantDiscovery is true, the first request should be unauthorized
             if (enableTenantDiscovery)
             {
-                Assert.False(transport.Requests[0].Headers.TryGetValue("Authorization", out _));
+                Assert.That(transport.Requests[0].Headers.TryGetValue("Authorization", out _), Is.False);
             }
             // If enableTenantDiscovery is true, all but the first request should be authorized.
-            Assert.True(transport.Requests.Skip(enableTenantDiscovery ? 1 : 0).All(r => r.Headers.TryGetValue("Authorization", out _)));
+            Assert.That(transport.Requests.Skip(enableTenantDiscovery ? 1 : 0).All(r => r.Headers.TryGetValue("Authorization", out _)), Is.True);
         }
 
         [Test]
@@ -120,8 +120,8 @@ namespace Azure.Storage.Tests
             {
                 GetTokenCallback = (trc, _) =>
                 {
-                    Assert.IsTrue(callCount <= 1);
-                    Assert.AreEqual(serviceChallengeResponseScopes, trc.Scopes);
+                    Assert.That(callCount <= 1, Is.True);
+                    Assert.That(trc.Scopes, Is.EqualTo(serviceChallengeResponseScopes));
                     callCount++;
                 }
             };
@@ -166,7 +166,7 @@ namespace Azure.Storage.Tests
                     // Assert.AreEqual(serviceChallengeResponseScopes, trc.Scopes);
                     claims = trc.Claims;
                     Interlocked.Increment(ref callCount);
-                    Assert.AreEqual(true, trc.IsCaeEnabled);
+                    Assert.That(trc.IsCaeEnabled, Is.EqualTo(true));
                 }
             };
 
@@ -194,13 +194,13 @@ namespace Azure.Storage.Tests
             }, System.Diagnostics.Tracing.EventLevel.Error);
 
             var response = await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
-            Assert.AreEqual(expectedClaims, claims);
-            Assert.AreEqual(expectedResponseCode, response.Status);
+            Assert.That(claims, Is.EqualTo(expectedClaims));
+            Assert.That(response.Status, Is.EqualTo(expectedResponseCode));
 
             var response2 = await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
             if (expectedClaims != null)
             {
-                Assert.IsNull(claims);
+                Assert.That(claims, Is.Null);
             }
         }
 

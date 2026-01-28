@@ -13,33 +13,33 @@ namespace System.ClientModel.SourceGeneration.Tests
         public void JsonModelIsPresent()
         {
             var modelInfo = BasicContext.Default.GetTypeBuilder(typeof(JsonModel));
-            Assert.IsNotNull(modelInfo);
+            Assert.That(modelInfo, Is.Not.Null);
             JsonModel? model = InvokeCreateObject(modelInfo) as JsonModel;
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
             var ex = Assert.Throws<InvalidOperationException>(() => BasicContext.Default.GetTypeBuilder(typeof(string)));
-            Assert.IsNotNull(ex);
-            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for String.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.", ex!.Message);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex!.Message, Is.EqualTo("No ModelReaderWriterTypeBuilder found for String.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info."));
         }
 
         [Test]
         public void PersistableModelIsPresent()
         {
             var modelInfo = BasicContext.Default.GetTypeBuilder(typeof(PersistableModel));
-            Assert.IsNotNull(modelInfo);
+            Assert.That(modelInfo, Is.Not.Null);
             PersistableModel? model = InvokeCreateObject(modelInfo) as PersistableModel;
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
             var ex = Assert.Throws<InvalidOperationException>(() => BasicContext.Default.GetTypeBuilder(typeof(string)));
-            Assert.IsNotNull(ex);
-            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for String.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.", ex!.Message);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex!.Message, Is.EqualTo("No ModelReaderWriterTypeBuilder found for String.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info."));
         }
 
         [Test]
         public void ReadOnlyJsonModelIsPresent()
         {
             var modelInfo = BasicContext.Default.GetTypeBuilder(typeof(ReadOnlyMemory<JsonModel>));
-            Assert.IsNotNull(modelInfo);
+            Assert.That(modelInfo, Is.Not.Null);
             List<JsonModel>? model = InvokeCreateInstance(modelInfo) as List<JsonModel>;
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
         }
 
         private object? InvokeCreateObject(ModelReaderWriterTypeBuilder modelInfo)

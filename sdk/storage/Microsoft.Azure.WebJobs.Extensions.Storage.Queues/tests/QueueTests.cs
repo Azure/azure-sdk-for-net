@@ -58,8 +58,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var queue = queueServiceClient.GetQueueClient(QueueName);
             var msgs = (await queue.ReceiveMessagesAsync(10)).Value;
 
-            Assert.AreEqual(1, msgs.Count());
-            Assert.AreEqual("123", msgs[0].MessageText);
+            Assert.That(msgs.Count(), Is.EqualTo(1));
+            Assert.That(msgs[0].MessageText, Is.EqualTo("123"));
         }
 
         // Program with a static bad queue name (no { } ).
@@ -132,14 +132,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             try
             {
                 await host.GetJobHost().CallAsync<ProgramWithVariableQueueName>("Func", new { x = "*" }); // produces an error pattern.
-                Assert.False(true, "should have failed");
+                Assert.That(true, Is.False, "should have failed");
             }
             catch (FunctionInvocationException e)
             {
-                Assert.AreEqual("Exception binding parameter 'q'", e.InnerException.Message);
+                Assert.That(e.InnerException.Message, Is.EqualTo("Exception binding parameter 'q'"));
 
                 string errorMessage = GetErrorMessageForBadQueueName("q1-test*", "name");
-                Assert.AreEqual(errorMessage, e.InnerException.InnerException.Message);
+                Assert.That(e.InnerException.InnerException.Message, Is.EqualTo(errorMessage));
             }
         }
 
@@ -163,14 +163,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             try
             {
                 await host.GetJobHost().CallAsync<ProgramWithVariableQueueName>("Func", new { x = "1" }); // produces an error pattern.
-                Assert.False(true, "should have failed");
+                Assert.That(true, Is.False, "should have failed");
             }
             catch (FunctionInvocationException e) // Not an index exception!
             {
-                Assert.AreEqual("Exception binding parameter 'q'", e.InnerException.Message);
+                Assert.That(e.InnerException.Message, Is.EqualTo("Exception binding parameter 'q'"));
 
                 string errorMessage = GetErrorMessageForBadQueueName("q$-test1", "name");
-                Assert.AreEqual(errorMessage, e.InnerException.InnerException.Message);
+                Assert.That(e.InnerException.InnerException.Message, Is.EqualTo(errorMessage));
             }
         }
 
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         public async Task InvokeWithBindingData()
         {
             // Verify that queue binding pattern has uppercase letters in it. These get normalized to lowercase.
-            Assert.AreNotEqual(ProgramWithTriggerAndBindingData.QueueOutName, ProgramWithTriggerAndBindingData.QueueOutName.ToLower());
+            Assert.That(ProgramWithTriggerAndBindingData.QueueOutName.ToLower(), Is.Not.EqualTo(ProgramWithTriggerAndBindingData.QueueOutName));
 
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramWithTriggerAndBindingData>(b =>
@@ -216,8 +216,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var queue = queueServiceClient.GetQueueClient("qname-abc");
             var msgs = (await queue.ReceiveMessagesAsync(10)).Value;
 
-            Assert.AreEqual(1, msgs.Count());
-            Assert.AreEqual("123", msgs[0].MessageText);
+            Assert.That(msgs.Count(), Is.EqualTo(1));
+            Assert.That(msgs[0].MessageText, Is.EqualTo("123"));
         }
 
         public class ProgramWithTriggerAndCompoundBindingData
@@ -243,10 +243,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 SubOject prop1) // Bind to a object
             {
                 // binding to subobject work
-                Assert.NotNull(prop1);
-                Assert.AreEqual("abc", prop1.xyz);
+                Assert.That(prop1, Is.Not.Null);
+                Assert.That(prop1.xyz, Is.EqualTo("abc"));
 
-                Assert.AreEqual("bad", xyz);
+                Assert.That(xyz, Is.EqualTo("bad"));
 
                 q.Add("123");
             }
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         public async Task InvokeWithCompoundBindingData()
         {
             // Verify that queue binding pattern has uppercase letters in it. These get normalized to lowercase.
-            Assert.AreNotEqual(ProgramWithTriggerAndBindingData.QueueOutName, ProgramWithTriggerAndBindingData.QueueOutName.ToLower());
+            Assert.That(ProgramWithTriggerAndBindingData.QueueOutName.ToLower(), Is.Not.EqualTo(ProgramWithTriggerAndBindingData.QueueOutName));
 
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramWithTriggerAndCompoundBindingData>(b =>
@@ -285,8 +285,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var queue = queueServiceClient.GetQueueClient("qname-abc");
             var msgs = (await queue.ReceiveMessagesAsync(10)).Value;
 
-            Assert.AreEqual(1, msgs.Count());
-            Assert.AreEqual("123", msgs[0].MessageText);
+            Assert.That(msgs.Count(), Is.EqualTo(1));
+            Assert.That(msgs[0].MessageText, Is.EqualTo("123"));
         }
 
         public class ProgramSimple
@@ -401,10 +401,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToCloudQueueProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual(QueueName, result.Name);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Name, Is.EqualTo(QueueName));
             var queue = queueServiceClient.GetQueueClient(QueueName);
-            Assert.True(await queue.ExistsAsync());
+            Assert.That((bool)await queue.ExistsAsync(), Is.True);
         }
 
         [Test]
@@ -422,10 +422,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Assert
             var queue = queueServiceClient.GetQueueClient(QueueName);
             IEnumerable<QueueMessage> messages = (await queue.ReceiveMessagesAsync(10)).Value;
-            Assert.NotNull(messages);
-            Assert.AreEqual(1, messages.Count());
+            Assert.That(messages, Is.Not.Null);
+            Assert.That(messages.Count(), Is.EqualTo(1));
             QueueMessage message = messages.Single();
-            Assert.AreEqual(expectedContent, message.MessageText);
+            Assert.That(message.MessageText, Is.EqualTo(expectedContent));
         }
 
         private static async Task<QueueClient> CreateQueue(QueueServiceClient client, string queueName)

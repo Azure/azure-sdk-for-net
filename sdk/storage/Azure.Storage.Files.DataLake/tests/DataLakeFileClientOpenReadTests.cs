@@ -97,7 +97,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         protected override async Task StageDataAsync(DataLakeFileClient client, Stream data)
         {
-            using Stream writeStream = await client.OpenWriteAsync( overwrite: true);
+            using Stream writeStream = await client.OpenWriteAsync(overwrite: true);
             await data.CopyToAsync(writeStream);
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public override async Task AssertExpectedExceptionOpenReadModifiedAsync(Task readTask)
             => await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 readTask,
-                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ConditionNotMet")));
         #endregion
     }
 }

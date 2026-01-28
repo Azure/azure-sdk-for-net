@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,17 +10,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Shared;
+using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Models;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Test;
-using Azure.Storage.Test.Shared;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Azure.Storage.Shared;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -181,7 +180,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             CancellationToken cancellationToken)
         {
             long size = contents.Length;
-            Assert.IsTrue(size % (Constants.KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
+            Assert.That(size % (Constants.KB / 2), Is.EqualTo(0), "Cannot create page blob that's not a multiple of 512");
             await blobClient.CreateIfNotExistsAsync(
                 size,
                 new PageBlobCreateOptions()
@@ -271,7 +270,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Prefix = destinationPrefix
             };
             IList<BlobItem> items = await destinationContainer.GetBlobsAsync(options, cancellationToken: cancellationToken).ToListAsync();
-            Assert.IsEmpty(items);
+            Assert.That(items, Is.Empty);
         }
 
         protected internal abstract TSourceObjectClient GetSourceBlob(BlobContainerClient containerClient, string blobName);
@@ -314,14 +313,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             // Assert file and file contents
-            Assert.AreEqual(sourceFileNames.Count, destinationFileNames.Count);
+            Assert.That(destinationFileNames.Count, Is.EqualTo(sourceFileNames.Count));
             sourceFileNames.Sort();
             destinationFileNames.Sort();
             for (int i = 0; i < sourceFileNames.Count; i++)
             {
-                Assert.AreEqual(
-                    sourceFileNames[i],
-                    destinationFileNames[i]);
+                Assert.That(
+                    destinationFileNames[i],
+                    Is.EqualTo(sourceFileNames[i]));
 
                 // Verify contents
                 string sourceFullName = !string.IsNullOrEmpty(sourcePrefix) ?
@@ -334,29 +333,29 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 TDestinationObjectClient destinationClient = GetDestinationBlob(destinationContainer, destinationFullName);
                 using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationToken);
                 using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationToken);
-                Assert.AreEqual(sourceStream, destinationStream);
+                Assert.That(destinationStream, Is.EqualTo(sourceStream));
 
                 if (propertiesTestType == TransferPropertiesTestType.NoPreserve)
                 {
                     BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-                    Assert.IsEmpty(destinationProperties.Metadata);
-                    Assert.IsNull(destinationProperties.ContentDisposition);
-                    Assert.IsNull(destinationProperties.ContentLanguage);
-                    Assert.IsNull(destinationProperties.CacheControl);
+                    Assert.That(destinationProperties.Metadata, Is.Empty);
+                    Assert.That(destinationProperties.ContentDisposition, Is.Null);
+                    Assert.That(destinationProperties.ContentLanguage, Is.Null);
+                    Assert.That(destinationProperties.CacheControl, Is.Null);
 
                     GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
-                    Assert.IsEmpty(destinationTags.Tags);
+                    Assert.That(destinationTags.Tags, Is.Empty);
                 }
                 else if (propertiesTestType == TransferPropertiesTestType.NewProperties)
                 {
                     BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                     Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
-                    Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
-                    Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
-                    Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
-                    Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
+                    Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(_defaultContentDisposition));
+                    Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(_defaultContentLanguage));
+                    Assert.That(destinationProperties.CacheControl, Is.EqualTo(_defaultCacheControl));
+                    Assert.That(destinationProperties.ContentType, Is.EqualTo(_defaultContentType));
                 }
                 else //(propertiesTestType == TransferPropertiesTestType.Default ||
                      //(propertiesTestType == TransferPropertiesTestType.Preserve)
@@ -365,7 +364,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                     Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                    Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                    Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
                 }
             }
         }

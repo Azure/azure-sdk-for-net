@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class ETagConverterTests: JsonConverterTestBase
+    public class ETagConverterTests : JsonConverterTestBase
     {
         public ETagConverterTests(JsonSerializerType serializer) : base(serializer)
         {
@@ -26,13 +26,13 @@ namespace Azure.Core.Tests
 
             if (value == null)
             {
-                Assert.AreEqual(default(ETag), deserialized.ETag);
+                Assert.That(deserialized.ETag, Is.EqualTo(default(ETag)));
             }
             else
             {
-                Assert.AreEqual(value, deserialized.ETag.ToString("H"));
+                Assert.That(deserialized.ETag.ToString("H"), Is.EqualTo(value));
             }
-            Assert.AreEqual(expected, serialized);
+            Assert.That(serialized, Is.EqualTo(expected));
         }
 
         [Theory]
@@ -48,13 +48,13 @@ namespace Azure.Core.Tests
 
             if (value == null)
             {
-                Assert.Null(deserialized.ETag);
+                Assert.That(deserialized.ETag, Is.Null);
             }
             else
             {
-                Assert.AreEqual(value, deserialized.ETag.Value.ToString("H"));
+                Assert.That(deserialized.ETag.Value.ToString("H"), Is.EqualTo(value));
             }
-            Assert.AreEqual(expected, serialized);
+            Assert.That(serialized, Is.EqualTo(expected));
         }
 
         private class ClassWithEtagProperty

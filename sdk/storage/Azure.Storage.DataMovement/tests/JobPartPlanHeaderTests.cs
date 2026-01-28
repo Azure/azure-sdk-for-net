@@ -16,19 +16,19 @@ namespace Azure.Storage.DataMovement.Tests
         {
             JobPartPlanHeader header = CreateDefaultJobPartHeader();
 
-            Assert.AreEqual(DataMovementConstants.JobPartPlanFile.SchemaVersion, header.Version);
-            Assert.AreEqual(DefaultTransferId, header.TransferId);
-            Assert.AreEqual(DefaultPartNumber, header.PartNumber);
-            Assert.AreEqual(DefaultCreateTime, header.CreateTime);
-            Assert.AreEqual(DefaultSourceTypeId, header.SourceTypeId);
-            Assert.AreEqual(DefaultDestinationTypeId, header.DestinationTypeId);
-            Assert.AreEqual(DefaultSourcePath, header.SourcePath);
-            Assert.AreEqual(DefaultDestinationPath, header.DestinationPath);
-            Assert.AreEqual(DefaultCreatePreference, header.CreatePreference);
-            Assert.AreEqual(DefaultInitialTransferSize, header.InitialTransferSize);
-            Assert.AreEqual(DefaultChunkSize, header.ChunkSize);
-            Assert.AreEqual(DefaultPriority, header.Priority);
-            Assert.AreEqual(DefaultPartStatus, header.JobPartStatus);
+            Assert.That(header.Version, Is.EqualTo(DataMovementConstants.JobPartPlanFile.SchemaVersion));
+            Assert.That(header.TransferId, Is.EqualTo(DefaultTransferId));
+            Assert.That(header.PartNumber, Is.EqualTo(DefaultPartNumber));
+            Assert.That(header.CreateTime, Is.EqualTo(DefaultCreateTime));
+            Assert.That(header.SourceTypeId, Is.EqualTo(DefaultSourceTypeId));
+            Assert.That(header.DestinationTypeId, Is.EqualTo(DefaultDestinationTypeId));
+            Assert.That(header.SourcePath, Is.EqualTo(DefaultSourcePath));
+            Assert.That(header.DestinationPath, Is.EqualTo(DefaultDestinationPath));
+            Assert.That(header.CreatePreference, Is.EqualTo(DefaultCreatePreference));
+            Assert.That(header.InitialTransferSize, Is.EqualTo(DefaultInitialTransferSize));
+            Assert.That(header.ChunkSize, Is.EqualTo(DefaultChunkSize));
+            Assert.That(header.Priority, Is.EqualTo(DefaultPriority));
+            Assert.That(header.JobPartStatus, Is.EqualTo(DefaultPartStatus));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement.Tests
                 byte[] expected = reader.ReadBytes((int)fileStream.Length);
                 byte[] actual = headerStream.ToArray();
 
-                CollectionAssert.AreEqual(expected, actual);
+                Assert.That(actual, Is.EqualTo(expected).AsCollection);
             }
         }
 
@@ -106,19 +106,19 @@ namespace Azure.Storage.DataMovement.Tests
             JobPartPlanHeader deserializedHeader = JobPartPlanHeader.Deserialize(stream);
 
             // Assert
-            Assert.AreEqual(schemaVersion, deserializedHeader.Version);
-            Assert.AreEqual(DefaultTransferId, deserializedHeader.TransferId);
-            Assert.AreEqual(DefaultPartNumber, deserializedHeader.PartNumber);
-            Assert.AreEqual(DefaultCreateTime, deserializedHeader.CreateTime);
-            Assert.AreEqual(DefaultSourceTypeId, deserializedHeader.SourceTypeId);
-            Assert.AreEqual(DefaultDestinationTypeId, deserializedHeader.DestinationTypeId);
-            Assert.AreEqual(DefaultSourcePath, deserializedHeader.SourcePath);
-            Assert.AreEqual(DefaultDestinationPath, deserializedHeader.DestinationPath);
-            Assert.AreEqual(DefaultCreatePreference, deserializedHeader.CreatePreference);
-            Assert.AreEqual(DefaultInitialTransferSize, deserializedHeader.InitialTransferSize);
-            Assert.AreEqual(DefaultChunkSize, deserializedHeader.ChunkSize);
-            Assert.AreEqual(DefaultPriority, deserializedHeader.Priority);
-            Assert.AreEqual(DefaultPartStatus, deserializedHeader.JobPartStatus);
+            Assert.That(deserializedHeader.Version, Is.EqualTo(schemaVersion));
+            Assert.That(deserializedHeader.TransferId, Is.EqualTo(DefaultTransferId));
+            Assert.That(deserializedHeader.PartNumber, Is.EqualTo(DefaultPartNumber));
+            Assert.That(deserializedHeader.CreateTime, Is.EqualTo(DefaultCreateTime));
+            Assert.That(deserializedHeader.SourceTypeId, Is.EqualTo(DefaultSourceTypeId));
+            Assert.That(deserializedHeader.DestinationTypeId, Is.EqualTo(DefaultDestinationTypeId));
+            Assert.That(deserializedHeader.SourcePath, Is.EqualTo(DefaultSourcePath));
+            Assert.That(deserializedHeader.DestinationPath, Is.EqualTo(DefaultDestinationPath));
+            Assert.That(deserializedHeader.CreatePreference, Is.EqualTo(DefaultCreatePreference));
+            Assert.That(deserializedHeader.InitialTransferSize, Is.EqualTo(DefaultInitialTransferSize));
+            Assert.That(deserializedHeader.ChunkSize, Is.EqualTo(DefaultChunkSize));
+            Assert.That(deserializedHeader.Priority, Is.EqualTo(DefaultPriority));
+            Assert.That(deserializedHeader.JobPartStatus, Is.EqualTo(DefaultPartStatus));
         }
     }
 }

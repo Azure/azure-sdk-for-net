@@ -24,59 +24,59 @@ namespace Azure.Storage.Test
             var credentials1 = new StorageSharedKeyCredential(accountName, emptyKeyValueAsString);
 
             StorageConnectionString conn1 = TestExtensions.CreateStorageConnectionString(credentials1, true);
-            Assert.AreEqual(emptyKeyConnectionString, conn1.ToString(true));
-            Assert.IsNotNull(conn1.Credentials);
-            Assert.IsInstanceOf(typeof(StorageSharedKeyCredential), conn1.Credentials);
-            Assert.AreEqual(accountName, ((StorageSharedKeyCredential)conn1.Credentials).AccountName);
-            Assert.AreEqual(emptyKeyValueAsString, ((StorageSharedKeyCredential)conn1.Credentials).ExportBase64EncodedKey());
+            Assert.That(conn1.ToString(true), Is.EqualTo(emptyKeyConnectionString));
+            Assert.That(conn1.Credentials, Is.Not.Null);
+            Assert.That(conn1.Credentials, Is.InstanceOf(typeof(StorageSharedKeyCredential)));
+            Assert.That(((StorageSharedKeyCredential)conn1.Credentials).AccountName, Is.EqualTo(accountName));
+            Assert.That(((StorageSharedKeyCredential)conn1.Credentials).ExportBase64EncodedKey(), Is.EqualTo(emptyKeyValueAsString));
 
             var account2 = StorageConnectionString.Parse(emptyKeyConnectionString);
-            Assert.AreEqual(emptyKeyConnectionString, account2.ToString(true));
-            Assert.IsNotNull(account2.Credentials);
-            Assert.IsInstanceOf(typeof(StorageSharedKeyCredential), account2.Credentials);
-            Assert.AreEqual(accountName, ((StorageSharedKeyCredential)account2.Credentials).AccountName);
-            Assert.AreEqual(emptyKeyValueAsString, ((StorageSharedKeyCredential)account2.Credentials).ExportBase64EncodedKey());
+            Assert.That(account2.ToString(true), Is.EqualTo(emptyKeyConnectionString));
+            Assert.That(account2.Credentials, Is.Not.Null);
+            Assert.That(account2.Credentials, Is.InstanceOf(typeof(StorageSharedKeyCredential)));
+            Assert.That(((StorageSharedKeyCredential)account2.Credentials).AccountName, Is.EqualTo(accountName));
+            Assert.That(((StorageSharedKeyCredential)account2.Credentials).ExportBase64EncodedKey(), Is.EqualTo(emptyKeyValueAsString));
 
             var isValidAccount3 = StorageConnectionString.TryParse(emptyKeyConnectionString, out StorageConnectionString account3);
-            Assert.IsTrue(isValidAccount3);
-            Assert.IsNotNull(account3);
-            Assert.AreEqual(emptyKeyConnectionString, account3.ToString(true));
-            Assert.IsNotNull(account3.Credentials);
-            Assert.IsInstanceOf(typeof(StorageSharedKeyCredential), account3.Credentials);
-            Assert.AreEqual(accountName, ((StorageSharedKeyCredential)account3.Credentials).AccountName);
-            Assert.AreEqual(emptyKeyValueAsString, ((StorageSharedKeyCredential)account3.Credentials).ExportBase64EncodedKey());
+            Assert.That(isValidAccount3, Is.True);
+            Assert.That(account3, Is.Not.Null);
+            Assert.That(account3.ToString(true), Is.EqualTo(emptyKeyConnectionString));
+            Assert.That(account3.Credentials, Is.Not.Null);
+            Assert.That(account3.Credentials, Is.InstanceOf(typeof(StorageSharedKeyCredential)));
+            Assert.That(((StorageSharedKeyCredential)account3.Credentials).AccountName, Is.EqualTo(accountName));
+            Assert.That(((StorageSharedKeyCredential)account3.Credentials).ExportBase64EncodedKey(), Is.EqualTo(emptyKeyValueAsString));
         }
 
         private void AccountsAreEqual(StorageConnectionString a, StorageConnectionString b)
         {
             // endpoints are the same
-            Assert.AreEqual(a.BlobEndpoint, b.BlobEndpoint);
-            Assert.AreEqual(a.QueueEndpoint, b.QueueEndpoint);
-            Assert.AreEqual(a.FileEndpoint, b.FileEndpoint);
+            Assert.That(b.BlobEndpoint, Is.EqualTo(a.BlobEndpoint));
+            Assert.That(b.QueueEndpoint, Is.EqualTo(a.QueueEndpoint));
+            Assert.That(b.FileEndpoint, Is.EqualTo(a.FileEndpoint));
 
             // storage uris are the same
-            Assert.AreEqual(a.BlobStorageUri, b.BlobStorageUri);
-            Assert.AreEqual(a.QueueStorageUri, b.QueueStorageUri);
-            Assert.AreEqual(a.FileStorageUri, b.FileStorageUri);
+            Assert.That(b.BlobStorageUri, Is.EqualTo(a.BlobStorageUri));
+            Assert.That(b.QueueStorageUri, Is.EqualTo(a.QueueStorageUri));
+            Assert.That(b.FileStorageUri, Is.EqualTo(a.FileStorageUri));
 
             // seralized representatons are the same.
             var aToStringNoSecrets = a.ToString(false);
             var aToStringWithSecrets = a.ToString(true);
             var bToStringNoSecrets = b.ToString(false);
             var bToStringWithSecrets = b.ToString(true);
-            Assert.AreEqual(aToStringNoSecrets, bToStringNoSecrets);
-            Assert.AreEqual(aToStringWithSecrets, bToStringWithSecrets);
+            Assert.That(bToStringNoSecrets, Is.EqualTo(aToStringNoSecrets));
+            Assert.That(bToStringWithSecrets, Is.EqualTo(aToStringWithSecrets));
 
             // credentials are the same
             if (a.Credentials != null && b.Credentials != null)
             {
-                Assert.AreEqual(a.GetType(), b.GetType());
+                Assert.That(b.GetType(), Is.EqualTo(a.GetType()));
 
                 // make sure
                 if (a.Credentials != StorageConnectionString.DevelopmentStorageAccount.Credentials &&
                     b.Credentials != StorageConnectionString.DevelopmentStorageAccount.Credentials)
                 {
-                    StringAssert.AreNotEqualIgnoringCase(aToStringWithSecrets, bToStringNoSecrets);
+                    Assert.That(bToStringNoSecrets, Is.Not.EqualTo(aToStringWithSecrets).IgnoreCase);
                 }
             }
             else if (a.Credentials == null && b.Credentials == null)
@@ -94,14 +94,14 @@ namespace Azure.Storage.Test
         public void DevelopmentStorageAccount()
         {
             StorageConnectionString devstoreAccount = StorageConnectionString.DevelopmentStorageAccount;
-            Assert.AreEqual(new Uri("http://127.0.0.1:10000/devstoreaccount1"), devstoreAccount.BlobEndpoint);
-            Assert.AreEqual(new Uri("http://127.0.0.1:10001/devstoreaccount1"), devstoreAccount.QueueEndpoint);
-            Assert.AreEqual(new Uri("http://127.0.0.1:10000/devstoreaccount1"), devstoreAccount.BlobStorageUri.PrimaryUri);
-            Assert.AreEqual(new Uri("http://127.0.0.1:10001/devstoreaccount1"), devstoreAccount.QueueStorageUri.PrimaryUri);
-            Assert.AreEqual(new Uri("http://127.0.0.1:10000/devstoreaccount1-secondary"), devstoreAccount.BlobStorageUri.SecondaryUri);
-            Assert.AreEqual(new Uri("http://127.0.0.1:10001/devstoreaccount1-secondary"), devstoreAccount.QueueStorageUri.SecondaryUri);
-            Assert.IsNull(devstoreAccount.FileStorageUri.PrimaryUri);
-            Assert.IsNull(devstoreAccount.FileStorageUri.SecondaryUri);
+            Assert.That(devstoreAccount.BlobEndpoint, Is.EqualTo(new Uri("http://127.0.0.1:10000/devstoreaccount1")));
+            Assert.That(devstoreAccount.QueueEndpoint, Is.EqualTo(new Uri("http://127.0.0.1:10001/devstoreaccount1")));
+            Assert.That(devstoreAccount.BlobStorageUri.PrimaryUri, Is.EqualTo(new Uri("http://127.0.0.1:10000/devstoreaccount1")));
+            Assert.That(devstoreAccount.QueueStorageUri.PrimaryUri, Is.EqualTo(new Uri("http://127.0.0.1:10001/devstoreaccount1")));
+            Assert.That(devstoreAccount.BlobStorageUri.SecondaryUri, Is.EqualTo(new Uri("http://127.0.0.1:10000/devstoreaccount1-secondary")));
+            Assert.That(devstoreAccount.QueueStorageUri.SecondaryUri, Is.EqualTo(new Uri("http://127.0.0.1:10001/devstoreaccount1-secondary")));
+            Assert.That(devstoreAccount.FileStorageUri.PrimaryUri, Is.Null);
+            Assert.That(devstoreAccount.FileStorageUri.SecondaryUri, Is.Null);
 
             var devstoreAccountToStringWithSecrets = devstoreAccount.ToString(true);
             var testAccount = StorageConnectionString.Parse(devstoreAccountToStringWithSecrets);
@@ -120,18 +120,18 @@ namespace Azure.Storage.Test
         {
             var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
             var conn = TestExtensions.CreateStorageConnectionString(cred, false);
-            Assert.AreEqual(conn.BlobEndpoint,
-                new Uri(string.Format("http://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.QueueEndpoint,
-                new Uri(string.Format("http://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.FileEndpoint,
-                new Uri(string.Format("http://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
-                new Uri(string.Format("http://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
-                new Uri(string.Format("http://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
-                new Uri(string.Format("http://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+            Assert.That(new Uri(string.Format("http://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.BlobEndpoint));
+            Assert.That(new Uri(string.Format("http://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.QueueEndpoint));
+            Assert.That(new Uri(string.Format("http://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.FileEndpoint));
+            Assert.That(new Uri(string.Format("http://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.BlobStorageUri.SecondaryUri));
+            Assert.That(new Uri(string.Format("http://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.QueueStorageUri.SecondaryUri));
+            Assert.That(new Uri(string.Format("http://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.FileStorageUri.SecondaryUri));
             _ = conn.ToString();
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
             var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
@@ -146,18 +146,18 @@ namespace Azure.Storage.Test
         {
             var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
             var conn = TestExtensions.CreateStorageConnectionString(cred, true);
-            Assert.AreEqual(conn.BlobEndpoint,
-                new Uri(string.Format("https://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.QueueEndpoint,
-                new Uri(string.Format("https://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.FileEndpoint,
-                new Uri(string.Format("https://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
-                new Uri(string.Format("https://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
-                new Uri(string.Format("https://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
-                new Uri(string.Format("https://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+            Assert.That(new Uri(string.Format("https://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.BlobEndpoint));
+            Assert.That(new Uri(string.Format("https://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.QueueEndpoint));
+            Assert.That(new Uri(string.Format("https://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.FileEndpoint));
+            Assert.That(new Uri(string.Format("https://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.BlobStorageUri.SecondaryUri));
+            Assert.That(new Uri(string.Format("https://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.QueueStorageUri.SecondaryUri));
+            Assert.That(new Uri(string.Format("https://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)),
+                Is.EqualTo(conn.FileStorageUri.SecondaryUri));
 
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
             var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
@@ -179,18 +179,18 @@ namespace Azure.Storage.Test
                     TestConfigurations.DefaultTargetTenant.AccountKey,
                     TestEndpointSuffix));
 
-            Assert.AreEqual(conn.BlobEndpoint,
-                new Uri(string.Format("http://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.QueueEndpoint,
-                new Uri(string.Format("http://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.FileEndpoint,
-                new Uri(string.Format("http://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
-                new Uri(string.Format("http://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
-                new Uri(string.Format("http://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
-               new Uri(string.Format("http://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+            Assert.That(new Uri(string.Format("http://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+                Is.EqualTo(conn.BlobEndpoint));
+            Assert.That(new Uri(string.Format("http://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+                Is.EqualTo(conn.QueueEndpoint));
+            Assert.That(new Uri(string.Format("http://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+                Is.EqualTo(conn.FileEndpoint));
+            Assert.That(new Uri(string.Format("http://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+                Is.EqualTo(conn.BlobStorageUri.SecondaryUri));
+            Assert.That(new Uri(string.Format("http://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+                Is.EqualTo(conn.QueueStorageUri.SecondaryUri));
+            Assert.That(new Uri(string.Format("http://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+               Is.EqualTo(conn.FileStorageUri.SecondaryUri));
 
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
             var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
@@ -212,18 +212,18 @@ namespace Azure.Storage.Test
                     TestConfigurations.DefaultTargetTenant.AccountKey,
                     TestEndpointSuffix));
 
-            Assert.AreEqual(conn.BlobEndpoint,
-                new Uri(string.Format("https://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.QueueEndpoint,
-                new Uri(string.Format("https://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.FileEndpoint,
-                new Uri(string.Format("https://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
-                new Uri(string.Format("https://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
-                new Uri(string.Format("https://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
-                new Uri(string.Format("https://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+            Assert.That(new Uri(string.Format("https://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+                Is.EqualTo(conn.BlobEndpoint));
+            Assert.That(new Uri(string.Format("https://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+                Is.EqualTo(conn.QueueEndpoint));
+            Assert.That(new Uri(string.Format("https://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+                Is.EqualTo(conn.FileEndpoint));
+            Assert.That(new Uri(string.Format("https://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+                Is.EqualTo(conn.BlobStorageUri.SecondaryUri));
+            Assert.That(new Uri(string.Format("https://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+                Is.EqualTo(conn.QueueStorageUri.SecondaryUri));
+            Assert.That(new Uri(string.Format("https://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)),
+                Is.EqualTo(conn.FileStorageUri.SecondaryUri));
 
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
             var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
@@ -446,9 +446,9 @@ namespace Azure.Storage.Test
                 var conn = StorageConnectionString.Parse(accountStringKeyPrimary); // no exception expected
 
                 // Query params should not be set as no Sas token is included
-                Assert.IsEmpty(conn.BlobEndpoint.Query);
-                Assert.IsEmpty(conn.FileEndpoint.Query);
-                Assert.IsEmpty(conn.QueueEndpoint.Query);
+                Assert.That(conn.BlobEndpoint.Query, Is.Empty);
+                Assert.That(conn.FileEndpoint.Query, Is.Empty);
+                Assert.That(conn.QueueEndpoint.Query, Is.Empty);
 
                 TestHelper.AssertExpectedException(
                     () => StorageConnectionString.Parse(accountStringKeySecondary),
@@ -538,9 +538,9 @@ namespace Azure.Storage.Test
                 conn = StorageConnectionString.Parse(accountStringSasNoDefaultProtocolPrimary); // no exception expected
 
                 // Sas token should be included in Query portion of Uri
-                StringAssert.Contains("sasTest", conn.BlobEndpoint.Query);
-                StringAssert.Contains("sasTest", conn.FileEndpoint.Query);
-                StringAssert.Contains("sasTest", conn.QueueEndpoint.Query);
+                Assert.That(conn.BlobEndpoint.Query, Does.Contain("sasTest"));
+                Assert.That(conn.FileEndpoint.Query, Does.Contain("sasTest"));
+                Assert.That(conn.QueueEndpoint.Query, Does.Contain("sasTest"));
 
                 TestHelper.AssertExpectedException(
                     () => StorageConnectionString.Parse(accountStringSasNoDefaultProtocolSecondary),
@@ -608,52 +608,52 @@ namespace Azure.Storage.Test
         public void TryParseNullEmpty()
         {
             // TryParse should not throw exception when passing in null or empty string
-            Assert.IsFalse(StorageConnectionString.TryParse(null, out _));
-            Assert.IsFalse(StorageConnectionString.TryParse(string.Empty, out _));
+            Assert.That(StorageConnectionString.TryParse(null, out _), Is.False);
+            Assert.That(StorageConnectionString.TryParse(string.Empty, out _), Is.False);
         }
 
         [Test]
         [Description("UseDevelopmentStorage=false should fail")]
-        public void DevStoreNonTrueFails() => Assert.IsFalse(StorageConnectionString.TryParse("UseDevelopmentStorage=false", out _));
+        public void DevStoreNonTrueFails() => Assert.That(StorageConnectionString.TryParse("UseDevelopmentStorage=false", out _), Is.False);
 
         [Test]
         [Description("UseDevelopmentStorage should fail when used with an account name")]
-        public void DevStorePlusAccountFails() => Assert.IsFalse(StorageConnectionString.TryParse("UseDevelopmentStorage=false;AccountName=devstoreaccount1", out _));
+        public void DevStorePlusAccountFails() => Assert.That(StorageConnectionString.TryParse("UseDevelopmentStorage=false;AccountName=devstoreaccount1", out _), Is.False);
 
         [Test]
         [Description("UseDevelopmentStorage should fail when used with a custom endpoint")]
-        public void DevStorePlusEndpointFails() => Assert.IsFalse(StorageConnectionString.TryParse("UseDevelopmentStorage=false;BlobEndpoint=http://127.0.0.1:1000/devstoreaccount1", out _));
+        public void DevStorePlusEndpointFails() => Assert.That(StorageConnectionString.TryParse("UseDevelopmentStorage=false;BlobEndpoint=http://127.0.0.1:1000/devstoreaccount1", out _), Is.False);
 
         [Test]
         [Description("UseDevelopmentStorage=true should succeed")]
-        public void DevStoreTrueLowerCase() => Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true", out _));
+        public void DevStoreTrueLowerCase() => Assert.That(StorageConnectionString.TryParse("UseDevelopmentStorage=true", out _), Is.True);
 
         [Test]
         [Description("UseDevelopmentStorage=True should succeed")]
-        public void DevStoreTrueUpperCase() => Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=True", out _));
+        public void DevStoreTrueUpperCase() => Assert.That(StorageConnectionString.TryParse("UseDevelopmentStorage=True", out _), Is.True);
 
         [Test]
         [Description("Custom endpoints")]
         public void DefaultEndpointOverride()
         {
-            Assert.IsTrue(StorageConnectionString.TryParse("DefaultEndpointsProtocol=http;BlobEndpoint=http://customdomain.com/;AccountName=asdf;AccountKey=123=", out StorageConnectionString account));
-            Assert.AreEqual(new Uri("http://customdomain.com/"), account.BlobEndpoint);
-            Assert.IsNull(account.BlobStorageUri.SecondaryUri);
+            Assert.That(StorageConnectionString.TryParse("DefaultEndpointsProtocol=http;BlobEndpoint=http://customdomain.com/;AccountName=asdf;AccountKey=123=", out StorageConnectionString account), Is.True);
+            Assert.That(account.BlobEndpoint, Is.EqualTo(new Uri("http://customdomain.com/")));
+            Assert.That(account.BlobStorageUri.SecondaryUri, Is.Null);
         }
 
         [Test]
         [Description("Use DevStore with a proxy")]
         public void DevStoreProxyUri()
         {
-            Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler", out StorageConnectionString devstoreAccount));
-            Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1"), devstoreAccount.BlobEndpoint);
-            Assert.AreEqual(new Uri("http://ipv4.fiddler:10001/devstoreaccount1"), devstoreAccount.QueueEndpoint);
-            Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1"), devstoreAccount.BlobStorageUri.PrimaryUri);
-            Assert.AreEqual(new Uri("http://ipv4.fiddler:10001/devstoreaccount1"), devstoreAccount.QueueStorageUri.PrimaryUri);
-            Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1-secondary"), devstoreAccount.BlobStorageUri.SecondaryUri);
-            Assert.AreEqual(new Uri("http://ipv4.fiddler:10001/devstoreaccount1-secondary"), devstoreAccount.QueueStorageUri.SecondaryUri);
-            Assert.IsNull(devstoreAccount.FileStorageUri.PrimaryUri);
-            Assert.IsNull(devstoreAccount.FileStorageUri.SecondaryUri);
+            Assert.That(StorageConnectionString.TryParse("UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler", out StorageConnectionString devstoreAccount), Is.True);
+            Assert.That(devstoreAccount.BlobEndpoint, Is.EqualTo(new Uri("http://ipv4.fiddler:10000/devstoreaccount1")));
+            Assert.That(devstoreAccount.QueueEndpoint, Is.EqualTo(new Uri("http://ipv4.fiddler:10001/devstoreaccount1")));
+            Assert.That(devstoreAccount.BlobStorageUri.PrimaryUri, Is.EqualTo(new Uri("http://ipv4.fiddler:10000/devstoreaccount1")));
+            Assert.That(devstoreAccount.QueueStorageUri.PrimaryUri, Is.EqualTo(new Uri("http://ipv4.fiddler:10001/devstoreaccount1")));
+            Assert.That(devstoreAccount.BlobStorageUri.SecondaryUri, Is.EqualTo(new Uri("http://ipv4.fiddler:10000/devstoreaccount1-secondary")));
+            Assert.That(devstoreAccount.QueueStorageUri.SecondaryUri, Is.EqualTo(new Uri("http://ipv4.fiddler:10001/devstoreaccount1-secondary")));
+            Assert.That(devstoreAccount.FileStorageUri.PrimaryUri, Is.Null);
+            Assert.That(devstoreAccount.FileStorageUri.SecondaryUri, Is.Null);
         }
 
         [Test]
@@ -662,7 +662,7 @@ namespace Azure.Storage.Test
         {
             var accountString = "UseDevelopmentStorage=true";
 
-            Assert.AreEqual(accountString, StorageConnectionString.Parse(accountString).ToString(true));
+            Assert.That(StorageConnectionString.Parse(accountString).ToString(true), Is.EqualTo(accountString));
         }
 
         [Test]
@@ -671,7 +671,7 @@ namespace Azure.Storage.Test
         {
             var accountString = "UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler/";
 
-            Assert.AreEqual(accountString, StorageConnectionString.Parse(accountString).ToString(true));
+            Assert.That(StorageConnectionString.Parse(accountString).ToString(true), Is.EqualTo(accountString));
         }
 
         [Test]
@@ -680,7 +680,7 @@ namespace Azure.Storage.Test
         {
             var accountString = "DefaultEndpointsProtocol=http;AccountName=test;AccountKey=abc=";
 
-            Assert.AreEqual(accountString, StorageConnectionString.Parse(accountString).ToString(true));
+            Assert.That(StorageConnectionString.Parse(accountString).ToString(true), Is.EqualTo(accountString));
         }
 
         [Test]
@@ -689,7 +689,7 @@ namespace Azure.Storage.Test
         {
             var accountString = "BlobEndpoint=http://blobs/";
 
-            Assert.AreEqual(accountString, StorageConnectionString.Parse(accountString).ToString(true));
+            Assert.That(StorageConnectionString.Parse(accountString).ToString(true), Is.EqualTo(accountString));
 
             var account = new StorageConnectionString(null, (new Uri("http://blobs/"), default), (default, default), (default, default));
 
@@ -705,7 +705,7 @@ namespace Azure.Storage.Test
             var account = StorageConnectionString.Parse(accountString);
             var accountAndKey = (StorageSharedKeyCredential)account.Credentials;
             var key = accountAndKey.ExportBase64EncodedKey();
-            Assert.AreEqual(accountKeyString, key);
+            Assert.That(key, Is.EqualTo(accountKeyString));
 
             var keyBytes = accountAndKey.GetAccountKey();
             var expectedKeyBytes = Convert.FromBase64String(accountKeyString);

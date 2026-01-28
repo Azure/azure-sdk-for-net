@@ -102,11 +102,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             }
             catch (FunctionIndexingException e)
             {
-                Assert.AreEqual("Error indexing method '" + functionName + "'", e.Message);
-                StringAssert.StartsWith(expectedErrorMessage, e.InnerException.Message);
+                Assert.That(e.Message, Is.EqualTo("Error indexing method '" + functionName + "'"));
+                Assert.That(e.InnerException.Message, Does.StartWith(expectedErrorMessage));
                 return;
             }
-            Assert.True(false, "Invoker should have failed");
+            Assert.That(false, Is.True, "Invoker should have failed");
         }
 
         public static IHostBuilder ConfigureDefaultTestHost(this IHostBuilder builder, Action<IWebJobsBuilder> configureWebJobs, params Type[] types)
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
                     newlyIntroducedPublicTypes.Length,
                     newlyIntroducedPublicTypes.Length == 1 ? "" : "s",
                     string.Join("\r\n", newlyIntroducedPublicTypes));
-                Assert.True(false, message);
+                Assert.That(false, Is.True, message);
             }
 
             var missingPublicTypes = expected.Except(actual).ToArray();
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
                     missingPublicTypes.Length,
                     missingPublicTypes.Length == 1 ? "" : "s",
                     string.Join("\r\n", missingPublicTypes));
-                Assert.True(false, message);
+                Assert.That(false, Is.True, message);
             }
         }
     }

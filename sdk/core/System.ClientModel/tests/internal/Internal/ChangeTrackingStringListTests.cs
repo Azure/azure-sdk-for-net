@@ -14,11 +14,11 @@ internal class ChangeTrackingStringListTests
     {
         ChangeTrackingStringList list = new(["a"]);
 
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(list.HasChanged, Is.False);
 
         list.Add("b");
 
-        Assert.IsTrue(list.HasChanged);
+        Assert.That(list.HasChanged, Is.True);
     }
 
     [Test]
@@ -26,11 +26,11 @@ internal class ChangeTrackingStringListTests
     {
         ChangeTrackingStringList list = new(["a"]);
 
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(list.HasChanged, Is.False);
 
         list[0] = "b";
 
-        Assert.IsTrue(list.HasChanged);
+        Assert.That(list.HasChanged, Is.True);
     }
 
     [Test]
@@ -38,11 +38,11 @@ internal class ChangeTrackingStringListTests
     {
         ChangeTrackingStringList list = new(["a"]);
 
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(list.HasChanged, Is.False);
 
         list.Clear();
 
-        Assert.IsTrue(list.HasChanged);
+        Assert.That(list.HasChanged, Is.True);
     }
 
     [Test]
@@ -50,11 +50,11 @@ internal class ChangeTrackingStringListTests
     {
         ChangeTrackingStringList list = new();
 
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(list.HasChanged, Is.False);
 
         list.Clear();
 
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(list.HasChanged, Is.False);
     }
 
     [Test]
@@ -62,11 +62,11 @@ internal class ChangeTrackingStringListTests
     {
         ChangeTrackingStringList list = new(["a"]);
 
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(list.HasChanged, Is.False);
 
         list.Insert(0, "b");
 
-        Assert.IsTrue(list.HasChanged);
+        Assert.That(list.HasChanged, Is.True);
     }
 
     [Test]
@@ -74,11 +74,11 @@ internal class ChangeTrackingStringListTests
     {
         ChangeTrackingStringList list = new(["a"]);
 
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(list.HasChanged, Is.False);
 
         list.Remove("a");
 
-        Assert.IsTrue(list.HasChanged);
+        Assert.That(list.HasChanged, Is.True);
     }
 
     [Test]
@@ -86,12 +86,12 @@ internal class ChangeTrackingStringListTests
     {
         ChangeTrackingStringList list = new(["a"]);
 
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(list.HasChanged, Is.False);
 
         bool removed = list.Remove("b");
 
-        Assert.IsFalse(removed);
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(removed, Is.False);
+        Assert.That(list.HasChanged, Is.False);
     }
 
     [Test]
@@ -99,11 +99,11 @@ internal class ChangeTrackingStringListTests
     {
         ChangeTrackingStringList list = new(["a"]);
 
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(list.HasChanged, Is.False);
 
         list.RemoveAt(0);
 
-        Assert.IsTrue(list.HasChanged);
+        Assert.That(list.HasChanged, Is.True);
     }
 
     [Test]
@@ -111,11 +111,11 @@ internal class ChangeTrackingStringListTests
     {
         ChangeTrackingStringList list = new(["a"]);
 
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(list.HasChanged, Is.False);
 
         Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveAt(1));
 
-        Assert.IsFalse(list.HasChanged);
+        Assert.That(list.HasChanged, Is.False);
     }
 
     [Test]
@@ -124,10 +124,10 @@ internal class ChangeTrackingStringListTests
         List<string> originalList = ["a", "b", "c"];
         ChangeTrackingStringList changeTrackingList = new(originalList);
 
-        Assert.AreEqual(originalList.Count, changeTrackingList.Count);
-        Assert.IsTrue(changeTrackingList.Contains(originalList[0]));
-        Assert.IsTrue(changeTrackingList.Contains(originalList[1]));
-        Assert.IsTrue(changeTrackingList.Contains(originalList[2]));
+        Assert.That(originalList.Count, Is.EqualTo(changeTrackingList.Count));
+        Assert.That(changeTrackingList.Contains(originalList[0]), Is.True);
+        Assert.That(changeTrackingList.Contains(originalList[1]), Is.True);
+        Assert.That(changeTrackingList.Contains(originalList[2]), Is.True);
     }
 
     [Test]
@@ -138,7 +138,7 @@ internal class ChangeTrackingStringListTests
 
         changeTrackingList.Add("d");
 
-        Assert.IsTrue(changeTrackingList.HasChanged);
+        Assert.That(changeTrackingList.HasChanged, Is.True);
     }
 
     [Test]

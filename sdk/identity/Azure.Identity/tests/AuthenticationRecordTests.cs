@@ -24,11 +24,11 @@ namespace Azure.Identity.Tests
                 $"{Guid.NewGuid()}.{Guid.NewGuid()}", Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
             IAccount account = (AuthenticationAccount)record;
-            Assert.NotNull(account.Username);
-            Assert.NotNull(account.Environment);
-            Assert.NotNull(account.HomeAccountId.Identifier);
-            Assert.NotNull(account.HomeAccountId.ObjectId);
-            Assert.NotNull(account.HomeAccountId.TenantId);
+            Assert.That(account.Username, Is.Not.Null);
+            Assert.That(account.Environment, Is.Not.Null);
+            Assert.That(account.HomeAccountId.Identifier, Is.Not.Null);
+            Assert.That(account.HomeAccountId.ObjectId, Is.Not.Null);
+            Assert.That(account.HomeAccountId.TenantId, Is.Not.Null);
         }
 
         [Test]
@@ -59,18 +59,18 @@ namespace Azure.Identity.Tests
             var actRecord = await AuthenticationRecord.DeserializeAsync(stream);
             IAccount actAccount = (AuthenticationAccount)actRecord;
 
-            Assert.AreEqual(expRecord.Username, actRecord.Username);
-            Assert.AreEqual(expRecord.Authority, actRecord.Authority);
-            Assert.AreEqual(expRecord.HomeAccountId, actRecord.HomeAccountId);
-            Assert.AreEqual(expRecord.TenantId, actRecord.TenantId);
-            Assert.AreEqual(expRecord.ClientId, actRecord.ClientId);
-            Assert.AreEqual(expRecord.Version, actRecord.Version);
+            Assert.That(actRecord.Username, Is.EqualTo(expRecord.Username));
+            Assert.That(actRecord.Authority, Is.EqualTo(expRecord.Authority));
+            Assert.That(actRecord.HomeAccountId, Is.EqualTo(expRecord.HomeAccountId));
+            Assert.That(actRecord.TenantId, Is.EqualTo(expRecord.TenantId));
+            Assert.That(actRecord.ClientId, Is.EqualTo(expRecord.ClientId));
+            Assert.That(actRecord.Version, Is.EqualTo(expRecord.Version));
 
-            Assert.AreEqual(expAccount.Username, actAccount.Username);
-            Assert.AreEqual(expAccount.Environment, actAccount.Environment);
-            Assert.AreEqual(expAccount.HomeAccountId.Identifier, actAccount.HomeAccountId.Identifier);
-            Assert.AreEqual(expAccount.HomeAccountId.ObjectId, actAccount.HomeAccountId.ObjectId);
-            Assert.AreEqual(expAccount.HomeAccountId.TenantId, actAccount.HomeAccountId.TenantId);
+            Assert.That(actAccount.Username, Is.EqualTo(expAccount.Username));
+            Assert.That(actAccount.Environment, Is.EqualTo(expAccount.Environment));
+            Assert.That(actAccount.HomeAccountId.Identifier, Is.EqualTo(expAccount.HomeAccountId.Identifier));
+            Assert.That(actAccount.HomeAccountId.ObjectId, Is.EqualTo(expAccount.HomeAccountId.ObjectId));
+            Assert.That(actAccount.HomeAccountId.TenantId, Is.EqualTo(expAccount.HomeAccountId.TenantId));
         }
 
         [Test]
@@ -88,12 +88,12 @@ namespace Azure.Identity.Tests
 
             var actRecord = AuthenticationRecord.Deserialize(stream);
 
-            Assert.AreEqual(expRecord.Username, actRecord.Username);
-            Assert.AreEqual(expRecord.Authority, actRecord.Authority);
-            Assert.AreEqual(expRecord.HomeAccountId, actRecord.HomeAccountId);
-            Assert.AreEqual(expRecord.TenantId, actRecord.TenantId);
-            Assert.AreEqual(expRecord.ClientId, actRecord.ClientId);
-            Assert.AreEqual(expRecord.Version, actRecord.Version);
+            Assert.That(actRecord.Username, Is.EqualTo(expRecord.Username));
+            Assert.That(actRecord.Authority, Is.EqualTo(expRecord.Authority));
+            Assert.That(actRecord.HomeAccountId, Is.EqualTo(expRecord.HomeAccountId));
+            Assert.That(actRecord.TenantId, Is.EqualTo(expRecord.TenantId));
+            Assert.That(actRecord.ClientId, Is.EqualTo(expRecord.ClientId));
+            Assert.That(actRecord.Version, Is.EqualTo(expRecord.Version));
         }
         [Test]
         public void DeserializeThrowsWithNonCurrentVersion()
@@ -118,7 +118,7 @@ namespace Azure.Identity.Tests
 
             var actRecord = AuthenticationRecord.Deserialize(stream);
 
-            Assert.AreEqual(actRecord.Version, version);
+            Assert.That(version, Is.EqualTo(actRecord.Version));
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace Azure.Identity.Tests
 
             var actRecord = AuthenticationRecord.Deserialize(stream);
 
-            Assert.AreEqual(actRecord.Version, AuthenticationRecord.CurrentVersion);
+            Assert.That(actRecord.Version, Is.EqualTo(AuthenticationRecord.CurrentVersion));
         }
 
         [Test]

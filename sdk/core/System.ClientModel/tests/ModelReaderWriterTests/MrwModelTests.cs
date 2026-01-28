@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
-using System.ClientModel.Primitives;
 using System.Reflection;
 using System.Text.Json;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
@@ -139,7 +139,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 }
                 finally
                 {
-                    Assert.IsTrue(gotException);
+                    Assert.That(gotException, Is.True);
                 }
 
                 gotException = false;
@@ -154,7 +154,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 }
                 finally
                 {
-                    Assert.IsTrue(gotException);
+                    Assert.That(gotException, Is.True);
                 }
             }
         }
@@ -175,7 +175,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 {
                     exceptionCaught = true;
                 }
-                Assert.IsTrue(exceptionCaught, "Expected InvalidOperationException to be thrown when deserializing wire format as json");
+                Assert.That(exceptionCaught, Is.True, "Expected InvalidOperationException to be thrown when deserializing wire format as json");
             }
         }
     }

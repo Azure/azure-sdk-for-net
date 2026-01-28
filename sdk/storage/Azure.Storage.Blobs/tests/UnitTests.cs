@@ -14,9 +14,9 @@ namespace Azure.Storage.Blobs.Test
         {
             MockStream stream = new MockStream();
             BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Assert.IsFalse(stream.IsDisposed);
+            Assert.That(stream.IsDisposed, Is.False);
             blobDownloadInfo.Dispose();
-            Assert.IsTrue(stream.IsDisposed);
+            Assert.That(stream.IsDisposed, Is.True);
         }
 
         // TODO fix this.

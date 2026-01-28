@@ -100,17 +100,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Task<FunctionResult> task = product.ExecuteAsync(message, CancellationToken.None);
 
             // Assert
-            Assert.True(task.Result.Succeeded);
+            Assert.That(task.Result.Succeeded, Is.True);
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual("FunctionNotFound", logMessage.EventId.Name);
-            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
-            Assert.AreEqual(4, logMessage.State.Count());
-            Assert.AreEqual(TestBlobName, logMessage.GetStateValue<string>("blobName"));
-            Assert.AreEqual("Missing", logMessage.GetStateValue<string>("functionName"));
-            Assert.AreEqual(TestQueueMessageId, logMessage.GetStateValue<string>("queueMessageId"));
-            Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
+            Assert.That(logMessage.EventId.Name, Is.EqualTo("FunctionNotFound"));
+            Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Debug));
+            Assert.That(logMessage.State.Count(), Is.EqualTo(4));
+            Assert.That(logMessage.GetStateValue<string>("blobName"), Is.EqualTo(TestBlobName));
+            Assert.That(logMessage.GetStateValue<string>("functionName"), Is.EqualTo("Missing"));
+            Assert.That(logMessage.GetStateValue<string>("queueMessageId"), Is.EqualTo(TestQueueMessageId));
+            Assert.That(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")), Is.True);
         }
 
         [Test]
@@ -135,16 +135,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Task<FunctionResult> task = product.ExecuteAsync(message, CancellationToken.None);
 
             // Assert
-            Assert.True(task.Result.Succeeded);
+            Assert.That(task.Result.Succeeded, Is.True);
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual("BlobNotFound", logMessage.EventId.Name);
-            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
-            Assert.AreEqual(3, logMessage.State.Count());
-            Assert.AreEqual(TestBlobName, logMessage.GetStateValue<string>("blobName"));
-            Assert.AreEqual(TestQueueMessageId, logMessage.GetStateValue<string>("queueMessageId"));
-            Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
+            Assert.That(logMessage.EventId.Name, Is.EqualTo("BlobNotFound"));
+            Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Debug));
+            Assert.That(logMessage.State.Count(), Is.EqualTo(3));
+            Assert.That(logMessage.GetStateValue<string>("blobName"), Is.EqualTo(TestBlobName));
+            Assert.That(logMessage.GetStateValue<string>("queueMessageId"), Is.EqualTo(TestQueueMessageId));
+            Assert.That(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")), Is.True);
         }
 
         [Test]
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // Assert
             task.WaitUntilCompleted();
             mock.Verify();
-            Assert.True(task.Result.Succeeded);
+            Assert.That(task.Result.Succeeded, Is.True);
         }
 
         [Test]
@@ -196,10 +196,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 .Callback<TriggeredFunctionData, CancellationToken>(
                 (mockInput, mockCancellationToken) =>
                 {
-                    Assert.AreEqual(expectedParentId, mockInput.ParentId);
+                    Assert.That(mockInput.ParentId, Is.EqualTo(expectedParentId));
 
                     var resultBlob = (BlobBaseClient)mockInput.TriggerValue;
-                    Assert.AreEqual(TestBlobName, resultBlob.Name);
+                    Assert.That(resultBlob.Name, Is.EqualTo(TestBlobName));
                 })
                 .ReturnsAsync(expectedResult)
                 .Verifiable();
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             FunctionResult result = await product.ExecuteAsync(message, CancellationToken.None);
 
             // Assert
-            Assert.AreSame(expectedResult, result);
+            Assert.That(result, Is.SameAs(expectedResult));
             mock.Verify();
         }
 
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Task<FunctionResult> task = product.ExecuteAsync(message, CancellationToken.None);
 
             // Assert
-            Assert.AreSame(expectedResult, task.Result);
+            Assert.That(task.Result, Is.SameAs(expectedResult));
         }
 
         [Test]
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Task<FunctionResult> task = product.ExecuteAsync(message, CancellationToken.None);
 
             // Assert
-            Assert.False(task.Result.Succeeded);
+            Assert.That(task.Result.Succeeded, Is.False);
         }
 
         private static IBlobWrittenWatcher CreateDummyBlobWrittenWatcher()

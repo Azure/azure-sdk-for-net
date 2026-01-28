@@ -19,7 +19,7 @@ namespace Azure.Core.Tests
 
             byte[] actual = LightweightPkcs8Decoder.ReadBitString(data, ref offset);
 
-            Assert.AreEqual(new byte[] { 0x11, 0x22, 0x33, 0x00 }, actual);
+            Assert.That(actual, Is.EqualTo(new byte[] { 0x11, 0x22, 0x33, 0x00 }));
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
             int offset = 0;
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadBitString(data, ref offset));
-            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Invalid PKCS#8 Data"));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace Azure.Core.Tests
             int offset = 0;
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadBitString(data, ref offset));
-            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Invalid PKCS#8 Data"));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests
             int offset = 0;
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadBitString(data, ref offset));
-            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Invalid PKCS#8 Data"));
         }
 
         private static IEnumerable ReadBitStringData => new[]
@@ -65,7 +65,7 @@ namespace Azure.Core.Tests
 
             string actualOid = LightweightPkcs8Decoder.ReadObjectIdentifier(data, ref offset);
 
-            Assert.AreEqual(expectedOid, actualOid);
+            Assert.That(actualOid, Is.EqualTo(expectedOid));
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Azure.Core.Tests
             int offset = 0;
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadObjectIdentifier(data, ref offset));
-            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Invalid PKCS#8 Data"));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace Azure.Core.Tests
             int offset = 0;
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadObjectIdentifier(data, ref offset));
-            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Invalid PKCS#8 Data"));
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Azure.Core.Tests
             int offset = 0;
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadObjectIdentifier(data, ref offset));
-            Assert.AreEqual("Unsupported PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Unsupported PKCS#8 Data"));
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Azure.Core.Tests
             int offset = 0;
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadObjectIdentifier(data, ref offset));
-            Assert.AreEqual("Unsupported PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Unsupported PKCS#8 Data"));
         }
 
         private static IEnumerable ReadObjectIdentifierData => new[]
@@ -142,7 +142,7 @@ namespace Azure.Core.Tests
             int offset = 0;
             byte[] actual = LightweightPkcs8Decoder.ReadOctetString(data, ref offset);
 
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace Azure.Core.Tests
             int offset = 0;
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadOctetString(data, ref offset));
-            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Invalid PKCS#8 Data"));
         }
 
         [Test]
@@ -162,14 +162,14 @@ namespace Azure.Core.Tests
             int offset = 0;
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadOctetString(data, ref offset));
-            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Invalid PKCS#8 Data"));
         }
 
         [Test]
         public void GetRSAPrivateKeyOid()
         {
             byte[] data = Convert.FromBase64String(PrivateKey);
-            Assert.AreEqual("1.2.840.113549.1.1.1", LightweightPkcs8Decoder.DecodePrivateKeyOid(data));
+            Assert.That(LightweightPkcs8Decoder.DecodePrivateKeyOid(data), Is.EqualTo("1.2.840.113549.1.1.1"));
         }
 
         [Test]
@@ -177,7 +177,7 @@ namespace Azure.Core.Tests
         {
             // cspell:ignore Secp
             byte[] data = Convert.FromBase64String(EcSecp256k1PrivateKey);
-            Assert.AreEqual("1.2.840.10045.2.1", LightweightPkcs8Decoder.DecodePrivateKeyOid(data));
+            Assert.That(LightweightPkcs8Decoder.DecodePrivateKeyOid(data), Is.EqualTo("1.2.840.10045.2.1"));
         }
 
         [Test]
@@ -200,8 +200,8 @@ namespace Azure.Core.Tests
             RSAParameters pemParams = fromPem.ExportParameters(false);
             RSAParameters pfxParams = fromPfx.ExportParameters(false);
 
-            Assert.AreEqual(pfxParams.Modulus, pemParams.Modulus);
-            Assert.AreEqual(pfxParams.Exponent, pemParams.Exponent);
+            Assert.That(pemParams.Modulus, Is.EqualTo(pfxParams.Modulus));
+            Assert.That(pemParams.Exponent, Is.EqualTo(pfxParams.Exponent));
             clientCert.Dispose();
         }
 
@@ -211,7 +211,7 @@ namespace Azure.Core.Tests
             byte[] data = Convert.FromBase64String(InvalidPrivateKey);
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeRSAPkcs8(data));
-            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Invalid PKCS#8 Data"));
         }
 
         [Test]
@@ -220,7 +220,7 @@ namespace Azure.Core.Tests
             byte[] data = Convert.FromBase64String(EcSecp256k1PrivateKey);
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeRSAPkcs8(data));
-            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Invalid PKCS#8 Data"));
         }
 
         private const string Pfx = @"

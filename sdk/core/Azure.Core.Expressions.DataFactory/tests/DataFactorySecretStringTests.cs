@@ -11,15 +11,15 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CanCreateFromString()
         {
-           var maskedString = new DataFactorySecretString("foo");
-           Assert.AreEqual("foo", maskedString.Value);
+            var maskedString = new DataFactorySecretString("foo");
+            Assert.That(maskedString.Value, Is.EqualTo("foo"));
         }
 
         [Test]
         public void CanCreateFromStringImplicitCast()
         {
             DataFactorySecretString maskedString = "foo";
-            Assert.AreEqual("foo", maskedString.Value);
+            Assert.That(maskedString.Value, Is.EqualTo("foo"));
         }
     }
 }

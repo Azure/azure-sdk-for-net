@@ -43,7 +43,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests
 
         private async Task RunTrigger(Type programType)
         {
-            await FunctionalTest.RunTriggerAsync(b => {
+            await FunctionalTest.RunTriggerAsync(b =>
+            {
                 b.Services.AddAzureClients(builder =>
                 {
                     builder.ConfigureDefaults(options => options.Transport = AzuriteNUnitFixture.Instance.GetTransport());

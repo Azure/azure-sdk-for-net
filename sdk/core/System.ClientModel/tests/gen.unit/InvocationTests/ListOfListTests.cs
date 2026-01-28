@@ -21,40 +21,40 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                 var dupedListListModel = ValidateBuilder("TestProject1", expectation, dict, out var dupedListModel);
             }
 
-            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
-            Assert.AreEqual(itemModel!.Type, listModel!.Type.ItemType);
+            Assert.That(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel), Is.True);
+            Assert.That(listModel!.Type.ItemType, Is.EqualTo(itemModel!.Type));
             expectation.ModelValidation(itemModel);
         }
 
         private static TypeBuilderSpec ValidateBuilder(string lookupName, ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict, out TypeBuilderSpec? innerList)
         {
-            Assert.IsTrue(dict.TryGetValue($"{lookupName}.List<List<{expectation.TypeName}>>", out var listListModel));
-            Assert.AreEqual($"List<List<{expectation.TypeName}>>", listListModel!.Type.Name);
-            Assert.AreEqual("System.Collections.Generic", listListModel.Type.Namespace);
-            Assert.IsNotNull(listListModel.Type.ItemType);
-            Assert.AreEqual(TypeBuilderKind.IList, listListModel.Kind);
-            Assert.AreEqual(0, listListModel.Type.ArrayRank);
-            Assert.AreEqual($"List_List_{expectation.TypeName}_", listListModel.Type.TypeCaseName);
-            Assert.AreEqual($"list_List_{expectation.TypeName}_", listListModel.Type.CamelCaseName);
-            Assert.AreEqual(s_localContext, listListModel.ContextType);
+            Assert.That(dict.TryGetValue($"{lookupName}.List<List<{expectation.TypeName}>>", out var listListModel), Is.True);
+            Assert.That(listListModel!.Type.Name, Is.EqualTo($"List<List<{expectation.TypeName}>>"));
+            Assert.That(listListModel.Type.Namespace, Is.EqualTo("System.Collections.Generic"));
+            Assert.That(listListModel.Type.ItemType, Is.Not.Null);
+            Assert.That(listListModel.Kind, Is.EqualTo(TypeBuilderKind.IList));
+            Assert.That(listListModel.Type.ArrayRank, Is.EqualTo(0));
+            Assert.That(listListModel.Type.TypeCaseName, Is.EqualTo($"List_List_{expectation.TypeName}_"));
+            Assert.That(listListModel.Type.CamelCaseName, Is.EqualTo($"list_List_{expectation.TypeName}_"));
+            Assert.That(listListModel.ContextType, Is.EqualTo(s_localContext));
 
             var genericArgument = listListModel.Type.ItemType!;
-            Assert.AreEqual($"List<{expectation.TypeName}>", genericArgument.Name);
-            Assert.AreEqual("System.Collections.Generic", genericArgument.Namespace);
-            Assert.IsNotNull(genericArgument.ItemType);
-            Assert.AreEqual(0, genericArgument.ArrayRank);
-            Assert.AreEqual($"List_{expectation.TypeName}_", genericArgument.TypeCaseName);
-            Assert.AreEqual($"list_{expectation.TypeName}_", genericArgument.CamelCaseName);
+            Assert.That(genericArgument.Name, Is.EqualTo($"List<{expectation.TypeName}>"));
+            Assert.That(genericArgument.Namespace, Is.EqualTo("System.Collections.Generic"));
+            Assert.That(genericArgument.ItemType, Is.Not.Null);
+            Assert.That(genericArgument.ArrayRank, Is.EqualTo(0));
+            Assert.That(genericArgument.TypeCaseName, Is.EqualTo($"List_{expectation.TypeName}_"));
+            Assert.That(genericArgument.CamelCaseName, Is.EqualTo($"list_{expectation.TypeName}_"));
 
-            Assert.IsTrue(dict.TryGetValue($"{lookupName}.List<{expectation.TypeName}>", out innerList));
-            Assert.AreEqual($"List<{expectation.TypeName}>", innerList!.Type.Name);
-            Assert.AreEqual("System.Collections.Generic", innerList.Type.Namespace);
-            Assert.IsNotNull(innerList.Type.ItemType);
-            Assert.AreEqual(TypeBuilderKind.IList, innerList.Kind);
-            Assert.AreEqual(0, innerList.Type.ArrayRank);
-            Assert.AreEqual($"List_{expectation.TypeName}_", innerList.Type.TypeCaseName);
-            Assert.AreEqual($"list_{expectation.TypeName}_", innerList.Type.CamelCaseName);
-            Assert.AreEqual(s_localContext, innerList.ContextType);
+            Assert.That(dict.TryGetValue($"{lookupName}.List<{expectation.TypeName}>", out innerList), Is.True);
+            Assert.That(innerList!.Type.Name, Is.EqualTo($"List<{expectation.TypeName}>"));
+            Assert.That(innerList.Type.Namespace, Is.EqualTo("System.Collections.Generic"));
+            Assert.That(innerList.Type.ItemType, Is.Not.Null);
+            Assert.That(innerList.Kind, Is.EqualTo(TypeBuilderKind.IList));
+            Assert.That(innerList.Type.ArrayRank, Is.EqualTo(0));
+            Assert.That(innerList.Type.TypeCaseName, Is.EqualTo($"List_{expectation.TypeName}_"));
+            Assert.That(innerList.Type.CamelCaseName, Is.EqualTo($"list_{expectation.TypeName}_"));
+            Assert.That(innerList.ContextType, Is.EqualTo(s_localContext));
             return listListModel;
         }
     }

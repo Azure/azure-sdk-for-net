@@ -15,19 +15,19 @@ namespace Azure.Core.Expressions.DataFactory.Samples
             blobDataSet.FolderPath = "foo/bar";
             #endregion
 
-            Assert.AreEqual("foo/bar", blobDataSet.FolderPath.ToString());
+            Assert.That(blobDataSet.FolderPath.ToString(), Is.EqualTo("foo/bar"));
 
             #region Snippet:DataFactoryElementFromExpression
             blobDataSet.FolderPath = DataFactoryElement<string>.FromExpression("foo/bar-@{pipeline().TriggerTime}");
             #endregion
 
-            Assert.AreEqual("foo/bar-@{pipeline().TriggerTime}", blobDataSet.FolderPath.ToString());
+            Assert.That(blobDataSet.FolderPath.ToString(), Is.EqualTo("foo/bar-@{pipeline().TriggerTime}"));
 
             #region Snippet:DataFactoryElementSecretString
             blobDataSet.FolderPath = DataFactoryElement<string>.FromSecretString("some/secret/path");
             #endregion
 
-            Assert.AreEqual("some/secret/path", blobDataSet.FolderPath.ToString());
+            Assert.That(blobDataSet.FolderPath.ToString(), Is.EqualTo("some/secret/path"));
 
             #region Snippet:DataFactoryElementKeyVaultSecretReference
             var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
@@ -36,7 +36,7 @@ namespace Azure.Core.Expressions.DataFactory.Samples
             blobDataSet.FolderPath = DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference);
             #endregion
 
-            Assert.AreEqual("secretName", blobDataSet.FolderPath.ToString());
+            Assert.That(blobDataSet.FolderPath.ToString(), Is.EqualTo("secretName"));
         }
 
         private class BlobDataSet

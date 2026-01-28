@@ -79,9 +79,9 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Samples
             #endregion Snippet:Microsoft_Azure_Core_Spatial_Samples_Readme_SearchSample
 
             Mountain _mountain = results.Value.GetResults().Single().Document;
-            Assert.AreEqual("Mount Rainier", _mountain.Name);
-            Assert.AreEqual(-121.76044, _mountain.Summit.Longitude);
-            Assert.AreEqual(46.85287, _mountain.Summit.Latitude);
+            Assert.That(_mountain.Name, Is.EqualTo("Mount Rainier"));
+            Assert.That(_mountain.Summit.Longitude, Is.EqualTo(-121.76044));
+            Assert.That(_mountain.Summit.Latitude, Is.EqualTo(46.85287));
         }
 
         #region Snippet:Microsoft_Azure_Core_Spatial_Samples_Readme_Model

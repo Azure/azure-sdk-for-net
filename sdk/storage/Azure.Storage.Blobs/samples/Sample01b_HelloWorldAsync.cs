@@ -50,7 +50,7 @@ namespace Azure.Storage.Blobs.Samples
 
                 // Verify we uploaded some content
                 BlobProperties properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(SampleFileContent.Length, properties.ContentLength);
+                Assert.That(properties.ContentLength, Is.EqualTo(SampleFileContent.Length));
             }
             finally
             {
@@ -89,7 +89,7 @@ namespace Azure.Storage.Blobs.Samples
                 await blob.DownloadToAsync(downloadPath);
 
                 // Verify the contents
-                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+                Assert.That(File.ReadAllText(downloadPath), Is.EqualTo(SampleFileContent));
             }
             finally
             {
@@ -113,7 +113,7 @@ namespace Azure.Storage.Blobs.Samples
             await new BlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt")).DownloadToAsync(downloadPath);
             #endregion
 
-            Assert.IsTrue(File.ReadAllBytes(downloadPath).Length > 0);
+            Assert.That(File.ReadAllBytes(downloadPath).Length > 0, Is.True);
             File.Delete(downloadPath);
         }
 
@@ -143,10 +143,10 @@ namespace Azure.Storage.Blobs.Samples
                     names.Add(blob.Name);
                 }
 
-                Assert.AreEqual(3, names.Count);
-                Assert.Contains("first", names);
-                Assert.Contains("second", names);
-                Assert.Contains("third", names);
+                Assert.That(names.Count, Is.EqualTo(3));
+                Assert.That(names, Does.Contain("first"));
+                Assert.That(names, Does.Contain("second"));
+                Assert.That(names, Does.Contain("third"));
             }
             finally
             {

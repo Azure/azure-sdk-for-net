@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Tests
             AdditionalAssertions += async (client) =>
             {
                 IDictionary<string, string> metadata = (await client.GetPropertiesAsync()).Value.Metadata;
-                Assert.IsFalse(metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
+                Assert.That(metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey), Is.False);
             };
         }
 
@@ -109,14 +109,14 @@ namespace Azure.Storage.Blobs.Tests
             HttpHeaderParameters httpHeaders = default,
             IProgress<long> progressHandler = default)
             => await client.OpenWriteAsync(overwrite, new BlobOpenWriteOptions
-               {
-                   BufferSize = bufferSize,
-                   OpenConditions = conditions,
-                   Metadata = metadata,
-                   Tags = tags,
-                   HttpHeaders = httpHeaders.ToBlobHttpHeaders(),
-                   ProgressHandler = progressHandler
-               });
+            {
+                BufferSize = bufferSize,
+                OpenConditions = conditions,
+                Metadata = metadata,
+                Tags = tags,
+                HttpHeaders = httpHeaders.ToBlobHttpHeaders(),
+                ProgressHandler = progressHandler
+            });
         #endregion
 
         #region Tests
@@ -129,7 +129,7 @@ namespace Azure.Storage.Blobs.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 OpenWriteAsync(client, overwrite: false, maxDataSize: Constants.KB),
-                e => Assert.AreEqual("BlockBlobClient.OpenWrite only supports overwriting", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("BlockBlobClient.OpenWrite only supports overwriting")));
         }
 
         [RecordedTest]

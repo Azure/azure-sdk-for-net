@@ -11,39 +11,39 @@ namespace Azure.Core.Tests
         public void Basics()
         {
             ContentType contentType = default;
-            Assert.AreEqual("", contentType.ToString());
-            Assert.IsTrue(contentType.Equals(null));
-            Assert.IsTrue(contentType.Equals(new ContentType()));
+            Assert.That(contentType.ToString(), Is.Empty);
+            Assert.That(contentType, Is.EqualTo(null));
+            Assert.That(contentType, Is.EqualTo(new ContentType()));
 
             string aj = "application/json";
             contentType = ContentType.ApplicationJson;
-            Assert.AreEqual(aj, contentType.ToString());
-            Assert.IsTrue(contentType.Equals(aj));
-            Assert.IsTrue(contentType.Equals(new ContentType(aj)));
-            Assert.IsTrue(contentType.Equals((object)aj));
-            Assert.IsTrue(contentType.Equals((object)new ContentType(aj)));
-            Assert.IsFalse(contentType.Equals("text/plain"));
-            Assert.IsFalse(contentType.Equals(null));
+            Assert.That(contentType.ToString(), Is.EqualTo(aj));
+            Assert.That(contentType, Is.EqualTo(aj));
+            Assert.That(contentType, Is.EqualTo(new ContentType(aj)));
+            Assert.That(contentType, Is.EqualTo((object)aj));
+            Assert.That(contentType, Is.EqualTo((object)new ContentType(aj)));
+            Assert.That(contentType.Equals("text/plain"), Is.False);
+            Assert.That(contentType.Equals(null), Is.False);
 
             string aos = "application/octet-stream";
             contentType = ContentType.ApplicationOctetStream;
-            Assert.AreEqual(aos, contentType.ToString());
-            Assert.IsTrue(contentType.Equals(aos));
-            Assert.IsTrue(contentType.Equals(new ContentType(aos)));
-            Assert.IsTrue(contentType.Equals((object)aos));
-            Assert.IsTrue(contentType.Equals((object)new ContentType(aos)));
-            Assert.IsFalse(contentType.Equals("text/plain"));
-            Assert.IsFalse(contentType.Equals(null));
+            Assert.That(contentType.ToString(), Is.EqualTo(aos));
+            Assert.That(contentType, Is.EqualTo(aos));
+            Assert.That(contentType, Is.EqualTo(new ContentType(aos)));
+            Assert.That(contentType, Is.EqualTo((object)aos));
+            Assert.That(contentType, Is.EqualTo((object)new ContentType(aos)));
+            Assert.That(contentType.Equals("text/plain"), Is.False);
+            Assert.That(contentType.Equals(null), Is.False);
 
             string pt = "text/plain";
             contentType = ContentType.TextPlain;
-            Assert.AreEqual(pt, contentType.ToString());
-            Assert.IsTrue(contentType.Equals(pt));
-            Assert.IsTrue(contentType.Equals(new ContentType(pt)));
-            Assert.IsTrue(contentType.Equals((object)pt));
-            Assert.IsTrue(contentType.Equals((object)new ContentType(pt)));
-            Assert.IsFalse(contentType.Equals("application/json"));
-            Assert.IsFalse(contentType.Equals(null));
+            Assert.That(contentType.ToString(), Is.EqualTo(pt));
+            Assert.That(contentType, Is.EqualTo(pt));
+            Assert.That(contentType, Is.EqualTo(new ContentType(pt)));
+            Assert.That(contentType, Is.EqualTo((object)pt));
+            Assert.That(contentType, Is.EqualTo((object)new ContentType(pt)));
+            Assert.That(contentType.Equals("application/json"), Is.False);
+            Assert.That(contentType.Equals(null), Is.False);
         }
     }
 }

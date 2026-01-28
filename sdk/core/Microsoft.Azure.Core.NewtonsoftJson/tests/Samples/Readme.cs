@@ -70,10 +70,10 @@ namespace Microsoft.Azure.Core.NewtonsoftJson.Tests.Samples
             #endregion Snippet:Microsoft_Azure_Core_NewtonsoftJson_Samples_Readme_SearchSample
 
             Movie _movie = results.Value.GetResults().Single().Document;
-            Assert.AreEqual("efe8857f-1d74-41e2-9ff1-4943a9ad69d5", _movie.Id);
-            Assert.AreEqual("The Lord of the Rings: The Return of the King", _movie.Title);
-            Assert.AreEqual("Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.", _movie.Description);
-            Assert.AreEqual(9.1, _movie.Rating, 0.01);
+            Assert.That(_movie.Id, Is.EqualTo("efe8857f-1d74-41e2-9ff1-4943a9ad69d5"));
+            Assert.That(_movie.Title, Is.EqualTo("The Lord of the Rings: The Return of the King"));
+            Assert.That(_movie.Description, Is.EqualTo("Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring."));
+            Assert.That(_movie.Rating, Is.EqualTo(9.1).Within(0.01));
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Core.NewtonsoftJson.Tests.Samples
             };
             #endregion Snippet:Microsoft_Azure_Core_NewtonsoftJson_Samples_Readme_DefaultSerializerSettings
 
-            Assert.AreEqual(2, serializerSettings.Converters.Count);
+            Assert.That(serializerSettings.Converters.Count, Is.EqualTo(2));
             Assert.That(serializerSettings.Converters, Has.Some.TypeOf(typeof(NewtonsoftJsonETagConverter)));
             Assert.That(serializerSettings.Converters, Has.Some.TypeOf(typeof(StringEnumConverter)));
         }

@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
             var target = new DisposableHttpPipeline(transport, 0, 0, new[] { new MockPolicy(transport, HttpMessageSanitizer.Default) }, ResponseClassifier.Shared, isOwned);
 
             target.Dispose();
-            Assert.AreEqual(isOwned, transport.DisposeCalled);
+            Assert.That(transport.DisposeCalled, Is.EqualTo(isOwned));
         }
 
         [Test]

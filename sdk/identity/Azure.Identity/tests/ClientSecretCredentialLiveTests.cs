@@ -42,14 +42,14 @@ namespace Azure.Identity.Tests
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
 
-            Assert.IsNotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
             Assert.That(cache.CacheReadCount, Is.Not.Zero);
             Assert.That(cache.CacheUpdatedCount, Is.Not.Zero);
 
             // ensure subsequent calls before the token expires are served from the token cache
             AccessToken cachedToken = await credential.GetTokenAsync(tokenRequestContext);
 
-            Assert.AreEqual(token.Token, cachedToken.Token);
+            Assert.That(cachedToken.Token, Is.EqualTo(token.Token));
 
             var options2 = InstrumentClientOptions(new ClientSecretCredentialOptions());
 
@@ -60,7 +60,7 @@ namespace Azure.Identity.Tests
 
             if (Mode != RecordedTestMode.Playback && Mode != RecordedTestMode.None)
             {
-                Assert.AreNotEqual(token.Token, token2.Token);
+                Assert.That(token2.Token, Is.Not.EqualTo(token.Token));
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.Identity.Tests
 
                     var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret);
 
-                    Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+                    Assert.That(cred.Client.RegionalAuthority, Is.EqualTo(regionalAuthority));
                 }
             }
         }

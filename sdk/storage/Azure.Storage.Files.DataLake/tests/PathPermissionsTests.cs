@@ -100,57 +100,57 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void ToOctalPermissions()
         {
-            Assert.AreEqual("0777", new PathPermissions(
+            Assert.That(new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
-                other: AllPermissions).ToOctalPermissions());
+                other: AllPermissions).ToOctalPermissions(), Is.EqualTo("0777"));
 
-            Assert.AreEqual("1777", new PathPermissions(
+            Assert.That(new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
                 other: AllPermissions,
-                stickyBit: true).ToOctalPermissions());
+                stickyBit: true).ToOctalPermissions(), Is.EqualTo("1777"));
         }
 
         [Test]
         public void ToSymbolicPermissions()
         {
-            Assert.AreEqual("rwxrwxrwx", new PathPermissions(
+            Assert.That(new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
-                other: AllPermissions).ToSymbolicPermissions());
+                other: AllPermissions).ToSymbolicPermissions(), Is.EqualTo("rwxrwxrwx"));
 
-            Assert.AreEqual("rwxrwxrwt", new PathPermissions(
+            Assert.That(new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
                 other: AllPermissions,
-                stickyBit: true).ToSymbolicPermissions());
+                stickyBit: true).ToSymbolicPermissions(), Is.EqualTo("rwxrwxrwt"));
 
-            Assert.AreEqual("rwxrwxrwT", new PathPermissions(
+            Assert.That(new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
                 other: RolePermissions.Read | RolePermissions.Write,
-                stickyBit: true).ToSymbolicPermissions());
+                stickyBit: true).ToSymbolicPermissions(), Is.EqualTo("rwxrwxrwT"));
 
-            Assert.AreEqual("rwxrwxrwx+", new PathPermissions(
+            Assert.That(new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
                 other: AllPermissions,
-                extendedInfoInAcl: true).ToSymbolicPermissions());
+                extendedInfoInAcl: true).ToSymbolicPermissions(), Is.EqualTo("rwxrwxrwx+"));
 
-            Assert.AreEqual("rwxrwxrwt+", new PathPermissions(
+            Assert.That(new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
                 other: AllPermissions,
                 stickyBit: true,
-                extendedInfoInAcl: true).ToSymbolicPermissions());
+                extendedInfoInAcl: true).ToSymbolicPermissions(), Is.EqualTo("rwxrwxrwt+"));
 
-            Assert.AreEqual("rwxrwxrwT+", new PathPermissions(
+            Assert.That(new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
                 other: RolePermissions.Read | RolePermissions.Write,
                 stickyBit: true,
-                extendedInfoInAcl: true).ToSymbolicPermissions());
+                extendedInfoInAcl: true).ToSymbolicPermissions(), Is.EqualTo("rwxrwxrwT+"));
         }
     }
 }

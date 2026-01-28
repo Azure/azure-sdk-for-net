@@ -16,7 +16,6 @@ using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Queues.Specialized.Models;
 using Moq;
 using NUnit.Framework;
-using static Moq.It;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -53,9 +52,9 @@ namespace Azure.Storage.Queues.Test
 
             var keyMock = new Mock<IKeyEncryptionKey>(MockBehavior.Strict);
             keyMock.SetupGet(k => k.KeyId).Returns(keyId);
-            keyMock.Setup(k => k.WrapKey(KeyWrapAlgorithm, IsNotNull<ReadOnlyMemory<byte>>(), IsAny<CancellationToken>()))
+            keyMock.Setup(k => k.WrapKey(KeyWrapAlgorithm, It.IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
                 .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Xor(userKeyBytes, key.ToArray()));
-            keyMock.Setup(k => k.UnwrapKey(KeyWrapAlgorithm, IsNotNull<ReadOnlyMemory<byte>>(), IsAny<CancellationToken>()))
+            keyMock.Setup(k => k.UnwrapKey(KeyWrapAlgorithm, It.IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
                 .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Xor(userKeyBytes, userKeyBytes.ToArray()));
 
             return keyMock;
@@ -118,7 +117,7 @@ namespace Azure.Storage.Queues.Test
 
             var parsedEncryptedMessage = EncryptedMessageSerializer.Deserialize(serializedMessage);
 
-            Assert.IsTrue(AreEqual(encryptedMessage, parsedEncryptedMessage));
+            Assert.That(AreEqual(encryptedMessage, parsedEncryptedMessage), Is.True);
         }
 
         [Test]
@@ -141,8 +140,8 @@ namespace Azure.Storage.Queues.Test
 
             bool tryResult = EncryptedMessageSerializer.TryDeserialize(serializedMessage, out var parsedEncryptedMessage);
 
-            Assert.AreEqual(true, tryResult);
-            Assert.IsTrue(AreEqual(encryptedMessage, parsedEncryptedMessage));
+            Assert.That(tryResult, Is.EqualTo(true));
+            Assert.That(AreEqual(encryptedMessage, parsedEncryptedMessage), Is.True);
         }
 
         [TestCase("")]
@@ -156,10 +155,10 @@ namespace Azure.Storage.Queues.Test
         {
             bool tryResult = EncryptedMessageSerializer.TryDeserialize(new BinaryData(input), out var parsedEncryptedMessage);
 
-            Assert.AreEqual(false, tryResult);
-            Assert.IsNull(parsedEncryptedMessage?.EncryptedMessageText);
-            Assert.IsNull(parsedEncryptedMessage?.EncryptionData);
-            Assert.IsNull(parsedEncryptedMessage);
+            Assert.That(tryResult, Is.EqualTo(false));
+            Assert.That(parsedEncryptedMessage?.EncryptedMessageText, Is.Null);
+            Assert.That(parsedEncryptedMessage?.EncryptionData, Is.Null);
+            Assert.That(parsedEncryptedMessage, Is.Null);
         }
 
         #region ModelComparison

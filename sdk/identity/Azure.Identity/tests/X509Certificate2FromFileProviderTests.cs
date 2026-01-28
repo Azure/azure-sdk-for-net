@@ -10,7 +10,7 @@ namespace Azure.Identity.Tests
     public class X509Certificate2FromFileProviderTests
     {
         [Test]
-        public async Task ValidatePemCertificateLoad([Values]bool async)
+        public async Task ValidatePemCertificateLoad([Values] bool async)
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
 
@@ -18,11 +18,11 @@ namespace Azure.Identity.Tests
 
             var cert = await certProvider.GetCertificateAsync(async, default);
 
-            Assert.NotNull(cert);
+            Assert.That(cert, Is.Not.Null);
         }
 
         [Test]
-        public void ValidatePemCertificateLoadFailsWithPassword([Values]bool async)
+        public void ValidatePemCertificateLoadFailsWithPassword([Values] bool async)
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
 
@@ -30,11 +30,11 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await certProvider.GetCertificateAsync(async, default));
 
-            StringAssert.Contains("Password protection for PEM encoded certificates is not supported.", ex.Message);
+            Assert.That(ex.Message, Does.Contain("Password protection for PEM encoded certificates is not supported."));
         }
 
         [Test]
-        public async Task ValidatePfxCertificateLoad([Values] bool async, [Values(null, "password")]string password)
+        public async Task ValidatePfxCertificateLoad([Values] bool async, [Values(null, "password")] string password)
         {
             var certificatePath = password == null ? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx") : Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-password-protected.pfx");
 
@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
 
             var cert = await certProvider.GetCertificateAsync(async, default);
 
-            Assert.NotNull(cert);
+            Assert.That(cert, Is.Not.Null);
         }
     }
 }

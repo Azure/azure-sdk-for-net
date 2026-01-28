@@ -55,13 +55,13 @@ namespace Azure.Identity.Tests
             await cred.GetTokenAsync(new(new[] { "test" }));
 
             var expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1), null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
             networkTimeouts.Clear();
 
             await cred.GetTokenAsync(new(new[] { "test" }));
 
             expectedTimeouts = new TimeSpan?[] { null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Azure.Identity.Tests
                     callCount++;
                     networkTimeouts.Add(msg.NetworkTimeout);
                     // Validate that there is no probe request (which does not have the Metadata header)
-                    Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out string val) && val == "true");
+                    Assert.That(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out string val) && val == "true", Is.True);
                     return callCount switch
                     {
                         < 6 => CreateMockResponse(500, "{ \"Error\": \"Some error occurred\" }").WithHeader("Content-Type", "application/json"),
@@ -107,13 +107,13 @@ namespace Azure.Identity.Tests
                 await cred.GetTokenAsync(new(new[] { "test" }));
 
                 var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
-                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+                Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
                 networkTimeouts.Clear();
 
                 await cred.GetTokenAsync(new(new[] { "test" }));
 
                 expectedTimeouts = new TimeSpan?[] { null };
-                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+                Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.Identity.Tests
                     callCount++;
                     networkTimeouts.Add(msg.NetworkTimeout);
                     // Validate that there is no probe request (which does not have the Metadata header)
-                    Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out string val) && val == "true", "Expected Metadata header with value 'true'");
+                    Assert.That(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out string val) && val == "true", Is.True, "Expected Metadata header with value 'true'");
                     return callCount switch
                     {
                         < 6 => CreateMockResponse(500, "{ \"Error\": \"Some error occurred\" }").WithHeader("Content-Type", "application/json"),
@@ -160,13 +160,13 @@ namespace Azure.Identity.Tests
                 await cred.GetTokenAsync(new(new[] { "test" }));
 
                 var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
-                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+                Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
                 networkTimeouts.Clear();
 
                 await cred.GetTokenAsync(new(new[] { "test" }));
 
                 expectedTimeouts = new TimeSpan?[] { null };
-                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+                Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
             }
         }
 
@@ -208,14 +208,14 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
             var expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1) };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
             networkTimeouts.Clear();
 
             // Second request gets the expected probe response and should use the probe timeout on first request and default timeout on the retry
             await cred.GetTokenAsync(new(new[] { "test" }));
 
             expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1), null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
         }
 
         [Test]
@@ -252,7 +252,7 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
             var expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1), null, null, null, null, null, null, null, null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
         }
 
         [Test]
@@ -265,7 +265,7 @@ namespace Azure.Identity.Tests
             {
                 callCount++;
                 networkTimeouts.Add(msg.NetworkTimeout);
-                Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out _));
+                Assert.That(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out _), Is.True);
                 return CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json");
             });
 
@@ -278,7 +278,7 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
             var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
         }
 
         [Test]
@@ -291,7 +291,7 @@ namespace Azure.Identity.Tests
             {
                 callCount++;
                 networkTimeouts.Add(msg.NetworkTimeout);
-                Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out _));
+                Assert.That(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out _), Is.True);
                 return CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json");
             });
 
@@ -308,7 +308,7 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
             var expectedTimeouts = new TimeSpan?[] { null, null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
         }
 
         [Test]
@@ -332,11 +332,11 @@ namespace Azure.Identity.Tests
             var cts = new CancellationTokenSource();
             cts.CancelAfter(TimeSpan.Zero);
             var ex = Assert.CatchAsync(async () => await cred.GetTokenAsync(new(new[] { "test" }), cts.Token));
-            Assert.IsTrue(ex is TaskCanceledException || ex is OperationCanceledException, "Expected TaskCanceledException or OperationCanceledException but got " + ex.GetType().ToString());
+            Assert.That(ex is TaskCanceledException || ex is OperationCanceledException, Is.True, "Expected TaskCanceledException or OperationCanceledException but got " + ex.GetType().ToString());
 
             // Default number of retries is 5, so we should just ensure we have less than that.
             // Timing on some platforms makes this test somewhat non-deterministic, so we just ensure we have less than 2 calls.
-            Assert.Less(callCount, 2);
+            Assert.That(callCount, Is.LessThan(2));
         }
 
         private MockResponse CreateMockResponse(int responseCode, string token)

@@ -87,7 +87,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             };
 
             EncryptResult encrypted = await localClient.EncryptAsync(encryptParams);
-            Assert.IsNotNull(encrypted.Ciphertext);
+            Assert.That(encrypted.Ciphertext, Is.Not.Null);
 
             DecryptParameters decryptParameters = algorithm.ToString() switch
             {
@@ -103,9 +103,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             };
 
             DecryptResult decrypted = await remoteClient.DecryptAsync(decryptParameters);
-            Assert.IsNotNull(decrypted.Plaintext);
+            Assert.That(decrypted.Plaintext, Is.Not.Null);
 
-            CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
+            Assert.That(decrypted.Plaintext, Is.EqualTo(plaintext).AsCollection);
         }
 
         [RecordedTest]
@@ -153,7 +153,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             };
 
             EncryptResult encrypted = await remoteClient.EncryptAsync(encryptParams);
-            Assert.IsNotNull(encrypted.Ciphertext);
+            Assert.That(encrypted.Ciphertext, Is.Not.Null);
 
             DecryptParameters decryptParameters = algorithm.ToString() switch
             {
@@ -166,9 +166,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             };
 
             DecryptResult decrypted = await remoteClient.DecryptAsync(decryptParameters);
-            Assert.IsNotNull(decrypted.Plaintext);
+            Assert.That(decrypted.Plaintext, Is.Not.Null);
 
-            CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
+            Assert.That(decrypted.Plaintext, Is.EqualTo(plaintext).AsCollection);
         }
 
         [RecordedTest]
@@ -190,21 +190,21 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             WrapResult encrypted = await remoteClient.WrapKeyAsync(algorithm, plaintext);
 
-            Assert.AreEqual(algorithm, encrypted.Algorithm);
-            Assert.AreEqual(key.Id, encrypted.KeyId);
-            Assert.IsNotNull(encrypted.EncryptedKey);
+            Assert.That(encrypted.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(encrypted.KeyId, Is.EqualTo(key.Id));
+            Assert.That(encrypted.EncryptedKey, Is.Not.Null);
 
             UnwrapResult decrypted = await remoteClient.UnwrapKeyAsync(algorithm, encrypted.EncryptedKey);
 
-            Assert.AreEqual(algorithm, decrypted.Algorithm);
-            Assert.AreEqual(key.Id, decrypted.KeyId);
-            Assert.IsNotNull(decrypted.Key);
+            Assert.That(decrypted.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(decrypted.KeyId, Is.EqualTo(key.Id));
+            Assert.That(decrypted.Key, Is.Not.Null);
 
-            CollectionAssert.AreEqual(plaintext, decrypted.Key);
+            Assert.That(decrypted.Key, Is.EqualTo(plaintext).AsCollection);
         }
 
         [RecordedTest]
-        public async Task SignLocalVerifyRoundTripHSM([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
+        public async Task SignLocalVerifyRoundTripHSM([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
         {
             await SignLocalVerifyRoundTripInternal(algorithm);
         }

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Identity;
-using NUnit.Framework;
 using System;
 using System.Diagnostics;
 using System.Threading;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Samples
 {

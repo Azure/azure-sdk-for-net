@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
         protected AzureLocation DefaultLocation => AzureLocation.CanadaCentral;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
-       protected ResourceGroupResource DefaultResourceGroup { get; private set; }
+        protected ResourceGroupResource DefaultResourceGroup { get; private set; }
         protected Stack<Action> CleanupActions { get; } = new Stack<Action>();
         protected string amlFSSubnetResourceId;
         protected ResourceGroupResource amlFSResourceGroup;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             DefaultResourceGroup = await this.DefaultSubscription.GetResourceGroupAsync("rg-amajaistoragecache");
             amlFSResourceGroup = DefaultResourceGroup;
-            amlFSStorageAccountId = "/subscriptions/" + DefaultSubscription.Id.SubscriptionId +"/resourceGroups/"+ DefaultResourceGroup.Id.Name +"/providers/Microsoft.Storage/storageAccounts/" + "sdktestingstorageaccount";
+            amlFSStorageAccountId = "/subscriptions/" + DefaultSubscription.Id.SubscriptionId + "/resourceGroups/" + DefaultResourceGroup.Id.Name + "/providers/Microsoft.Storage/storageAccounts/" + "sdktestingstorageaccount";
             amlFSSubnetResourceId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" + "/subnets/fsSubnet";
         }
 
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.StorageCache.Tests
 
         public void VerifyStorageTarget(StorageTargetResource actual, StorageTargetData expected)
         {
-            Assert.AreEqual(actual.Data.TargetType, expected.TargetType);
-            Assert.AreEqual(actual.Data.Nfs3.Target, expected.Nfs3.Target);
-            Assert.AreEqual(actual.Data.Nfs3.UsageModel, expected.Nfs3.UsageModel);
-            Assert.AreEqual(actual.Data.Nfs3.VerificationDelayInSeconds, expected.Nfs3.VerificationDelayInSeconds);
+            Assert.That(expected.TargetType, Is.EqualTo(actual.Data.TargetType));
+            Assert.That(expected.Nfs3.Target, Is.EqualTo(actual.Data.Nfs3.Target));
+            Assert.That(expected.Nfs3.UsageModel, Is.EqualTo(actual.Data.Nfs3.UsageModel));
+            Assert.That(expected.Nfs3.VerificationDelayInSeconds, Is.EqualTo(actual.Data.Nfs3.VerificationDelayInSeconds));
         }
 
         protected async Task<StorageCacheResource> CreateOrUpdateStorageCache(string name = null, string zone = "1", bool verifyResult = false)
@@ -161,19 +161,19 @@ namespace Azure.ResourceManager.StorageCache.Tests
 
         protected void VerifyStorageCache(StorageCacheResource actual, StorageCacheData expected)
         {
-            Assert.AreEqual(actual.Data.CacheSizeGB, expected.CacheSizeGB);
-            Assert.AreEqual(actual.Data.SkuName, expected.SkuName);
-            Assert.AreEqual(actual.Data.Subnet, expected.Subnet);
-            Assert.AreEqual(actual.Data.Zones.Count, expected.Zones.Count);
+            Assert.That(expected.CacheSizeGB, Is.EqualTo(actual.Data.CacheSizeGB));
+            Assert.That(expected.SkuName, Is.EqualTo(actual.Data.SkuName));
+            Assert.That(expected.Subnet, Is.EqualTo(actual.Data.Subnet));
+            Assert.That(expected.Zones.Count, Is.EqualTo(actual.Data.Zones.Count));
             for (int i = 0; i < actual.Data.Zones.Count; i++)
-                Assert.AreEqual(actual.Data.Zones[i], expected.Zones[i]);
+                Assert.That(expected.Zones[i], Is.EqualTo(actual.Data.Zones[i]));
         }
 
         protected async Task<AmlFileSystemResource> CreateOrUpdateAmlFilesystem(string name = null, string zone = "1", bool verifyResult = false)
         {
             AmlFileSystemCollection amlFSCollectionVar = this.amlFSResourceGroup.GetAmlFileSystems();
             string amlFSName = name ?? Recording.GenerateAssetName("testamlFS");
-            string subnetId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" +"/subnets/fsSubnet";
+            string subnetId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" + "/subnets/fsSubnet";
             string amlFSHsmContainer = amlFSStorageAccountId + "/blobServices/default/containers/importcontainer";
             string amlFSHsmLoggingContainer = amlFSStorageAccountId + "/blobServices/default/containers/loggingcontainer";
             AmlFileSystemData dataVar = new AmlFileSystemData(this.DefaultLocation)
@@ -212,16 +212,16 @@ namespace Azure.ResourceManager.StorageCache.Tests
 
         protected void VerifyAmlFileSystem(AmlFileSystemResource actual, AmlFileSystemData expected)
         {
-            Assert.AreEqual(actual.Data.Sku.Name, expected.Sku.Name);
-            Assert.AreEqual(actual.Data.StorageCapacityTiB, expected.StorageCapacityTiB);
-            Assert.AreEqual(actual.Data.FilesystemSubnet, expected.FilesystemSubnet);
-            Assert.AreEqual(actual.Data.Zones.Count, expected.Zones.Count);
-            Assert.AreEqual(actual.Data.MaintenanceWindow.DayOfWeek, expected.MaintenanceWindow.DayOfWeek);
-            Assert.AreEqual(actual.Data.MaintenanceWindow.TimeOfDayUTC, expected.MaintenanceWindow.TimeOfDayUTC);
-            Assert.AreEqual(actual.Data.Hsm.Settings.Container, expected.Hsm.Settings.Container);
-            Assert.AreEqual(actual.Data.Hsm.Settings.LoggingContainer, expected.Hsm.Settings.LoggingContainer);
+            Assert.That(expected.Sku.Name, Is.EqualTo(actual.Data.Sku.Name));
+            Assert.That(expected.StorageCapacityTiB, Is.EqualTo(actual.Data.StorageCapacityTiB));
+            Assert.That(expected.FilesystemSubnet, Is.EqualTo(actual.Data.FilesystemSubnet));
+            Assert.That(expected.Zones.Count, Is.EqualTo(actual.Data.Zones.Count));
+            Assert.That(expected.MaintenanceWindow.DayOfWeek, Is.EqualTo(actual.Data.MaintenanceWindow.DayOfWeek));
+            Assert.That(expected.MaintenanceWindow.TimeOfDayUTC, Is.EqualTo(actual.Data.MaintenanceWindow.TimeOfDayUTC));
+            Assert.That(expected.Hsm.Settings.Container, Is.EqualTo(actual.Data.Hsm.Settings.Container));
+            Assert.That(expected.Hsm.Settings.LoggingContainer, Is.EqualTo(actual.Data.Hsm.Settings.LoggingContainer));
             for (int i = 0; i < actual.Data.Zones.Count; i++)
-                Assert.AreEqual(actual.Data.Zones[i], expected.Zones[i]);
+                Assert.That(expected.Zones[i], Is.EqualTo(actual.Data.Zones[i]));
         }
 
         protected async Task<StorageCacheImportJobResource> CreateOrUpdateImportJob(AmlFileSystemResource amlFS, string name = null, bool verifyResult = false)
@@ -249,9 +249,9 @@ namespace Azure.ResourceManager.StorageCache.Tests
         protected void VerifyImportJob(StorageCacheImportJobResource actual, StorageCacheImportJobData expected)
         {
             for (int i = 0; i < actual.Data.ImportPrefixes.Count; i++)
-                Assert.AreEqual(actual.Data.ImportPrefixes[i], expected.ImportPrefixes[i]);
-            Assert.AreEqual(actual.Data.ConflictResolutionMode, expected.ConflictResolutionMode);
-            Assert.AreEqual(actual.Data.MaximumErrors, expected.MaximumErrors);
+                Assert.That(expected.ImportPrefixes[i], Is.EqualTo(actual.Data.ImportPrefixes[i]));
+            Assert.That(expected.ConflictResolutionMode, Is.EqualTo(actual.Data.ConflictResolutionMode));
+            Assert.That(expected.MaximumErrors, Is.EqualTo(actual.Data.MaximumErrors));
         }
 
         protected async Task<AutoExportJobResource> CreateOrUpdateAutoExportJob(AmlFileSystemResource amlFS, string name, AutoExportJobData dataVar, bool verifyResult = false)
@@ -274,8 +274,8 @@ namespace Azure.ResourceManager.StorageCache.Tests
         protected void VerifyAutoExportJob(AutoExportJobResource actual, AutoExportJobData expected)
         {
             for (int i = 0; i < actual.Data.AutoExportPrefixes.Count; i++)
-                Assert.AreEqual(actual.Data.AutoExportPrefixes[i], expected.AutoExportPrefixes[i]);
-            Assert.AreEqual(actual.Data.AdminStatus, expected.AdminStatus);
+                Assert.That(expected.AutoExportPrefixes[i], Is.EqualTo(actual.Data.AutoExportPrefixes[i]));
+            Assert.That(expected.AdminStatus, Is.EqualTo(actual.Data.AdminStatus));
         }
 
         protected async Task<AutoImportJobResource> CreateOrUpdateAutoImportJob(AmlFileSystemResource amlFS, string name, AutoImportJobData dataVar, bool verifyResult = false)
@@ -298,10 +298,10 @@ namespace Azure.ResourceManager.StorageCache.Tests
         protected void VerifyAutoImportJob(AutoImportJobResource actual, AutoImportJobData expected)
         {
             for (int i = 0; i < actual.Data.AutoImportPrefixes.Count; i++)
-                Assert.AreEqual(actual.Data.AutoImportPrefixes[i], expected.AutoImportPrefixes[i]);
-            Assert.AreEqual(actual.Data.ConflictResolutionMode, expected.ConflictResolutionMode);
-            Assert.AreEqual(actual.Data.MaximumErrors, expected.MaximumErrors);
-            Assert.AreEqual(actual.Data.AdminStatus, expected.AdminStatus);
+                Assert.That(expected.AutoImportPrefixes[i], Is.EqualTo(actual.Data.AutoImportPrefixes[i]));
+            Assert.That(expected.ConflictResolutionMode, Is.EqualTo(actual.Data.ConflictResolutionMode));
+            Assert.That(expected.MaximumErrors, Is.EqualTo(actual.Data.MaximumErrors));
+            Assert.That(expected.AdminStatus, Is.EqualTo(actual.Data.AdminStatus));
         }
 
         protected async Task<GenericResource> CreateVirtualNetwork()

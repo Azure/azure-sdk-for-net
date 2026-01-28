@@ -13,19 +13,19 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void NewIsEmpty()
         {
             SubjectAlternativeNames subjectAlternativeNames = new SubjectAlternativeNames();
-            Assert.IsTrue(subjectAlternativeNames.IsEmpty);
+            Assert.That(subjectAlternativeNames.IsEmpty, Is.True);
         }
 
         [TestCaseSource(nameof(GetSubjectAlternativeNames))]
         public void AreEqual(SubjectAlternativeNames actual, string expectedJson)
         {
-            Assert.IsFalse(actual.IsEmpty);
+            Assert.That(actual.IsEmpty, Is.False);
 
             using JsonStream json = new JsonStream();
             json.WriteObject(actual);
 
             string actualJson = json.ToString();
-            Assert.AreEqual(expectedJson, actualJson);
+            Assert.That(actualJson, Is.EqualTo(expectedJson));
         }
 
         private static IEnumerable GetSubjectAlternativeNames()

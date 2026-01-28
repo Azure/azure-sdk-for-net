@@ -27,7 +27,7 @@ namespace Azure.Storage.Tests
             await SendGetRequest(transport, StorageServerTimeoutPolicy.Shared, uri: new Uri("http://foo.com/"));
 
             // Assert
-            Assert.AreEqual("http://foo.com/", transport.SingleRequest.Uri.ToString());
+            Assert.That(transport.SingleRequest.Uri.ToString(), Is.EqualTo("http://foo.com/"));
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Azure.Storage.Tests
             }
 
             // Assert
-            Assert.AreEqual($"http://foo.com/?timeout={ServerTimeoutSeconds}", transport.SingleRequest.Uri.ToString());
+            Assert.That(transport.SingleRequest.Uri.ToString(), Is.EqualTo($"http://foo.com/?timeout={ServerTimeoutSeconds}"));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.Storage.Tests
             }
 
             // Assert
-            Assert.AreEqual($"http://foo.com/?bar=baz&timeout={ServerTimeoutSeconds}", transport.SingleRequest.Uri.ToString());
+            Assert.That(transport.SingleRequest.Uri.ToString(), Is.EqualTo($"http://foo.com/?bar=baz&timeout={ServerTimeoutSeconds}"));
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Azure.Storage.Tests
             }
 
             // Assert
-            Assert.AreEqual("http://foo.com/?timeout=25", transport.SingleRequest.Uri.ToString());
+            Assert.That(transport.SingleRequest.Uri.ToString(), Is.EqualTo("http://foo.com/?timeout=25"));
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace Azure.Storage.Tests
             }
 
             // Assert
-            Assert.AreEqual($"http://foo.com/?timeout={ServerTimeout.TotalSeconds + 1}", transport.SingleRequest.Uri.ToString());
+            Assert.That(transport.SingleRequest.Uri.ToString(), Is.EqualTo($"http://foo.com/?timeout={ServerTimeout.TotalSeconds + 1}"));
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace Azure.Storage.Tests
             }
 
             // Assert
-            Assert.AreEqual("http://foo.com/", transport.SingleRequest.Uri.ToString());
+            Assert.That(transport.SingleRequest.Uri.ToString(), Is.EqualTo("http://foo.com/"));
         }
     }
 }

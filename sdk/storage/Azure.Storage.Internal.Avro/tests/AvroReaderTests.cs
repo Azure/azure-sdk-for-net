@@ -19,30 +19,30 @@ namespace Azure.Storage.Internal.Avro.Tests
         {
             List<TestCase> testCases = new List<TestCase>
             {
-                new TestCase("test_null_0.avro", 57, o => Assert.IsNull(o)), // null
-                new TestCase("test_null_1.avro", 60, o => Assert.AreEqual(true, (bool)o)), // bool
-                new TestCase("test_null_2.avro", 59, o => Assert.AreEqual("adsfasdf09809dsf-=adsf", (string)o)), // string
-                new TestCase("test_null_3.avro", 58, o => Assert.AreEqual(Encoding.UTF8.GetBytes("12345abcd"), (byte[])o)), // byte[]
-                new TestCase("test_null_4.avro", 56, o => Assert.AreEqual(1234, (int)o)), // int
-                new TestCase("test_null_5.avro", 57, o => Assert.AreEqual(1234L, (long)o)), // long
-                new TestCase("test_null_6.avro", 58, o => Assert.AreEqual(1234.0, (float)o)), // float
-                new TestCase("test_null_7.avro", 59, o => Assert.AreEqual(1234.0, (double)o)), // fouble
+                new TestCase("test_null_0.avro", 57, o => Assert.That(o,Is.Null)), // null
+                new TestCase("test_null_1.avro", 60, o => Assert.That((bool)o, Is.EqualTo(true))), // bool
+                new TestCase("test_null_2.avro", 59, o => Assert.That((string)o, Is.EqualTo("adsfasdf09809dsf-=adsf"))), // string
+                new TestCase("test_null_3.avro", 58, o => Assert.That((byte[])o, Is.EqualTo(Encoding.UTF8.GetBytes("12345abcd")))), // byte[]
+                new TestCase("test_null_4.avro", 56, o => Assert.That((int)o, Is.EqualTo(1234))), // int
+                new TestCase("test_null_5.avro", 57, o => Assert.That((long)o, Is.EqualTo(1234L))), // long
+                new TestCase("test_null_6.avro", 58, o => Assert.That((float)o, Is.EqualTo(1234.0))), // float
+                new TestCase("test_null_7.avro", 59, o => Assert.That((double)o, Is.EqualTo(1234.0))), // fouble
                 // Not supported today.
                 //new TestCase("test_null_8.avro", o => Assert.AreEqual(Encoding.UTF8.GetBytes("B"), (byte[])o)), // fixed
-                new TestCase("test_null_9.avro", 106, o => Assert.AreEqual("B", (string)o)), // enum
+                new TestCase("test_null_9.avro", 106, o => Assert.That((string)o, Is.EqualTo("B"))), // enum
                 // Not supported today.
                 // new TestCase("test_null_10.avro", o => Assert.AreEqual(new List<long>() { 1, 2, 3 }, (List<long>)o)), // array
-                new TestCase("test_null_11.avro", 84, o => Assert.AreEqual(
-                    new Dictionary<string, int>() { { "a", 1 }, { "b", 3 }, { "c", 2 } }, (Dictionary<string, object>)o)), // dictionary
-                new TestCase("test_null_12.avro", 77, o => Assert.IsNull(o)), // union
+                new TestCase("test_null_11.avro", 84, o => Assert.That(
+                    (Dictionary<string, object>)o, Is.EqualTo(new Dictionary<string, int>() { { "a", 1 }, { "b", 3 }, { "c", 2 } }))), // dictionary
+                new TestCase("test_null_12.avro", 77, o => Assert.That(o,Is.Null)), // union
                 new TestCase("test_null_13.avro", 129, o => // record
                 {
                     Dictionary<string, object> expected = new Dictionary<string, object>() { { "$schema", "Test" }, { "f", 5 } };
                     Dictionary<string, object> actual = (Dictionary<string, object>)o;
-                    Assert.AreEqual(expected.Count, actual.Count);
+                    Assert.That(actual.Count, Is.EqualTo(expected.Count));
                     foreach (KeyValuePair<string, object> keyValuePair in actual)
                     {
-                        Assert.AreEqual(expected[keyValuePair.Key], keyValuePair.Value);
+                        Assert.That(keyValuePair.Value, Is.EqualTo(expected[keyValuePair.Key]));
                     }
                 })
             };
@@ -58,7 +58,7 @@ namespace Azure.Storage.Internal.Avro.Tests
                 // Act
                 object o = await avroReader.Next(async: true).ConfigureAwait(false);
                 testCase.Predicate(o);
-                Assert.AreEqual(testCase.BlockOffset, avroReader.BlockOffset);
+                Assert.That(avroReader.BlockOffset, Is.EqualTo(testCase.BlockOffset));
             }
 
             // non-seekable streams
@@ -75,7 +75,7 @@ namespace Azure.Storage.Internal.Avro.Tests
                 // Act
                 object o = await avroReader.Next(async: true).ConfigureAwait(false);
                 testCase.Predicate(o);
-                Assert.AreEqual(testCase.BlockOffset, avroReader.BlockOffset);
+                Assert.That(avroReader.BlockOffset, Is.EqualTo(testCase.BlockOffset));
             }
         }
 

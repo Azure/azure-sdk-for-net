@@ -60,9 +60,9 @@ namespace Azure.Storage.Blobs.Test
 
             var builder = new BlobUriBuilder(blob.Uri);
 
-            Assert.AreEqual(containerName, builder.BlobContainerName);
-            Assert.AreEqual(blobName, builder.BlobName);
-            Assert.AreEqual("accountName", builder.AccountName);
+            Assert.That(builder.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(builder.BlobName, Is.EqualTo(blobName));
+            Assert.That(builder.AccountName, Is.EqualTo("accountName"));
         }
 
         [RecordedTest]
@@ -81,9 +81,9 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             BlobUriBuilder builder = new BlobUriBuilder(pageBlobClient.Uri);
 
-            Assert.AreEqual(containerName, builder.BlobContainerName);
-            Assert.AreEqual(blobName, builder.BlobName);
-            Assert.AreEqual(accountName, builder.AccountName);
+            Assert.That(builder.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(builder.BlobName, Is.EqualTo(blobName));
+            Assert.That(builder.AccountName, Is.EqualTo(accountName));
         }
 
         [RecordedTest]
@@ -130,7 +130,7 @@ namespace Azure.Storage.Blobs.Test
             BlobProperties blobProperties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(blobProperties);
+            Assert.That(blobProperties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -173,7 +173,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             bool exists = await aadBlob.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -201,7 +201,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             bool exists = await aadBlob.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -229,7 +229,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             bool exists = await aadBlob.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -258,7 +258,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadBlob.ExistsAsync(),
-                e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.InvalidAuthenticationInfo.ToString())));
         }
 
         [RecordedTest]
@@ -274,8 +274,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -315,8 +315,8 @@ namespace Azure.Storage.Blobs.Test
                     options),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"Create does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"Create does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -355,7 +355,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            Assert.AreEqual(2, response.Value.BlobSequenceNumber);
+            Assert.That(response.Value.BlobSequenceNumber, Is.EqualTo(2));
         }
 
         [RecordedTest]
@@ -373,7 +373,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
             AssertDictionaryEquality(metadata, getPropertiesResponse.Value.Metadata);
-            Assert.AreEqual(BlobType.Page, getPropertiesResponse.Value.BlobType);
+            Assert.That(getPropertiesResponse.Value.BlobType, Is.EqualTo(BlobType.Page));
         }
 
         [RecordedTest]
@@ -391,7 +391,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
 
             // Assert
-            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            Assert.That(response.Value.EncryptionKeySha256, Is.EqualTo(customerProvidedKey.EncryptionKeyHash));
         }
 
         [RecordedTest]
@@ -408,7 +408,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
 
             // Assert
-            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+            Assert.That(response.Value.EncryptionScope, Is.EqualTo(TestConfigDefault.EncryptionScope));
         }
 
         [RecordedTest]
@@ -424,7 +424,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
 
             // Assert
-            Assert.IsNotNull(response.Value.VersionId);
+            Assert.That(response.Value.VersionId, Is.Not.Null);
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace Azure.Storage.Blobs.Test
                     conditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -493,7 +493,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             BlobProperties properties = await blob.GetPropertiesAsync();
-            Assert.AreEqual(accessTier.ToString(), properties.AccessTier);
+            Assert.That(properties.AccessTier, Is.EqualTo(accessTier.ToString()));
         }
 
         /// <summary>
@@ -533,7 +533,7 @@ namespace Azure.Storage.Blobs.Test
                     blob.CreateAsync(
                         size: Constants.KB,
                         conditions: accessConditions),
-                    actualException => Assert.IsTrue(true));
+                    actualException => Assert.That(true, Is.True));
             }
         }
 
@@ -582,7 +582,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.CreateAsync(
                     Constants.KB,
                     conditions: conditions),
-                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ConditionNotMet")));
         }
 
         [RecordedTest]
@@ -610,12 +610,12 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            Assert.AreEqual(ContentType, response.Value.ContentType);
+            Assert.That(response.Value.ContentType, Is.EqualTo(ContentType));
             TestHelper.AssertSequenceEqual(contentMD5, response.Value.ContentHash);
-            Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
-            Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
-            Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
-            Assert.AreEqual(CacheControl, response.Value.CacheControl);
+            Assert.That(response.Value.ContentEncoding, Is.EqualTo(ContentEncoding));
+            Assert.That(response.Value.ContentLanguage, Is.EqualTo(ContentLanguage));
+            Assert.That(response.Value.ContentDisposition, Is.EqualTo(ContentDisposition));
+            Assert.That(response.Value.CacheControl, Is.EqualTo(CacheControl));
         }
 
         [RecordedTest]
@@ -632,9 +632,9 @@ namespace Azure.Storage.Blobs.Test
                 blob.CreateAsync(invalidPageSize),
                 e =>
                 {
-                    Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
-                    Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
-                        e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidHeaderValue"));
+                    Assert.That(e.Message.Split('\n')[0],
+                        Is.EqualTo("The value for one of the HTTP headers is not in the correct format."));
                 });
         }
 
@@ -659,7 +659,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             // Ensure we uploaded the pages correctly by downloading and checking the content against the upload content
             var expectedData = new byte[4 * Constants.KB];
@@ -694,7 +694,7 @@ namespace Azure.Storage.Blobs.Test
                 offset: 0);
 
             // Assert
-            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            Assert.That(response.Value.EncryptionKeySha256, Is.EqualTo(customerProvidedKey.EncryptionKeyHash));
         }
 
         [RecordedTest]
@@ -718,7 +718,7 @@ namespace Azure.Storage.Blobs.Test
                 offset: 0);
 
             // Assert
-            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+            Assert.That(response.Value.EncryptionScope, Is.EqualTo(TestConfigDefault.EncryptionScope));
         }
 
         [RecordedTest]
@@ -735,7 +735,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.UploadPagesAsync(stream, 5 * Constants.KB),
-                    e => Assert.AreEqual("InvalidPageRange", e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo("InvalidPageRange")));
             }
         }
 
@@ -755,7 +755,7 @@ namespace Azure.Storage.Blobs.Test
                     blob.UploadPagesAsync(
                         content: stream,
                         offset: 0),
-                    e => Assert.AreEqual("body", e.ParamName));
+                    e => Assert.That(e.ParamName, Is.EqualTo("body")));
             }
         }
 
@@ -805,7 +805,7 @@ namespace Azure.Storage.Blobs.Test
                         });
 
                     // Assert
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                    Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
                 }
             }
         }
@@ -854,7 +854,7 @@ namespace Azure.Storage.Blobs.Test
                             {
                                 Conditions = accessConditions
                             }),
-                        e => Assert.IsTrue(true));
+                        e => Assert.That(true, Is.True));
                 }
             }
         }
@@ -920,7 +920,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         Conditions = conditions
                     }),
-                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ConditionNotMet")));
         }
 
         [RecordedTest]
@@ -966,9 +966,9 @@ namespace Azure.Storage.Blobs.Test
                 });
 
                 await WaitForProgressAsync(progressBag, data.LongLength);
-                Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
+                Assert.That(progressBag.Count > 1, Is.True, "Too few progress received");
                 // Changing from Assert.AreEqual because these don't always update fast enough
-                Assert.GreaterOrEqual(data.LongLength, progressBag.Max(), "Final progress has unexpected value");
+                Assert.That(data.LongLength, Is.GreaterThanOrEqualTo(progressBag.Max()), "Final progress has unexpected value");
             }
 
             // Assert
@@ -977,7 +977,7 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
-            Assert.AreNotEqual(0, timesFaulted);
+            Assert.That(timesFaulted, Is.Not.EqualTo(0));
         }
 
         [LiveOnly]
@@ -1005,9 +1005,9 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.IsFalse(progress.List.Count == 0);
+            Assert.That(progress.List.Count == 0, Is.False);
 
-            Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
+            Assert.That(progress.List[progress.List.Count - 1], Is.EqualTo(blobSize));
         }
 
         [RecordedTest]
@@ -1030,7 +1030,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.UploadPagesAsync(
                     content: stream,
                     offset: 0),
-                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.")));
         }
 
         [RecordedTest]
@@ -1085,7 +1085,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             // Ensure the correct pages are cleared by downloading the blob
             var expectedData = new byte[4 * Constants.KB];
@@ -1119,7 +1119,7 @@ namespace Azure.Storage.Blobs.Test
                 range: new HttpRange(Constants.KB, Constants.KB));
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1156,8 +1156,8 @@ namespace Azure.Storage.Blobs.Test
                 blob.ClearPagesAsync(range: new HttpRange(5 * Constants.KB, Constants.KB)),
                 e =>
                 {
-                    Assert.AreEqual("InvalidPageRange", e.ErrorCode);
-                    Assert.AreEqual("The page range specified is invalid.", e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidPageRange"));
+                    Assert.That(e.Message.Split('\n')[0], Is.EqualTo("The page range specified is invalid."));
                 });
         }
 
@@ -1185,7 +1185,7 @@ namespace Azure.Storage.Blobs.Test
                 conditions: conditions);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1206,7 +1206,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.ClearPagesAsync(
                     range: new HttpRange(0, Constants.KB),
                     conditions: conditions),
-                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.ConditionNotMet.ToString())));
         }
 
         [RecordedTest]
@@ -1232,7 +1232,7 @@ namespace Azure.Storage.Blobs.Test
                     range: new HttpRange(0, Constants.KB),
                     conditions: accessConditions);
 
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -1260,7 +1260,7 @@ namespace Azure.Storage.Blobs.Test
                     blob.ClearPagesAsync(
                         range: new HttpRange(0, Constants.KB),
                         conditions: accessConditions),
-                    e => Assert.IsTrue(true));
+                    e => Assert.That(true, Is.True));
             }
         }
 
@@ -1282,16 +1282,16 @@ namespace Azure.Storage.Blobs.Test
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(result.Value.ETag.ToString(), $"\"{result.GetRawResponse().Headers.ETag.ToString()}\"");
+            Assert.That($"\"{result.GetRawResponse().Headers.ETag.ToString()}\"", Is.EqualTo(result.Value.ETag.ToString()));
 
-            Assert.AreEqual(2, result.Value.PageRanges.Count());
+            Assert.That(result.Value.PageRanges.Count(), Is.EqualTo(2));
             HttpRange range1 = result.Value.PageRanges.First();
-            Assert.AreEqual(0, range1.Offset);
-            Assert.AreEqual(Constants.KB, range1.Offset + range1.Length);
+            Assert.That(range1.Offset, Is.EqualTo(0));
+            Assert.That(range1.Offset + range1.Length, Is.EqualTo(Constants.KB));
 
             HttpRange range2 = result.Value.PageRanges.ElementAt(1);
-            Assert.AreEqual(2 * Constants.KB, range2.Offset);
-            Assert.AreEqual(3 * Constants.KB, range2.Offset + range2.Length);
+            Assert.That(range2.Offset, Is.EqualTo(2 * Constants.KB));
+            Assert.That(range2.Offset + range2.Length, Is.EqualTo(3 * Constants.KB));
         }
 
         [RecordedTest]
@@ -1328,8 +1328,8 @@ namespace Azure.Storage.Blobs.Test
                     cancellationToken: CancellationToken.None),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"GetPageRanges does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"GetPageRanges does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -1373,18 +1373,18 @@ namespace Azure.Storage.Blobs.Test
                 cancellationToken: CancellationToken.None);
 
             // Assert
-            Assert.AreEqual(2, result.Value.PageRanges.Count());
+            Assert.That(result.Value.PageRanges.Count(), Is.EqualTo(2));
             HttpRange pageRange1 = result.Value.PageRanges.First();
-            Assert.AreEqual(0, pageRange1.Offset);
-            Assert.AreEqual(2 * Constants.KB, pageRange1.Offset + pageRange1.Length);
+            Assert.That(pageRange1.Offset, Is.EqualTo(0));
+            Assert.That(pageRange1.Offset + pageRange1.Length, Is.EqualTo(2 * Constants.KB));
 
             HttpRange pageRange2 = result.Value.PageRanges.ElementAt(1);
-            Assert.AreEqual(5 * Constants.KB, pageRange2.Offset); // since the first part of the page was cleared, it should start at 5 rather than 4 KB
-            Assert.AreEqual(6 * Constants.KB, pageRange2.Offset + pageRange2.Length);
+            Assert.That(pageRange2.Offset, Is.EqualTo(5 * Constants.KB)); // since the first part of the page was cleared, it should start at 5 rather than 4 KB
+            Assert.That(pageRange2.Offset + pageRange2.Length, Is.EqualTo(6 * Constants.KB));
 
-            Assert.AreEqual(1, diff.Value.ClearRanges.Count());
+            Assert.That(diff.Value.ClearRanges.Count(), Is.EqualTo(1));
             HttpRange clearRange = diff.Value.ClearRanges.First(); // ClearRange is only populated by GetPageRangesDiff API, and only if passing previous snapshot parameter
-            Assert.AreEqual(4 * Constants.KB, clearRange.Offset);
+            Assert.That(clearRange.Offset, Is.EqualTo(4 * Constants.KB));
         }
 
         [RecordedTest]
@@ -1404,9 +1404,9 @@ namespace Azure.Storage.Blobs.Test
                     cancellationToken: CancellationToken.None),
                 e =>
                 {
-                    Assert.AreEqual("InvalidRange", e.ErrorCode);
-                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
-                        e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidRange"));
+                    Assert.That(e.Message.Split('\n')[0],
+                        Is.EqualTo("The range specified is invalid for the current size of the resource."));
                 });
         }
 
@@ -1436,7 +1436,7 @@ namespace Azure.Storage.Blobs.Test
                     cancellationToken: CancellationToken.None);
 
                 // Assert
-                Assert.IsNotNull(response.Value.PageRanges);
+                Assert.That(response.Value.PageRanges, Is.Not.Null);
             }
         }
 
@@ -1518,7 +1518,7 @@ namespace Azure.Storage.Blobs.Test
                     snapshot: null,
                     conditions: conditions,
                     cancellationToken: CancellationToken.None),
-                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ConditionNotMet")));
         }
 
         [RecordedTest]
@@ -1537,15 +1537,15 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(2, pageBlobRanges.Count);
+            Assert.That(pageBlobRanges.Count, Is.EqualTo(2));
 
-            Assert.IsFalse(pageBlobRanges[0].IsClear);
-            Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+            Assert.That(pageBlobRanges[0].IsClear, Is.False);
+            Assert.That(pageBlobRanges[0].Range.Offset, Is.EqualTo(0));
+            Assert.That(pageBlobRanges[0].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsFalse(pageBlobRanges[1].IsClear);
-            Assert.AreEqual(2048, pageBlobRanges[1].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+            Assert.That(pageBlobRanges[1].IsClear, Is.False);
+            Assert.That(pageBlobRanges[1].Range.Offset, Is.EqualTo(2048));
+            Assert.That(pageBlobRanges[1].Range.Length, Is.EqualTo(1024));
         }
 
         [RecordedTest]
@@ -1584,8 +1584,8 @@ namespace Azure.Storage.Blobs.Test
                 pageBlobClient.GetAllPageRangesAsync(options).ToListAsync(),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"GetPageRanges does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"GetPageRanges does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -1605,15 +1605,15 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(2, pageBlobRanges.Count);
+            Assert.That(pageBlobRanges.Count, Is.EqualTo(2));
 
-            Assert.IsFalse(pageBlobRanges[0].IsClear);
-            Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+            Assert.That(pageBlobRanges[0].IsClear, Is.False);
+            Assert.That(pageBlobRanges[0].Range.Offset, Is.EqualTo(0));
+            Assert.That(pageBlobRanges[0].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsFalse(pageBlobRanges[1].IsClear);
-            Assert.AreEqual(2048, pageBlobRanges[1].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+            Assert.That(pageBlobRanges[1].IsClear, Is.False);
+            Assert.That(pageBlobRanges[1].Range.Offset, Is.EqualTo(2048));
+            Assert.That(pageBlobRanges[1].Range.Length, Is.EqualTo(1024));
         }
 
         [RecordedTest]
@@ -1636,11 +1636,11 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(1, pageBlobRanges.Count);
+            Assert.That(pageBlobRanges.Count, Is.EqualTo(1));
 
-            Assert.IsFalse(pageBlobRanges[0].IsClear);
-            Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+            Assert.That(pageBlobRanges[0].IsClear, Is.False);
+            Assert.That(pageBlobRanges[0].Range.Offset, Is.EqualTo(0));
+            Assert.That(pageBlobRanges[0].Range.Length, Is.EqualTo(1024));
         }
 
         [RecordedTest]
@@ -1664,15 +1664,15 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(2, pageBlobRanges.Count);
+            Assert.That(pageBlobRanges.Count, Is.EqualTo(2));
 
-            Assert.IsFalse(pageBlobRanges[0].IsClear);
-            Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+            Assert.That(pageBlobRanges[0].IsClear, Is.False);
+            Assert.That(pageBlobRanges[0].Range.Offset, Is.EqualTo(0));
+            Assert.That(pageBlobRanges[0].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsFalse(pageBlobRanges[1].IsClear);
-            Assert.AreEqual(2048, pageBlobRanges[1].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+            Assert.That(pageBlobRanges[1].IsClear, Is.False);
+            Assert.That(pageBlobRanges[1].Range.Offset, Is.EqualTo(2048));
+            Assert.That(pageBlobRanges[1].Range.Length, Is.EqualTo(1024));
         }
 
         [RecordedTest]
@@ -1707,15 +1707,15 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Assert
-                Assert.AreEqual(2, pageBlobRanges.Count);
+                Assert.That(pageBlobRanges.Count, Is.EqualTo(2));
 
-                Assert.IsFalse(pageBlobRanges[0].IsClear);
-                Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
-                Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+                Assert.That(pageBlobRanges[0].IsClear, Is.False);
+                Assert.That(pageBlobRanges[0].Range.Offset, Is.EqualTo(0));
+                Assert.That(pageBlobRanges[0].Range.Length, Is.EqualTo(1024));
 
-                Assert.IsFalse(pageBlobRanges[1].IsClear);
-                Assert.AreEqual(2048, pageBlobRanges[1].Range.Offset);
-                Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+                Assert.That(pageBlobRanges[1].IsClear, Is.False);
+                Assert.That(pageBlobRanges[1].Range.Offset, Is.EqualTo(2048));
+                Assert.That(pageBlobRanges[1].Range.Length, Is.EqualTo(1024));
             }
         }
 
@@ -1784,15 +1784,15 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(2, pageBlobRanges.Count);
+            Assert.That(pageBlobRanges.Count, Is.EqualTo(2));
 
-            Assert.IsFalse(pageBlobRanges[0].IsClear);
-            Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+            Assert.That(pageBlobRanges[0].IsClear, Is.False);
+            Assert.That(pageBlobRanges[0].Range.Offset, Is.EqualTo(0));
+            Assert.That(pageBlobRanges[0].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsFalse(pageBlobRanges[1].IsClear);
-            Assert.AreEqual(2048, pageBlobRanges[1].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+            Assert.That(pageBlobRanges[1].IsClear, Is.False);
+            Assert.That(pageBlobRanges[1].Range.Offset, Is.EqualTo(2048));
+            Assert.That(pageBlobRanges[1].Range.Length, Is.EqualTo(1024));
         }
 
         [RecordedTest]
@@ -1817,7 +1817,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 pageBlob.GetAllPageRangesAsync(options).ToListAsync(),
-                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ConditionNotMet")));
         }
 
         [RecordedTest]
@@ -1838,9 +1838,9 @@ namespace Azure.Storage.Blobs.Test
                pageBlob.GetAllPageRangesAsync(options).ToListAsync(),
                 e =>
                 {
-                    Assert.AreEqual("InvalidRange", e.ErrorCode);
-                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
-                        e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidRange"));
+                    Assert.That(e.Message.Split('\n')[0],
+                        Is.EqualTo("The range specified is invalid for the current size of the resource."));
                 });
         }
 
@@ -1884,13 +1884,13 @@ namespace Azure.Storage.Blobs.Test
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(result.Value.ETag.ToString(), $"\"{result.GetRawResponse().Headers.ETag.ToString()}\"");
+            Assert.That($"\"{result.GetRawResponse().Headers.ETag.ToString()}\"", Is.EqualTo(result.Value.ETag.ToString()));
 
-            Assert.AreEqual(1, result.Value.PageRanges.Count());
+            Assert.That(result.Value.PageRanges.Count(), Is.EqualTo(1));
             HttpRange range = result.Value.PageRanges.First();
 
-            Assert.AreEqual(2 * Constants.KB, range.Offset);
-            Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
+            Assert.That(range.Offset, Is.EqualTo(2 * Constants.KB));
+            Assert.That(range.Offset + range.Length, Is.EqualTo(3 * Constants.KB));
         }
 
         [RecordedTest]
@@ -1928,8 +1928,8 @@ namespace Azure.Storage.Blobs.Test
                     cancellationToken: CancellationToken.None),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"GetPageRangesDiff does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"GetPageRangesDiff does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -1951,9 +1951,9 @@ namespace Azure.Storage.Blobs.Test
                     cancellationToken: CancellationToken.None),
                 e =>
                 {
-                    Assert.AreEqual("InvalidRange", e.ErrorCode);
-                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
-                        e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidRange"));
+                    Assert.That(e.Message.Split('\n')[0],
+                        Is.EqualTo("The range specified is invalid for the current size of the resource."));
                 });
         }
 
@@ -2001,7 +2001,7 @@ namespace Azure.Storage.Blobs.Test
                     cancellationToken: CancellationToken.None);
 
                 // Assert
-                Assert.IsNotNull(response.Value.PageRanges);
+                Assert.That(response.Value.PageRanges, Is.Not.Null);
             }
         }
 
@@ -2147,7 +2147,7 @@ namespace Azure.Storage.Blobs.Test
                     prevSnapshot,
                     conditions: conditions,
                     cancellationToken: CancellationToken.None),
-                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ConditionNotMet")));
         }
 
         [RecordedTest]
@@ -2175,23 +2175,23 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(4, pageBlobRanges.Count);
+            Assert.That(pageBlobRanges.Count, Is.EqualTo(4));
 
-            Assert.IsFalse(pageBlobRanges[0].IsClear);
-            Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+            Assert.That(pageBlobRanges[0].IsClear, Is.False);
+            Assert.That(pageBlobRanges[0].Range.Offset, Is.EqualTo(0));
+            Assert.That(pageBlobRanges[0].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsTrue(pageBlobRanges[1].IsClear);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+            Assert.That(pageBlobRanges[1].IsClear, Is.True);
+            Assert.That(pageBlobRanges[1].Range.Offset, Is.EqualTo(1024));
+            Assert.That(pageBlobRanges[1].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsFalse(pageBlobRanges[2].IsClear);
-            Assert.AreEqual(2048, pageBlobRanges[2].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[2].Range.Length);
+            Assert.That(pageBlobRanges[2].IsClear, Is.False);
+            Assert.That(pageBlobRanges[2].Range.Offset, Is.EqualTo(2048));
+            Assert.That(pageBlobRanges[2].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsTrue(pageBlobRanges[3].IsClear);
-            Assert.AreEqual(3072, pageBlobRanges[3].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[3].Range.Length);
+            Assert.That(pageBlobRanges[3].IsClear, Is.True);
+            Assert.That(pageBlobRanges[3].Range.Offset, Is.EqualTo(3072));
+            Assert.That(pageBlobRanges[3].Range.Length, Is.EqualTo(1024));
         }
 
         [RecordedTest]
@@ -2230,8 +2230,8 @@ namespace Azure.Storage.Blobs.Test
                 pageBlobClient.GetAllPageRangesDiffAsync(options).ToListAsync(),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"GetPageRanges does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"GetPageRanges does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -2261,23 +2261,23 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(4, pageBlobRanges.Count);
+            Assert.That(pageBlobRanges.Count, Is.EqualTo(4));
 
-            Assert.IsFalse(pageBlobRanges[0].IsClear);
-            Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+            Assert.That(pageBlobRanges[0].IsClear, Is.False);
+            Assert.That(pageBlobRanges[0].Range.Offset, Is.EqualTo(0));
+            Assert.That(pageBlobRanges[0].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsTrue(pageBlobRanges[1].IsClear);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+            Assert.That(pageBlobRanges[1].IsClear, Is.True);
+            Assert.That(pageBlobRanges[1].Range.Offset, Is.EqualTo(1024));
+            Assert.That(pageBlobRanges[1].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsFalse(pageBlobRanges[2].IsClear);
-            Assert.AreEqual(2048, pageBlobRanges[2].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[2].Range.Length);
+            Assert.That(pageBlobRanges[2].IsClear, Is.False);
+            Assert.That(pageBlobRanges[2].Range.Offset, Is.EqualTo(2048));
+            Assert.That(pageBlobRanges[2].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsTrue(pageBlobRanges[3].IsClear);
-            Assert.AreEqual(3072, pageBlobRanges[3].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[3].Range.Length);
+            Assert.That(pageBlobRanges[3].IsClear, Is.True);
+            Assert.That(pageBlobRanges[3].Range.Offset, Is.EqualTo(3072));
+            Assert.That(pageBlobRanges[3].Range.Length, Is.EqualTo(1024));
         }
 
         [RecordedTest]
@@ -2306,15 +2306,15 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(2, pageBlobRanges.Count);
+            Assert.That(pageBlobRanges.Count, Is.EqualTo(2));
 
-            Assert.IsFalse(pageBlobRanges[0].IsClear);
-            Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+            Assert.That(pageBlobRanges[0].IsClear, Is.False);
+            Assert.That(pageBlobRanges[0].Range.Offset, Is.EqualTo(0));
+            Assert.That(pageBlobRanges[0].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsTrue(pageBlobRanges[1].IsClear);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+            Assert.That(pageBlobRanges[1].IsClear, Is.True);
+            Assert.That(pageBlobRanges[1].Range.Offset, Is.EqualTo(1024));
+            Assert.That(pageBlobRanges[1].Range.Length, Is.EqualTo(1024));
         }
 
         [RecordedTest]
@@ -2352,23 +2352,23 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Assert
-                Assert.AreEqual(4, pageBlobRanges.Count);
+                Assert.That(pageBlobRanges.Count, Is.EqualTo(4));
 
-                Assert.IsFalse(pageBlobRanges[0].IsClear);
-                Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
-                Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+                Assert.That(pageBlobRanges[0].IsClear, Is.False);
+                Assert.That(pageBlobRanges[0].Range.Offset, Is.EqualTo(0));
+                Assert.That(pageBlobRanges[0].Range.Length, Is.EqualTo(1024));
 
-                Assert.IsTrue(pageBlobRanges[1].IsClear);
-                Assert.AreEqual(1024, pageBlobRanges[1].Range.Offset);
-                Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+                Assert.That(pageBlobRanges[1].IsClear, Is.True);
+                Assert.That(pageBlobRanges[1].Range.Offset, Is.EqualTo(1024));
+                Assert.That(pageBlobRanges[1].Range.Length, Is.EqualTo(1024));
 
-                Assert.IsFalse(pageBlobRanges[2].IsClear);
-                Assert.AreEqual(2048, pageBlobRanges[2].Range.Offset);
-                Assert.AreEqual(1024, pageBlobRanges[2].Range.Length);
+                Assert.That(pageBlobRanges[2].IsClear, Is.False);
+                Assert.That(pageBlobRanges[2].Range.Offset, Is.EqualTo(2048));
+                Assert.That(pageBlobRanges[2].Range.Length, Is.EqualTo(1024));
 
-                Assert.IsTrue(pageBlobRanges[3].IsClear);
-                Assert.AreEqual(3072, pageBlobRanges[3].Range.Offset);
-                Assert.AreEqual(1024, pageBlobRanges[3].Range.Length);
+                Assert.That(pageBlobRanges[3].IsClear, Is.True);
+                Assert.That(pageBlobRanges[3].Range.Offset, Is.EqualTo(3072));
+                Assert.That(pageBlobRanges[3].Range.Length, Is.EqualTo(1024));
             }
         }
 
@@ -2442,23 +2442,23 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(4, pageBlobRanges.Count);
+            Assert.That(pageBlobRanges.Count, Is.EqualTo(4));
 
-            Assert.IsFalse(pageBlobRanges[0].IsClear);
-            Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+            Assert.That(pageBlobRanges[0].IsClear, Is.False);
+            Assert.That(pageBlobRanges[0].Range.Offset, Is.EqualTo(0));
+            Assert.That(pageBlobRanges[0].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsTrue(pageBlobRanges[1].IsClear);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+            Assert.That(pageBlobRanges[1].IsClear, Is.True);
+            Assert.That(pageBlobRanges[1].Range.Offset, Is.EqualTo(1024));
+            Assert.That(pageBlobRanges[1].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsFalse(pageBlobRanges[2].IsClear);
-            Assert.AreEqual(2048, pageBlobRanges[2].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[2].Range.Length);
+            Assert.That(pageBlobRanges[2].IsClear, Is.False);
+            Assert.That(pageBlobRanges[2].Range.Offset, Is.EqualTo(2048));
+            Assert.That(pageBlobRanges[2].Range.Length, Is.EqualTo(1024));
 
-            Assert.IsTrue(pageBlobRanges[3].IsClear);
-            Assert.AreEqual(3072, pageBlobRanges[3].Range.Offset);
-            Assert.AreEqual(1024, pageBlobRanges[3].Range.Length);
+            Assert.That(pageBlobRanges[3].IsClear, Is.True);
+            Assert.That(pageBlobRanges[3].Range.Offset, Is.EqualTo(3072));
+            Assert.That(pageBlobRanges[3].Range.Length, Is.EqualTo(1024));
         }
 
         [RecordedTest]
@@ -2488,7 +2488,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 pageBlob.GetAllPageRangesDiffAsync(options).ToListAsync(),
-                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ConditionNotMet")));
         }
 
         [RecordedTest]
@@ -2509,9 +2509,9 @@ namespace Azure.Storage.Blobs.Test
                pageBlob.GetAllPageRangesDiffAsync(options).ToListAsync(),
                 e =>
                 {
-                    Assert.AreEqual("InvalidRange", e.ErrorCode);
-                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
-                        e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidRange"));
+                    Assert.That(e.Message.Split('\n')[0],
+                        Is.EqualTo("The range specified is invalid for the current size of the resource."));
                 });
         }
 
@@ -2530,11 +2530,11 @@ namespace Azure.Storage.Blobs.Test
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(result.Value.ETag.ToString(), $"\"{result.GetRawResponse().Headers.ETag.ToString()}\"");
+            Assert.That($"\"{result.GetRawResponse().Headers.ETag.ToString()}\"", Is.EqualTo(result.Value.ETag.ToString()));
 
             // Ensure we correctly resized properly by doing a GetProperties call
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            Assert.AreEqual(newSize, response.Value.ContentLength);
+            Assert.That(response.Value.ContentLength, Is.EqualTo(newSize));
         }
 
         [RecordedTest]
@@ -2569,8 +2569,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions: conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"Resize does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"Resize does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -2590,7 +2590,7 @@ namespace Azure.Storage.Blobs.Test
             Response<PageBlobInfo> response = await blob.ResizeAsync(size: newSize);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2609,7 +2609,7 @@ namespace Azure.Storage.Blobs.Test
             Response<PageBlobInfo> response = await blob.ResizeAsync(size: newSize);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2626,9 +2626,9 @@ namespace Azure.Storage.Blobs.Test
                 blob.ResizeAsync(size: invalidSize),
                 e =>
                 {
-                    Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
-                    Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
-                        e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidHeaderValue"));
+                    Assert.That(e.Message.Split('\n')[0],
+                        Is.EqualTo("The value for one of the HTTP headers is not in the correct format."));
                 });
         }
 
@@ -2657,7 +2657,7 @@ namespace Azure.Storage.Blobs.Test
                     conditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -2685,7 +2685,7 @@ namespace Azure.Storage.Blobs.Test
                     blob.ResizeAsync(
                         size: newSize,
                         conditions: accessConditions),
-                    e => Assert.IsTrue(true));
+                    e => Assert.That(true, Is.True));
             }
         }
 
@@ -2714,7 +2714,7 @@ namespace Azure.Storage.Blobs.Test
                 conditions: conditions);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2736,7 +2736,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.ResizeAsync(
                     size: newSize,
                     conditions: conditions),
-                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ConditionNotMet")));
         }
 
         [RecordedTest]
@@ -2756,11 +2756,11 @@ namespace Azure.Storage.Blobs.Test
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             // Ensure that the correct BlobSequence was set by doing a GetProperties
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
-            Assert.AreEqual(sequenceAccessNumber, propertiesResponse.Value.BlobSequenceNumber);
+            Assert.That(propertiesResponse.Value.BlobSequenceNumber, Is.EqualTo(sequenceAccessNumber));
         }
 
         [RecordedTest]
@@ -2795,8 +2795,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions: conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"UpdateSequenceNumber does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"UpdateSequenceNumber does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -2826,7 +2826,7 @@ namespace Azure.Storage.Blobs.Test
                     conditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -2855,7 +2855,7 @@ namespace Azure.Storage.Blobs.Test
                         action: SequenceNumberAction.Update,
                         sequenceNumber: sequenceAccessNumber,
                         conditions: accessConditions),
-                    e => Assert.IsTrue(true));
+                    e => Assert.That(true, Is.True));
             }
         }
 
@@ -2886,7 +2886,7 @@ namespace Azure.Storage.Blobs.Test
                 conditions: conditions);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2910,7 +2910,7 @@ namespace Azure.Storage.Blobs.Test
                     action: SequenceNumberAction.Update,
                     sequenceNumber: sequenceNumber,
                     conditions: conditions),
-                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.ConditionNotMet.ToString())));
         }
 
         [RecordedTest]
@@ -2928,9 +2928,9 @@ namespace Azure.Storage.Blobs.Test
                     sequenceNumber: -1),
                 e =>
                 {
-                    Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
-                    Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
-                        e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidHeaderValue"));
+                    Assert.That(e.Message.Split('\n')[0],
+                        Is.EqualTo("The value for one of the HTTP headers is not in the correct format."));
                 });
         }
 
@@ -2971,7 +2971,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> properties = await destinationBlob.GetPropertiesAsync();
-            Assert.AreEqual(CopyStatus.Success, properties.Value.CopyStatus);
+            Assert.That(properties.Value.CopyStatus, Is.EqualTo(CopyStatus.Success));
         }
 
         [RecordedTest]
@@ -3011,8 +3011,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions: conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"StartCopyIncremental does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"StartCopyIncremental does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -3033,8 +3033,8 @@ namespace Azure.Storage.Blobs.Test
                     snapshot: "2019-03-29T18:12:15.6608647Z"),
                 e =>
                 {
-                    Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode);
-                    Assert.AreEqual("The specified blob does not exist.", e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("CannotVerifyCopySource"));
+                    Assert.That(e.Message.Split('\n')[0], Is.EqualTo("The specified blob does not exist."));
                 });
         }
 
@@ -3086,7 +3086,7 @@ namespace Azure.Storage.Blobs.Test
                     conditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -3137,7 +3137,7 @@ namespace Azure.Storage.Blobs.Test
                         sourceUri: sourceBlob.Uri,
                         snapshot: snapshot,
                         conditions: accessConditions),
-                    e => Assert.IsTrue(true));
+                    e => Assert.That(true, Is.True));
             }
         }
 
@@ -3252,7 +3252,7 @@ namespace Azure.Storage.Blobs.Test
                     sourceUri: sourceBlob.Uri,
                     snapshot: snapshot1,
                     conditions: conditions),
-                    e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.ConditionNotMet.ToString())));
         }
 
         [RecordedTest]
@@ -3289,11 +3289,11 @@ namespace Azure.Storage.Blobs.Test
 
             await operation.WaitForCompletionAsync();
 
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasCompleted, Is.True);
+            Assert.That(operation.HasValue, Is.True);
 
             Response<BlobProperties> response = await destinationBlob.GetPropertiesAsync();
-            Assert.AreEqual(AccessTier.P20.ToString(), response.Value.AccessTier);
+            Assert.That(response.Value.AccessTier, Is.EqualTo(AccessTier.P20.ToString()));
         }
 
         [RecordedTest]
@@ -3329,7 +3329,7 @@ namespace Azure.Storage.Blobs.Test
                 destinationBlob.StartCopyFromUriAsync(
                 sourceBlob.Uri,
                 accessTier: AccessTier.Cool),
-                e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.InvalidBlobTier.ToString())));
         }
 
         [RecordedTest]
@@ -3347,7 +3347,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> responseProperties = await blob.GetPropertiesAsync();
-            Assert.AreEqual(AccessTier.P20.ToString(), responseProperties.Value.AccessTier);
+            Assert.That(responseProperties.Value.AccessTier, Is.EqualTo(AccessTier.P20.ToString()));
         }
 
         [RecordedTest]
@@ -3362,7 +3362,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.SetAccessTierAsync(AccessTier.Cool),
-                e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.InvalidBlobTier.ToString())));
         }
 
         [RecordedTest]
@@ -3389,7 +3389,7 @@ namespace Azure.Storage.Blobs.Test
                     range: range);
 
                 // Ensure that we grab the whole ETag value from the service without removing the quotes
-                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+                Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
             }
         }
 
@@ -3412,9 +3412,9 @@ namespace Azure.Storage.Blobs.Test
                 destBlob.UploadPagesFromUriAsync(sourceBlob.Uri, range, range),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 401"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: NoAuthenticationInformation"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Server failed to authenticate the request. Please refer to the information in the www-authenticate header."));
+                    Assert.That(e.Message.Contains("CopySourceStatusCode: 401"), Is.True);
+                    Assert.That(e.Message.Contains("CopySourceErrorCode: NoAuthenticationInformation"), Is.True);
+                    Assert.That(e.Message.Contains("CopySourceErrorMessage: Server failed to authenticate the request. Please refer to the information in the www-authenticate header."), Is.True);
                 });
         }
 
@@ -3467,8 +3467,8 @@ namespace Azure.Storage.Blobs.Test
                     options),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"UploadPagesFromUri does not support the {invalidSourceCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("sourceConditions"));
+                    Assert.That(e.Message.Contains($"UploadPagesFromUri does not support the {invalidSourceCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("sourceConditions"), Is.True);
                 });
         }
 
@@ -3501,7 +3501,7 @@ namespace Azure.Storage.Blobs.Test
                 range: range);
 
             // Assert
-            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            Assert.That(response.Value.EncryptionKeySha256, Is.EqualTo(customerProvidedKey.EncryptionKeyHash));
         }
 
         [RecordedTest]
@@ -3538,7 +3538,7 @@ namespace Azure.Storage.Blobs.Test
                 options: options);
 
             // Assert
-            Assert.AreEqual(destCustomerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            Assert.That(response.Value.EncryptionKeySha256, Is.EqualTo(destCustomerProvidedKey.EncryptionKeyHash));
         }
 
         [RecordedTest]
@@ -3577,9 +3577,9 @@ namespace Azure.Storage.Blobs.Test
                     options: options),
                 e =>
                 {
-                    Assert.AreEqual(409, e.Status);
-                    Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode);
-                    StringAssert.Contains("The given customer specified encryption does not match the encryption used to encrypt the blob.", e.Message);
+                    Assert.That(e.Status, Is.EqualTo(409));
+                    Assert.That(e.ErrorCode, Is.EqualTo("CannotVerifyCopySource"));
+                    Assert.That(e.Message, Does.Contain("The given customer specified encryption does not match the encryption used to encrypt the blob."));
                 });
         }
 
@@ -3609,7 +3609,7 @@ namespace Azure.Storage.Blobs.Test
                 range: range);
 
             // Assert
-            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+            Assert.That(response.Value.EncryptionScope, Is.EqualTo(TestConfigDefault.EncryptionScope));
         }
 
         [RecordedTest]
@@ -3640,7 +3640,7 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobDownloadInfo> response = await destBlob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
                 var dataResult = new MemoryStream();
                 await response.Value.Content.CopyToAsync(dataResult);
-                Assert.AreEqual(2 * Constants.KB, dataResult.Length);
+                Assert.That(dataResult.Length, Is.EqualTo(2 * Constants.KB));
                 TestHelper.AssertSequenceEqual(data.Skip(2 * Constants.KB).Take(2 * Constants.KB), dataResult.ToArray());
             }
         }
@@ -3708,7 +3708,7 @@ namespace Azure.Storage.Blobs.Test
                         sourceRange: range,
                         range: range,
                         options: options),
-                    actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
+                    actualException => Assert.That(actualException.ErrorCode, Is.EqualTo("Md5Mismatch"))
                 );
             }
         }
@@ -3869,7 +3869,7 @@ namespace Azure.Storage.Blobs.Test
                             sourceRange: range,
                             range: range,
                             options: options),
-                        actualException => Assert.IsTrue(true)
+                        actualException => Assert.That(true, Is.True)
                     );
                 }
             }
@@ -3956,7 +3956,7 @@ namespace Azure.Storage.Blobs.Test
                     sourceRange: range,
                     range: range,
                     options: options),
-                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ConditionNotMet")));
         }
 
         [RecordedTest]
@@ -4036,7 +4036,7 @@ namespace Azure.Storage.Blobs.Test
                     sourceRange: range,
                     range: range,
                     options: options),
-                e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.CannotVerifyCopySource.ToString())));
         }
 
         [RecordedTest]
@@ -4105,16 +4105,16 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(snapshotPageBlobClient.Uri);
 
             // Assert
-            Assert.AreEqual(accountName, snapshotPageBlobClient.AccountName);
-            Assert.AreEqual(containerName, snapshotPageBlobClient.BlobContainerName);
-            Assert.AreEqual(blobName, snapshotPageBlobClient.Name);
-            Assert.AreEqual(snapshotUri, snapshotPageBlobClient.Uri);
+            Assert.That(snapshotPageBlobClient.AccountName, Is.EqualTo(accountName));
+            Assert.That(snapshotPageBlobClient.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(snapshotPageBlobClient.Name, Is.EqualTo(blobName));
+            Assert.That(snapshotPageBlobClient.Uri, Is.EqualTo(snapshotUri));
 
-            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
-            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
-            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
-            Assert.AreEqual(snapshot, blobUriBuilder.Snapshot);
-            Assert.AreEqual(snapshotUri, blobUriBuilder.ToUri());
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo(accountName));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
+            Assert.That(blobUriBuilder.Snapshot, Is.EqualTo(snapshot));
+            Assert.That(blobUriBuilder.ToUri(), Is.EqualTo(snapshotUri));
         }
 
         [RecordedTest]
@@ -4134,16 +4134,16 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(versionPageBlobClient.Uri);
 
             // Assert
-            Assert.AreEqual(accountName, versionPageBlobClient.AccountName);
-            Assert.AreEqual(containerName, versionPageBlobClient.BlobContainerName);
-            Assert.AreEqual(blobName, versionPageBlobClient.Name);
-            Assert.AreEqual(versionUri, versionPageBlobClient.Uri);
+            Assert.That(versionPageBlobClient.AccountName, Is.EqualTo(accountName));
+            Assert.That(versionPageBlobClient.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(versionPageBlobClient.Name, Is.EqualTo(blobName));
+            Assert.That(versionPageBlobClient.Uri, Is.EqualTo(versionUri));
 
-            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
-            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
-            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
-            Assert.AreEqual(versionId, blobUriBuilder.VersionId);
-            Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo(accountName));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
+            Assert.That(blobUriBuilder.VersionId, Is.EqualTo(versionId));
+            Assert.That(blobUriBuilder.ToUri(), Is.EqualTo(versionUri));
         }
 
         [RecordedTest]
@@ -4158,7 +4158,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync(Constants.KB);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -4174,7 +4174,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> responseExists = await blob.CreateIfNotExistsAsync(Constants.KB);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -4191,9 +4191,9 @@ namespace Azure.Storage.Blobs.Test
                 blob.CreateIfNotExistsAsync(invalidPageSize),
                 e =>
                 {
-                    Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
-                    Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
-                        e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidHeaderValue"));
+                    Assert.That(e.Message.Split('\n')[0],
+                        Is.EqualTo("The value for one of the HTTP headers is not in the correct format."));
                 });
         }
 
@@ -4215,8 +4215,8 @@ namespace Azure.Storage.Blobs.Test
                 names.Add(pathItem.Name);
             }
             // Verify the file name exists in the filesystem
-            Assert.AreEqual(1, names.Count);
-            Assert.Contains(blobName, names);
+            Assert.That(names.Count, Is.EqualTo(1));
+            Assert.That(names, Does.Contain(blobName));
         }
 
         [RecordedTest]
@@ -4237,8 +4237,8 @@ namespace Azure.Storage.Blobs.Test
                 names.Add(pathItem.Name);
             }
             // Verify the file name exists in the filesystem
-            Assert.AreEqual(1, names.Count);
-            Assert.Contains(blobName, names);
+            Assert.That(names.Count, Is.EqualTo(1));
+            Assert.That(names, Does.Contain(blobName));
         }
 
         [RecordedTest]
@@ -4254,7 +4254,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 noCpkBlob.GetPropertiesAsync(),
-                e => Assert.AreEqual(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString())));
         }
 
         [RecordedTest]
@@ -4271,7 +4271,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 noEncryptionScopeBlob.SetMetadataAsync(BuildMetadata()),
-                e => Assert.AreEqual(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString())));
         }
 
         [RecordedTest]
@@ -4320,7 +4320,7 @@ namespace Azure.Storage.Blobs.Test
             actual.Seek(offset, SeekOrigin.Begin);
             byte[] resultArray = new byte[length];
             await actual.ReadAsync(resultArray, 0, length, CancellationToken.None);
-            Assert.AreEqual(pageBlobSize, actual.Length);
+            Assert.That(actual.Length, Is.EqualTo(pageBlobSize));
             Assert.That(data, Is.EqualTo(resultArray));
         }
 

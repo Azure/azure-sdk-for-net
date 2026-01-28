@@ -132,8 +132,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
 
             // Assert
             // 1. The strategy should have registered the target client and container
-            Assert.AreEqual(targetClient.Object, testStrategy.TargetServiceClient, "TargetServiceClient should be the target client.");
-            Assert.AreEqual(containerClient1.Object, testStrategy.ContainerClient, "ContainerClient should be the primary container.");
+            Assert.That(testStrategy.TargetServiceClient, Is.EqualTo(targetClient.Object), "TargetServiceClient should be the target client.");
+            Assert.That(testStrategy.ContainerClient, Is.EqualTo(containerClient1.Object), "ContainerClient should be the primary container.");
 
             // 2. The BlobTriggerExecutor should use a BlobReceiptManager with the primary client
             var receiptManagerField = typeof(BlobTriggerExecutor).GetField("_receiptManager", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
             var resultPrimaryClient = blobContainerClientField.GetValue(receiptManager);
 
             // The BlobReceiptManager should use the hostNamesContainerClient (from the primary client)
-            Assert.AreEqual(hostNamesContainerClient.Object, resultPrimaryClient, "BlobReceiptManager should use the primary container client.");
+            Assert.That(resultPrimaryClient, Is.EqualTo(hostNamesContainerClient.Object), "BlobReceiptManager should use the primary container client.");
         }
     }
 }

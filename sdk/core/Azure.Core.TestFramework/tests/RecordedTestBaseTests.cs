@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.TestFramework.Tests
 {
-    public class RecordedTestBaseTests: RecordedTestBase
+    public class RecordedTestBaseTests : RecordedTestBase
     {
         public RecordedTestBaseTests(bool isAsync) : base(isAsync)
         {
@@ -78,11 +78,11 @@ namespace Azure.Core.TestFramework.Tests
 
             var original = GetOriginal(operation);
 
-            Assert.AreEqual(TimeSpan.MaxValue, original.WaitForCompletionCalls[0]);
-            Assert.AreEqual(TimeSpan.FromSeconds(10), original.WaitForCompletionCalls[1]);
+            Assert.That(original.WaitForCompletionCalls[0], Is.EqualTo(TimeSpan.MaxValue));
+            Assert.That(original.WaitForCompletionCalls[1], Is.EqualTo(TimeSpan.FromSeconds(10)));
 
-            Assert.AreEqual(TimeSpan.MaxValue, original.WaitForCompletionCalls[2]);
-            Assert.AreEqual(TimeSpan.FromSeconds(10), original.WaitForCompletionCalls[3]);
+            Assert.That(original.WaitForCompletionCalls[2], Is.EqualTo(TimeSpan.MaxValue));
+            Assert.That(original.WaitForCompletionCalls[3], Is.EqualTo(TimeSpan.FromSeconds(10)));
         }
 
         [Test]

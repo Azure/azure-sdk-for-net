@@ -28,7 +28,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void ThrowsIfUnsupportedFormat()
         {
             ModelX? model = ModelReaderWriter.Read<ModelX>(BinaryData.FromString(File.ReadAllText(TestData.GetLocation("ModelX/ModelX.json"))));
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
             Assert.Throws<FormatException>(() => new ModelWriter(model!, new ModelReaderWriterOptions("x")).ExtractReader());
         }
 
@@ -37,17 +37,17 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             UnsafeBufferSequence.Reader reader = new ModelWriter(_resourceProviderData, _wireOptions).ExtractReader();
             long length = reader.Length;
-            Assert.AreEqual(_modelSize, length);
+            Assert.That(length, Is.EqualTo(_modelSize));
 
             MemoryStream stream1 = new MemoryStream((int)length);
             reader.CopyTo(stream1, default);
-            Assert.AreEqual(_modelSize, stream1.Length);
+            Assert.That(stream1.Length, Is.EqualTo(_modelSize));
 
             MemoryStream stream2 = new MemoryStream((int)length);
             await reader.CopyToAsync(stream2, default);
-            Assert.AreEqual(_modelSize, stream2.Length);
+            Assert.That(stream2.Length, Is.EqualTo(_modelSize));
 
-            CollectionAssert.AreEqual(stream1.ToArray(), stream2.ToArray());
+            Assert.That(stream1.ToArray(), Is.EqualTo(stream2.ToArray()));
         }
 
         [TestCase("J")]

@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ClientModel.TestFramework.Mocks;
-using Microsoft.ClientModel.TestFramework.TestProxy;
-using Moq;
-using NUnit.Framework;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.ClientModel.TestFramework.Mocks;
+using Microsoft.ClientModel.TestFramework.TestProxy;
+using Moq;
+using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework.Tests;
 

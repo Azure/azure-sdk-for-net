@@ -2,19 +2,18 @@
 // Licensed under the MIT License.
 extern alias BaseShares;
 extern alias DMShare;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using BaseShares::Azure.Storage.Files.Shares.Models;
-using Azure.Storage.Test;
-using Azure.Storage.Tests;
-using Moq;
-using NUnit.Framework;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Storage.Test;
+using Azure.Storage.Tests;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
+using Moq;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -186,7 +185,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.That(storageResource._options.DirectoryMetadata, Is.EqualTo(originalDestinationData.DirectoryMetadata));
             Assert.That(storageResource._options._isFileAttributesSet, Is.EqualTo(originalDestinationData.IsFileAttributesSet));
             Assert.That(storageResource._options.FileAttributes, Is.EqualTo(originalDestinationData.FileAttributes));
-            Assert.IsTrue(storageResource._options.FilePermissions);
+            Assert.That(storageResource._options.FilePermissions, Is.True);
             Assert.That(storageResource._options._isFileCreatedOnSet, Is.EqualTo(originalDestinationData.IsFileCreatedOnSet));
             Assert.That(storageResource._options.FileCreatedOn, Is.EqualTo(originalDestinationData.FileCreatedOn));
             Assert.That(storageResource._options._isFileLastWrittenOnSet, Is.EqualTo(originalDestinationData.IsFileLastWrittenOnSet));
@@ -271,7 +270,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.That(storageResource._options.DirectoryMetadata, Is.EqualTo(originalDestinationData.DirectoryMetadata));
             Assert.That(storageResource._options._isFileAttributesSet, Is.EqualTo(originalDestinationData.IsFileAttributesSet));
             Assert.That(storageResource._options.FileAttributes, Is.EqualTo(originalDestinationData.FileAttributes));
-            Assert.IsTrue(storageResource._options.FilePermissions);
+            Assert.That(storageResource._options.FilePermissions, Is.True);
             Assert.That(storageResource._options._isFileCreatedOnSet, Is.EqualTo(originalDestinationData.IsFileCreatedOnSet));
             Assert.That(storageResource._options.FileCreatedOn, Is.EqualTo(originalDestinationData.FileCreatedOn));
             Assert.That(storageResource._options._isFileLastWrittenOnSet, Is.EqualTo(originalDestinationData.IsFileLastWrittenOnSet));

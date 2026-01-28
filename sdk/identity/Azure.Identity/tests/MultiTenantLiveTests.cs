@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Net;
 
 namespace Azure.Identity.Tests
 {
@@ -35,8 +35,8 @@ namespace Azure.Identity.Tests
 
             var response = await _client.CallGraphAsync("https://graph.microsoft.com/.default");
 
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
-            Assert.Greater(response.Value, 0);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
+            Assert.That(response.Value, Is.GreaterThan(0));
         }
 
         [RecordedTest]
@@ -58,8 +58,8 @@ namespace Azure.Identity.Tests
 
             var response = await _client.CallGraphAsync("User.Read");
 
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
-            Assert.Greater(response.Value, 0);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
+            Assert.That(response.Value, Is.GreaterThan(0));
         }
 
         public class IdentityTestClient

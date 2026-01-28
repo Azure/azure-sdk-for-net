@@ -14,7 +14,7 @@ namespace AuthEventsTrigger
         public static WebJobsAuthenticationEventResponse Run(
         [WebJobsAuthenticationEventsTriggerAttribute(
             AudienceAppId = "<custom_authentication_extension_app_id>",
-            AuthorityUrl = "<authority_uri>", 
+            AuthorityUrl = "<authority_uri>",
             AuthorizedPartyAppId = "<authorized_party_app_id>")] WebJobsTokenIssuanceStartRequest request, ILogger log)
         #endregion
         {
@@ -31,7 +31,7 @@ namespace AuthEventsTrigger
                             new WebJobsAuthenticationEventsTokenClaim("customRoles", "Writer", "Editor"),
                             new WebJobsAuthenticationEventsTokenClaim("apiVersion", "1.0.0"),
                             new WebJobsAuthenticationEventsTokenClaim(
-                                "correlationId", 
+                                "correlationId",
                                 request.Data.AuthenticationContext.CorrelationId.ToString())));
                 }
                 else
@@ -42,8 +42,8 @@ namespace AuthEventsTrigger
                 }
                 return request.Completed();
             }
-            catch (Exception ex) 
-            { 
+            catch (Exception ex)
+            {
                 return request.Failed(ex);
             }
         }

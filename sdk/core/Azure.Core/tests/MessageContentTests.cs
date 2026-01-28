@@ -18,9 +18,9 @@ namespace Azure.Core.Tests
                 Data = new BinaryData("data")
             };
 
-            Assert.AreEqual(ContentType.ApplicationJson, messageContent.ContentType);
-            Assert.AreEqual("data", messageContent.Data.ToString());
-            Assert.IsFalse(messageContent.IsReadOnly);
+            Assert.That(messageContent.ContentType, Is.EqualTo(ContentType.ApplicationJson));
+            Assert.That(messageContent.Data.ToString(), Is.EqualTo("data"));
+            Assert.That(messageContent.IsReadOnly, Is.False);
         }
 
         [Test]
@@ -32,16 +32,16 @@ namespace Azure.Core.Tests
             };
 
             // we can cast to base type to use the ContentType struct property
-            ((MessageContent) messageContent).ContentType = ContentType.ApplicationJson;
+            ((MessageContent)messageContent).ContentType = ContentType.ApplicationJson;
 
-            Assert.AreEqual(ContentType.ApplicationJson, messageContent.ContentType);
-            Assert.AreEqual("data", messageContent.Data.ToString());
+            Assert.That(messageContent.ContentType, Is.EqualTo(ContentType.ApplicationJson));
+            Assert.That(messageContent.Data.ToString(), Is.EqualTo("data"));
 
             // we can also use the derived type string property
             messageContent.ContentType = ContentType.ApplicationJson.ToString();
-            Assert.AreEqual(ContentType.ApplicationJson, messageContent.ContentType);
+            Assert.That(messageContent.ContentType, Is.EqualTo(ContentType.ApplicationJson));
 
-            Assert.IsTrue(messageContent.IsReadOnly);
+            Assert.That(messageContent.IsReadOnly, Is.True);
         }
     }
 

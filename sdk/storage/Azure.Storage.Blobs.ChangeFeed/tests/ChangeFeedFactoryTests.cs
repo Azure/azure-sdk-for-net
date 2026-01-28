@@ -63,7 +63,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             expectedYears.Enqueue("idx/segments/2020/");
             expectedYears.Enqueue("idx/segments/2022/");
             expectedYears.Enqueue("idx/segments/2023/");
-            Assert.AreEqual(expectedYears, years);
+            Assert.That(years, Is.EqualTo(expectedYears));
         }
 
         [RecordedTest]
@@ -116,7 +116,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 cancellationToken: CancellationToken.None);
 
             // Assert
-            Assert.IsFalse(changeFeed.HasNext());
+            Assert.That(changeFeed.HasNext(), Is.False);
 
             if (IsAsync)
             {

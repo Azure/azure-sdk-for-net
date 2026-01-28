@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             EcCryptographyProvider client = new EcCryptographyProvider(jwk, null, false);
             KeyOperation operation = new KeyOperation(operationValue);
 
-            Assert.AreEqual(supported, client.SupportsOperation(operation));
+            Assert.That(client.SupportsOperation(operation), Is.EqualTo(supported));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             EcCryptographyProvider client = new EcCryptographyProvider(jwk, null, false);
 
             // The provider caches the original allow key operations to facilitate tracing. Operation will still be sent to the service.
-            Assert.IsTrue(client.SupportsOperation(KeyOperation.Sign));
+            Assert.That(client.SupportsOperation(KeyOperation.Sign), Is.True);
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             EcCryptographyProvider client = new EcCryptographyProvider(jwk, null, false);
 
-            Assert.IsFalse(client.SupportsOperation(KeyOperation.Sign));
+            Assert.That(client.SupportsOperation(KeyOperation.Sign), Is.False);
         }
 
         [Test]
@@ -64,9 +64,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] digest = new byte[] { 0x9f, 0x86, 0xd0, 0x81, 0x88, 0x4c, 0x7d, 0x65, 0x9a, 0x2f, 0xea, 0xa0, 0xc5, 0x5a, 0xd0, 0x15, 0xa3, 0xbf, 0x4f, 0x1b, 0x2b, 0x0b, 0x82, 0x2c, 0xd1, 0x5d, 0x6c, 0x15, 0xb0, 0xf0, 0x0a, 0x08 };
             SignResult result = await client.SignAsync(algorithm, digest, default);
 
-            Assert.AreEqual(algorithm, result.Algorithm);
-            Assert.AreEqual("test", result.KeyId);
-            Assert.AreEqual(64, result.Signature.Length);
+            Assert.That(result.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(result.KeyId, Is.EqualTo("test"));
+            Assert.That(result.Signature.Length, Is.EqualTo(64));
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             EcCryptographyProvider client = new EcCryptographyProvider(jwk, null, false);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
-            Assert.IsNull(client.Sign(algorithm, new byte[] { 0xff }, default));
+            Assert.That(client.Sign(algorithm, new byte[] { 0xff }, default), Is.Null);
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             EcCryptographyProvider client = new EcCryptographyProvider(jwk, null, false);
             SignResult result = client.Sign(default, new byte[] { 0xff }, default);
 
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -133,9 +133,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             SignResult signResult = await client.SignAsync(algorithm, digest, default);
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature, default);
 
-            Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual("test", verifyResult.KeyId);
-            Assert.IsTrue(verifyResult.IsValid);
+            Assert.That(verifyResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(verifyResult.KeyId, Is.EqualTo("test"));
+            Assert.That(verifyResult.IsValid, Is.True);
         }
 
         [Test]
@@ -183,7 +183,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] signature = new byte[] { 0xff, 0xff };
             VerifyResult result = client.Verify(default, digest, signature, default);
 
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -204,7 +204,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             byte[] digest = new byte[] { 0x9f, 0x86, 0xd0, 0x81, 0x88, 0x4c, 0x7d, 0x65, 0x9a, 0x2f, 0xea, 0xa0, 0xc5, 0x5a, 0xd0, 0x15, 0xa3, 0xbf, 0x4f, 0x1b, 0x2b, 0x0b, 0x82, 0x2c, 0xd1, 0x5d, 0x6c, 0x15, 0xb0, 0xf0, 0x0a, 0x08 };
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => client.Sign(GetSignatureAlgorithm(key.Key), digest, default));
-            Assert.AreEqual($"The key \"test\" is not valid before {key.Properties.NotBefore.Value:r}.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo($"The key \"test\" is not valid before {key.Properties.NotBefore.Value:r}."));
         }
 
         [Test]
@@ -225,7 +225,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             byte[] digest = new byte[] { 0x9f, 0x86, 0xd0, 0x81, 0x88, 0x4c, 0x7d, 0x65, 0x9a, 0x2f, 0xea, 0xa0, 0xc5, 0x5a, 0xd0, 0x15, 0xa3, 0xbf, 0x4f, 0x1b, 0x2b, 0x0b, 0x82, 0x2c, 0xd1, 0x5d, 0x6c, 0x15, 0xb0, 0xf0, 0x0a, 0x08 };
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => client.Sign(GetSignatureAlgorithm(key.Key), digest, default));
-            Assert.AreEqual($"The key \"test\" is not valid after {key.Properties.ExpiresOn.Value:r}.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo($"The key \"test\" is not valid after {key.Properties.ExpiresOn.Value:r}."));
         }
 
         private static IEnumerable<TestCaseData> GetInvalidKeys()
@@ -236,7 +236,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 yield return ("1.3.132.0.10", new[] { SignatureAlgorithm.ES256, SignatureAlgorithm.ES384, SignatureAlgorithm.ES512 }); // P-256K
                 yield return ("1.3.132.0.34", new[] { SignatureAlgorithm.ES256, SignatureAlgorithm.ES256K, SignatureAlgorithm.ES512 }); // P-384
                 yield return ("1.3.132.0.35", new[] { SignatureAlgorithm.ES256, SignatureAlgorithm.ES256K, SignatureAlgorithm.ES384 }); // P-521
-            };
+            }
+            ;
 
             foreach ((string oid, SignatureAlgorithm[] algorithms) in GetInvalidPairs())
             {

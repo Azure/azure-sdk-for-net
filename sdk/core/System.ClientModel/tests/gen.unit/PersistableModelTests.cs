@@ -38,15 +38,15 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(modifier, result.GenerationSpec.Modifier);
-            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.GenerationSpec.Modifier, Is.EqualTo(modifier));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
 
-            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual("PersistableModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
-            Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[0].Modifier);
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Name, Is.EqualTo("PersistableModel"));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Modifier, Is.EqualTo("internal"));
         }
 
         [TestCase("public")]
@@ -86,15 +86,15 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(modifier, result.GenerationSpec.Modifier);
-            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.GenerationSpec.Modifier, Is.EqualTo(modifier));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
 
-            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
-            Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[0].Modifier);
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Name, Is.EqualTo("JsonModel"));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Modifier, Is.EqualTo("internal"));
         }
 
         [TestCase("public")]
@@ -129,7 +129,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Null);
         }
 
         [TestCase("public")]
@@ -157,7 +157,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Null);
         }
 
         [Test]
@@ -199,19 +199,19 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual("public", result.GenerationSpec.Modifier);
-            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.GenerationSpec.Modifier, Is.EqualTo("public"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
 
-            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual("Wrapper.JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
-            Assert.AreEqual("Wrapper_JsonModel_", result.GenerationSpec.TypeBuilders[0].Type.TypeCaseName);
-            Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[0].Modifier);
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Name, Is.EqualTo("Wrapper.JsonModel"));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.TypeCaseName, Is.EqualTo("Wrapper_JsonModel_"));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Modifier, Is.EqualTo("internal"));
 
             var modelType = newCompilation.GetTypeByMetadataName("TestProject.Wrapper+JsonModel");
-            Assert.IsNotNull(modelType);
+            Assert.That(modelType, Is.Not.Null);
         }
 
         [Test]
@@ -253,13 +253,13 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual("public", result.GenerationSpec.Modifier);
-            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.GenerationSpec.Modifier, Is.EqualTo("public"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
 
-            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -285,7 +285,7 @@ namespace TestDependency
             Compilation depCompilation = CompilationHelper.CreateCompilation(depSource, assemblyName: "TestDependency");
             var depResult = CompilationHelper.RunSourceGenerator(depCompilation, out var newDepCompilation);
 
-            Assert.IsNull(depResult.GenerationSpec);
+            Assert.That(depResult.GenerationSpec, Is.Null);
 
             var source =
 $$"""
@@ -313,22 +313,22 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source, additionalReferences: [newDepCompilation.ToMetadataReference()]);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
 
             var myCollection = result.GenerationSpec.TypeBuilders[0];
-            Assert.AreEqual("internal", myCollection.Modifier);
-            Assert.AreEqual("MyCollection", myCollection.Type.Name);
-            Assert.AreEqual("TestProject", myCollection.Type.Namespace);
-            Assert.AreEqual(TypeBuilderKind.IPersistableModel, myCollection.Kind);
-            Assert.AreEqual("LocalContext", myCollection.ContextType.Name);
-            Assert.AreEqual("TestProject", myCollection.ContextType.Namespace);
-            Assert.IsNull(myCollection.PersistableModelProxy);
+            Assert.That(myCollection.Modifier, Is.EqualTo("internal"));
+            Assert.That(myCollection.Type.Name, Is.EqualTo("MyCollection"));
+            Assert.That(myCollection.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(myCollection.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
+            Assert.That(myCollection.ContextType.Name, Is.EqualTo("LocalContext"));
+            Assert.That(myCollection.ContextType.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(myCollection.PersistableModelProxy, Is.Null);
         }
     }
 }

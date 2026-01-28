@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Azure.Storage.Blobs.Test;
-using NUnit.Framework;
 using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Batch.Tests
 {
@@ -25,10 +25,10 @@ namespace Azure.Storage.Blobs.Batch.Tests
             var regex = new Regex(bodyRegexSanitizer.Regex);
 
             // Assert
-            Assert.AreEqual("Sanitized", bodyRegexSanitizer.Value);
+            Assert.That(bodyRegexSanitizer.Value, Is.EqualTo("Sanitized"));
             var match = regex.Match(sampleBody);
-            Assert.AreEqual("sig=abcde", match.Groups[0].ToString());
-            Assert.AreEqual("abcde", match.Groups[1].ToString());
+            Assert.That(match.Groups[0].ToString(), Is.EqualTo("sig=abcde"));
+            Assert.That(match.Groups[1].ToString(), Is.EqualTo("abcde"));
         }
     }
 }

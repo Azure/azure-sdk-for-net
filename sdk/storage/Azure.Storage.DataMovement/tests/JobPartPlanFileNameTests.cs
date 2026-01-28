@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using NUnit.Framework;
-using Azure.Storage.Test;
 using System.IO;
 using Azure.Storage.DataMovement.JobPlan;
+using Azure.Storage.Test;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -23,18 +23,18 @@ namespace Azure.Storage.DataMovement.Tests
             // Part Num: 1
             JobPartPlanFileName jobFileName = new JobPartPlanFileName($"12345678-1234-1234-1234-123456789abc.00001.ndmpart");
 
-            Assert.AreEqual("", jobFileName.PrefixPath);
-            Assert.AreEqual("12345678-1234-1234-1234-123456789abc", jobFileName.Id);
-            Assert.AreEqual(1, jobFileName.JobPartNumber);
+            Assert.That(jobFileName.PrefixPath, Is.Empty);
+            Assert.That(jobFileName.Id, Is.EqualTo("12345678-1234-1234-1234-123456789abc"));
+            Assert.That(jobFileName.JobPartNumber, Is.EqualTo(1));
 
             // "randomtransferidthataddsupto36charac.jobpart.ndmpart"
             // Transfer Id: randomtransferidthataddsupto36charac
             // Part Num: 1
             JobPartPlanFileName jobFileName2 = new JobPartPlanFileName($"randomtransferidthataddsupto36charac.00210.ndmpart");
 
-            Assert.AreEqual("", jobFileName.PrefixPath);
-            Assert.AreEqual("randomtransferidthataddsupto36charac", jobFileName2.Id);
-            Assert.AreEqual(210, jobFileName2.JobPartNumber);
+            Assert.That(jobFileName.PrefixPath, Is.Empty);
+            Assert.That(jobFileName2.Id, Is.EqualTo("randomtransferidthataddsupto36charac"));
+            Assert.That(jobFileName2.JobPartNumber, Is.EqualTo(210));
         }
 
         [Test]
@@ -47,9 +47,9 @@ namespace Azure.Storage.DataMovement.Tests
             string pathName1 = Path.Combine(tempPath, $"12345678-1234-1234-1234-123456789abc.00001.ndmpart");
             JobPartPlanFileName jobFileName = new JobPartPlanFileName(pathName1);
 
-            Assert.AreEqual(tempPath, jobFileName.PrefixPath);
-            Assert.AreEqual("12345678-1234-1234-1234-123456789abc", jobFileName.Id);
-            Assert.AreEqual(1, jobFileName.JobPartNumber);
+            Assert.That(jobFileName.PrefixPath, Is.EqualTo(tempPath));
+            Assert.That(jobFileName.Id, Is.EqualTo("12345678-1234-1234-1234-123456789abc"));
+            Assert.That(jobFileName.JobPartNumber, Is.EqualTo(1));
 
             // "randomtransferidthataddsupto36charac.00001.ndmpart"
             // Transfer Id: randomtransferidthataddsupto36charac
@@ -57,9 +57,9 @@ namespace Azure.Storage.DataMovement.Tests
             string pathName2 = Path.Combine(tempPath, $"randomtransferidthataddsupto36charac.00001.ndmpart");
             JobPartPlanFileName jobFileName2 = new JobPartPlanFileName(pathName2);
 
-            Assert.AreEqual(tempPath, jobFileName2.PrefixPath);
-            Assert.AreEqual("randomtransferidthataddsupto36charac", jobFileName2.Id);
-            Assert.AreEqual(1, jobFileName2.JobPartNumber);
+            Assert.That(jobFileName2.PrefixPath, Is.EqualTo(tempPath));
+            Assert.That(jobFileName2.Id, Is.EqualTo("randomtransferidthataddsupto36charac"));
+            Assert.That(jobFileName2.JobPartNumber, Is.EqualTo(1));
 
             // "abcdefgh-abcd-abcd-abcd-123456789abc.00210.ndmpart"
             // Transfer Id: abcdefgh-abcd-abcd-abcd-123456789abc
@@ -68,9 +68,9 @@ namespace Azure.Storage.DataMovement.Tests
             string pathName3 = Path.Combine(prefixPath3, $"abcdefgh-abcd-abcd-abcd-123456789abc.00210.ndmpart");
             JobPartPlanFileName jobFileName3 = new JobPartPlanFileName(pathName3);
 
-            Assert.AreEqual(prefixPath3, jobFileName3.PrefixPath);
-            Assert.AreEqual("abcdefgh-abcd-abcd-abcd-123456789abc", jobFileName3.Id);
-            Assert.AreEqual(210, jobFileName3.JobPartNumber);
+            Assert.That(jobFileName3.PrefixPath, Is.EqualTo(prefixPath3));
+            Assert.That(jobFileName3.Id, Is.EqualTo("abcdefgh-abcd-abcd-abcd-123456789abc"));
+            Assert.That(jobFileName3.JobPartNumber, Is.EqualTo(210));
         }
 
         [Test]
@@ -84,9 +84,9 @@ namespace Azure.Storage.DataMovement.Tests
                 id: "12345678-1234-1234-1234-123456789abc",
                 jobPartNumber: 1);
 
-            Assert.AreEqual("C:\\folder\\subfolder", jobFileName.PrefixPath);
-            Assert.AreEqual("12345678-1234-1234-1234-123456789abc", jobFileName.Id);
-            Assert.AreEqual(1, jobFileName.JobPartNumber);
+            Assert.That(jobFileName.PrefixPath, Is.EqualTo("C:\\folder\\subfolder"));
+            Assert.That(jobFileName.Id, Is.EqualTo("12345678-1234-1234-1234-123456789abc"));
+            Assert.That(jobFileName.JobPartNumber, Is.EqualTo(1));
 
             // "randomtransferidthataddsupto36charac.jobpart.ndmpart"
             // Transfer Id: randomtransferidthataddsupto36charac
@@ -96,9 +96,9 @@ namespace Azure.Storage.DataMovement.Tests
                 id: "randomtransferidthataddsupto36charac",
                 jobPartNumber: 1);
 
-            Assert.AreEqual("F:\\folder\\foo", jobFileName2.PrefixPath);
-            Assert.AreEqual("randomtransferidthataddsupto36charac", jobFileName2.Id);
-            Assert.AreEqual(1, jobFileName2.JobPartNumber);
+            Assert.That(jobFileName2.PrefixPath, Is.EqualTo("F:\\folder\\foo"));
+            Assert.That(jobFileName2.Id, Is.EqualTo("randomtransferidthataddsupto36charac"));
+            Assert.That(jobFileName2.JobPartNumber, Is.EqualTo(1));
 
             // "abcdefgh-abcd-abcd-abcd-123456789abc.00210.ndmpart"
             // Transfer Id: abcdefgh-abcd-abcd-abcd-123456789abc
@@ -108,9 +108,9 @@ namespace Azure.Storage.DataMovement.Tests
                 id: "abcdefgh-abcd-abcd-abcd-123456789abc",
                 jobPartNumber: 210);
 
-            Assert.AreEqual("\\folder\\sub", jobFileName3.PrefixPath);
-            Assert.AreEqual("abcdefgh-abcd-abcd-abcd-123456789abc", jobFileName3.Id);
-            Assert.AreEqual(210, jobFileName3.JobPartNumber);
+            Assert.That(jobFileName3.PrefixPath, Is.EqualTo("\\folder\\sub"));
+            Assert.That(jobFileName3.Id, Is.EqualTo("abcdefgh-abcd-abcd-abcd-123456789abc"));
+            Assert.That(jobFileName3.JobPartNumber, Is.EqualTo(210));
         }
 
         [Test]
@@ -146,11 +146,11 @@ namespace Azure.Storage.DataMovement.Tests
         {
             string originalPath = $"12345678-1234-1234-1234-123456789abc.00001.ndmpart";
             JobPartPlanFileName jobFileName = new JobPartPlanFileName(originalPath);
-            Assert.AreEqual(originalPath, jobFileName.ToString());
+            Assert.That(jobFileName.ToString(), Is.EqualTo(originalPath));
 
             string originalPath2 = $"randomtransferidthataddsupto36charac.00210.ndmpart";
             JobPartPlanFileName jobFileName2 = new JobPartPlanFileName(originalPath2);
-            Assert.AreEqual(originalPath2, jobFileName2.ToString());
+            Assert.That(jobFileName2.ToString(), Is.EqualTo(originalPath2));
         }
 
         [Test]
@@ -160,18 +160,18 @@ namespace Azure.Storage.DataMovement.Tests
             string tempPath = Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar);
             string originalPath = Path.Combine(tempPath, $"12345678-1234-1234-1234-123456789abc.00001.ndmpart");
             JobPartPlanFileName jobFileName = new JobPartPlanFileName(originalPath);
-            Assert.AreEqual(originalPath, jobFileName.ToString());
+            Assert.That(jobFileName.ToString(), Is.EqualTo(originalPath));
 
             // "F:/folder/foo/randomtransferidthataddsupto36charac.00001.ndmpart"
             string originalPath2 = Path.Combine(tempPath, $"randomtransferidthataddsupto36charac.00001.ndmpart");
             JobPartPlanFileName jobFileName2 = new JobPartPlanFileName(originalPath2);
-            Assert.AreEqual(originalPath2, jobFileName2.ToString());
+            Assert.That(jobFileName2.ToString(), Is.EqualTo(originalPath2));
 
             // "/folder/sub/abcdefgh-abcd-abcd-abcd-123456789abc.00210.ndmpart"
             string prefixPath3 = Path.Combine("folder", "sub");
             string originalPath3 = Path.Combine(prefixPath3, $"abcdefgh-abcd-abcd-abcd-123456789abc.00210.ndmpart");
             JobPartPlanFileName jobFileName3 = new JobPartPlanFileName(originalPath3);
-            Assert.AreEqual(originalPath3, jobFileName3.ToString());
+            Assert.That(jobFileName3.ToString(), Is.EqualTo(originalPath3));
         }
 
         [Test]
@@ -184,7 +184,7 @@ namespace Azure.Storage.DataMovement.Tests
                 checkpointerPath: tempPath,
                 id: "12345678-1234-1234-1234-123456789abc",
                 jobPartNumber: 1);
-            Assert.AreEqual(originalPath, jobFileName.ToString());
+            Assert.That(jobFileName.ToString(), Is.EqualTo(originalPath));
 
             // "F:/folder/foo/randomtransferidthataddsupto36charac.00001.ndmpart"
             string originalPath2 = Path.Combine(tempPath, $"randomtransferidthataddsupto36charac.00001.ndmpart");
@@ -192,7 +192,7 @@ namespace Azure.Storage.DataMovement.Tests
                 checkpointerPath: tempPath,
                 id: "randomtransferidthataddsupto36charac",
                 jobPartNumber: 1);
-            Assert.AreEqual(originalPath2, jobFileName2.ToString());
+            Assert.That(jobFileName2.ToString(), Is.EqualTo(originalPath2));
 
             // "/folder/sub/abcdefgh-abcd-abcd-abcd-123456789abc.00210.ndmpart"
             string prefixPath3 = Path.Combine("folder", "sub");
@@ -201,7 +201,7 @@ namespace Azure.Storage.DataMovement.Tests
                 checkpointerPath: prefixPath3,
                 id: "abcdefgh-abcd-abcd-abcd-123456789abc",
                 jobPartNumber: 210);
-            Assert.AreEqual(originalPath3, jobFileName3.ToString());
+            Assert.That(jobFileName3.ToString(), Is.EqualTo(originalPath3));
         }
     }
 }

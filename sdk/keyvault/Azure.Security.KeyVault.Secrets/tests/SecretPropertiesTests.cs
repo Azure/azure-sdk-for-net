@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 properties.Deserialize(json.AsStream());
             }
 
-            Assert.AreEqual(expected, properties.Managed);
+            Assert.That(properties.Managed, Is.EqualTo(expected));
         }
 
         [TestCase(@"{""kid"":""https://vault/secret/secret-name""}", null)]
@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 properties.Deserialize(json.AsStream());
             }
 
-            Assert.AreEqual(expected, properties.RecoverableDays);
+            Assert.That(properties.RecoverableDays, Is.EqualTo(expected));
         }
 
         [TestCase(@"{""kid"":""https://vault/secret/secret-name""}", null)]
@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 properties.Deserialize(json.AsStream());
             }
 
-            Assert.AreEqual(expected, properties.PreviousVersion);
+            Assert.That(properties.PreviousVersion, Is.EqualTo(expected));
         }
     }
 }

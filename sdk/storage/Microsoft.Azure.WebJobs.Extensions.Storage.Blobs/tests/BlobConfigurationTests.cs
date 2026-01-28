@@ -49,11 +49,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual("csblob", result.Name);
-            Assert.AreEqual("cscontainer", result.BlobContainerName);
-            Assert.NotNull(result.BlobContainerName);
-            Assert.False(await result.ExistsAsync());
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Name, Is.EqualTo("csblob"));
+            Assert.That(result.BlobContainerName, Is.EqualTo("cscontainer"));
+            Assert.That(result.BlobContainerName, Is.Not.Null);
+            Assert.That((bool)await result.ExistsAsync(), Is.False);
         }
 
         [Test]
@@ -83,11 +83,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual("endpointblob", result.Name);
-            Assert.AreEqual("endpointcontainer", result.BlobContainerName);
-            Assert.NotNull(result.BlobContainerName);
-            Assert.False(await result.ExistsAsync());
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Name, Is.EqualTo("endpointblob"));
+            Assert.That(result.BlobContainerName, Is.EqualTo("endpointcontainer"));
+            Assert.That(result.BlobContainerName, Is.Not.Null);
+            Assert.That((bool)await result.ExistsAsync(), Is.False);
         }
 
         [Test]
@@ -117,11 +117,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual("endpointblob", result.Name);
-            Assert.AreEqual("endpointcontainer", result.BlobContainerName);
-            Assert.NotNull(result.BlobContainerName);
-            Assert.False(await result.ExistsAsync());
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Name, Is.EqualTo("endpointblob"));
+            Assert.That(result.BlobContainerName, Is.EqualTo("endpointcontainer"));
+            Assert.That(result.BlobContainerName, Is.Not.Null);
+            Assert.That((bool)await result.ExistsAsync(), Is.False);
         }
 
         private void SetupAzurite(IWebJobsBuilder builder)

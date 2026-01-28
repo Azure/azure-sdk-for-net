@@ -50,24 +50,24 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             PageRangesInfo pageRangesInfo = await snapshot2Client.GetManagedDiskPageRangesDiffAsync(previousSnapshotUri: snapshot1SASUri);
 
             // Assert
-            Assert.IsNotNull(pageRangesInfo.LastModified);
-            Assert.IsNotNull(pageRangesInfo.ETag);
-            CollectionAssert.IsNotEmpty(pageRangesInfo.ClearRanges);
-            CollectionAssert.IsNotEmpty(pageRangesInfo.PageRanges);
+            Assert.That(pageRangesInfo.LastModified, Is.Not.Null);
+            Assert.That(pageRangesInfo.ETag, Is.Not.Null);
+            Assert.That(pageRangesInfo.ClearRanges, Is.Not.Empty);
+            Assert.That(pageRangesInfo.PageRanges, Is.Not.Empty);
 
             // Assert page diff
             var pageRange = pageRangesInfo.PageRanges.First();
             var range1 = await DownloadRange(snapshot1Client, pageRange);
             var range2 = await DownloadRange(snapshot2Client, pageRange);
 
-            Assert.AreNotEqual(range1, range2);
+            Assert.That(range2, Is.Not.EqualTo(range1));
 
             // Assert page clean
             var cleanRange = pageRangesInfo.ClearRanges.First();
             range2 = await DownloadRange(snapshot2Client, cleanRange);
             foreach (byte b in range2)
             {
-                Assert.AreEqual(0, b);
+                Assert.That(b, Is.EqualTo(0));
             }
         }
 
@@ -83,9 +83,9 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
                 snapshot1Client.GetManagedDiskPageRangesDiffAsync(range: new HttpRange(snapshot1Size + Constants.MB, 4 * Constants.KB)),
                 e =>
                 {
-                    Assert.AreEqual("InvalidRange", e.ErrorCode);
-                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
-                        e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidRange"));
+                    Assert.That(e.Message.Split('\n')[0],
+                        Is.EqualTo("The range specified is invalid for the current size of the resource."));
                 });
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
                     conditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Value.PageRanges);
+                Assert.That(response.Value.PageRanges, Is.Not.Null);
             }
         }
 

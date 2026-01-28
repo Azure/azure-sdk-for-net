@@ -116,8 +116,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         public static void AssertValidStoragePathInfo(PathInfo pathInfo)
         {
-            Assert.IsNotNull(pathInfo.ETag);
-            Assert.IsNotNull(pathInfo.LastModified);
+            Assert.That(pathInfo.ETag, Is.Not.Null);
+            Assert.That(pathInfo.LastModified, Is.Not.Null);
         }
 
         public void AssertMetadataEquality(
@@ -125,16 +125,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             IDictionary<string, string> actual,
             bool isDirectory)
         {
-            Assert.IsNotNull(expected, "Expected metadata is null");
-            Assert.IsNotNull(actual, "Actual metadata is null");
+            Assert.That(expected, Is.Not.Null, "Expected metadata is null");
+            Assert.That(actual, Is.Not.Null, "Actual metadata is null");
 
             if (isDirectory)
             {
-                Assert.AreEqual(expected.Count + 1, actual.Count, "Metadata counts are not equal");
+                Assert.That(actual.Count, Is.EqualTo(expected.Count + 1), "Metadata counts are not equal");
             }
             else
             {
-                Assert.AreEqual(expected.Count, actual.Count, "Metadata counts are not equal");
+                Assert.That(actual.Count, Is.EqualTo(expected.Count), "Metadata counts are not equal");
             }
 
             foreach (KeyValuePair<string, string> kvp in expected)
@@ -151,7 +151,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathAccessControlItem> expected,
              IList<PathAccessControlItem> actual)
         {
-            Assert.AreEqual(expected.Count, actual.Count);
+            Assert.That(actual.Count, Is.EqualTo(expected.Count));
             foreach (PathAccessControlItem expectedItem in expected)
             {
                 PathAccessControlItem actualItem = actual.Where(
@@ -166,10 +166,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         public void AssertPathAccessControlItemEquality(PathAccessControlItem expected, PathAccessControlItem actual)
         {
-            Assert.AreEqual(expected.DefaultScope, actual.DefaultScope);
-            Assert.AreEqual(expected.AccessControlType, actual.AccessControlType);
-            Assert.AreEqual(expected.EntityId, actual.EntityId);
-            Assert.AreEqual(expected.Permissions, actual.Permissions);
+            Assert.That(actual.DefaultScope, Is.EqualTo(expected.DefaultScope));
+            Assert.That(actual.AccessControlType, Is.EqualTo(expected.AccessControlType));
+            Assert.That(actual.EntityId, Is.EqualTo(expected.EntityId));
+            Assert.That(actual.Permissions, Is.EqualTo(expected.Permissions));
         }
 
         public DataLakeCustomerProvidedKey GetCustomerProvidedKey()
@@ -181,11 +181,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         public void AssertPathPermissionsEquality(PathPermissions expected, PathPermissions actual)
         {
-            Assert.AreEqual(expected.Owner, actual.Owner);
-            Assert.AreEqual(expected.Group, actual.Group);
-            Assert.AreEqual(expected.Other, actual.Other);
-            Assert.AreEqual(expected.StickyBit, actual.StickyBit);
-            Assert.AreEqual(expected.ExtendedAcls, actual.ExtendedAcls);
+            Assert.That(actual.Owner, Is.EqualTo(expected.Owner));
+            Assert.That(actual.Group, Is.EqualTo(expected.Group));
+            Assert.That(actual.Other, Is.EqualTo(expected.Other));
+            Assert.That(actual.StickyBit, Is.EqualTo(expected.StickyBit));
+            Assert.That(actual.ExtendedAcls, Is.EqualTo(expected.ExtendedAcls));
         }
 
         public DataLakeServiceClient GetServiceClient_AccountSas(
@@ -449,12 +449,12 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
         {
             DataLakeSasQueryParameters sas = new DataLakeUriBuilder(uri).Sas;
-            Assert.AreEqual(key.SignedObjectId, sas.KeyObjectId);
-            Assert.AreEqual(key.SignedExpiresOn, sas.KeyExpiresOn);
-            Assert.AreEqual(key.SignedService, sas.KeyService);
-            Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
-            Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
-            Assert.AreEqual(key.SignedDelegatedUserTenantId, sas.KeyDelegatedUserTenantId);
+            Assert.That(sas.KeyObjectId, Is.EqualTo(key.SignedObjectId));
+            Assert.That(sas.KeyExpiresOn, Is.EqualTo(key.SignedExpiresOn));
+            Assert.That(sas.KeyService, Is.EqualTo(key.SignedService));
+            Assert.That(sas.KeyStartsOn, Is.EqualTo(key.SignedStartsOn));
+            Assert.That(sas.KeyTenantId, Is.EqualTo(key.SignedTenantId));
+            Assert.That(sas.KeyDelegatedUserTenantId, Is.EqualTo(key.SignedDelegatedUserTenantId));
             //Assert.AreEqual(key.SignedVersion, sas.Version);
         }
     };

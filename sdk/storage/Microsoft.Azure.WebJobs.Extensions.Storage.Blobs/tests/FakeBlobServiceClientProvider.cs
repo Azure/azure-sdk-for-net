@@ -13,12 +13,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         private readonly BlobServiceClient _blobServiceClient;
 
         public FakeBlobServiceClientProvider(BlobServiceClient blobServiceClient)
-            : base(null, null, null, null) {
+            : base(null, null, null, null)
+        {
             _blobServiceClient = blobServiceClient;
         }
 
         public FakeBlobServiceClientProvider(BlobServiceClient blobServiceClient, IConfiguration configuration)
-            : base(configuration, null, null, null) {
+            : base(configuration, null, null, null)
+        {
             _blobServiceClient = blobServiceClient;
         }
 

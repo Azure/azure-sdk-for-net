@@ -3,8 +3,8 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
-using System.Collections.Immutable;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {

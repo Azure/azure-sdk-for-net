@@ -13,13 +13,13 @@ namespace Azure.Core.Experimental.Tests
         public void CharImplicit(char testValue)
         {
             Variant value = testValue;
-            Assert.AreEqual(testValue, value.As<char>());
-            Assert.AreEqual(typeof(char), value.Type);
+            Assert.That(value.As<char>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(char)));
 
             char? source = testValue;
             value = source;
-            Assert.AreEqual(source, value.As<char?>());
-            Assert.AreEqual(typeof(char), value.Type);
+            Assert.That(value.As<char?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(char)));
         }
 
         [TestCase('!')]
@@ -33,8 +33,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(testValue);
             }
 
-            Assert.AreEqual(testValue, value.As<char>());
-            Assert.AreEqual(typeof(char), value.Type);
+            Assert.That(value.As<char>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(char)));
 
             char? source = testValue;
 
@@ -43,8 +43,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(source);
             }
 
-            Assert.AreEqual(source, value.As<char?>());
-            Assert.AreEqual(typeof(char), value.Type);
+            Assert.That(value.As<char?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(char)));
         }
 
         [TestCase('!')]
@@ -54,11 +54,11 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             bool success = value.TryGetValue(out char result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<char>());
-            Assert.AreEqual(testValue, (char)value);
+            Assert.That(value.As<char>(), Is.EqualTo(testValue));
+            Assert.That((char)value, Is.EqualTo(testValue));
         }
 
         [TestCase('!')]
@@ -70,12 +70,12 @@ namespace Azure.Core.Experimental.Tests
             Variant value = new(source);
 
             bool success = value.TryGetValue(out char result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<char>());
+            Assert.That(value.As<char>(), Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (char)value);
+            Assert.That((char)value, Is.EqualTo(testValue));
         }
 
         [TestCase('!')]
@@ -86,10 +86,10 @@ namespace Azure.Core.Experimental.Tests
             char source = testValue;
             Variant value = new(source);
             bool success = value.TryGetValue(out char? result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (char?)value);
+            Assert.That((char?)value, Is.EqualTo(testValue));
         }
 
         [TestCase('!')]
@@ -101,21 +101,21 @@ namespace Azure.Core.Experimental.Tests
             object o = i;
             Variant value = new(o);
 
-            Assert.AreEqual(typeof(char), value.Type);
-            Assert.True(value.TryGetValue(out char result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out char? nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.That(value.Type, Is.EqualTo(typeof(char)));
+            Assert.That(value.TryGetValue(out char result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out char? nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
 
             char? n = testValue;
             o = n;
             value = new(o);
 
-            Assert.AreEqual(typeof(char), value.Type);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.That(value.Type, Is.EqualTo(typeof(char)));
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -123,9 +123,9 @@ namespace Azure.Core.Experimental.Tests
         {
             char? source = null;
             Variant value = source;
-            Assert.Null(value.Type);
-            Assert.AreEqual(source, value.As<char?>());
-            Assert.False(value.As<char?>().HasValue);
+            Assert.That(value.Type, Is.Null);
+            Assert.That(value.As<char?>(), Is.EqualTo(source));
+            Assert.That(value.As<char?>().HasValue, Is.False);
         }
 
         [TestCase('!')]
@@ -135,14 +135,14 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             object o = value.As<object>();
-            Assert.AreEqual(typeof(char), o.GetType());
-            Assert.AreEqual(testValue, (char)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(char)));
+            Assert.That((char)o, Is.EqualTo(testValue));
 
             char? n = testValue;
             value = new(n);
             o = value.As<object>();
-            Assert.AreEqual(typeof(char), o.GetType());
-            Assert.AreEqual(testValue, (char)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(char)));
+            Assert.That((char)o, Is.EqualTo(testValue));
         }
     }
 }

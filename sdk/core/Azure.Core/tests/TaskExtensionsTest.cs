@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
-using NUnit.Framework;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
@@ -19,19 +19,19 @@ namespace Azure.Core.Tests
             var awaiter = tcs.Task.AwaitWithCancellation(cts.Token).GetAwaiter();
             var continuationCalled = 0;
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
             awaiter.UnsafeOnCompleted(() => continuationCalled++);
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
-            Assert.AreEqual(0, continuationCalled);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
+            Assert.That(continuationCalled, Is.EqualTo(0));
             tcs.SetResult(8);
 
-            Assert.AreEqual(true, awaiter.IsCompleted);
-            Assert.AreEqual(1, continuationCalled);
-            Assert.AreEqual(8, awaiter.GetResult());
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(true));
+            Assert.That(continuationCalled, Is.EqualTo(1));
+            Assert.That(awaiter.GetResult(), Is.EqualTo(8));
 
             cts.Cancel();
-            Assert.AreEqual(1, continuationCalled);
+            Assert.That(continuationCalled, Is.EqualTo(1));
         }
 
         [Test]
@@ -42,8 +42,8 @@ namespace Azure.Core.Tests
 
             var awaiter = Task.FromResult(8).AwaitWithCancellation(cts.Token).GetAwaiter();
 
-            Assert.AreEqual(true, awaiter.IsCompleted);
-            Assert.AreEqual(8, awaiter.GetResult());
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(true));
+            Assert.That(awaiter.GetResult(), Is.EqualTo(8));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Azure.Core.Tests
 
             var awaiter = tcs.Task.AwaitWithCancellation(cts.Token).GetAwaiter();
 
-            Assert.AreEqual(true, awaiter.IsCompleted);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(true));
             Assert.Catch<OperationCanceledException>(() => awaiter.GetResult());
         }
 
@@ -67,19 +67,19 @@ namespace Azure.Core.Tests
             var awaiter = tcs.Task.AwaitWithCancellation(cts.Token).GetAwaiter();
             var continuationCalled = 0;
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
             awaiter.UnsafeOnCompleted(() => continuationCalled++);
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
-            Assert.AreEqual(0, continuationCalled);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
+            Assert.That(continuationCalled, Is.EqualTo(0));
             cts.Cancel();
 
-            Assert.AreEqual(1, continuationCalled);
-            Assert.AreEqual(true, awaiter.IsCompleted);
+            Assert.That(continuationCalled, Is.EqualTo(1));
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(true));
             Assert.Catch<OperationCanceledException>(() => awaiter.GetResult());
 
             tcs.SetResult(0);
-            Assert.AreEqual(1, continuationCalled);
+            Assert.That(continuationCalled, Is.EqualTo(1));
         }
 
         [Test]
@@ -90,15 +90,15 @@ namespace Azure.Core.Tests
             var awaiter = tcs.Task.AwaitWithCancellation(cts.Token).GetAwaiter();
             var continuationCalled = false;
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
             awaiter.UnsafeOnCompleted(() => continuationCalled = true);
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
-            Assert.AreEqual(false, continuationCalled);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
+            Assert.That(continuationCalled, Is.EqualTo(false));
             tcs.SetException(new OperationCanceledException("Error"));
 
-            Assert.AreEqual(true, continuationCalled);
-            Assert.AreEqual(true, awaiter.IsCompleted);
+            Assert.That(continuationCalled, Is.EqualTo(true));
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(true));
             Assert.Catch<OperationCanceledException>(() => awaiter.GetResult(), "Error");
         }
 
@@ -110,19 +110,19 @@ namespace Azure.Core.Tests
             var awaiter = new ValueTask<int>(tcs.Task).AwaitWithCancellation(cts.Token).GetAwaiter();
             var continuationCalled = 0;
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
             awaiter.UnsafeOnCompleted(() => continuationCalled++);
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
-            Assert.AreEqual(0, continuationCalled);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
+            Assert.That(continuationCalled, Is.EqualTo(0));
             tcs.SetResult(8);
 
-            Assert.AreEqual(true, awaiter.IsCompleted);
-            Assert.AreEqual(1, continuationCalled);
-            Assert.AreEqual(8, awaiter.GetResult());
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(true));
+            Assert.That(continuationCalled, Is.EqualTo(1));
+            Assert.That(awaiter.GetResult(), Is.EqualTo(8));
 
             cts.Cancel();
-            Assert.AreEqual(1, continuationCalled);
+            Assert.That(continuationCalled, Is.EqualTo(1));
         }
 
         [Test]
@@ -133,8 +133,8 @@ namespace Azure.Core.Tests
 
             var awaiter = new ValueTask<int>(8).AwaitWithCancellation(cts.Token).GetAwaiter();
 
-            Assert.AreEqual(true, awaiter.IsCompleted);
-            Assert.AreEqual(8, awaiter.GetResult());
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(true));
+            Assert.That(awaiter.GetResult(), Is.EqualTo(8));
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace Azure.Core.Tests
 
             var awaiter = new ValueTask<int>(tcs.Task).AwaitWithCancellation(cts.Token).GetAwaiter();
 
-            Assert.AreEqual(true, awaiter.IsCompleted);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(true));
             Assert.Catch<OperationCanceledException>(() => awaiter.GetResult());
         }
 
@@ -158,19 +158,19 @@ namespace Azure.Core.Tests
             var awaiter = new ValueTask<int>(tcs.Task).AwaitWithCancellation(cts.Token).GetAwaiter();
             var continuationCalled = 0;
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
             awaiter.UnsafeOnCompleted(() => continuationCalled++);
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
-            Assert.AreEqual(0, continuationCalled);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
+            Assert.That(continuationCalled, Is.EqualTo(0));
             cts.Cancel();
 
-            Assert.AreEqual(1, continuationCalled);
-            Assert.AreEqual(true, awaiter.IsCompleted);
+            Assert.That(continuationCalled, Is.EqualTo(1));
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(true));
             Assert.Catch<OperationCanceledException>(() => awaiter.GetResult());
 
             tcs.SetResult(0);
-            Assert.AreEqual(1, continuationCalled);
+            Assert.That(continuationCalled, Is.EqualTo(1));
         }
 
         [Test]
@@ -181,15 +181,15 @@ namespace Azure.Core.Tests
             var awaiter = new ValueTask<int>(tcs.Task).AwaitWithCancellation(cts.Token).GetAwaiter();
             var continuationCalled = false;
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
             awaiter.UnsafeOnCompleted(() => continuationCalled = true);
 
-            Assert.AreEqual(false, awaiter.IsCompleted);
-            Assert.AreEqual(false, continuationCalled);
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(false));
+            Assert.That(continuationCalled, Is.EqualTo(false));
             tcs.SetException(new OperationCanceledException("Error"));
 
-            Assert.AreEqual(true, continuationCalled);
-            Assert.AreEqual(true, awaiter.IsCompleted);
+            Assert.That(continuationCalled, Is.EqualTo(true));
+            Assert.That(awaiter.IsCompleted, Is.EqualTo(true));
             Assert.Catch<OperationCanceledException>(() => awaiter.GetResult(), "Error");
         }
     }

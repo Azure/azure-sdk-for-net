@@ -22,93 +22,93 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         [RecordedTest]
         public void ToDateTimeOffsetTests()
         {
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700/meta.json"));
+            Assert.That(
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700/meta.json"),
+                Is.EqualTo(new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero)));
 
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700/"));
+            Assert.That(
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700/"),
+                Is.EqualTo(new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero)));
 
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700"));
+            Assert.That(
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700"),
+                Is.EqualTo(new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero)));
 
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 2, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/"));
+            Assert.That(
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/"),
+                Is.EqualTo(new DateTimeOffset(2019, 11, 2, 0, 0, 0, TimeSpan.Zero)));
 
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 2, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02"));
+            Assert.That(
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02"),
+                Is.EqualTo(new DateTimeOffset(2019, 11, 2, 0, 0, 0, TimeSpan.Zero)));
 
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 1, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/"));
+            Assert.That(
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/"),
+                Is.EqualTo(new DateTimeOffset(2019, 11, 1, 0, 0, 0, TimeSpan.Zero)));
 
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 1, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11"));
+            Assert.That(
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11"),
+                Is.EqualTo(new DateTimeOffset(2019, 11, 1, 0, 0, 0, TimeSpan.Zero)));
 
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 1, 1, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/"));
+            Assert.That(
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/"),
+                Is.EqualTo(new DateTimeOffset(2019, 1, 1, 0, 0, 0, TimeSpan.Zero)));
 
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 1, 1, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019"));
+            Assert.That(
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019"),
+                Is.EqualTo(new DateTimeOffset(2019, 1, 1, 0, 0, 0, TimeSpan.Zero)));
 
-            Assert.AreEqual(
-                null,
-                BlobChangeFeedExtensions.ToDateTimeOffset(((string)null)));
+            Assert.That(
+                BlobChangeFeedExtensions.ToDateTimeOffset(((string)null)),
+                Is.EqualTo(null));
         }
 
         [RecordedTest]
         public void RoundDownToNearestHourTests()
         {
-            Assert.AreEqual(
-                new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 20, 0, 0, TimeSpan.Zero)),
+            Assert.That(
                 (new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 20, 25, 30, TimeSpan.Zero))).RoundDownToNearestHour());
+                    new DateTimeOffset(2020, 03, 17, 20, 25, 30, TimeSpan.Zero))).RoundDownToNearestHour(),
+                Is.EqualTo(new DateTimeOffset?(
+                    new DateTimeOffset(2020, 03, 17, 20, 0, 0, TimeSpan.Zero))));
 
-            Assert.AreEqual(
-                null,
-                ((DateTimeOffset?)null).RoundDownToNearestHour());
+            Assert.That(
+                ((DateTimeOffset?)null).RoundDownToNearestHour(),
+                Is.EqualTo(null));
         }
 
         [RecordedTest]
         public void RoundUpToNearestHourTests()
         {
-            Assert.AreEqual(
-                new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 21, 0, 0, TimeSpan.Zero)),
+            Assert.That(
                 (new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 20, 25, 30, TimeSpan.Zero))).RoundUpToNearestHour());
+                    new DateTimeOffset(2020, 03, 17, 20, 25, 30, TimeSpan.Zero))).RoundUpToNearestHour(),
+                Is.EqualTo(new DateTimeOffset?(
+                    new DateTimeOffset(2020, 03, 17, 21, 0, 0, TimeSpan.Zero))));
 
-            Assert.AreEqual(
-                new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 21, 0, 0, TimeSpan.Zero)),
+            Assert.That(
                 (new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 21, 0, 0, TimeSpan.Zero))).RoundUpToNearestHour());
+                    new DateTimeOffset(2020, 03, 17, 21, 0, 0, TimeSpan.Zero))).RoundUpToNearestHour(),
+                Is.EqualTo(new DateTimeOffset?(
+                    new DateTimeOffset(2020, 03, 17, 21, 0, 0, TimeSpan.Zero))));
 
-            Assert.AreEqual(
-                null,
-                ((DateTimeOffset?)null).RoundUpToNearestHour());
+            Assert.That(
+                ((DateTimeOffset?)null).RoundUpToNearestHour(),
+                Is.EqualTo(null));
         }
 
         [RecordedTest]
         public void RoundDownToNearestYearTests()
         {
-            Assert.AreEqual(
-                new DateTimeOffset?(
-                    new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero)),
+            Assert.That(
                 (new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 20, 25, 30, TimeSpan.Zero))).RoundDownToNearestYear());
+                    new DateTimeOffset(2020, 03, 17, 20, 25, 30, TimeSpan.Zero))).RoundDownToNearestYear(),
+                Is.EqualTo(new DateTimeOffset?(
+                    new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero))));
 
-            Assert.AreEqual(
-                null,
-                ((DateTimeOffset?)null).RoundDownToNearestYear());
+            Assert.That(
+                ((DateTimeOffset?)null).RoundDownToNearestYear(),
+                Is.EqualTo(null));
         }
 
         [RecordedTest]
@@ -153,7 +153,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             expectedSegmentPaths.Enqueue("idx/segments/2020/03/03/2000/meta.json");
             expectedSegmentPaths.Enqueue("idx/segments/2020/03/03/2200/meta.json");
 
-            Assert.AreEqual(expectedSegmentPaths, segmentPaths);
+            Assert.That(segmentPaths, Is.EqualTo(expectedSegmentPaths));
         }
     }
 }

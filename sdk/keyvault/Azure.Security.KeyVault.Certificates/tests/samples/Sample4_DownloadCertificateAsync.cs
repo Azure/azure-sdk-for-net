@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -9,13 +8,14 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
     public partial class DownloadCertificate
     {
-// Need to exclude actual TFMs since SNIPPET is always passed during CIs, such that the following will fail:
-// NET472_OR_GREATER || NETSTANDARD2_1_OR_GREATER || SNIPPET
+        // Need to exclude actual TFMs since SNIPPET is always passed during CIs, such that the following will fail:
+        // NET472_OR_GREATER || NETSTANDARD2_1_OR_GREATER || SNIPPET
 #if !NET462 && !NET47
         [Test]
         public async Task DownloadCertificateAsync()
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             bool verified = publicKey.VerifyHash(hash, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             Debug.WriteLine($"Signature verified: {verified}");
 
-            Assert.IsTrue(verified);
+            Assert.That(verified, Is.True);
 
             DeleteCertificateOperation deleteOperation = await client.StartDeleteCertificateAsync(certificateName);
             await deleteOperation.WaitForCompletionAsync();

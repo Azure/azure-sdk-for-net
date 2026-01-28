@@ -33,7 +33,7 @@ namespace Azure.Storage.Blobs.Test
             var expectedUri = WebUtility.UrlDecode(service.Uri.AbsoluteUri);
             var actualUri = WebUtility.UrlDecode(blobUri.AbsoluteUri);
 
-            Assert.AreEqual(expectedUri, actualUri);
+            Assert.That(actualUri, Is.EqualTo(expectedUri));
         }
 
         [RecordedTest]
@@ -48,16 +48,16 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("comp=list", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("account.blob.core.windows.net"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.Empty);
+            Assert.That(blobUriBuilder.BlobName, Is.Empty);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.EqualTo("comp=list"));
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -72,16 +72,16 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("account.blob.core.windows.net"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.Empty);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -96,16 +96,16 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("blob", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("account.blob.core.windows.net"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -126,30 +126,30 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("account.blob.core.windows.net"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             // blob name was trimmed when set via constructor uri
             if (trimsSlash)
             {
-                Assert.AreEqual(trimmedName, blobUriBuilder.BlobName);
+                Assert.That(blobUriBuilder.BlobName, Is.EqualTo(trimmedName));
             }
             else
             {
-                Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+                Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
             }
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
             if (trimsSlash)
             {
-                Assert.AreEqual(noSlashUri, newUri);
+                Assert.That(newUri, Is.EqualTo(noSlashUri));
             }
             else
             {
-                Assert.AreEqual(originalUri, newUri);
+                Assert.That(newUri, Is.EqualTo(originalUri));
             }
         }
 
@@ -174,23 +174,23 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("account.blob.core.windows.net"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             // blob name was NOT trimmed when set via property
-            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
             if (trimsSlash)
             {
-                Assert.AreEqual(noSlashUri, newUri);
+                Assert.That(newUri, Is.EqualTo(noSlashUri));
             }
             else
             {
-                Assert.AreEqual(originalUri, newUri);
+                Assert.That(newUri, Is.EqualTo(originalUri));
             }
         }
 
@@ -211,16 +211,16 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("account.blob.core.windows.net"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -243,16 +243,16 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("account.blob.core.windows.net"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -313,16 +313,16 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(8080, blobUriBuilder.Port);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("account.blob.core.windows.net"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.Empty);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(8080));
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -346,16 +346,16 @@ namespace Azure.Storage.Blobs.Test
                 Uri newUri = blobUriBuilder.ToUri();
 
                 // Assert
-                Assert.AreEqual("https", blobUriBuilder.Scheme);
-                Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
-                Assert.AreEqual("account", blobUriBuilder.AccountName);
-                Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-                Assert.AreEqual("blob", blobUriBuilder.BlobName);
-                Assert.AreEqual("2011-03-09T01:42:34.9360000Z", blobUriBuilder.Snapshot);
-                Assert.IsNull(blobUriBuilder.Sas);
-                Assert.AreEqual("", blobUriBuilder.Query);
-                Assert.AreEqual(443, blobUriBuilder.Port);
-                Assert.IsTrue(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+                Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(blobUriBuilder.Host, Is.EqualTo("account.blob.core.windows.net"));
+                Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+                Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+                Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
+                Assert.That(blobUriBuilder.Snapshot, Is.EqualTo("2011-03-09T01:42:34.9360000Z"));
+                Assert.That(blobUriBuilder.Sas, Is.Null);
+                Assert.That(blobUriBuilder.Query, Is.Empty);
+                Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
+                Assert.That(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase), Is.True);
             }
         }
 
@@ -381,16 +381,16 @@ namespace Azure.Storage.Blobs.Test
                 Uri newUri = blobUriBuilder.ToUri();
 
                 // Assert
-                Assert.AreEqual("https", blobUriBuilder.Scheme);
-                Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
-                Assert.AreEqual("account", blobUriBuilder.AccountName);
-                Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-                Assert.AreEqual("blob", blobUriBuilder.BlobName);
-                Assert.AreEqual("2011-03-09T01:42:34.9360000Z", blobUriBuilder.VersionId);
-                Assert.IsNull(blobUriBuilder.Sas);
-                Assert.AreEqual("", blobUriBuilder.Query);
-                Assert.AreEqual(443, blobUriBuilder.Port);
-                Assert.IsTrue(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+                Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(blobUriBuilder.Host, Is.EqualTo("account.blob.core.windows.net"));
+                Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+                Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+                Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
+                Assert.That(blobUriBuilder.VersionId, Is.EqualTo("2011-03-09T01:42:34.9360000Z"));
+                Assert.That(blobUriBuilder.Sas, Is.Null);
+                Assert.That(blobUriBuilder.Query, Is.Empty);
+                Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
+                Assert.That(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase), Is.True);
             }
         }
 
@@ -406,35 +406,35 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("blob", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("account.blob.core.windows.net"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
 
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), blobUriBuilder.Sas.ExpiresOn);
-            Assert.AreEqual("", blobUriBuilder.Sas.Identifier);
-            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), blobUriBuilder.Sas.IPRange);
-            Assert.AreEqual("rw", blobUriBuilder.Sas.Permissions);
-            Assert.AreEqual(SasProtocol.Https, blobUriBuilder.Sas.Protocol);
-            Assert.AreEqual("b", blobUriBuilder.Sas.Resource);
-            Assert.IsNull(blobUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(blobUriBuilder.Sas.Services);
-            Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", blobUriBuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), blobUriBuilder.Sas.StartsOn);
-            Assert.AreEqual("2015-04-05", blobUriBuilder.Sas.Version);
+            Assert.That(blobUriBuilder.Sas.ExpiresOn, Is.EqualTo(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero)));
+            Assert.That(blobUriBuilder.Sas.Identifier, Is.Empty);
+            Assert.That(blobUriBuilder.Sas.IPRange, Is.EqualTo(SasIPRange.Parse("168.1.5.60-168.1.5.70")));
+            Assert.That(blobUriBuilder.Sas.Permissions, Is.EqualTo("rw"));
+            Assert.That(blobUriBuilder.Sas.Protocol, Is.EqualTo(SasProtocol.Https));
+            Assert.That(blobUriBuilder.Sas.Resource, Is.EqualTo("b"));
+            Assert.That(blobUriBuilder.Sas.ResourceTypes, Is.Null);
+            Assert.That(blobUriBuilder.Sas.Services, Is.Null);
+            Assert.That(blobUriBuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
+            Assert.That(blobUriBuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
+            Assert.That(blobUriBuilder.Sas.Version, Is.EqualTo("2015-04-05"));
 
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
         public void BlobUriBuilder_RegularUrl_CNAME()
         {
             var blobUriBuilder = new BlobUriBuilder(new Uri("http://www.contoso.com"));
-            Assert.AreEqual(string.Empty, blobUriBuilder.AccountName);
+            Assert.That(blobUriBuilder.AccountName, Is.Empty);
         }
 
         [RecordedTest]
@@ -442,7 +442,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var blobUriBuilder = new BlobUriBuilder(new Uri("https://account.z.blob.core.windows.net/share/dir"));
 
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
         }
 
         [RecordedTest]
@@ -450,7 +450,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var blobUriBuilder = new BlobUriBuilder(new Uri("http://notaurl"));
 
-            Assert.IsEmpty(blobUriBuilder.AccountName);
+            Assert.That(blobUriBuilder.AccountName, Is.Empty);
         }
 
         [RecordedTest]
@@ -465,9 +465,9 @@ namespace Azure.Storage.Blobs.Test
             // empty service
             var blobUriBuilder3 = new BlobUriBuilder(new Uri("https://account./container/blob"));
 
-            Assert.AreEqual(string.Empty, blobUriBuilder1.AccountName);
-            Assert.AreEqual(string.Empty, blobUriBuilder2.AccountName);
-            Assert.AreEqual(string.Empty, blobUriBuilder3.AccountName);
+            Assert.That(blobUriBuilder1.AccountName, Is.Empty);
+            Assert.That(blobUriBuilder2.AccountName, Is.Empty);
+            Assert.That(blobUriBuilder3.AccountName, Is.Empty);
         }
 
         [RecordedTest]
@@ -482,17 +482,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("comp=list", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.Empty);
+            Assert.That(blobUriBuilder.BlobName, Is.Empty);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.EqualTo("comp=list"));
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -507,17 +507,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.Empty);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -532,17 +532,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("blob", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -557,17 +557,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(8080, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.Empty);
+            Assert.That(blobUriBuilder.BlobName, Is.Empty);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(8080));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -582,17 +582,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(8080, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.Empty);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(8080));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -607,17 +607,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("blob", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(8080, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(8080));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -631,17 +631,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("http", blobUriBuilder.Scheme);
-            Assert.AreEqual("localhost", blobUriBuilder.Host);
-            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("斑點", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(10000, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("http"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("localhost"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("devstoreaccount1"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("斑點"));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -655,17 +655,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("http", blobUriBuilder.Scheme);
-            Assert.AreEqual("localhost", blobUriBuilder.Host);
-            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("斑點", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(10000, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("http"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("localhost"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("devstoreaccount1"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("斑點"));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -681,17 +681,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("http", blobUriBuilder.Scheme);
-            Assert.AreEqual("docker_container", blobUriBuilder.Host);
-            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
-            Assert.AreEqual("", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(10000, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("http"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("docker_container"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("devstoreaccount1"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.Empty);
+            Assert.That(blobUriBuilder.BlobName, Is.Empty);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -707,17 +707,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("http", blobUriBuilder.Scheme);
-            Assert.AreEqual("docker_container", blobUriBuilder.Host);
-            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
-            Assert.AreEqual("containername", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(10000, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("http"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("docker_container"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("devstoreaccount1"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("containername"));
+            Assert.That(blobUriBuilder.BlobName, Is.Empty);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -733,17 +733,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("http", blobUriBuilder.Scheme);
-            Assert.AreEqual("docker_container", blobUriBuilder.Host);
-            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
-            Assert.AreEqual("containername", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("blobname", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(10000, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("http"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("docker_container"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("devstoreaccount1"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("containername"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blobname"));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -758,17 +758,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("http", blobUriBuilder.Scheme);
-            Assert.AreEqual("azure-storage-emulator-azurite", blobUriBuilder.Host);
-            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
-            Assert.AreEqual("", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(10000, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("http"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("azure-storage-emulator-azurite"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("devstoreaccount1"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.Empty);
+            Assert.That(blobUriBuilder.BlobName, Is.Empty);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -783,17 +783,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("http", blobUriBuilder.Scheme);
-            Assert.AreEqual("azure-storage-emulator-azurite", blobUriBuilder.Host);
-            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(10000, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("http"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("azure-storage-emulator-azurite"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("devstoreaccount1"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.Empty);
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -808,17 +808,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("http", blobUriBuilder.Scheme);
-            Assert.AreEqual("azure-storage-emulator-azurite", blobUriBuilder.Host);
-            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("blob", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(10000, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("http"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("azure-storage-emulator-azurite"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("devstoreaccount1"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -833,17 +833,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("www.mycustomname.com", blobUriBuilder.Host);
-            Assert.AreEqual(String.Empty, blobUriBuilder.AccountName);
-            Assert.AreEqual("containername", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("blobname", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("www.mycustomname.com"));
+            Assert.That(blobUriBuilder.AccountName, Is.Empty);
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("containername"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blobname"));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -858,17 +858,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("blob", blobUriBuilder.BlobName);
-            Assert.AreEqual("2011-03-09T01:42:34.9360000Z", blobUriBuilder.Snapshot);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
+            Assert.That(blobUriBuilder.Snapshot, Is.EqualTo("2011-03-09T01:42:34.9360000Z"));
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -883,17 +883,17 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("blob", blobUriBuilder.BlobName);
-            Assert.AreEqual("2011-03-09T01:42:34.9360000Z", blobUriBuilder.VersionId);
-            Assert.IsNull(blobUriBuilder.Sas);
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
+            Assert.That(blobUriBuilder.VersionId, Is.EqualTo("2011-03-09T01:42:34.9360000Z"));
+            Assert.That(blobUriBuilder.Sas, Is.Null);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -908,28 +908,28 @@ namespace Azure.Storage.Blobs.Test
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
-            Assert.AreEqual("account", blobUriBuilder.AccountName);
-            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
-            Assert.AreEqual("blob", blobUriBuilder.BlobName);
-            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.That(blobUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(blobUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(blobUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
+            Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
+            Assert.That(blobUriBuilder.Snapshot, Is.Empty);
 
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), blobUriBuilder.Sas.ExpiresOn);
-            Assert.AreEqual("", blobUriBuilder.Sas.Identifier);
-            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), blobUriBuilder.Sas.IPRange);
-            Assert.AreEqual("rw", blobUriBuilder.Sas.Permissions);
-            Assert.AreEqual(SasProtocol.Https, blobUriBuilder.Sas.Protocol);
-            Assert.AreEqual("b", blobUriBuilder.Sas.Resource);
-            Assert.IsNull(blobUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(blobUriBuilder.Sas.Services);
-            Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", blobUriBuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), blobUriBuilder.Sas.StartsOn);
-            Assert.AreEqual("2015-04-05", blobUriBuilder.Sas.Version);
+            Assert.That(blobUriBuilder.Sas.ExpiresOn, Is.EqualTo(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero)));
+            Assert.That(blobUriBuilder.Sas.Identifier, Is.Empty);
+            Assert.That(blobUriBuilder.Sas.IPRange, Is.EqualTo(SasIPRange.Parse("168.1.5.60-168.1.5.70")));
+            Assert.That(blobUriBuilder.Sas.Permissions, Is.EqualTo("rw"));
+            Assert.That(blobUriBuilder.Sas.Protocol, Is.EqualTo(SasProtocol.Https));
+            Assert.That(blobUriBuilder.Sas.Resource, Is.EqualTo("b"));
+            Assert.That(blobUriBuilder.Sas.ResourceTypes, Is.Null);
+            Assert.That(blobUriBuilder.Sas.Services, Is.Null);
+            Assert.That(blobUriBuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
+            Assert.That(blobUriBuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
+            Assert.That(blobUriBuilder.Sas.Version, Is.EqualTo("2015-04-05"));
 
-            Assert.AreEqual("", blobUriBuilder.Query);
-            Assert.AreEqual(443, blobUriBuilder.Port);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(blobUriBuilder.Query, Is.Empty);
+            Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -947,9 +947,9 @@ namespace Azure.Storage.Blobs.Test
             Uri resultUri = blobUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual(initialUri, resultUri);
-            Assert.IsTrue(resultUri.PathAndQuery.Contains($"st={WebUtility.UrlEncode(startTime)}"));
-            Assert.IsTrue(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"));
+            Assert.That(resultUri, Is.EqualTo(initialUri));
+            Assert.That(resultUri.PathAndQuery.Contains($"st={WebUtility.UrlEncode(startTime)}"), Is.True);
+            Assert.That(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"), Is.True);
         }
 
         [RecordedTest]
@@ -967,7 +967,7 @@ namespace Azure.Storage.Blobs.Test
             }
             catch (FormatException e)
             {
-                Assert.IsTrue(e.Message.Contains("was not recognized as a valid DateTime."));
+                Assert.That(e.Message.Contains("was not recognized as a valid DateTime."), Is.True);
             }
         }
 
@@ -986,14 +986,14 @@ namespace Azure.Storage.Blobs.Test
             // verify
             if (trimBlobNameSlashes)
             {
-                Assert.AreEqual(blobName.Trim('/'), blobBase.Name);
+                Assert.That(blobBase.Name, Is.EqualTo(blobName.Trim('/')));
             }
             else
             {
-                Assert.AreEqual(blobName, blobBase.Name);
+                Assert.That(blobBase.Name, Is.EqualTo(blobName));
             }
-            Assert.AreEqual(containerName, blobBase.BlobContainerName);
-            Assert.AreEqual(accountName, blobBase.AccountName);
+            Assert.That(blobBase.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(blobBase.AccountName, Is.EqualTo(accountName));
         }
     }
 }

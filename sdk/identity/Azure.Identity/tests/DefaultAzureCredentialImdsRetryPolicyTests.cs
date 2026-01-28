@@ -36,9 +36,9 @@ namespace Azure.Identity.Tests
 
             // The first request should only try once
             var response = await SendGetRequest(mockTransport, policy, uri: imdsUri);
-            Assert.AreEqual(1, tryCount);
-            Assert.Greater(options.Retry.MaxRetries, 1);
-            Assert.AreEqual(400, response.Status);
+            Assert.That(tryCount, Is.EqualTo(1));
+            Assert.That(options.Retry.MaxRetries, Is.GreaterThan(1));
+            Assert.That(response.Status, Is.EqualTo(400));
 
             tryCount = 0;
             // Subsequent requests should default to the retry options behavior
@@ -48,8 +48,8 @@ namespace Azure.Identity.Tests
                 req.Uri.Reset(imdsUri);
                 req.Headers.Add(ImdsManagedIdentityProbeSource.metadataHeaderName, "true");
             }, policy);
-            Assert.AreEqual(options.Retry.MaxRetries + 1, tryCount);
-            Assert.AreEqual(500, response.Status);
+            Assert.That(tryCount, Is.EqualTo(options.Retry.MaxRetries + 1));
+            Assert.That(response.Status, Is.EqualTo(500));
 
             tryCount = 0;
             response = await SendRequestAsync(mockTransport, req =>
@@ -58,8 +58,8 @@ namespace Azure.Identity.Tests
                 req.Uri.Reset(imdsUri);
                 req.Headers.Add(ImdsManagedIdentityProbeSource.metadataHeaderName, "true");
             }, policy);
-            Assert.AreEqual(options.Retry.MaxRetries + 1, tryCount);
-            Assert.AreEqual(500, response.Status);
+            Assert.That(tryCount, Is.EqualTo(options.Retry.MaxRetries + 1));
+            Assert.That(response.Status, Is.EqualTo(500));
         }
 
         [Test]
@@ -78,13 +78,13 @@ namespace Azure.Identity.Tests
 
             // non-IMDS requests should default to the retry options behavior
             var response = await SendGetRequest(mockTransport, policy);
-            Assert.AreEqual(options.Retry.MaxRetries + 1, tryCount);
-            Assert.AreEqual(500, response.Status);
+            Assert.That(tryCount, Is.EqualTo(options.Retry.MaxRetries + 1));
+            Assert.That(response.Status, Is.EqualTo(500));
 
             tryCount = 0;
             response = await SendGetRequest(mockTransport, policy);
-            Assert.AreEqual(options.Retry.MaxRetries + 1, tryCount);
-            Assert.AreEqual(500, response.Status);
+            Assert.That(tryCount, Is.EqualTo(options.Retry.MaxRetries + 1));
+            Assert.That(response.Status, Is.EqualTo(500));
         }
 
         public class MockDelayStrategy : DelayStrategy

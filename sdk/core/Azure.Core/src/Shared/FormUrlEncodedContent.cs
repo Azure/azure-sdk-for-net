@@ -17,12 +17,12 @@ namespace Azure.Core
         private Encoding Latin1 = Encoding.GetEncoding("iso-8859-1");
         private byte[] _bytes = Array.Empty<byte>();
 
-        public void Add (string parameter, string value)
+        public void Add(string parameter, string value)
         {
-            _values.Add(new KeyValuePair<string, string> (parameter, value));
+            _values.Add(new KeyValuePair<string, string>(parameter, value));
         }
 
-        private void BuildIfNeeded ()
+        private void BuildIfNeeded()
         {
             if (_bytes.Length == 0)
             {
@@ -33,7 +33,7 @@ namespace Azure.Core
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
-            BuildIfNeeded ();
+            BuildIfNeeded();
 #if NET6_0_OR_GREATER
             await stream.WriteAsync(_bytes.AsMemory(), cancellation).ConfigureAwait(false);
 #else
@@ -43,7 +43,7 @@ namespace Azure.Core
 
         public override void WriteTo(Stream stream, CancellationToken cancellation)
         {
-            BuildIfNeeded ();
+            BuildIfNeeded();
 #if NET6_0_OR_GREATER
             stream.Write(_bytes.AsSpan());
 #else
@@ -53,7 +53,7 @@ namespace Azure.Core
 
         public override bool TryComputeLength(out long length)
         {
-            BuildIfNeeded ();
+            BuildIfNeeded();
             length = _bytes.Length;
             return true;
         }

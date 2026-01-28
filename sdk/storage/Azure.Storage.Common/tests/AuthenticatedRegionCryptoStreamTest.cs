@@ -54,7 +54,7 @@ namespace Azure.Storage.Test
 
             public int TransformAuthenticationBlock(ReadOnlySpan<byte> input, Span<byte> output)
             {
-                Assert.LessOrEqual(input.Length + NonceLength + TagLength, output.Length);
+                Assert.That(input.Length + NonceLength + TagLength, Is.LessThanOrEqualTo(output.Length));
 
                 var nonce = new Span<byte>(new byte[NonceLength]);
                 for (int i = 0; i < nonce.Length; i++)
@@ -96,7 +96,7 @@ namespace Azure.Storage.Test
             }
             public int TransformAuthenticationBlock(ReadOnlySpan<byte> input, Span<byte> output)
             {
-                Assert.LessOrEqual(input.Length, output.Length + NonceLength + TagLength);
+                Assert.That(input.Length, Is.LessThanOrEqualTo(output.Length + NonceLength + TagLength));
                 int bytesToCopy = input.Length - NonceLength - TagLength;
                 input.Slice(NonceLength, bytesToCopy).CopyTo(output);
                 return bytesToCopy;
@@ -167,17 +167,17 @@ namespace Azure.Storage.Test
                     ciphertextOffset,
                     Math.Min(_totalAuthRegionLength, ciphertextResult.Length - ciphertextOffset));
 
-                CollectionAssert.AreEqual(
-                    Enumerable.Repeat(_nonceByte, _nonceLength),
-                    ciphertextAuthBlock.Slice(0, _nonceLength).ToArray());
-                CollectionAssert.AreEqual(
-                    plaintextAuthBlock.ToArray(),
+                Assert.That(
+                    ciphertextAuthBlock.Slice(0, _nonceLength).ToArray(),
+                    Is.EqualTo(Enumerable.Repeat(_nonceByte, _nonceLength)).AsCollection);
+                Assert.That(
                     ciphertextAuthBlock.Slice(
                         _nonceLength,
-                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
-                CollectionAssert.AreEqual(
-                    Enumerable.Repeat(_tagByte, _tagLength),
-                    ciphertextAuthBlock.Slice(ciphertextAuthBlock.Length - _tagLength).ToArray());
+                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray(),
+                    Is.EqualTo(plaintextAuthBlock.ToArray()).AsCollection);
+                Assert.That(
+                    ciphertextAuthBlock.Slice(ciphertextAuthBlock.Length - _tagLength).ToArray(),
+                    Is.EqualTo(Enumerable.Repeat(_tagByte, _tagLength)).AsCollection);
             }
         }
 
@@ -234,11 +234,11 @@ namespace Azure.Storage.Test
                     ciphertextOffset,
                     Math.Min(_totalAuthRegionLength, ciphertext.Length - ciphertextOffset));
 
-                CollectionAssert.AreEqual(
-                    plaintextAuthBlock.ToArray(),
+                Assert.That(
                     ciphertextAuthBlock.Slice(
                         _nonceLength,
-                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
+                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray(),
+                    Is.EqualTo(plaintextAuthBlock.ToArray()).AsCollection);
             }
         }
 
@@ -272,7 +272,7 @@ namespace Azure.Storage.Test
             } while (read != 0);
 
             // Assert
-            Assert.AreEqual(ciphertextResult.Length, totalRead);
+            Assert.That(totalRead, Is.EqualTo(ciphertextResult.Length));
             foreach (int authBlock in Enumerable.Range(0, numAuthBlocks))
             {
                 int plaintextOffset = authBlock * _authRegionDataLength;
@@ -286,17 +286,17 @@ namespace Azure.Storage.Test
                     ciphertextOffset,
                     Math.Min(_totalAuthRegionLength, ciphertextResult.Length - ciphertextOffset));
 
-                CollectionAssert.AreEqual(
-                    Enumerable.Repeat(_nonceByte, _nonceLength),
-                    ciphertextAuthBlock.Slice(0, _nonceLength).ToArray());
-                CollectionAssert.AreEqual(
-                    plaintextAuthBlock.ToArray(),
+                Assert.That(
+                    ciphertextAuthBlock.Slice(0, _nonceLength).ToArray(),
+                    Is.EqualTo(Enumerable.Repeat(_nonceByte, _nonceLength)).AsCollection);
+                Assert.That(
                     ciphertextAuthBlock.Slice(
                         _nonceLength,
-                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
-                CollectionAssert.AreEqual(
-                    Enumerable.Repeat(_tagByte, _tagLength),
-                    ciphertextAuthBlock.Slice(ciphertextAuthBlock.Length - _tagLength).ToArray());
+                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray(),
+                    Is.EqualTo(plaintextAuthBlock.ToArray()).AsCollection);
+                Assert.That(
+                    ciphertextAuthBlock.Slice(ciphertextAuthBlock.Length - _tagLength).ToArray(),
+                    Is.EqualTo(Enumerable.Repeat(_tagByte, _tagLength)).AsCollection);
             }
         }
 
@@ -330,7 +330,7 @@ namespace Azure.Storage.Test
             } while (read != 0);
 
             // Assert
-            Assert.AreEqual(plaintextResult.Length, totalRead);
+            Assert.That(totalRead, Is.EqualTo(plaintextResult.Length));
             foreach (int authBlock in Enumerable.Range(0, numAuthBlocks))
             {
                 int plaintextOffset = authBlock * _authRegionDataLength;
@@ -344,11 +344,11 @@ namespace Azure.Storage.Test
                     ciphertextOffset,
                     Math.Min(_totalAuthRegionLength, ciphertext.Length - ciphertextOffset));
 
-                CollectionAssert.AreEqual(
-                    plaintextAuthBlock.ToArray(),
+                Assert.That(
                     ciphertextAuthBlock.Slice(
                         _nonceLength,
-                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
+                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray(),
+                    Is.EqualTo(plaintextAuthBlock.ToArray()).AsCollection);
             }
         }
 
@@ -380,7 +380,7 @@ namespace Azure.Storage.Test
             decryptingReadStream.CopyTo(new MemoryStream(roundtrippedPlaintext));
 
             // Assert
-            CollectionAssert.AreEqual(plaintext.ToArray(), roundtrippedPlaintext);
+            Assert.That(roundtrippedPlaintext, Is.EqualTo(plaintext.ToArray()).AsCollection);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace Azure.Storage.Test
         /// <param name="readSize"></param>
         [Test]
         public void VerySmallSourceStreamRead(
-            [Values(Constants.KB/2, Constants.KB - 5, Constants.KB, 2 * Constants.KB)] int readSize)
+            [Values(Constants.KB / 2, Constants.KB - 5, Constants.KB, 2 * Constants.KB)] int readSize)
         {
             const int bufferSize = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize;
             const int dataLength = Constants.KB;
@@ -422,7 +422,7 @@ namespace Azure.Storage.Test
             } while (read != 0);
 
             // Assert
-            Assert.AreEqual(expectedOutputLength, totalRead);
+            Assert.That(totalRead, Is.EqualTo(expectedOutputLength));
         }
 
         [Test]

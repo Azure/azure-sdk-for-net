@@ -33,14 +33,14 @@ namespace Azure.Storage.Tests
                     uInitialCrcAB: 0,
                     uInitialCrcA: 0,
                     uFinalCrcA: composedCrc,
-                    uSizeA: (ulong) (blockSize * i),
+                    uSizeA: (ulong)(blockSize * i),
                     uInitialCrcB: 0,
                     uFinalCrcB: nextBlockCrc,
                     uSizeB: blockSize);
                 i++;
             }
 
-            Assert.AreEqual(wholeCrc, composedCrc);
+            Assert.That(composedCrc, Is.EqualTo(wholeCrc));
         }
 
         [TestCase(2)]
@@ -75,14 +75,14 @@ namespace Azure.Storage.Tests
                     uInitialCrcAB: 0,
                     uInitialCrcA: 0,
                     uFinalCrcA: composedCrc,
-                    uSizeA: (ulong) blockLengths[lengthIndex - 1],
+                    uSizeA: (ulong)blockLengths[lengthIndex - 1],
                     uInitialCrcB: 0,
                     uFinalCrcB: nextBlockCrc,
-                    uSizeB: (ulong) blockLengths[lengthIndex]);
+                    uSizeB: (ulong)blockLengths[lengthIndex]);
                 lengthIndex++;
             }
 
-            Assert.AreEqual(wholeCrc, composedCrc);
+            Assert.That(composedCrc, Is.EqualTo(wholeCrc));
         }
 
         [TestCase(2)]
@@ -111,7 +111,7 @@ namespace Azure.Storage.Tests
             ulong composedCrc = StorageCrc64Composer.Compose(
                 blockCrcs.Zip(blockLengths, (crc, len) => (crc, (long)len)));
 
-            Assert.AreEqual(wholeCrc, composedCrc);
+            Assert.That(composedCrc, Is.EqualTo(wholeCrc));
         }
 
         [TestCase(2)]
@@ -123,7 +123,8 @@ namespace Azure.Storage.Tests
             var random = new Random();
 
             List<ReadOnlyMemory<byte>> blocks = Enumerable.Range(0, numSegments)
-                .Select(_ => {
+                .Select(_ =>
+                {
                     var block = new byte[random.Next(minBlockSize, maxBlockSize)];
                     random.NextBytes(block);
                     return new ReadOnlyMemory<byte>(block);
@@ -144,7 +145,7 @@ namespace Azure.Storage.Tests
                 return (blockCrcCalculator.GetCurrentHash(), (long)block.Length);
             }));
 
-            CollectionAssert.AreEqual(wholeCrc, composedCrc.ToArray());
+            Assert.That(composedCrc.ToArray(), Is.EqualTo(wholeCrc).AsCollection);
         }
     }
 }

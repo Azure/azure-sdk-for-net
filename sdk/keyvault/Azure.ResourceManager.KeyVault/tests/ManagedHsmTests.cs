@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             // Create a MHSM
             ArmOperation<ManagedHsmResource> managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, MHSMName, parameters).ConfigureAwait(false);
-            Assert.NotNull(managedHsm.Value);
-            Assert.NotNull(managedHsm.Value.Id);
+            Assert.That(managedHsm.Value, Is.Not.Null);
+            Assert.That(managedHsm.Value.Id, Is.Not.Null);
             ValidateVault(managedHsm.Value.Data,
                 MHSMName,
                 ResGroupName,
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                     break;
                 }
             }
-            Assert.True(count == 1);
+            Assert.That(count, Is.EqualTo(1));
 
             // Update
             ManagedHsmProperties.PublicNetworkAccess = ManagedHsmPublicNetworkAccess.Enabled;
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             try
             {
                 Response<DeletedManagedHsmResource> deletedMhsm = await Subscription.GetDeletedManagedHsmAsync(Location, MHSMName);
-                Assert.NotNull(deletedMhsm.Value);
-                Assert.NotNull(deletedMhsm.Value.Data.Properties.DeletedOn);
+                Assert.That(deletedMhsm.Value, Is.Not.Null);
+                Assert.That(deletedMhsm.Value.Data.Properties.DeletedOn, Is.Not.Null);
                 await deletedMhsm.Value.PurgeDeletedAsync(WaitUntil.Completed);
             }
             catch (Exception)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             // Recover in recover mode
             ArmOperation<ManagedHsmResource> recoveredVault2 = await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, MHSMName, parameters).ConfigureAwait(false);
 
-            Assert.True(recoveredVault2.Value.Data.IsEqual(managedHsm.Value.Data));
+            Assert.That(recoveredVault2.Value.Data.IsEqual(managedHsm.Value.Data), Is.True);
 
             // Get recovered vault
             Response<ManagedHsmResource> getResult = await ManagedHsmCollection.GetAsync(MHSMName);
@@ -206,28 +206,28 @@ namespace Azure.ResourceManager.KeyVault.Tests
             int expectedSoftDeleteRetentionInDays,
             Dictionary<string, string> expectedTags)
         {
-            Assert.NotNull(managedHsmData);
-            Assert.NotNull(managedHsmData.Properties);
+            Assert.That(managedHsmData, Is.Not.Null);
+            Assert.That(managedHsmData.Properties, Is.Not.Null);
 
             string resourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/managedHSMs/{2}";
             string expectedResourceId = string.Format(resourceIdFormat, expectedSubId, expectedResourceGroupName, expectedVaultName);
             string expectedHsmUri = $"https://{expectedVaultName}.managedhsm.azure.net/";
 
-            Assert.AreEqual(expectedResourceId, managedHsmData.Id.ToString());
-            Assert.AreEqual(expectedLocation.ToString(), managedHsmData.Location.ToString());
-            Assert.AreEqual(Mode == RecordedTestMode.Live ? expectedTenantId : Guid.Empty, managedHsmData.Properties.TenantId);
-            Assert.AreEqual(expectedVaultName, managedHsmData.Name);
-            Assert.AreEqual(expectedSkuFamily, managedHsmData.Sku.Family);
-            Assert.AreEqual(expectedSkuName, managedHsmData.Sku.Name);
-            Assert.AreEqual(expectedEnablePurgeProtection, managedHsmData.Properties.EnablePurgeProtection);
-            Assert.AreEqual(expectedEnableSoftDelete, managedHsmData.Properties.EnableSoftDelete);
-            Assert.AreEqual(expectedHsmUri, managedHsmData.Properties.HsmUri.ToString());
-            Assert.AreEqual(expectedInitialAdminObjectIds, managedHsmData.Properties.InitialAdminObjectIds);
-            Assert.AreEqual(expectedNetworkAcls.Bypass, managedHsmData.Properties.NetworkRuleSet.Bypass);
-            Assert.AreEqual(expectedNetworkAcls.DefaultAction, managedHsmData.Properties.NetworkRuleSet.DefaultAction);
-            Assert.AreEqual(expectedPublicNetworkAccess, managedHsmData.Properties.PublicNetworkAccess);
-            Assert.AreEqual(expectedSoftDeleteRetentionInDays, managedHsmData.Properties.SoftDeleteRetentionInDays);
-            Assert.True(expectedTags.DictionaryEqual(managedHsmData.Tags));
+            Assert.That(managedHsmData.Id.ToString(), Is.EqualTo(expectedResourceId));
+            Assert.That(managedHsmData.Location.ToString(), Is.EqualTo(expectedLocation.ToString()));
+            Assert.That(managedHsmData.Properties.TenantId, Is.EqualTo(Mode == RecordedTestMode.Live ? expectedTenantId : Guid.Empty));
+            Assert.That(managedHsmData.Name, Is.EqualTo(expectedVaultName));
+            Assert.That(managedHsmData.Sku.Family, Is.EqualTo(expectedSkuFamily));
+            Assert.That(managedHsmData.Sku.Name, Is.EqualTo(expectedSkuName));
+            Assert.That(managedHsmData.Properties.EnablePurgeProtection, Is.EqualTo(expectedEnablePurgeProtection));
+            Assert.That(managedHsmData.Properties.EnableSoftDelete, Is.EqualTo(expectedEnableSoftDelete));
+            Assert.That(managedHsmData.Properties.HsmUri.ToString(), Is.EqualTo(expectedHsmUri));
+            Assert.That(managedHsmData.Properties.InitialAdminObjectIds, Is.EqualTo(expectedInitialAdminObjectIds));
+            Assert.That(managedHsmData.Properties.NetworkRuleSet.Bypass, Is.EqualTo(expectedNetworkAcls.Bypass));
+            Assert.That(managedHsmData.Properties.NetworkRuleSet.DefaultAction, Is.EqualTo(expectedNetworkAcls.DefaultAction));
+            Assert.That(managedHsmData.Properties.PublicNetworkAccess, Is.EqualTo(expectedPublicNetworkAccess));
+            Assert.That(managedHsmData.Properties.SoftDeleteRetentionInDays, Is.EqualTo(expectedSoftDeleteRetentionInDays));
+            Assert.That(expectedTags.DictionaryEqual(managedHsmData.Tags), Is.True);
         }
     }
 }

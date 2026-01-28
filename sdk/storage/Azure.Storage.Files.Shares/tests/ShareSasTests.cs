@@ -140,8 +140,8 @@ namespace Azure.Storage.Files.Shares.Tests
             await file.CreateAsync(Constants.MB).ConfigureAwait(false);
 
             string sasQueryParams = GetCustomAccountSas(
-                permissions:permissions,
-                services:services,
+                permissions: permissions,
+                services: services,
                 resourceType: resourceType);
             UriBuilder uriBuilder = new UriBuilder(file.Uri)
             {
@@ -150,7 +150,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             ShareFileClient sasFileClient = InstrumentClient(new ShareFileClient(uriBuilder.Uri, GetOptions()));
-            Assert.AreEqual("?" + sasQueryParams, sasFileClient.Uri.Query);
+            Assert.That(sasFileClient.Uri.Query, Is.EqualTo("?" + sasQueryParams));
             await sasFileClient.GetPropertiesAsync();
         }
 
@@ -198,7 +198,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient shareClient = serviceClient.GetShareClient(GetNewShareName());
 
             // Assert
-            Assert.AreEqual(serviceClient.Uri.Query, shareClient.Uri.Query);
+            Assert.That(shareClient.Uri.Query, Is.EqualTo(serviceClient.Uri.Query));
             await shareClient.CreateAsync();
         }
 
@@ -242,7 +242,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareServiceClient serviceClient = shareClient.GetParentServiceClient();
 
             // Assert
-            Assert.AreEqual(shareClient.Uri.Query, serviceClient.Uri.Query);
+            Assert.That(serviceClient.Uri.Query, Is.EqualTo(shareClient.Uri.Query));
             await serviceClient.GetPropertiesAsync();
         }
 
@@ -284,7 +284,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareLeaseClient leaseClient = shareClient.GetShareLeaseClient(Recording.Random.NewGuid().ToString());
 
             // Assert
-            Assert.AreEqual(shareClient.Uri.Query, leaseClient.Uri.Query);
+            Assert.That(leaseClient.Uri.Query, Is.EqualTo(shareClient.Uri.Query));
             await leaseClient.AcquireAsync();
             await leaseClient.BreakAsync();
         }
@@ -332,7 +332,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string snapshotSasToken = shareClient.Uri.Query.Substring(1);
             // The original client will not have the snapshot appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(snapshotShareClient.Uri.Query.EndsWith(snapshotSasToken));
+            Assert.That(snapshotShareClient.Uri.Query.EndsWith(snapshotSasToken), Is.True);
             await snapshotShareClient.GetPropertiesAsync();
         }
 
@@ -374,7 +374,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient directoryClient = shareClient.GetRootDirectoryClient();
 
             // Assert
-            Assert.AreEqual(shareClient.Uri.Query, directoryClient.Uri.Query);
+            Assert.That(directoryClient.Uri.Query, Is.EqualTo(shareClient.Uri.Query));
             await directoryClient.GetPropertiesAsync();
         }
 
@@ -416,7 +416,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient(GetNewDirectoryName());
 
             // Assert
-            Assert.AreEqual(shareClient.Uri.Query, directoryClient.Uri.Query);
+            Assert.That(directoryClient.Uri.Query, Is.EqualTo(shareClient.Uri.Query));
             await directoryClient.CreateAsync();
         }
 
@@ -469,7 +469,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Trim the ? at the beginning
             // The original client will not have the snapshot appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(snapshotDirectoryClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(snapshotDirectoryClient.Uri.Query.EndsWith(sasToken), Is.True);
             await snapshotDirectoryClient.GetPropertiesAsync();
         }
 
@@ -511,7 +511,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
 
             // Assert
-            Assert.AreEqual(directoryClient.Uri.Query, fileClient.Uri.Query);
+            Assert.That(fileClient.Uri.Query, Is.EqualTo(directoryClient.Uri.Query));
             await fileClient.CreateAsync(Constants.MB);
         }
 
@@ -553,7 +553,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient subdirectoryClient = directoryClient.GetSubdirectoryClient(GetNewDirectoryName());
 
             // Assert
-            Assert.AreEqual(directoryClient.Uri.Query, subdirectoryClient.Uri.Query);
+            Assert.That(subdirectoryClient.Uri.Query, Is.EqualTo(directoryClient.Uri.Query));
             await subdirectoryClient.CreateAsync();
         }
 
@@ -601,7 +601,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient parentDirectoryClient = directoryClient.GetParentDirectoryClient();
 
             // Assert
-            Assert.AreEqual(directoryClient.Uri.Query, parentDirectoryClient.Uri.Query);
+            Assert.That(parentDirectoryClient.Uri.Query, Is.EqualTo(directoryClient.Uri.Query));
             await parentDirectoryClient.GetPropertiesAsync();
         }
 
@@ -643,7 +643,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient shareClient = directoryClient.GetParentShareClient();
 
             // Assert
-            Assert.AreEqual(directoryClient.Uri.Query, shareClient.Uri.Query);
+            Assert.That(shareClient.Uri.Query, Is.EqualTo(directoryClient.Uri.Query));
             await shareClient.GetPropertiesAsync();
         }
 
@@ -694,7 +694,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             // The original client will not have the snapshot appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(snapshotFileClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(snapshotFileClient.Uri.Query.EndsWith(sasToken), Is.True);
             await snapshotFileClient.GetPropertiesAsync();
         }
 
@@ -736,7 +736,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient shareClient = fileClient.GetParentShareClient();
 
             // Assert
-            Assert.AreEqual(fileClient.Uri.Query, shareClient.Uri.Query);
+            Assert.That(shareClient.Uri.Query, Is.EqualTo(fileClient.Uri.Query));
             await shareClient.GetPropertiesAsync();
         }
 
@@ -778,7 +778,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient directoryClient = fileClient.GetParentShareDirectoryClient();
 
             // Assert
-            Assert.AreEqual(fileClient.Uri.Query, directoryClient.Uri.Query);
+            Assert.That(directoryClient.Uri.Query, Is.EqualTo(fileClient.Uri.Query));
             await directoryClient.GetPropertiesAsync();
         }
 
@@ -820,7 +820,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareLeaseClient leaseClient = shareFileClient.GetShareLeaseClient(Recording.Random.NewGuid().ToString());
 
             // Assert
-            Assert.AreEqual(shareFileClient.Uri.Query, leaseClient.Uri.Query);
+            Assert.That(leaseClient.Uri.Query, Is.EqualTo(shareFileClient.Uri.Query));
             await leaseClient.AcquireAsync();
             await leaseClient.BreakAsync();
         }
@@ -877,7 +877,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await sasShare.CreateDirectoryAsync(GetNewDirectoryName());
 
             // Assert
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -910,7 +910,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await sasShare.CreateDirectoryAsync(GetNewDirectoryName());
 
             // Assert
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -943,7 +943,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await sasFile.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -979,7 +979,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await sasFile.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1009,8 +1009,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
                 options: options);
 
-            Assert.IsNotNull(userDelegationKey.Value);
-            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+            Assert.That(userDelegationKey.Value, Is.Not.Null);
+            Assert.That(userDelegationKey.Value.SignedDelegatedUserTenantId, Is.EqualTo(options.DelegatedUserTenantId));
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
@@ -1035,7 +1035,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareDirectoryClient> response = await sasShare.CreateDirectoryAsync(GetNewDirectoryName());
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1065,8 +1065,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
                 options: options);
 
-            Assert.IsNotNull(userDelegationKey.Value);
-            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+            Assert.That(userDelegationKey.Value, Is.Not.Null);
+            Assert.That(userDelegationKey.Value.SignedDelegatedUserTenantId, Is.EqualTo(options.DelegatedUserTenantId));
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
@@ -1088,7 +1088,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act & Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 sasShare.CreateDirectoryAsync(GetNewDirectoryName()),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
         }
 
         [RecordedTest]
@@ -1118,8 +1118,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
                 options: options);
 
-            Assert.IsNotNull(userDelegationKey.Value);
-            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+            Assert.That(userDelegationKey.Value, Is.Not.Null);
+            Assert.That(userDelegationKey.Value.SignedDelegatedUserTenantId, Is.EqualTo(options.DelegatedUserTenantId));
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
@@ -1138,8 +1138,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareUriBuilder roundtripShareUriBuilder = new ShareUriBuilder(originalShareUriBuilder.ToUri());
 
-            Assert.AreEqual(originalShareUriBuilder.ToUri(), roundtripShareUriBuilder.ToUri());
-            Assert.AreEqual(originalShareUriBuilder.Sas.ToString(), roundtripShareUriBuilder.Sas.ToString());
+            Assert.That(roundtripShareUriBuilder.ToUri(), Is.EqualTo(originalShareUriBuilder.ToUri()));
+            Assert.That(roundtripShareUriBuilder.Sas.ToString(), Is.EqualTo(originalShareUriBuilder.Sas.ToString()));
         }
 
         [RecordedTest]
@@ -1247,7 +1247,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 sasShare.CreateDirectoryAsync(GetNewDirectoryName()),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
         }
     }
 }

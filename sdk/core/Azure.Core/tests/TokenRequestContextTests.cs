@@ -29,15 +29,15 @@ namespace Azure
 
             var context = new TokenRequestContext(scopes, parentRequestId, claims, tenantId, isCaeEnabled, isProofOfPossessionEnabled, proofOfPossessionNonce, request.Uri.ToUri(), request.Method.ToString());
 
-            Assert.AreEqual(scopes, context.Scopes);
-            Assert.AreEqual(parentRequestId, context.ParentRequestId);
-            Assert.AreEqual(claims, context.Claims);
-            Assert.AreEqual(tenantId, context.TenantId);
-            Assert.AreEqual(isCaeEnabled, context.IsCaeEnabled);
-            Assert.AreEqual(isProofOfPossessionEnabled, context.IsProofOfPossessionEnabled);
-            Assert.AreEqual(proofOfPossessionNonce, context.ProofOfPossessionNonce);
-            Assert.AreEqual(request.Method.ToString(), context.ResourceRequestMethod);
-            Assert.AreEqual(request.Uri.ToUri(), context.ResourceRequestUri);
+            Assert.That(context.Scopes, Is.EqualTo(scopes));
+            Assert.That(context.ParentRequestId, Is.EqualTo(parentRequestId));
+            Assert.That(context.Claims, Is.EqualTo(claims));
+            Assert.That(context.TenantId, Is.EqualTo(tenantId));
+            Assert.That(context.IsCaeEnabled, Is.EqualTo(isCaeEnabled));
+            Assert.That(context.IsProofOfPossessionEnabled, Is.EqualTo(isProofOfPossessionEnabled));
+            Assert.That(context.ProofOfPossessionNonce, Is.EqualTo(proofOfPossessionNonce));
+            Assert.That(context.ResourceRequestMethod, Is.EqualTo(request.Method.ToString()));
+            Assert.That(context.ResourceRequestUri, Is.EqualTo(request.Uri.ToUri()));
         }
     }
 }

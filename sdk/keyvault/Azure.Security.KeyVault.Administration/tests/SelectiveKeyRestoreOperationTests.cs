@@ -154,10 +154,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var operation = new KeyVaultSelectiveKeyRestoreOperation(client, JobId);
 
             Response response = await operation.UpdateStatusAsync();
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
 
             KeyVaultSelectiveKeyRestoreResult result = operation.Value;
-            Assert.AreEqual(endTime, result.EndTime);
+            Assert.That(result.EndTime, Is.EqualTo(endTime));
         }
 
         [Test]
@@ -186,10 +186,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var operation = new KeyVaultSelectiveKeyRestoreOperation(client, JobId);
 
             Response response = await operation.UpdateStatusAsync();
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
 
             KeyVaultSelectiveKeyRestoreResult result = operation.Value;
-            Assert.AreEqual(endTime, result.EndTime);
+            Assert.That(result.EndTime, Is.EqualTo(endTime));
         }
 
         [Test]
@@ -222,10 +222,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var operation = new KeyVaultSelectiveKeyRestoreOperation(client, JobId);
 
             Response response = await operation.UpdateStatusAsync();
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
 
             KeyVaultSelectiveKeyRestoreResult result = operation.Value;
-            Assert.AreEqual(endTime, result.EndTime);
+            Assert.That(result.EndTime, Is.EqualTo(endTime));
         }
     }
 }

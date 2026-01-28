@@ -13,32 +13,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
     public class EventTriggerMetricsTests
     {
         [Test]
-        [Description ("Verify it does not throw if response message is null")]
+        [Description("Verify it does not throw if response message is null")]
         public void TestSetMetricHeadersNull()
         {
             HttpResponseMessage message = null;
             Assert.DoesNotThrow(() => WebJobsEventTriggerMetrics.Instance.SetMetricHeaders(message));
-            Assert.IsNull(
-                anObject: message,
-                message: "Verify WebJobsAuthenticationEventRequestBase is not set to anything when null.");
+            Assert.That(
+                message,
+                Is.Null,
+                "Verify WebJobsAuthenticationEventRequestBase is not set to anything when null.");
         }
 
         [Test]
         [Description("Verify it sets the headers to the correct default values")]
-        public  void TestSetMetricHeaders()
+        public void TestSetMetricHeaders()
         {
             HttpResponseMessage message = new() { };
             WebJobsEventTriggerMetrics.Instance.SetMetricHeaders(message);
 
-            Assert.IsNotEmpty(WebJobsEventTriggerMetrics.Framework, "Framework should note be empty");
-            Assert.IsNotEmpty(WebJobsEventTriggerMetrics.ProductVersion, "ProductVersion should not be empty");
-            Assert.IsNotEmpty(WebJobsEventTriggerMetrics.Platform, "Platform should not be empty");
+            Assert.That(WebJobsEventTriggerMetrics.Framework, Is.Not.Empty, "Framework should note be empty");
+            Assert.That(WebJobsEventTriggerMetrics.ProductVersion, Is.Not.Empty, "ProductVersion should not be empty");
+            Assert.That(WebJobsEventTriggerMetrics.Platform, Is.Not.Empty, "Platform should not be empty");
 
             var headers = message.Headers;
-            Assert.IsTrue(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader));
-            
+            Assert.That(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader), Is.True);
+
             string headerValue = headers.GetValues(WebJobsEventTriggerMetrics.MetricsHeader).First();
-            Assert.IsNotEmpty(headerValue, "Header value should not be empty or null");
+            Assert.That(headerValue, Is.Not.Empty, "Header value should not be empty or null");
         }
 
         [Test]
@@ -49,11 +50,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             WebJobsEventTriggerMetrics.Instance.SetMetricHeaders(message);
 
             var headers = message.Headers;
-            Assert.IsTrue(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader));
+            Assert.That(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader), Is.True);
 
             string headerValue = headers.GetValues(WebJobsEventTriggerMetrics.MetricsHeader).First();
 
-            Assert.AreEqual(GetTestHeaderValue(), headerValue, "Verify format of header values matches");
+            Assert.That(headerValue, Is.EqualTo(GetTestHeaderValue()), "Verify format of header values matches");
         }
 
         [Test]
@@ -66,10 +67,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             WebJobsEventTriggerMetrics.Instance.SetMetricHeaders(message);
 
             var headers = message.Headers;
-            Assert.IsTrue(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader));
+            Assert.That(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader), Is.True);
 
             string headerValue = headers.GetValues(WebJobsEventTriggerMetrics.MetricsHeader).First();
-            Assert.AreEqual("test " + GetTestHeaderValue(), headerValue, "Verify default header values match");
+            Assert.That(headerValue, Is.EqualTo("test " + GetTestHeaderValue()), "Verify default header values match");
         }
 
         private static string GetTestHeaderValue(

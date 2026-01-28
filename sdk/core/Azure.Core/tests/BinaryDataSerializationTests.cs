@@ -24,25 +24,25 @@ namespace Azure.Core.Tests
             using var document = JsonDocument.Parse(fs);
             var data = ModelWithBinaryDataInDictionary.DeserializeModelWithBinaryDataInDictionary(document.RootElement);
 
-            Assert.AreEqual("a.value", data.A);
-            Assert.AreEqual("1", data.Details["strValue"].ToObjectFromJson<string>());
-            Assert.IsTrue(data.Details["strValue"].ToObjectFromJson() is string);
-            Assert.AreEqual(1, data.Details["intValue"].ToObjectFromJson<int>());
-            Assert.IsTrue(data.Details["intValue"].ToObjectFromJson() is int);
-            Assert.AreEqual(1.1, data.Details["doubleValue"].ToObjectFromJson<double>());
-            Assert.IsTrue(data.Details["doubleValue"].ToObjectFromJson() is double);
+            Assert.That(data.A, Is.EqualTo("a.value"));
+            Assert.That(data.Details["strValue"].ToObjectFromJson<string>(), Is.EqualTo("1"));
+            Assert.That(data.Details["strValue"].ToObjectFromJson() is string, Is.True);
+            Assert.That(data.Details["intValue"].ToObjectFromJson<int>(), Is.EqualTo(1));
+            Assert.That(data.Details["intValue"].ToObjectFromJson() is int, Is.True);
+            Assert.That(data.Details["doubleValue"].ToObjectFromJson<double>(), Is.EqualTo(1.1));
+            Assert.That(data.Details["doubleValue"].ToObjectFromJson() is double, Is.True);
 
             var toObjectWithT = data.Details["innerProperties"].ToObjectFromJson<Dictionary<string, object>>();
             var jsonElementObject = data.Details["innerProperties"].ToObjectFromJson<object>();
-            Assert.IsTrue(jsonElementObject is JsonElement);
+            Assert.That(jsonElementObject is JsonElement, Is.True);
             var jsonDictionary = data.Details["innerProperties"].ToObjectFromJson();
-            Assert.IsTrue(jsonDictionary is Dictionary<string, object>);
-            Assert.IsTrue(toObjectWithT["strValue"] is JsonElement);
+            Assert.That(jsonDictionary is Dictionary<string, object>, Is.True);
+            Assert.That(toObjectWithT["strValue"] is JsonElement, Is.True);
 
             var dict = data.Details["innerProperties"].ToObjectFromJson() as Dictionary<string, object>;
-            Assert.AreEqual("2", (string)dict["strValue"]);
-            Assert.AreEqual(2, (int)dict["intValue"]);
-            Assert.AreEqual(2.2, (double)dict["doubleValue"]);
+            Assert.That((string)dict["strValue"], Is.EqualTo("2"));
+            Assert.That((int)dict["intValue"], Is.EqualTo(2));
+            Assert.That((double)dict["doubleValue"], Is.EqualTo(2.2));
         }
 
         [Test]
@@ -52,11 +52,11 @@ namespace Azure.Core.Tests
             using var document = JsonDocument.Parse(fs);
             var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
 
-            Assert.AreEqual("a.value", data.A);
-            Assert.AreEqual(1, data.Properties.ToObjectFromJson<int>());
+            Assert.That(data.A, Is.EqualTo("a.value"));
+            Assert.That(data.Properties.ToObjectFromJson<int>(), Is.EqualTo(1));
 
             var roundTripString = GetSerializedString(data);
-            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringInt.json")).TrimEnd(), roundTripString);
+            Assert.That(roundTripString, Is.EqualTo(File.ReadAllText(GetFileName("JsonFormattedStringInt.json")).TrimEnd()));
         }
 
         [Test]
@@ -66,11 +66,11 @@ namespace Azure.Core.Tests
             using var document = JsonDocument.Parse(fs);
             var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
 
-            Assert.AreEqual("a.value", data.A);
-            Assert.AreEqual(1.5, data.Properties.ToObjectFromJson<double>());
+            Assert.That(data.A, Is.EqualTo("a.value"));
+            Assert.That(data.Properties.ToObjectFromJson<double>(), Is.EqualTo(1.5));
 
             var roundTripString = GetSerializedString(data);
-            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringDouble.json")).TrimEnd(), roundTripString);
+            Assert.That(roundTripString, Is.EqualTo(File.ReadAllText(GetFileName("JsonFormattedStringDouble.json")).TrimEnd()));
         }
 
         [Test]
@@ -80,11 +80,11 @@ namespace Azure.Core.Tests
             using var document = JsonDocument.Parse(fs);
             var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
 
-            Assert.AreEqual("a.value", data.A);
-            Assert.AreEqual("1", data.Properties.ToObjectFromJson<string>());
+            Assert.That(data.A, Is.EqualTo("a.value"));
+            Assert.That(data.Properties.ToObjectFromJson<string>(), Is.EqualTo("1"));
 
             var roundTripString = GetSerializedString(data);
-            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringString.json")).TrimEnd(), roundTripString);
+            Assert.That(roundTripString, Is.EqualTo(File.ReadAllText(GetFileName("JsonFormattedStringString.json")).TrimEnd()));
         }
 
         [Test]
@@ -94,11 +94,11 @@ namespace Azure.Core.Tests
             using var document = JsonDocument.Parse(fs);
             var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
 
-            Assert.AreEqual("a.value", data.A);
-            Assert.AreEqual(null, data.Properties.ToObjectFromJson<string>());
+            Assert.That(data.A, Is.EqualTo("a.value"));
+            Assert.That(data.Properties.ToObjectFromJson<string>(), Is.EqualTo(null));
 
             var roundTripString = GetSerializedString(data);
-            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringNull.json")).TrimEnd(), roundTripString);
+            Assert.That(roundTripString, Is.EqualTo(File.ReadAllText(GetFileName("JsonFormattedStringNull.json")).TrimEnd()));
         }
 
         [Test]
@@ -108,11 +108,11 @@ namespace Azure.Core.Tests
             using var document = JsonDocument.Parse(fs);
             var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
 
-            Assert.AreEqual("a.value", data.A);
-            Assert.AreEqual(true, data.Properties.ToObjectFromJson<bool>());
+            Assert.That(data.A, Is.EqualTo("a.value"));
+            Assert.That(data.Properties.ToObjectFromJson<bool>(), Is.EqualTo(true));
 
             var roundTripString = GetSerializedString(data);
-            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringTrue.json")).TrimEnd(), roundTripString);
+            Assert.That(roundTripString, Is.EqualTo(File.ReadAllText(GetFileName("JsonFormattedStringTrue.json")).TrimEnd()));
         }
 
         [Test]
@@ -122,11 +122,11 @@ namespace Azure.Core.Tests
             using var document = JsonDocument.Parse(fs);
             var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
 
-            Assert.AreEqual("a.value", data.A);
-            Assert.AreEqual(false, data.Properties.ToObjectFromJson<bool>());
+            Assert.That(data.A, Is.EqualTo("a.value"));
+            Assert.That(data.Properties.ToObjectFromJson<bool>(), Is.EqualTo(false));
 
             var roundTripString = GetSerializedString(data);
-            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringFalse.json")).TrimEnd(), roundTripString);
+            Assert.That(roundTripString, Is.EqualTo(File.ReadAllText(GetFileName("JsonFormattedStringFalse.json")).TrimEnd()));
         }
 
         [Test]
@@ -136,16 +136,16 @@ namespace Azure.Core.Tests
             var model = BinaryData.FromString(expected);
 
             var properties = model.ToObjectFromJson() as Dictionary<string, object>;
-            Assert.AreEqual(typeof(string), properties["stringValue"].GetType());
-            Assert.AreEqual(typeof(string), properties["dateTimeValue"].GetType());
-            Assert.AreEqual(typeof(int), properties["intValue"].GetType());
-            Assert.AreEqual(typeof(long), properties["longValue"].GetType());
-            Assert.AreEqual(typeof(double), properties["doubleValue"].GetType());
-            Assert.AreEqual(typeof(bool), properties["trueValue"].GetType());
-            Assert.AreEqual(typeof(bool), properties["falseValue"].GetType());
-            Assert.IsNull(properties["nullValue"]);
+            Assert.That(properties["stringValue"].GetType(), Is.EqualTo(typeof(string)));
+            Assert.That(properties["dateTimeValue"].GetType(), Is.EqualTo(typeof(string)));
+            Assert.That(properties["intValue"].GetType(), Is.EqualTo(typeof(int)));
+            Assert.That(properties["longValue"].GetType(), Is.EqualTo(typeof(long)));
+            Assert.That(properties["doubleValue"].GetType(), Is.EqualTo(typeof(double)));
+            Assert.That(properties["trueValue"].GetType(), Is.EqualTo(typeof(bool)));
+            Assert.That(properties["falseValue"].GetType(), Is.EqualTo(typeof(bool)));
+            Assert.That(properties["nullValue"], Is.Null);
 
-            Assert.AreEqual(expected, GetSerializedString(model));
+            Assert.That(GetSerializedString(model), Is.EqualTo(expected));
         }
 
         [Test]
@@ -155,29 +155,29 @@ namespace Azure.Core.Tests
             var model = BinaryData.FromString(expected);
 
             var properties = model.ToObjectFromJson() as Dictionary<string, object>;
-            Assert.IsTrue(AllValuesAreType(typeof(string), properties["stringArray"]));
-            Assert.IsTrue(AllValuesAreType(typeof(string), properties["dateTimeArray"]));
-            Assert.IsTrue(AllValuesAreType(typeof(int), properties["intArray"]));
-            Assert.IsTrue(AllValuesAreType(typeof(long), properties["longArray"]));
-            Assert.IsTrue(AllValuesAreType(typeof(double), properties["doubleArray"]));
-            Assert.IsTrue(AllValuesAreType(typeof(bool), properties["boolArray"]));
+            Assert.That(AllValuesAreType(typeof(string), properties["stringArray"]), Is.True);
+            Assert.That(AllValuesAreType(typeof(string), properties["dateTimeArray"]), Is.True);
+            Assert.That(AllValuesAreType(typeof(int), properties["intArray"]), Is.True);
+            Assert.That(AllValuesAreType(typeof(long), properties["longArray"]), Is.True);
+            Assert.That(AllValuesAreType(typeof(double), properties["doubleArray"]), Is.True);
+            Assert.That(AllValuesAreType(typeof(bool), properties["boolArray"]), Is.True);
             foreach (var item in properties["nullArray"] as object[])
             {
-                Assert.IsNull(item);
+                Assert.That(item, Is.Null);
             }
             var mixList = properties["mixedNullArray"] as object[];
             for (int i = 0; i < 2; i++)
             {
                 if (i == 0)
                 {
-                    Assert.IsNull(mixList[i]);
+                    Assert.That(mixList[i], Is.Null);
                 }
                 else
                 {
-                    Assert.IsNotNull(mixList[i]);
+                    Assert.That(mixList[i], Is.Not.Null);
                 }
             }
-            Assert.AreEqual(expected, GetSerializedString(model));
+            Assert.That(GetSerializedString(model), Is.EqualTo(expected));
         }
 
         [Test]
@@ -190,13 +190,13 @@ namespace Azure.Core.Tests
             for (int i = 0; i < 3; i++)
             {
                 var obj = objArray[i] as Dictionary<string, object>;
-                Assert.IsNotNull(obj);
-                Assert.AreEqual(i, obj["intValue"]);
+                Assert.That(obj, Is.Not.Null);
+                Assert.That(obj["intValue"], Is.EqualTo(i));
                 var innerObj = obj["objectValue"] as Dictionary<string, object>;
-                Assert.IsNotNull(innerObj);
-                Assert.AreEqual(i.ToString(), innerObj["stringValue"]);
+                Assert.That(innerObj, Is.Not.Null);
+                Assert.That(innerObj["stringValue"], Is.EqualTo(i.ToString()));
             }
-            Assert.AreEqual(expected, GetSerializedString(model));
+            Assert.That(GetSerializedString(model), Is.EqualTo(expected));
         }
 
         [Test]
@@ -206,17 +206,17 @@ namespace Azure.Core.Tests
             var model = BinaryData.FromString(expected);
             var properties = model.ToObjectFromJson() as Dictionary<string, object>;
             var arrayArray = properties["arrayArray"] as object[];
-            Assert.IsNotNull(arrayArray);
+            Assert.That(arrayArray, Is.Not.Null);
             for (int i = 0; i < 2; i++)
             {
                 var array = arrayArray[i] as object[];
-                Assert.IsNotNull(array);
+                Assert.That(array, Is.Not.Null);
                 foreach (var item in array)
                 {
-                    Assert.AreEqual(i, item);
+                    Assert.That(item, Is.EqualTo(i));
                 }
             }
-            Assert.AreEqual(expected, GetSerializedString(model));
+            Assert.That(GetSerializedString(model), Is.EqualTo(expected));
         }
 
         private bool AllValuesAreType(Type type, object list)
@@ -236,12 +236,12 @@ namespace Azure.Core.Tests
             {
                 using var document = JsonDocument.Parse(fs);
                 var data = ModelWithObject.DeserializeModelWithObject(document.RootElement);
-                Assert.AreEqual("a.value", data.A);
+                Assert.That(data.A, Is.EqualTo("a.value"));
 
                 var properties = data.Properties as Dictionary<string, object>;
-                Assert.AreEqual("properties.a.value", properties["a"]);
+                Assert.That(properties["a"], Is.EqualTo("properties.a.value"));
                 var innerProperties = properties["innerProperties"] as IDictionary<string, object>;
-                Assert.AreEqual("properties.innerProperties.a.value", innerProperties["a"]);
+                Assert.That(innerProperties["a"], Is.EqualTo("properties.innerProperties.a.value"));
             }
         }
 
@@ -252,12 +252,12 @@ namespace Azure.Core.Tests
             {
                 using var document = JsonDocument.Parse(fs);
                 var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
-                Assert.AreEqual("a.value", data.A);
+                Assert.That(data.A, Is.EqualTo("a.value"));
 
                 var properties = data.Properties.ToObjectFromJson() as Dictionary<string, object>;
-                Assert.AreEqual("properties.a.value", properties["a"]);
+                Assert.That(properties["a"], Is.EqualTo("properties.a.value"));
                 var innerProperties = properties["innerProperties"] as IDictionary<string, object>;
-                Assert.AreEqual("properties.innerProperties.a.value", innerProperties["a"]);
+                Assert.That(innerProperties["a"], Is.EqualTo("properties.innerProperties.a.value"));
             }
         }
 
@@ -275,7 +275,7 @@ namespace Azure.Core.Tests
             payload.Properties = BinaryData.FromObjectAsJson(properties);
 
             string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -287,7 +287,7 @@ namespace Azure.Core.Tests
             payload.Properties = BinaryData.FromString(File.ReadAllText(GetFileName("Properties.json")).TrimEnd());
 
             string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -315,7 +315,7 @@ namespace Azure.Core.Tests
             payload.Details = details;
 
             string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -330,7 +330,7 @@ namespace Azure.Core.Tests
             string actual = GetSerializedString(payload);
             //for some reason in dotnet 6 only there is a random new line after the binarydata object
             //to make this work in all frameworks we will just do a comparison ignoring whitespace
-            Assert.IsTrue(CompareIgnoreWhitespace(expected, actual));
+            Assert.That(CompareIgnoreWhitespace(expected, actual), Is.True);
         }
 
         private bool? CompareIgnoreWhitespace(string expected, string actual)
@@ -374,7 +374,7 @@ namespace Azure.Core.Tests
             payload.Properties = BinaryData.FromObjectAsJson(properties);
 
             string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -385,11 +385,11 @@ namespace Azure.Core.Tests
             var payload = new ModelWithBinaryData { A = "a.value" };
             payload.Properties = BinaryData.FromObjectAsJson("1");
             string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
 
             payload.Properties = BinaryData.FromString("\"1\"");
             actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -401,7 +401,7 @@ namespace Azure.Core.Tests
             payload.Properties = BinaryData.FromObjectAsJson(true);
 
             string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -413,7 +413,7 @@ namespace Azure.Core.Tests
             payload.Properties = BinaryData.FromObjectAsJson(false);
 
             string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -425,7 +425,7 @@ namespace Azure.Core.Tests
             payload.Properties = BinaryData.FromObjectAsJson(1);
 
             string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -437,7 +437,7 @@ namespace Azure.Core.Tests
             payload.Properties = BinaryData.FromObjectAsJson(1.5);
 
             string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -449,7 +449,7 @@ namespace Azure.Core.Tests
             payload.Properties = BinaryData.FromObjectAsJson<object>(null);
 
             string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         private static string GetSerializedString(BinaryData payload)
@@ -495,12 +495,12 @@ namespace Azure.Core.Tests
 
             async Task AssertData(BinaryData data)
             {
-                Assert.AreEqual(payload.A, data.ToObject<Model>(serializer).A);
-                Assert.AreEqual(payload.B, data.ToObject<Model>(serializer).B);
-                Assert.AreEqual(0, data.ToObject<Model>(serializer).C);
-                Assert.AreEqual(payload.A, (await data.ToObjectAsync<Model>(serializer)).A);
-                Assert.AreEqual(payload.B, (await data.ToObjectAsync<Model>(serializer)).B);
-                Assert.AreEqual(0, (await data.ToObjectAsync<Model>(serializer)).C);
+                Assert.That(data.ToObject<Model>(serializer).A, Is.EqualTo(payload.A));
+                Assert.That(data.ToObject<Model>(serializer).B, Is.EqualTo(payload.B));
+                Assert.That(data.ToObject<Model>(serializer).C, Is.EqualTo(0));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).A, Is.EqualTo(payload.A));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).B, Is.EqualTo(payload.B));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).C, Is.EqualTo(0));
             }
         }
 
@@ -515,13 +515,13 @@ namespace Azure.Core.Tests
 
             async Task AssertData(BinaryData data)
             {
-                Assert.AreEqual(payload.A, data.ToObject<Model>(serializer).A);
-                Assert.AreEqual(payload.B, data.ToObject<Model>(serializer).B);
-                Assert.AreEqual(0, data.ToObject<Model>(serializer).C);
-                Assert.AreEqual(payload.A, (await data.ToObjectAsync<Model>(serializer)).A);
-                Assert.AreEqual(payload.B, (await data.ToObjectAsync<Model>(serializer)).B);
-                Assert.AreEqual(0, (await data.ToObjectAsync<Model>(serializer)).C);
-                Assert.AreEqual(0, (await data.ToObjectAsync<ExtendedModel>(serializer)).F);
+                Assert.That(data.ToObject<Model>(serializer).A, Is.EqualTo(payload.A));
+                Assert.That(data.ToObject<Model>(serializer).B, Is.EqualTo(payload.B));
+                Assert.That(data.ToObject<Model>(serializer).C, Is.EqualTo(0));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).A, Is.EqualTo(payload.A));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).B, Is.EqualTo(payload.B));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).C, Is.EqualTo(0));
+                Assert.That((await data.ToObjectAsync<ExtendedModel>(serializer)).F, Is.EqualTo(0));
             }
         }
 
@@ -540,8 +540,8 @@ namespace Azure.Core.Tests
 
             async Task AssertData(BinaryData data)
             {
-                Assert.IsNull(data.ToObject<Model>(serializer));
-                Assert.IsNull(await data.ToObjectAsync<Model>(serializer));
+                Assert.That(data.ToObject<Model>(serializer), Is.Null);
+                Assert.That(await data.ToObjectAsync<Model>(serializer), Is.Null);
             }
         }
 
@@ -561,12 +561,12 @@ namespace Azure.Core.Tests
 
             async Task AssertData(BinaryData data)
             {
-                Assert.AreEqual(payload.A, data.ToObject<Model>(serializer).A);
-                Assert.AreEqual(payload.B, data.ToObject<Model>(serializer).B);
-                Assert.AreEqual(0, data.ToObject<Model>(serializer).C);
-                Assert.AreEqual(payload.A, (await data.ToObjectAsync<Model>(serializer)).A);
-                Assert.AreEqual(payload.B, (await data.ToObjectAsync<Model>(serializer)).B);
-                Assert.AreEqual(0, (await data.ToObjectAsync<Model>(serializer)).C);
+                Assert.That(data.ToObject<Model>(serializer).A, Is.EqualTo(payload.A));
+                Assert.That(data.ToObject<Model>(serializer).B, Is.EqualTo(payload.B));
+                Assert.That(data.ToObject<Model>(serializer).C, Is.EqualTo(0));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).A, Is.EqualTo(payload.A));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).B, Is.EqualTo(payload.B));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).C, Is.EqualTo(0));
             }
         }
 
@@ -582,13 +582,13 @@ namespace Azure.Core.Tests
 
             async Task AssertData(BinaryData data)
             {
-                Assert.AreEqual(payload.A, data.ToObject<Model>(serializer).A);
-                Assert.AreEqual(payload.B, data.ToObject<Model>(serializer).B);
-                Assert.AreEqual(0, data.ToObject<Model>(serializer).C);
-                Assert.AreEqual(payload.A, (await data.ToObjectAsync<Model>(serializer)).A);
-                Assert.AreEqual(payload.B, (await data.ToObjectAsync<Model>(serializer)).B);
-                Assert.AreEqual(0, (await data.ToObjectAsync<Model>(serializer)).C);
-                Assert.AreEqual(0, (await data.ToObjectAsync<ExtendedModel>(serializer)).F);
+                Assert.That(data.ToObject<Model>(serializer).A, Is.EqualTo(payload.A));
+                Assert.That(data.ToObject<Model>(serializer).B, Is.EqualTo(payload.B));
+                Assert.That(data.ToObject<Model>(serializer).C, Is.EqualTo(0));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).A, Is.EqualTo(payload.A));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).B, Is.EqualTo(payload.B));
+                Assert.That((await data.ToObjectAsync<Model>(serializer)).C, Is.EqualTo(0));
+                Assert.That((await data.ToObjectAsync<ExtendedModel>(serializer)).F, Is.EqualTo(0));
             }
         }
 
@@ -608,8 +608,8 @@ namespace Azure.Core.Tests
 
             async Task AssertData(BinaryData data)
             {
-                Assert.IsNull(data.ToObject<Model>(serializer));
-                Assert.IsNull(await data.ToObjectAsync<Model>(serializer));
+                Assert.That(data.ToObject<Model>(serializer), Is.Null);
+                Assert.That(await data.ToObjectAsync<Model>(serializer), Is.Null);
             }
         }
 

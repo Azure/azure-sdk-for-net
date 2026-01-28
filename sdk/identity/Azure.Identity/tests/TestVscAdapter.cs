@@ -22,8 +22,8 @@ namespace Azure.Identity.Tests
         public string GetUserSettingsPath() => Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         public string GetCredentials(string serviceName, string accountName)
         {
-            Assert.AreEqual(_expectedServiceName, serviceName);
-            Assert.AreEqual(_expectedAccountName, accountName);
+            Assert.That(serviceName, Is.EqualTo(_expectedServiceName));
+            Assert.That(accountName, Is.EqualTo(_expectedAccountName));
             return _refreshToken ?? throw new InvalidOperationException("No token found");
         }
     }

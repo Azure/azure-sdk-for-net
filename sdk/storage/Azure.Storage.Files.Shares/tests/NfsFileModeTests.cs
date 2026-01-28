@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string output = fileMode.ToOctalFileMode();
 
             // Assert
-            Assert.AreEqual(s, output);
+            Assert.That(output, Is.EqualTo(s));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string output = fileMode.ToSymbolicFileMode();
 
             // Assert
-            Assert.AreEqual(s, output);
+            Assert.That(output, Is.EqualTo(s));
         }
     }
 }

@@ -23,8 +23,8 @@ namespace Azure.Core.Tests
         public void ConvertFromDisplayName(string input, string expectedName, string expectedDisplayName)
         {
             AzureLocation loc = input;
-            Assert.AreEqual(expectedName, loc.Name);
-            Assert.AreEqual(expectedDisplayName, loc.DisplayName);
+            Assert.That(loc.Name, Is.EqualTo(expectedName));
+            Assert.That(loc.DisplayName, Is.EqualTo(expectedDisplayName));
         }
 
         [TestCase("northcentralus", "northcentralus", "North Central US")]
@@ -42,8 +42,8 @@ namespace Azure.Core.Tests
         public void NameTypeIsName(string location, string expectedName, string expectedDisplayName)
         {
             AzureLocation loc = location;
-            Assert.AreEqual(expectedName, loc.Name);
-            Assert.AreEqual(expectedDisplayName, loc.DisplayName);
+            Assert.That(loc.Name, Is.EqualTo(expectedName));
+            Assert.That(loc.DisplayName, Is.EqualTo(expectedDisplayName));
         }
 
         [TestCase("us-west")]
@@ -54,8 +54,8 @@ namespace Azure.Core.Tests
         public void NameTypeIsCanonical(string location)
         {
             AzureLocation loc = location;
-            Assert.AreEqual(location, loc.Name);
-            Assert.IsNull(loc.DisplayName);
+            Assert.That(loc.Name, Is.EqualTo(location));
+            Assert.That(loc.DisplayName, Is.Null);
         }
 
         [TestCase(true, "West Us", "West Us")]
@@ -71,9 +71,9 @@ namespace Azure.Core.Tests
         {
             AzureLocation loc1 = left;
             AzureLocation loc2 = right;
-            Assert.AreEqual(expected, loc1.Equals(loc2));
+            Assert.That(loc1.Equals(loc2), Is.EqualTo(expected));
             if (right != null)
-                Assert.AreEqual(expected, loc1.GetHashCode() == loc2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({loc1.GetHashCode()}, {loc2.GetHashCode()})");
+                Assert.That(loc1.GetHashCode() == loc2.GetHashCode(), Is.EqualTo(expected), $"Hashcodes comparison was expect {expected} but was {!expected}, ({loc1.GetHashCode()}, {loc2.GetHashCode()})");
         }
 
         [Test]
@@ -89,16 +89,16 @@ namespace Azure.Core.Tests
             AzureLocation loc = AzureLocation.WestUS2;
 
             object intLoc = 5;
-            Assert.IsFalse(loc.Equals(intLoc));
+            Assert.That(loc.Equals(intLoc), Is.False);
 
             object nullLoc = null;
-            Assert.IsFalse(loc.Equals(nullLoc));
+            Assert.That(loc.Equals(nullLoc), Is.False);
 
             object sameLoc = loc;
-            Assert.IsTrue(loc.Equals(sameLoc));
+            Assert.That(loc, Is.EqualTo(sameLoc));
 
             object loc2 = AzureLocation.EastUS2;
-            Assert.IsFalse(loc.Equals(loc2));
+            Assert.That(loc.Equals(loc2), Is.False);
         }
 
         [TestCase(true, "West Us", "West Us")]
@@ -113,7 +113,7 @@ namespace Azure.Core.Tests
         public void EqualsToString(bool expected, string left, string right)
         {
             AzureLocation location = left;
-            Assert.AreEqual(expected, location.Equals(right));
+            Assert.That(location.Equals(right), Is.EqualTo(expected));
         }
 
         [TestCase("West US", "westus", "West US")]
@@ -130,14 +130,14 @@ namespace Azure.Core.Tests
         {
             if (name == null)
             {
-                Assert.Throws<ArgumentNullException>(()=> { AzureLocation location = name; });
+                Assert.Throws<ArgumentNullException>(() => { AzureLocation location = name; });
             }
             else
             {
                 AzureLocation location = name;
                 string strLocation = location;
-                Assert.AreEqual(expectedName, strLocation);
-                Assert.AreEqual(expectedDisplayName, location.DisplayName);
+                Assert.That(strLocation, Is.EqualTo(expectedName));
+                Assert.That(location.DisplayName, Is.EqualTo(expectedDisplayName));
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Core.Tests
         {
             AzureLocation loc1 = string1;
             AzureLocation loc2 = string2;
-            Assert.AreEqual(expected, loc1 == loc2);
+            Assert.That(loc1 == loc2, Is.EqualTo(expected));
         }
 
         [TestCase(true, "WESTUS2", "EASTUS2")]
@@ -158,7 +158,7 @@ namespace Azure.Core.Tests
         {
             AzureLocation loc1 = string1;
             AzureLocation loc2 = string2;
-            Assert.AreEqual(expected, loc1 != loc2);
+            Assert.That(loc1 != loc2, Is.EqualTo(expected));
         }
 
         [Test]

@@ -2,20 +2,19 @@
 // Licensed under the MIT License.
 extern alias BaseShares;
 extern alias DMShare;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using BaseShares::Azure.Storage.Files.Shares;
-using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Tests;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using Moq;
 using NUnit.Framework;
-using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -44,8 +43,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             List<Mock<ShareDirectoryClient>> expectedDirectories = Enumerable.Range(0, pathCount)
                 .Select(i => new Mock<ShareDirectoryClient>())
                 .ToList();
-            List<StorageResource> expectedResources = expectedFiles.Select(m => (StorageResource) new ShareFileStorageResource(m.Object)).ToList();
-            expectedResources.Concat(expectedDirectories.Select(m => (StorageResource) new ShareDirectoryStorageResourceContainer(m.Object, default)));
+            List<StorageResource> expectedResources = expectedFiles.Select(m => (StorageResource)new ShareFileStorageResource(m.Object)).ToList();
+            expectedResources.Concat(expectedDirectories.Select(m => (StorageResource)new ShareDirectoryStorageResourceContainer(m.Object, default)));
             // And a mock path scanner
             Mock<SharesPathScanner> pathScanner = new();
             pathScanner.Setup(p => p.ScanAsync(
@@ -122,7 +121,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             UriBuilder builder = new UriBuilder(containerResource.Uri);
             builder.Path = string.Join("/", builder.Path, childPath);
-            Assert.AreEqual(builder.Uri, childContainer.Uri);
+            Assert.That(childContainer.Uri, Is.EqualTo(builder.Uri));
         }
 
         [Test]

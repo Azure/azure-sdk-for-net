@@ -42,11 +42,11 @@ namespace Azure.Identity.Tests
                     ManagedIdentityCredential cred = (ManagedIdentityCredential)factory.CreateManagedIdentityCredential();
                     if (setResourceId)
                     {
-                        Assert.AreEqual(expResourceId.ToString(), cred.Client.ManagedIdentityId._userAssignedId);
+                        Assert.That(cred.Client.ManagedIdentityId._userAssignedId, Is.EqualTo(expResourceId.ToString()));
                     }
                     if (setClientId)
                     {
-                        Assert.AreEqual(expClientId, cred.Client.ManagedIdentityId._userAssignedId);
+                        Assert.That(cred.Client.ManagedIdentityId._userAssignedId, Is.EqualTo(expClientId));
                     }
                 }
             }
@@ -91,8 +91,8 @@ namespace Azure.Identity.Tests
 
                 SharedTokenCacheCredential cred = (SharedTokenCacheCredential)factory.CreateSharedTokenCacheCredential();
 
-                Assert.AreEqual(expSharedTokenCacheTenantId ?? expTenantId, cred.TenantId);
-                Assert.AreEqual(expSharedTokenCacheUsername, cred.Username);
+                Assert.That(cred.TenantId, Is.EqualTo(expSharedTokenCacheTenantId ?? expTenantId));
+                Assert.That(cred.Username, Is.EqualTo(expSharedTokenCacheUsername));
             }
         }
 
@@ -141,10 +141,10 @@ namespace Azure.Identity.Tests
 
                 VisualStudioCredential cred = (VisualStudioCredential)factory.CreateVisualStudioCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(30), cred.ProcessTimeout);
-                Assert.AreEqual(expVisualStudioTenantId ?? expTenantId, cred.TenantId);
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
-                Assert.True(cred._isChainedCredential);
+                Assert.That(cred.ProcessTimeout, Is.EqualTo(expTimeout ?? TimeSpan.FromSeconds(30)));
+                Assert.That(cred.TenantId, Is.EqualTo(expVisualStudioTenantId ?? expTenantId));
+                Assert.That(cred.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
+                Assert.That(cred._isChainedCredential, Is.True);
             }
         }
 
@@ -190,8 +190,8 @@ namespace Azure.Identity.Tests
 
                 VisualStudioCodeCredential cred = (VisualStudioCodeCredential)factory.CreateVisualStudioCodeCredential();
 
-                Assert.AreEqual(expVisualStudioCodeTenantId ?? expTenantId, cred.TenantId);
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                Assert.That(cred.TenantId, Is.EqualTo(expVisualStudioCodeTenantId ?? expTenantId));
+                Assert.That(cred.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
             }
         }
 
@@ -225,17 +225,17 @@ namespace Azure.Identity.Tests
 
                 AzureCliCredential cred = (AzureCliCredential)factory.CreateAzureCliCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.ProcessTimeout);
-                Assert.AreEqual(expTenantId, cred.TenantId);
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
-                Assert.True(cred._isChainedCredential);
+                Assert.That(cred.ProcessTimeout, Is.EqualTo(expTimeout ?? TimeSpan.FromSeconds(13)));
+                Assert.That(cred.TenantId, Is.EqualTo(expTenantId));
+                Assert.That(cred.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
+                Assert.That(cred._isChainedCredential, Is.True);
 
                 AzureDeveloperCliCredential credAzd = (AzureDeveloperCliCredential)factory.CreateAzureDeveloperCliCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), credAzd.ProcessTimeout);
-                Assert.AreEqual(expTenantId, credAzd.TenantId);
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, credAzd.AdditionallyAllowedTenantIds);
-                Assert.True(credAzd._isChainedCredential);
+                Assert.That(credAzd.ProcessTimeout, Is.EqualTo(expTimeout ?? TimeSpan.FromSeconds(13)));
+                Assert.That(credAzd.TenantId, Is.EqualTo(expTenantId));
+                Assert.That(credAzd.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
+                Assert.That(credAzd._isChainedCredential, Is.True);
             }
         }
 
@@ -269,10 +269,10 @@ namespace Azure.Identity.Tests
 
                 AzurePowerShellCredential cred = (AzurePowerShellCredential)factory.CreateAzurePowerShellCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(10), cred.ProcessTimeout);
-                Assert.AreEqual(expTenantId, cred.TenantId);
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
-                Assert.True(cred._isChainedCredential);
+                Assert.That(cred.ProcessTimeout, Is.EqualTo(expTimeout ?? TimeSpan.FromSeconds(10)));
+                Assert.That(cred.TenantId, Is.EqualTo(expTenantId));
+                Assert.That(cred.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
+                Assert.That(cred._isChainedCredential, Is.True);
             }
         }
 
@@ -324,9 +324,9 @@ namespace Azure.Identity.Tests
 
                 InteractiveBrowserCredential cred = (InteractiveBrowserCredential)factory.CreateInteractiveBrowserCredential();
 
-                Assert.AreEqual(expInteractiveBrowserTenantId ?? expTenantId, cred.TenantId);
-                Assert.AreEqual(expClientId, cred.ClientId);
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                Assert.That(cred.TenantId, Is.EqualTo(expInteractiveBrowserTenantId ?? expTenantId));
+                Assert.That(cred.ClientId, Is.EqualTo(expClientId));
+                Assert.That(cred.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
             }
         }
 
@@ -408,12 +408,12 @@ namespace Azure.Identity.Tests
 
                 for (int i = 0; i < expCredentialTypes.Count; i++)
                 {
-                    Assert.IsInstanceOf(expCredentialTypes[i], chain[i]);
+                    Assert.That(chain[i], Is.InstanceOf(expCredentialTypes[i]));
                 }
 
                 for (int i = expCredentialTypes.Count; i < chain.Length; i++)
                 {
-                    Assert.IsNull(chain[i]);
+                    Assert.That(chain[i], Is.Null);
                 }
             }
         }
@@ -453,45 +453,45 @@ namespace Azure.Identity.Tests
                 // check the factory created the correct credentials
                 if (credSelection == Constants.DevCredentials)
                 {
-                    Assert.IsFalse(chain.Any(cred => cred is EnvironmentCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is WorkloadIdentityCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is ManagedIdentityCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is BrokerCredential));
+                    Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is BrokerCredential), Is.True);
                     // InteractiveBrowser is always excluded by default.
-                    Assert.IsFalse(chain.Any(cred => cred.GetType() == typeof(InteractiveBrowserCredential)));
+                    Assert.That(chain.Any(cred => cred.GetType() == typeof(InteractiveBrowserCredential)), Is.False);
                 }
                 else if (credSelection == Constants.ProdCredentials)
                 {
                     //check the factory created the credentials
-                    Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is AzureCliCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is AzurePowerShellCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is InteractiveBrowserCredential));
+                    Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is InteractiveBrowserCredential), Is.False);
                 }
                 else if (credSelection == null)
                 {
                     //check the factory created the credentials
-                    Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
+                    Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.True);
                 }
                 else
                 {
@@ -518,46 +518,46 @@ namespace Azure.Identity.Tests
                 // check the factory created the correct credentials
                 if (credSelection == Constants.DevCredentials)
                 {
-                    Assert.IsFalse(chain.Any(cred => cred is EnvironmentCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is WorkloadIdentityCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is ManagedIdentityCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is BrokerCredential));
+                    Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is BrokerCredential), Is.True);
                     // InteractiveBrowser is always excluded by default.
-                    Assert.IsFalse(chain.Any(cred => cred.GetType() == typeof(InteractiveBrowserCredential)));
+                    Assert.That(chain.Any(cred => cred.GetType() == typeof(InteractiveBrowserCredential)), Is.False);
                 }
                 else if (credSelection == Constants.ProdCredentials)
                 {
                     //check the factory created the credentials
-                    Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is AzureCliCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is AzurePowerShellCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is InteractiveBrowserCredential));
+                    Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is InteractiveBrowserCredential), Is.False);
                 }
                 else if (credSelection == null)
                 {
                     //check the factory created the credentials
-                    Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is BrokerCredential));
+                    Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is BrokerCredential), Is.True);
                 }
                 else
                 {
@@ -641,12 +641,12 @@ namespace Azure.Identity.Tests
 
                 for (int i = 0; i < expCredentialTypes.Count; i++)
                 {
-                    Assert.IsInstanceOf(expCredentialTypes[i], chain[i]);
+                    Assert.That(chain[i], Is.InstanceOf(expCredentialTypes[i]));
                 }
 
                 for (int i = expCredentialTypes.Count; i < chain.Length; i++)
                 {
-                    Assert.IsNull(chain[i]);
+                    Assert.That(chain[i], Is.Null);
                 }
             }
         }
@@ -707,21 +707,21 @@ namespace Azure.Identity.Tests
 
                 for (int i = 0; i < expCredentialTypes.Count; i++)
                 {
-                    Assert.IsInstanceOf(expCredentialTypes[i], chain[i]);
+                    Assert.That(chain[i], Is.InstanceOf(expCredentialTypes[i]));
                 }
 
                 for (int i = expCredentialTypes.Count; i < chain.Length; i++)
                 {
-                    Assert.IsNull(chain[i]);
+                    Assert.That(chain[i], Is.Null);
                 }
             }
         }
 
         private void ValidateSingleCredSelection(Type expectedType, IReadOnlyList<TokenCredential> chain)
         {
-            Assert.IsNotNull(chain);
-            Assert.IsTrue(chain.Single(cred => cred.GetType() == expectedType).GetType() == expectedType, $"Chain does not contain expected credential type: {expectedType}");
-            Assert.IsTrue(chain.Count == 1, $"Chain contains unexpected number of credentials: {chain.Count}");
+            Assert.That(chain, Is.Not.Null);
+            Assert.That(chain.Single(cred => cred.GetType() == expectedType).GetType(), Is.EqualTo(expectedType), $"Chain does not contain expected credential type: {expectedType}");
+            Assert.That(chain.Count, Is.EqualTo(1), $"Chain contains unexpected number of credentials: {chain.Count}");
         }
 
         [Test]
@@ -744,7 +744,7 @@ namespace Azure.Identity.Tests
 
             var credential = new DefaultAzureCredential(options);
             var exception = Assert.Throws<CredentialUnavailableException>(() => credential.GetToken(new TokenRequestContext(new[] { "scope" })));
-            Assert.AreEqual($"The {nameof(BrokerCredential)} requires the Azure.Identity.Broker package to be referenced. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/brokercredential/troubleshoot", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo($"The {nameof(BrokerCredential)} requires the Azure.Identity.Broker package to be referenced. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/brokercredential/troubleshoot"));
         }
 
         [Test]
@@ -774,37 +774,37 @@ namespace Azure.Identity.Tests
                     // Verify that credential selection works correctly with Turkish culture
                     if (credSelection == Constants.DevCredentials)
                     {
-                        Assert.IsFalse(chain.Any(cred => cred is EnvironmentCredential));
-                        Assert.IsFalse(chain.Any(cred => cred is WorkloadIdentityCredential));
-                        Assert.IsFalse(chain.Any(cred => cred is ManagedIdentityCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is BrokerCredential));
+                        Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.False);
+                        Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.False);
+                        Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.False);
+                        Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is BrokerCredential), Is.True);
                     }
                     else if (credSelection == Constants.ProdCredentials)
                     {
-                        Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
-                        Assert.IsFalse(chain.Any(cred => cred is AzureCliCredential));
-                        Assert.IsFalse(chain.Any(cred => cred is AzurePowerShellCredential));
-                        Assert.IsFalse(chain.Any(cred => cred is VisualStudioCredential));
-                        Assert.IsFalse(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                        Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
+                        Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.False);
+                        Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.False);
+                        Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.False);
+                        Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.False);
+                        Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.False);
                     }
                     else if (credSelection == null)
                     {
-                        Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
+                        Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.True);
+                        Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.True);
                     }
                     else
                     {

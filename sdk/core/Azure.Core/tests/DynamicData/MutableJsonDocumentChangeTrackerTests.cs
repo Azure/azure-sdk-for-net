@@ -16,22 +16,22 @@ namespace Azure.Core.Tests
             char delimiter = MutableJsonDocument.ChangeTracker.Delimiter;
 
             // Test IsLessThan
-            Assert.IsTrue(CreateChange("a").IsLessThan("b".AsSpan()));
-            Assert.IsTrue(CreateChange("a").IsLessThan($"a{delimiter}a".AsSpan()));
+            Assert.That(CreateChange("a").IsLessThan("b".AsSpan()), Is.True);
+            Assert.That(CreateChange("a").IsLessThan($"a{delimiter}a".AsSpan()), Is.True);
 
-            Assert.IsFalse(CreateChange("a").IsLessThan("a".AsSpan()));
+            Assert.That(CreateChange("a").IsLessThan("a".AsSpan()), Is.False);
 
-            Assert.IsFalse(CreateChange("b").IsLessThan("a".AsSpan()));
-            Assert.IsFalse(CreateChange($"a{delimiter}a").IsLessThan("a".AsSpan()));
+            Assert.That(CreateChange("b").IsLessThan("a".AsSpan()), Is.False);
+            Assert.That(CreateChange($"a{delimiter}a").IsLessThan("a".AsSpan()), Is.False);
 
             // Test IsGreaterThan
-            Assert.IsTrue(CreateChange("b").IsGreaterThan("a".AsSpan()));
-            Assert.IsTrue(CreateChange($"a{delimiter}a").IsGreaterThan("a".AsSpan()));
+            Assert.That(CreateChange("b").IsGreaterThan("a".AsSpan()), Is.True);
+            Assert.That(CreateChange($"a{delimiter}a").IsGreaterThan("a".AsSpan()), Is.True);
 
-            Assert.IsFalse(CreateChange("a").IsGreaterThan("a".AsSpan()));
+            Assert.That(CreateChange("a").IsGreaterThan("a".AsSpan()), Is.False);
 
-            Assert.IsFalse(CreateChange("a").IsGreaterThan("b".AsSpan()));
-            Assert.IsFalse(CreateChange("a").IsGreaterThan($"a{delimiter}a".AsSpan()));
+            Assert.That(CreateChange("a").IsGreaterThan("b".AsSpan()), Is.False);
+            Assert.That(CreateChange("a").IsGreaterThan($"a{delimiter}a".AsSpan()), Is.False);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests
 
             MutableJsonChange? change = changeTracker.GetFirstMergePatchChange(ReadOnlySpan<char>.Empty, out int length);
 
-            Assert.AreEqual(3, length);
+            Assert.That(length, Is.EqualTo(3));
 
             while (change != null)
             {
@@ -58,9 +58,9 @@ namespace Azure.Core.Tests
             }
 
             // Note, descendants are ignored
-            Assert.AreEqual(2, changes.Count);
-            Assert.AreEqual("a", changes[0].Path);
-            Assert.AreEqual("b", changes[1].Path);
+            Assert.That(changes.Count, Is.EqualTo(2));
+            Assert.That(changes[0].Path, Is.EqualTo("a"));
+            Assert.That(changes[1].Path, Is.EqualTo("b"));
         }
 
         #region Helpers

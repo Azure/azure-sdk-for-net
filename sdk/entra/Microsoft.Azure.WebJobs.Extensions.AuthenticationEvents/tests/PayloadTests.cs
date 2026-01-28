@@ -46,8 +46,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 await eventsResponseHandler.SetValueAsync(payload, CancellationToken.None);
             });
 
-            Assert.AreEqual(expectedStatus, httpResponseMessage.StatusCode);
-            Assert.True(DoesPayloadMatch(expected, await httpResponseMessage.Content.ReadAsStringAsync()));
+            Assert.That(httpResponseMessage.StatusCode, Is.EqualTo(expectedStatus));
+            Assert.That(DoesPayloadMatch(expected, await httpResponseMessage.Content.ReadAsStringAsync()), Is.True);
         }
 
 

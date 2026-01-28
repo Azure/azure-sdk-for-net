@@ -1,18 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 extern alias BaseShares;
-
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Test.Shared;
 using BaseShares::Azure.Storage.Files.Shares;
 using BaseShares::Azure.Storage.Files.Shares.Models;
 using SharesClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
     BaseShares::Azure.Storage.Files.Shares.ShareServiceClient,
     BaseShares::Azure.Storage.Files.Shares.ShareClientOptions>;
-using System.Threading;
-using Azure.Core;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {

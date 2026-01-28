@@ -68,11 +68,11 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await cred.GetTokenAsync(context);
 
-            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+            Assert.That(expectedToken, Is.EqualTo(token.Token), "Should be the expected token value");
 
             AccessToken token2 = await cred.GetTokenAsync(context);
 
-            Assert.AreEqual(token2.Token, expectedToken, "Should be the expected token value");
+            Assert.That(expectedToken, Is.EqualTo(token2.Token), "Should be the expected token value");
         }
 
         [Test]
@@ -87,11 +87,11 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await cred.GetTokenAsync(context);
 
-            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+            Assert.That(expectedToken, Is.EqualTo(token.Token), "Should be the expected token value");
 
             AccessToken token2 = await cred.GetTokenAsync(context);
 
-            Assert.AreEqual(token2.Token, expectedToken, "Should be the expected token value");
+            Assert.That(expectedToken, Is.EqualTo(token2.Token), "Should be the expected token value");
         }
 
         [Test]

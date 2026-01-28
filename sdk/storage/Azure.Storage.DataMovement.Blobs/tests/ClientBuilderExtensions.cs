@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 extern alias BaseBlobs;
-
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test.Shared;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
     BaseBlobs::Azure.Storage.Blobs.BlobServiceClient,
     BaseBlobs::Azure.Storage.Blobs.BlobClientOptions>;
-using BaseBlobs::Azure.Storage.Blobs;
-using BaseBlobs::Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {

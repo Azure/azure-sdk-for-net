@@ -30,7 +30,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         private void AssertListTransfersEquals(IList<TransferOperation> expected, IList<TransferOperation> actual)
         {
-            Assert.AreEqual(expected.Count, actual.Count);
+            Assert.That(actual.Count, Is.EqualTo(expected.Count));
 
             // Sort
             IList<TransferOperation> expectedSorted = expected.OrderBy(a => a.Id).ToList();
@@ -40,8 +40,8 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 TransferOperation expectedValue = expectedSorted.ElementAt(i);
                 TransferOperation actualValue = actualSorted.ElementAt(i);
-                Assert.AreEqual(expectedValue.Id, actualValue.Id);
-                Assert.AreEqual(expectedValue.Status, actualValue.Status);
+                Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+                Assert.That(actualValue.Status, Is.EqualTo(expectedValue.Status));
             }
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Tests
             IList<TransferOperation> transfers = await manager.GetTransfersAsync().ToListAsync();
 
             // Assert
-            Assert.IsEmpty(transfers);
+            Assert.That(transfers, Is.Empty);
         }
 
         [Test]
@@ -197,7 +197,7 @@ namespace Azure.Storage.DataMovement.Tests
             IList<TransferOperation> result = await manager.GetTransfersAsync(statuses).ToListAsync();
 
             // Assert
-            Assert.IsEmpty(result);
+            Assert.That(result, Is.Empty);
         }
 
         [Test]
@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> resultIds = result.Select(t => t.Id).ToList();
 
             // Assert
-            Assert.IsTrue(Enumerable.SequenceEqual(checkpointerTransfers.OrderBy(id => id), result.Select(t => t.Id).OrderBy(id => id)));
+            Assert.That(Enumerable.SequenceEqual(checkpointerTransfers.OrderBy(id => id), result.Select(t => t.Id).OrderBy(id => id)), Is.True);
         }
 
         [Test]
@@ -266,7 +266,7 @@ namespace Azure.Storage.DataMovement.Tests
             IList<TransferProperties> result = await manager.GetResumableTransfersAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(5, result.Count);
+            Assert.That(result.Count, Is.EqualTo(5));
             foreach (TransferProperties props in result)
             {
                 TransferProperties expected = expectedResults.Where(p => p.TransferId == props.TransferId).First();
@@ -305,8 +305,8 @@ namespace Azure.Storage.DataMovement.Tests
             IList<TransferProperties> result = await manager.GetResumableTransfersAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(transferId2, result.First().TransferId);
+            Assert.That(result.Count, Is.EqualTo(1));
+            Assert.That(result.First().TransferId, Is.EqualTo(transferId2));
         }
 
         private void AddTransferFromTransferProperties(
@@ -370,15 +370,15 @@ namespace Azure.Storage.DataMovement.Tests
 
         private void AssertTransferProperties(TransferProperties expected, TransferProperties actual)
         {
-            Assert.AreEqual(expected.TransferId, actual.TransferId);
-            Assert.AreEqual(expected.SourceProviderId, actual.SourceProviderId);
-            Assert.AreEqual(expected.SourceUri.AbsoluteUri.TrimEnd('\\', '/'), actual.SourceUri.AbsoluteUri.TrimEnd('\\', '/'));
-            Assert.AreEqual(expected.DestinationProviderId, actual.DestinationProviderId);
-            Assert.AreEqual(expected.DestinationUri.AbsoluteUri.TrimEnd('\\', '/'), actual.DestinationUri.AbsoluteUri.TrimEnd('\\', '/'));
-            Assert.AreEqual(expected.IsContainer, actual.IsContainer);
+            Assert.That(actual.TransferId, Is.EqualTo(expected.TransferId));
+            Assert.That(actual.SourceProviderId, Is.EqualTo(expected.SourceProviderId));
+            Assert.That(actual.SourceUri.AbsoluteUri.TrimEnd('\\', '/'), Is.EqualTo(expected.SourceUri.AbsoluteUri.TrimEnd('\\', '/')));
+            Assert.That(actual.DestinationProviderId, Is.EqualTo(expected.DestinationProviderId));
+            Assert.That(actual.DestinationUri.AbsoluteUri.TrimEnd('\\', '/'), Is.EqualTo(expected.DestinationUri.AbsoluteUri.TrimEnd('\\', '/')));
+            Assert.That(actual.IsContainer, Is.EqualTo(expected.IsContainer));
 
-            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, actual.SourceCheckpointDetails);
-            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, actual.DestinationCheckpointDetails);
+            Assert.That(actual.SourceCheckpointDetails, Is.EqualTo(MockResourceCheckpointDetails.DefaultInstance.Bytes).AsCollection);
+            Assert.That(actual.DestinationCheckpointDetails, Is.EqualTo(MockResourceCheckpointDetails.DefaultInstance.Bytes).AsCollection);
         }
 
         private string GetTypeIdForProvider(string providerId)

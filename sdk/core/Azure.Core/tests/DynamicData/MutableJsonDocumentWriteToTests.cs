@@ -182,12 +182,12 @@ namespace Azure.Core.Tests
             BinaryData buffer = MutableJsonDocumentTests.GetWriteToBuffer(mdoc);
 
             TestClass testClass = JsonSerializer.Deserialize<TestClass>(buffer);
-            Assert.AreEqual(mdoc.RootElement.GetProperty("StringProperty").GetString(), testClass.StringProperty);
-            Assert.AreEqual(mdoc.RootElement.GetProperty("IntProperty").GetInt32(), testClass.IntProperty);
-            Assert.AreEqual(mdoc.RootElement.GetProperty("DoubleProperty").GetDouble(), testClass.DoubleProperty);
-            Assert.AreEqual(mdoc.RootElement.GetProperty("ObjectProperty").GetProperty("StringProperty").GetString(), testClass.ObjectProperty.StringProperty);
-            Assert.AreEqual(mdoc.RootElement.GetProperty("ObjectProperty").GetProperty("IntProperty").GetInt32(), testClass.ObjectProperty.IntProperty);
-            Assert.AreEqual(mdoc.RootElement.GetProperty("ObjectProperty").GetProperty("DoubleProperty").GetDouble(), testClass.ObjectProperty.DoubleProperty);
+            Assert.That(testClass.StringProperty, Is.EqualTo(mdoc.RootElement.GetProperty("StringProperty").GetString()));
+            Assert.That(testClass.IntProperty, Is.EqualTo(mdoc.RootElement.GetProperty("IntProperty").GetInt32()));
+            Assert.That(testClass.DoubleProperty, Is.EqualTo(mdoc.RootElement.GetProperty("DoubleProperty").GetDouble()));
+            Assert.That(testClass.ObjectProperty.StringProperty, Is.EqualTo(mdoc.RootElement.GetProperty("ObjectProperty").GetProperty("StringProperty").GetString()));
+            Assert.That(testClass.ObjectProperty.IntProperty, Is.EqualTo(mdoc.RootElement.GetProperty("ObjectProperty").GetProperty("IntProperty").GetInt32()));
+            Assert.That(testClass.ObjectProperty.DoubleProperty, Is.EqualTo(mdoc.RootElement.GetProperty("ObjectProperty").GetProperty("DoubleProperty").GetDouble()));
 
             MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
         }
@@ -491,7 +491,7 @@ namespace Azure.Core.Tests
 
             string actual = BinaryData.FromStream(stream).ToString();
 
-            Assert.AreEqual(json, actual);
+            Assert.That(actual, Is.EqualTo(json));
         }
 
         [Test]
@@ -507,7 +507,7 @@ namespace Azure.Core.Tests
 
             string actual = BinaryData.FromStream(stream).ToString();
 
-            Assert.AreEqual(json, actual);
+            Assert.That(actual, Is.EqualTo(json));
         }
 
         [Test]
@@ -525,7 +525,7 @@ namespace Azure.Core.Tests
 
             string actual = BinaryData.FromStream(stream).ToString();
 
-            Assert.AreEqual("""{"foo":2}""", actual);
+            Assert.That(actual, Is.EqualTo("""{"foo":2}"""));
         }
 
         [Test]
@@ -568,16 +568,16 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             // Get from parsed JSON
-            Assert.AreEqual($"{42}", mdoc.RootElement.GetProperty("foo").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ToString(), Is.EqualTo($"{42}"));
 
             // Get from assigned existing value
             byte newValue = 43;
             mdoc.RootElement.GetProperty("foo").Set(newValue);
-            Assert.AreEqual($"{newValue}", mdoc.RootElement.GetProperty("foo").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ToString(), Is.EqualTo($"{newValue}"));
 
             // Get from added value
             mdoc.RootElement.SetProperty("bar", (byte)44);
-            Assert.AreEqual($"{44}", mdoc.RootElement.GetProperty("bar").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("bar").ToString(), Is.EqualTo($"{44}"));
         }
 
         [TestCaseSource(nameof(NumberValues))]
@@ -591,17 +591,17 @@ namespace Azure.Core.Tests
             using MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             // Get from parsed JSON
-            Assert.AreEqual($"{x}", mdoc.RootElement.GetProperty("foo").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ToString(), Is.EqualTo($"{x}"));
             MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
 
             // Get from assigned existing value
             set(mdoc, "foo", y);
-            Assert.AreEqual($"{y}", mdoc.RootElement.GetProperty("foo").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ToString(), Is.EqualTo($"{y}"));
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : {y}}}", mdoc);
 
             // Get from added value
             setProperty(mdoc, "bar", z);
-            Assert.AreEqual($"{z}", mdoc.RootElement.GetProperty("bar").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("bar").ToString(), Is.EqualTo($"{z}"));
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":{y},\"bar\":{z}}}", mdoc);
         }
 
@@ -614,19 +614,19 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             // Get from parsed JSON
-            Assert.AreEqual($"{guid}", mdoc.RootElement.GetProperty("foo").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ToString(), Is.EqualTo($"{guid}"));
             MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
 
             // Get from assigned existing value
             Guid fooValue = Guid.NewGuid();
             mdoc.RootElement.GetProperty("foo").Set(fooValue);
-            Assert.AreEqual($"{fooValue}", mdoc.RootElement.GetProperty("foo").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ToString(), Is.EqualTo($"{fooValue}"));
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : \"{fooValue}\"}}", mdoc);
 
             // Get from added value
             Guid barValue = Guid.NewGuid();
             mdoc.RootElement.SetProperty("bar", barValue);
-            Assert.AreEqual($"{barValue}", mdoc.RootElement.GetProperty("bar").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("bar").ToString(), Is.EqualTo($"{barValue}"));
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":\"{fooValue}\",\"bar\":\"{barValue}\"}}", mdoc);
         }
 
@@ -641,21 +641,21 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             // Get from parsed JSON
-            Assert.AreEqual(dateTimeString, mdoc.RootElement.GetProperty("foo").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ToString(), Is.EqualTo(dateTimeString));
             MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
 
             // Get from assigned existing value
             DateTime fooValue = dateTime.AddDays(1);
             string fooString = MutableJsonElementTests.FormatDateTime(fooValue);
             mdoc.RootElement.GetProperty("foo").Set(fooValue);
-            Assert.AreEqual(fooString, mdoc.RootElement.GetProperty("foo").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ToString(), Is.EqualTo(fooString));
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : \"{fooString}\"}}", mdoc);
 
             // Get from added value
             DateTime barValue = dateTime.AddDays(2);
             string barString = MutableJsonElementTests.FormatDateTime(barValue);
             mdoc.RootElement.SetProperty("bar", barValue);
-            Assert.AreEqual(barString, mdoc.RootElement.GetProperty("bar").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("bar").ToString(), Is.EqualTo(barString));
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":\"{fooString}\",\"bar\":\"{barString}\"}}", mdoc);
         }
 
@@ -670,21 +670,21 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             // Get from parsed JSON
-            Assert.AreEqual(dateTimeString, mdoc.RootElement.GetProperty("foo").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ToString(), Is.EqualTo(dateTimeString));
             MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
 
             // Get from assigned existing value
             DateTimeOffset fooValue = dateTime.AddDays(1);
             string fooString = MutableJsonElementTests.FormatDateTimeOffset(fooValue);
             mdoc.RootElement.GetProperty("foo").Set(fooValue);
-            Assert.AreEqual(fooString, mdoc.RootElement.GetProperty("foo").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ToString(), Is.EqualTo(fooString));
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : \"{fooString}\"}}", mdoc);
 
             // Get from added value
             DateTimeOffset barValue = dateTime.AddDays(2);
             string barString = MutableJsonElementTests.FormatDateTimeOffset(barValue);
             mdoc.RootElement.SetProperty("bar", barValue);
-            Assert.AreEqual(barString, mdoc.RootElement.GetProperty("bar").ToString());
+            Assert.That(mdoc.RootElement.GetProperty("bar").ToString(), Is.EqualTo(barString));
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":\"{fooString}\",\"bar\":\"{barString}\"}}", mdoc);
         }
 
@@ -1549,7 +1549,7 @@ namespace Azure.Core.Tests
         {
             JsonDocument doc = JsonDocument.Parse(expected);
             BinaryData buffer = MutableJsonDocumentTests.GetWriteToBuffer(doc);
-            Assert.AreEqual(buffer.ToString(), actual);
+            Assert.That(actual, Is.EqualTo(buffer.ToString()));
         }
 
         public static IEnumerable<dynamic> TestCases()

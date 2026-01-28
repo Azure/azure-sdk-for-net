@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
         {
             NewtonsoftJsonMicrosoftSpatialGeoJsonConverter converter = new NewtonsoftJsonMicrosoftSpatialGeoJsonConverter();
 
-            Assert.IsFalse(converter.CanConvert(typeof(Geography)));
+            Assert.That(converter.CanConvert(typeof(Geography)), Is.False);
 
             // This list is the implementation types. CanConvert will see these when serializing.
             List<Type> types = (from p in GeographyGeoJsons
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
 
             foreach (Type type in types)
             {
-                Assert.IsTrue(converter.CanConvert(type));
+                Assert.That(converter.CanConvert(type), Is.True);
             }
 
             // During a deserialization request, you pass the base classes, so these also must pass.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
 
             foreach (Type type in types)
             {
-                Assert.IsTrue(converter.CanConvert(type));
+                Assert.That(converter.CanConvert(type), Is.True);
             }
         }
 
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
             {
                 object geography = JsonConvert.DeserializeObject(geographyGeoJson.GeoJson, geographyGeoJson.Geography.GetType().BaseType, settings);
 
-                Assert.AreEqual(geography, geographyGeoJson.Geography);
+                Assert.That(geographyGeoJson.Geography, Is.EqualTo(geography));
             }
         }
 
@@ -117,11 +117,11 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
 
             GeographyPoint point = JsonConvert.DeserializeObject<GeographyPoint>(@"{""type"":""Point"",""coordinates"":[-121.726906,46.879967,2541.118],""crs"":{""type"":""name"",""properties"":{""name"":""EPSG:4326""}}}", settings);
 
-            Assert.AreEqual(point.Latitude, 46.879967);
-            Assert.AreEqual(point.Longitude, -121.726906);
+            Assert.That(point.Latitude, Is.EqualTo(46.879967));
+            Assert.That(point.Longitude, Is.EqualTo(-121.726906));
 
             // Not currently supported.
-            Assert.IsNull(point.Z);
+            Assert.That(point.Z, Is.Null);
         }
 
         [Test]
@@ -137,11 +137,11 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
 
             GeographyPoint point = JsonConvert.DeserializeObject<GeographyPoint>(@"{""type"":""Point"",""coordinates"":[-121,46]}", settings);
 
-            Assert.AreEqual(46.0, point.Latitude);
-            Assert.AreEqual(-121.0, point.Longitude);
+            Assert.That(point.Latitude, Is.EqualTo(46.0));
+            Assert.That(point.Longitude, Is.EqualTo(-121.0));
 
             // Not currently supported.
-            Assert.IsNull(point.Z);
+            Assert.That(point.Z, Is.Null);
         }
 
         [TestCaseSource(nameof(ReadBadJsonData))]
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
             };
 
             JsonSerializationException expectedException = Assert.Throws<JsonSerializationException>(() => JsonConvert.DeserializeObject<GeographyPoint>(json, settings));
-            Assert.AreEqual(expectedExceptionMessage, expectedException.Message);
+            Assert.That(expectedException.Message, Is.EqualTo(expectedExceptionMessage));
         }
 
         private static IEnumerable<TestCaseData> ReadBadJsonData => new[]
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
             {
                 string geoJson = JsonConvert.SerializeObject(geographyGeoJson.Geography, settings);
 
-                Assert.AreEqual(geographyGeoJson.GeoJson, geoJson);
+                Assert.That(geoJson, Is.EqualTo(geographyGeoJson.GeoJson));
             }
         }
     }

@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using NUnit.Framework;
-using Azure.Core.TestFramework;
 using System.Diagnostics.Tracing;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
@@ -27,10 +27,10 @@ namespace Azure.Identity.Tests
         {
             var result = TokenHelper.ParseAccountInfoFromToken(_encodedToken);
 
-            Assert.AreEqual(clientId, result.ClientId);
-            Assert.AreEqual(tenantId, result.TenantId);
-            Assert.AreEqual(myUpn, result.Upn);
-            Assert.AreEqual(objectId, result.ObjectId);
+            Assert.That(result.ClientId, Is.EqualTo(clientId));
+            Assert.That(result.TenantId, Is.EqualTo(tenantId));
+            Assert.That(result.Upn, Is.EqualTo(myUpn));
+            Assert.That(result.ObjectId, Is.EqualTo(objectId));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
             var loggedEvents = _listener.EventsById(AzureIdentityEventSource.UnableToParseAccountDetailsFromTokenEvent);
             TokenHelper.ParseAccountInfoFromToken("header.token.signature");
 
-            CollectionAssert.IsNotEmpty(loggedEvents);
+            Assert.That(loggedEvents, Is.Not.Empty);
         }
 
         [Test]

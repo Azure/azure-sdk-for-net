@@ -30,17 +30,17 @@ namespace Azure.Identity.Tests
             var fileCache = new FileContentsCache(filePath, TimeSpan.FromSeconds(1));
 
             // assert the file text is returned
-            Assert.AreEqual(originalText, await fileCache.GetTokenFileContentsAsync(default));
+            Assert.That(await fileCache.GetTokenFileContentsAsync(default), Is.EqualTo(originalText));
 
             File.WriteAllText(filePath, updatedText);
 
             // assert the cached file text is still returned
-            Assert.AreEqual(originalText, await fileCache.GetTokenFileContentsAsync(default));
+            Assert.That(await fileCache.GetTokenFileContentsAsync(default), Is.EqualTo(originalText));
 
             await Task.Delay(TimeSpan.FromSeconds(1.5));
 
             // assert the updated file text is returned
-            Assert.AreEqual(updatedText, await fileCache.GetTokenFileContentsAsync(default));
+            Assert.That(await fileCache.GetTokenFileContentsAsync(default), Is.EqualTo(updatedText));
         }
 
         [Test]

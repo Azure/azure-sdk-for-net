@@ -28,10 +28,10 @@ namespace Azure.Core.Tests
 
             using MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.AreEqual(1.2, mdoc.RootElement.GetProperty("Foo").GetDouble());
-            Assert.AreEqual("Hi!", mdoc.RootElement.GetProperty("Bar").GetString());
-            Assert.AreEqual(3.0, mdoc.RootElement.GetProperty("Baz").GetProperty("A").GetDouble());
-            Assert.AreEqual(false, mdoc.RootElement.GetProperty("Qux").GetBoolean());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetDouble(), Is.EqualTo(1.2));
+            Assert.That(mdoc.RootElement.GetProperty("Bar").GetString(), Is.EqualTo("Hi!"));
+            Assert.That(mdoc.RootElement.GetProperty("Baz").GetProperty("A").GetDouble(), Is.EqualTo(3.0));
+            Assert.That(mdoc.RootElement.GetProperty("Qux").GetBoolean(), Is.EqualTo(false));
 
             ValidateWriteTo(json, mdoc);
         }
@@ -57,10 +57,10 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("Baz").GetProperty("A").Set(5);
             mdoc.RootElement.GetProperty("Qux").Set(true);
 
-            Assert.AreEqual(2, mdoc.RootElement.GetProperty("Foo").GetInt32());
-            Assert.AreEqual("Hello", mdoc.RootElement.GetProperty("Bar").GetString());
-            Assert.AreEqual(5, mdoc.RootElement.GetProperty("Baz").GetProperty("A").GetInt32());
-            Assert.AreEqual(true, mdoc.RootElement.GetProperty("Qux").GetBoolean());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetInt32(), Is.EqualTo(2));
+            Assert.That(mdoc.RootElement.GetProperty("Bar").GetString(), Is.EqualTo("Hello"));
+            Assert.That(mdoc.RootElement.GetProperty("Baz").GetProperty("A").GetInt32(), Is.EqualTo(5));
+            Assert.That(mdoc.RootElement.GetProperty("Qux").GetBoolean(), Is.EqualTo(true));
 
             string expected = """
                 {
@@ -95,7 +95,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("Foo").Set(3);
 
             // Last write wins
-            Assert.AreEqual(3, mdoc.RootElement.GetProperty("Foo").GetInt32());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetInt32(), Is.EqualTo(3));
 
             string expected = """
                 {
@@ -127,7 +127,7 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("Foo").Set(3);
 
-            Assert.AreEqual(3, mdoc.RootElement.GetProperty("Foo").GetInt32());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetInt32(), Is.EqualTo(3));
 
             string expected = """
                 {
@@ -162,8 +162,8 @@ namespace Azure.Core.Tests
                 threwJsonException = true;
             }
 
-            Assert.IsFalse(parsed);
-            Assert.IsTrue(threwJsonException);
+            Assert.That(parsed, Is.False);
+            Assert.That(threwJsonException, Is.True);
         }
 
         [Test]
@@ -184,18 +184,18 @@ namespace Azure.Core.Tests
             // Assert:
 
             // 1. Old property is present.
-            Assert.AreEqual(1.2, mdoc.RootElement.GetProperty("Foo").GetDouble());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetDouble(), Is.EqualTo(1.2));
 
             // 2. New property is present.
-            Assert.IsNotNull(mdoc.RootElement.GetProperty("Bar"));
-            Assert.AreEqual("hi", mdoc.RootElement.GetProperty("Bar").GetString());
+            Assert.That(mdoc.RootElement.GetProperty("Bar"), Is.Not.Null);
+            Assert.That(mdoc.RootElement.GetProperty("Bar").GetString(), Is.EqualTo("hi"));
 
             // 3. Type round-trips correctly.
             BinaryData buffer = GetWriteToBuffer(mdoc);
             JsonDocument doc = JsonDocument.Parse(buffer);
 
-            Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetDouble());
-            Assert.AreEqual("hi", doc.RootElement.GetProperty("Bar").GetString());
+            Assert.That(doc.RootElement.GetProperty("Foo").GetDouble(), Is.EqualTo(1.2));
+            Assert.That(doc.RootElement.GetProperty("Bar").GetString(), Is.EqualTo("hi"));
 
             string expected = """
                 {
@@ -224,18 +224,18 @@ namespace Azure.Core.Tests
             // Assert:
 
             // 1. Old property is present.
-            Assert.AreEqual(1.2, mdoc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble(), Is.EqualTo(1.2));
 
             // 2. New property is present.
-            Assert.IsNotNull(mdoc.RootElement.GetProperty("Foo").GetProperty("B"));
-            Assert.AreEqual("hi", mdoc.RootElement.GetProperty("Foo").GetProperty("B").GetString());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetProperty("B"), Is.Not.Null);
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetProperty("B").GetString(), Is.EqualTo("hi"));
 
             // 3. Type round-trips correctly.
             BinaryData buffer = GetWriteToBuffer(mdoc);
             JsonDocument doc = JsonDocument.Parse(buffer);
 
-            Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
-            Assert.AreEqual("hi", doc.RootElement.GetProperty("Foo").GetProperty("B").GetString());
+            Assert.That(doc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble(), Is.EqualTo(1.2));
+            Assert.That(doc.RootElement.GetProperty("Foo").GetProperty("B").GetString(), Is.EqualTo("hi"));
 
             string expected = """
                 {
@@ -266,17 +266,17 @@ namespace Azure.Core.Tests
             // Assert:
 
             // 1. Old property is present.
-            Assert.AreEqual(1.2, mdoc.RootElement.GetProperty("Foo").GetDouble());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetDouble(), Is.EqualTo(1.2));
 
             // 2. New property not present.
-            Assert.IsFalse(mdoc.RootElement.TryGetProperty("Bar", out var _));
+            Assert.That(mdoc.RootElement.TryGetProperty("Bar", out var _), Is.False);
 
             // 3. Type round-trips correctly.
             BinaryData buffer = GetWriteToBuffer(mdoc);
             JsonDocument doc = JsonDocument.Parse(buffer);
 
-            Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetDouble());
-            Assert.IsFalse(doc.RootElement.TryGetProperty("Bar", out JsonElement _));
+            Assert.That(doc.RootElement.GetProperty("Foo").GetDouble(), Is.EqualTo(1.2));
+            Assert.That(doc.RootElement.TryGetProperty("Bar", out JsonElement _), Is.False);
 
             string expected = """
                 {
@@ -306,16 +306,16 @@ namespace Azure.Core.Tests
             // Assert:
 
             // 1. Old property is present.
-            Assert.AreEqual(1.2, mdoc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble(), Is.EqualTo(1.2));
 
             // 2. New property is absent.
-            Assert.IsFalse(mdoc.RootElement.GetProperty("Foo").TryGetProperty("B", out var _));
+            Assert.That(mdoc.RootElement.GetProperty("Foo").TryGetProperty("B", out var _), Is.False);
 
             // 3. Type round-trips correctly.
             BinaryData buffer = GetWriteToBuffer(mdoc);
             JsonDocument doc = JsonDocument.Parse(buffer);
 
-            Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
+            Assert.That(doc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble(), Is.EqualTo(1.2));
 
             string expected = """
                 {
@@ -348,18 +348,18 @@ namespace Azure.Core.Tests
             // Assert:
 
             // 1. Old property is present.
-            Assert.AreEqual(1.2, mdoc.RootElement.GetProperty("Foo").GetDouble());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetDouble(), Is.EqualTo(1.2));
 
             // 2. Object structure has been rewritten
-            Assert.IsFalse(mdoc.RootElement.GetProperty("Baz").TryGetProperty("A", out var _));
-            Assert.AreEqual(5.5, mdoc.RootElement.GetProperty("Baz").GetProperty("B").GetDouble());
+            Assert.That(mdoc.RootElement.GetProperty("Baz").TryGetProperty("A", out var _), Is.False);
+            Assert.That(mdoc.RootElement.GetProperty("Baz").GetProperty("B").GetDouble(), Is.EqualTo(5.5));
 
             // 3. Type round-trips correctly.
             BinaryData buffer = GetWriteToBuffer(mdoc);
 
             BazB baz = JsonSerializer.Deserialize<BazB>(buffer);
-            Assert.AreEqual(1.2, baz.Foo);
-            Assert.AreEqual(5.5, baz.Baz.B);
+            Assert.That(baz.Foo, Is.EqualTo(1.2));
+            Assert.That(baz.Baz.B, Is.EqualTo(5.5));
 
             string expected = """
                 {
@@ -406,9 +406,9 @@ namespace Azure.Core.Tests
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.AreEqual(1, mdoc.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
-            Assert.AreEqual(2, mdoc.RootElement.GetProperty("Foo").GetIndexElement(1).GetInt32());
-            Assert.AreEqual(3, mdoc.RootElement.GetProperty("Foo").GetIndexElement(2).GetInt32());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32(), Is.EqualTo(1));
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetIndexElement(1).GetInt32(), Is.EqualTo(2));
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetIndexElement(2).GetInt32(), Is.EqualTo(3));
 
             ValidateWriteTo(json, mdoc);
         }
@@ -428,9 +428,9 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("Foo").GetIndexElement(1).Set(6);
             mdoc.RootElement.GetProperty("Foo").GetIndexElement(2).Set(7);
 
-            Assert.AreEqual(5, mdoc.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
-            Assert.AreEqual(6, mdoc.RootElement.GetProperty("Foo").GetIndexElement(1).GetInt32());
-            Assert.AreEqual(7, mdoc.RootElement.GetProperty("Foo").GetIndexElement(2).GetInt32());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32(), Is.EqualTo(5));
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetIndexElement(1).GetInt32(), Is.EqualTo(6));
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetIndexElement(2).GetInt32(), Is.EqualTo(7));
 
             string expected = """
                 {
@@ -455,7 +455,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("Foo").GetIndexElement(0).Set(5);
             mdoc.RootElement.GetProperty("Foo").GetIndexElement(0).Set(6);
 
-            Assert.AreEqual(6, mdoc.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32(), Is.EqualTo(6));
 
             string expected = """
                 {
@@ -481,16 +481,16 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("Foo").GetIndexElement(1).Set("string");
             mdoc.RootElement.GetProperty("Foo").GetIndexElement(2).Set(true);
 
-            Assert.AreEqual(5, mdoc.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
-            Assert.AreEqual("string", mdoc.RootElement.GetProperty("Foo").GetIndexElement(1).GetString());
-            Assert.AreEqual(true, mdoc.RootElement.GetProperty("Foo").GetIndexElement(2).GetBoolean());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32(), Is.EqualTo(5));
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetIndexElement(1).GetString(), Is.EqualTo("string"));
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetIndexElement(2).GetBoolean(), Is.EqualTo(true));
 
             BinaryData buffer = GetWriteToBuffer(mdoc);
             JsonDocument doc = JsonDocument.Parse(buffer);
 
-            Assert.AreEqual(5, doc.RootElement.GetProperty("Foo")[0].GetInt32());
-            Assert.AreEqual("string", doc.RootElement.GetProperty("Foo")[1].GetString());
-            Assert.AreEqual(true, doc.RootElement.GetProperty("Foo")[2].GetBoolean());
+            Assert.That(doc.RootElement.GetProperty("Foo")[0].GetInt32(), Is.EqualTo(5));
+            Assert.That(doc.RootElement.GetProperty("Foo")[1].GetString(), Is.EqualTo("string"));
+            Assert.That(doc.RootElement.GetProperty("Foo")[2].GetBoolean(), Is.EqualTo(true));
 
             string expected = """
                 {
@@ -515,8 +515,8 @@ namespace Azure.Core.Tests
 
             a.GetProperty("Foo").SetProperty("Bar", 5);
 
-            Assert.AreEqual(5, a.GetProperty("Foo").GetProperty("Bar").GetInt32());
-            Assert.AreEqual(5, mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("Bar").GetInt32());
+            Assert.That(a.GetProperty("Foo").GetProperty("Bar").GetInt32(), Is.EqualTo(5));
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("Bar").GetInt32(), Is.EqualTo(5));
 
             string expected = """
                 [ {
@@ -536,17 +536,17 @@ namespace Azure.Core.Tests
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.AreEqual("hi", mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString(), Is.EqualTo("hi"));
 
             mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").Set(1.2);
 
-            Assert.AreEqual(1.2, mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetDouble());
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetDouble(), Is.EqualTo(1.2));
 
             // 3. Type round-trips correctly.
             BinaryData buffer = GetWriteToBuffer(mdoc);
             JsonDocument doc = JsonDocument.Parse(buffer);
 
-            Assert.AreEqual(1.2, doc.RootElement[0].GetProperty("Foo").GetDouble());
+            Assert.That(doc.RootElement[0].GetProperty("Foo").GetDouble(), Is.EqualTo(1.2));
 
             string expected = """[ { "Foo" : 1.2 } ]""";
 
@@ -560,17 +560,17 @@ namespace Azure.Core.Tests
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.AreEqual("hi", mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString(), Is.EqualTo("hi"));
 
             mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").Set(false);
 
-            Assert.IsFalse(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetBoolean());
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetBoolean(), Is.False);
 
             // 3. Type round-trips correctly.
             BinaryData buffer = GetWriteToBuffer(mdoc);
             JsonDocument doc = JsonDocument.Parse(buffer);
 
-            Assert.IsFalse(doc.RootElement[0].GetProperty("Foo").GetBoolean());
+            Assert.That(doc.RootElement[0].GetProperty("Foo").GetBoolean(), Is.False);
 
             string expected = """[ { "Foo" : false } ]""";
 
@@ -584,7 +584,7 @@ namespace Azure.Core.Tests
 
             using MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.AreEqual("hi", mdoc.RootElement.GetProperty("Foo").GetString());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetString(), Is.EqualTo("hi"));
 
             JsonElement element = MutableJsonElement.SerializeToJsonElement(new
             {
@@ -592,12 +592,12 @@ namespace Azure.Core.Tests
             });
             mdoc.RootElement.GetProperty("Foo").Set(element);
 
-            Assert.AreEqual(6, mdoc.RootElement.GetProperty("Foo").GetProperty("Bar").GetInt32());
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetProperty("Bar").GetInt32(), Is.EqualTo(6));
 
             BinaryData buffer = GetWriteToBuffer(mdoc);
             JsonDocument doc = JsonDocument.Parse(buffer);
 
-            Assert.AreEqual(6, doc.RootElement.GetProperty("Foo").GetProperty("Bar").GetInt32());
+            Assert.That(doc.RootElement.GetProperty("Foo").GetProperty("Bar").GetInt32(), Is.EqualTo(6));
 
             string expected = """{ "Foo" : {"Bar" : 6 } }""";
 
@@ -611,22 +611,22 @@ namespace Azure.Core.Tests
 
             using MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.AreEqual("hi", mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString(), Is.EqualTo("hi"));
 
             JsonElement element = MutableJsonElement.SerializeToJsonElement(new int[] { 1, 2, 3 });
             mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").Set(element);
 
-            Assert.AreEqual(1, mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(0).GetInt32());
-            Assert.AreEqual(2, mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(1).GetInt32());
-            Assert.AreEqual(3, mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(2).GetInt32());
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(0).GetInt32(), Is.EqualTo(1));
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(1).GetInt32(), Is.EqualTo(2));
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(2).GetInt32(), Is.EqualTo(3));
 
             // 3. Type round-trips correctly.
             BinaryData buffer = GetWriteToBuffer(mdoc);
             JsonDocument doc = JsonDocument.Parse(buffer);
 
-            Assert.AreEqual(1, doc.RootElement[0].GetProperty("Foo")[0].GetInt32());
-            Assert.AreEqual(2, doc.RootElement[0].GetProperty("Foo")[1].GetInt32());
-            Assert.AreEqual(3, doc.RootElement[0].GetProperty("Foo")[2].GetInt32());
+            Assert.That(doc.RootElement[0].GetProperty("Foo")[0].GetInt32(), Is.EqualTo(1));
+            Assert.That(doc.RootElement[0].GetProperty("Foo")[1].GetInt32(), Is.EqualTo(2));
+            Assert.That(doc.RootElement[0].GetProperty("Foo")[2].GetInt32(), Is.EqualTo(3));
 
             string expected = """[ { "Foo" : [1, 2, 3] }]""";
 
@@ -640,17 +640,17 @@ namespace Azure.Core.Tests
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.AreEqual("hi", mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString(), Is.EqualTo("hi"));
 
             mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").Set(null);
 
-            Assert.IsNull(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString(), Is.Null);
 
             // 3. Type round-trips correctly.
             BinaryData buffer = GetWriteToBuffer(mdoc);
             JsonDocument doc = JsonDocument.Parse(buffer);
 
-            Assert.AreEqual(JsonValueKind.Null, doc.RootElement[0].GetProperty("Foo").ValueKind);
+            Assert.That(doc.RootElement[0].GetProperty("Foo").ValueKind, Is.EqualTo(JsonValueKind.Null));
 
             string expected = """[ { "Foo" : null } ]""";
 
@@ -671,7 +671,7 @@ namespace Azure.Core.Tests
 
             JsonDocument doc = JsonDocument.Parse(bytes);
 
-            Assert.AreEqual("Hello", doc.RootElement.GetProperty("Foo").GetString());
+            Assert.That(doc.RootElement.GetProperty("Foo").GetString(), Is.EqualTo("Hello"));
         }
 
         [Test]
@@ -696,7 +696,7 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
             mdoc.RootElement.Set(2);
 
-            Assert.AreEqual(2, mdoc.RootElement.GetInt32());
+            Assert.That(mdoc.RootElement.GetInt32(), Is.EqualTo(2));
         }
 
         [Test]
@@ -711,14 +711,14 @@ namespace Azure.Core.Tests
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
 
-            Assert.AreEqual(1, mdoc.RootElement.GetProperty("foo").GetInt32());
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetInt32(), Is.EqualTo(1));
 
             using MemoryStream stream = new();
             mdoc.WriteTo(stream, "J");
             stream.Flush();
             stream.Position = 0;
 
-            Assert.AreEqual("""{"foo":1}""", BinaryData.FromStream(stream).ToString());
+            Assert.That(BinaryData.FromStream(stream).ToString(), Is.EqualTo("""{"foo":1}"""));
         }
 
         #region Helpers
@@ -733,8 +733,9 @@ namespace Azure.Core.Tests
 
             BinaryData mdocBuffer = GetWriteToBuffer(mdoc);
 
-            Assert.AreEqual(jdocBuffer.ToString(), mdocBuffer.ToString());
-            Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(mdocBuffer.ToMemory().Span),
+            Assert.That(mdocBuffer.ToString(), Is.EqualTo(jdocBuffer.ToString()));
+            Assert.That(jdocBuffer.ToMemory().Span.SequenceEqual(mdocBuffer.ToMemory().Span),
+                Is.True,
                 "JsonDocument buffer does not match MutableJsonDocument buffer.");
         }
 
@@ -748,8 +749,9 @@ namespace Azure.Core.Tests
 
             BinaryData mdocBuffer = GetWriteToBuffer(mdoc);
 
-            Assert.AreEqual(jdocBuffer.ToString(), mdocBuffer.ToString());
-            Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(mdocBuffer.ToMemory().Span),
+            Assert.That(mdocBuffer.ToString(), Is.EqualTo(jdocBuffer.ToString()));
+            Assert.That(jdocBuffer.ToMemory().Span.SequenceEqual(mdocBuffer.ToMemory().Span),
+                Is.True,
                 "JsonDocument buffer does not match MutableJsonDocument buffer.");
         }
 

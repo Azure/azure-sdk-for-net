@@ -21,8 +21,8 @@ namespace Azure.Core.Tests.DelayStrategies
             OperationPoller poller = new OperationPoller();
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
-            Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(typeof(FixedDelayWithNoJitterStrategy), delayStrategy.GetType());
+            Assert.That(delayStrategy, Is.Not.Null);
+            Assert.That(delayStrategy.GetType(), Is.EqualTo(typeof(FixedDelayWithNoJitterStrategy)));
         }
 
         [Test]
@@ -32,8 +32,8 @@ namespace Azure.Core.Tests.DelayStrategies
             OperationPoller poller = new OperationPoller(sequentialDelay);
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
-            Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(typeof(SequentialDelayStrategy), delayStrategy.GetType());
+            Assert.That(delayStrategy, Is.Not.Null);
+            Assert.That(delayStrategy.GetType(), Is.EqualTo(typeof(SequentialDelayStrategy)));
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests.DelayStrategies
         {
             var cts = new CancellationTokenSource();
             var poller = new OperationPoller(new TestDelayStrategy(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1), cts));
-            var operation = new OperationInternal(new EndlessOperation(),new ClientDiagnostics(ClientOptions.Default), new MockResponse(200));
+            var operation = new OperationInternal(new EndlessOperation(), new ClientDiagnostics(ClientOptions.Default), new MockResponse(200));
             Assert.CatchAsync<OperationCanceledException>(async () => await poller.WaitForCompletionResponseAsync(operation, null, cts.Token));
         }
 

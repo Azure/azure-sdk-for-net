@@ -51,9 +51,9 @@ $"30sdQlNG9EGdqNsoVn/363Cg1iKJy4JU5uW/5kjh4UfBZG6DDwjLK88ZWh0OHPRV{lineEnding}" 
 $"h8q0or9YnvqnVrELMR8cjUkZ{lineEnding}" +
 $"-----END PRIVATE KEY-----";
 
-            Assert.IsTrue(PemReader.TryRead(pem.AsSpan(), out PemReader.PemField field));
-            Assert.AreEqual("PRIVATE KEY", field.Label.ToString());
-            Assert.AreEqual(s_rsaPrivateKeyBytes, field.FromBase64Data());
+            Assert.That(PemReader.TryRead(pem.AsSpan(), out PemReader.PemField field), Is.True);
+            Assert.That(field.Label.ToString(), Is.EqualTo("PRIVATE KEY"));
+            Assert.That(field.FromBase64Data(), Is.EqualTo(s_rsaPrivateKeyBytes));
         }
 
         private const string RsaPem = @"

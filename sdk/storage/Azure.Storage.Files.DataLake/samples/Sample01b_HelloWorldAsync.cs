@@ -48,7 +48,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             {
                 paths.Add(path);
             }
-            Assert.AreEqual(1, paths.Count);
+            Assert.That(paths.Count, Is.EqualTo(1));
 
             // Cleanup
             await filesystem.DeleteAsync();
@@ -88,7 +88,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             {
                 paths.Add(path);
             }
-            Assert.AreEqual(1, paths.Count);
+            Assert.That(paths.Count, Is.EqualTo(1));
 
             // Cleanup
             await filesystem.DeleteAsync();
@@ -124,7 +124,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             {
                 paths.Add(path);
             }
-            Assert.AreEqual(1, paths.Count);
+            Assert.That(paths.Count, Is.EqualTo(1));
 
             // Cleanup
             await filesystem.DeleteAsync();
@@ -164,7 +164,7 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Verify the contents of the file
                 PathProperties properties = await file.GetPropertiesAsync();
-                Assert.AreEqual(SampleFileContent.Length, properties.ContentLength);
+                Assert.That(properties.ContentLength, Is.EqualTo(SampleFileContent.Length));
             }
             finally
             {
@@ -212,7 +212,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 {
                     paths.Add(path);
                 }
-                Assert.AreEqual(1, paths.Count);
+                Assert.That(paths.Count, Is.EqualTo(1));
 
                 // Append data to an existing DataLake File.  Append is currently limited to 4000 MB per call.
                 // To upload a large file all at once, consider using UploadAsync() instead.
@@ -223,7 +223,7 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Verify the contents of the file
                 PathProperties properties = await file.GetPropertiesAsync();
-                Assert.AreEqual(contentLength * 3, properties.ContentLength);
+                Assert.That(properties.ContentLength, Is.EqualTo(contentLength * 3));
             }
             finally
             {
@@ -267,7 +267,7 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Verify the contents of the file
                 PathProperties properties = await file.GetPropertiesAsync();
-                Assert.AreEqual(contentLength, properties.ContentLength);
+                Assert.That(properties.ContentLength, Is.EqualTo(contentLength));
             }
             finally
             {
@@ -318,7 +318,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 }
 
                 // Verify the contents
-                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+                Assert.That(File.ReadAllText(downloadPath), Is.EqualTo(SampleFileContent));
             }
             finally
             {
@@ -370,7 +370,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 }
 
                 // Verify the contents
-                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+                Assert.That(File.ReadAllText(downloadPath), Is.EqualTo(SampleFileContent));
             }
             finally
             {
@@ -423,7 +423,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 }
 
                 // Verify the contents
-                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+                Assert.That(File.ReadAllText(downloadPath), Is.EqualTo(SampleFileContent));
             }
             finally
             {
@@ -469,7 +469,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 await file.ReadToAsync(downloadPath);
 
                 // Verify the contents
-                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+                Assert.That(File.ReadAllText(downloadPath), Is.EqualTo(SampleFileContent));
             }
             finally
             {
@@ -509,10 +509,10 @@ namespace Azure.Storage.Files.DataLake.Samples
                 {
                     names.Add(pathItem.Name);
                 }
-                Assert.AreEqual(3, names.Count);
-                Assert.Contains("sample-directory1", names);
-                Assert.Contains("sample-directory2", names);
-                Assert.Contains("sample-directory3", names);
+                Assert.That(names.Count, Is.EqualTo(3));
+                Assert.That(names, Does.Contain("sample-directory1"));
+                Assert.That(names, Does.Contain("sample-directory2"));
+                Assert.That(names, Does.Contain("sample-directory3"));
             }
             finally
             {
@@ -579,17 +579,17 @@ namespace Azure.Storage.Files.DataLake.Samples
                 }
 
                 // Verify we've seen everything
-                Assert.AreEqual(10, names.Count);
-                Assert.Contains("first", names);
-                Assert.Contains("second", names);
-                Assert.Contains("third", names);
-                Assert.Contains("fourth", names);
-                Assert.Contains("first/a", names);
-                Assert.Contains("first/b", names);
-                Assert.Contains("second/c", names);
-                Assert.Contains("second/d", names);
-                Assert.Contains("fourth/e", names);
-                Assert.Contains("fourth/e/file", names);
+                Assert.That(names.Count, Is.EqualTo(10));
+                Assert.That(names, Does.Contain("first"));
+                Assert.That(names, Does.Contain("second"));
+                Assert.That(names, Does.Contain("third"));
+                Assert.That(names, Does.Contain("fourth"));
+                Assert.That(names, Does.Contain("first/a"));
+                Assert.That(names, Does.Contain("first/b"));
+                Assert.That(names, Does.Contain("second/c"));
+                Assert.That(names, Does.Contain("second/d"));
+                Assert.That(names, Does.Contain("fourth/e"));
+                Assert.That(names, Does.Contain("fourth/e/file"));
             }
             finally
             {
@@ -667,8 +667,8 @@ namespace Azure.Storage.Files.DataLake.Samples
                 PathAccessControl accessControlResponse = await fileClient.GetAccessControlAsync();
 
                 // Check Access Control permissions
-                Assert.AreEqual(pathPermissions.ToSymbolicPermissions(), accessControlResponse.Permissions.ToSymbolicPermissions());
-                Assert.AreEqual(pathPermissions.ToOctalPermissions(), accessControlResponse.Permissions.ToOctalPermissions());
+                Assert.That(accessControlResponse.Permissions.ToSymbolicPermissions(), Is.EqualTo(pathPermissions.ToSymbolicPermissions()));
+                Assert.That(accessControlResponse.Permissions.ToOctalPermissions(), Is.EqualTo(pathPermissions.ToOctalPermissions()));
             }
             finally
             {
@@ -709,9 +709,9 @@ namespace Azure.Storage.Files.DataLake.Samples
                 PathAccessControl accessControlResponse = await fileClient.GetAccessControlAsync();
 
                 // Check Access Control permissions
-                Assert.AreEqual(
-                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    PathAccessControlExtensions.ToAccessControlListString(accessControlResponse.AccessControlList.ToList()));
+                Assert.That(
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlResponse.AccessControlList.ToList()),
+                    Is.EqualTo(PathAccessControlExtensions.ToAccessControlListString(accessControlList)));
             }
             finally
             {

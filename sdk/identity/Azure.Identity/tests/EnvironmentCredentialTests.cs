@@ -39,13 +39,13 @@ namespace Azure.Identity.Tests
 
                 ClientSecretCredential cred = provider.Credential as ClientSecretCredential;
 
-                Assert.NotNull(cred);
+                Assert.That(cred, Is.Not.Null);
 
-                Assert.AreEqual("mockclientid", cred.ClientId);
+                Assert.That(cred.ClientId, Is.EqualTo("mockclientid"));
 
-                Assert.AreEqual("mocktenantid", cred.TenantId);
+                Assert.That(cred.TenantId, Is.EqualTo("mocktenantid"));
 
-                Assert.AreEqual("mockclientsecret", cred.ClientSecret);
+                Assert.That(cred.ClientSecret, Is.EqualTo("mockclientsecret"));
             }
             finally
             {
@@ -78,16 +78,16 @@ namespace Azure.Identity.Tests
             {
                 var provider = new EnvironmentCredential();
                 var cred = provider.Credential as ClientCertificateCredential;
-                Assert.NotNull(cred);
-                Assert.AreEqual("mockclientid", cred.ClientId);
-                Assert.AreEqual("mocktenantid", cred.TenantId);
+                Assert.That(cred, Is.Not.Null);
+                Assert.That(cred.ClientId, Is.EqualTo("mockclientid"));
+                Assert.That(cred.TenantId, Is.EqualTo("mocktenantid"));
 
                 var certProvider = cred.ClientCertificateProvider as X509Certificate2FromFileProvider;
 
-                Assert.NotNull(certProvider);
-                Assert.AreEqual("mockcertificatepath", certProvider.CertificatePath);
-                Assert.AreEqual(expPassword, certProvider.CertificatePassword);
-                Assert.AreEqual(includeX5C == "true", cred.Client._includeX5CClaimHeader);
+                Assert.That(certProvider, Is.Not.Null);
+                Assert.That(certProvider.CertificatePath, Is.EqualTo("mockcertificatepath"));
+                Assert.That(certProvider.CertificatePassword, Is.EqualTo(expPassword));
+                Assert.That(cred.Client._includeX5CClaimHeader, Is.EqualTo(includeX5C == "true"));
             }
         }
 
@@ -131,9 +131,9 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(MockClientException)));
 
-            Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
+            Assert.That(ex.InnerException.Message, Is.EqualTo(expectedInnerExMessage));
 
             await Task.CompletedTask;
         }
@@ -187,8 +187,8 @@ namespace Azure.Identity.Tests
                     { "AZURE_CLIENT_CERTIFICATE_PATH", null } },
                 typeof(UsernamePasswordCredential)};
 
-                // If username/password is available AND AZURE_CLIENT_CERTIFICATE_PATH, ClientCertificateCredential will be selected.
-                yield return new object[] {
+            // If username/password is available AND AZURE_CLIENT_CERTIFICATE_PATH, ClientCertificateCredential will be selected.
+            yield return new object[] {
                 new Dictionary<string, string> {
                     { "AZURE_CLIENT_ID", "mockclientid" },
                     { "AZURE_CLIENT_SECRET", null },
@@ -207,7 +207,7 @@ namespace Azure.Identity.Tests
             using (new TestEnvVar(environmentVars))
             {
                 var cred = new EnvironmentCredential();
-                Assert.AreEqual(expectedCredentialType, cred.Credential.GetType());
+                Assert.That(cred.Credential.GetType(), Is.EqualTo(expectedCredentialType));
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.Identity.Tests
             {
                 var cred = new EnvironmentCredential(new EnvironmentCredentialOptions { DisableInstanceDiscovery = true });
                 bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(cred);
-                Assert.IsTrue(DisableInstanceDiscovery);
+                Assert.That(DisableInstanceDiscovery, Is.True);
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.Identity.Tests
             {
                 var cred = new EnvironmentCredential(new EnvironmentCredentialOptions { DisableInstanceDiscovery = false });
                 bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(cred);
-                Assert.IsFalse(DisableInstanceDiscovery);
+                Assert.That(DisableInstanceDiscovery, Is.False);
             }
         }
     }

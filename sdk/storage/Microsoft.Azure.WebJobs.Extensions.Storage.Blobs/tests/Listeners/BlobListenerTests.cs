@@ -25,14 +25,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var monitor1 = blobListener1.GetMonitor();
             var monitor2 = blobListener1.GetMonitor();
 
-            Assert.AreSame(monitor1, monitor2);
-            Assert.AreSame(monitor1, queueListener.GetMonitor());
+            Assert.That(monitor2, Is.SameAs(monitor1));
+            Assert.That(queueListener.GetMonitor(), Is.SameAs(monitor1));
 
             var targetScaler1 = blobListener1.GetTargetScaler();
             var targetScaler2 = blobListener1.GetTargetScaler();
 
-            Assert.AreSame(targetScaler1, targetScaler2);
-            Assert.AreSame(targetScaler1, queueListener.GetTargetScaler());
+            Assert.That(targetScaler2, Is.SameAs(targetScaler1));
+            Assert.That(queueListener.GetTargetScaler(), Is.SameAs(targetScaler1));
         }
     }
 }

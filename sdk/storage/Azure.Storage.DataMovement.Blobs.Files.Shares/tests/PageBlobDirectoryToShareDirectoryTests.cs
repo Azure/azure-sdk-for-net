@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlob;
 extern alias BaseShares;
-
+extern alias DMBlob;
 using System;
 using System.IO;
 using System.Threading;
@@ -64,7 +63,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             CancellationToken cancellationToken)
         {
             long size = contents.Length;
-            Assert.IsTrue(size % (Constants.KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
+            Assert.That(size % (Constants.KB / 2), Is.EqualTo(0), "Cannot create page blob that's not a multiple of 512");
             await blobClient.CreateIfNotExistsAsync(size, new PageBlobCreateOptions()
             {
                 Metadata = _defaultMetadata,

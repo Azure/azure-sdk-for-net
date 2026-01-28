@@ -50,7 +50,7 @@ namespace Azure.Core.Tests
         public void ConstructorRequiresArgument()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => new NewtonsoftJsonObjectSerializer(null));
-            Assert.AreEqual("settings", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("settings"));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Azure.Core.Tests
 
             _jsonObjectSerializer.Serialize(memoryStream, o, o.GetType(), default);
 
-            Assert.AreEqual($"{{\"{SerializedName("A")}\":\"1\",\"b\":2,\"d\":4,\"{SerializedName("F")}\":6,\"h\":8,\"{SerializedName("Type")}\":\"one\"}}", Encoding.UTF8.GetString(memoryStream.ToArray()));
+            Assert.That(Encoding.UTF8.GetString(memoryStream.ToArray()), Is.EqualTo($"{{\"{SerializedName("A")}\":\"1\",\"b\":2,\"d\":4,\"{SerializedName("F")}\":6,\"h\":8,\"{SerializedName("Type")}\":\"one\"}}"));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Azure.Core.Tests
 
             await _jsonObjectSerializer.SerializeAsync(memoryStream, o, o.GetType(), default);
 
-            Assert.AreEqual($"{{\"{SerializedName("A")}\":\"1\",\"b\":2,\"d\":4,\"{SerializedName("F")}\":6,\"h\":8,\"{SerializedName("Type")}\":\"one\"}}", Encoding.UTF8.GetString(memoryStream.ToArray()));
+            Assert.That(Encoding.UTF8.GetString(memoryStream.ToArray()), Is.EqualTo($"{{\"{SerializedName("A")}\":\"1\",\"b\":2,\"d\":4,\"{SerializedName("F")}\":6,\"h\":8,\"{SerializedName("Type")}\":\"one\"}}"));
         }
 
         [Test]
@@ -111,15 +111,15 @@ namespace Azure.Core.Tests
 
             var model = (ExtendedModel)_jsonObjectSerializer.Deserialize(memoryStream, typeof(ExtendedModel), default);
 
-            Assert.AreEqual("1", model.A);
-            Assert.AreEqual(2, model.ActuallyB);
-            Assert.AreEqual(0, model.C);
-            Assert.AreEqual(ModelType.One, model.Type);
-            Assert.AreEqual(0, model.ReadOnlyD);
-            Assert.AreEqual(0, model.IgnoredE);
-            Assert.AreEqual(6, model.F);
-            Assert.AreEqual(0, model.G);
-            Assert.AreEqual(8, model.GetH());
+            Assert.That(model.A, Is.EqualTo("1"));
+            Assert.That(model.ActuallyB, Is.EqualTo(2));
+            Assert.That(model.C, Is.EqualTo(0));
+            Assert.That(model.Type, Is.EqualTo(ModelType.One));
+            Assert.That(model.ReadOnlyD, Is.EqualTo(0));
+            Assert.That(model.IgnoredE, Is.EqualTo(0));
+            Assert.That(model.F, Is.EqualTo(6));
+            Assert.That(model.G, Is.EqualTo(0));
+            Assert.That(model.GetH(), Is.EqualTo(8));
         }
 
         [Test]
@@ -140,15 +140,15 @@ namespace Azure.Core.Tests
 
             var model = (ExtendedModel)await _jsonObjectSerializer.DeserializeAsync(memoryStream, typeof(ExtendedModel), default).ConfigureAwait(false);
 
-            Assert.AreEqual("1", model.A);
-            Assert.AreEqual(2, model.ActuallyB);
-            Assert.AreEqual(0, model.C);
-            Assert.AreEqual(ModelType.One, model.Type);
-            Assert.AreEqual(0, model.ReadOnlyD);
-            Assert.AreEqual(0, model.IgnoredE);
-            Assert.AreEqual(6, model.F);
-            Assert.AreEqual(0, model.G);
-            Assert.AreEqual(8, model.GetH());
+            Assert.That(model.A, Is.EqualTo("1"));
+            Assert.That(model.ActuallyB, Is.EqualTo(2));
+            Assert.That(model.C, Is.EqualTo(0));
+            Assert.That(model.Type, Is.EqualTo(ModelType.One));
+            Assert.That(model.ReadOnlyD, Is.EqualTo(0));
+            Assert.That(model.IgnoredE, Is.EqualTo(0));
+            Assert.That(model.F, Is.EqualTo(6));
+            Assert.That(model.G, Is.EqualTo(0));
+            Assert.That(model.GetH(), Is.EqualTo(8));
         }
 
         [Test]
@@ -168,31 +168,31 @@ namespace Azure.Core.Tests
                 switch (member.Name)
                 {
                     case nameof(ExtendedModel.A):
-                        Assert.AreEqual(SerializedName("A"), propertyName);
+                        Assert.That(propertyName, Is.EqualTo(SerializedName("A")));
                         break;
 
                     case nameof(ExtendedModel.ActuallyB):
-                        Assert.AreEqual("b", propertyName);
+                        Assert.That(propertyName, Is.EqualTo("b"));
                         break;
 
                     case nameof(ExtendedModel.Type):
-                        Assert.AreEqual(SerializedName("Type"), propertyName);
+                        Assert.That(propertyName, Is.EqualTo(SerializedName("Type")));
                         break;
 
                     case nameof(ExtendedModel.ReadOnlyD):
-                        Assert.AreEqual("d", propertyName);
+                        Assert.That(propertyName, Is.EqualTo("d"));
                         break;
 
                     case nameof(ExtendedModel.F):
-                        Assert.AreEqual(SerializedName("F"), propertyName);
+                        Assert.That(propertyName, Is.EqualTo(SerializedName("F")));
                         break;
 
                     case "H":
-                        Assert.AreEqual("h", propertyName);
+                        Assert.That(propertyName, Is.EqualTo("h"));
                         break;
 
                     default:
-                        Assert.IsNull(propertyName, $"Unexpected serialized name '{propertyName}' for member {member.DeclaringType}.{member.Name}");
+                        Assert.That(propertyName, Is.Null, $"Unexpected serialized name '{propertyName}' for member {member.DeclaringType}.{member.Name}");
                         break;
                 }
             }

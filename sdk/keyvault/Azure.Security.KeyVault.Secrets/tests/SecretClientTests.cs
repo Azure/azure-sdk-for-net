@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
-    public class SecretClientTests: ClientTestBase
+    public class SecretClientTests : ClientTestBase
     {
         public SecretClientTests(bool isAsync) : base(isAsync)
         {
@@ -124,7 +124,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             SecretClient client = InstrumentClient(new SecretClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
 
             var secrets = await client.GetPropertiesOfSecretsAsync().ToEnumerableAsync();
-            Assert.AreEqual(3, secrets.Count);
+            Assert.That(secrets.Count, Is.EqualTo(3));
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             SecretClient client = InstrumentClient(new SecretClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
 
             var versions = await client.GetPropertiesOfSecretVersionsAsync("1").ToEnumerableAsync();
-            Assert.AreEqual(3, versions.Count);
+            Assert.That(versions.Count, Is.EqualTo(3));
         }
 
         [Test]
@@ -184,7 +184,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             SecretClient client = InstrumentClient(new SecretClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
 
             var secrets = await client.GetDeletedSecretsAsync().ToEnumerableAsync();
-            Assert.AreEqual(3, secrets.Count);
+            Assert.That(secrets.Count, Is.EqualTo(3));
         }
     }
 }

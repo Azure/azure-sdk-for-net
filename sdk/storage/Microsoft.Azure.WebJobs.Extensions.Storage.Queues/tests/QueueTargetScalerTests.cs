@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
             QueueTargetScaler targetScaler = new QueueTargetScaler("testFunctionId", mockQueueClient.Object, options, _loggerFactory);
             TargetScalerResult result = targetScaler.GetScaleResultInternal(context, queueLength);
-            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
+            Assert.That(result.TargetWorkerCount, Is.EqualTo(expectedTargetWorkerCount));
         }
     }
 }

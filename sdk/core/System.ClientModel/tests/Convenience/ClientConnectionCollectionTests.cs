@@ -22,11 +22,11 @@ public class ClientConnectionCollectionTests
 
         collection.Add(connection);
 
-        Assert.AreEqual(1, collection.Count);
-        Assert.AreEqual("conn1", collection["conn1"].Id);
-        Assert.AreEqual("https://example.com", collection["conn1"].Locator);
-        Assert.AreEqual("myAPIKey", collection["conn1"].Credential);
-        Assert.AreEqual(CredentialKind.ApiKeyString, collection["conn1"].CredentialKind);
+        Assert.That(collection.Count, Is.EqualTo(1));
+        Assert.That(collection["conn1"].Id, Is.EqualTo("conn1"));
+        Assert.That(collection["conn1"].Locator, Is.EqualTo("https://example.com"));
+        Assert.That(collection["conn1"].Credential, Is.EqualTo("myAPIKey"));
+        Assert.That(collection["conn1"].CredentialKind, Is.EqualTo(CredentialKind.ApiKeyString));
     }
 
     [Test]
@@ -40,9 +40,9 @@ public class ClientConnectionCollectionTests
         using var document = JsonDocument.Parse(json);
         var root = document.RootElement.EnumerateArray().First();
 
-        Assert.AreEqual("conn1", root.GetProperty("id").GetString());
-        Assert.AreEqual("https://example.com", root.GetProperty("locator").GetString());
-        Assert.AreEqual("ApiKeyString", root.GetProperty("credentialKind").GetString());
+        Assert.That(root.GetProperty("id").GetString(), Is.EqualTo("conn1"));
+        Assert.That(root.GetProperty("locator").GetString(), Is.EqualTo("https://example.com"));
+        Assert.That(root.GetProperty("credentialKind").GetString(), Is.EqualTo("ApiKeyString"));
     }
 
     [Test]
@@ -52,10 +52,10 @@ public class ClientConnectionCollectionTests
 
         ClientConnectionCollection? collection = JsonSerializer.Deserialize<ClientConnectionCollection>(json);
 
-        Assert.AreEqual(1, collection!.Count);
-        Assert.AreEqual("conn1", collection["conn1"].Id);
-        Assert.AreEqual("https://example.com", collection["conn1"].Locator);
-        Assert.AreEqual(CredentialKind.ApiKeyString, collection["conn1"].CredentialKind);
+        Assert.That(collection!.Count, Is.EqualTo(1));
+        Assert.That(collection["conn1"].Id, Is.EqualTo("conn1"));
+        Assert.That(collection["conn1"].Locator, Is.EqualTo("https://example.com"));
+        Assert.That(collection["conn1"].CredentialKind, Is.EqualTo(CredentialKind.ApiKeyString));
     }
 
     [Test]
@@ -67,9 +67,9 @@ public class ClientConnectionCollectionTests
         string json = JsonSerializer.Serialize(collection);
         ClientConnectionCollection? deserializedCollection = JsonSerializer.Deserialize<ClientConnectionCollection>(json);
 
-        Assert.IsNotNull(deserializedCollection);
-        Assert.AreEqual(1, deserializedCollection!.Count);
-        Assert.AreEqual("locator1", deserializedCollection["id1"].Locator);
-        Assert.AreEqual(CredentialKind.ApiKeyString, deserializedCollection["id1"].CredentialKind);
+        Assert.That(deserializedCollection, Is.Not.Null);
+        Assert.That(deserializedCollection!.Count, Is.EqualTo(1));
+        Assert.That(deserializedCollection["id1"].Locator, Is.EqualTo("locator1"));
+        Assert.That(deserializedCollection["id1"].CredentialKind, Is.EqualTo(CredentialKind.ApiKeyString));
     }
 }

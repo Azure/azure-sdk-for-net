@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.Tests
             AdditionalAssertions += async (client) =>
             {
                 IDictionary<string, string> metadata = (await client.GetPropertiesAsync()).Value.Metadata;
-                Assert.IsTrue(metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
+                Assert.That(metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey), Is.True);
             };
         }
 
@@ -90,9 +90,9 @@ namespace Azure.Storage.Blobs.Tests
 
             // Assert
             var downloadedMetadata = await GetMetadataAsync(client);
-            Assert.AreEqual(metadata.Count + 1, downloadedMetadata.Count);
-            CollectionAssert.IsSubsetOf(metadata, downloadedMetadata);
-            Assert.IsTrue(downloadedMetadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
+            Assert.That(downloadedMetadata.Count, Is.EqualTo(metadata.Count + 1));
+            Assert.That(metadata, Is.SubsetOf(downloadedMetadata));
+            Assert.That(downloadedMetadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey), Is.True);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
@@ -125,9 +125,9 @@ namespace Azure.Storage.Blobs.Tests
 
             // Assert
             var downloadedMetadata = await GetMetadataAsync(client);
-            Assert.AreEqual(metadata.Count + 1, downloadedMetadata.Count);
-            CollectionAssert.IsSubsetOf(metadata, downloadedMetadata);
-            Assert.IsTrue(downloadedMetadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
+            Assert.That(downloadedMetadata.Count, Is.EqualTo(metadata.Count + 1));
+            Assert.That(metadata, Is.SubsetOf(downloadedMetadata));
+            Assert.That(downloadedMetadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey), Is.True);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }

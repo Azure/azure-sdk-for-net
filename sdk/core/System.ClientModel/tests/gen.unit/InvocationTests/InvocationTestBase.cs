@@ -358,23 +358,23 @@ namespace TestProject1
 
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
 
             if (!contextAdded)
             {
-                Assert.IsNull(result.GenerationSpec);
+                Assert.That(result.GenerationSpec, Is.Null);
             }
             else
             {
-                Assert.IsNotNull(result.GenerationSpec);
-                Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-                Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-                Assert.AreEqual("public", result.GenerationSpec.Modifier);
+                Assert.That(result.GenerationSpec, Is.Not.Null);
+                Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+                Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+                Assert.That(result.GenerationSpec.Modifier, Is.EqualTo("public"));
 
                 //if the persistable is from a dependency, it won't be added to the context builders
                 if (!shouldBeFound && type != JsonModel && type != LocalBaseModel)
                 {
-                    Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
+                    Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(0));
                     return; // early exit if not found
                 }
 
@@ -386,31 +386,31 @@ namespace TestProject1
                 if (dupeModel)
                     expectedBuilders = expectedBuilders * 2;
 
-                Assert.AreEqual(expectedBuilders, result.GenerationSpec.TypeBuilders.Count);
+                Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(expectedBuilders));
                 var dict = result.GenerationSpec.TypeBuilders.ToDictionary(t => $"{t.Type.GetInnerItemType().Namespace}.{t.Type.Name}", t => t);
 
                 var fullName = $"{s_namespaces[type]}.{type}";
-                Assert.IsTrue(dict.TryGetValue(fullName, out var typeModel));
+                Assert.That(dict.TryGetValue(fullName, out var typeModel), Is.True);
                 var builderValidator = s_builderValidators[type];
                 builderValidator(typeModel!);
 
                 if (dupeModel)
                 {
                     var dupeFullName = $"TestProject1.{type}";
-                    Assert.IsTrue(dict.TryGetValue(dupeFullName, out var dupeTypeModel));
+                    Assert.That(dict.TryGetValue(dupeFullName, out var dupeTypeModel), Is.True);
                     builderValidator = s_builderValidators[dupeFullName];
                     builderValidator(dupeTypeModel!);
                 }
 
                 if (type == LocalBaseModel)
                 {
-                    Assert.IsNotNull(dict[fullName].PersistableModelProxy);
+                    Assert.That(dict[fullName].PersistableModelProxy, Is.Not.Null);
                     AssertUnknownLocalBaseModel(dict[fullName].PersistableModelProxy!);
 
                     if (dupeModel)
                     {
                         var dupeFullName = $"TestProject1.{type}";
-                        Assert.IsNotNull(dict[dupeFullName].PersistableModelProxy);
+                        Assert.That(dict[dupeFullName].PersistableModelProxy, Is.Not.Null);
                         AssertUnknownLocalBaseModel(dict[dupeFullName].PersistableModelProxy!, "TestProject1");
                     }
                 }
@@ -447,7 +447,7 @@ $$"""
     {
     }
 """;
-        return result;
+            return result;
         }
 
         private string LocalCall(bool contextAdded, string type, string invocation)
@@ -497,16 +497,16 @@ $$"""
             {
                 code +=
 $$"""
-                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
-                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+                ModelReaderWriter.Read <{{string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+                ModelReaderWriter.Read <{{string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
 """;
             }
             else
             {
                 code +=
 $$"""
-                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json);
-                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json);
+                ModelReaderWriter.Read <{{string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json);
+                ModelReaderWriter.Read <{{string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json);
 """;
             }
 
@@ -521,106 +521,106 @@ $$"""
 
         internal static void AssertTestProject1JsonModelBuilder(TypeBuilderSpec jsonModel)
         {
-            Assert.AreEqual("internal", jsonModel.Modifier);
-            Assert.IsNull(jsonModel.PersistableModelProxy);
+            Assert.That(jsonModel.Modifier, Is.EqualTo("internal"));
+            Assert.That(jsonModel.PersistableModelProxy, Is.Null);
             AssertJsonModel(jsonModel.Type, "TestProject1");
-            Assert.AreEqual(TypeBuilderKind.IPersistableModel, jsonModel.Kind);
-            Assert.AreEqual(s_modelExpectations[jsonModel.Type.Name].Context, jsonModel.ContextType);
+            Assert.That(jsonModel.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
+            Assert.That(jsonModel.ContextType, Is.EqualTo(s_modelExpectations[jsonModel.Type.Name].Context));
         }
 
         internal static void AssertJsonModelBuilder(TypeBuilderSpec jsonModel)
         {
-            Assert.AreEqual("internal", jsonModel.Modifier);
-            Assert.IsNull(jsonModel.PersistableModelProxy);
+            Assert.That(jsonModel.Modifier, Is.EqualTo("internal"));
+            Assert.That(jsonModel.PersistableModelProxy, Is.Null);
             AssertJsonModel(jsonModel.Type);
-            Assert.AreEqual(TypeBuilderKind.IPersistableModel, jsonModel.Kind);
-            Assert.AreEqual(s_modelExpectations[jsonModel.Type.Name].Context, jsonModel.ContextType);
+            Assert.That(jsonModel.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
+            Assert.That(jsonModel.ContextType, Is.EqualTo(s_modelExpectations[jsonModel.Type.Name].Context));
         }
 
         private static void AssertBaseModelBuilder(TypeBuilderSpec baseModel)
         {
-            Assert.AreEqual("internal", baseModel.Modifier);
-            Assert.IsNotNull(baseModel.PersistableModelProxy);
+            Assert.That(baseModel.Modifier, Is.EqualTo("internal"));
+            Assert.That(baseModel.PersistableModelProxy, Is.Not.Null);
             AssertBaseModel(baseModel.Type);
-            Assert.AreEqual(TypeBuilderKind.IPersistableModel, baseModel.Kind);
-            Assert.AreEqual(s_modelExpectations[baseModel.Type.Name].Context, baseModel.ContextType);
+            Assert.That(baseModel.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
+            Assert.That(baseModel.ContextType, Is.EqualTo(s_modelExpectations[baseModel.Type.Name].Context));
         }
 
         private static void AssertAvailabilitySetDataBuilder(TypeBuilderSpec availabilitySetData)
         {
-            Assert.AreEqual("internal", availabilitySetData.Modifier);
-            Assert.IsNull(availabilitySetData.PersistableModelProxy);
+            Assert.That(availabilitySetData.Modifier, Is.EqualTo("internal"));
+            Assert.That(availabilitySetData.PersistableModelProxy, Is.Null);
             AssertAvailabilitySetData(availabilitySetData.Type);
-            Assert.AreEqual(TypeBuilderKind.IPersistableModel, availabilitySetData.Kind);
-            Assert.AreEqual(s_modelExpectations[availabilitySetData.Type.Name].Context, availabilitySetData.ContextType);
+            Assert.That(availabilitySetData.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
+            Assert.That(availabilitySetData.ContextType, Is.EqualTo(s_modelExpectations[availabilitySetData.Type.Name].Context));
         }
 
         private static void AssertTestProject1LocalBaseModelBuilder(TypeBuilderSpec localBaseModel)
         {
-            Assert.AreEqual("internal", localBaseModel.Modifier);
-            Assert.IsNotNull(localBaseModel.PersistableModelProxy);
+            Assert.That(localBaseModel.Modifier, Is.EqualTo("internal"));
+            Assert.That(localBaseModel.PersistableModelProxy, Is.Not.Null);
             AssertLocalBaseModel(localBaseModel.Type, "TestProject1");
-            Assert.AreEqual(TypeBuilderKind.IPersistableModel, localBaseModel.Kind);
-            Assert.AreEqual(s_modelExpectations[localBaseModel.Type.Name].Context, localBaseModel.ContextType);
+            Assert.That(localBaseModel.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
+            Assert.That(localBaseModel.ContextType, Is.EqualTo(s_modelExpectations[localBaseModel.Type.Name].Context));
         }
 
         private static void AssertLocalBaseModelBuilder(TypeBuilderSpec localBaseModel)
         {
-            Assert.AreEqual("internal", localBaseModel.Modifier);
-            Assert.IsNotNull(localBaseModel.PersistableModelProxy);
+            Assert.That(localBaseModel.Modifier, Is.EqualTo("internal"));
+            Assert.That(localBaseModel.PersistableModelProxy, Is.Not.Null);
             AssertLocalBaseModel(localBaseModel.Type);
-            Assert.AreEqual(TypeBuilderKind.IPersistableModel, localBaseModel.Kind);
-            Assert.AreEqual(s_modelExpectations[localBaseModel.Type.Name].Context, localBaseModel.ContextType);
+            Assert.That(localBaseModel.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
+            Assert.That(localBaseModel.ContextType, Is.EqualTo(s_modelExpectations[localBaseModel.Type.Name].Context));
         }
 
         internal static void AssertJsonModel(TypeRef jsonModel, string expectedNamespace = "TestProject")
         {
-            Assert.AreEqual("JsonModel", jsonModel.Name);
-            Assert.AreEqual(expectedNamespace, jsonModel.Namespace);
-            Assert.AreEqual("JsonModel_", jsonModel.TypeCaseName);
-            Assert.AreEqual("jsonModel_", jsonModel.CamelCaseName);
-            Assert.AreEqual(0, jsonModel.ArrayRank);
-            Assert.IsNull(jsonModel.ItemType);
+            Assert.That(jsonModel.Name, Is.EqualTo("JsonModel"));
+            Assert.That(jsonModel.Namespace, Is.EqualTo(expectedNamespace));
+            Assert.That(jsonModel.TypeCaseName, Is.EqualTo("JsonModel_"));
+            Assert.That(jsonModel.CamelCaseName, Is.EqualTo("jsonModel_"));
+            Assert.That(jsonModel.ArrayRank, Is.EqualTo(0));
+            Assert.That(jsonModel.ItemType, Is.Null);
         }
 
         internal static void AssertLocalBaseModel(TypeRef localBaseModel, string expectedNamespace = "TestProject")
         {
-            Assert.AreEqual("LocalBaseModel", localBaseModel.Name);
-            Assert.AreEqual(expectedNamespace, localBaseModel.Namespace);
-            Assert.AreEqual("LocalBaseModel_", localBaseModel.TypeCaseName);
-            Assert.AreEqual("localBaseModel_", localBaseModel.CamelCaseName);
-            Assert.AreEqual(0, localBaseModel.ArrayRank);
-            Assert.IsNull(localBaseModel.ItemType);
+            Assert.That(localBaseModel.Name, Is.EqualTo("LocalBaseModel"));
+            Assert.That(localBaseModel.Namespace, Is.EqualTo(expectedNamespace));
+            Assert.That(localBaseModel.TypeCaseName, Is.EqualTo("LocalBaseModel_"));
+            Assert.That(localBaseModel.CamelCaseName, Is.EqualTo("localBaseModel_"));
+            Assert.That(localBaseModel.ArrayRank, Is.EqualTo(0));
+            Assert.That(localBaseModel.ItemType, Is.Null);
         }
 
         internal static void AssertUnknownLocalBaseModel(TypeRef unknownLocalBaseModel, string expectedNamespace = "TestProject")
         {
-            Assert.AreEqual("UnknownLocalBaseModel", unknownLocalBaseModel.Name);
-            Assert.AreEqual(expectedNamespace, unknownLocalBaseModel.Namespace);
-            Assert.AreEqual("UnknownLocalBaseModel_", unknownLocalBaseModel.TypeCaseName);
-            Assert.AreEqual("unknownLocalBaseModel_", unknownLocalBaseModel.CamelCaseName);
-            Assert.AreEqual(0, unknownLocalBaseModel.ArrayRank);
-            Assert.IsNull(unknownLocalBaseModel.ItemType);
+            Assert.That(unknownLocalBaseModel.Name, Is.EqualTo("UnknownLocalBaseModel"));
+            Assert.That(unknownLocalBaseModel.Namespace, Is.EqualTo(expectedNamespace));
+            Assert.That(unknownLocalBaseModel.TypeCaseName, Is.EqualTo("UnknownLocalBaseModel_"));
+            Assert.That(unknownLocalBaseModel.CamelCaseName, Is.EqualTo("unknownLocalBaseModel_"));
+            Assert.That(unknownLocalBaseModel.ArrayRank, Is.EqualTo(0));
+            Assert.That(unknownLocalBaseModel.ItemType, Is.Null);
         }
 
         internal static void AssertBaseModel(TypeRef baseModel)
         {
-            Assert.AreEqual("BaseModel", baseModel.Name);
-            Assert.AreEqual("System.ClientModel.Tests.Client.ModelReaderWriterTests.Models", baseModel.Namespace);
-            Assert.AreEqual("BaseModel_", baseModel.TypeCaseName);
-            Assert.AreEqual("baseModel_", baseModel.CamelCaseName);
-            Assert.AreEqual(0, baseModel.ArrayRank);
-            Assert.IsNull(baseModel.ItemType);
+            Assert.That(baseModel.Name, Is.EqualTo("BaseModel"));
+            Assert.That(baseModel.Namespace, Is.EqualTo("System.ClientModel.Tests.Client.ModelReaderWriterTests.Models"));
+            Assert.That(baseModel.TypeCaseName, Is.EqualTo("BaseModel_"));
+            Assert.That(baseModel.CamelCaseName, Is.EqualTo("baseModel_"));
+            Assert.That(baseModel.ArrayRank, Is.EqualTo(0));
+            Assert.That(baseModel.ItemType, Is.Null);
         }
 
         private static void AssertAvailabilitySetData(TypeRef aset)
         {
-            Assert.AreEqual("AvailabilitySetData", aset.Name);
-            Assert.AreEqual("System.ClientModel.Tests.Client.Models.ResourceManager.Compute", aset.Namespace);
-            Assert.AreEqual("AvailabilitySetData_", aset.TypeCaseName);
-            Assert.AreEqual("availabilitySetData_", aset.CamelCaseName);
-            Assert.AreEqual(0, aset.ArrayRank);
-            Assert.IsNull(aset.ItemType);
+            Assert.That(aset.Name, Is.EqualTo("AvailabilitySetData"));
+            Assert.That(aset.Namespace, Is.EqualTo("System.ClientModel.Tests.Client.Models.ResourceManager.Compute"));
+            Assert.That(aset.TypeCaseName, Is.EqualTo("AvailabilitySetData_"));
+            Assert.That(aset.CamelCaseName, Is.EqualTo("availabilitySetData_"));
+            Assert.That(aset.ArrayRank, Is.EqualTo(0));
+            Assert.That(aset.ItemType, Is.Null);
         }
 
         [Test]

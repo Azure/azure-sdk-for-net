@@ -170,7 +170,7 @@ namespace Azure.Storage.Blobs.Samples
             RequestFailedException ex =
                 Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateBlobContainerAsync(Randomize("sample-container")));
-            Assert.AreEqual(403, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(403));
         }
 
         /// <summary>

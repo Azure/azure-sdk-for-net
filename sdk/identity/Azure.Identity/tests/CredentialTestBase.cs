@@ -67,11 +67,11 @@ namespace Azure.Identity.Tests
             var loggedEvents = _listener.EventsById(AzureIdentityEventSource.AuthenticatedAccountDetailsEvent);
             if (isOptionSet)
             {
-                CollectionAssert.IsNotEmpty(loggedEvents);
+                Assert.That(loggedEvents, Is.Not.Empty);
             }
             else
             {
-                CollectionAssert.IsEmpty(loggedEvents);
+                Assert.That(loggedEvents, Is.Empty);
             }
         }
 
@@ -104,9 +104,9 @@ namespace Azure.Identity.Tests
             transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
 
-            Assert.AreEqual(token, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(token));
             string expectedPrefix = isSupportLoggingEnabled ? "True" : "False";
-            Assert.True(_listener.EventData.Any(d => d.Payload.Any(p => p.ToString().StartsWith($"{expectedPrefix} MSAL"))));
+            Assert.That(_listener.EventData.Any(d => d.Payload.Any(p => p.ToString().StartsWith($"{expectedPrefix} MSAL"))), Is.True);
         }
 
         [Test]
@@ -140,17 +140,17 @@ namespace Azure.Identity.Tests
             transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
 
-            Assert.AreEqual(token, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(token));
 
-            Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Informational && d.EventName == "LogMsalInformational"));
+            Assert.That(_listener.EventData.Any(d => d.Level == EventLevel.Informational && d.EventName == "LogMsalInformational"), Is.True);
 
             switch (eventLevel)
             {
                 case EventLevel.Informational:
-                    Assert.False(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"));
+                    Assert.That(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"), Is.False);
                     break;
                 case EventLevel.Verbose:
-                    Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"));
+                    Assert.That(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"), Is.True);
                     break;
                 default:
                     Assert.Fail("Unexpected event level");
@@ -192,8 +192,8 @@ namespace Azure.Identity.Tests
             transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
 
-            Assert.AreNotEqual(disable, transportConfig.CalledDiscoveryEndpoint);
-            Assert.AreEqual(token, actualToken.Token);
+            Assert.That(transportConfig.CalledDiscoveryEndpoint, Is.Not.EqualTo(disable));
+            Assert.That(actualToken.Token, Is.EqualTo(token));
         }
 
         [Test]
@@ -226,9 +226,9 @@ namespace Azure.Identity.Tests
             // Assert that Resolver is called and that the resolved tenant is the expected tenant
             mockResolver.Setup(r => r.Resolve(It.IsAny<string>(), It.IsAny<TokenRequestContext>(), It.IsAny<string[]>())).Callback<string, TokenRequestContext, IList<string>>((tenantId, context, additionalTenants) =>
             {
-                Assert.AreEqual(config.TenantId, tenantId);
-                Assert.AreEqual(config.RequestContext.TenantId, context.TenantId);
-                Assert.AreEqual(config.AdditionallyAllowedTenants, additionalTenants);
+                Assert.That(tenantId, Is.EqualTo(config.TenantId));
+                Assert.That(context.TenantId, Is.EqualTo(config.RequestContext.TenantId));
+                Assert.That(config.AdditionallyAllowedTenants, Is.EqualTo(additionalTenants));
             }).Returns(resolvedTenantId);
         }
 
@@ -263,11 +263,11 @@ namespace Azure.Identity.Tests
                         {
                             observedNoCae = true;
                         }
-                        Assert.AreEqual(enableCae, containsClaims);
+                        Assert.That(containsClaims, Is.EqualTo(enableCae));
                         if (containsClaims)
                         {
                             var claims = System.Text.Json.JsonSerializer.Deserialize<Claims>(claimsJson);
-                            CollectionAssert.Contains(claims.access_token.xms_cc.values, "CP1");
+                            Assert.That(claims.access_token.xms_cc.values, Has.Member("CP1"));
                         }
                     }
                 }
@@ -292,28 +292,28 @@ namespace Azure.Identity.Tests
             using (HttpPipeline.CreateClientRequestIdScope("disableCae"))
             {
                 AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isCaeEnabled: false), default);
-                Assert.AreEqual(token, actualToken.Token);
+                Assert.That(actualToken.Token, Is.EqualTo(token));
             }
             // First call with EnableCae = true
             using (HttpPipeline.CreateClientRequestIdScope("enableCae"))
             {
                 AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isCaeEnabled: true), default);
-                Assert.AreEqual(token, actualToken.Token);
+                Assert.That(actualToken.Token, Is.EqualTo(token));
             }
             // Second call with EnableCae = false
             using (HttpPipeline.CreateClientRequestIdScope("disableCae"))
             {
                 AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isCaeEnabled: false), default);
-                Assert.AreEqual(token, actualToken.Token);
+                Assert.That(actualToken.Token, Is.EqualTo(token));
             }
             // Second call with EnableCae = true
             using (HttpPipeline.CreateClientRequestIdScope("enableCae"))
             {
                 AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isCaeEnabled: true), default);
-                Assert.AreEqual(token, actualToken.Token);
+                Assert.That(actualToken.Token, Is.EqualTo(token));
             }
-            Assert.True(observedCae);
-            Assert.True(observedNoCae);
+            Assert.That(observedCae, Is.True);
+            Assert.That(observedNoCae, Is.True);
         }
 
         [Test]
@@ -340,12 +340,12 @@ namespace Azure.Identity.Tests
 
                         if (req.ClientRequestId == "NoClaims")
                         {
-                            Assert.False(containsClaims, "(NoClaims) Claims should not be present. Claims=" + claimsJson);
+                            Assert.That(containsClaims, Is.False, "(NoClaims) Claims should not be present. Claims=" + claimsJson);
                         }
                         if (req.ClientRequestId == "WithClaims")
                         {
-                            Assert.True(containsClaims, "(WithClaims) Claims should be present");
-                            Assert.AreEqual(Claims, claimsJson, "(WithClaims) Claims should match");
+                            Assert.That(containsClaims, Is.True, "(WithClaims) Claims should be present");
+                            Assert.That(claimsJson, Is.EqualTo(Claims), "(WithClaims) Claims should match");
                         }
                     }
                 }
@@ -372,12 +372,12 @@ namespace Azure.Identity.Tests
                 // First call to populate the account record for confidential client creds
                 await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
                 var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default);
-                Assert.AreEqual(token, actualToken.Token);
+                Assert.That(actualToken.Token, Is.EqualTo(token));
             }
             using (HttpPipeline.CreateClientRequestIdScope("WithClaims"))
             {
                 var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate2, claims: Claims), default);
-                Assert.AreEqual(token, actualToken.Token);
+                Assert.That(actualToken.Token, Is.EqualTo(token));
             }
         }
 
@@ -418,8 +418,8 @@ namespace Azure.Identity.Tests
             transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
 
-            Assert.AreEqual(token, actualToken.Token);
-            Assert.IsNotNull(actualToken.RefreshOn);
+            Assert.That(actualToken.Token, Is.EqualTo(token));
+            Assert.That(actualToken.RefreshOn, Is.Not.Null);
         }
 
         [Test]
@@ -468,7 +468,7 @@ namespace Azure.Identity.Tests
             var credential2 = GetTokenCredential(config);
             AccessToken actualToken2 = await credential2.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
 
-            Assert.AreEqual(actualToken1.Token, actualToken2.Token);
+            Assert.That(actualToken2.Token, Is.EqualTo(actualToken1.Token));
         }
 
         [Test]
@@ -483,8 +483,8 @@ namespace Azure.Identity.Tests
                 {
                     if (req.Uri.Path.EndsWith("/token"))
                     {
-                        Assert.AreEqual("usnorth-passive-dsts.dsts.core.windows.net", req.Uri.Host);
-                        Assert.AreEqual($"/dstsv2/{TenantId}/oauth2/v2.0/token", req.Uri.Path);
+                        Assert.That(req.Uri.Host, Is.EqualTo("usnorth-passive-dsts.dsts.core.windows.net"));
+                        Assert.That(req.Uri.Path, Is.EqualTo($"/dstsv2/{TenantId}/oauth2/v2.0/token"));
                     }
                 }
             };
@@ -509,7 +509,7 @@ namespace Azure.Identity.Tests
             // First call to populate the account record for confidential client creds
             await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
             var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default);
-            Assert.AreEqual(token, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(token));
         }
 
         public class MemoryTokenCache : UnsafeTokenCacheOptions
@@ -546,31 +546,31 @@ namespace Azure.Identity.Tests
             {
                 SilentAuthFactory = (_, claims, _, _, _) =>
                 {
-                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    Assert.That(claims, Is.EqualTo(caeClaim.ToString()), "Claims passed to msal should match");
                     claimsIsVerified = true;
                     return result;
                 },
                 ExtendedSilentAuthFactory = (_, claims, _, _, _, _) =>
                 {
-                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    Assert.That(claims, Is.EqualTo(caeClaim.ToString()), "Claims passed to msal should match");
                     claimsIsVerified = true;
                     return result;
                 },
                 InteractiveAuthFactory = (_, claims, _, _, _, _, _, _) =>
                 {
-                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    Assert.That(claims, Is.EqualTo(caeClaim.ToString()), "Claims passed to msal should match");
                     claimsIsVerified = true;
                     return result;
                 },
                 DeviceCodeAuthFactory = (_, claims, _, _, _) =>
                 {
-                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    Assert.That(claims, Is.EqualTo(caeClaim.ToString()), "Claims passed to msal should match");
                     claimsIsVerified = true;
                     return result;
                 },
                 UserPassAuthFactory = (_, claims, _, _, _, _) =>
                 {
-                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    Assert.That(claims, Is.EqualTo(caeClaim.ToString()), "Claims passed to msal should match");
                     claimsIsVerified = true;
                     return result;
                 },
@@ -579,25 +579,25 @@ namespace Azure.Identity.Tests
             var msalConf = new MockMsalConfidentialClient(null, null, null, null, null, options)
                 .WithAuthCodeFactory((_, _, _, _, claims, _) =>
                 {
-                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    Assert.That(claims, Is.EqualTo(caeClaim.ToString()), "Claims passed to msal should match");
                     claimsIsVerified = true;
                     return result;
                 })
                 .WithClientFactory((_, _, claims, _) =>
                 {
-                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    Assert.That(claims, Is.EqualTo(caeClaim.ToString()), "Claims passed to msal should match");
                     claimsIsVerified = true;
                     return result;
                 })
                 .WithOnBehalfOfFactory((_, _, _, claims, _, _, _) =>
                 {
-                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    Assert.That(claims, Is.EqualTo(caeClaim.ToString()), "Claims passed to msal should match");
                     claimsIsVerified = true;
                     return new ValueTask<AuthenticationResult>(result);
                 })
                 .WithSilentFactory((_, _, _, _, claims, _) =>
                 {
-                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    Assert.That(claims, Is.EqualTo(caeClaim.ToString()), "Claims passed to msal should match");
                     claimsIsVerified = true;
                     return new ValueTask<AuthenticationResult>(result);
                 });
@@ -624,8 +624,8 @@ namespace Azure.Identity.Tests
 
             var actualToken = await credential.GetTokenAsync(context, CancellationToken.None);
 
-            Assert.AreEqual(expectedToken, actualToken.Token, "Token should match");
-            Assert.True(claimsIsVerified);
+            Assert.That(actualToken.Token, Is.EqualTo(expectedToken), "Token should match");
+            Assert.That(claimsIsVerified, Is.True);
         }
 
         public class TransportConfig
@@ -748,27 +748,27 @@ namespace Azure.Identity.Tests
                 .WithSilentFactory(
                     (_, _, _tenantId, _replyUri, _, _) =>
                     {
-                        Assert.AreEqual(expectedTenantId, _tenantId);
-                        Assert.AreEqual(expectedReplyUri, _replyUri);
+                        Assert.That(_tenantId, Is.EqualTo(expectedTenantId));
+                        Assert.That(_replyUri, Is.EqualTo(expectedReplyUri));
                         return new ValueTask<AuthenticationResult>(result);
                     })
                 .WithAuthCodeFactory(
                     (_a, _b, _tenantId, _replyUri, _c, _d) =>
                     {
-                        Assert.AreEqual(expectedTenantId, _tenantId);
-                        Assert.AreEqual(expectedReplyUri, _replyUri);
+                        Assert.That(_tenantId, Is.EqualTo(expectedTenantId));
+                        Assert.That(_replyUri, Is.EqualTo(expectedReplyUri));
                         return result;
                     })
                 .WithOnBehalfOfFactory(
                     (_, _, userAssertion, _, _, _, _) =>
                     {
-                        Assert.AreEqual(expectedUserAssertion, userAssertion.Assertion);
+                        Assert.That(userAssertion.Assertion, Is.EqualTo(expectedUserAssertion));
                         return new ValueTask<AuthenticationResult>(result);
                     })
                 .WithClientFactory(
                     (_, _tenantId, _, _) =>
                     {
-                        Assert.AreEqual(expectedTenantId, _tenantId);
+                        Assert.That(_tenantId, Is.EqualTo(expectedTenantId));
                         return result;
                     });
 
@@ -796,27 +796,27 @@ namespace Azure.Identity.Tests
             };
             mockPublicMsalClient.InteractiveAuthFactory = (_, _, _, _, tenant, _, _, _) =>
             {
-                Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
+                Assert.That(tenant, Is.EqualTo(expectedTenantId), "TenantId passed to msal should match");
                 return result;
             };
             mockPublicMsalClient.SilentAuthFactory = (_, _, _, tenant, _) =>
             {
-                Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
+                Assert.That(tenant, Is.EqualTo(expectedTenantId), "TenantId passed to msal should match");
                 return result;
             };
             mockPublicMsalClient.ExtendedSilentAuthFactory = (_, _, _, tenant, _, _) =>
             {
-                Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
+                Assert.That(tenant, Is.EqualTo(expectedTenantId), "TenantId passed to msal should match");
                 return result;
             };
             mockPublicMsalClient.UserPassAuthFactory = (_, _, _, _, tenant, _) =>
             {
-                Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
+                Assert.That(tenant, Is.EqualTo(expectedTenantId), "TenantId passed to msal should match");
                 return result;
             };
             mockPublicMsalClient.RefreshTokenFactory = (_, _, _, _, tenant, _, _) =>
             {
-                Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
+                Assert.That(tenant, Is.EqualTo(expectedTenantId), "TenantId passed to msal should match");
                 return result;
             };
         }

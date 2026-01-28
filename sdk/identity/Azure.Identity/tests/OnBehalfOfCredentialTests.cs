@@ -92,7 +92,7 @@ namespace Azure.Identity.Tests
                 new OnBehalfOfCredential(TenantId, ClientId, clientSecret, null, null));
             cred = new OnBehalfOfCredential(TenantId, ClientId, clientSecret, userAssertion, null);
             // Assert
-            Assert.AreEqual(clientSecret, cred.Client._clientSecret);
+            Assert.That(cred.Client._clientSecret, Is.EqualTo(clientSecret));
 
             Assert.Throws<ArgumentNullException>(() =>
                 new OnBehalfOfCredential(null, ClientId, _mockCertificate, userAssertion));
@@ -104,7 +104,7 @@ namespace Azure.Identity.Tests
                 new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null));
             cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion);
             // Assert
-            Assert.NotNull(cred.Client._certificateProvider);
+            Assert.That(cred.Client._certificateProvider, Is.Not.Null);
 
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
@@ -113,7 +113,7 @@ namespace Azure.Identity.Tests
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null, new OnBehalfOfCredentialOptions()));
             cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions());
             // Assert
-            Assert.NotNull(cred.Client._certificateProvider);
+            Assert.That(cred.Client._certificateProvider, Is.Not.Null);
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace Azure.Identity.Tests
                     mockConfidentialMsalClient));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
-            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+            Assert.That(expectedToken, Is.EqualTo(token.Token), "Should be the expected token value");
         }
 
         [Test]
@@ -149,7 +149,7 @@ namespace Azure.Identity.Tests
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 
 #if NET9_0_OR_GREATER
-            var mockCert= X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
 #else
             var mockCert = new X509Certificate2(certificatePath);
 #endif
@@ -170,7 +170,7 @@ namespace Azure.Identity.Tests
                     null));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
-            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+            Assert.That(expectedToken, Is.EqualTo(token.Token), "Should be the expected token value");
         }
 
         [Test]
@@ -198,7 +198,7 @@ namespace Azure.Identity.Tests
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 
 #if NET9_0_OR_GREATER
-           var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
 #else
             var mockCert = new X509Certificate2(certificatePath);
 #endif
@@ -220,7 +220,7 @@ namespace Azure.Identity.Tests
                     null));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
-            Assert.AreEqual(expectedToken, token.Token, "Should be the expected token value");
+            Assert.That(token.Token, Is.EqualTo(expectedToken), "Should be the expected token value");
         }
     }
 }

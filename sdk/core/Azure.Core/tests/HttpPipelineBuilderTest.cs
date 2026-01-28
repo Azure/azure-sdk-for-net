@@ -42,8 +42,8 @@ namespace Azure.Core.Tests
 
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            Assert.AreEqual(200, response.Status);
-            Assert.AreEqual(expectedCount, policy.ExecutionCount);
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(policy.ExecutionCount, Is.EqualTo(expectedCount));
         }
 
         [Test]
@@ -59,15 +59,15 @@ namespace Azure.Core.Tests
             options.AddPolicy(new CallbackPolicy(m =>
             {
                 perCallRan = true;
-                Assert.False(perRetryRan);
-                Assert.False(beforeTransportRan);
+                Assert.That(perRetryRan, Is.False);
+                Assert.That(beforeTransportRan, Is.False);
             }), HttpPipelinePosition.PerCall);
 
             options.AddPolicy(new CallbackPolicy(m =>
             {
                 perRetryRan = true;
-                Assert.True(perCallRan);
-                Assert.False(beforeTransportRan);
+                Assert.That(perCallRan, Is.True);
+                Assert.That(beforeTransportRan, Is.False);
             }), HttpPipelinePosition.PerRetry);
 
             // Intentionally add some null policies to ensure it does not break indexing
@@ -78,8 +78,8 @@ namespace Azure.Core.Tests
             options.AddPolicy(new CallbackPolicy(m =>
             {
                 beforeTransportRan = true;
-                Assert.True(perRetryRan);
-                Assert.True(perCallRan);
+                Assert.That(perRetryRan, Is.True);
+                Assert.That(perCallRan, Is.True);
             }), HttpPipelinePosition.BeforeTransport);
 
             options.Transport = transport;
@@ -92,9 +92,9 @@ namespace Azure.Core.Tests
 
             await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            Assert.True(perRetryRan);
-            Assert.True(perCallRan);
-            Assert.True(beforeTransportRan);
+            Assert.That(perRetryRan, Is.True);
+            Assert.That(perCallRan, Is.True);
+            Assert.That(beforeTransportRan, Is.True);
         }
 
         [Test]
@@ -121,8 +121,8 @@ namespace Azure.Core.Tests
                 informationalVersion = informationalVersion.Substring(0, i);
             }
 
-            Assert.True(request.Headers.TryGetValue("User-Agent", out string value));
-            StringAssert.StartsWith($"azsdk-net-Core.Tests/{informationalVersion} ", value);
+            Assert.That(request.Headers.TryGetValue("User-Agent", out string value), Is.True);
+            Assert.That(value, Does.StartWith($"azsdk-net-Core.Tests/{informationalVersion} "));
         }
 
         [Test]
@@ -152,11 +152,11 @@ namespace Azure.Core.Tests
                 informationalVersion = informationalVersion.Substring(0, i);
             }
 
-            Assert.True(request.Headers.TryGetValue("User-Agent", out string value));
+            Assert.That(request.Headers.TryGetValue("User-Agent", out string value), Is.True);
 #if NETFRAMEWORK
-            StringAssert.StartsWith($"azsdk-net-mscorlib/{informationalVersion} ", value);
+            Assert.That(value, Does.StartWith($"azsdk-net-mscorlib/{informationalVersion} "));
 #else
-            StringAssert.StartsWith($"azsdk-net-System.Private.CoreLib/{informationalVersion} ", value);
+            Assert.That(value, Does.StartWith($"azsdk-net-System.Private.CoreLib/{informationalVersion} "));
 #endif
         }
 
@@ -168,10 +168,10 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, telemetryPolicy);
 
-            Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
-            StringAssert.IsMatch(Regex.Escape("azsdk-net-Core.Tests/") +
+            Assert.That(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent), Is.True);
+            Assert.That(userAgent, Does.Match(Regex.Escape("azsdk-net-Core.Tests/") +
                                  "[.\\-0-9a-z]+" +
-                                 Regex.Escape($" ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})"), userAgent);
+                                 Regex.Escape($" ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})")));
         }
 
         [Test]
@@ -182,9 +182,9 @@ namespace Azure.Core.Tests
             policy.Setup(p => p.OnSendingRequest(It.IsAny<HttpMessage>()))
                 .Callback<HttpMessage>(message =>
                 {
-                    Assert.AreEqual("ExternalClientId", message.Request.ClientRequestId);
-                    Assert.True(message.Request.TryGetHeader("x-ms-client-request-id", out string requestId));
-                    Assert.AreEqual("ExternalClientId", requestId);
+                    Assert.That(message.Request.ClientRequestId, Is.EqualTo("ExternalClientId"));
+                    Assert.That(message.Request.TryGetHeader("x-ms-client-request-id", out string requestId), Is.True);
+                    Assert.That(requestId, Is.EqualTo("ExternalClientId"));
                 }).Verifiable();
 
             var options = new TestOptions();
@@ -230,8 +230,8 @@ namespace Azure.Core.Tests
 
             policy.Verify();
 
-            Assert.True(transport.SingleRequest.Headers.TryGetValue("x-ms-client-request-id", out var value));
-            Assert.AreEqual("MyPolicyClientId", value);
+            Assert.That(transport.SingleRequest.Headers.TryGetValue("x-ms-client-request-id", out var value), Is.True);
+            Assert.That(value, Is.EqualTo("MyPolicyClientId"));
         }
 
         [Test]
@@ -306,13 +306,13 @@ namespace Azure.Core.Tests
 
                 if (transportOptionsIsClientRedirectEnabled ?? false)
                 {
-                    Assert.AreEqual(200, response.Status);
-                    Assert.AreEqual(2, transport.Requests.Count);
+                    Assert.That(response.Status, Is.EqualTo(200));
+                    Assert.That(transport.Requests.Count, Is.EqualTo(2));
                 }
                 else
                 {
-                    Assert.AreEqual(300, response.Status);
-                    Assert.AreEqual(1, transport.Requests.Count);
+                    Assert.That(response.Status, Is.EqualTo(300));
+                    Assert.That(transport.Requests.Count, Is.EqualTo(1));
                 }
             }
         }

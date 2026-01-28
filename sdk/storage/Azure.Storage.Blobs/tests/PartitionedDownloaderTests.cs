@@ -57,8 +57,8 @@ namespace Azure.Storage.Blobs.Test
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
-            Assert.AreEqual(0, stream.Length);
-            Assert.NotNull(result);
+            Assert.That(stream.Length, Is.EqualTo(0));
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs.Test
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
             AssertContent(10, stream);
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -101,9 +101,9 @@ namespace Azure.Storage.Blobs.Test
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
-            Assert.AreEqual(dataSource.Requests.Count, 9);
+            Assert.That(dataSource.Requests.Count, Is.EqualTo(9));
             AssertContent(100, stream);
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -127,9 +127,9 @@ namespace Azure.Storage.Blobs.Test
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
-            Assert.AreEqual(dataSource.Requests.Count, 4);
+            Assert.That(dataSource.Requests.Count, Is.EqualTo(4));
             AssertContent(100, stream);
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -153,24 +153,24 @@ namespace Azure.Storage.Blobs.Test
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
-            Assert.AreEqual(dataSource.Requests.Count, 10);
+            Assert.That(dataSource.Requests.Count, Is.EqualTo(10));
             AssertContent(100, stream);
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             bool first = true;
             foreach ((HttpRange Range, BlobRequestConditions Conditions) request in dataSource.Requests)
             {
-                Assert.AreEqual(s_conditions.LeaseId, request.Conditions.LeaseId);
-                Assert.AreEqual(s_conditions.IfModifiedSince, request.Conditions.IfModifiedSince);
-                Assert.AreEqual(s_conditions.IfUnmodifiedSince, request.Conditions.IfUnmodifiedSince);
-                Assert.AreEqual(s_conditions.IfNoneMatch, request.Conditions.IfNoneMatch);
+                Assert.That(request.Conditions.LeaseId, Is.EqualTo(s_conditions.LeaseId));
+                Assert.That(request.Conditions.IfModifiedSince, Is.EqualTo(s_conditions.IfModifiedSince));
+                Assert.That(request.Conditions.IfUnmodifiedSince, Is.EqualTo(s_conditions.IfUnmodifiedSince));
+                Assert.That(request.Conditions.IfNoneMatch, Is.EqualTo(s_conditions.IfNoneMatch));
                 if (first)
                 {
                     first = false;
                 }
                 else
                 {
-                    Assert.AreEqual(s_etag, request.Conditions.IfMatch);
+                    Assert.That(request.Conditions.IfMatch, Is.EqualTo(s_etag));
                 }
             }
         }
@@ -196,22 +196,22 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
-                new StorageTransferOptions() { MaximumTransferLength = 10},
+                new StorageTransferOptions() { MaximumTransferLength = 10 },
                 transferValidation: s_validationOptions);
 
             Exception thrown = Assert.ThrowsAsync<Exception>(async () => await InvokeDownloadToAsync(downloader, stream));
 
-            Assert.AreSame(e, thrown);
+            Assert.That(thrown, Is.SameAs(e));
         }
 
         private void AssertContent(int expectedLength, MemoryStream stream)
         {
-            Assert.AreEqual(expectedLength, stream.Length);
+            Assert.That(stream.Length, Is.EqualTo(expectedLength));
 
             byte[] array = stream.ToArray();
             for (int i = 0; i < array.Length; i++)
             {
-                Assert.AreEqual((byte)i, array[i]);
+                Assert.That(array[i], Is.EqualTo((byte)i));
             }
         }
 

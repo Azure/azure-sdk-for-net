@@ -6,18 +6,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageMover.Tests.Scenario
 {
-    public class ProjectCollectionTests :StorageMoverManagementTestBase
+    public class ProjectCollectionTests : StorageMoverManagementTestBase
     {
         public ProjectCollectionTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
-            {
-            }
+        {
+        }
 
         private ResourceGroupResource _resourceGroup;
 
@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             string projectName = Recording.GenerateAssetName("project-");
             StorageMoverProjectData projectData = new StorageMoverProjectData();
             StorageMoverProjectResource project = (await projects.CreateOrUpdateAsync(WaitUntil.Completed, projectName, projectData)).Value;
-            Assert.AreEqual(projectName, project.Data.Name);
-            Assert.AreEqual(null, project.Data.Description);
-            Assert.AreEqual("microsoft.storagemover/storagemovers/projects", project.Data.ResourceType.ToString());
+            Assert.That(project.Data.Name, Is.EqualTo(projectName));
+            Assert.That(project.Data.Description, Is.EqualTo(null));
+            Assert.That(project.Data.ResourceType.ToString(), Is.EqualTo("microsoft.storagemover/storagemovers/projects"));
 
             project = (await projects.GetAsync(projectName)).Value;
-            Assert.AreEqual(projectName, project.Data.Name);
-            Assert.AreEqual(null, project.Data.Description);
-            Assert.AreEqual("microsoft.storagemover/storagemovers/projects", project.Data.ResourceType.ToString());
+            Assert.That(project.Data.Name, Is.EqualTo(projectName));
+            Assert.That(project.Data.Description, Is.EqualTo(null));
+            Assert.That(project.Data.ResourceType.ToString(), Is.EqualTo("microsoft.storagemover/storagemovers/projects"));
 
             int counter = 0;
             await foreach (StorageMoverProjectResource _ in projects.GetAllAsync())
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
                 counter++;
             }
 
-            Assert.IsTrue((await projects.ExistsAsync(projectName)).Value);
+            Assert.That((await projects.ExistsAsync(projectName)).Value, Is.True);
         }
     }
 }

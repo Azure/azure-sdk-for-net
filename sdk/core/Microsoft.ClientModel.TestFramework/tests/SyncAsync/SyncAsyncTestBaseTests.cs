@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
-using System;
 
 namespace Microsoft.ClientModel.TestFramework.Tests.SyncAsync;
 

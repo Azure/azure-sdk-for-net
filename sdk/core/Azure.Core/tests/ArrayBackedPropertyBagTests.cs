@@ -23,8 +23,8 @@ namespace Azure.Core.Tests
             for (ulong i = 0; i < count; i++)
             {
                 target.Set(i, i);
-                Assert.True(target.TryGetValue(i, out var value));
-                Assert.AreEqual(i, value);
+                Assert.That(target.TryGetValue(i, out var value), Is.True);
+                Assert.That(value, Is.EqualTo(i));
             }
         }
 
@@ -38,8 +38,8 @@ namespace Azure.Core.Tests
             for (ulong i = 0; i < 5; i++)
             {
                 target.Set(i, i);
-                Assert.True(target.TryGetValue(i, out var value));
-                Assert.AreEqual(i, value);
+                Assert.That(target.TryGetValue(i, out var value), Is.True);
+                Assert.That(value, Is.EqualTo(i));
             }
             for (ulong i = 0; i < readLoops; i++)
             {
@@ -61,15 +61,15 @@ namespace Azure.Core.Tests
             for (ulong i = 1; i <= count; i++)
             {
                 target.Set(i, i);
-                Assert.True(target.TryGetValue(i, out var value));
-                Assert.AreEqual(i, (ulong)value);
+                Assert.That(target.TryGetValue(i, out var value), Is.True);
+                Assert.That((ulong)value, Is.EqualTo(i));
             }
 
             // add a duplicate key and set the value to the negative of its original value
             ulong lastKey = count;
             target.Set(lastKey, lastKey * 10L);
-            Assert.True(target.TryGetValue(lastKey, out var newValue));
-            Assert.AreEqual(lastKey * 10, (ulong)newValue);
+            Assert.That(target.TryGetValue(lastKey, out var newValue), Is.True);
+            Assert.That((ulong)newValue, Is.EqualTo(lastKey * 10));
         }
 
         [Test]
@@ -78,17 +78,17 @@ namespace Azure.Core.Tests
             var target = new ArrayBackedPropertyBag<ulong, ulong>();
             target.Set(1, 1);
 
-            Assert.False(target.TryGetValue(2, out _));
+            Assert.That(target.TryGetValue(2, out _), Is.False);
         }
 
         [Test]
-        [TestCase(1, true, new[]{2,3,5,6})]
-        [TestCase(2, true, new[]{1,3,5,6})]
-        [TestCase(3, true, new[]{1,2,5,6})]
-        [TestCase(4, false, new[]{1,2,3,5,6})]
-        [TestCase(5, true, new[]{1,2,3,6})]
-        [TestCase(6, true, new[]{1,2,3,5})]
-        [TestCase(7, false, new[]{1,2,3,5,6})]
+        [TestCase(1, true, new[] { 2, 3, 5, 6 })]
+        [TestCase(2, true, new[] { 1, 3, 5, 6 })]
+        [TestCase(3, true, new[] { 1, 2, 5, 6 })]
+        [TestCase(4, false, new[] { 1, 2, 3, 5, 6 })]
+        [TestCase(5, true, new[] { 1, 2, 3, 6 })]
+        [TestCase(6, true, new[] { 1, 2, 3, 5 })]
+        [TestCase(7, false, new[] { 1, 2, 3, 5, 6 })]
         public void Delete(int keyToDelete, bool isDeleted, int[] expectedKeys)
         {
             var target = new ArrayBackedPropertyBag<int, int>();
@@ -97,16 +97,16 @@ namespace Azure.Core.Tests
             target.Set(3, 3);
             target.Set(5, 5);
             target.Set(6, 6);
-            Assert.AreEqual(isDeleted, target.TryGetValue(keyToDelete, out _));
-            Assert.AreEqual(isDeleted, target.TryRemove(keyToDelete));
-            Assert.AreEqual(false, target.TryGetValue(keyToDelete, out _));
-            Assert.AreEqual(expectedKeys.Length, target.Count);
+            Assert.That(target.TryGetValue(keyToDelete, out _), Is.EqualTo(isDeleted));
+            Assert.That(target.TryRemove(keyToDelete), Is.EqualTo(isDeleted));
+            Assert.That(target.TryGetValue(keyToDelete, out _), Is.EqualTo(false));
+            Assert.That(target.Count, Is.EqualTo(expectedKeys.Length));
 
             for (var i = 0; i < expectedKeys.Length; i++)
             {
                 target.GetAt(i, out var key, out var value);
-                Assert.AreEqual(expectedKeys[i], key);
-                Assert.AreEqual(expectedKeys[i], value);
+                Assert.That(key, Is.EqualTo(expectedKeys[i]));
+                Assert.That(value, Is.EqualTo(expectedKeys[i]));
             }
         }
 
@@ -124,11 +124,11 @@ namespace Azure.Core.Tests
         public void DeleteMultiple(int total, int increment)
         {
             var target = new ArrayBackedPropertyBag<int, int>();
-            var expected = new Dictionary<int,int>();
+            var expected = new Dictionary<int, int>();
             for (var key = 0; key < total; key++)
             {
                 target.Set(key, key);
-                expected.Add(key,key);
+                expected.Add(key, key);
             }
 
             for (var key = 0; key < total; key += increment)
@@ -137,11 +137,11 @@ namespace Azure.Core.Tests
                 expected.Remove(key);
             }
 
-            Assert.AreEqual(expected.Count, target.Count);
+            Assert.That(target.Count, Is.EqualTo(expected.Count));
             for (var index = 0; index < expected.Count; index++)
             {
                 target.GetAt(index, out var key, out var value);
-                Assert.AreEqual(expected[key], value);
+                Assert.That(value, Is.EqualTo(expected[key]));
             }
         }
 
@@ -159,11 +159,11 @@ namespace Azure.Core.Tests
                 target.Set(key, key);
             }
 
-            Assert.AreEqual(count, target.Count);
+            Assert.That(target.Count, Is.EqualTo(count));
             for (var key = 0; key < count; key++)
             {
-                Assert.IsTrue(target.TryGetValue(key, out var value));
-                Assert.AreEqual(key, value);
+                Assert.That(target.TryGetValue(key, out var value), Is.True);
+                Assert.That(value, Is.EqualTo(key));
             }
 
             target.Dispose();
@@ -201,11 +201,11 @@ namespace Azure.Core.Tests
 
             first.Dispose();
 
-            Assert.AreEqual(count, second.Count);
+            Assert.That(second.Count, Is.EqualTo(count));
             for (var key = 0; key < count; key++)
             {
-                Assert.IsTrue(second.TryGetValue(key, out var value));
-                Assert.AreEqual(key, value);
+                Assert.That(second.TryGetValue(key, out var value), Is.True);
+                Assert.That(value, Is.EqualTo(key));
             }
         }
     }

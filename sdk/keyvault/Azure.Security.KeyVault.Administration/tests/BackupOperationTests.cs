@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 "",
                 null,
                 DateTimeOffset.Now.AddMinutes(-5),
-                null, JobId, BackupLocation,new Dictionary<string, BinaryData>());
+                null, JobId, BackupLocation, new Dictionary<string, BinaryData>());
 
             failedResponse = new Mock<Response<FullBackupDetailsInternal>>();
             failedResponse.SetupGet(m => m.Value).Returns(failedBackup);
@@ -154,12 +154,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             var operation = new KeyVaultBackupOperation(mockClient.Object, jobId);
             var ex = Assert.Throws<RequestFailedException>(() => operation.WaitForCompletion());
-            Assert.AreEqual(ex.Status, 200);
+            Assert.That(ex.Status, Is.EqualTo(200));
 
             dynamic error = ex.GetRawResponse()?.Content.ToDynamicFromJson(JsonPropertyNames.UseExact).error;
-            Assert.NotNull(error);
-            Assert.AreEqual("BadRequest", (string)error.code);
-            Assert.AreEqual("Invalid backup: Reason: Cannot read backup status document", (string)error.message);
+            Assert.That(error, Is.Not.Null);
+            Assert.That((string)error.code, Is.EqualTo("BadRequest"));
+            Assert.That((string)error.message, Is.EqualTo("Invalid backup: Reason: Cannot read backup status document"));
         }
 
         [Test(Description = "https://github.com/Azure/azure-sdk-for-net/issues/41855")]
@@ -191,12 +191,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             var operation = new KeyVaultRestoreOperation(mockClient.Object, jobId);
             var ex = Assert.Throws<RequestFailedException>(() => operation.WaitForCompletion());
-            Assert.AreEqual(ex.Status, 200);
+            Assert.That(ex.Status, Is.EqualTo(200));
 
             dynamic error = ex.GetRawResponse()?.Content.ToDynamicFromJson(JsonPropertyNames.UseExact).error;
-            Assert.NotNull(error);
-            Assert.AreEqual("BadRequest", (string)error.code);
-            Assert.AreEqual("Invalid backup: Reason: Cannot read backup status document", (string)error.message);
+            Assert.That(error, Is.Not.Null);
+            Assert.That((string)error.code, Is.EqualTo("BadRequest"));
+            Assert.That((string)error.message, Is.EqualTo("Invalid backup: Reason: Cannot read backup status document"));
         }
     }
 }

@@ -20,8 +20,8 @@ public class PipelineResponseHeadersTests
 
         HttpClientResponseHeaders headers = new(httpResponse, content);
 
-        Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
-        Assert.AreEqual("Mock value", value);
+        Assert.That(headers.TryGetValue("Mock-Header", out string? value), Is.True);
+        Assert.That(value, Is.EqualTo("Mock value"));
     }
 
     [Test]
@@ -34,8 +34,8 @@ public class PipelineResponseHeadersTests
 
         HttpClientResponseHeaders headers = new(httpResponse, content);
 
-        Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
-        Assert.AreEqual("Value 1,Value 2", value);
+        Assert.That(headers.TryGetValue("Mock-Header", out string? value), Is.True);
+        Assert.That(value, Is.EqualTo("Value 1,Value 2"));
     }
 
     [Test]
@@ -47,9 +47,9 @@ public class PipelineResponseHeadersTests
 
         HttpClientResponseHeaders headers = new(httpResponse, content);
 
-        Assert.IsTrue(headers.TryGetValues("Mock-Header", out IEnumerable<string>? values));
-        Assert.AreEqual(1, values!.Count());
-        Assert.AreEqual("Mock value", values!.First());
+        Assert.That(headers.TryGetValues("Mock-Header", out IEnumerable<string>? values), Is.True);
+        Assert.That(values!.Count(), Is.EqualTo(1));
+        Assert.That(values!.First(), Is.EqualTo("Mock value"));
     }
 
     [Test]
@@ -61,10 +61,10 @@ public class PipelineResponseHeadersTests
         HttpContent content = new ByteArrayContent(BinaryData.FromString("Content").ToArray());
 
         HttpClientResponseHeaders headers = new(httpResponse, content);
-        Assert.IsTrue(headers.TryGetValues("Mock-Header", out IEnumerable<string>? values));
-        Assert.AreEqual(2, values!.Count());
-        Assert.AreEqual("Value 1", values!.ElementAt(0));
-        Assert.AreEqual("Value 2", values!.ElementAt(1));
+        Assert.That(headers.TryGetValues("Mock-Header", out IEnumerable<string>? values), Is.True);
+        Assert.That(values!.Count(), Is.EqualTo(2));
+        Assert.That(values!.ElementAt(0), Is.EqualTo("Value 1"));
+        Assert.That(values!.ElementAt(1), Is.EqualTo("Value 2"));
     }
 
     [Test]
@@ -76,8 +76,8 @@ public class PipelineResponseHeadersTests
 
         HttpClientResponseHeaders headers = new(httpResponse, content);
 
-        Assert.IsTrue(headers.TryGetValues("MOCK-HEADER", out IEnumerable<string>? values));
-        Assert.AreEqual(1, values!.Count());
-        Assert.AreEqual("Mock value", values!.First());
+        Assert.That(headers.TryGetValues("MOCK-HEADER", out IEnumerable<string>? values), Is.True);
+        Assert.That(values!.Count(), Is.EqualTo(1));
+        Assert.That(values!.First(), Is.EqualTo("Mock value"));
     }
 }

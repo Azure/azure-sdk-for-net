@@ -23,7 +23,7 @@ namespace Azure.Core.TestFramework.Tests
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.NoScopeAsync());
-            StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
+            Assert.That(ex.Message, Does.Contain("Expected some diagnostic scopes to be created other than the Azure.Core scopes"));
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace Azure.Core.TestFramework.Tests
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.AzureCoreScopeAsync());
-            StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
+            Assert.That(ex.Message, Does.Contain("Expected some diagnostic scopes to be created other than the Azure.Core scopes"));
         }
 
 #if NET5_0_OR_GREATER
@@ -40,7 +40,7 @@ namespace Azure.Core.TestFramework.Tests
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.DuplicateScopeDirectAncestorAsync());
-            StringAssert.Contains($"A scope has already started for event '{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.DuplicateScopeDirectAncestor)}'", ex.Message);
+            Assert.That(ex.Message, Does.Contain($"A scope has already started for event '{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.DuplicateScopeDirectAncestor)}'"));
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Azure.Core.TestFramework.Tests
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.DuplicateScopeAncestorAsync());
-            StringAssert.Contains($"A scope has already started for event '{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.DuplicateScopeAncestor)}'", ex.Message);
+            Assert.That(ex.Message, Does.Contain($"A scope has already started for event '{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.DuplicateScopeAncestor)}'"));
         }
 #endif
 
@@ -66,9 +66,9 @@ namespace Azure.Core.TestFramework.Tests
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.GetPageableNoPageableScopesAsync().ToEnumerableAsync());
 
             // Make the error message more helpful
-            StringAssert.Contains($"{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.GetPageableNoPageableScopes)}", ex.Message);
-            StringAssert.Contains("ForwardsClientCalls", ex.Message);
-            StringAssert.Contains("operationId", ex.Message);
+            Assert.That(ex.Message, Does.Contain($"{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.GetPageableNoPageableScopes)}"));
+            Assert.That(ex.Message, Does.Contain("ForwardsClientCalls"));
+            Assert.That(ex.Message, Does.Contain("operationId"));
         }
 
         [Test]
@@ -78,16 +78,16 @@ namespace Azure.Core.TestFramework.Tests
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.WrongScopeAsync());
 
             // Make the error message more helpful
-            StringAssert.Contains($"{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.WrongScope)}", ex.Message);
-            StringAssert.Contains("ForwardsClientCalls", ex.Message);
-            StringAssert.Contains("operationId", ex.Message);
+            Assert.That(ex.Message, Does.Contain($"{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.WrongScope)}"));
+            Assert.That(ex.Message, Does.Contain("ForwardsClientCalls"));
+            Assert.That(ex.Message, Does.Contain("operationId"));
         }
 
         [Test]
         public async Task DoesNotThrowForCorrectPageableScopes()
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
-            Assert.AreEqual(new[] {1, 2, 3, 4, 5, 6}, await client.GetPageableValidScopesAsync().ToEnumerableAsync());
+            Assert.That(await client.GetPageableValidScopesAsync().ToEnumerableAsync(), Is.EqualTo(new[] { 1, 2, 3, 4, 5, 6 }));
             await client.ForwardsAsync();
         }
 
@@ -274,10 +274,10 @@ namespace Azure.Core.TestFramework.Tests
                 {
                     if (s == null)
                     {
-                        return Task.FromResult(Page<int>.FromValues(new[] {1, 2, 3}, "1", new MockResponse(200)));
+                        return Task.FromResult(Page<int>.FromValues(new[] { 1, 2, 3 }, "1", new MockResponse(200)));
                     }
 
-                    return Task.FromResult(Page<int>.FromValues(new[] {4, 5, 6}, null, new MockResponse(200)));
+                    return Task.FromResult(Page<int>.FromValues(new[] { 4, 5, 6 }, null, new MockResponse(200)));
                 });
             }
 
@@ -289,10 +289,10 @@ namespace Azure.Core.TestFramework.Tests
                 {
                     if (s == null)
                     {
-                        return Page<int>.FromValues(new[] {1, 2, 3}, "1", new MockResponse(200));
+                        return Page<int>.FromValues(new[] { 1, 2, 3 }, "1", new MockResponse(200));
                     }
 
-                    return Page<int>.FromValues(new[] {4, 5, 6}, null, new MockResponse(200));
+                    return Page<int>.FromValues(new[] { 4, 5, 6 }, null, new MockResponse(200));
                 });
             }
 
@@ -304,10 +304,10 @@ namespace Azure.Core.TestFramework.Tests
 
                     if (s == null)
                     {
-                        return Task.FromResult(Page<int>.FromValues(new[] {1, 2, 3}, "1", new MockResponse(200)));
+                        return Task.FromResult(Page<int>.FromValues(new[] { 1, 2, 3 }, "1", new MockResponse(200)));
                     }
 
-                    return Task.FromResult(Page<int>.FromValues(new[] {4, 5, 6}, null, new MockResponse(200)));
+                    return Task.FromResult(Page<int>.FromValues(new[] { 4, 5, 6 }, null, new MockResponse(200)));
                 });
             }
 
@@ -319,10 +319,10 @@ namespace Azure.Core.TestFramework.Tests
 
                     if (s == null)
                     {
-                        return Page<int>.FromValues(new[] {1, 2, 3}, "1", new MockResponse(200));
+                        return Page<int>.FromValues(new[] { 1, 2, 3 }, "1", new MockResponse(200));
                     }
 
-                    return Page<int>.FromValues(new[] {4, 5, 6}, null, new MockResponse(200));
+                    return Page<int>.FromValues(new[] { 4, 5, 6 }, null, new MockResponse(200));
                 });
             }
         }

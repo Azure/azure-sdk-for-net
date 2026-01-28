@@ -171,7 +171,8 @@ internal static class ModelReaderWriterExtensions
 
     public static void WriteNumberValue(this Utf8JsonWriter writer, DateTimeOffset value, string format)
     {
-        if (format != "U") throw new ArgumentOutOfRangeException(format, "Only 'U' format is supported when writing a DateTimeOffset as a Number.");
+        if (format != "U")
+            throw new ArgumentOutOfRangeException(format, "Only 'U' format is supported when writing a DateTimeOffset as a Number.");
 
         writer.WriteNumberValue(value.ToUnixTimeSeconds());
     }
@@ -258,5 +259,5 @@ internal static class ModelReaderWriterExtensions
         }
     }
 
-#endregion
+    #endregion
 }

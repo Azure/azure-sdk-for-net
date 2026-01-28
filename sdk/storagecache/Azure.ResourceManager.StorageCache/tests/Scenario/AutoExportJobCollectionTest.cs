@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
             // Ensure the job is disabled before next test
             // Poll till the job is disabled
             AutoExportJobResource autoExportJob = await this.DefaultAmlFS.GetAutoExportJobs().GetAsync(name);
-            Assert.IsNotNull(autoExportJob);
+            Assert.That(autoExportJob, Is.Not.Null);
             while (autoExportJob.Data.State != AutoExportStatusType.Disabled)
             {
                 await Task.Delay(TimeSpan.FromSeconds(5));
                 autoExportJob = await this.DefaultAmlFS.GetAutoExportJobs().GetAsync(name);
             }
 
-            Assert.IsTrue(autoExportJob.Data.State == AutoExportStatusType.Disabled);
+            Assert.That(autoExportJob.Data.State, Is.EqualTo(AutoExportStatusType.Disabled));
         }
 
         [TestCase]
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
                 count++;
             }
 
-            Assert.IsTrue(count >= 0);
+            Assert.That(count >= 0, Is.True);
         }
     }
 }

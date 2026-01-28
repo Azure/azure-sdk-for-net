@@ -41,8 +41,8 @@ public class TestClientActivityListener : IDisposable
     public Activity? AssertAndRemoveActivity(string name)
     {
         bool gotActivity = Activities.TryDequeue(out Activity? activity);
-        Assert.True(gotActivity);
-        Assert.AreEqual(name, activity?.OperationName);
+        Assert.That(gotActivity, Is.True);
+        Assert.That(activity?.OperationName, Is.EqualTo(name));
         return activity;
     }
 

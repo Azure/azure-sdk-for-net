@@ -32,19 +32,19 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override void CompareModels(BaseModel model, BaseModel model2, string format)
         {
-            Assert.AreEqual("UnknownBaseModel", model.GetType().Name);
-            Assert.AreEqual("UnknownBaseModel", model2.GetType().Name);
-            Assert.AreEqual(model.Kind, model2.Kind);
-            Assert.AreEqual(model.Name, model2.Name);
+            Assert.That(model.GetType().Name, Is.EqualTo("UnknownBaseModel"));
+            Assert.That(model2.GetType().Name, Is.EqualTo("UnknownBaseModel"));
+            Assert.That(model2.Kind, Is.EqualTo(model.Kind));
+            Assert.That(model2.Name, Is.EqualTo(model.Name));
             var rawData = GetRawData(model);
             var rawData2 = GetRawData(model2);
-            Assert.IsNotNull(rawData);
-            Assert.IsNotNull(rawData2);
+            Assert.That(rawData, Is.Not.Null);
+            Assert.That(rawData2, Is.Not.Null);
             if (format == "J")
             {
-                Assert.AreEqual(rawData.Count, rawData2.Count);
-                Assert.AreEqual(rawData["zProperty"].ToObjectFromJson<double>(), rawData2["zProperty"].ToObjectFromJson<double>());
-                Assert.AreEqual(rawData["extra"].ToObjectFromJson<string>(), rawData2["extra"].ToObjectFromJson<string>());
+                Assert.That(rawData2.Count, Is.EqualTo(rawData.Count));
+                Assert.That(rawData2["zProperty"].ToObjectFromJson<double>(), Is.EqualTo(rawData["zProperty"].ToObjectFromJson<double>()));
+                Assert.That(rawData2["extra"].ToObjectFromJson<string>(), Is.EqualTo(rawData["extra"].ToObjectFromJson<string>()));
             }
         }
 
@@ -59,15 +59,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override void VerifyModel(BaseModel model, string format)
         {
-            Assert.AreEqual("UnknownBaseModel", model.GetType().Name);
-            Assert.AreEqual("Z", model.Kind);
-            Assert.AreEqual("zmodel", model.Name);
+            Assert.That(model.GetType().Name, Is.EqualTo("UnknownBaseModel"));
+            Assert.That(model.Kind, Is.EqualTo("Z"));
+            Assert.That(model.Name, Is.EqualTo("zmodel"));
             var rawData = GetRawData(model);
-            Assert.IsNotNull(rawData);
+            Assert.That(rawData, Is.Not.Null);
             if (format == "J")
             {
-                Assert.AreEqual(1.5, rawData["zProperty"].ToObjectFromJson<double>());
-                Assert.AreEqual("stuff", rawData["extra"].ToObjectFromJson<string>());
+                Assert.That(rawData["zProperty"].ToObjectFromJson<double>(), Is.EqualTo(1.5));
+                Assert.That(rawData["extra"].ToObjectFromJson<string>(), Is.EqualTo("stuff"));
             }
         }
     }

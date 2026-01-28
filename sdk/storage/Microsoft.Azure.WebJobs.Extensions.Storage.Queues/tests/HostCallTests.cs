@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             int result = await CallAsync<int>(typeof(UnboundInt32Program), "Call", arguments,
                 (s) => UnboundInt32Program.TaskSource = s);
 
-            Assert.AreEqual(15, result);
+            Assert.That(result, Is.EqualTo(15));
         }
 
         private class UnboundInt32Program
@@ -92,13 +92,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Assert
             var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
-            Assert.NotNull(messages);
-            Assert.AreEqual(3, messages.Count());
+            Assert.That(messages, Is.Not.Null);
+            Assert.That(messages.Count(), Is.EqualTo(3));
             QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
 
-            Assert.AreEqual("test1", sortedMessages[0].Body.ToString());
-            Assert.AreEqual("test2", sortedMessages[1].Body.ToString());
-            Assert.AreEqual("test3", sortedMessages[2].Body.ToString());
+            Assert.That(sortedMessages[0].Body.ToString(), Is.EqualTo("test1"));
+            Assert.That(sortedMessages[1].Body.ToString(), Is.EqualTo("test2"));
+            Assert.That(sortedMessages[2].Body.ToString(), Is.EqualTo("test3"));
         }
 
         [Test]
@@ -110,13 +110,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Assert
             var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
-            Assert.NotNull(messages);
-            Assert.AreEqual(3, messages.Count());
+            Assert.That(messages, Is.Not.Null);
+            Assert.That(messages.Count(), Is.EqualTo(3));
             QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
 
-            Assert.AreEqual("test1", sortedMessages[0].Body.ToString());
-            Assert.AreEqual("test2", sortedMessages[1].Body.ToString());
-            Assert.AreEqual("test3", sortedMessages[2].Body.ToString());
+            Assert.That(sortedMessages[0].Body.ToString(), Is.EqualTo("test1"));
+            Assert.That(sortedMessages[1].Body.ToString(), Is.EqualTo("test2"));
+            Assert.That(sortedMessages[2].Body.ToString(), Is.EqualTo("test3"));
         }
 
         [Test]
@@ -128,13 +128,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Assert
             var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
-            Assert.NotNull(messages);
-            Assert.AreEqual(3, messages.Count());
+            Assert.That(messages, Is.Not.Null);
+            Assert.That(messages.Count(), Is.EqualTo(3));
             QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
 
-            Assert.AreEqual("test1", sortedMessages[0].Body.ToString());
-            Assert.AreEqual("test2", sortedMessages[1].Body.ToString());
-            Assert.AreEqual("test3", sortedMessages[2].Body.ToString());
+            Assert.That(sortedMessages[0].Body.ToString(), Is.EqualTo("test1"));
+            Assert.That(sortedMessages[1].Body.ToString(), Is.EqualTo("test2"));
+            Assert.That(sortedMessages[2].Body.ToString(), Is.EqualTo("test3"));
         }
 
         [Test]
@@ -146,13 +146,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Assert
             var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
-            Assert.NotNull(messages);
-            Assert.AreEqual(3, messages.Count());
+            Assert.That(messages, Is.Not.Null);
+            Assert.That(messages.Count(), Is.EqualTo(3));
             QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
 
-            Assert.AreEqual("test1", sortedMessages[0].Body.ToString());
-            Assert.AreEqual("test2", sortedMessages[1].Body.ToString());
-            Assert.AreEqual("test3", sortedMessages[2].Body.ToString());
+            Assert.That(sortedMessages[0].Body.ToString(), Is.EqualTo("test1"));
+            Assert.That(sortedMessages[1].Body.ToString(), Is.EqualTo("test2"));
+            Assert.That(sortedMessages[2].Body.ToString(), Is.EqualTo("test3"));
         }
 
         [Test]
@@ -164,11 +164,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Assert
             var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
-            Assert.NotNull(messages);
-            Assert.AreEqual(1, messages.Count());
+            Assert.That(messages, Is.Not.Null);
+            Assert.That(messages.Count(), Is.EqualTo(1));
             QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
 
-            Assert.AreEqual("test", sortedMessages[0].Body.ToString());
+            Assert.That(sortedMessages[0].Body.ToString(), Is.EqualTo("test"));
         }
 
         [Test]
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             });
 
             // Assert
-            Assert.AreEqual("Primitive types are not supported.", ex.InnerException.Message);
+            Assert.That(ex.InnerException.Message, Is.EqualTo("Primitive types are not supported."));
         }
 
         private async Task TestEnqueueMultiplePocoMessages(string methodName)
@@ -192,8 +192,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Assert
             var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
-            Assert.NotNull(messages);
-            Assert.AreEqual(3, messages.Count());
+            Assert.That(messages, Is.Not.Null);
+            Assert.That(messages.Count(), Is.EqualTo(3));
             IEnumerable<QueueMessage> sortedMessages = messages.OrderBy((m) => m.MessageText);
             QueueMessage firstMessage = sortedMessages.ElementAt(0);
             QueueMessage secondMessage = sortedMessages.ElementAt(1);
@@ -218,8 +218,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToCloudQueueProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual(QueueName, result.Name);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Name, Is.EqualTo(QueueName));
         }
 
         [Test]
@@ -230,9 +230,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToCloudQueueProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             QueueClient queue = queueServiceClient.GetQueueClient(QueueName);
-            Assert.True(await queue.ExistsAsync());
+            Assert.That((bool)await queue.ExistsAsync(), Is.True);
         }
 
         private class BindToCloudQueueProgram
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             // Assert
             QueueClient queue = queueServiceClient.GetQueueClient(OutputQueueName);
-            Assert.True(await queue.ExistsAsync());
+            Assert.That((bool)await queue.ExistsAsync(), Is.True);
             AssertMessageSent(expectedMessage, queue);
         }
 
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             // Assert
             QueueClient queue = queueServiceClient.GetQueueClient(OutputQueueName);
-            Assert.True(await queue.ExistsAsync());
+            Assert.That((bool)await queue.ExistsAsync(), Is.True);
             AssertMessageSent(new PocoMessage { Value = TestQueueMessage }, queue);
         }
 
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             // Assert
             QueueClient queue = queueServiceClient.GetQueueClient(OutputQueueName);
-            Assert.True(await queue.ExistsAsync());
+            Assert.That((bool)await queue.ExistsAsync(), Is.True);
             AssertMessageSent(new StructMessage { Value = TestQueueMessage }, queue);
         }
 
@@ -295,36 +295,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             // Assert
             QueueClient queue = queueServiceClient.GetQueueClient(OutputQueueName);
-            Assert.False(await queue.ExistsAsync());
+            Assert.That((bool)await queue.ExistsAsync(), Is.False);
         }
 
         private static void AssertMessageSent(string expectedMessage, QueueClient queue)
         {
-            Assert.NotNull(queue);
+            Assert.That(queue, Is.Not.Null);
             QueueMessage message = queue.ReceiveMessages(1).Value.FirstOrDefault();
-            Assert.NotNull(message);
-            Assert.AreEqual(expectedMessage, message.MessageText);
+            Assert.That(message, Is.Not.Null);
+            Assert.That(message.MessageText, Is.EqualTo(expectedMessage));
         }
 
         private static void AssertMessageSent(PocoMessage expected, QueueClient queue)
         {
-            Assert.NotNull(queue);
+            Assert.That(queue, Is.Not.Null);
             QueueMessage message = queue.ReceiveMessages(1).Value.FirstOrDefault();
-            Assert.NotNull(message);
+            Assert.That(message, Is.Not.Null);
             AssertEqual(expected, message);
         }
 
         private static void AssertMessageSent(StructMessage expected, QueueClient queue)
         {
-            Assert.NotNull(queue);
+            Assert.That(queue, Is.Not.Null);
             QueueMessage message = queue.ReceiveMessages(1).Value.FirstOrDefault();
-            Assert.NotNull(message);
+            Assert.That(message, Is.Not.Null);
             AssertEqual(expected, message);
         }
 
         private static void AssertEqual(PocoMessage expected, QueueMessage actualMessage)
         {
-            Assert.NotNull(actualMessage);
+            Assert.That(actualMessage, Is.Not.Null);
             string content = actualMessage.MessageText;
             PocoMessage actual = JsonConvert.DeserializeObject<PocoMessage>(content);
             AssertEqual(expected, actual);
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
         private static void AssertEqual(StructMessage expected, QueueMessage actualMessage)
         {
-            Assert.NotNull(actualMessage);
+            Assert.That(actualMessage, Is.Not.Null);
             string content = actualMessage.MessageText;
             StructMessage actual = JsonConvert.DeserializeObject<StructMessage>(content);
             AssertEqual(expected, actual);
@@ -342,16 +342,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             if (expected == null)
             {
-                Assert.Null(actual);
+                Assert.That(actual, Is.Null);
                 return;
             }
 
-            Assert.AreEqual(expected.Value, actual.Value);
+            Assert.That(actual.Value, Is.EqualTo(expected.Value));
         }
 
         private static void AssertEqual(StructMessage expected, StructMessage actual)
         {
-            Assert.AreEqual(expected.Value, actual.Value);
+            Assert.That(actual.Value, Is.EqualTo(expected.Value));
         }
 
         private async Task CallAsync(Type programType, string methodName, params Type[] customExtensions)
@@ -472,8 +472,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 string expectedContents = "Enqueued immediately";
                 await collector.AddAsync(expectedContents);
                 QueueMessage message = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-                Assert.NotNull(message);
-                Assert.AreEqual(expectedContents, message.MessageText);
+                Assert.That(message, Is.Not.Null);
+                Assert.That(message.MessageText, Is.EqualTo(expectedContents));
             }
         }
 
@@ -521,13 +521,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             public static void FuncWithICollector([Queue(OutputQueueName)] ICollector<string> queue)
             {
-                Assert.NotNull(queue);
+                Assert.That(queue, Is.Not.Null);
                 queue.Add(TestQueueMessage);
             }
 
             public static void FuncWithICollectorNoop([Queue(QueueName)] ICollector<PocoMessage> queue)
             {
-                Assert.NotNull(queue);
+                Assert.That(queue, Is.Not.Null);
             }
 
             public static void FuncWithOutT([Queue(OutputQueueName)] out PocoMessage value)

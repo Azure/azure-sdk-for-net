@@ -31,14 +31,14 @@ namespace Azure.Core.Tests
             var token = new RehydrationToken(Guid.NewGuid().ToString(), null, "headerSource", "nextRequestUri", "initialUri", RequestMethod.Get, "lastKnownLocation", OperationFinalStateVia.OperationLocation.ToString());
             var data = ModelReaderWriter.Write(token);
             var deserializedToken = ModelReaderWriter.Read(data, typeof(RehydrationToken));
-            Assert.AreEqual(token, deserializedToken);
+            Assert.That(deserializedToken, Is.EqualTo(token));
         }
 
         [Test]
         public void SerializeDefaultValue()
         {
             var data = ModelReaderWriter.Write(default(RehydrationToken));
-            Assert.NotNull(data);
+            Assert.That(data, Is.Not.Null);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
             Argument.AssertNotNull(value, "value");
 
             // With nullability enabled and without [NotNull] attributed on the first parameter above, this would fail compilation.
-            Assert.AreEqual("test", value.ToString());
+            Assert.That(value.ToString(), Is.EqualTo("test"));
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace Azure.Core.Tests
             var value = "test";
             var checkedValue = Argument.CheckNotNull(value, "value");
 
-            Assert.AreEqual(value, checkedValue);
+            Assert.That(checkedValue, Is.EqualTo(value));
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace Azure.Core.Tests
             string value = "test";
             var checkedValue = Argument.CheckNotNullOrEmpty(value, "value");
 
-            Assert.AreEqual(value, checkedValue);
+            Assert.That(checkedValue, Is.EqualTo(value));
         }
 
         [Test]

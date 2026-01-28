@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Identity;
-using ClientModel.Tests;
-using ClientModel.Tests.Mocks;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
+using ClientModel.Tests;
+using ClientModel.Tests.Mocks;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Pipeline;
 
@@ -115,14 +115,14 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
 
         AssertHasAuthorization(message);
         AssertTokenProviderCalled(tokenProvider, shouldCallAsync: true);
-        Assert.AreEqual("parentRequestIdValue", tokenProvider.ReceivedRequestContext.ParentRequestId);
-        Assert.AreEqual("claimsValue", tokenProvider.ReceivedRequestContext.Claims);
-        Assert.AreEqual("tenantIdValue", tokenProvider.ReceivedRequestContext.TenantId);
-        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsCaeEnabled);
-        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsProofOfPossessionEnabled);
-        Assert.AreEqual("proofOfPossessionNonceValue", tokenProvider.ReceivedRequestContext.ProofOfPossessionNonce);
-        Assert.AreEqual(new Uri("https://example.com"), tokenProvider.ReceivedRequestContext.ResourceRequestUri);
-        Assert.AreEqual("requestMethodValue", tokenProvider.ReceivedRequestContext.ResourceRequestMethod);
+        Assert.That(tokenProvider.ReceivedRequestContext.ParentRequestId, Is.EqualTo("parentRequestIdValue"));
+        Assert.That(tokenProvider.ReceivedRequestContext.Claims, Is.EqualTo("claimsValue"));
+        Assert.That(tokenProvider.ReceivedRequestContext.TenantId, Is.EqualTo("tenantIdValue"));
+        Assert.That(tokenProvider.ReceivedRequestContext.IsCaeEnabled, Is.EqualTo(true));
+        Assert.That(tokenProvider.ReceivedRequestContext.IsProofOfPossessionEnabled, Is.EqualTo(true));
+        Assert.That(tokenProvider.ReceivedRequestContext.ProofOfPossessionNonce, Is.EqualTo("proofOfPossessionNonceValue"));
+        Assert.That(tokenProvider.ReceivedRequestContext.ResourceRequestUri, Is.EqualTo(new Uri("https://example.com")));
+        Assert.That(tokenProvider.ReceivedRequestContext.ResourceRequestMethod, Is.EqualTo("requestMethodValue"));
     }
 
     [Test]
@@ -153,14 +153,14 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
 
         AssertHasAuthorization(message);
         AssertTokenProviderCalled(tokenProvider, shouldCallAsync: true);
-        Assert.AreEqual("parentRequestIdValue", tokenProvider.ReceivedRequestContext.ParentRequestId);
-        Assert.AreEqual("claimsValue", tokenProvider.ReceivedRequestContext.Claims);
-        Assert.AreEqual("tenantIdValue", tokenProvider.ReceivedRequestContext.TenantId);
-        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsCaeEnabled);
-        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsProofOfPossessionEnabled);
-        Assert.AreEqual("proofOfPossessionNonceValue", tokenProvider.ReceivedRequestContext.ProofOfPossessionNonce);
-        Assert.AreEqual(new Uri("https://example.com"), tokenProvider.ReceivedRequestContext.ResourceRequestUri);
-        Assert.AreEqual("requestMethodValue", tokenProvider.ReceivedRequestContext.ResourceRequestMethod);
+        Assert.That(tokenProvider.ReceivedRequestContext.ParentRequestId, Is.EqualTo("parentRequestIdValue"));
+        Assert.That(tokenProvider.ReceivedRequestContext.Claims, Is.EqualTo("claimsValue"));
+        Assert.That(tokenProvider.ReceivedRequestContext.TenantId, Is.EqualTo("tenantIdValue"));
+        Assert.That(tokenProvider.ReceivedRequestContext.IsCaeEnabled, Is.EqualTo(true));
+        Assert.That(tokenProvider.ReceivedRequestContext.IsProofOfPossessionEnabled, Is.EqualTo(true));
+        Assert.That(tokenProvider.ReceivedRequestContext.ProofOfPossessionNonce, Is.EqualTo("proofOfPossessionNonceValue"));
+        Assert.That(tokenProvider.ReceivedRequestContext.ResourceRequestUri, Is.EqualTo(new Uri("https://example.com")));
+        Assert.That(tokenProvider.ReceivedRequestContext.ResourceRequestMethod, Is.EqualTo("requestMethodValue"));
     }
 
     [Test]
@@ -188,7 +188,7 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         // Act
         var message = await SendMessageAsync(pipeline);
 
-         Assert.IsFalse(message.Request.Headers.TryGetValue("Authorization", out var authHeader));
+        Assert.That(message.Request.Headers.TryGetValue("Authorization", out var authHeader), Is.False);
     }
 
     [Test]
@@ -204,7 +204,7 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         var message = await SendMessageAsync(pipeline);
 
         // Assert - no authorization header should be set when token is null
-        Assert.IsFalse(message.Request.Headers.TryGetValue("Authorization", out _));
+        Assert.That(message.Request.Headers.TryGetValue("Authorization", out _), Is.False);
     }
 
     [Test]
@@ -345,26 +345,26 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
 
     private static void AssertNoAuthorization(PipelineMessage message, MockAuthenticationTokenProvider tokenProvider)
     {
-        Assert.IsFalse(message.Request.Headers.TryGetValue("Authorization", out _));
-        Assert.IsFalse(tokenProvider.GetTokenCalled);
-        Assert.IsFalse(tokenProvider.GetTokenAsyncCalled);
+        Assert.That(message.Request.Headers.TryGetValue("Authorization", out _), Is.False);
+        Assert.That(tokenProvider.GetTokenCalled, Is.False);
+        Assert.That(tokenProvider.GetTokenAsyncCalled, Is.False);
     }
 
     private static void AssertHasAuthorization(PipelineMessage message, string expectedToken = "Bearer mock_token_value")
     {
-        Assert.IsTrue(message.Request.Headers.TryGetValue("Authorization", out var authHeader));
-        Assert.AreEqual(expectedToken, authHeader);
+        Assert.That(message.Request.Headers.TryGetValue("Authorization", out var authHeader), Is.True);
+        Assert.That(authHeader, Is.EqualTo(expectedToken));
     }
 
     private void AssertTokenProviderCalled(MockAuthenticationTokenProvider tokenProvider, bool shouldCallAsync)
     {
         if (shouldCallAsync && IsAsync)
         {
-            Assert.IsTrue(tokenProvider.GetTokenAsyncCalled);
+            Assert.That(tokenProvider.GetTokenAsyncCalled, Is.True);
         }
         else
         {
-            Assert.IsTrue(tokenProvider.GetTokenCalled);
+            Assert.That(tokenProvider.GetTokenCalled, Is.True);
         }
     }
 
@@ -372,11 +372,11 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
     {
         if (shouldCallAsync && IsAsync)
         {
-            Assert.IsTrue(tokenProvider.GetTokenAsyncCalled);
+            Assert.That(tokenProvider.GetTokenAsyncCalled, Is.True);
         }
         else
         {
-            Assert.IsTrue(tokenProvider.GetTokenCalled);
+            Assert.That(tokenProvider.GetTokenCalled, Is.True);
         }
     }
 }

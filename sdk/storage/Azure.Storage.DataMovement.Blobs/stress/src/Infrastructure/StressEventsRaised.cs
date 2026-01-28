@@ -112,7 +112,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 
         private void AssertTransferStatusCollection(TransferStatus[] expected, TransferStatus[] actual)
         {
-            Assert.AreEqual(expected.Length, actual.Length);
+            Assert.That(actual.Length, Is.EqualTo(expected.Length));
             Assert.Multiple(() =>
             {
                 for (int i = 0; i < expected.Length; i++)
@@ -155,8 +155,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.IsEmpty(SkippedEvents);
-            Assert.IsEmpty(SingleCompletedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
+            Assert.That(SingleCompletedEvents, Is.Empty);
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -175,10 +175,10 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.IsEmpty(SingleCompletedEvents);
-            Assert.AreEqual(1, SkippedEvents.Count);
-            Assert.NotNull(SkippedEvents.First().Source.Uri);
-            Assert.NotNull(SkippedEvents.First().Destination.Uri);
+            Assert.That(SingleCompletedEvents, Is.Empty);
+            Assert.That(SkippedEvents.Count, Is.EqualTo(1));
+            Assert.That(SkippedEvents.First().Source.Uri, Is.Not.Null);
+            Assert.That(SkippedEvents.First().Destination.Uri, Is.Not.Null);
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -196,14 +196,14 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         {
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
-            Assert.IsEmpty(SkippedEvents);
-            Assert.IsEmpty(SingleCompletedEvents);
-            Assert.AreEqual(failureCount, FailedEvents.Count);
+            Assert.That(SkippedEvents, Is.Empty);
+            Assert.That(SingleCompletedEvents, Is.Empty);
+            Assert.That(FailedEvents.Count, Is.EqualTo(failureCount));
             foreach (TransferItemFailedEventArgs args in FailedEvents)
             {
-                Assert.NotNull(args.Exception);
-                Assert.NotNull(args.Source.Uri);
-                Assert.NotNull(args.Destination.Uri);
+                Assert.That(args.Exception, Is.Not.Null);
+                Assert.That(args.Source.Uri, Is.Not.Null);
+                Assert.That(args.Destination.Uri, Is.Not.Null);
             }
 
             AssertTransferStatusCollection(
@@ -228,8 +228,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.IsEmpty(SkippedEvents);
-            Assert.AreEqual(transferCount, SingleCompletedEvents.Count);
+            Assert.That(SkippedEvents, Is.Empty);
+            Assert.That(SingleCompletedEvents.Count, Is.EqualTo(transferCount));
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -257,10 +257,10 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                 Assert.Multiple(() =>
                 {
                     AssertUnexpectedFailureCheck();
-                    Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
+                    Assert.That(FailedEvents.Count, Is.EqualTo(expectedFailureCount));
                 });
             }
-            Assert.IsEmpty(SkippedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -290,10 +290,10 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                 Assert.Multiple(() =>
                 {
                     AssertUnexpectedFailureCheck();
-                    Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
+                    Assert.That(FailedEvents.Count, Is.EqualTo(expectedFailureCount));
                 });
             }
-            Assert.IsEmpty(SkippedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -315,7 +315,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.AreEqual(expectedSkipCount, SkippedEvents.Count);
+            Assert.That(SkippedEvents.Count, Is.EqualTo(expectedSkipCount));
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -330,7 +330,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.IsEmpty(SkippedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -364,7 +364,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             else
             {
                 // If blobNames is populated make sure these number of blobs match
-                Assert.AreEqual(transferCount, listOptions.Count);
+                Assert.That(listOptions.Count, Is.EqualTo(transferCount));
                 // Add TestEventRaised to each option
                 foreach (TransferOptions currentOptions in listOptions)
                 {

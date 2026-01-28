@@ -3,8 +3,8 @@
 
 // Adapted from https://raw.githubusercontent.com/dotnet/corefx/master/src/System.Net.Http/src/System/Net/Http/SocketsHttpHandler/HttpEnvironmentProxy.cs
 
-using Azure.Core.Pipeline;
 using System.Collections.Generic;
+using Azure.Core.Pipeline;
 using NUnit.Framework;
 
 namespace System.Net.Http.Tests
@@ -39,57 +39,57 @@ namespace System.Net.Http.Tests
             Uri u;
 
             // It should not return object if there are no variables set.
-            Assert.False(HttpEnvironmentProxy.TryCreate(out IWebProxy p));
+            Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.False);
 
             Environment.SetEnvironmentVariable("all_proxy", "http://1.1.1.1:3000");
-            Assert.True(HttpEnvironmentProxy.TryCreate(out p));
-            Assert.NotNull(p);
-            Assert.Null(p.Credentials);
+            Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
+            Assert.That(p, Is.Not.Null);
+            Assert.That(p.Credentials, Is.Null);
 
             u = p.GetProxy(s_fooHttp);
-            Assert.True(u != null && u.Host == "1.1.1.1");
+            Assert.That(u != null && u.Host == "1.1.1.1", Is.True);
             u = p.GetProxy(s_fooHttps);
-            Assert.True(u != null && u.Host == "1.1.1.1");
+            Assert.That(u != null && u.Host == "1.1.1.1", Is.True);
 
             Environment.SetEnvironmentVariable("http_proxy", "http://1.1.1.2:3001");
-            Assert.True(HttpEnvironmentProxy.TryCreate(out p));
-            Assert.NotNull(p);
+            Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
+            Assert.That(p, Is.Not.Null);
 
             // Protocol specific variables should take precedence over all_
             // and https should still use all_proxy.
             u = p.GetProxy(s_fooHttp);
-            Assert.True(u != null && u.Host == "1.1.1.2" && u.Port == 3001);
+            Assert.That(u != null && u.Host == "1.1.1.2" && u.Port == 3001, Is.True);
             u = p.GetProxy(s_fooHttps);
-            Assert.True(u != null && u.Host == "1.1.1.1" && u.Port == 3000);
+            Assert.That(u != null && u.Host == "1.1.1.1" && u.Port == 3000, Is.True);
 
             // Set https to invalid strings and use only IP & port for http.
             Environment.SetEnvironmentVariable("http_proxy", "1.1.1.3:3003");
             Environment.SetEnvironmentVariable("https_proxy", "ab!cd");
-            Assert.True(HttpEnvironmentProxy.TryCreate(out p));
-            Assert.NotNull(p);
+            Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
+            Assert.That(p, Is.Not.Null);
 
             u = p.GetProxy(s_fooHttp);
-            Assert.True(u != null && u.Host == "1.1.1.3" && u.Port == 3003);
+            Assert.That(u != null && u.Host == "1.1.1.3" && u.Port == 3003, Is.True);
             u = p.GetProxy(s_fooHttps);
-            Assert.True(u != null && u.Host == "1.1.1.1" && u.Port == 3000);
+            Assert.That(u != null && u.Host == "1.1.1.1" && u.Port == 3000, Is.True);
 
             // Try valid URI with unsupported protocol. It will be ignored
             // to mimic curl behavior.
             Environment.SetEnvironmentVariable("https_proxy", "socks5://1.1.1.4:3004");
-            Assert.True(HttpEnvironmentProxy.TryCreate(out p));
-            Assert.NotNull(p);
+            Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
+            Assert.That(p, Is.Not.Null);
             u = p.GetProxy(s_fooHttps);
-            Assert.True(u != null && u.Host == "1.1.1.1" && u.Port == 3000);
+            Assert.That(u != null && u.Host == "1.1.1.1" && u.Port == 3000, Is.True);
 
             // Set https to valid URI but different from http.
             Environment.SetEnvironmentVariable("https_proxy", "http://1.1.1.5:3005");
-            Assert.True(HttpEnvironmentProxy.TryCreate(out p));
-            Assert.NotNull(p);
+            Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
+            Assert.That(p, Is.Not.Null);
 
             u = p.GetProxy(s_fooHttp);
-            Assert.True(u != null && u.Host == "1.1.1.3" && u.Port == 3003);
+            Assert.That(u != null && u.Host == "1.1.1.3" && u.Port == 3003, Is.True);
             u = p.GetProxy(s_fooHttps);
-            Assert.True(u != null && u.Host == "1.1.1.5" && u.Port == 3005);
+            Assert.That(u != null && u.Host == "1.1.1.5" && u.Port == 3005, Is.True);
         }
 
         [Theory]
@@ -111,19 +111,19 @@ namespace System.Net.Http.Tests
             Environment.SetEnvironmentVariable("all_proxy", input);
             Uri u;
 
-            Assert.True(HttpEnvironmentProxy.TryCreate(out IWebProxy p));
-            Assert.NotNull(p);
+            Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
+            Assert.That(p, Is.Not.Null);
 
             u = p.GetProxy(s_fooHttp);
-            Assert.AreEqual(host, u.Host);
-            Assert.AreEqual(Convert.ToInt32(port), u.Port);
+            Assert.That(u.Host, Is.EqualTo(host));
+            Assert.That(u.Port, Is.EqualTo(Convert.ToInt32(port)));
 
             if (user != null)
             {
                 NetworkCredential nc = p.Credentials.GetCredential(u, "Basic");
-                Assert.NotNull(nc);
-                Assert.AreEqual(user, nc.UserName);
-                Assert.AreEqual(password, nc.Password);
+                Assert.That(nc, Is.Not.Null);
+                Assert.That(nc.UserName, Is.EqualTo(user));
+                Assert.That(nc.Password, Is.EqualTo(password));
             }
         }
 
@@ -131,27 +131,27 @@ namespace System.Net.Http.Tests
         public void HttpProxy_CredentialParsing_Basic()
         {
             Environment.SetEnvironmentVariable("all_proxy", "http://foo:pwd1@1.1.1.1:3000");
-            Assert.True(HttpEnvironmentProxy.TryCreate(out IWebProxy p));
-            Assert.NotNull(p);
-            Assert.NotNull(p.Credentials);
+            Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
+            Assert.That(p, Is.Not.Null);
+            Assert.That(p.Credentials, Is.Not.Null);
 
             // Use user only without password.
             Environment.SetEnvironmentVariable("all_proxy", "http://foo@1.1.1.1:3000");
-            Assert.True(HttpEnvironmentProxy.TryCreate(out p));
-            Assert.NotNull(p);
-            Assert.NotNull(p.Credentials);
+            Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
+            Assert.That(p, Is.Not.Null);
+            Assert.That(p.Credentials, Is.Not.Null);
 
             // Use different user for http and https
             Environment.SetEnvironmentVariable("https_proxy", "http://foo1:pwd2@1.1.1.1:3000");
-            Assert.True(HttpEnvironmentProxy.TryCreate(out p));
-            Assert.NotNull(p);
+            Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
+            Assert.That(p, Is.Not.Null);
             Uri u = p.GetProxy(s_fooHttp);
-            Assert.NotNull(p.Credentials.GetCredential(u, "Basic"));
+            Assert.That(p.Credentials.GetCredential(u, "Basic"), Is.Not.Null);
             u = p.GetProxy(s_fooHttps);
-            Assert.NotNull(p.Credentials.GetCredential(u, "Basic"));
+            Assert.That(p.Credentials.GetCredential(u, "Basic"), Is.Not.Null);
             // This should not match Proxy Uri
-            Assert.Null(p.Credentials.GetCredential(s_fooHttp, "Basic"));
-            Assert.Null(p.Credentials.GetCredential(null, null));
+            Assert.That(p.Credentials.GetCredential(s_fooHttp, "Basic"), Is.Null);
+            Assert.That(p.Credentials.GetCredential(null, null), Is.Null);
         }
 
         [Test]
@@ -159,14 +159,14 @@ namespace System.Net.Http.Tests
         {
             Environment.SetEnvironmentVariable("no_proxy", ".test.com,, foo.com");
             Environment.SetEnvironmentVariable("all_proxy", "http://foo:pwd1@1.1.1.1:3000");
-            Assert.True(HttpEnvironmentProxy.TryCreate(out IWebProxy p));
-            Assert.NotNull(p);
+            Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
+            Assert.That(p, Is.Not.Null);
 
-            Assert.True(p.IsBypassed(s_fooHttp));
-            Assert.True(p.IsBypassed(s_fooHttps));
-            Assert.True(p.IsBypassed(new Uri("http://test.com")));
-            Assert.False(p.IsBypassed(new Uri("http://1test.com")));
-            Assert.True(p.IsBypassed(new Uri("http://www.test.com")));
+            Assert.That(p.IsBypassed(s_fooHttp), Is.True);
+            Assert.That(p.IsBypassed(s_fooHttps), Is.True);
+            Assert.That(p.IsBypassed(new Uri("http://test.com")), Is.True);
+            Assert.That(p.IsBypassed(new Uri("http://1test.com")), Is.False);
+            Assert.That(p.IsBypassed(new Uri("http://www.test.com")), Is.True);
         }
 
         public static IEnumerable<object[]> HttpProxyNoProxyEnvVarMemberData()
@@ -189,12 +189,12 @@ namespace System.Net.Http.Tests
             var directUri = new Uri("http://test.com");
             var thruProxyUri = new Uri("http://atest.com");
 
-            Assert.True(HttpEnvironmentProxy.TryCreate(out IWebProxy p));
-            Assert.NotNull(p);
+            Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
+            Assert.That(p, Is.Not.Null);
 
-            Assert.True(p.IsBypassed(directUri));
-            Assert.False(p.IsBypassed(thruProxyUri));
-            Assert.AreEqual(new Uri(proxy), p.GetProxy(thruProxyUri));
+            Assert.That(p.IsBypassed(directUri), Is.True);
+            Assert.That(p.IsBypassed(thruProxyUri), Is.False);
+            Assert.That(p.GetProxy(thruProxyUri), Is.EqualTo(new Uri(proxy)));
         }
     }
 }

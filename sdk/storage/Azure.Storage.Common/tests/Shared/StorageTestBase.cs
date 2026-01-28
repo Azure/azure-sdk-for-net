@@ -11,13 +11,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 using Azure.Storage.Sas;
 using Azure.Storage.Tests.Shared;
 using Microsoft.Identity.Client;
-using NUnit.Framework;
-using Azure.Core.TestFramework.Models;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -168,10 +168,10 @@ namespace Azure.Storage.Test.Shared
 
         public virtual void AssertDictionaryEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
-            Assert.IsNotNull(expected, "Expected metadata is null");
-            Assert.IsNotNull(actual, "Actual metadata is null");
+            Assert.That(expected, Is.Not.Null, "Expected metadata is null");
+            Assert.That(actual, Is.Not.Null, "Actual metadata is null");
 
-            Assert.AreEqual(expected.Count, actual.Count, "Metadata counts are not equal");
+            Assert.That(actual.Count, Is.EqualTo(expected.Count), "Metadata counts are not equal");
 
             foreach (KeyValuePair<string, string> kvp in expected)
             {
@@ -229,31 +229,31 @@ namespace Azure.Storage.Test.Shared
 
         protected void AssertSecondaryStorageFirstRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
         {
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
-            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
+            Assert.That(testExceptionPolicy.HostsSetInRequests[0], Is.EqualTo(primaryHost));
+            Assert.That(testExceptionPolicy.HostsSetInRequests[1], Is.EqualTo(secondaryHost));
         }
 
         protected void AssertSecondaryStorageSecondRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
         {
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
-            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
+            Assert.That(testExceptionPolicy.HostsSetInRequests[0], Is.EqualTo(primaryHost));
+            Assert.That(testExceptionPolicy.HostsSetInRequests[1], Is.EqualTo(secondaryHost));
+            Assert.That(testExceptionPolicy.HostsSetInRequests[2], Is.EqualTo(primaryHost));
         }
 
         protected void AssertSecondaryStorageThirdRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
         {
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
-            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
-            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[3]);
+            Assert.That(testExceptionPolicy.HostsSetInRequests[0], Is.EqualTo(primaryHost));
+            Assert.That(testExceptionPolicy.HostsSetInRequests[1], Is.EqualTo(secondaryHost));
+            Assert.That(testExceptionPolicy.HostsSetInRequests[2], Is.EqualTo(primaryHost));
+            Assert.That(testExceptionPolicy.HostsSetInRequests[3], Is.EqualTo(secondaryHost));
         }
 
         protected void AssertSecondaryStorage404OnSecondary(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
         {
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
-            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[3]);
+            Assert.That(testExceptionPolicy.HostsSetInRequests[0], Is.EqualTo(primaryHost));
+            Assert.That(testExceptionPolicy.HostsSetInRequests[1], Is.EqualTo(secondaryHost));
+            Assert.That(testExceptionPolicy.HostsSetInRequests[2], Is.EqualTo(primaryHost));
+            Assert.That(testExceptionPolicy.HostsSetInRequests[3], Is.EqualTo(primaryHost));
         }
 
         protected async Task<T> EnsurePropagatedAsync<T>(
@@ -281,11 +281,11 @@ namespace Azure.Storage.Test.Shared
 
         internal void AssertResponseHeaders(TestConstants constants, SasQueryParameters sasQueryParameters)
         {
-            Assert.AreEqual(constants.Sas.CacheControl, sasQueryParameters.CacheControl);
-            Assert.AreEqual(constants.Sas.ContentDisposition, sasQueryParameters.ContentDisposition);
-            Assert.AreEqual(constants.Sas.ContentEncoding, sasQueryParameters.ContentEncoding);
-            Assert.AreEqual(constants.Sas.ContentLanguage, sasQueryParameters.ContentLanguage);
-            Assert.AreEqual(constants.Sas.ContentType, sasQueryParameters.ContentType);
+            Assert.That(sasQueryParameters.CacheControl, Is.EqualTo(constants.Sas.CacheControl));
+            Assert.That(sasQueryParameters.ContentDisposition, Is.EqualTo(constants.Sas.ContentDisposition));
+            Assert.That(sasQueryParameters.ContentEncoding, Is.EqualTo(constants.Sas.ContentEncoding));
+            Assert.That(sasQueryParameters.ContentLanguage, Is.EqualTo(constants.Sas.ContentLanguage));
+            Assert.That(sasQueryParameters.ContentType, Is.EqualTo(constants.Sas.ContentType));
         }
 
         protected async Task<T> RetryAsync<T>(

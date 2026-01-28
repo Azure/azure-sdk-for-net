@@ -70,7 +70,7 @@ namespace Azure.Storage.Tests
             // Assert
             stream.VerifyNoOtherCalls();
             binaryData.VerifyNoOtherCalls();
-            CollectionAssert.AreEqual(precalculatedChecksum, result.Checksum.ToArray());
+            Assert.That(result.Checksum.ToArray(), Is.EqualTo(precalculatedChecksum).AsCollection);
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Azure.Storage.Tests
             };
 
             // Assert
-            CollectionAssert.AreEqual(dataChecksum, result.Checksum.ToArray());
+            Assert.That(result.Checksum.ToArray(), Is.EqualTo(dataChecksum).AsCollection);
         }
 
         private static byte[] CrcInline(byte[] data)

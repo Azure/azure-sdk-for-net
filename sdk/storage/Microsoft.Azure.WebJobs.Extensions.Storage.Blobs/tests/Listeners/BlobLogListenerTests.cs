@@ -42,8 +42,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             IEnumerable<BlobPath> validPaths = BlobLogListener.GetPathsForValidBlobWrites(entries);
 
             BlobPath singlePath = validPaths.Single();
-            Assert.AreEqual("sample-container", singlePath.ContainerName);
-            Assert.AreEqual(@"""0x8D199A96CB71468""/sample-blob.txt", singlePath.BlobName);
+            Assert.That(singlePath.ContainerName, Is.EqualTo("sample-container"));
+            Assert.That(singlePath.BlobName, Is.EqualTo(@"""0x8D199A96CB71468""/sample-blob.txt"));
         }
     }
 }

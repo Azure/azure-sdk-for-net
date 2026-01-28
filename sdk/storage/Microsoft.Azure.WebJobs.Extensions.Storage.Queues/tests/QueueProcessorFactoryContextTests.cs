@@ -24,14 +24,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             QueueProcessorOptions context = new QueueProcessorOptions(queue, loggerFactory, queuesOptions, poisonQueue);
 
-            Assert.AreSame(queue, context.Queue);
-            Assert.AreSame(poisonQueue, context.PoisonQueue);
-            Assert.NotNull(context.Logger);
+            Assert.That(context.Queue, Is.SameAs(queue));
+            Assert.That(context.PoisonQueue, Is.SameAs(poisonQueue));
+            Assert.That(context.Logger, Is.Not.Null);
 
-            Assert.AreEqual(queuesOptions.BatchSize, context.Options.BatchSize);
-            Assert.AreEqual(queuesOptions.NewBatchThreshold, context.Options.NewBatchThreshold);
-            Assert.AreEqual(queuesOptions.MaxDequeueCount, context.Options.MaxDequeueCount);
-            Assert.AreEqual(queuesOptions.MaxPollingInterval, context.Options.MaxPollingInterval);
+            Assert.That(context.Options.BatchSize, Is.EqualTo(queuesOptions.BatchSize));
+            Assert.That(context.Options.NewBatchThreshold, Is.EqualTo(queuesOptions.NewBatchThreshold));
+            Assert.That(context.Options.MaxDequeueCount, Is.EqualTo(queuesOptions.MaxDequeueCount));
+            Assert.That(context.Options.MaxPollingInterval, Is.EqualTo(queuesOptions.MaxPollingInterval));
         }
     }
 }

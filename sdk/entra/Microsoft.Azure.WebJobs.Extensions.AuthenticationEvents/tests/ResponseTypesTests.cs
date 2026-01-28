@@ -67,8 +67,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 }
             });
 
-            Assert.AreEqual(httpResponseMessage.StatusCode, code);
-            Assert.True(DoesPayloadMatch(payload, await httpResponseMessage.Content.ReadAsStringAsync()));
+            Assert.That(code, Is.EqualTo(httpResponseMessage.StatusCode));
+            Assert.That(DoesPayloadMatch(payload, await httpResponseMessage.Content.ReadAsStringAsync()), Is.True);
         }
 
         private object GetResponseTypeObject(ResponseTypes responseType, StreamWriter streamWriter)
@@ -101,7 +101,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                     return (code: HttpStatusCode.InternalServerError, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return']}");
                 default:
                     return (code: HttpStatusCode.BadRequest, string.Empty);
-            };
+            }
+            ;
         }
 
         /// <summary>Creates a HttpResponse object based on default HTTP context.</summary>

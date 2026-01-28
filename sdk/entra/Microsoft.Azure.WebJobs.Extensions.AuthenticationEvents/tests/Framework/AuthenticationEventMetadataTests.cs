@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             if (success == false)
             {
                 var ex = Assert.Throws<AuthenticationEventTriggerRequestValidationException>(() => AuthenticationEventMetadataLoader.GetEventMetadata(payload));
-                Assert.AreEqual(exceptionMessage, ex.Message);
+                Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
             }
             else
             {
@@ -34,12 +34,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
         {
             string payload = testObject.ToString();
             AuthenticationEventMetadata eventMetadata = AuthenticationEventMetadataLoader.GetEventMetadata(payload);
-            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post,"https://localhost.net/");
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://localhost.net/");
 
             if (success == false)
             {
                 var ex = Assert.Throws<AuthenticationEventTriggerRequestValidationException>(() => eventMetadata.CreateEventRequestValidate(requestMessage, payload, string.Empty));
-                Assert.AreEqual(exceptionMessage, ex.Message);
+                Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
             }
             else
             {
@@ -49,28 +49,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
         private static IEnumerable<object[]> TestJsonPayloadScenarios()
         {
-#region Invalid
+            #region Invalid
             yield return new TestCaseStructure()
             {
                 Test = Payload.TokenIssuanceStart.RequestWithInvalidCharacter,
                 Message = "Testing request payload with invalid character passed and verifies it throws an error",
                 ExceptionMessage = "The JSON object contains a trailing comma at the end which is not supported in this mode. Change the reader options. LineNumber: 38 | BytePositionInLine: 6."
             }.ToArray;
-#endregion
+            #endregion
 
-#region Valid
+            #region Valid
             yield return new TestCaseStructure()
             {
                 Test = Payload.TokenIssuanceStart.ValidRequestPayload,
                 Message = "Testing valid full request payload",
                 Success = true,
             }.ToArray;
-#endregion
+            #endregion
         }
 
         private static IEnumerable<object[]> TestAttributeScenarios()
         {
-#region Invalid
+            #region Invalid
             yield return new TestCaseStructure()
             {
                 Test = Payload.TokenIssuanceStart.RequestWithoutSourcePayload,
@@ -83,16 +83,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
                 Message = "Testing request payload without ODataType field passed and verifies it throws an error",
                 ExceptionMessage = "WebJobsTokenIssuanceStartRequest: The ODataType field is required."
             }.ToArray;
-#endregion
+            #endregion
 
-#region Valid
+            #region Valid
             yield return new TestCaseStructure()
             {
                 Test = Payload.TokenIssuanceStart.ValidRequestPayload,
                 Message = "Testing valid full request payload",
                 Success = true,
             }.ToArray;
-#endregion
+            #endregion
         }
     }
 }

@@ -3,13 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Storage.Blobs.Models;
 using Moq;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using Azure.Storage.Blobs.Models;
-using Azure.Core;
-using System.Threading;
-using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
@@ -80,9 +80,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             ShardCursor cursor = shard.GetCursor();
 
             // Assert
-            Assert.AreEqual(currentChunkPath, cursor.CurrentChunkPath);
-            Assert.AreEqual(blockOffset, cursor.BlockOffset);
-            Assert.AreEqual(eventIndex, cursor.EventIndex);
+            Assert.That(cursor.CurrentChunkPath, Is.EqualTo(currentChunkPath));
+            Assert.That(cursor.BlockOffset, Is.EqualTo(blockOffset));
+            Assert.That(cursor.EventIndex, Is.EqualTo(eventIndex));
 
             if (IsAsync)
             {
@@ -171,7 +171,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             bool hasNext = shard.HasNext();
 
             // Assert
-            Assert.IsFalse(hasNext);
+            Assert.That(hasNext, Is.False);
 
             if (IsAsync)
             {
@@ -256,7 +256,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             bool hasNext = shard.HasNext();
 
             // Assert
-            Assert.IsTrue(hasNext);
+            Assert.That(hasNext, Is.True);
 
             if (IsAsync)
             {
@@ -341,7 +341,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             bool hasNext = shard.HasNext();
 
             // Assert
-            Assert.IsTrue(hasNext);
+            Assert.That(hasNext, Is.True);
 
             if (IsAsync)
             {
@@ -484,11 +484,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             // Assert
             for (int i = 0; i < eventCount; i++)
             {
-                Assert.AreEqual(expectedChangeFeedEvents[i].Id, changeFeedEvents[i].Id);
+                Assert.That(changeFeedEvents[i].Id, Is.EqualTo(expectedChangeFeedEvents[i].Id));
             }
 
-            Assert.AreEqual("chunk4", cursor.CurrentChunkPath);
-            Assert.AreEqual(eventIndex, cursor.EventIndex);
+            Assert.That(cursor.CurrentChunkPath, Is.EqualTo("chunk4"));
+            Assert.That(cursor.EventIndex, Is.EqualTo(eventIndex));
 
             if (IsAsync)
             {

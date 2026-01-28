@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Security.KeyVault.Keys.Cryptography;
-using NUnit.Framework;
 using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using Azure.Core.Pipeline;
+using Azure.Security.KeyVault.Keys.Cryptography;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DecryptResult decryptResult = cryptoClient.Decrypt(decryptParams);
             #endregion
 
-            Assert.AreEqual(plaintext, decryptResult.Plaintext);
+            Assert.That(decryptResult.Plaintext, Is.EqualTo(plaintext));
 
             // Delete and purge the key.
             DeleteKeyOperation operation = managedHsmClient.StartDeleteKey(octKeyOptions.Name);

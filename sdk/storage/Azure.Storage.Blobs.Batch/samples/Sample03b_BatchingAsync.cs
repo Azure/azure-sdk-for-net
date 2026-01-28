@@ -121,9 +121,9 @@ namespace Azure.Storage.Blobs.Samples
                 await batchClient.SubmitBatchAsync(batch);
 
                 // Verify the results
-                Assert.AreEqual(202, fooResponse.Status);
-                Assert.AreEqual(202, barResponse.Status);
-                Assert.AreEqual(202, bazResponse.Status);
+                Assert.That(fooResponse.Status, Is.EqualTo(202));
+                Assert.That(barResponse.Status, Is.EqualTo(202));
+                Assert.That(bazResponse.Status, Is.EqualTo(202));
             }
             finally
             {
@@ -161,9 +161,9 @@ namespace Azure.Storage.Blobs.Samples
             catch (AggregateException ex)
             {
                 // An aggregate exception is thrown for all the indivudal failures
-                Assert.AreEqual(1, ex.InnerExceptions.Count);
+                Assert.That(ex.InnerExceptions.Count, Is.EqualTo(1));
                 RequestFailedException failure = ex.InnerException as RequestFailedException;
-                Assert.IsTrue(BlobErrorCode.BlobNotFound == failure.ErrorCode);
+                Assert.That(BlobErrorCode.BlobNotFound, Is.EqualTo(failure.ErrorCode));
             }
             finally
             {

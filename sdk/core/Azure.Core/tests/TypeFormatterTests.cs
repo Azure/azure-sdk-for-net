@@ -53,8 +53,8 @@ namespace Azure.Core.Tests
         public void FormatsDatesAsString(string format, DateTimeOffset date, string expected)
         {
             var formatted = TypeFormatters.ToString(date, format);
-            Assert.AreEqual(expected, formatted);
-            Assert.AreEqual(date, TypeFormatters.ParseDateTimeOffset(formatted, format));
+            Assert.That(formatted, Is.EqualTo(expected));
+            Assert.That(TypeFormatters.ParseDateTimeOffset(formatted, format), Is.EqualTo(date));
         }
 
         [TestCaseSource(nameof(DateTimeOffsetCases))]
@@ -74,8 +74,8 @@ namespace Azure.Core.Tests
             }
 
             var formatted = JsonDocument.Parse(memoryStream.ToArray()).RootElement;
-            Assert.AreEqual(expected, formatted.ToString());
-            Assert.AreEqual(date, formatted.GetDateTimeOffset(format));
+            Assert.That(formatted.ToString(), Is.EqualTo(expected));
+            Assert.That(formatted.GetDateTimeOffset(format), Is.EqualTo(date));
         }
 
         [TestCase("2020-05-04T03:02:01.1230000+08:00")]
@@ -95,7 +95,7 @@ namespace Azure.Core.Tests
 
                 var formatted = TypeFormatters.ToString(originalDate, format);
                 var utcDate = DateTimeOffset.Parse(formatted);
-                Assert.AreEqual(originalTimeMillis, utcDate.ToUnixTimeMilliseconds());
+                Assert.That(utcDate.ToUnixTimeMilliseconds(), Is.EqualTo(originalTimeMillis));
             }
         }
 
@@ -109,8 +109,8 @@ namespace Azure.Core.Tests
             }
 
             var formatted = JsonDocument.Parse(memoryStream.ToArray()).RootElement;
-            Assert.AreEqual(expected, formatted.ToString());
-            Assert.AreEqual(duration, formatted.GetTimeSpan(format));
+            Assert.That(formatted.ToString(), Is.EqualTo(expected));
+            Assert.That(formatted.GetTimeSpan(format), Is.EqualTo(duration));
         }
 
         [TestCase(null, null, "null")]
@@ -137,7 +137,7 @@ namespace Azure.Core.Tests
         {
             var result = TypeFormatters.ConvertToString(value, format);
 
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
         }
     }
 }

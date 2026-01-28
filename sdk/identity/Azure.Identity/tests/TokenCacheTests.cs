@@ -277,13 +277,13 @@ namespace Azure.Identity.Tests
             cache.TokenCacheUpdatedAsync += (args) =>
             {
                 updatedCalled = true;
-                Assert.AreEqual(enableCae, args.IsCaeEnabled);
+                Assert.That(args.IsCaeEnabled, Is.EqualTo(enableCae));
                 return Task.CompletedTask;
             };
 
             cache.RefreshCacheFromOptionsAsync += (args, cancellationToken) =>
             {
-                Assert.AreEqual(enableCae, args.IsCaeEnabled);
+                Assert.That(args.IsCaeEnabled, Is.EqualTo(enableCae));
                 return Task.FromResult(new TokenCacheData(bytes));
             };
 
@@ -395,10 +395,11 @@ namespace Azure.Identity.Tests
             Task updateHandler(TokenCacheUpdatedArgs args)
             {
                 Assert.That(args.UnsafeCacheData.ToArray(), Is.EqualTo(updatedBytes));
-                Assert.AreEqual(enableCae, args.IsCaeEnabled);
+                Assert.That(args.IsCaeEnabled, Is.EqualTo(enableCae));
                 evt.Set();
                 return Task.CompletedTask;
-            };
+            }
+            ;
 
             evt.Wait();
         }

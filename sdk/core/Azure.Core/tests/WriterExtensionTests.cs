@@ -38,53 +38,53 @@ namespace Azure.Core.Tests
         };
 
         [Test, TestCaseSource("ObjectCases")]
-        public static void WriteObjectValue (object value, string expectedJson)
+        public static void WriteObjectValue(object value, string expectedJson)
         {
-            using MemoryStream stream = new MemoryStream ();
-            using Utf8JsonWriter writer = new Utf8JsonWriter (stream);
-            writer.WriteObjectValue (value);
+            using MemoryStream stream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            writer.WriteObjectValue(value);
 
-            writer.Flush ();
-            Assert.AreEqual (expectedJson, System.Text.Encoding.UTF8.GetString(stream.ToArray()));
+            writer.Flush();
+            Assert.That(System.Text.Encoding.UTF8.GetString(stream.ToArray()), Is.EqualTo(expectedJson));
         }
 
         [Test]
-        public static void WriteObjectValueJsonElement ()
+        public static void WriteObjectValueJsonElement()
         {
-            using MemoryStream stream = new MemoryStream ();
-            using Utf8JsonWriter writer = new Utf8JsonWriter (stream);
+            using MemoryStream stream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
 
             string json = @"{""TablesToMove"": [{""TableName"":""TestTable""}]}";
             Dictionary<string, object> content = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
             JsonElement element = (JsonElement)content["TablesToMove"];
-            writer.WriteObjectValue (element);
-            writer.Flush ();
+            writer.WriteObjectValue(element);
+            writer.Flush();
 
-            Assert.AreEqual (@"[{""TableName"":""TestTable""}]", System.Text.Encoding.UTF8.GetString(stream.ToArray()));
+            Assert.That(System.Text.Encoding.UTF8.GetString(stream.ToArray()), Is.EqualTo(@"[{""TableName"":""TestTable""}]"));
         }
 
         [Test]
-        public static void WriteObjectValueIUtf8JsonSerializable ()
+        public static void WriteObjectValueIUtf8JsonSerializable()
         {
-            using MemoryStream stream = new MemoryStream ();
-            using Utf8JsonWriter writer = new Utf8JsonWriter (stream);
+            using MemoryStream stream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
 
-            var content = new TestSerialize ();
-            writer.WriteObjectValue (content);
-            Assert.True (content.didWrite);
+            var content = new TestSerialize();
+            writer.WriteObjectValue(content);
+            Assert.That(content.didWrite, Is.True);
         }
 
         [Test]
-        public static void WriteObjectValueNullIUtf8JsonSerializable ()
+        public static void WriteObjectValueNullIUtf8JsonSerializable()
         {
-            using MemoryStream stream = new MemoryStream ();
-            using Utf8JsonWriter writer = new Utf8JsonWriter (stream);
+            using MemoryStream stream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
 
             TestSerialize content = null;
             writer.WriteObjectValue(content);
 
             writer.Flush();
-            Assert.AreEqual("null", System.Text.Encoding.UTF8.GetString(stream.ToArray()));
+            Assert.That(System.Text.Encoding.UTF8.GetString(stream.ToArray()), Is.EqualTo("null"));
         }
 
         internal class TestSerialize : IUtf8JsonSerializable

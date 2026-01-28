@@ -21,7 +21,7 @@ namespace Azure.Storage.Queues.Samples
                 Sample01a_HelloWorld.SendMessage(ConnectionString, queueName);
 
                 // Verify we uploaded one message
-                Assert.AreEqual(1, queue.PeekMessages().Value.Length);
+                Assert.That(queue.PeekMessages().Value.Length, Is.EqualTo(1));
             }
             finally
             {
@@ -39,7 +39,7 @@ namespace Azure.Storage.Queues.Samples
                 await Sample01b_HelloWorldAsync.SendMessageAsync(ConnectionString, queueName);
 
                 // Verify we uploaded one message
-                Assert.AreEqual(1, (await queue.PeekMessagesAsync(10)).Value.Length);
+                Assert.That((await queue.PeekMessagesAsync(10)).Value.Length, Is.EqualTo(1));
             }
             finally
             {
@@ -58,7 +58,7 @@ namespace Azure.Storage.Queues.Samples
                 Sample01a_HelloWorld.ReceiveMessages(ConnectionString, queueName);
 
                 // Verify we processed all the messages
-                Assert.AreEqual(0, queue.PeekMessages().Value.Length);
+                Assert.That(queue.PeekMessages().Value.Length, Is.EqualTo(0));
             }
             finally
             {
@@ -77,7 +77,7 @@ namespace Azure.Storage.Queues.Samples
                 await Sample01b_HelloWorldAsync.ReceiveMessagesAsync(ConnectionString, queueName);
 
                 // Verify we processed all the messages
-                Assert.AreEqual(0, (await queue.PeekMessagesAsync()).Value.Length);
+                Assert.That((await queue.PeekMessagesAsync()).Value.Length, Is.EqualTo(0));
             }
             finally
             {
@@ -96,7 +96,7 @@ namespace Azure.Storage.Queues.Samples
                 Sample01a_HelloWorld.PeekMesssages(ConnectionString, queueName);
 
                 // Verify we haven't emptied the queue
-                Assert.Less(0, queue.PeekMessages().Value.Length);
+                Assert.That(0, Is.LessThan(queue.PeekMessages().Value.Length));
             }
             finally
             {
@@ -115,7 +115,7 @@ namespace Azure.Storage.Queues.Samples
                 await Sample01b_HelloWorldAsync.PeekMesssagesAsync(ConnectionString, queueName);
 
                 // Verify we haven't emptied the queue
-                Assert.Less(0, (await queue.PeekMessagesAsync()).Value.Length);
+                Assert.That(0, Is.LessThan((await queue.PeekMessagesAsync()).Value.Length));
             }
             finally
             {
@@ -134,7 +134,7 @@ namespace Azure.Storage.Queues.Samples
                 Sample01a_HelloWorld.ReceiveAndUpdate(ConnectionString, queueName);
 
                 // Verify we processed all the messages
-                Assert.AreEqual(0, queue.PeekMessages().Value.Length);
+                Assert.That(queue.PeekMessages().Value.Length, Is.EqualTo(0));
             }
             finally
             {
@@ -153,7 +153,7 @@ namespace Azure.Storage.Queues.Samples
                 await Sample01b_HelloWorldAsync.ReceiveAndUpdateAsync(ConnectionString, queueName);
 
                 // Verify we processed all the messages
-                Assert.AreEqual(0, (await queue.PeekMessagesAsync()).Value.Length);
+                Assert.That((await queue.PeekMessagesAsync()).Value.Length, Is.EqualTo(0));
             }
             finally
             {

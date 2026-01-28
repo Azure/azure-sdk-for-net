@@ -58,8 +58,8 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
             using PipelineResponse response = message.Response!;
 
-            Assert.AreEqual(response.ContentStream!.Length, 1000);
-            Assert.AreEqual(response.Content.ToMemory().Length, 1000);
+            Assert.That(response.ContentStream!.Length, Is.EqualTo(1000));
+            Assert.That(response.Content.ToMemory().Length, Is.EqualTo(1000));
         }
     }
 
@@ -99,7 +99,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
             MemoryStream memoryStream = new();
             await response.ContentStream!.CopyToAsync(memoryStream);
-            Assert.AreEqual(memoryStream.Length, bodySize);
+            Assert.That(bodySize, Is.EqualTo(memoryStream.Length));
         }
     }
 
@@ -182,11 +182,11 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
-            Assert.AreEqual(message.Response!.ContentStream!.CanSeek, false);
+            Assert.That(message.Response!.ContentStream!.CanSeek, Is.EqualTo(false));
             Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
         }
 
-        Assert.Greater(reqNum, requestCount);
+        Assert.That(reqNum, Is.GreaterThan(requestCount));
     }
 
     [Test]
@@ -211,7 +211,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         message.BufferResponse = true;
 
         var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
-        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.", exception!.Message);
+        Assert.That(exception!.Message, Is.EqualTo("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information."));
 
         testDoneTcs.Cancel();
     }
@@ -243,7 +243,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         message.BufferResponse = true;
 
         var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
-        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.", exception!.Message);
+        Assert.That(exception!.Message, Is.EqualTo("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information."));
 
         testDoneTcs.Cancel();
     }
@@ -276,15 +276,15 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual(message.Response!.Status, 200);
+        Assert.That(message.Response!.Status, Is.EqualTo(200));
         var responseContentStream = message.Response.ContentStream;
         Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
         var buffer = new byte[10];
-        Assert.AreEqual(1, await responseContentStream!.ReadAsync(buffer, 0, 1));
+        Assert.That(await responseContentStream!.ReadAsync(buffer, 0, 1), Is.EqualTo(1));
 #pragma warning disable CA2022 // This test is validating an exception is thrown and doesn't need to check the return value of ReadAsync.
         var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await responseContentStream.ReadAsync(buffer, 0, 10));
 #pragma warning restore CA2022
-        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.", exception!.Message);
+        Assert.That(exception!.Message, Is.EqualTo("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information."));
 
         testDoneTcs.Cancel();
     }
@@ -320,8 +320,8 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual(message.Response!.Status, 201);
-        Assert.AreEqual(2, i);
+        Assert.That(message.Response!.Status, Is.EqualTo(201));
+        Assert.That(i, Is.EqualTo(2));
     }
 
     [Test]
@@ -352,8 +352,8 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual(message.Response!.Status, 201);
-        Assert.AreEqual(2, i);
+        Assert.That(message.Response!.Status, Is.EqualTo(201));
+        Assert.That(i, Is.EqualTo(2));
 
         testDoneTcs.Cancel();
     }
@@ -393,8 +393,8 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         cts.Cancel();
 
         TaskCanceledException? exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await task);
-        Assert.AreEqual("The operation was canceled.", exception!.Message);
-        Assert.AreEqual(1, i);
+        Assert.That(exception!.Message, Is.EqualTo("The operation was canceled."));
+        Assert.That(i, Is.EqualTo(1));
 
         testDoneTcs.Cancel();
     }
@@ -432,10 +432,10 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual(message.Response!.Status, 201);
-        Assert.AreEqual("Hello world!", await new StreamReader(message.Response.ContentStream!).ReadToEndAsync());
-        Assert.AreEqual("Hello world!", message.Response.Content.ToString());
-        Assert.AreEqual(2, i);
+        Assert.That(message.Response!.Status, Is.EqualTo(201));
+        Assert.That(await new StreamReader(message.Response.ContentStream!).ReadToEndAsync(), Is.EqualTo("Hello world!"));
+        Assert.That(message.Response.Content.ToString(), Is.EqualTo("Hello world!"));
+        Assert.That(i, Is.EqualTo(2));
 
         testDoneTcs.Cancel();
     }
@@ -466,17 +466,17 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         // Request
         EventWrittenEventArgs args = eventListener.SingleEventById(1, e => e.EventSource.Name == "System.ClientModel");
-        Assert.AreEqual(EventLevel.Informational, args.Level);
-        Assert.AreEqual("Request", args.EventName);
+        Assert.That(args.Level, Is.EqualTo(EventLevel.Informational));
+        Assert.That(args.EventName, Is.EqualTo("Request"));
 
         // Response
         args = eventListener.SingleEventById(5, e => e.EventSource.Name == "System.ClientModel");
-        Assert.AreEqual(EventLevel.Informational, args.Level);
-        Assert.AreEqual("Response", args.EventName);
-        Assert.AreEqual(201, args.GetProperty<int>("status"));
+        Assert.That(args.Level, Is.EqualTo(EventLevel.Informational));
+        Assert.That(args.EventName, Is.EqualTo("Response"));
+        Assert.That(args.GetProperty<int>("status"), Is.EqualTo(201));
 
         // No other events should have been logged
-        Assert.AreEqual(2, eventListener.EventData.Count());
+        Assert.That(eventListener.EventData.Count(), Is.EqualTo(2));
     }
 
     [Test]
@@ -501,20 +501,20 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         // Request Events
         IEnumerable<EventWrittenEventArgs> args = eventListener.EventsById(1);
-        Assert.AreEqual(4, args.Count());
+        Assert.That(args.Count(), Is.EqualTo(4));
 
         // Exception Response Events
         args = eventListener.EventsById(18);
-        Assert.AreEqual(4, args.Count());
+        Assert.That(args.Count(), Is.EqualTo(4));
         foreach (EventWrittenEventArgs responseEventArgs in args)
         {
-            Assert.AreEqual(EventLevel.Informational, responseEventArgs.Level);
-            Assert.AreEqual("ExceptionResponse", responseEventArgs.EventName);
-            Assert.True((responseEventArgs.GetProperty<string>("exception")).Contains("Exception"));
+            Assert.That(responseEventArgs.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(responseEventArgs.EventName, Is.EqualTo("ExceptionResponse"));
+            Assert.That((responseEventArgs.GetProperty<string>("exception")).Contains("Exception"), Is.True);
         }
 
         // 4 request events, 3 request retrying, 4 exception response
-        Assert.AreEqual(11, eventListener.EventData.Count());
+        Assert.That(eventListener.EventData.Count(), Is.EqualTo(11));
     }
 
     [Test]
@@ -550,22 +550,22 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         // Request Events
         IEnumerable<EventWrittenEventArgs> args = eventListener.EventsById(1);
-        Assert.AreEqual(2, args.Count());
+        Assert.That(args.Count(), Is.EqualTo(2));
 
         // Retry event
         EventWrittenEventArgs arg = eventListener.SingleEventById(10);
-        Assert.AreEqual("RequestRetrying", arg.EventName);
+        Assert.That(arg.EventName, Is.EqualTo("RequestRetrying"));
 
         // Error response event
         arg = eventListener.SingleEventById(8);
-        Assert.AreEqual("ErrorResponse", arg.EventName);
+        Assert.That(arg.EventName, Is.EqualTo("ErrorResponse"));
 
         // Response event
         arg = eventListener.SingleEventById(5);
-        Assert.AreEqual("Response", arg.EventName);
+        Assert.That(arg.EventName, Is.EqualTo("Response"));
 
         // No other events should have been logged
-        Assert.AreEqual(5, eventListener.EventData.Count());
+        Assert.That(eventListener.EventData.Count(), Is.EqualTo(5));
     }
 
     [Test]
@@ -593,17 +593,17 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         // Request
         LoggerEvent log = messageLogger.SingleEventById(1);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual("Request", log.EventId.Name);
+        Assert.That(log.LogLevel, Is.EqualTo(LogLevel.Information));
+        Assert.That(log.EventId.Name, Is.EqualTo("Request"));
 
         // Response
         log = messageLogger.SingleEventById(5);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual("Response", log.EventId.Name);
-        Assert.AreEqual(201, log.GetValueFromArguments<int>("status"));
+        Assert.That(log.LogLevel, Is.EqualTo(LogLevel.Information));
+        Assert.That(log.EventId.Name, Is.EqualTo("Response"));
+        Assert.That(log.GetValueFromArguments<int>("status"), Is.EqualTo(201));
 
         // No other events should have been logged
-        Assert.AreEqual(2, messageLogger.Logs.Count());
+        Assert.That(messageLogger.Logs.Count(), Is.EqualTo(2));
     }
 
     [Test]
@@ -634,20 +634,20 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         // Request Events
         IEnumerable<LoggerEvent> logs = messageLogger.EventsById(1);
-        Assert.AreEqual(4, logs.Count());
+        Assert.That(logs.Count(), Is.EqualTo(4));
 
         // Exception Response Events
         logs = transportLogger.EventsById(18);
-        Assert.AreEqual(4, logs.Count());
+        Assert.That(logs.Count(), Is.EqualTo(4));
         foreach (LoggerEvent responseEventLog in logs)
         {
-            Assert.AreEqual(LogLevel.Information, responseEventLog.LogLevel);
-            Assert.AreEqual("ExceptionResponse", responseEventLog.EventId.Name);
+            Assert.That(responseEventLog.LogLevel, Is.EqualTo(LogLevel.Information));
+            Assert.That(responseEventLog.EventId.Name, Is.EqualTo("ExceptionResponse"));
         }
 
         // No other events should have been logged
-        Assert.AreEqual(4, messageLogger.Logs.Count());
-        Assert.AreEqual(4, transportLogger.Logs.Count());
+        Assert.That(messageLogger.Logs.Count(), Is.EqualTo(4));
+        Assert.That(transportLogger.Logs.Count(), Is.EqualTo(4));
     }
 
     [Test]
@@ -689,23 +689,23 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         // Request Events
         IEnumerable<LoggerEvent> args = messageLogger.EventsById(1);
-        Assert.AreEqual(2, args.Count());
+        Assert.That(args.Count(), Is.EqualTo(2));
 
         // Retry event
         LoggerEvent arg = retryLogger.SingleEventById(10);
-        Assert.AreEqual("RequestRetrying", arg.EventId.Name);
+        Assert.That(arg.EventId.Name, Is.EqualTo("RequestRetrying"));
 
         // Error response event
         arg = messageLogger.SingleEventById(8);
-        Assert.AreEqual("ErrorResponse", arg.EventId.Name);
+        Assert.That(arg.EventId.Name, Is.EqualTo("ErrorResponse"));
 
         // Response event
         arg = messageLogger.SingleEventById(5);
-        Assert.AreEqual("Response", arg.EventId.Name);
+        Assert.That(arg.EventId.Name, Is.EqualTo("Response"));
 
         // No other events should have been logged
-        Assert.AreEqual(4, messageLogger.Logs.Count());
-        Assert.AreEqual(1, retryLogger.Logs.Count());
+        Assert.That(messageLogger.Logs.Count(), Is.EqualTo(4));
+        Assert.That(retryLogger.Logs.Count(), Is.EqualTo(1));
     }
 
     #endregion

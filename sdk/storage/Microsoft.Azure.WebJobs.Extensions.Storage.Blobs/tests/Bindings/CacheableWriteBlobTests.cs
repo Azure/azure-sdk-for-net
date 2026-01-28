@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             bool result = await cacheableWriteBlob.TryPutToCacheAsync(isDeleteOnFailure);
 
             // Assert
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
             cacheMock.Verify();
         }
 
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             bool result = await cacheableWriteBlob.TryPutToCacheAsync(isDeleteOnFailure);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             bool result = await cacheableWriteBlob.TryPutToCacheAsync(isDeleteOnFailure);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         /// <summary>

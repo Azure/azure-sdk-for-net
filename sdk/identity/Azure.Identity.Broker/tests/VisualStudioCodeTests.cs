@@ -14,8 +14,8 @@ namespace Azure.Identity.Broker.Tests
         {
             var cred = new VisualStudioCodeCredential();
             var token = cred.GetToken(new TokenRequestContext(["https://management.azure.com/.default"]), default);
-            Assert.IsNotNull(token);
-            Assert.IsNotEmpty(token.Token);
+            Assert.That(token, Is.Not.Null);
+            Assert.That(token.Token, Is.Not.Empty);
         }
     }
 }

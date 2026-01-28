@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageSync.Models;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
-using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.StorageSync.Tests
 {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
         private string _serverEndpointName;
 
-        public ServerEndpointTests(bool async) : base(async, ModeFromSourceCode )
+        public ServerEndpointTests(bool async) : base(async, ModeFromSourceCode)
         {
         }
 
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Create RegisteredServer
             StorageSyncRegisteredServerResource registeredServerResource = await EnsureRegisteredServerResource(_storageSyncServiceResource);
-            Assert.NotNull(registeredServerResource);
+            Assert.That(registeredServerResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResource);
 
             StorageSyncServerEndpointCreateOrUpdateContent serverEndpointParameters = StorageSyncManagementTestUtilities.GetDefaultServerEndpointParameters(registeredServerResource.Id);
 
             // Create ServerEndpoints
             StorageSyncServerEndpointResource serverEndpointResource = (await _storageSyncGroupResource.GetStorageSyncServerEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, _serverEndpointName, serverEndpointParameters)).Value;
-            Assert.NotNull(serverEndpointResource);
+            Assert.That(serverEndpointResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyServerEndpointProperties(serverEndpointResource, true);
 
             // Get ServerEndpoint
@@ -58,15 +58,15 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // List ServerEndpoints
             List<StorageSyncServerEndpointResource> serverEndpointResources = await _storageSyncGroupResource.GetStorageSyncServerEndpoints().ToEnumerableAsync();
-            Assert.NotNull(serverEndpointResources);
-            Assert.AreEqual(serverEndpointResources.Count(), 1);
+            Assert.That(serverEndpointResources, Is.Not.Null);
+            Assert.That(serverEndpointResources.Count(), Is.EqualTo(1));
             StorageSyncManagementTestUtilities.VerifyServerEndpointProperties(serverEndpointResources.First(), false);
 
             // Recall ServerEndpoint
             RecallActionContent recallActionParameters = StorageSyncManagementTestUtilities.GetDefaultRecallActionParameters();
             ArmOperation serverEndpointsRecallOperation = await serverEndpointResource.RecallActionAsync(WaitUntil.Completed, recallActionParameters);
-            Assert.NotNull(serverEndpointsRecallOperation);
-            Assert.IsNotEmpty(serverEndpointsRecallOperation.GetRawResponse().ClientRequestId); // Request Id
+            Assert.That(serverEndpointsRecallOperation, Is.Not.Null);
+            Assert.That(serverEndpointsRecallOperation.GetRawResponse().ClientRequestId, Is.Not.Empty); // Request Id
             // Assert.IsNotEmpty(serverEndpointsRecallOperation.Id); // Getting serverEndpointsRecallOperation id throws not implemented exception
 
             // Note: Currently updating a ServerEndpoint is blocked by design. API enforces that PUT on an existing resource has to be
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Delete ServerEndpoint
             await serverEndpointResource.DeleteAsync(WaitUntil.Completed);
-            Assert.IsFalse((await _storageSyncGroupResource.GetStorageSyncServerEndpoints().ExistsAsync(_serverEndpointName)).Value);
+            Assert.That((await _storageSyncGroupResource.GetStorageSyncServerEndpoints().ExistsAsync(_serverEndpointName)).Value, Is.False);
 
             await _cloudEndpointResource.DeleteAsync(WaitUntil.Completed);
             await registeredServerResource.DeleteAsync(WaitUntil.Completed);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // For Record :  PLACE A BREAKPOINT HERE , REGISTER SERVER AND CONTINUE.
             List<StorageSyncRegisteredServerResource> registeredServerResources = await storageSyncServiceResource.GetStorageSyncRegisteredServers().ToEnumerableAsync();
-            Assert.AreEqual(registeredServerResources.Count(), 1);
+            Assert.That(registeredServerResources.Count(), Is.EqualTo(1));
 
             return registeredServerResources.Single();
         }

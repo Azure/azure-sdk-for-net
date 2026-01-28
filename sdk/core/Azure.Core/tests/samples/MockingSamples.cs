@@ -35,7 +35,7 @@ namespace Azure.Core.Samples
             KeyVaultSecret secret = client.GetSecret("Name");
             #endregion
 
-            Assert.NotNull(secret);
+            Assert.That(secret, Is.Not.Null);
         }
     }
 }

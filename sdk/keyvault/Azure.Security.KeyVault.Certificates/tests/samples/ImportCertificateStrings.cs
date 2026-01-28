@@ -5,7 +5,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 {
     public partial class ImportCertificate
     {
-    #region Certificates
+        #region Certificates
 #if !SNIPPET
         // Taken from CertificateClientLiveTestsConstants
 

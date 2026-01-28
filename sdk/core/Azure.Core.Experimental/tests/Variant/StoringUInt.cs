@@ -18,13 +18,13 @@ namespace Azure.Core.Experimental.Tests
         public void UIntImplicit([ValueSource("UInt32Data")] uint testValue)
         {
             Variant value = testValue;
-            Assert.AreEqual(testValue, value.As<uint>());
-            Assert.AreEqual(typeof(uint), value.Type);
+            Assert.That(value.As<uint>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(uint)));
 
             uint? source = testValue;
             value = source;
-            Assert.AreEqual(source, value.As<uint?>());
-            Assert.AreEqual(typeof(uint), value.Type);
+            Assert.That(value.As<uint?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(uint)));
         }
 
         [Test]
@@ -36,8 +36,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(testValue);
             }
 
-            Assert.AreEqual(testValue, value.As<uint>());
-            Assert.AreEqual(typeof(uint), value.Type);
+            Assert.That(value.As<uint>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(uint)));
 
             uint? source = testValue;
 
@@ -46,8 +46,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(source);
             }
 
-            Assert.AreEqual(source, value.As<uint?>());
-            Assert.AreEqual(typeof(uint), value.Type);
+            Assert.That(value.As<uint?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(uint)));
         }
 
         [Test]
@@ -55,11 +55,11 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             bool success = value.TryGetValue(out uint result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<uint>());
-            Assert.AreEqual(testValue, (uint)value);
+            Assert.That(value.As<uint>(), Is.EqualTo(testValue));
+            Assert.That((uint)value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -69,12 +69,12 @@ namespace Azure.Core.Experimental.Tests
             Variant value = new(source);
 
             bool success = value.TryGetValue(out uint result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<uint>());
+            Assert.That(value.As<uint>(), Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (uint)value);
+            Assert.That((uint)value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -83,10 +83,10 @@ namespace Azure.Core.Experimental.Tests
             uint source = testValue;
             Variant value = new(source);
             bool success = value.TryGetValue(out uint? result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (uint?)value);
+            Assert.That((uint?)value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -96,21 +96,21 @@ namespace Azure.Core.Experimental.Tests
             object o = i;
             Variant value = new(o);
 
-            Assert.AreEqual(typeof(uint), value.Type);
-            Assert.True(value.TryGetValue(out uint result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out uint? nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.That(value.Type, Is.EqualTo(typeof(uint)));
+            Assert.That(value.TryGetValue(out uint result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out uint? nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
 
             uint? n = testValue;
             o = n;
             value = new(o);
 
-            Assert.AreEqual(typeof(uint), value.Type);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.That(value.Type, Is.EqualTo(typeof(uint)));
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -118,9 +118,9 @@ namespace Azure.Core.Experimental.Tests
         {
             uint? source = null;
             Variant value = source;
-            Assert.Null(value.Type);
-            Assert.AreEqual(source, value.As<uint?>());
-            Assert.False(value.As<uint?>().HasValue);
+            Assert.That(value.Type, Is.Null);
+            Assert.That(value.As<uint?>(), Is.EqualTo(source));
+            Assert.That(value.As<uint?>().HasValue, Is.False);
         }
 
         [Test]
@@ -128,14 +128,14 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             object o = value.As<object>();
-            Assert.AreEqual(typeof(uint), o.GetType());
-            Assert.AreEqual(testValue, (uint)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(uint)));
+            Assert.That((uint)o, Is.EqualTo(testValue));
 
             uint? n = testValue;
             value = new(n);
             o = value.As<object>();
-            Assert.AreEqual(typeof(uint), o.GetType());
-            Assert.AreEqual(testValue, (uint)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(uint)));
+            Assert.That((uint)o, Is.EqualTo(testValue));
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
-using System.IO;
+using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
-using System.ClientModel.Primitives;
+using System.IO;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -19,21 +19,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override void CompareModels(ModelWithPersistableOnly model, ModelWithPersistableOnly model2, string format)
         {
-            Assert.AreEqual(model.Name, model2.Name);
+            Assert.That(model2.Name, Is.EqualTo(model.Name));
 
-            Assert.AreEqual(model.Fields, model2.Fields);
-            Assert.AreEqual(model.KeyValuePairs, model2.KeyValuePairs);
-            Assert.AreEqual(model.NullProperty, model2.NullProperty);
+            Assert.That(model2.Fields, Is.EqualTo(model.Fields));
+            Assert.That(model2.KeyValuePairs, Is.EqualTo(model.KeyValuePairs));
+            Assert.That(model2.NullProperty, Is.EqualTo(model.NullProperty));
 
             if (format == "J")
             {
-                Assert.AreEqual(model.XProperty, model2.XProperty);
+                Assert.That(model2.XProperty, Is.EqualTo(model.XProperty));
                 var rawData = GetRawData(model);
                 var rawData2 = GetRawData(model2);
-                Assert.IsNotNull(rawData);
-                Assert.IsNotNull(rawData2);
-                Assert.AreEqual(rawData.Count, rawData2.Count);
-                Assert.AreEqual(rawData["extra"].ToObjectFromJson<string>(), rawData2["extra"].ToObjectFromJson<string>());
+                Assert.That(rawData, Is.Not.Null);
+                Assert.That(rawData2, Is.Not.Null);
+                Assert.That(rawData2.Count, Is.EqualTo(rawData.Count));
+                Assert.That(rawData2["extra"].ToObjectFromJson<string>(), Is.EqualTo(rawData["extra"].ToObjectFromJson<string>()));
             }
         }
 
@@ -52,20 +52,20 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override void VerifyModel(ModelWithPersistableOnly model, string format)
         {
-            Assert.AreEqual("xmodel", model.Name);
+            Assert.That(model.Name, Is.EqualTo("xmodel"));
 
-            Assert.AreEqual(1, model.Fields.Count);
-            Assert.AreEqual("testField", model.Fields[0]);
-            Assert.AreEqual(1, model.KeyValuePairs.Count);
-            Assert.AreEqual("red", model.KeyValuePairs["color"]);
-            Assert.IsNull(model.NullProperty);
+            Assert.That(model.Fields.Count, Is.EqualTo(1));
+            Assert.That(model.Fields[0], Is.EqualTo("testField"));
+            Assert.That(model.KeyValuePairs.Count, Is.EqualTo(1));
+            Assert.That(model.KeyValuePairs["color"], Is.EqualTo("red"));
+            Assert.That(model.NullProperty, Is.Null);
 
             var rawData = GetRawData(model);
-            Assert.IsNotNull(rawData);
+            Assert.That(rawData, Is.Not.Null);
             if (format == "J")
             {
-                Assert.AreEqual(100, model.XProperty);
-                Assert.AreEqual("stuff", rawData["extra"].ToObjectFromJson<string>());
+                Assert.That(model.XProperty, Is.EqualTo(100));
+                Assert.That(rawData["extra"].ToObjectFromJson<string>(), Is.EqualTo("stuff"));
             }
         }
     }

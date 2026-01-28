@@ -14,13 +14,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
     {
         public Task OnTimeoutExceptionAsync(ExceptionDispatchInfo exceptionInfo, TimeSpan timeoutGracePeriod)
         {
-            Assert.True(false, $"Timeout exception in test exception handler: {exceptionInfo.SourceException}");
+            Assert.That(false, Is.True, $"Timeout exception in test exception handler: {exceptionInfo.SourceException}");
             return Task.CompletedTask;
         }
 
         public Task OnUnhandledExceptionAsync(ExceptionDispatchInfo exceptionInfo)
         {
-            Assert.True(false, $"Error in test exception handler: {exceptionInfo.SourceException}");
+            Assert.That(false, Is.True, $"Error in test exception handler: {exceptionInfo.SourceException}");
             return Task.CompletedTask;
         }
     }

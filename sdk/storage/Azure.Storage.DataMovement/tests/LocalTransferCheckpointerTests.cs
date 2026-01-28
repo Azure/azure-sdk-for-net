@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Storage.DataMovement.JobPlan;
+using NUnit.Framework;
 using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -91,7 +91,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(default);
 
-            Assert.NotNull(transferCheckpointer);
+            Assert.That(transferCheckpointer, Is.Not.Null);
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
             SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
-            Assert.NotNull(transferCheckpointer);
+            Assert.That(transferCheckpointer, Is.Not.Null);
         }
 
         [Test]
@@ -125,8 +125,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
-            Assert.AreEqual(1, transferIds.Count);
-            Assert.IsTrue(transferIds.Contains(transferId));
+            Assert.That(transferIds.Count, Is.EqualTo(1));
+            Assert.That(transferIds.Contains(transferId), Is.True);
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
-            CollectionAssert.AreEquivalent(expectedTransferIds, transferIds);
+            Assert.That(transferIds, Is.EquivalentTo(expectedTransferIds));
         }
 
         [Test]
@@ -186,8 +186,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
-            Assert.AreEqual(1, transferIds.Count);
-            Assert.IsTrue(transferIds.Contains(transferId));
+            Assert.That(transferIds.Count, Is.EqualTo(1));
+            Assert.That(transferIds.Contains(transferId), Is.True);
         }
 
         [Test]
@@ -214,11 +214,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
-            Assert.AreEqual(1, transferIds.Count);
-            Assert.IsTrue(transferIds.Contains(transferId));
+            Assert.That(transferIds.Count, Is.EqualTo(1));
+            Assert.That(transferIds.Contains(transferId), Is.True);
 
             int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId);
-            Assert.AreEqual(1, partCount);
+            Assert.That(partCount, Is.EqualTo(1));
 
             await transferCheckpointer.AssertJobPlanHeaderAsync(transferId, partNumber, header);
         }
@@ -252,11 +252,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
-            Assert.AreEqual(1, transferIds.Count);
-            Assert.IsTrue(transferIds.Contains(transferId));
+            Assert.That(transferIds.Count, Is.EqualTo(1));
+            Assert.That(transferIds.Contains(transferId), Is.True);
 
             int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId);
-            Assert.AreEqual(1, partCount);
+            Assert.That(partCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -302,8 +302,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
-            Assert.AreEqual(1, transferIds.Count);
-            Assert.IsTrue(transferIds.Contains(transferId));
+            Assert.That(transferIds.Count, Is.EqualTo(1));
+            Assert.That(transferIds.Contains(transferId), Is.True);
 
             await transferCheckpointer.AssertJobPlanHeaderAsync(transferId, 0, header1);
             await transferCheckpointer.AssertJobPlanHeaderAsync(transferId, 1, header2);
@@ -337,8 +337,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
-            Assert.AreEqual(1, transferIds.Count);
-            Assert.IsTrue(transferIds.Contains(transferId));
+            Assert.That(transferIds.Count, Is.EqualTo(1));
+            Assert.That(transferIds.Contains(transferId), Is.True);
 
             await transferCheckpointer.AssertJobPlanHeaderAsync(transferId, 1, header);
         }
@@ -354,7 +354,7 @@ namespace Azure.Storage.DataMovement.Tests
             await transferCheckpointer.TryRemoveStoredTransferAsync(transferId);
 
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
-            Assert.AreEqual(0, transferIds.Count);
+            Assert.That(transferIds.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -366,7 +366,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             // Assert
-            Assert.IsFalse(await transferCheckpointer.TryRemoveStoredTransferAsync(transferId));
+            Assert.That(await transferCheckpointer.TryRemoveStoredTransferAsync(transferId), Is.False);
         }
 
         [Test]
@@ -386,7 +386,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> transfers = await transferCheckpointer.GetStoredTransfersAsync();
 
             // Assert
-            Assert.IsEmpty(transfers);
+            Assert.That(transfers, Is.Empty);
         }
 
         [Test]
@@ -404,8 +404,8 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> transfers = await transferCheckpointer.GetStoredTransfersAsync();
 
             // Assert
-            Assert.AreEqual(1, transfers.Count);
-            Assert.AreEqual(transfers.First(), transferId);
+            Assert.That(transfers.Count, Is.EqualTo(1));
+            Assert.That(transferId, Is.EqualTo(transfers.First()));
         }
 
         [Test]
@@ -433,7 +433,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> transfers = await transferCheckpointer.GetStoredTransfersAsync();
 
             // Assert
-            CollectionAssert.AreEquivalent(expectedTransferIds, transfers);
+            Assert.That(transfers, Is.EquivalentTo(expectedTransferIds));
         }
 
         [Test]
@@ -464,9 +464,9 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> transfers = await transferCheckpointer.GetStoredTransfersAsync();
 
             // Assert
-            Assert.AreEqual(2, transfers.Count);
-            Assert.IsTrue(transfers.Contains(transferId));
-            Assert.IsTrue(transfers.Contains(transferId2));
+            Assert.That(transfers.Count, Is.EqualTo(2));
+            Assert.That(transfers.Contains(transferId), Is.True);
+            Assert.That(transfers.Contains(transferId2), Is.True);
 
             // Arrange - add more job to the checkpointer
             string transferId3 = GetNewTransferId();
@@ -479,11 +479,11 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> transfersAfterAdditions = await transferCheckpointer.GetStoredTransfersAsync();
 
             // Assert
-            Assert.AreEqual(4, transfersAfterAdditions.Count);
-            Assert.IsTrue(transfersAfterAdditions.Contains(transferId));
-            Assert.IsTrue(transfersAfterAdditions.Contains(transferId2));
-            Assert.IsTrue(transfersAfterAdditions.Contains(transferId3));
-            Assert.IsTrue(transfersAfterAdditions.Contains(transferId4));
+            Assert.That(transfersAfterAdditions.Count, Is.EqualTo(4));
+            Assert.That(transfersAfterAdditions.Contains(transferId), Is.True);
+            Assert.That(transfersAfterAdditions.Contains(transferId2), Is.True);
+            Assert.That(transfersAfterAdditions.Contains(transferId3), Is.True);
+            Assert.That(transfersAfterAdditions.Contains(transferId4), Is.True);
         }
 
         [Test]
@@ -502,7 +502,7 @@ namespace Azure.Storage.DataMovement.Tests
             int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId);
 
             // Assert
-            Assert.AreEqual(0, partCount);
+            Assert.That(partCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -530,7 +530,7 @@ namespace Azure.Storage.DataMovement.Tests
             int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId);
 
             // Assert
-            Assert.AreEqual(1, partCount);
+            Assert.That(partCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -578,7 +578,7 @@ namespace Azure.Storage.DataMovement.Tests
             int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId);
 
             // Assert
-            Assert.AreEqual(4, partCount);
+            Assert.That(partCount, Is.EqualTo(4));
         }
 
         [Test]
@@ -614,11 +614,11 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // Assert
-            Assert.IsNotNull(header);
-            Assert.AreEqual(DataMovementConstants.JobPlanFile.SchemaVersion, header.Version);
-            Assert.AreEqual(transferId, header.TransferId);
-            Assert.AreEqual(CheckpointerTesting.DefaultWebSourcePath, header.ParentSourcePath);
-            Assert.AreEqual(CheckpointerTesting.DefaultWebDestinationPath, header.ParentDestinationPath);
+            Assert.That(header, Is.Not.Null);
+            Assert.That(header.Version, Is.EqualTo(DataMovementConstants.JobPlanFile.SchemaVersion));
+            Assert.That(header.TransferId, Is.EqualTo(transferId));
+            Assert.That(header.ParentSourcePath, Is.EqualTo(CheckpointerTesting.DefaultWebSourcePath));
+            Assert.That(header.ParentDestinationPath, Is.EqualTo(CheckpointerTesting.DefaultWebDestinationPath));
         }
 
         [Test]
@@ -647,8 +647,8 @@ namespace Azure.Storage.DataMovement.Tests
             TransferStatus actualJobStatus = await transferCheckpointer.GetJobStatusAsync(transferId);
 
             // Assert
-            Assert.AreEqual(transferId, actualTransferId);
-            Assert.AreEqual(actualJobStatus, new TransferStatus());
+            Assert.That(actualTransferId, Is.EqualTo(transferId));
+            Assert.That(new TransferStatus(), Is.EqualTo(actualJobStatus));
         }
 
         [Test]
@@ -735,10 +735,10 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 BinaryReader reader = new BinaryReader(stream);
                 bool enumerationComplete = Convert.ToBoolean(reader.ReadByte());
-                Assert.IsTrue(enumerationComplete);
+                Assert.That(enumerationComplete, Is.True);
 
                 JobPlanStatus actualJobPlanStatus = (JobPlanStatus)reader.ReadInt32();
-                Assert.AreEqual(jobPlanStatus, actualJobPlanStatus);
+                Assert.That(actualJobPlanStatus, Is.EqualTo(jobPlanStatus));
             }
         }
 
@@ -759,7 +759,7 @@ namespace Azure.Storage.DataMovement.Tests
                     buffer: bytes,
                     bufferOffset: 0,
                     length: 1));
-            }
+        }
 
         [Test]
         public async Task SetJobTransferStatusAsync()

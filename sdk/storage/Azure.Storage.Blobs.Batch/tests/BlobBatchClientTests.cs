@@ -5,8 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
+using Azure.Storage.Blobs.Batch;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
@@ -15,9 +18,6 @@ using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
-using System.Text.RegularExpressions;
-using Azure.Core.TestFramework.Models;
-using Azure.Storage.Blobs.Batch;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -65,7 +65,7 @@ namespace Azure.Storage.Blobs.Test
             ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
                 async () => await client.SubmitBatchAsync(batch));
 
-            StringAssert.Contains("Cannot submit an empty batch", ex.Message);
+            Assert.That(ex.Message, Does.Contain("Cannot submit an empty batch"));
         }
 
         [RecordedTest]
@@ -78,8 +78,8 @@ namespace Azure.Storage.Blobs.Test
             // One over the limit
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await client.DeleteBlobsAsync(blobs));
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("ExceedsMaxBatchRequestCount", ex.ErrorCode);
+            Assert.That(ex.Status, Is.EqualTo(400));
+            Assert.That(ex.ErrorCode, Is.EqualTo("ExceedsMaxBatchRequestCount"));
 
             // The exact limit
             await client.DeleteBlobsAsync(blobs.Take(256).ToArray());
@@ -98,7 +98,7 @@ namespace Azure.Storage.Blobs.Test
                 () => batch.SetBlobAccessTier(uris[1], AccessTier.Cool));
             batch.Dispose();
 
-            StringAssert.Contains("already being used for Delete operations", ex.Message);
+            Assert.That(ex.Message, Does.Contain("already being used for Delete operations"));
         }
 
         [RecordedTest]
@@ -113,7 +113,7 @@ namespace Azure.Storage.Blobs.Test
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
                 () => batch.DeleteBlob(uris[1]));
 
-            StringAssert.Contains("already being used for SetAccessTier operations", ex.Message);
+            Assert.That(ex.Message, Does.Contain("already being used for SetAccessTier operations"));
         }
 
         [RecordedTest]
@@ -127,7 +127,7 @@ namespace Azure.Storage.Blobs.Test
             Response response = batch.DeleteBlob(uri);
             batch.Dispose();
 
-            Assert.AreEqual(0, response.Status);
+            Assert.That(response.Status, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -142,7 +142,7 @@ namespace Azure.Storage.Blobs.Test
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
                 () => { var _ = response.ClientRequestId; });
 
-            StringAssert.Contains("Cannot use the Response before calling BlobBatchClient.SubmitBatch", ex.Message);
+            Assert.That(ex.Message, Does.Contain("Cannot use the Response before calling BlobBatchClient.SubmitBatch"));
         }
 
         [RecordedTest]
@@ -186,7 +186,7 @@ namespace Azure.Storage.Blobs.Test
             ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
                 async () => await client2.SubmitBatchAsync(batch1));
 
-            StringAssert.Contains("BlobBatchClient used to create the BlobBatch must be used to submit it", ex.Message);
+            Assert.That(ex.Message, Does.Contain("BlobBatchClient used to create the BlobBatch must be used to submit it"));
         }
 
         [RecordedTest]
@@ -218,7 +218,7 @@ namespace Azure.Storage.Blobs.Test
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await client.DeleteBlobsAsync(blobs));
 
-            Assert.AreEqual(403, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(403));
         }
 
         [Test]
@@ -560,9 +560,9 @@ namespace Azure.Storage.Blobs.Test
                 async () => await client.SubmitBatchAsync(batch, throwOnAnyFailure: true));
 
             RequestFailedException ex = exes.InnerException as RequestFailedException;
-            Assert.IsNotNull(ex);
-            Assert.AreEqual(404, ex.Status);
-            Assert.IsTrue(BlobErrorCode.ContainerNotFound == ex.ErrorCode);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.Status, Is.EqualTo(404));
+            Assert.That(BlobErrorCode.ContainerNotFound, Is.EqualTo(ex.ErrorCode));
             await scenario.AssertDeleted(good);
         }
 
@@ -579,9 +579,9 @@ namespace Azure.Storage.Blobs.Test
                 async () => await client.DeleteBlobsAsync(uris));
 
             RequestFailedException ex = exes.InnerException as RequestFailedException;
-            Assert.IsNotNull(ex);
-            Assert.AreEqual(404, ex.Status);
-            Assert.IsTrue(BlobErrorCode.ContainerNotFound == ex.ErrorCode);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.Status, Is.EqualTo(404));
+            Assert.That(BlobErrorCode.ContainerNotFound, Is.EqualTo(ex.ErrorCode));
 
             await scenario.AssertDeleted(good);
         }
@@ -600,7 +600,7 @@ namespace Azure.Storage.Blobs.Test
             Response response3 = batch.DeleteBlob(bad[0]);
             Response response = await client.SubmitBatchAsync(batch, throwOnAnyFailure: false);
 
-            Assert.AreEqual(3, batch.RequestCount);
+            Assert.That(batch.RequestCount, Is.EqualTo(3));
             scenario.AssertStatus(202, response, response1, response2);
             scenario.AssertStatus(404, response3);
             await scenario.AssertDeleted(good);
@@ -621,9 +621,9 @@ namespace Azure.Storage.Blobs.Test
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
                 async () => await client.SubmitBatchAsync(batch, throwOnAnyFailure: true));
 
-            Assert.AreEqual(2, exes.InnerExceptions.Count);
-            Assert.AreEqual(404, (exes.InnerExceptions[0] as RequestFailedException)?.Status);
-            Assert.AreEqual(404, (exes.InnerExceptions[1] as RequestFailedException)?.Status);
+            Assert.That(exes.InnerExceptions.Count, Is.EqualTo(2));
+            Assert.That((exes.InnerExceptions[0] as RequestFailedException)?.Status, Is.EqualTo(404));
+            Assert.That((exes.InnerExceptions[1] as RequestFailedException)?.Status, Is.EqualTo(404));
             await scenario.AssertDeleted(good);
         }
 
@@ -639,9 +639,9 @@ namespace Azure.Storage.Blobs.Test
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
                 async () => await client.DeleteBlobsAsync(uris));
 
-            Assert.AreEqual(2, exes.InnerExceptions.Count);
-            Assert.AreEqual(404, (exes.InnerExceptions[0] as RequestFailedException)?.Status);
-            Assert.AreEqual(404, (exes.InnerExceptions[1] as RequestFailedException)?.Status);
+            Assert.That(exes.InnerExceptions.Count, Is.EqualTo(2));
+            Assert.That((exes.InnerExceptions[0] as RequestFailedException)?.Status, Is.EqualTo(404));
+            Assert.That((exes.InnerExceptions[1] as RequestFailedException)?.Status, Is.EqualTo(404));
             await scenario.AssertDeleted(good);
         }
 
@@ -679,11 +679,11 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blobBatchClient.SubmitBatchAsync(batch),
-                e => Assert.AreEqual(
-                    _serviceVersion >= BlobClientOptions.ServiceVersion.V2019_12_12 ?
+                e => Assert.That(
+                    e.ErrorCode,
+                    Is.EqualTo(_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_12_12 ?
                         BlobErrorCode.NoAuthenticationInformation.ToString() :
-                        BlobErrorCode.AuthenticationFailed.ToString(),
-                    e.ErrorCode));
+                        BlobErrorCode.AuthenticationFailed.ToString())));
         }
         #endregion Delete
 
@@ -936,9 +936,9 @@ namespace Azure.Storage.Blobs.Test
                 async () => await client.SubmitBatchAsync(batch, throwOnAnyFailure: true));
 
             RequestFailedException ex = exes.InnerException as RequestFailedException;
-            Assert.IsNotNull(ex);
-            Assert.AreEqual(404, ex.Status);
-            Assert.IsTrue(BlobErrorCode.ContainerNotFound == ex.ErrorCode);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.Status, Is.EqualTo(404));
+            Assert.That(BlobErrorCode.ContainerNotFound, Is.EqualTo(ex.ErrorCode));
             await scenario.AssertTiers(AccessTier.Cool, good);
         }
 
@@ -955,9 +955,9 @@ namespace Azure.Storage.Blobs.Test
                 async () => await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool));
 
             RequestFailedException ex = exes.InnerException as RequestFailedException;
-            Assert.IsNotNull(ex);
-            Assert.AreEqual(404, ex.Status);
-            Assert.IsTrue(BlobErrorCode.ContainerNotFound == ex.ErrorCode);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.Status, Is.EqualTo(404));
+            Assert.That(BlobErrorCode.ContainerNotFound, Is.EqualTo(ex.ErrorCode));
 
             await scenario.AssertTiers(AccessTier.Cool, good);
         }
@@ -997,9 +997,9 @@ namespace Azure.Storage.Blobs.Test
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
                 async () => await client.SubmitBatchAsync(batch, throwOnAnyFailure: true));
 
-            Assert.AreEqual(2, exes.InnerExceptions.Count);
-            Assert.AreEqual(404, (exes.InnerExceptions[0] as RequestFailedException)?.Status);
-            Assert.AreEqual(404, (exes.InnerExceptions[1] as RequestFailedException)?.Status);
+            Assert.That(exes.InnerExceptions.Count, Is.EqualTo(2));
+            Assert.That((exes.InnerExceptions[0] as RequestFailedException)?.Status, Is.EqualTo(404));
+            Assert.That((exes.InnerExceptions[1] as RequestFailedException)?.Status, Is.EqualTo(404));
             await scenario.AssertTiers(AccessTier.Cool, good);
         }
 
@@ -1015,9 +1015,9 @@ namespace Azure.Storage.Blobs.Test
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
                 async () => await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool));
 
-            Assert.AreEqual(2, exes.InnerExceptions.Count);
-            Assert.AreEqual(404, (exes.InnerExceptions[0] as RequestFailedException)?.Status);
-            Assert.AreEqual(404, (exes.InnerExceptions[1] as RequestFailedException)?.Status);
+            Assert.That(exes.InnerExceptions.Count, Is.EqualTo(2));
+            Assert.That((exes.InnerExceptions[0] as RequestFailedException)?.Status, Is.EqualTo(404));
+            Assert.That((exes.InnerExceptions[1] as RequestFailedException)?.Status, Is.EqualTo(404));
             await scenario.AssertTiers(AccessTier.Cool, good);
         }
 
@@ -1078,7 +1078,7 @@ namespace Azure.Storage.Blobs.Test
                 responses[2] = batch.DeleteBlob(blobs[2].Uri);
                 response = await client.SubmitBatchAsync(batch);
                 batch.Dispose();
-                Assert.AreEqual(3, batch.RequestCount);
+                Assert.That(batch.RequestCount, Is.EqualTo(3));
             }
             scenario.AssertStatus(202, response);
             scenario.AssertStatus(202, responses);
@@ -1147,11 +1147,11 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blobBatchClient.SubmitBatchAsync(batch),
-                e => Assert.AreEqual(
-                    _serviceVersion >= BlobClientOptions.ServiceVersion.V2019_12_12 ?
+                e => Assert.That(
+                    e.ErrorCode,
+                    Is.EqualTo(_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_12_12 ?
                         BlobErrorCode.NoAuthenticationInformation.ToString() :
-                        BlobErrorCode.AuthenticationFailed.ToString(),
-                    e.ErrorCode));
+                        BlobErrorCode.AuthenticationFailed.ToString())));
         }
         #endregion SetBlobAccessTier
 
@@ -1183,7 +1183,7 @@ namespace Azure.Storage.Blobs.Test
                 return test.Container;
             }
 
-            public async Task<BlobClient[]> CreateBlobsAsync(BlobContainerClient container, int count, string prefix="blob")
+            public async Task<BlobClient[]> CreateBlobsAsync(BlobContainerClient container, int count, string prefix = "blob")
             {
                 BlobClient[] blobs = new BlobClient[count];
                 for (int i = 0; i < count; i++)
@@ -1205,7 +1205,7 @@ namespace Azure.Storage.Blobs.Test
                 return blobs;
             }
 
-            public async Task<BlobClient[]> CreateBlobsAsync(int count, string prefix="blob") =>
+            public async Task<BlobClient[]> CreateBlobsAsync(int count, string prefix = "blob") =>
                 await CreateBlobsAsync(await CreateContainerAsync(), count, prefix);
 
             public async Task<BlockBlobClient[]> CreateBlockBlobsAsync(int count) =>
@@ -1256,7 +1256,7 @@ namespace Azure.Storage.Blobs.Test
                 try
                 {
                     BlobProperties properties = await blob.GetPropertiesAsync();
-                    Assert.AreEqual(tier.ToString(), properties.AccessTier.ToString());
+                    Assert.That(properties.AccessTier.ToString(), Is.EqualTo(tier.ToString()));
                 }
                 catch (RequestFailedException)
                 {
@@ -1268,7 +1268,7 @@ namespace Azure.Storage.Blobs.Test
                 try
                 {
                     BlobProperties properties = await blob.GetPropertiesAsync();
-                    Assert.AreEqual(tier.ToString(), properties.AccessTier.ToString());
+                    Assert.That(properties.AccessTier.ToString(), Is.EqualTo(tier.ToString()));
                 }
                 catch (RequestFailedException)
                 {
@@ -1282,7 +1282,7 @@ namespace Azure.Storage.Blobs.Test
                 Task.WhenAll(blobs.Select(b => AssertTiers(tier, b)));
 
             public void AssertStatus(int status, params Response[] responses) =>
-                Assert.IsTrue(responses.All(r => r.Status == status));
+                Assert.That(responses.All(r => r.Status == status), Is.True);
 
             public async ValueTask DisposeAsync()
             {

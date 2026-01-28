@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Test
         public void DelayedResponseToStringDoesntThrow()
         {
             DelayedResponse delayedResponse = new DelayedResponse(new HttpMessage(new MockRequest(), new ResponseClassifier()));
-            Assert.AreEqual("Status: NotSent, the batch has not been submitted yet", delayedResponse.ToString());
+            Assert.That(delayedResponse.ToString(), Is.EqualTo("Status: NotSent, the batch has not been submitted yet"));
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Test
         {
             DelayedResponse delayedResponse = new DelayedResponse(new HttpMessage(new MockRequest(), new ResponseClassifier()));
             delayedResponse.SetLiveResponse(new MockResponse(200, "Yay"), false);
-            Assert.AreEqual("Status: 200, ReasonPhrase: Yay", delayedResponse.ToString());
+            Assert.That(delayedResponse.ToString(), Is.EqualTo("Status: 200, ReasonPhrase: Yay"));
         }
     }
 }

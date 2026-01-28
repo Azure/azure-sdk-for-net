@@ -79,7 +79,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             cryptoClient = InstrumentClient(cryptoClient);
 
-            Assert.IsNotNull(cryptoClient);
+            Assert.That(cryptoClient, Is.Not.Null);
 
             byte[] toWrap = new byte[32];
 
@@ -89,7 +89,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             UnwrapResult unwrapResult = await cryptoClient.UnwrapKeyAsync(KeyWrapAlgorithm.RsaOaep, wrapResult.EncryptedKey);
 
-            CollectionAssert.AreEqual(toWrap, unwrapResult.Key);
+            Assert.That(unwrapResult.Key, Is.EqualTo(toWrap).AsCollection);
         }
 
         [RecordedTest]
@@ -117,7 +117,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             cryptoClient = InstrumentClient(cryptoClient);
 
-            Assert.IsNotNull(cryptoClient);
+            Assert.That(cryptoClient, Is.Not.Null);
 
             byte[] toWrap = new byte[32];
 
@@ -127,7 +127,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             UnwrapResult unwrapResult = await cryptoClient.UnwrapKeyAsync(KeyWrapAlgorithm.A256KW, wrapResult.EncryptedKey);
 
-            CollectionAssert.AreEqual(toWrap, unwrapResult.Key);
+            Assert.That(unwrapResult.Key, Is.EqualTo(toWrap).AsCollection);
         }
 
         [RecordedTest]
@@ -141,7 +141,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             IKeyEncryptionKey kek = await ((IKeyEncryptionKeyResolver)Resolver).ResolveAsync(key.Id.ToString());
 
-            Assert.IsNotNull(kek);
+            Assert.That(kek, Is.Not.Null);
         }
     }
 }

@@ -41,97 +41,97 @@ namespace Azure.Core.Amqp.Tests
             message.Properties.To = new AmqpAddress("to");
             message.Properties.UserId = Encoding.UTF8.GetBytes("userId");
 
-            Assert.AreEqual(AmqpMessageBodyType.Data, message.Body.BodyType);
-            Assert.IsTrue(message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> body));
-            Assert.AreEqual("some data", Encoding.UTF8.GetString(body.First().ToArray()));
-            Assert.AreEqual("applicationValue", message.ApplicationProperties["applicationKey"]);
-            Assert.AreEqual("deliveryValue", message.DeliveryAnnotations["deliveryKey"]);
-            Assert.AreEqual("messageValue", message.MessageAnnotations["messageKey"]);
-            Assert.AreEqual("footerValue", message.Footer["footerKey"]);
-            Assert.AreEqual(1, message.Header.DeliveryCount);
-            Assert.IsTrue(message.Header.Durable);
-            Assert.IsTrue(message.Header.FirstAcquirer);
-            Assert.AreEqual(1, message.Header.Priority);
-            Assert.AreEqual(TimeSpan.FromSeconds(60), message.Header.TimeToLive);
-            Assert.AreEqual(time, message.Properties.AbsoluteExpiryTime);
-            Assert.AreEqual("compress", message.Properties.ContentEncoding);
-            Assert.AreEqual("application/json", message.Properties.ContentType);
-            Assert.AreEqual("correlationId", message.Properties.CorrelationId.ToString());
-            Assert.AreEqual(time, message.Properties.CreationTime);
-            Assert.AreEqual("groupId", message.Properties.GroupId);
-            Assert.AreEqual(5, message.Properties.GroupSequence);
-            Assert.AreEqual("messageId", message.Properties.MessageId.ToString());
-            Assert.AreEqual("replyTo", message.Properties.ReplyTo.ToString());
-            Assert.AreEqual("replyToGroupId", message.Properties.ReplyToGroupId);
-            Assert.AreEqual("subject", message.Properties.Subject);
-            Assert.AreEqual("to", message.Properties.To.ToString());
-            Assert.AreEqual("userId", Encoding.UTF8.GetString(message.Properties.UserId.Value.ToArray()));
+            Assert.That(message.Body.BodyType, Is.EqualTo(AmqpMessageBodyType.Data));
+            Assert.That(message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> body), Is.True);
+            Assert.That(Encoding.UTF8.GetString(body.First().ToArray()), Is.EqualTo("some data"));
+            Assert.That(message.ApplicationProperties["applicationKey"], Is.EqualTo("applicationValue"));
+            Assert.That(message.DeliveryAnnotations["deliveryKey"], Is.EqualTo("deliveryValue"));
+            Assert.That(message.MessageAnnotations["messageKey"], Is.EqualTo("messageValue"));
+            Assert.That(message.Footer["footerKey"], Is.EqualTo("footerValue"));
+            Assert.That(message.Header.DeliveryCount, Is.EqualTo(1));
+            Assert.That(message.Header.Durable, Is.True);
+            Assert.That(message.Header.FirstAcquirer, Is.True);
+            Assert.That(message.Header.Priority, Is.EqualTo(1));
+            Assert.That(message.Header.TimeToLive, Is.EqualTo(TimeSpan.FromSeconds(60)));
+            Assert.That(message.Properties.AbsoluteExpiryTime, Is.EqualTo(time));
+            Assert.That(message.Properties.ContentEncoding, Is.EqualTo("compress"));
+            Assert.That(message.Properties.ContentType, Is.EqualTo("application/json"));
+            Assert.That(message.Properties.CorrelationId.ToString(), Is.EqualTo("correlationId"));
+            Assert.That(message.Properties.CreationTime, Is.EqualTo(time));
+            Assert.That(message.Properties.GroupId, Is.EqualTo("groupId"));
+            Assert.That(message.Properties.GroupSequence, Is.EqualTo(5));
+            Assert.That(message.Properties.MessageId.ToString(), Is.EqualTo("messageId"));
+            Assert.That(message.Properties.ReplyTo.ToString(), Is.EqualTo("replyTo"));
+            Assert.That(message.Properties.ReplyToGroupId, Is.EqualTo("replyToGroupId"));
+            Assert.That(message.Properties.Subject, Is.EqualTo("subject"));
+            Assert.That(message.Properties.To.ToString(), Is.EqualTo("to"));
+            Assert.That(Encoding.UTF8.GetString(message.Properties.UserId.Value.ToArray()), Is.EqualTo("userId"));
         }
 
         [Test]
         public void HeaderIsCreatedOnDemand()
         {
             var message = new AmqpAnnotatedMessage(EmptyDataBody);
-            Assert.False(message.HasSection(AmqpMessageSection.Header));
+            Assert.That(message.HasSection(AmqpMessageSection.Header), Is.False);
 
             message.Header.DeliveryCount = 99;
-            Assert.True(message.HasSection(AmqpMessageSection.Header));
-            Assert.NotNull(message.Header);
+            Assert.That(message.HasSection(AmqpMessageSection.Header), Is.True);
+            Assert.That(message.Header, Is.Not.Null);
         }
 
         [Test]
         public void DeliveryAnnotationsAreCreatedOnDemand()
         {
             var message = new AmqpAnnotatedMessage(EmptyDataBody);
-            Assert.False(message.HasSection(AmqpMessageSection.DeliveryAnnotations));
+            Assert.That(message.HasSection(AmqpMessageSection.DeliveryAnnotations), Is.False);
 
             message.DeliveryAnnotations.Add("test", new object());
-            Assert.True(message.HasSection(AmqpMessageSection.DeliveryAnnotations));
-            Assert.NotNull(message.DeliveryAnnotations);
+            Assert.That(message.HasSection(AmqpMessageSection.DeliveryAnnotations), Is.True);
+            Assert.That(message.DeliveryAnnotations, Is.Not.Null);
         }
 
         [Test]
         public void MessageAnnotationsAreCreatedOnDemand()
         {
             var message = new AmqpAnnotatedMessage(EmptyDataBody);
-            Assert.False(message.HasSection(AmqpMessageSection.MessageAnnotations));
+            Assert.That(message.HasSection(AmqpMessageSection.MessageAnnotations), Is.False);
 
             message.MessageAnnotations.Add("test", new object());
-            Assert.True(message.HasSection(AmqpMessageSection.MessageAnnotations));
-            Assert.NotNull(message.MessageAnnotations);
+            Assert.That(message.HasSection(AmqpMessageSection.MessageAnnotations), Is.True);
+            Assert.That(message.MessageAnnotations, Is.Not.Null);
         }
 
         [Test]
         public void PropertiesAreCreatedOnDemand()
         {
             var message = new AmqpAnnotatedMessage(EmptyDataBody);
-            Assert.False(message.HasSection(AmqpMessageSection.Properties));
+            Assert.That(message.HasSection(AmqpMessageSection.Properties), Is.False);
 
             message.Properties.ContentType = "test/unit";
-            Assert.True(message.HasSection(AmqpMessageSection.Properties));
-            Assert.NotNull(message.Properties);
+            Assert.That(message.HasSection(AmqpMessageSection.Properties), Is.True);
+            Assert.That(message.Properties, Is.Not.Null);
         }
 
         [Test]
         public void ApplicationPropertiesAreCreatedOnDemand()
         {
             var message = new AmqpAnnotatedMessage(EmptyDataBody);
-            Assert.False(message.HasSection(AmqpMessageSection.ApplicationProperties));
+            Assert.That(message.HasSection(AmqpMessageSection.ApplicationProperties), Is.False);
 
             message.ApplicationProperties.Add("test", new object());
-            Assert.True(message.HasSection(AmqpMessageSection.ApplicationProperties));
-            Assert.NotNull(message.ApplicationProperties);
+            Assert.That(message.HasSection(AmqpMessageSection.ApplicationProperties), Is.True);
+            Assert.That(message.ApplicationProperties, Is.Not.Null);
         }
 
         [Test]
         public void FooterIsCreatedOnDemand()
         {
             var message = new AmqpAnnotatedMessage(EmptyDataBody);
-            Assert.False(message.HasSection(AmqpMessageSection.Footer));
+            Assert.That(message.HasSection(AmqpMessageSection.Footer), Is.False);
 
             message.Footer.Add("test", new object());
-            Assert.True(message.HasSection(AmqpMessageSection.Footer));
-            Assert.NotNull(message.Footer);
+            Assert.That(message.HasSection(AmqpMessageSection.Footer), Is.True);
+            Assert.That(message.Footer, Is.Not.Null);
         }
 
         [Test]
@@ -140,10 +140,10 @@ namespace Azure.Core.Amqp.Tests
             var message = new AmqpAnnotatedMessage(EmptyDataBody);
 
             message.Body = null;
-            Assert.False(message.HasSection(AmqpMessageSection.Body));
+            Assert.That(message.HasSection(AmqpMessageSection.Body), Is.False);
 
             message.Body = AmqpMessageBody.FromValue("this is a string value");
-            Assert.True(message.HasSection(AmqpMessageSection.Body));
+            Assert.That(message.HasSection(AmqpMessageSection.Body), Is.True);
         }
 
         [Test]

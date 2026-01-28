@@ -46,9 +46,9 @@ namespace Azure.Core.Tests
             var doc = JsonDocument.Parse(response.Content.ToMemory());
             var name = doc.RootElement.GetProperty("name").GetString();
 
-            Assert.AreEqual(200, response.Status);
-            Assert.AreEqual("snoopy", name);
-            Assert.AreEqual("beagle", doc.RootElement.GetProperty("species").GetString());
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(name, Is.EqualTo("snoopy"));
+            Assert.That(doc.RootElement.GetProperty("species").GetString(), Is.EqualTo("beagle"));
         }
 
         [Test]
@@ -64,8 +64,8 @@ namespace Azure.Core.Tests
 
             Pet pet = await client.GetPetAsync("pet1");
 
-            Assert.AreEqual("snoopy", pet.Name);
-            Assert.AreEqual("beagle", pet.Species);
+            Assert.That(pet.Name, Is.EqualTo("snoopy"));
+            Assert.That(pet.Species, Is.EqualTo("beagle"));
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace Azure.Core.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual(404, e.Status);
+                Assert.That(e.Status, Is.EqualTo(404));
                 Assert.That(() => e.Message.StartsWith("Service request failed."));
                 Assert.That(() => e.ErrorCode.StartsWith("MockStatusCode"));
             }
@@ -146,7 +146,7 @@ namespace Azure.Core.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual(404, e.Status);
+                Assert.That(e.Status, Is.EqualTo(404));
                 Assert.That(() => e.Message.StartsWith("Service request failed."));
                 Assert.That(() => e.ErrorCode.StartsWith("MockStatusCode"));
             }
@@ -171,7 +171,7 @@ namespace Azure.Core.Tests
                 response = await client.GetPetAsync("snoopy", context);
             });
 
-            Assert.AreEqual(404, response.Status);
+            Assert.That(response.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -192,9 +192,9 @@ namespace Azure.Core.Tests
                 });
             var doc = JsonDocument.Parse(response.Content.ToMemory());
 
-            Assert.AreEqual(200, response.Status);
-            Assert.AreEqual("snoopy", doc.RootElement.GetProperty("name").GetString());
-            Assert.AreEqual("beagle", doc.RootElement.GetProperty("species").GetString());
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(doc.RootElement.GetProperty("name").GetString(), Is.EqualTo("snoopy"));
+            Assert.That(doc.RootElement.GetProperty("species").GetString(), Is.EqualTo("beagle"));
         }
 
         [Test]
@@ -230,7 +230,7 @@ namespace Azure.Core.Tests
             Response response = await client.GetPetAsync("pet1", context);
             #endregion
 
-            Assert.AreEqual(404, response.Status);
+            Assert.That(response.Status, Is.EqualTo(404));
         }
 
         #region Helpers

@@ -57,8 +57,8 @@ namespace Azure.Identity.Tests
 
             var token = await credential.GetTokenAsync(context, default);
 
-            Assert.AreEqual(token.Token, expectedToken);
-            Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
+            Assert.That(expectedToken, Is.EqualTo(token.Token));
+            Assert.That(expectedExpiresOn, Is.EqualTo(token.ExpiresOn));
             if (expectedTenantId != null)
             {
                 Assert.That(testProcess.StartInfo.Arguments, Does.Contain(expectedTenantId));
@@ -75,8 +75,8 @@ namespace Azure.Identity.Tests
             var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess1, testProcess2)));
             var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None);
 
-            Assert.AreEqual(token.Token, expectedToken);
-            Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
+            Assert.That(expectedToken, Is.EqualTo(token.Token));
+            Assert.That(expectedExpiresOn, Is.EqualTo(token.ExpiresOn));
         }
 
         [Test]
@@ -109,8 +109,8 @@ namespace Azure.Identity.Tests
             var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, testProcessFactory));
             var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None);
 
-            Assert.AreEqual(token.Token, expectedToken);
-            Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
+            Assert.That(expectedToken, Is.EqualTo(token.Token));
+            Assert.That(expectedExpiresOn, Is.EqualTo(token.ExpiresOn));
         }
 
         [Test]
@@ -126,8 +126,8 @@ namespace Azure.Identity.Tests
 
             var token = await credential.GetTokenAsync(context, default);
 
-            Assert.AreEqual(token.Token, expectedToken);
-            Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
+            Assert.That(expectedToken, Is.EqualTo(token.Token));
+            Assert.That(expectedExpiresOn, Is.EqualTo(token.ExpiresOn));
 
             // Ensure that the argument from the json file comes first
             Assert.That(testProcess.StartInfo.Arguments, Does.StartWith("2064"));
@@ -279,7 +279,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio(0, 1);
             VisualStudioCredential credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, processService, new VisualStudioCredentialOptions() { ProcessTimeout = TimeSpan.Zero }));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), CancellationToken.None));
-            Assert.True(ex.Message.Contains("has failed to get access token in 0 seconds."));
+            Assert.That(ex.Message.Contains("has failed to get access token in 0 seconds."), Is.True);
         }
 
         [Test]

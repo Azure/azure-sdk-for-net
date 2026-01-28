@@ -2,18 +2,17 @@
 // Licensed under the MIT License.
 extern alias BaseShares;
 extern alias DMShare;
-
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Tests;
-using BaseShares::Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using NUnit.Framework;
-using System.Threading;
-using Azure.Core.TestFramework;
-using BaseShares::Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -114,8 +113,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert hardlink was successfully created
             ShareFileProperties sourceProperties = await hardlinkClient.GetPropertiesAsync();
-            Assert.AreEqual(2, sourceProperties.PosixProperties.LinkCount);
-            Assert.AreEqual(NfsFileType.Regular, sourceProperties.PosixProperties.FileType);
+            Assert.That(sourceProperties.PosixProperties.LinkCount, Is.EqualTo(2));
+            Assert.That(sourceProperties.PosixProperties.FileType, Is.EqualTo(NfsFileType.Regular));
 
             // Use the hardlink to create the source file
             StorageResource sourceResource = new ShareFileStorageResource(hardlinkClient,
@@ -141,18 +140,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer, Is.Not.Null);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             await testEventsRaised.AssertSingleCompletedCheck();
 
             // Assert dest was copied as regular file
             bool destExists = File.Exists(destinationResource.Uri.LocalPath);
-            Assert.IsTrue(destExists);
+            Assert.That(destExists, Is.True);
             using Stream sourceStream = await hardlinkClient.OpenReadAsync();
             using Stream destinationStream = File.OpenRead(destinationResource.Uri.LocalPath);
-            Assert.AreEqual(sourceStream.Length, destinationStream.Length);
-            Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
+            Assert.That(destinationStream.Length, Is.EqualTo(sourceStream.Length));
+            Assert.That(StreamsAreEqual(sourceStream, destinationStream), Is.True);
         }
 
         [RecordedTest]
@@ -175,8 +174,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert symlink was successfully created
             ShareFileProperties sourceProperties = await symlinkClient.GetPropertiesAsync();
-            Assert.AreEqual(1, sourceProperties.PosixProperties.LinkCount);
-            Assert.AreEqual(NfsFileType.SymLink, sourceProperties.PosixProperties.FileType);
+            Assert.That(sourceProperties.PosixProperties.LinkCount, Is.EqualTo(1));
+            Assert.That(sourceProperties.PosixProperties.FileType, Is.EqualTo(NfsFileType.SymLink));
 
             // Use the symlink to create the source file
             StorageResourceItem sourceResource = new ShareFileStorageResource(symlinkClient,
@@ -202,14 +201,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer, Is.Not.Null);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             await testEventsRaised.AssertSingleCompletedCheck();
 
             // Assert the Symlink was skipped and not copied
             bool destExists = File.Exists(destinationResource.Uri.LocalPath);
-            Assert.IsFalse(destExists);
+            Assert.That(destExists, Is.False);
         }
     }
 }
