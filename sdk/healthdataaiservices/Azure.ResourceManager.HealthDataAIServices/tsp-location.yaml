@@ -1,6 +1,6 @@
 directory: specification/healthdataaiservices/HealthDataAIServices.Management
-commit: 10bf25aa5a3f2a6f1b0b27e9ead67c1c3a8df728
-repo: Azure/azure-rest-api-specs-pr
+commit: ronniegeraghty/azsdktoolsagent-demo-7
+repo: Azure/azure-rest-api-specs
 additionalDirectories:
 
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
