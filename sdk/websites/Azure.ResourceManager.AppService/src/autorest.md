@@ -70,6 +70,7 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettingsV2
 
 request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}: CertificateOrderDetector
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}: WebSite
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: WebSiteWebJob
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp: WebSiteFtpPublishingCredentialsPolicy
@@ -854,14 +855,7 @@ directive:
     transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
 # Enum rename
   - from: swagger-document
-    where: $.definitions.AppServiceCertificateOrder.properties.properties.properties.appServiceCertificateNotRenewableReasons.items
-    transform: >
-      $["x-ms-enum"]={
-            "name": "AppServiceCertificateNotRenewableReason",
-            "modelAsString": true
-          }
-  - from: swagger-document
-    where: $.definitions.AppServiceCertificateOrderPatchResource.properties.properties.properties.appServiceCertificateNotRenewableReasons.items
+    where: $.definitions.ResourceNotRenewableReason
     transform: >
       $["x-ms-enum"]={
             "name": "AppServiceCertificateNotRenewableReason",

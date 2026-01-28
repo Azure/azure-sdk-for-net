@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService
         {
             NameServers = new ChangeTrackingList<string>();
             ManagedHostNames = new ChangeTrackingList<AppServiceHostName>();
-            DomainNotRenewableReasons = new ChangeTrackingList<ResourceNotRenewableReason>();
+            DomainNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDomainData"/>. </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"> Authorization code for the domain. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isDnsRecordManagementReady, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<ResourceNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, string dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServiceDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isDnsRecordManagementReady, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<AppServiceCertificateNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, string dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ContactAdmin = contactAdmin;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService
         public DomainPurchaseConsent Consent { get; set; }
         /// <summary> Reasons why domain is not renewable. </summary>
         [WirePath("properties.domainNotRenewableReasons")]
-        public IReadOnlyList<ResourceNotRenewableReason> DomainNotRenewableReasons { get; }
+        public IReadOnlyList<AppServiceCertificateNotRenewableReason> DomainNotRenewableReasons { get; }
         /// <summary> Current DNS type. </summary>
         [WirePath("properties.dnsType")]
         public AppServiceDnsType? DnsType { get; set; }

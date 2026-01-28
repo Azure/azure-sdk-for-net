@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService
         public AppServiceCertificateOrderData(AzureLocation location) : base(location)
         {
             Certificates = new ChangeTrackingDictionary<string, AppServiceCertificateProperties>();
-            AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<ResourceNotRenewableReason>();
+            AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceCertificateOrderData"/>. </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextAutoRenewTimeStamp"> Time stamp when the certificate would be auto renewed next. </param>
         /// <param name="contact"> Contact info. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, IDictionary<string, AppServiceCertificateProperties> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? isAutoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, AppServiceCertificateDetails signedCertificate, string csr, AppServiceCertificateDetails intermediate, AppServiceCertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuedOn, DateTimeOffset? expireOn, bool? isPrivateKeyExternal, IReadOnlyList<ResourceNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewTimeStamp, CertificateOrderContact contact, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, IDictionary<string, AppServiceCertificateProperties> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? isAutoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, AppServiceCertificateDetails signedCertificate, string csr, AppServiceCertificateDetails intermediate, AppServiceCertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuedOn, DateTimeOffset? expireOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewTimeStamp, CertificateOrderContact contact, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Certificates = certificates;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppService
         public bool? IsPrivateKeyExternal { get; }
         /// <summary> Reasons why App Service Certificate is not renewable at the current moment. </summary>
         [WirePath("properties.appServiceCertificateNotRenewableReasons")]
-        public IReadOnlyList<ResourceNotRenewableReason> AppServiceCertificateNotRenewableReasons { get; }
+        public IReadOnlyList<AppServiceCertificateNotRenewableReason> AppServiceCertificateNotRenewableReasons { get; }
         /// <summary> Time stamp when the certificate would be auto renewed next. </summary>
         [WirePath("properties.nextAutoRenewalTimeStamp")]
         public DateTimeOffset? NextAutoRenewTimeStamp { get; }

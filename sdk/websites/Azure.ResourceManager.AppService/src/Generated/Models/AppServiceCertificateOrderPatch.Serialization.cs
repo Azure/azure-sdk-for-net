@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService.Models
             DateTimeOffset? lastCertificateIssuanceTime = default;
             DateTimeOffset? expirationTime = default;
             bool? isPrivateKeyExternal = default;
-            IReadOnlyList<ResourceNotRenewableReason> appServiceCertificateNotRenewableReasons = default;
+            IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default;
             DateTimeOffset? nextAutoRenewalTimeStamp = default;
             CertificateOrderContact contact = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -394,10 +394,10 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            List<ResourceNotRenewableReason> array = new List<ResourceNotRenewableReason>();
+                            List<AppServiceCertificateNotRenewableReason> array = new List<AppServiceCertificateNotRenewableReason>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new ResourceNotRenewableReason(item.GetString()));
+                                array.Add(new AppServiceCertificateNotRenewableReason(item.GetString()));
                             }
                             appServiceCertificateNotRenewableReasons = array;
                             continue;
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.AppService.Models
                 lastCertificateIssuanceTime,
                 expirationTime,
                 isPrivateKeyExternal,
-                appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<ResourceNotRenewableReason>(),
+                appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
                 nextAutoRenewalTimeStamp,
                 contact,
                 kind,
