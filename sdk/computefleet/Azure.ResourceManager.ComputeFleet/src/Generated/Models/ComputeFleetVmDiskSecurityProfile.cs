@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary>
-    /// Specifies the security profile settings for the managed disk. **Note:** It can
+    /// Specifies the security profile settings for the managed disk. <b>Note:</b> It can
     /// only be set for Confidential VMs.
     /// </summary>
     public partial class ComputeFleetVmDiskSecurityProfile
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// DiskWithVMGuestState for encryption of the managed disk along with VMGuestState
         /// blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and
         /// NonPersistedTPM for not persisting firmware state in the VMGuestState blob..
-        /// **Note:** It can be set for only Confidential VMs.
+        /// <b>Note:</b> It can be set for only Confidential VMs.
         /// </param>
         /// <param name="diskEncryptionSet">
         /// Specifies the customer managed disk encryption set resource id for the managed
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// DiskWithVMGuestState for encryption of the managed disk along with VMGuestState
         /// blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and
         /// NonPersistedTPM for not persisting firmware state in the VMGuestState blob..
-        /// **Note:** It can be set for only Confidential VMs.
+        /// <b>Note:</b> It can be set for only Confidential VMs.
         /// </summary>
         public ComputeFleetSecurityEncryptionType? SecurityEncryptionType { get; set; }
 

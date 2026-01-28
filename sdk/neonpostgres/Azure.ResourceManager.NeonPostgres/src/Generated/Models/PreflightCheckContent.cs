@@ -13,13 +13,9 @@ namespace Azure.ResourceManager.NeonPostgres.Models
 {
     /// <summary>
     /// Preflight check parameters for branch and child resources.
-    /// 
     /// IMPORTANT: Only one of the property types (branchProperties, roleProperties, databaseProperties,
     /// or endpointProperties) should be provided at a time, based on the entityType value:
-    /// - When entityType is "branch", provide only branchProperties
-    /// - When entityType is "role", provide only roleProperties
-    /// - When entityType is "database", provide only databaseProperties
-    /// - When entityType is "endpoint", provide only endpointProperties
+    /// <list type="bullet"><item><description>When entityType is "branch", provide only branchProperties</description></item><item><description>When entityType is "role", provide only roleProperties</description></item><item><description>When entityType is "database", provide only databaseProperties</description></item><item><description>When entityType is "endpoint", provide only endpointProperties</description></item></list>
     /// </summary>
     public partial class PreflightCheckContent
     {

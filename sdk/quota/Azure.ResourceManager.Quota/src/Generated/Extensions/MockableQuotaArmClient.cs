@@ -123,8 +123,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,8 +141,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,8 +176,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -197,8 +194,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,7 +225,7 @@ namespace Azure.ResourceManager.Quota.Mocking
             return new QuotaRequestDetailCollection(Client, scope);
         }
 
-        /// <summary> Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation. </summary>
+        /// <summary> Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID <b>id</b> is returned in the response of the PUT operation. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -243,7 +239,7 @@ namespace Azure.ResourceManager.Quota.Mocking
             return GetQuotaRequestDetails(scope).Get(id, cancellationToken);
         }
 
-        /// <summary> Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation. </summary>
+        /// <summary> Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID <b>id</b> is returned in the response of the PUT operation. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

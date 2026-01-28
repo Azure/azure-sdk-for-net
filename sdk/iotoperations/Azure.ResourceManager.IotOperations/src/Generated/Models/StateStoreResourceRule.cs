@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Initializes a new instance of <see cref="StateStoreResourceRule"/>. </summary>
         /// <param name="keyType"> Allowed keyTypes pattern, string, binary. The key type used for matching, for example pattern tries to match the key to a glob-style pattern and string checks key is equal to value provided in keys. </param>
-        /// <param name="keys"> Give access to state store keys for the corresponding principals defined. When key type is pattern set glob-style pattern (e.g., '*', 'clients/*'). </param>
+        /// <param name="keys"> Give access to state store keys for the corresponding principals defined. When key type is pattern set glob-style pattern (e.g., '<i>', 'clients/</i>'). </param>
         /// <param name="method"> Give access for `Read`, `Write` and `ReadWrite` access level. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keys"/> is null. </exception>
         public StateStoreResourceRule(StateStoreResourceKeyType keyType, IEnumerable<string> keys, StateStoreResourceDefinitionMethod @method)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Initializes a new instance of <see cref="StateStoreResourceRule"/>. </summary>
         /// <param name="keyType"> Allowed keyTypes pattern, string, binary. The key type used for matching, for example pattern tries to match the key to a glob-style pattern and string checks key is equal to value provided in keys. </param>
-        /// <param name="keys"> Give access to state store keys for the corresponding principals defined. When key type is pattern set glob-style pattern (e.g., '*', 'clients/*'). </param>
+        /// <param name="keys"> Give access to state store keys for the corresponding principals defined. When key type is pattern set glob-style pattern (e.g., '<i>', 'clients/</i>'). </param>
         /// <param name="method"> Give access for `Read`, `Write` and `ReadWrite` access level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal StateStoreResourceRule(StateStoreResourceKeyType keyType, IList<string> keys, StateStoreResourceDefinitionMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Allowed keyTypes pattern, string, binary. The key type used for matching, for example pattern tries to match the key to a glob-style pattern and string checks key is equal to value provided in keys. </summary>
         public StateStoreResourceKeyType KeyType { get; set; }
 
-        /// <summary> Give access to state store keys for the corresponding principals defined. When key type is pattern set glob-style pattern (e.g., '*', 'clients/*'). </summary>
+        /// <summary> Give access to state store keys for the corresponding principals defined. When key type is pattern set glob-style pattern (e.g., '<i>', 'clients/</i>'). </summary>
         public IList<string> Keys { get; }
 
         /// <summary> Give access for `Read`, `Write` and `ReadWrite` access level. </summary>

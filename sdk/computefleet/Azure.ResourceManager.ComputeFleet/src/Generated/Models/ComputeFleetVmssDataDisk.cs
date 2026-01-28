@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// disk attached to a VM.
         /// </param>
         /// <param name="caching">
-        /// Specifies the caching requirements. Possible values are: **None,**
-        /// **ReadOnly,** **ReadWrite.** The default values are: **None for Standard
+        /// Specifies the caching requirements. Possible values are: <b>None,</b>
+        /// <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: **None for Standard
         /// storage. ReadOnly for Premium storage.**
         /// </param>
         /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="deleteOption">
         /// Specifies whether data disk should be deleted or detached upon VMSS Flex
         /// deletion (This feature is available for VMSS with Flexible OrchestrationMode
-        /// only).&lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the
-        /// data disk is deleted when the VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If
+        /// only).&lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the
+        /// data disk is deleted when the VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If
         /// this value is used, the data disk is retained after VMSS Flex VM is
-        /// deleted.&lt;br&gt;&lt;br&gt; The default value is set to **Delete**.
+        /// deleted.&lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputeFleetVmssDataDisk(string name, int lun, ComputeFleetCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeFleetDiskCreateOptionType createOption, int? diskSizeGB, ComputeFleetVmssManagedDisk managedDisk, long? diskIopsReadWrite, long? diskMbpsReadWrite, ComputeFleetDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public int Lun { get; set; }
 
         /// <summary>
-        /// Specifies the caching requirements. Possible values are: **None,**
-        /// **ReadOnly,** **ReadWrite.** The default values are: **None for Standard
+        /// Specifies the caching requirements. Possible values are: <b>None,</b>
+        /// <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: **None for Standard
         /// storage. ReadOnly for Premium storage.**
         /// </summary>
         public ComputeFleetCachingType? Caching { get; set; }
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary>
         /// Specifies whether data disk should be deleted or detached upon VMSS Flex
         /// deletion (This feature is available for VMSS with Flexible OrchestrationMode
-        /// only).&lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the
-        /// data disk is deleted when the VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If
+        /// only).&lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the
+        /// data disk is deleted when the VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If
         /// this value is used, the data disk is retained after VMSS Flex VM is
-        /// deleted.&lt;br&gt;&lt;br&gt; The default value is set to **Delete**.
+        /// deleted.&lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>.
         /// </summary>
         public ComputeFleetDiskDeleteOptionType? DeleteOption { get; set; }
     }

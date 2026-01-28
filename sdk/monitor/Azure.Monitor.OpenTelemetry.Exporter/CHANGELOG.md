@@ -10,6 +10,16 @@
 
 ### Other Changes
 
+* The customer-facing SDK stats feature 
+  metric names have been updated to match the stable specification.
+  - **Metric names changed**: `preview.item.success.count` → `Item_Success_Count`,
+    `preview.item.dropped.count` → `Item_Dropped_Count`,
+    `preview.item.retry.count` → `Item_Retry_Count`.
+  - **New environment variable**: To enable, set environment variable
+    `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=false`.
+  - The old environment variable `APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW`
+    is no longer recognized.
+
 ## 1.6.0-beta.2 (2026-01-12)
 
 ### Breaking Changes
