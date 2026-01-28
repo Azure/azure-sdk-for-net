@@ -10,6 +10,7 @@
 - Fixed an issue where `TimeSpan` properties in strongly typed table entities were not being deserialized.
 - Fixed an issue when deserializing strongly typed table entities with enum properties. Enum values that aren't defined in the enum type are now skipped during deserialization of the table entity.
 - Fixed an issue when comparing `TableErrorCode` with null strings using equality operators.
+- Fixed duplicated diagnostic scopes in `TableClient.Query` and `TableServiceClient.Query`
 
 ### Other Changes
 - Use precedence rules to reduce the parenthesis nesting in OData filters generated from LINQ expressions.
