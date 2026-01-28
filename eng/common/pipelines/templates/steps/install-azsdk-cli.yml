@@ -1,0 +1,13 @@
+parameters:
+  InstallDirectory: $(Agent.TempDirectory)
+
+steps:
+  - task: Powershell@2
+    displayName: 'Install Azure SDK Tools CLI'
+    inputs:
+      targetType: 'inline'
+      script: >
+        ./eng/common/mcp/azure-sdk-mcp.ps1
+        -InstallDirectory ${{ parameters.InstallDirectory }}
+      pwsh: true
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
