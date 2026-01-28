@@ -22,24 +22,6 @@ Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
 . (Join-Path $PSScriptRoot Helpers ApiView-Helpers.ps1)
 
-# Get Bearer token for APIView authentication
-# In Azure DevOps, this uses the service connection's Managed Identity/Service Principal
-function Get-ApiViewBearerToken()
-{
-    try {
-        $tokenResponse = az account get-access-token --resource "api://apiview" --output json 2>&1
-        if ($LASTEXITCODE -ne 0) {
-            Write-Error "Failed to acquire access token: $tokenResponse"
-            return $null
-        }
-        return ($tokenResponse | ConvertFrom-Json).accessToken
-    }
-    catch {
-        Write-Error "Failed to acquire access token: $($_.Exception.Message)"
-        return $null
-    }
-}
-
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
 function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVersion, $packageType)
 {
