@@ -56,20 +56,28 @@ public class AIAgentInvocation(
     /// <param name="context">The agent run context.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A stream event generator for the response.</returns>
-    protected override INestedStreamEventGenerator<Contracts.Generated.Responses.Response> DoInvokeStreamAsync(
+    protected override async Task<
+        (INestedStreamEventGenerator<Contracts.Generated.Responses.Response> Generator, Func<CancellationToken, Task> PostInvoke)
+        > DoInvokeStreamAsync(
         AgentRunContext context,
         CancellationToken cancellationToken)
     {
         Activity.Current?.SetServiceNamespace("agentframework");
 
+        AgentThread? thread = null;
+        if (threadRepository != null)
+        {
+            thread = await threadRepository.Get(context.ConversationId).ConfigureAwait(false);
+        }
+
         var request = context.Request;
         var messages = request.GetInputMessages();
-        var updates = agent.RunStreamingAsync(messages, cancellationToken: cancellationToken);
+        var updates = agent.RunStreamingAsync(messages, thread: thread, cancellationToken: cancellationToken);
         // TODO refine to multicast event
         IList<Action<ResponseUsage>> usageUpdaters = [];
 
         var seq = ISequenceNumber.Default;
-        return new NestedResponseGenerator()
+        var generator = new NestedResponseGenerator()
         {
             Context = context,
             Seq = seq,
@@ -90,5 +98,14 @@ public class AIAgentInvocation(
                 CancellationToken = cancellationToken,
             }
         };
+
+        var func = (async (CancellationToken ct) =>
+        {
+            if (threadRepository != null && thread != null)
+            {
+                await threadRepository.Set(context.ConversationId, thread).ConfigureAwait(false);
+            }
+        });
+        return (generator, func);
     }
 }

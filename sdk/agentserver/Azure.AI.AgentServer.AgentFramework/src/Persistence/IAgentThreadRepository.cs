@@ -32,44 +32,4 @@ namespace Azure.AI.AgentServer.AgentFramework.Persistence
         /// <returns></returns>
         public Task Set(string conversationId, AgentThread thread);
     }
-
-    /// <summary>
-    /// An in-memory implementation of the IAgentThreadRepository interface.
-    /// </summary>
-    public class InMemoryAgentThreadRepository : IAgentThreadRepository
-    {
-        private readonly Dictionary<string, AgentThread> _threads = new();
-        private readonly AIAgent? _agent;
-
-        /// <summary>
-        /// Instructor of InMemoryAgentThreadRepository
-        /// </summary>
-        /// <param name="agent">AIAgent instance to associate with the threads.</param>
-        public InMemoryAgentThreadRepository(AIAgent? agent = null)
-        {
-             _agent = agent;
-        }
-
-        /// <inheritdoc/>
-        public async Task<AgentThread> Get(string conversationId, AIAgent? agent = null)
-        {
-            if (!_threads.ContainsKey(conversationId))
-            {
-                agent ??= _agent;
-                if (agent == null)
-                {
-                    throw new InvalidOperationException("AIAgent instance must be provided either in the instructor or in the method call.");
-                }
-                _threads[conversationId] = agent.GetNewThread();
-            }
-            return await Task.FromResult(_threads[conversationId]).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc/>
-        public async Task Set(string conversationId, AgentThread agentThread)
-        {
-            _threads[conversationId] = agentThread;
-            await Task.CompletedTask.ConfigureAwait(false);
-        }
-    }
 }
