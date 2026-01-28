@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <PackageId>Microsoft.Azure.PostgreSQL.Auth</PackageId>
+    <Authors>Microsoft</Authors>
+    <Version>1.0.0</Version>
+    <PackageDescription>
+      Azure Entra ID authentication extension for Npgsql driver
+    </PackageDescription>
+    <PackageTags>azure;entra;PostgreSQL;Npgsql</PackageTags>
+    <RepositoryUrl>https://github.com/Azure/postgres-entra-auth.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Azure/postgres-entra-auth</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>https://github.com/Azure/postgres-entra-auth/releases</PackageReleaseNotes>
+    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RequireLicenseAcceptance>true</RequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" Version="1.44.1" />
+    <PackageReference Include="Npgsql" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\..\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>
