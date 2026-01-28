@@ -9,6 +9,8 @@ param (
   [Parameter(Mandatory=$True)]
   [string] $RepoRoot,
   [Parameter(Mandatory=$True)]
+  [string] $APIKey,
+  [Parameter(Mandatory=$True)]
   [string] $ConfigFileDir,
   [string] $BuildDefinition,
   [string] $PipelineUrl,
@@ -93,7 +95,7 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
             Details = ""
         }
         Write-Host "Checking API review status for package $packageName with version $packageVersion. language [$language]."
-        Check-ApiReviewStatus $packageName $packageVersion $language $APIViewUri $apiStatus $packageNameStatus
+        Check-ApiReviewStatus $packageName $packageVersion $language $APIViewUri $APIKey $apiStatus $packageNameStatus
 
         Write-Host "API review approval details: $($apiStatus.Details)"
         Write-Host "Package name approval details: $($packageNameStatus.Details)"

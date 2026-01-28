@@ -1,23 +1,5 @@
 . ${PSScriptRoot}\..\logging.ps1
 
-# Get Bearer token for APIView authentication
-# In Azure DevOps, this uses the service connection's Managed Identity/Service Principal
-function Get-ApiViewBearerToken()
-{
-    try {
-        $tokenResponse = az account get-access-token --resource "api://apiview" --output json 2>&1
-        if ($LASTEXITCODE -ne 0) {
-            Write-Error "Failed to acquire access token: $tokenResponse"
-            return $null
-        }
-        return ($tokenResponse | ConvertFrom-Json).accessToken
-    }
-    catch {
-        Write-Error "Failed to acquire access token: $($_.Exception.Message)"
-        return $null
-    }
-}
-
 function MapLanguageToRequestParam($language)
 {
     $lang = $language
@@ -40,25 +22,15 @@ function MapLanguageToRequestParam($language)
     return $lang
 }
 
-function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $apiApprovalStatus = $null, $packageNameStatus = $null)
+function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $apiKey, $apiApprovalStatus = $null, $packageNameStatus = $null)
 {
-  # Get API view URL and Bearer token to check status
+  # Get API view URL and API Key to check status
   Write-Host "Checking API review status for package: ${packageName}"
   $lang = MapLanguageToRequestParam -language $language
   if ($lang -eq $null) {
     return
   }
-  
-  # Get Bearer token for authentication
-  $bearerToken = Get-ApiViewBearerToken
-  if (-not $bearerToken) {
-      Write-Error "Failed to acquire Bearer token for APIView authentication."
-      return
-  }
-  
-  $headers = @{
-      "Authorization" = "Bearer $bearerToken"
-  }
+  $headers = @{ "ApiKey" = $apiKey }
 
   if (!$apiApprovalStatus) {
     $apiApprovalStatus = [PSCustomObject]@{
