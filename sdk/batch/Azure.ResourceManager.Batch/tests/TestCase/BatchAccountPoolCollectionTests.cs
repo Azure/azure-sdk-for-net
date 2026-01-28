@@ -71,20 +71,20 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             var input = ResourceDataHelper.GetBatchAccountPoolData();
 
             PoolEndpointConfiguration batchPoolEndpointConfiguration =  new PoolEndpointConfiguration(new List<BatchInboundNatPool>());
-            batchPoolEndpointConfiguration.InboundNatPools.Add(new BatchInboundNatPool("ruleName", BatchInboundEndpointProtocol.TCP, 3389, 15000, 15100));
+            batchPoolEndpointConfiguration.InboundNatPools.Add(new BatchInboundNatPool("ruleName", BatchInboundEndpointProtocol.Tcp, 3389, 15000, 15100));
 
             input.NetworkConfiguration = new BatchNetworkConfiguration()
             {
                 EndpointConfiguration = batchPoolEndpointConfiguration,
                 PublicIPAddressConfiguration = new BatchPublicIPAddressConfiguration()
-            }
+            };
 
-            input.NetworkConfiguration.PublicIPAddressConfiguration.IpFamilies.Add(IPFamily.IPv4);
-            input.NetworkConfiguration.PublicIPAddressConfiguration.IpFamilies.Add(IPFamily.IPv6);
-            input.NetworkConfiguration.PublicIPAddressConfiguration.IpTags.Add(
+            input.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies.Add(IPFamily.IPv4);
+            input.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies.Add(IPFamily.IPv6);
+            input.NetworkConfiguration.PublicIPAddressConfiguration.IPTags.Add(
                 new IPTag()
                 {
-                    IpTagType = "tagType1",
+                    IPTagType = "tagType1",
                     Tag = "tag1"
                 }
                 );

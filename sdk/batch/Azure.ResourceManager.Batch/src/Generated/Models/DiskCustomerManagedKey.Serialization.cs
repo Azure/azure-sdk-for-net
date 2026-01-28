@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             Uri keyUrl = default;
             bool? rotationToLatestKeyVersionEnabled = default;
-            PoolIdentityReference identityReference = default;
+            ComputeNodeIdentityReference identityReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    identityReference = PoolIdentityReference.DeserializePoolIdentityReference(property.Value, options);
+                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

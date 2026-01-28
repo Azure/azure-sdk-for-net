@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specifies the access control policy execution mode. </summary>
-    public enum HostEndpointSettingsModeType
+    public readonly partial struct HostEndpointSettingsModeType : IEquatable<HostEndpointSettingsModeType>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="HostEndpointSettingsModeType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public HostEndpointSettingsModeType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string AuditValue = "Audit";
+        private const string EnforceValue = "Enforce";
+
         /// <summary> In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. </summary>
-        Audit,
+        public static HostEndpointSettingsModeType Audit { get; } = new HostEndpointSettingsModeType(AuditValue);
         /// <summary> Enforce mode is the recommended mode of operation and system will enforce the access control policy. This property cannot be used together with 'inVMAccessControlProfileReferenceId'. </summary>
-        Enforce
+        public static HostEndpointSettingsModeType Enforce { get; } = new HostEndpointSettingsModeType(EnforceValue);
+        /// <summary> Determines if two <see cref="HostEndpointSettingsModeType"/> values are the same. </summary>
+        public static bool operator ==(HostEndpointSettingsModeType left, HostEndpointSettingsModeType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="HostEndpointSettingsModeType"/> values are not the same. </summary>
+        public static bool operator !=(HostEndpointSettingsModeType left, HostEndpointSettingsModeType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HostEndpointSettingsModeType"/>. </summary>
+        public static implicit operator HostEndpointSettingsModeType(string value) => new HostEndpointSettingsModeType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is HostEndpointSettingsModeType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(HostEndpointSettingsModeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

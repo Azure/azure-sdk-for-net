@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToSerialString());
+                writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsDefined(InVmAccessControlProfileReferenceId))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             HostEndpointSettingsModeType? mode = default;
-            string inVmAccessControlProfileReferenceId = default;
+            ResourceIdentifier inVmAccessControlProfileReferenceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,12 +93,16 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    mode = property.Value.GetString().ToHostEndpointSettingsModeType();
+                    mode = new HostEndpointSettingsModeType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("inVMAccessControlProfileReferenceId"u8))
                 {
-                    inVmAccessControlProfileReferenceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inVmAccessControlProfileReferenceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

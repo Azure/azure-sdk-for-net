@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApplicationCreate()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/ApplicationCreate.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/ApplicationCreate.json
             // this example is just showing the usage of "Application_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApplicationGet()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/ApplicationGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/ApplicationGet.json
             // this example is just showing the usage of "Application_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ApplicationList()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/ApplicationList.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/ApplicationList.json
             // this example is just showing the usage of "Application_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApplicationGet()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/ApplicationGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/ApplicationGet.json
             // this example is just showing the usage of "Application_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApplicationGet()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/ApplicationGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/ApplicationGet.json
             // this example is just showing the usage of "Application_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

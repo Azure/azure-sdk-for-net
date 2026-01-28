@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPool()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolGet.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolAcceleratedNetworking()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_AcceleratedNetworking.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolGet_AcceleratedNetworking.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolSecurityProfile()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_SecurityProfile.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolGet_SecurityProfile.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolUpgradePolicy()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_UpgradePolicy.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolGet_UpgradePolicy.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolVirtualMachineConfigurationExtensions()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolVirtualMachineConfigurationOSDisk()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolVirtualMachineConfigurationServiceArtifactReference()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletePool()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolDelete.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolDelete.json
             // this example is just showing the usage of "Pool_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatePoolEnableAutoscale()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolUpdate_EnableAutoScale.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolUpdate_EnableAutoScale.json
             // this example is just showing the usage of "Pool_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatePoolOtherProperties()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolUpdate_OtherProperties.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolUpdate_OtherProperties.json
             // this example is just showing the usage of "Pool_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -342,7 +342,7 @@ Version = "1.0",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatePoolRemoveStartTask()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolUpdate_RemoveStartTask.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolUpdate_RemoveStartTask.json
             // this example is just showing the usage of "Pool_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -377,7 +377,7 @@ Version = "1.0",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatePoolResizePool()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolUpdate_ResizePool.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolUpdate_ResizePool.json
             // this example is just showing the usage of "Pool_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -421,7 +421,7 @@ Version = "1.0",
         [Ignore("Only validating compilation of examples")]
         public async Task DisableAutoScale_DisableAutoScale()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolDisableAutoScale.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolDisableAutoScale.json
             // this example is just showing the usage of "Pool_DisableAutoScale" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -452,7 +452,7 @@ Version = "1.0",
         [Ignore("Only validating compilation of examples")]
         public async Task StopResize_StopPoolResize()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolStopResize.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PoolStopResize.json
             // this example is just showing the usage of "Pool_StopResize" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in IPFamilies)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<IPFamily> array = new List<IPFamily>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToIPFamily());
+                        array.Add(new IPFamily(item.GetString()));
                     }
                     ipFamilies = array;
                     continue;

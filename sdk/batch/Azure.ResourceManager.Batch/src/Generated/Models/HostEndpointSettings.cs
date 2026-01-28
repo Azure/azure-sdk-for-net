@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="mode"> Specifies the access control policy execution mode. </param>
         /// <param name="inVmAccessControlProfileReferenceId"> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostEndpointSettings(HostEndpointSettingsModeType? mode, string inVmAccessControlProfileReferenceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HostEndpointSettings(HostEndpointSettingsModeType? mode, ResourceIdentifier inVmAccessControlProfileReferenceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             InVmAccessControlProfileReferenceId = inVmAccessControlProfileReferenceId;
@@ -64,6 +65,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Specifies the access control policy execution mode. </summary>
         public HostEndpointSettingsModeType? Mode { get; set; }
         /// <summary> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </summary>
-        public string InVmAccessControlProfileReferenceId { get; set; }
+        public ResourceIdentifier InVmAccessControlProfileReferenceId { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetBatchAccounts_BatchAccountList()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/BatchAccountList.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/BatchAccountList.json
             // this example is just showing the usage of "BatchAccount_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckBatchNameAvailability_LocationCheckNameAvailabilityAlreadyExists()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/LocationCheckNameAvailability_AlreadyExists.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/LocationCheckNameAvailability_AlreadyExists.json
             // this example is just showing the usage of "Location_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckBatchNameAvailability_LocationCheckNameAvailabilityAvailable()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/LocationCheckNameAvailability_Available.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/LocationCheckNameAvailability_Available.json
             // this example is just showing the usage of "Location_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetBatchQuotas_LocationGetQuotas()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/LocationGetQuotas.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/LocationGetQuotas.json
             // this example is just showing the usage of "Location_GetQuotas" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetBatchSupportedVirtualMachineSkus_LocationListVirtualMachineSkus()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/LocationListVirtualMachineSkus.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/LocationListVirtualMachineSkus.json
             // this example is just showing the usage of "Location_ListSupportedVirtualMachineSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

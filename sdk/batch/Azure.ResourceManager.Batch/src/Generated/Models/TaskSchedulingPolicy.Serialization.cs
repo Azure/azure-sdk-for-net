@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(JobDefaultOrder))
             {
                 writer.WritePropertyName("jobDefaultOrder"u8);
-                writer.WriteStringValue(JobDefaultOrder.Value.ToSerialString());
+                writer.WriteStringValue(JobDefaultOrder.Value.ToString());
             }
             writer.WritePropertyName("nodeFillType"u8);
             writer.WriteStringValue(NodeFillType.ToSerialString());
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    jobDefaultOrder = property.Value.GetString().ToJobDefaultOrder();
+                    jobDefaultOrder = new JobDefaultOrder(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("nodeFillType"u8))

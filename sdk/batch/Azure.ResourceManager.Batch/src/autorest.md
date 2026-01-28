@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Batch
 namespace: Azure.ResourceManager.Batch
-require: https://github.com/Azure/azure-rest-api-specs/blob/0b003dad5fc0997a2e6bfffc238cb98c93040f24/specification/batch/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0e54210c791ab8a18f9b9f821163580116e624b5/specification/batch/resource-manager/Microsoft.Batch/Batch/readme.md
 #tag: package-2024-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true

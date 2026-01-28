@@ -824,10 +824,21 @@ namespace Azure.ResourceManager.Batch.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchAccountPoolMetadataItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchAccountPoolMetadataItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum BatchAccountPoolProvisioningState
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchAccountPoolProvisioningState : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState>
     {
-        Succeeded = 0,
-        Deleting = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchAccountPoolProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState left, Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState left, Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BatchAccountPoolScaleSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchAccountPoolScaleSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchAccountPoolScaleSettings>
     {
@@ -1314,14 +1325,25 @@ namespace Azure.ResourceManager.Batch.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchOSDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchOSDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum BatchPrivateEndpointConnectionProvisioningState
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState>
     {
-        Creating = 0,
-        Updating = 1,
-        Deleting = 2,
-        Succeeded = 3,
-        Failed = 4,
-        Cancelled = 5,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchPrivateEndpointConnectionProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BatchPrivateLinkServiceConnectionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchPrivateLinkServiceConnectionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchPrivateLinkServiceConnectionState>
     {
@@ -1370,14 +1392,25 @@ namespace Azure.ResourceManager.Batch.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchProvisioningIssueProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchProvisioningIssueProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum BatchProvisioningState
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchProvisioningState : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchProvisioningState>
     {
-        Invalid = 0,
-        Creating = 1,
-        Deleting = 2,
-        Succeeded = 3,
-        Failed = 4,
-        Cancelled = 5,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Invalid { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchProvisioningState left, Azure.ResourceManager.Batch.Models.BatchProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchProvisioningState left, Azure.ResourceManager.Batch.Models.BatchProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BatchPublicIPAddressConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchPublicIPAddressConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchPublicIPAddressConfiguration>
     {
@@ -1740,7 +1773,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class DiskCustomerManagedKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey>
     {
         public DiskCustomerManagedKey() { }
-        public string IdentityReferenceResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier IdentityReferenceResourceId { get { throw null; } set { } }
         public System.Uri KeyUri { get { throw null; } set { } }
         public bool? RotationToLatestKeyVersionEnabled { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1770,7 +1803,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class HostEndpointSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>
     {
         public HostEndpointSettings() { }
-        public string InVmAccessControlProfileReferenceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier InVmAccessControlProfileReferenceId { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeType? Mode { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Batch.Models.HostEndpointSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1779,20 +1812,42 @@ namespace Azure.ResourceManager.Batch.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum HostEndpointSettingsModeType
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HostEndpointSettingsModeType : System.IEquatable<Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeType>
     {
-        Audit = 0,
-        Enforce = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HostEndpointSettingsModeType(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeType Audit { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeType Enforce { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeType left, Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeType left, Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum InterNodeCommunicationState
     {
         Enabled = 0,
         Disabled = 1,
     }
-    public enum IPFamily
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IPFamily : System.IEquatable<Azure.ResourceManager.Batch.Models.IPFamily>
     {
-        IPv4 = 0,
-        IPv6 = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IPFamily(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.IPFamily IPv4 { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.IPFamily IPv6 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.IPFamily other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.IPFamily left, Azure.ResourceManager.Batch.Models.IPFamily right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.IPFamily (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.IPFamily left, Azure.ResourceManager.Batch.Models.IPFamily right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class IPTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.IPTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.IPTag>
     {
@@ -1806,10 +1861,21 @@ namespace Azure.ResourceManager.Batch.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.IPTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.IPTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum JobDefaultOrder
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct JobDefaultOrder : System.IEquatable<Azure.ResourceManager.Batch.Models.JobDefaultOrder>
     {
-        None = 0,
-        CreationTime = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public JobDefaultOrder(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.JobDefaultOrder CreationTime { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.JobDefaultOrder None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.JobDefaultOrder other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.JobDefaultOrder left, Azure.ResourceManager.Batch.Models.JobDefaultOrder right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.JobDefaultOrder (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.JobDefaultOrder left, Azure.ResourceManager.Batch.Models.JobDefaultOrder right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ManagedDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ManagedDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.ManagedDisk>
     {

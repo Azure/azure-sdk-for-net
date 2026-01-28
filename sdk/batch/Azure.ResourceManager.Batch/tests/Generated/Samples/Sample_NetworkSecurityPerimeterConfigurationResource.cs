@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNspConfiguration()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/NspConfigurationGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/NspConfigurationGet.json
             // this example is just showing the usage of "NetworkSecurityPerimeter_GetConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ReconcileConfiguration_ReconcileNspConfiguration()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/NspConfigurationReconcile.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/NspConfigurationReconcile.json
             // this example is just showing the usage of "NetworkSecurityPerimeter_ReconcileConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

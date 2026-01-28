@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The order for scheduling tasks from different jobs with the same priority. </summary>
-    public enum JobDefaultOrder
+    public readonly partial struct JobDefaultOrder : IEquatable<JobDefaultOrder>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="JobDefaultOrder"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public JobDefaultOrder(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string NoneValue = "None";
+        private const string CreationTimeValue = "CreationTime";
+
         /// <summary> Tasks should be scheduled uniformly from all equal-priority jobs for the pool. </summary>
-        None,
+        public static JobDefaultOrder None { get; } = new JobDefaultOrder(NoneValue);
         /// <summary> If jobs have equal priority, tasks from jobs that were created earlier should be scheduled first. </summary>
-        CreationTime
+        public static JobDefaultOrder CreationTime { get; } = new JobDefaultOrder(CreationTimeValue);
+        /// <summary> Determines if two <see cref="JobDefaultOrder"/> values are the same. </summary>
+        public static bool operator ==(JobDefaultOrder left, JobDefaultOrder right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="JobDefaultOrder"/> values are not the same. </summary>
+        public static bool operator !=(JobDefaultOrder left, JobDefaultOrder right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobDefaultOrder"/>. </summary>
+        public static implicit operator JobDefaultOrder(string value) => new JobDefaultOrder(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is JobDefaultOrder other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(JobDefaultOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

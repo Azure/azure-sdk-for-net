@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of the Disk Encryption to the latest key version. Default is false. </param>
         /// <param name="identityReference"> The reference of one of the pool identities to encrypt Disk. This identity will be used to access the KeyVault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskCustomerManagedKey(Uri keyUri, bool? rotationToLatestKeyVersionEnabled, PoolIdentityReference identityReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskCustomerManagedKey(Uri keyUri, bool? rotationToLatestKeyVersionEnabled, ComputeNodeIdentityReference identityReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyUri = keyUri;
             RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
@@ -68,12 +69,17 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Set this flag to true to enable auto-updating of the Disk Encryption to the latest key version. Default is false. </summary>
         public bool? RotationToLatestKeyVersionEnabled { get; set; }
         /// <summary> The reference of one of the pool identities to encrypt Disk. This identity will be used to access the KeyVault. </summary>
-        internal PoolIdentityReference IdentityReference { get; set; }
-        /// <summary> The ARM resource id of the user assigned identity. This reference must be included in the pool identities. </summary>
-        public string IdentityReferenceResourceId
+        internal ComputeNodeIdentityReference IdentityReference { get; set; }
+        /// <summary> The ARM resource id of the user assigned identity. </summary>
+        public ResourceIdentifier IdentityReferenceResourceId
         {
             get => IdentityReference is null ? default : IdentityReference.ResourceId;
-            set => IdentityReference = new PoolIdentityReference(value);
+            set
+            {
+                if (IdentityReference is null)
+                    IdentityReference = new ComputeNodeIdentityReference();
+                IdentityReference.ResourceId = value;
+            }
         }
     }
 }

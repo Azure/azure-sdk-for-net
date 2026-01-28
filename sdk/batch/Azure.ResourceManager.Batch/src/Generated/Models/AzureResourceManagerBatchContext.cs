@@ -119,7 +119,6 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(NodePlacementConfiguration))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointCollection))]
     [ModelReaderWriterBuildable(typeof(PoolEndpointConfiguration))]
-    [ModelReaderWriterBuildable(typeof(PoolIdentityReference))]
     [ModelReaderWriterBuildable(typeof(ProxyAgentSettings))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RollingUpgradePolicy))]
