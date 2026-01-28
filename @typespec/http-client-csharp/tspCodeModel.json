@@ -1,5 +1,5 @@
 {
-  "name": "Azure.Communication.ProgrammableConnectivity",
+  "name": "Azure.ProgrammableConnectivity",
   "apiVersions": [
     "2024-02-09-preview"
   ],
@@ -32,7 +32,7 @@
           "decorators": []
         }
       ],
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "doc": "APC Versions",
       "isFixed": true,
       "isFlags": false,
@@ -223,7 +223,7 @@
       "$id": "26",
       "kind": "model",
       "name": "DeviceLocationVerificationContent",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocationVerificationContent",
       "usage": "Input,Json",
       "doc": "Request to verify Location",
@@ -239,7 +239,7 @@
             "$id": "28",
             "kind": "model",
             "name": "NetworkIdentifier",
-            "namespace": "Azure.Communication.ProgrammableConnectivity",
+            "namespace": "Azure.ProgrammableConnectivity",
             "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NetworkIdentifier",
             "usage": "Input,Json",
             "doc": "Identifier for the network to be queried",
@@ -400,7 +400,7 @@
             "$id": "40",
             "kind": "model",
             "name": "LocationDevice",
-            "namespace": "Azure.Communication.ProgrammableConnectivity",
+            "namespace": "Azure.ProgrammableConnectivity",
             "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.LocationDevice",
             "usage": "Input,Json",
             "doc": "Device information needed by operator to provide location information. Include exactly one of these properties to identify your device.",
@@ -468,7 +468,7 @@
                   "$id": "46",
                   "kind": "model",
                   "name": "Ipv4Address",
-                  "namespace": "Azure.Communication.ProgrammableConnectivity",
+                  "namespace": "Azure.ProgrammableConnectivity",
                   "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.Ipv4Address",
                   "usage": "Input,Json",
                   "doc": "IPv4 device indicator",
@@ -551,7 +551,7 @@
                   "$id": "52",
                   "kind": "model",
                   "name": "Ipv6Address",
-                  "namespace": "Azure.Communication.ProgrammableConnectivity",
+                  "namespace": "Azure.ProgrammableConnectivity",
                   "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.Ipv6Address",
                   "usage": "Input,Json",
                   "doc": "IPv6 device indicator",
@@ -657,7 +657,7 @@
       "$id": "57",
       "kind": "model",
       "name": "DeviceLocationVerificationResult",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocationVerificationResult",
       "usage": "Output,Json",
       "doc": "Response verifying location",
@@ -695,7 +695,7 @@
       "$id": "60",
       "kind": "model",
       "name": "ErrorResponse",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.Core.Foundations",
       "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse",
       "usage": "Json,Exception",
       "doc": "A response containing error details.",
@@ -711,7 +711,7 @@
             "$id": "62",
             "kind": "model",
             "name": "Error",
-            "namespace": "Azure.Communication.ProgrammableConnectivity",
+            "namespace": "Azure.Core.Foundations",
             "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
             "usage": "Json,Exception",
             "doc": "The error object.",
@@ -834,7 +834,7 @@
                   "$id": "72",
                   "kind": "model",
                   "name": "InnerError",
-                  "namespace": "Azure.Communication.ProgrammableConnectivity",
+                  "namespace": "Azure.Core.Foundations",
                   "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
                   "usage": "Json,Exception",
                   "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
@@ -956,7 +956,7 @@
       "$id": "78",
       "kind": "model",
       "name": "NetworkRetrievalResult",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NetworkRetrievalResult",
       "usage": "Output,Json",
       "doc": "The network that the device is on.",
@@ -994,7 +994,7 @@
       "$id": "81",
       "kind": "model",
       "name": "NumberVerificationWithoutCodeContent",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationWithoutCodeContent",
       "usage": "Input,Json",
       "doc": "Request to verify number of device - first call",
@@ -1106,7 +1106,7 @@
       "$id": "89",
       "kind": "model",
       "name": "NumberVerificationWithCodeContent",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationWithCodeContent",
       "usage": "Input,Json",
       "doc": "Request to verify number of device - second call",
@@ -1144,7 +1144,7 @@
       "$id": "92",
       "kind": "model",
       "name": "NumberVerificationResult",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationResult",
       "usage": "Output,Json",
       "doc": "Response verifying number of device",
@@ -1182,7 +1182,7 @@
       "$id": "95",
       "kind": "model",
       "name": "SimSwapRetrievalContent",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapRetrievalContent",
       "usage": "Input,Json",
       "doc": "Request to retrieve SimSwap date",
@@ -1242,7 +1242,7 @@
       "$id": "99",
       "kind": "model",
       "name": "SimSwapRetrievalResult",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapRetrievalResult",
       "usage": "Output,Json",
       "doc": "Response with SimSwap date",
@@ -1288,7 +1288,7 @@
       "$id": "103",
       "kind": "model",
       "name": "SimSwapVerificationContent",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapVerificationContent",
       "usage": "Input,Json",
       "doc": "Request to verify SimSwap in period",
@@ -1374,7 +1374,7 @@
       "$id": "109",
       "kind": "model",
       "name": "SimSwapVerificationResult",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapVerificationResult",
       "usage": "Output,Json",
       "doc": "Response verifying SimSwap in period",
@@ -1414,7 +1414,7 @@
       "$id": "112",
       "kind": "client",
       "name": "ProgrammableConnectivityClient",
-      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "namespace": "Azure.ProgrammableConnectivity",
       "doc": "Azure Programmable Connectivity (APC) provides a unified interface to the Network APIs of multiple Telecom Operators. Note that Operators may deprecate a Network API with less advance notice than the Azure standard, in which case APC will also deprecate that Network API.",
       "methods": [],
       "parameters": [
@@ -1482,7 +1482,7 @@
           "$id": "118",
           "kind": "client",
           "name": "DeviceLocation",
-          "namespace": "Azure.Communication.ProgrammableConnectivity",
+          "namespace": "Azure.ProgrammableConnectivity",
           "methods": [
             {
               "$id": "119",
@@ -1938,7 +1938,7 @@
                     ]
                   }
                 ],
-                "namespace": "Azure.Communication.ProgrammableConnectivity"
+                "namespace": "Azure.ProgrammableConnectivity"
               },
               "parameters": [
                 {
@@ -2098,7 +2098,7 @@
           "$id": "168",
           "kind": "client",
           "name": "DeviceNetwork",
-          "namespace": "Azure.Communication.ProgrammableConnectivity",
+          "namespace": "Azure.ProgrammableConnectivity",
           "methods": [
             {
               "$id": "169",
@@ -2446,7 +2446,7 @@
                     ]
                   }
                 ],
-                "namespace": "Azure.Communication.ProgrammableConnectivity"
+                "namespace": "Azure.ProgrammableConnectivity"
               },
               "parameters": [
                 {
@@ -2634,7 +2634,7 @@
           "$id": "208",
           "kind": "client",
           "name": "NumberVerification",
-          "namespace": "Azure.Communication.ProgrammableConnectivity",
+          "namespace": "Azure.ProgrammableConnectivity",
           "doc": "  Number operations include Frontend Authentication.\n\n  Users first make a call to the endpoint /Number:verify, which returns a redirect to the device's \n  Network. This is followed by the device to authenticate directly with the Network. The Network \n  responds with a token and a redirect. This token can be exchanged with APC for a code.\n  \n  Users make a second call to the endpoint /Number:verify including the code. The code is used \n  to verify the device number. The second response is a 200 containing the result of the query.\n\n  For more information on the steps required to use Number Verificaiton, see the APC documentation.",
           "methods": [
             {
@@ -2991,7 +2991,7 @@
                     ]
                   }
                 ],
-                "namespace": "Azure.Communication.ProgrammableConnectivity"
+                "namespace": "Azure.ProgrammableConnectivity"
               },
               "parameters": [
                 {
@@ -3426,7 +3426,7 @@
                     ]
                   }
                 ],
-                "namespace": "Azure.Communication.ProgrammableConnectivity"
+                "namespace": "Azure.ProgrammableConnectivity"
               },
               "parameters": [
                 {
@@ -3614,7 +3614,7 @@
           "$id": "282",
           "kind": "client",
           "name": "SimSwap",
-          "namespace": "Azure.Communication.ProgrammableConnectivity",
+          "namespace": "Azure.ProgrammableConnectivity",
           "doc": "SIM Swap API provides the customer the ability to obtain information on any recent SIM pairing change related to the User's mobile account.",
           "methods": [
             {
@@ -3980,7 +3980,7 @@
                     ]
                   }
                 ],
-                "namespace": "Azure.Communication.ProgrammableConnectivity"
+                "namespace": "Azure.ProgrammableConnectivity"
               },
               "parameters": [
                 {
@@ -4461,7 +4461,7 @@
                     ]
                   }
                 ],
-                "namespace": "Azure.Communication.ProgrammableConnectivity"
+                "namespace": "Azure.ProgrammableConnectivity"
               },
               "parameters": [
                 {
