@@ -21,78 +21,6 @@ namespace Azure.ResourceManager.Batch.Models
     public static partial class ArmBatchModelFactory
     {
 
-        /// <summary> Contains information about an Azure Batch account. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The identity of the Batch account. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Batch.BatchAccountData"/> instance for mocking. </returns>
-        public static BatchAccountData BatchAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BatchAccountProperties properties = default, ManagedServiceIdentity identity = default, IReadOnlyDictionary<string, string> tags = default, AzureLocation? location = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BatchAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                identity,
-                tags,
-                location);
-        }
-
-        /// <summary> Account specific properties. </summary>
-        /// <param name="accountEndpoint"> The account endpoint used to interact with the Batch service. </param>
-        /// <param name="nodeManagementEndpoint"> The endpoint used by compute node to connect to the Batch node management service. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="poolAllocationMode"> The allocation mode for creating pools in the Batch account. </param>
-        /// <param name="keyVaultReference"> Identifies the Azure key vault associated with a Batch account. </param>
-        /// <param name="publicNetworkAccess"> The network access type for operating on the resources in the Batch account. </param>
-        /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the Batch account. </param>
-        /// <param name="autoStorage"> Contains information about the auto-storage account associated with a Batch account. </param>
-        /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
-        /// <param name="dedicatedCoreQuota"> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
-        /// <param name="lowPriorityCoreQuota"> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
-        /// <param name="dedicatedCoreQuotaPerVMFamily"> A list of the dedicated core quota per Virtual Machine family for the Batch account. For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
-        /// <param name="isDedicatedCoreQuotaPerVmFamilyEnforced"> If this flag is true, dedicated core quota is enforced via both the dedicatedCoreQuotaPerVMFamily and dedicatedCoreQuota properties on the account. If this flag is false, dedicated core quota is enforced only via the dedicatedCoreQuota property on the account and does not consider Virtual Machine family. </param>
-        /// <param name="poolQuota"> The pool quota for the Batch account. </param>
-        /// <param name="activeJobAndJobScheduleQuota"> The active job and job schedule quota for the Batch account. </param>
-        /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
-        /// <returns> A new <see cref="Models.BatchAccountProperties"/> instance for mocking. </returns>
-        public static BatchAccountProperties BatchAccountProperties(string accountEndpoint = default, string nodeManagementEndpoint = default, BatchProvisioningState? provisioningState = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections = default, BatchAccountAutoStorageConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, int? dedicatedCoreQuota = default, int? lowPriorityCoreQuota = default, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default, bool? isDedicatedCoreQuotaPerVmFamilyEnforced = default, int? poolQuota = default, int? activeJobAndJobScheduleQuota = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default)
-        {
-            privateEndpointConnections ??= new ChangeTrackingList<BatchPrivateEndpointConnectionData>();
-            dedicatedCoreQuotaPerVMFamily ??= new ChangeTrackingList<BatchVmFamilyCoreQuota>();
-            allowedAuthenticationModes ??= new ChangeTrackingList<BatchAuthenticationMode>();
-
-            return new BatchAccountProperties(
-                accountEndpoint,
-                nodeManagementEndpoint,
-                provisioningState,
-                poolAllocationMode,
-                keyVaultReference,
-                publicNetworkAccess,
-                networkProfile,
-                privateEndpointConnections.ToList(),
-                autoStorage,
-                encryption,
-                dedicatedCoreQuota,
-                lowPriorityCoreQuota,
-                dedicatedCoreQuotaPerVMFamily.ToList(),
-                isDedicatedCoreQuotaPerVmFamilyEnforced,
-                poolQuota,
-                activeJobAndJobScheduleQuota,
-                allowedAuthenticationModes.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Network access profile for Batch endpoint. </summary>
         /// <param name="defaultAction"> Default action for endpoint access. It is only applicable when publicNetworkAccess is enabled. </param>
         /// <param name="ipRules"> Array of IP ranges to filter client IP address. </param>
@@ -102,32 +30,6 @@ namespace Azure.ResourceManager.Batch.Models
             ipRules ??= new ChangeTrackingList<BatchIPRule>();
 
             return new BatchEndpointAccessProfile(defaultAction, ipRules.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection. </param>
-        /// <param name="groupIds"> The value has one and only one group id. </param>
-        /// <param name="privateLinkServiceConnectionState"> The private link service connection state of the private endpoint connection. </param>
-        /// <param name="privateEndpointId"> The ARM resource identifier of the private endpoint. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/privateEndpoints/{privateEndpoint}. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <returns> A new <see cref="Batch.BatchPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BatchPrivateEndpointConnectionProvisioningState? provisioningState = default, IEnumerable<string> groupIds = default, BatchPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ResourceIdentifier privateEndpointId = default, ETag? etag = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BatchPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && groupIds is null && privateLinkServiceConnectionState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, null), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, null),
-                etag,
-                tags);
         }
 
         /// <summary> The private link service connection state of the private endpoint connection. </summary>
@@ -227,7 +129,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchAccountDetectorData"/> instance for mocking. </returns>
-        public static BatchAccountDetectorData BatchAccountDetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string value = default, string etag = default, IDictionary<string, string> tags = default)
+        public static BatchAccountDetectorData BatchAccountDetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string value = default, ETag? etag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -254,7 +156,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchApplicationPackageData"/> instance for mocking. </returns>
-        public static BatchApplicationPackageData BatchApplicationPackageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BatchApplicationPackageState? state = default, string format = default, string storageUri = default, DateTimeOffset? storageUriExpireOn = default, DateTimeOffset? lastActivatedOn = default, string etag = default, IDictionary<string, string> tags = default)
+        public static BatchApplicationPackageData BatchApplicationPackageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BatchApplicationPackageState? state = default, string format = default, Uri storageUri = default, DateTimeOffset? storageUriExpireOn = default, DateTimeOffset? lastActivatedOn = default, ETag? etag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -293,7 +195,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchApplicationData"/> instance for mocking. </returns>
-        public static BatchApplicationData BatchApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, bool? allowUpdates = default, string defaultVersion = default, string etag = default, IDictionary<string, string> tags = default)
+        public static BatchApplicationData BatchApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, bool? allowUpdates = default, string defaultVersion = default, ETag? etag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -324,7 +226,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchAccountCertificateData"/> instance for mocking. </returns>
-        public static BatchAccountCertificateData BatchAccountCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string thumbprintAlgorithm = default, string thumbprintString = default, BatchAccountCertificateFormat? format = default, BatchAccountCertificateProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountCertificateProvisioningState? previousProvisioningState = default, DateTimeOffset? previousProvisioningStateTransitOn = default, string publicData = default, DeleteCertificateError deleteCertificateError = default, ETag? etag = default, IDictionary<string, string> tags = default)
+        public static BatchAccountCertificateData BatchAccountCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string thumbprintAlgorithm = default, string thumbprintString = default, BatchAccountCertificateFormat? format = default, BatchAccountCertificateProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountCertificateProvisioningState? previousProvisioningState = default, DateTimeOffset? previousProvisioningStateTransitOn = default, string publicData = default, ResponseError deleteCertificateError = default, ETag? etag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -349,19 +251,6 @@ namespace Azure.ResourceManager.Batch.Models
                 tags);
         }
 
-        /// <summary> An error response from the Batch service. </summary>
-        /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
-        /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
-        /// <param name="target"> The target of the particular error. For example, the name of the property in error. </param>
-        /// <param name="details"> A list of additional details about the error. </param>
-        /// <returns> A new <see cref="Models.DeleteCertificateError"/> instance for mocking. </returns>
-        public static DeleteCertificateError DeleteCertificateError(string code = default, string message = default, string target = default, IEnumerable<DeleteCertificateError> details = default)
-        {
-            details ??= new ChangeTrackingList<DeleteCertificateError>();
-
-            return new DeleteCertificateError(code, message, target, details.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> The ID of the resource. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. </param>
@@ -372,12 +261,12 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
         /// <param name="data"> The maximum size is 10KB. </param>
         /// <param name="password"> This must not be specified if the certificate format is Cer. </param>
-        /// <returns> A new <see cref="Models.BatchAccountCertificatePatch"/> instance for mocking. </returns>
-        public static BatchAccountCertificatePatch BatchAccountCertificatePatch(string id = default, string name = default, string @type = default, string etag = default, IDictionary<string, string> tags = default, string thumbprintAlgorithm = default, string thumbprintString = default, BatchAccountCertificateFormat? format = default, BinaryData data = default, string password = default)
+        /// <returns> A new <see cref="Models.BatchAccountCertificateCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static BatchAccountCertificateCreateOrUpdateContent BatchAccountCertificateCreateOrUpdateContent(string id = default, string name = default, string @type = default, string etag = default, IDictionary<string, string> tags = default, string thumbprintAlgorithm = default, string thumbprintString = default, BatchAccountCertificateFormat? format = default, BinaryData data = default, string password = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BatchAccountCertificatePatch(
+            return new BatchAccountCertificateCreateOrUpdateContent(
                 id,
                 name,
                 @type,
@@ -527,31 +416,6 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountPoolAutoScaleRun(evaluationOn, results, error, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An error that occurred when autoscaling a pool. </summary>
-        /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
-        /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
-        /// <param name="details"> Additional details about the error. </param>
-        /// <param name="target"> The error target. </param>
-        /// <returns> A new <see cref="Models.ResponseError"/> instance for mocking. </returns>
-        public static ResponseError ResponseError(string code = default, string message = default, IEnumerable<AutoScaleRunError> details = default, string target = default)
-        {
-            details ??= new ChangeTrackingList<AutoScaleRunError>();
-
-            return new ResponseError(code, message, details.ToList(), target, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> An error that occurred when autoscaling a pool. </summary>
-        /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
-        /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
-        /// <param name="details"> Additional details about the error. </param>
-        /// <returns> A new <see cref="Models.AutoScaleRunError"/> instance for mocking. </returns>
-        public static AutoScaleRunError AutoScaleRunError(string code = default, string message = default, IEnumerable<AutoScaleRunError> details = default)
-        {
-            details ??= new ChangeTrackingList<AutoScaleRunError>();
-
-            return new AutoScaleRunError(code, message, details.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A inbound NAT pool that can be used to address specific ports on compute nodes in a Batch pool externally. </summary>
         /// <param name="name"> The name must be unique within a Batch pool, can contain letters, numbers, underscores, periods, and hyphens. Names must start with a letter or number, must end with a letter, number, or underscore, and cannot exceed 77 characters.  If any invalid values are provided the request fails with HTTP status code 400. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
@@ -664,9 +528,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="startOn"> The time when this resize operation was started. </param>
         /// <param name="errors"> This property is set only if an error occurred during the last pool resize, and only when the pool allocationState is Steady. </param>
         /// <returns> A new <see cref="Models.BatchResizeOperationStatus"/> instance for mocking. </returns>
-        public static BatchResizeOperationStatus BatchResizeOperationStatus(int? targetDedicatedNodes = default, int? targetLowPriorityNodes = default, TimeSpan? resizeTimeout = default, BatchNodeDeallocationOption? nodeDeallocationOption = default, DateTimeOffset? startOn = default, IEnumerable<Azure.ResponseError> errors = default)
+        public static BatchResizeOperationStatus BatchResizeOperationStatus(int? targetDedicatedNodes = default, int? targetLowPriorityNodes = default, TimeSpan? resizeTimeout = default, BatchNodeDeallocationOption? nodeDeallocationOption = default, DateTimeOffset? startOn = default, IEnumerable<ResponseError> errors = default)
         {
-            errors ??= new ChangeTrackingList<Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<ResponseError>();
 
             return new BatchResizeOperationStatus(
                 targetDedicatedNodes,
@@ -929,8 +793,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="location"> The location of the resource. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchAccountData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BatchAccountData BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string accountEndpoint, string nodeManagementEndpoint, BatchProvisioningState? provisioningState, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections, BatchAccountAutoStorageConfiguration autoStorage, BatchAccountEncryptionConfiguration encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily, bool? isDedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes, AzureLocation? location, IReadOnlyDictionary<string, string> tags)
+        public static BatchAccountData BatchAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, string accountEndpoint = default, string nodeManagementEndpoint = default, BatchProvisioningState? provisioningState = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections = default, BatchAccountAutoStorageConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, int? dedicatedCoreQuota = default, int? lowPriorityCoreQuota = default, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default, bool? isDedicatedCoreQuotaPerVmFamilyEnforced = default, int? poolQuota = default, int? activeJobAndJobScheduleQuota = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<BatchPrivateEndpointConnectionData>();
             dedicatedCoreQuotaPerVmFamily ??= new ChangeTrackingList<BatchVmFamilyCoreQuota>();
@@ -961,8 +824,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, IEnumerable<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState, ETag? etag, IDictionary<string, string> tags)
+        public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BatchPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, IEnumerable<string> groupIds = default, BatchPrivateLinkServiceConnectionState connectionState = default, ETag? etag = default, IDictionary<string, string> tags = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -976,6 +838,34 @@ namespace Azure.ResourceManager.Batch.Models
                 default,
                 default,
                 tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="thumbprintAlgorithm"> This must match the first portion of the certificate name. Currently required to be 'SHA1'. </param>
+        /// <param name="thumbprintString"> This must match the thumbprint from the name. </param>
+        /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
+        /// <param name="data"> The maximum size is 10KB. </param>
+        /// <param name="password"> This must not be specified if the certificate format is Cer. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <returns> A new <see cref="Models.BatchAccountCertificateCreateOrUpdateContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchAccountCertificateCreateOrUpdateContent BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprintString, BatchAccountCertificateFormat? format, BinaryData data, string password, ETag? etag, IDictionary<string, string> tags)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchAccountCertificateCreateOrUpdateContent(
+                id,
+                name,
+                default,
+                default,
+                tags,
+                additionalBinaryDataProperties: null,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountPoolData"/>. </summary>

@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -115,7 +117,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    error = ResponseError.DeserializeResponseError(prop.Value, options);
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

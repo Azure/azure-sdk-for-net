@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="storageUriExpireOn"> The UTC time at which the Azure Storage URL will expire. </param>
         /// <param name="lastActivatedOn"> The time at which the package was last activated, if the package is active. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationPackageProperties(BatchApplicationPackageState? state, string format, string storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationPackageProperties(BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Format = format;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Batch.Models
         public string Format { get; }
 
         /// <summary> The URL for the application package in Azure Storage. </summary>
-        public string StorageUri { get; }
+        public Uri StorageUri { get; }
 
         /// <summary> The UTC time at which the Azure Storage URL will expire. </summary>
         public DateTimeOffset? StorageUriExpireOn { get; }

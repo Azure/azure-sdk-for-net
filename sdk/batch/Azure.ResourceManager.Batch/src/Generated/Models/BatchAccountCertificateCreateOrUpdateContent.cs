@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Contains information about a certificate. </summary>
-    public partial class BatchAccountCertificatePatch : AzureProxyResource
+    public partial class BatchAccountCertificateCreateOrUpdateContent : AzureProxyResource
     {
-        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificatePatch"/>. </summary>
-        public BatchAccountCertificatePatch()
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
+        public BatchAccountCertificateCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificatePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The ID of the resource. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties associated with the certificate. </param>
-        internal BatchAccountCertificatePatch(string id, string name, string @type, string eTag, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CertificateCreateOrUpdateProperties properties) : base(id, name, @type, eTag, tags, additionalBinaryDataProperties)
+        internal BatchAccountCertificateCreateOrUpdateContent(string id, string name, string @type, string eTag, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CertificateCreateOrUpdateProperties properties) : base(id, name, @type, eTag, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

@@ -3,47 +3,51 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    //public partial class BatchAccountCertificateCreateOrUpdateContent
-    //{
-    //    /// <summary>
-    //    /// This must match the thumbprint from the name.
-    //    /// <para>
-    //    /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-    //    /// </para>
-    //    /// <para>
-    //    /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-    //    /// </para>
-    //    /// <para>
-    //    /// Examples:
-    //    /// <list type="bullet">
-    //    /// <item>
-    //    /// <term>BinaryData.FromObjectAsJson("foo")</term>
-    //    /// <description>Creates a payload of "foo".</description>
-    //    /// </item>
-    //    /// <item>
-    //    /// <term>BinaryData.FromString("\"foo\"")</term>
-    //    /// <description>Creates a payload of "foo".</description>
-    //    /// </item>
-    //    /// <item>
-    //    /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-    //    /// <description>Creates a payload of { "key": "value" }.</description>
-    //    /// </item>
-    //    /// <item>
-    //    /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-    //    /// <description>Creates a payload of { "key": "value" }.</description>
-    //    /// </item>
-    //    /// </list>
-    //    /// </para>
-    //    /// </summary>
-    //    [EditorBrowsable(EditorBrowsableState.Never)]
-    //    [Obsolete("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
-    //    public BinaryData Thumbprint
-    //    {
-    //        get { return BinaryData.FromString(ThumbprintString); }
-    //        set { ThumbprintString = value.ToString(); }
-    //    }
-    //}
+    // temperatory until https://github.com/Azure/azure-sdk-for-net/issues/55147 is resolved in the code generator
+    [CodeGenType("BatchAccountCertificatePatch")]
+    public partial class BatchAccountCertificateCreateOrUpdateContent
+    {
+        /// <summary>
+        /// This must match the thumbprint from the name.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
+        public BinaryData Thumbprint
+        {
+            get { return BinaryData.FromString(ThumbprintString); }
+            set { ThumbprintString = value.ToString(); }
+        }
+    }
 }

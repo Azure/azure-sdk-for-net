@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
-        /// <param name="batchAccountCertificatePatch"> Additional parameters for certificate creation. </param>
+        /// <param name="batchAccountCertificateCreateOrUpdateContent"> Additional parameters for certificate creation. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="batchAccountCertificatePatch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="batchAccountCertificateCreateOrUpdateContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BatchAccountCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, BatchAccountCertificatePatch batchAccountCertificatePatch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BatchAccountCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, BatchAccountCertificateCreateOrUpdateContent batchAccountCertificateCreateOrUpdateContent, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(batchAccountCertificatePatch, nameof(batchAccountCertificatePatch));
+            Argument.AssertNotNull(batchAccountCertificateCreateOrUpdateContent, nameof(batchAccountCertificateCreateOrUpdateContent));
 
             using DiagnosticScope scope = _certificateClientDiagnostics.CreateScope("BatchAccountCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, BatchAccountCertificatePatch.ToRequestContent(batchAccountCertificatePatch), ifMatch, context);
+                HttpMessage message = _certificateRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, BatchAccountCertificateCreateOrUpdateContent.ToRequestContent(batchAccountCertificateCreateOrUpdateContent), matchConditions, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BatchAccountCertificateData> response = Response.FromValue(BatchAccountCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -130,15 +130,15 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
-        /// <param name="batchAccountCertificatePatch"> Additional parameters for certificate creation. </param>
+        /// <param name="batchAccountCertificateCreateOrUpdateContent"> Additional parameters for certificate creation. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="batchAccountCertificatePatch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="batchAccountCertificateCreateOrUpdateContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BatchAccountCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, BatchAccountCertificatePatch batchAccountCertificatePatch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BatchAccountCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, BatchAccountCertificateCreateOrUpdateContent batchAccountCertificateCreateOrUpdateContent, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(batchAccountCertificatePatch, nameof(batchAccountCertificatePatch));
+            Argument.AssertNotNull(batchAccountCertificateCreateOrUpdateContent, nameof(batchAccountCertificateCreateOrUpdateContent));
 
             using DiagnosticScope scope = _certificateClientDiagnostics.CreateScope("BatchAccountCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, BatchAccountCertificatePatch.ToRequestContent(batchAccountCertificatePatch), ifMatch, context);
+                HttpMessage message = _certificateRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, BatchAccountCertificateCreateOrUpdateContent.ToRequestContent(batchAccountCertificateCreateOrUpdateContent), matchConditions, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BatchAccountCertificateData> response = Response.FromValue(BatchAccountCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

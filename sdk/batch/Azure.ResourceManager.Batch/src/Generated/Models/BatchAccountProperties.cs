@@ -12,7 +12,7 @@ using Azure.ResourceManager.Batch;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Account specific properties. </summary>
-    public partial class BatchAccountProperties
+    internal partial class BatchAccountProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchAccountProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<BatchPrivateEndpointConnectionData>();
-            DedicatedCoreQuotaPerVMFamily = new ChangeTrackingList<BatchVmFamilyCoreQuota>();
+            DedicatedCoreQuotaPerVmFamily = new ChangeTrackingList<BatchVmFamilyCoreQuota>();
             AllowedAuthenticationModes = new ChangeTrackingList<BatchAuthenticationMode>();
         }
 
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
         /// <param name="dedicatedCoreQuota"> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
         /// <param name="lowPriorityCoreQuota"> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
-        /// <param name="dedicatedCoreQuotaPerVMFamily"> A list of the dedicated core quota per Virtual Machine family for the Batch account. For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
+        /// <param name="dedicatedCoreQuotaPerVmFamily"> A list of the dedicated core quota per Virtual Machine family for the Batch account. For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
         /// <param name="isDedicatedCoreQuotaPerVmFamilyEnforced"> If this flag is true, dedicated core quota is enforced via both the dedicatedCoreQuotaPerVMFamily and dedicatedCoreQuota properties on the account. If this flag is false, dedicated core quota is enforced only via the dedicatedCoreQuota property on the account and does not consider Virtual Machine family. </param>
         /// <param name="poolQuota"> The pool quota for the Batch account. </param>
         /// <param name="activeJobAndJobScheduleQuota"> The active job and job schedule quota for the Batch account. </param>
         /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountProperties(string accountEndpoint, string nodeManagementEndpoint, BatchProvisioningState? provisioningState, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections, BatchAccountAutoStorageConfiguration autoStorage, BatchAccountEncryptionConfiguration encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily, bool? isDedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IReadOnlyList<BatchAuthenticationMode> allowedAuthenticationModes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchAccountProperties(string accountEndpoint, string nodeManagementEndpoint, BatchProvisioningState? provisioningState, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections, BatchAccountAutoStorageConfiguration autoStorage, BatchAccountEncryptionConfiguration encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily, bool? isDedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IReadOnlyList<BatchAuthenticationMode> allowedAuthenticationModes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountEndpoint = accountEndpoint;
             NodeManagementEndpoint = nodeManagementEndpoint;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Batch.Models
             Encryption = encryption;
             DedicatedCoreQuota = dedicatedCoreQuota;
             LowPriorityCoreQuota = lowPriorityCoreQuota;
-            DedicatedCoreQuotaPerVMFamily = dedicatedCoreQuotaPerVMFamily;
+            DedicatedCoreQuotaPerVmFamily = dedicatedCoreQuotaPerVmFamily;
             IsDedicatedCoreQuotaPerVmFamilyEnforced = isDedicatedCoreQuotaPerVmFamilyEnforced;
             PoolQuota = poolQuota;
             ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuota;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchNetworkProfile NetworkProfile { get; set; }
 
         /// <summary> List of private endpoint connections associated with the Batch account. </summary>
-        public IReadOnlyList<BatchPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<BatchPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<BatchPrivateEndpointConnectionData>();
 
         /// <summary> Contains information about the auto-storage account associated with a Batch account. </summary>
         public BatchAccountAutoStorageConfiguration AutoStorage { get; }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Batch.Models
         public int? LowPriorityCoreQuota { get; }
 
         /// <summary> A list of the dedicated core quota per Virtual Machine family for the Batch account. For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </summary>
-        public IReadOnlyList<BatchVmFamilyCoreQuota> DedicatedCoreQuotaPerVMFamily { get; }
+        public IReadOnlyList<BatchVmFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily { get; } = new ChangeTrackingList<BatchVmFamilyCoreQuota>();
 
         /// <summary> If this flag is true, dedicated core quota is enforced via both the dedicatedCoreQuotaPerVMFamily and dedicatedCoreQuota properties on the account. If this flag is false, dedicated core quota is enforced only via the dedicatedCoreQuota property on the account and does not consider Virtual Machine family. </summary>
         public bool? IsDedicatedCoreQuotaPerVmFamilyEnforced { get; }
@@ -115,6 +115,6 @@ namespace Azure.ResourceManager.Batch.Models
         public int? ActiveJobAndJobScheduleQuota { get; }
 
         /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
-        public IReadOnlyList<BatchAuthenticationMode> AllowedAuthenticationModes { get; }
+        public IReadOnlyList<BatchAuthenticationMode> AllowedAuthenticationModes { get; } = new ChangeTrackingList<BatchAuthenticationMode>();
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountDetectorData"/>. </summary>
-        internal BatchAccountDetectorData()
+        public BatchAccountDetectorData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="properties"> The properties associated with the detector. </param>
         /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
-        internal BatchAccountDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DetectorResponseProperties properties, string eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal BatchAccountDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DetectorResponseProperties properties, ETag? eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -43,10 +44,10 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> The properties associated with the detector. </summary>
-        internal DetectorResponseProperties Properties { get; }
+        internal DetectorResponseProperties Properties { get; set; }
 
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The tags of the resource. </summary>
         public IDictionary<string, string> Tags { get; }
@@ -56,7 +57,15 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.Value;
+                return Properties is null ? default : Properties.Value;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                Properties.Value = value;
             }
         }
     }

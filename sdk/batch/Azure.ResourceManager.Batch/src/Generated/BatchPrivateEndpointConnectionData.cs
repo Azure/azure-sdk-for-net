@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> The private link service connection state of the private endpoint connection. </summary>
-        public BatchPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        public BatchPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     Properties = new PrivateEndpointConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 

@@ -211,13 +211,13 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="batchAccountCertificatePatch"> Certificate entity to update. </param>
+        /// <param name="batchAccountCertificateCreateOrUpdateContent"> Certificate entity to update. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the certificate to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchAccountCertificatePatch"/> is null. </exception>
-        public virtual async Task<Response<BatchAccountCertificateResource>> UpdateAsync(BatchAccountCertificatePatch batchAccountCertificatePatch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchAccountCertificateCreateOrUpdateContent"/> is null. </exception>
+        public virtual async Task<Response<BatchAccountCertificateResource>> UpdateAsync(BatchAccountCertificateCreateOrUpdateContent batchAccountCertificateCreateOrUpdateContent, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(batchAccountCertificatePatch, nameof(batchAccountCertificatePatch));
+            Argument.AssertNotNull(batchAccountCertificateCreateOrUpdateContent, nameof(batchAccountCertificateCreateOrUpdateContent));
 
             using DiagnosticScope scope = _certificateClientDiagnostics.CreateScope("BatchAccountCertificateResource.Update");
             scope.Start();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchAccountCertificatePatch.ToRequestContent(batchAccountCertificatePatch), ifMatch, context);
+                HttpMessage message = _certificateRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchAccountCertificateCreateOrUpdateContent.ToRequestContent(batchAccountCertificateCreateOrUpdateContent), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BatchAccountCertificateData> response = Response.FromValue(BatchAccountCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,13 +264,13 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="batchAccountCertificatePatch"> Certificate entity to update. </param>
+        /// <param name="batchAccountCertificateCreateOrUpdateContent"> Certificate entity to update. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the certificate to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchAccountCertificatePatch"/> is null. </exception>
-        public virtual Response<BatchAccountCertificateResource> Update(BatchAccountCertificatePatch batchAccountCertificatePatch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchAccountCertificateCreateOrUpdateContent"/> is null. </exception>
+        public virtual Response<BatchAccountCertificateResource> Update(BatchAccountCertificateCreateOrUpdateContent batchAccountCertificateCreateOrUpdateContent, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(batchAccountCertificatePatch, nameof(batchAccountCertificatePatch));
+            Argument.AssertNotNull(batchAccountCertificateCreateOrUpdateContent, nameof(batchAccountCertificateCreateOrUpdateContent));
 
             using DiagnosticScope scope = _certificateClientDiagnostics.CreateScope("BatchAccountCertificateResource.Update");
             scope.Start();
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchAccountCertificatePatch.ToRequestContent(batchAccountCertificatePatch), ifMatch, context);
+                HttpMessage message = _certificateRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchAccountCertificateCreateOrUpdateContent.ToRequestContent(batchAccountCertificateCreateOrUpdateContent), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BatchAccountCertificateData> response = Response.FromValue(BatchAccountCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountCertificateData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BatchAccountCertificatePatch patch = new BatchAccountCertificatePatch();
+                    BatchAccountCertificateCreateOrUpdateContent patch = new BatchAccountCertificateCreateOrUpdateContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountCertificateData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BatchAccountCertificatePatch patch = new BatchAccountCertificatePatch();
+                    BatchAccountCertificateCreateOrUpdateContent patch = new BatchAccountCertificateCreateOrUpdateContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountCertificateData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BatchAccountCertificatePatch patch = new BatchAccountCertificatePatch();
+                    BatchAccountCertificateCreateOrUpdateContent patch = new BatchAccountCertificateCreateOrUpdateContent();
                     patch.Tags.ReplaceWith(tags);
                     Response<BatchAccountCertificateResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountCertificateData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BatchAccountCertificatePatch patch = new BatchAccountCertificatePatch();
+                    BatchAccountCertificateCreateOrUpdateContent patch = new BatchAccountCertificateCreateOrUpdateContent();
                     patch.Tags.ReplaceWith(tags);
                     Response<BatchAccountCertificateResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountCertificateData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BatchAccountCertificatePatch patch = new BatchAccountCertificatePatch();
+                    BatchAccountCertificateCreateOrUpdateContent patch = new BatchAccountCertificateCreateOrUpdateContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountCertificateData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BatchAccountCertificatePatch patch = new BatchAccountCertificatePatch();
+                    BatchAccountCertificateCreateOrUpdateContent patch = new BatchAccountCertificateCreateOrUpdateContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

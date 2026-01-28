@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
     internal partial class CertificateProperties : CertificateBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="CertificateProperties"/>. </summary>
-        internal CertificateProperties()
+        public CertificateProperties()
         {
         }
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="previousProvisioningStateTransitOn"> The time at which the certificate entered its previous state. </param>
         /// <param name="publicData"> The public key of the certificate. </param>
         /// <param name="deleteCertificateError"> This is only returned when the certificate provisioningState is 'Failed'. </param>
-        internal CertificateProperties(string thumbprintAlgorithm, string thumbprintString, BatchAccountCertificateFormat? format, IDictionary<string, BinaryData> additionalBinaryDataProperties, BatchAccountCertificateProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountCertificateProvisioningState? previousProvisioningState, DateTimeOffset? previousProvisioningStateTransitOn, string publicData, DeleteCertificateError deleteCertificateError) : base(thumbprintAlgorithm, thumbprintString, format, additionalBinaryDataProperties)
+        internal CertificateProperties(string thumbprintAlgorithm, string thumbprintString, BatchAccountCertificateFormat? format, IDictionary<string, BinaryData> additionalBinaryDataProperties, BatchAccountCertificateProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountCertificateProvisioningState? previousProvisioningState, DateTimeOffset? previousProvisioningStateTransitOn, string publicData, ResponseError deleteCertificateError) : base(thumbprintAlgorithm, thumbprintString, format, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ProvisioningStateTransitOn = provisioningStateTransitOn;
@@ -55,6 +56,6 @@ namespace Azure.ResourceManager.Batch.Models
         public string PublicData { get; }
 
         /// <summary> This is only returned when the certificate provisioningState is 'Failed'. </summary>
-        public DeleteCertificateError DeleteCertificateError { get; }
+        public ResponseError DeleteCertificateError { get; }
     }
 }

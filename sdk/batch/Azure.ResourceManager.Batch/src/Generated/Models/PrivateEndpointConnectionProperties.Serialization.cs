@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchPrivateEndpointConnectionProvisioningState? provisioningState = default;
             PrivateEndpoint privateEndpoint = default;
             IReadOnlyList<string> groupIds = default;
-            BatchPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            BatchPrivateLinkServiceConnectionState connectionState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = BatchPrivateLinkServiceConnectionState.DeserializeBatchPrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = BatchPrivateLinkServiceConnectionState.DeserializeBatchPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionProperties(provisioningState, privateEndpoint, groupIds ?? new ChangeTrackingList<string>(), privateLinkServiceConnectionState, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(provisioningState, privateEndpoint, groupIds ?? new ChangeTrackingList<string>(), connectionState, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

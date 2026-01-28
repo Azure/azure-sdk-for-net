@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DetectorResponseProperties"/>. </summary>
-        internal DetectorResponseProperties()
+        public DetectorResponseProperties()
         {
         }
 
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> A base64 encoded string that represents the content of a detector. </summary>
-        public string Value { get; }
+        public string Value { get; set; }
     }
 }

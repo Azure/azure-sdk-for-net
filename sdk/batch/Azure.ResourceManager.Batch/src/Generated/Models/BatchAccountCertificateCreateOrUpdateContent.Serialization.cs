@@ -15,11 +15,11 @@ using Azure.ResourceManager.Batch;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Contains information about a certificate. </summary>
-    public partial class BatchAccountCertificatePatch : AzureProxyResource, IJsonModel<BatchAccountCertificatePatch>
+    public partial class BatchAccountCertificateCreateOrUpdateContent : AzureProxyResource, IJsonModel<BatchAccountCertificateCreateOrUpdateContent>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchAccountCertificatePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchAccountCertificateCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountCertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountCertificatePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountCertificateCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -45,24 +45,24 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchAccountCertificatePatch IJsonModel<BatchAccountCertificatePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BatchAccountCertificatePatch)JsonModelCreateCore(ref reader, options);
+        BatchAccountCertificateCreateOrUpdateContent IJsonModel<BatchAccountCertificateCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BatchAccountCertificateCreateOrUpdateContent)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AzureProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountCertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountCertificatePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountCertificateCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchAccountCertificatePatch(document.RootElement, options);
+            return DeserializeBatchAccountCertificateCreateOrUpdateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BatchAccountCertificatePatch DeserializeBatchAccountCertificatePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static BatchAccountCertificateCreateOrUpdateContent DeserializeBatchAccountCertificateCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchAccountCertificatePatch(
+            return new BatchAccountCertificateCreateOrUpdateContent(
                 id,
                 name,
                 @type,
@@ -143,54 +143,54 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchAccountCertificatePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BatchAccountCertificateCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountCertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountCertificatePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountCertificateCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchAccountCertificatePatch IPersistableModel<BatchAccountCertificatePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (BatchAccountCertificatePatch)PersistableModelCreateCore(data, options);
+        BatchAccountCertificateCreateOrUpdateContent IPersistableModel<BatchAccountCertificateCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (BatchAccountCertificateCreateOrUpdateContent)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AzureProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountCertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchAccountCertificatePatch(document.RootElement, options);
+                        return DeserializeBatchAccountCertificateCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountCertificatePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountCertificateCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchAccountCertificatePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchAccountCertificateCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="batchAccountCertificatePatch"> The <see cref="BatchAccountCertificatePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BatchAccountCertificatePatch batchAccountCertificatePatch)
+        /// <param name="batchAccountCertificateCreateOrUpdateContent"> The <see cref="BatchAccountCertificateCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BatchAccountCertificateCreateOrUpdateContent batchAccountCertificateCreateOrUpdateContent)
         {
-            if (batchAccountCertificatePatch == null)
+            if (batchAccountCertificateCreateOrUpdateContent == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchAccountCertificatePatch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(batchAccountCertificateCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

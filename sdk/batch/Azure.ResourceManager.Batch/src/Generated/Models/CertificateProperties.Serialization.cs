@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -63,7 +65,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (options.Format != "W" && Optional.IsDefined(DeleteCertificateError))
             {
                 writer.WritePropertyName("deleteCertificateError"u8);
-                writer.WriteObjectValue(DeleteCertificateError, options);
+                ((IJsonModel<ResponseError>)DeleteCertificateError).Write(writer, options);
             }
         }
 
@@ -101,7 +103,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchAccountCertificateProvisioningState? previousProvisioningState = default;
             DateTimeOffset? previousProvisioningStateTransitOn = default;
             string publicData = default;
-            DeleteCertificateError deleteCertificateError = default;
+            ResponseError deleteCertificateError = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("thumbprintAlgorithm"u8))
@@ -170,7 +172,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    deleteCertificateError = DeleteCertificateError.DeserializeDeleteCertificateError(prop.Value, options);
+                    deleteCertificateError = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

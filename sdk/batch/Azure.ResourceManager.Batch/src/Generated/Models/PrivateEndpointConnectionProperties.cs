@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The private endpoint of the private endpoint connection. </param>
         /// <param name="groupIds"> The value has one and only one group id. </param>
-        /// <param name="privateLinkServiceConnectionState"> The private link service connection state of the private endpoint connection. </param>
+        /// <param name="connectionState"> The private link service connection state of the private endpoint connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(BatchPrivateEndpointConnectionProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, IReadOnlyList<string> groupIds, BatchPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(BatchPrivateEndpointConnectionProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, IReadOnlyList<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Batch.Models
         public IReadOnlyList<string> GroupIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The private link service connection state of the private endpoint connection. </summary>
-        public BatchPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public BatchPrivateLinkServiceConnectionState ConnectionState { get; set; }
 
         /// <summary> The ARM resource identifier of the private endpoint. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/privateEndpoints/{privateEndpoint}. </summary>
         public ResourceIdentifier PrivateEndpointId

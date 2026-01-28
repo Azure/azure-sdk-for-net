@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateData"/>. </summary>
-        internal BatchAccountCertificateData()
+        public BatchAccountCertificateData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> The properties associated with the certificate. </summary>
-        internal CertificateProperties Properties { get; }
+        internal CertificateProperties Properties { get; set; }
 
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
         public ETag? ETag { get; }
@@ -57,7 +57,15 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.ThumbprintAlgorithm;
+                return Properties is null ? default : Properties.ThumbprintAlgorithm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProperties();
+                }
+                Properties.ThumbprintAlgorithm = value;
             }
         }
 
@@ -66,7 +74,15 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.ThumbprintString;
+                return Properties is null ? default : Properties.ThumbprintString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProperties();
+                }
+                Properties.ThumbprintString = value;
             }
         }
 
@@ -75,7 +91,15 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.Format;
+                return Properties is null ? default : Properties.Format;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProperties();
+                }
+                Properties.Format = value.Value;
             }
         }
 
@@ -84,7 +108,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -93,7 +117,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.ProvisioningStateTransitOn;
+                return Properties is null ? default : Properties.ProvisioningStateTransitOn;
             }
         }
 
@@ -102,7 +126,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.PreviousProvisioningState;
+                return Properties is null ? default : Properties.PreviousProvisioningState;
             }
         }
 
@@ -111,7 +135,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.PreviousProvisioningStateTransitOn;
+                return Properties is null ? default : Properties.PreviousProvisioningStateTransitOn;
             }
         }
 
@@ -120,16 +144,16 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.PublicData;
+                return Properties is null ? default : Properties.PublicData;
             }
         }
 
         /// <summary> This is only returned when the certificate provisioningState is 'Failed'. </summary>
-        public DeleteCertificateError DeleteCertificateError
+        public ResponseError DeleteCertificateError
         {
             get
             {
-                return Properties.DeleteCertificateError;
+                return Properties is null ? default : Properties.DeleteCertificateError;
             }
         }
     }

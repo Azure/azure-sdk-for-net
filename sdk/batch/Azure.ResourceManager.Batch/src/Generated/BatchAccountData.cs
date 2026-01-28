@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public BatchAccountProperties Properties { get; set; }
+        internal BatchAccountProperties Properties { get; set; }
 
         /// <summary> The identity of the Batch account. </summary>
         public ManagedServiceIdentity Identity { get; set; }
@@ -55,5 +55,186 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; set; }
+
+        /// <summary> The account endpoint used to interact with the Batch service. </summary>
+        public string AccountEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccountEndpoint;
+            }
+        }
+
+        /// <summary> The endpoint used by compute node to connect to the Batch node management service. </summary>
+        public string NodeManagementEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeManagementEndpoint;
+            }
+        }
+
+        /// <summary> The provisioned state of the resource. </summary>
+        public BatchProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The allocation mode for creating pools in the Batch account. </summary>
+        public BatchAccountPoolAllocationMode? PoolAllocationMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PoolAllocationMode;
+            }
+        }
+
+        /// <summary> Identifies the Azure key vault associated with a Batch account. </summary>
+        public BatchKeyVaultReference KeyVaultReference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultReference;
+            }
+        }
+
+        /// <summary> The network access type for operating on the resources in the Batch account. </summary>
+        public BatchPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
+        /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
+        public BatchNetworkProfile NetworkProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                Properties.NetworkProfile = value;
+            }
+        }
+
+        /// <summary> List of private endpoint connections associated with the Batch account. </summary>
+        public IReadOnlyList<BatchPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> Contains information about the auto-storage account associated with a Batch account. </summary>
+        public BatchAccountAutoStorageConfiguration AutoStorage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoStorage;
+            }
+        }
+
+        /// <summary> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </summary>
+        public BatchAccountEncryptionConfiguration Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+        }
+
+        /// <summary> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </summary>
+        public int? DedicatedCoreQuota
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DedicatedCoreQuota;
+            }
+        }
+
+        /// <summary> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </summary>
+        public int? LowPriorityCoreQuota
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LowPriorityCoreQuota;
+            }
+        }
+
+        /// <summary> A list of the dedicated core quota per Virtual Machine family for the Batch account. For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </summary>
+        public IReadOnlyList<BatchVmFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.DedicatedCoreQuotaPerVmFamily;
+            }
+        }
+
+        /// <summary> If this flag is true, dedicated core quota is enforced via both the dedicatedCoreQuotaPerVMFamily and dedicatedCoreQuota properties on the account. If this flag is false, dedicated core quota is enforced only via the dedicatedCoreQuota property on the account and does not consider Virtual Machine family. </summary>
+        public bool? IsDedicatedCoreQuotaPerVmFamilyEnforced
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDedicatedCoreQuotaPerVmFamilyEnforced;
+            }
+        }
+
+        /// <summary> The pool quota for the Batch account. </summary>
+        public int? PoolQuota
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PoolQuota;
+            }
+        }
+
+        /// <summary> The active job and job schedule quota for the Batch account. </summary>
+        public int? ActiveJobAndJobScheduleQuota
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActiveJobAndJobScheduleQuota;
+            }
+        }
+
+        /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
+        public IReadOnlyList<BatchAuthenticationMode> AllowedAuthenticationModes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.AllowedAuthenticationModes;
+            }
+        }
     }
 }

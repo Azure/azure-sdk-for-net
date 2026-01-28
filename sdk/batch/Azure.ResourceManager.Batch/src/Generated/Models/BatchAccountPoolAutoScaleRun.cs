@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.Batch.Models
 {

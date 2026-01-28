@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Batch
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ApplicationPackageProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,7 +145,11 @@ namespace Azure.ResourceManager.Batch
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

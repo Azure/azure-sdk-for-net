@@ -14,7 +14,7 @@ using Azure.ResourceManager.Batch;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Account specific properties. </summary>
-    public partial class BatchAccountProperties : IJsonModel<BatchAccountProperties>
+    internal partial class BatchAccountProperties : IJsonModel<BatchAccountProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("lowPriorityCoreQuota"u8);
                 writer.WriteNumberValue(LowPriorityCoreQuota.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DedicatedCoreQuotaPerVMFamily))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DedicatedCoreQuotaPerVmFamily))
             {
                 writer.WritePropertyName("dedicatedCoreQuotaPerVMFamily"u8);
                 writer.WriteStartArray();
-                foreach (BatchVmFamilyCoreQuota item in DedicatedCoreQuotaPerVMFamily)
+                foreach (BatchVmFamilyCoreQuota item in DedicatedCoreQuotaPerVmFamily)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchAccountEncryptionConfiguration encryption = default;
             int? dedicatedCoreQuota = default;
             int? lowPriorityCoreQuota = default;
-            IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default;
+            IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default;
             bool? isDedicatedCoreQuotaPerVmFamilyEnforced = default;
             int? poolQuota = default;
             int? activeJobAndJobScheduleQuota = default;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         array.Add(BatchVmFamilyCoreQuota.DeserializeBatchVmFamilyCoreQuota(item, options));
                     }
-                    dedicatedCoreQuotaPerVMFamily = array;
+                    dedicatedCoreQuotaPerVmFamily = array;
                     continue;
                 }
                 if (prop.NameEquals("dedicatedCoreQuotaPerVMFamilyEnforced"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Batch.Models
                 encryption,
                 dedicatedCoreQuota,
                 lowPriorityCoreQuota,
-                dedicatedCoreQuotaPerVMFamily ?? new ChangeTrackingList<BatchVmFamilyCoreQuota>(),
+                dedicatedCoreQuotaPerVmFamily ?? new ChangeTrackingList<BatchVmFamilyCoreQuota>(),
                 isDedicatedCoreQuotaPerVmFamilyEnforced,
                 poolQuota,
                 activeJobAndJobScheduleQuota,

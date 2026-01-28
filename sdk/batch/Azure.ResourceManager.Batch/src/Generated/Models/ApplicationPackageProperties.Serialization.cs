@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (options.Format != "W" && Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUrl"u8);
-                writer.WriteStringValue(StorageUri);
+                writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageUriExpireOn))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             BatchApplicationPackageState? state = default;
             string format = default;
-            string storageUri = default;
+            Uri storageUri = default;
             DateTimeOffset? storageUriExpireOn = default;
             DateTimeOffset? lastActivatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -125,7 +125,11 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("storageUrl"u8))
                 {
-                    storageUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageUrlExpiry"u8))
