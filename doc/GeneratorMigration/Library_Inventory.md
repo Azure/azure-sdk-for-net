@@ -15,9 +15,9 @@
 
 - Total libraries: 401
 - Management Plane (MPG): 227
-  - Autorest/Swagger: 148
-  - New Emitter (TypeSpec): 74
-  - Old TypeSpec: 5
+  - Autorest/Swagger: 147
+  - New Emitter (TypeSpec): 76
+  - Old TypeSpec: 4
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
   - New Emitter (TypeSpec): 27
@@ -145,7 +145,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 74 / 79 (93.7%)
+**Migration Status**: 76 / 80 (95%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -206,6 +206,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | playwright | Azure.ResourceManager.Playwright | ✅ |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | ✅ |
+| quantum | Azure.ResourceManager.Quantum | ✅ |
 | qumulo | Azure.ResourceManager.Qumulo | ✅ |
 | quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
@@ -232,7 +233,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 148
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 147
 
 | Service | Library |
 | ------- | ------- |
@@ -345,7 +346,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | privatedns | Azure.ResourceManager.PrivateDns |
 | providerhub | Azure.ResourceManager.ProviderHub |
 | purview | Azure.ResourceManager.Purview |
-| quantum | Azure.ResourceManager.Quantum |
 | recoveryservices-backup | Azure.ResourceManager.RecoveryServicesBackup |
 | recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery |
 | redis | Azure.ResourceManager.Redis |
