@@ -96,7 +96,9 @@
     <!-- BCL packages -->
     <PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.2" />
     <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
     <PackageVersion Include="System.Buffers" Version="4.5.1" />
@@ -286,10 +288,14 @@
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
     <PackageVersion Include="Microsoft.Extensions.Telemetry" Version="10.1.0" />
-    <PackageVersion Include="OpenTelemetry" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry" Version="$(OpenTelemetryVersion)" />
+    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.InMemory" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.14.0" />
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.14.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.14.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryInstrumentationHttpVersion)" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.14.0-beta.1" />
     <PackageVersion Include="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.2" />
   </ItemGroup>
 
@@ -382,7 +388,6 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
-    <PackageVersion Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageVersion Include="SauceControl.InheritDoc" Version="2.0.2" PrivateAssets="All" />
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
@@ -444,7 +449,7 @@
     <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.3.0" />
     <PackageVersion Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.7" />
     <PackageVersion Include="Microsoft.Azure.KeyVault" Version="3.0.5" />
-    <PackageVersion Update="Microsoft.Azure.KeyVault.Core" Version="3.0.5" />
+    <PackageVersion Include="Microsoft.Azure.KeyVault.Core" Version="3.0.5" />
     <PackageVersion Include="Microsoft.Azure.Management.ContainerRegistry" Version="4.0.0" />
     <PackageVersion Include="Microsoft.Azure.Management.ContainerRegistry.Fluent" Version="1.37.1" />
     <PackageVersion Include="Microsoft.Azure.Management.EventGrid" Version="4.0.1-preview" />
@@ -455,7 +460,7 @@
     <PackageVersion Include="Microsoft.Azure.Management.Storage" Version="25.0.0" />
     <PackageVersion Include="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
     <PackageVersion Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
-    <PackageVersion Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
+    <PackageVersion Include="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
     <PackageVersion Include="Microsoft.Azure.Storage.DataMovement" Version="2.0.5" />
     <PackageVersion Include="Microsoft.Azure.Storage.File" Version="11.2.2" />
     <PackageVersion Include="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
@@ -475,10 +480,6 @@
     <PackageVersion Include="Microsoft.Graph" Version="5.100.0" />
     <PackageVersion Include="Mono.Posix" Version="7.0.0-alpha8.21302.6" />
     <PackageVersion Include="NAudio" Version="2.2.1" />
-    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.14.0" />
-    <PackageVersion Include="OpenTelemetry.Exporter.InMemory" Version="1.14.0" />
-    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.14.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.14.0-beta.1" />
 
     <!-- Note: Polly v8+ is a complete rewrite with a new resilience pipeline API and significant breaking changes -->
     <PackageVersion Include="Polly" Version="7.1.0" />
@@ -514,6 +515,15 @@
       )">
     <PackageVersion Include="Microsoft.Rest.ClientRuntime" Version="$(MicrosoftRestClientRuntimeVersion)" />
     <PackageVersion Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="$(MicrosoftRestClientRuntimeAzureAuthenticationVersion)" />
+  </ItemGroup>
+
+  <!--
+    Newtonsoft.Json is approved for use in Storage test projects for legacy integration testing.
+  -->
+  <ItemGroup Condition="
+      ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsPerfProject)' == 'true')
+      and $(MSBuildProjectName.StartsWith('Azure.Storage'))">
+    <PackageVersion Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
   </ItemGroup>
 
   <!--
@@ -615,7 +625,7 @@
 
   <!-- Azure.Core.Tests needs OpenTelemetry for tracing tests -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Core.Tests'))">
-    <PackageVersion Include="OpenTelemetry" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry" Version="$(OpenTelemetryVersion)" />
   </ItemGroup>
 
   <!-- Azure.Core.Perf needs AspNetCore.Http -->
