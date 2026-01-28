@@ -362,7 +362,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getKnownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Extensible"
               },
               "parameters": [
                 {
@@ -452,7 +453,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getUnknownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Extensible"
               },
               "parameters": [
                 {
@@ -550,7 +552,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Extensible"
               },
               "parameters": [
                 {
@@ -661,7 +664,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Extensible"
               },
               "parameters": [
                 {

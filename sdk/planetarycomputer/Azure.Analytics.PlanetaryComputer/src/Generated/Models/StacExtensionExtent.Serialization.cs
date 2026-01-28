@@ -14,7 +14,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#extent-object
-    /// 
     /// Represents the spatial and temporal extent of a STAC collection.
     /// </summary>
     public partial class StacExtensionExtent : IJsonModel<StacExtensionExtent>
