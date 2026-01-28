@@ -94,5 +94,30 @@ namespace Azure.Data.AppConfiguration
                 IsReadOnly = isReadOnly
             };
         }
+
+        /// <summary>
+        /// Creates a <see cref="SnapshotReferenceConfigurationSetting"/> for mocking purposes.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="snapshotName">The name of the snapshot to reference.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="eTag">An ETag indicating the version of a configuration setting within a configuration store.</param>
+        /// <param name="lastModified">The last time a modifying operation was performed on the given configuration setting.</param>
+        /// <param name="isReadOnly">A value indicating whether the configuration setting is read only.</param>
+        public static SnapshotReferenceConfigurationSetting SnapshotReferenceConfigurationSetting(
+            string key,
+            string snapshotName,
+            string label = null,
+            ETag eTag = default,
+            DateTimeOffset? lastModified = null,
+            bool? isReadOnly = null)
+        {
+            return new SnapshotReferenceConfigurationSetting(key, snapshotName, label)
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                IsReadOnly = isReadOnly
+            };
+        }
     }
 }
