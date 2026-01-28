@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServices;
@@ -58,6 +59,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -95,6 +101,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             RecoveryServicesVaultProperties properties = default;
             RecoveryServicesSku sku = default;
             ManagedServiceIdentity identity = default;
+            ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -182,6 +189,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -197,7 +213,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 location,
                 properties,
                 sku,
-                identity);
+                identity,
+                eTag);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

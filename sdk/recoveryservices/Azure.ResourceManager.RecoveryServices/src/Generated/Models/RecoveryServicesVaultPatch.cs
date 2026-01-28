@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -35,12 +36,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="properties"> Properties of the vault. </param>
         /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal RecoveryServicesVaultPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, RecoveryServicesVaultProperties properties, RecoveryServicesSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTag"> Optional ETag. </param>
+        internal RecoveryServicesVaultPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, RecoveryServicesVaultProperties properties, RecoveryServicesSku sku, ManagedServiceIdentity identity, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
             Identity = identity;
+            ETag = eTag;
         }
 
         /// <summary> Properties of the vault. </summary>
@@ -51,5 +54,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Optional ETag. </summary>
+        public ETag? ETag { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -187,7 +186,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesSecuritySettings(immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, null), softDeleteSettings, multiUserAuthorization, sourceScanConfiguration, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Patch Resource information, as returned by the resource provider. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -197,8 +195,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="properties"> Properties of the vault. </param>
         /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
         /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="etag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesVaultPatch"/> instance for mocking. </returns>
-        public static RecoveryServicesVaultPatch RecoveryServicesVaultPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RecoveryServicesVaultProperties properties = default, RecoveryServicesSku sku = default, ManagedServiceIdentity identity = default)
+        public static RecoveryServicesVaultPatch RecoveryServicesVaultPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RecoveryServicesVaultProperties properties = default, RecoveryServicesSku sku = default, ManagedServiceIdentity identity = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -212,7 +211,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 location,
                 properties,
                 sku,
-                identity);
+                identity,
+                etag);
         }
 
         /// <summary>
@@ -511,36 +511,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 properties,
                 name,
                 location);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesVaultPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> Properties of the vault. </param>
-        /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="Models.RecoveryServicesVaultPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecoveryServicesVaultPatch RecoveryServicesVaultPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RecoveryServicesVaultProperties properties, RecoveryServicesSku sku, ManagedServiceIdentity identity, ETag? etag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new RecoveryServicesVaultPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                sku,
-                identity);
         }
     }
 }
