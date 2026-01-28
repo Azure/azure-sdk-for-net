@@ -43,11 +43,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -81,11 +76,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RecoveryServicesPrivateEndpointConnection properties = default;
-            string name = default;
             AzureLocation? location = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,6 +91,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -125,11 +125,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     properties = RecoveryServicesPrivateEndpointConnection.DeserializeRecoveryServicesPrivateEndpointConnection(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("location"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -146,11 +141,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             return new RecoveryServicesPrivateEndpointConnectionVaultProperties(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
-                name,
                 location);
         }
 

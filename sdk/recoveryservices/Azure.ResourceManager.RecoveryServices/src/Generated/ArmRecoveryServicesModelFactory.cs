@@ -136,6 +136,26 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Information to be stored in Vault properties as an element of privateEndpointConnections List. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Private Endpoint Connection Response Properties. </param>
+        /// <param name="location"> The location of the private Endpoint connection. </param>
+        /// <returns> A new <see cref="Models.RecoveryServicesPrivateEndpointConnectionVaultProperties"/> instance for mocking. </returns>
+        public static RecoveryServicesPrivateEndpointConnectionVaultProperties RecoveryServicesPrivateEndpointConnectionVaultProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecoveryServicesPrivateEndpointConnection properties = default, AzureLocation? location = default)
+        {
+            return new RecoveryServicesPrivateEndpointConnectionVaultProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                location);
+        }
+
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpointId"> Gets or sets id. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
@@ -491,26 +511,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 additionalBinaryDataProperties: null,
                 name,
                 properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesPrivateEndpointConnectionVaultProperties"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Private Endpoint Connection Response Properties. </param>
-        /// <param name="location"> The location of the private Endpoint connection. </param>
-        /// <returns> A new <see cref="Models.RecoveryServicesPrivateEndpointConnectionVaultProperties"/> instance for mocking. </returns>
-        public static RecoveryServicesPrivateEndpointConnectionVaultProperties RecoveryServicesPrivateEndpointConnectionVaultProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecoveryServicesPrivateEndpointConnection properties = default, AzureLocation? location = default)
-        {
-            return new RecoveryServicesPrivateEndpointConnectionVaultProperties(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                name,
-                location);
         }
     }
 }
