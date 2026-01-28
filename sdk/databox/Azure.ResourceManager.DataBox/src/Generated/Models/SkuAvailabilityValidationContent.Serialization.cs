@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class SkuAvailabilityValidationContent : IUtf8JsonSerializable, IJsonModel<SkuAvailabilityValidationContent>
+    /// <summary> Request to validate sku availability. </summary>
+    public partial class SkuAvailabilityValidationContent : DataBoxValidationInputContent, IJsonModel<SkuAvailabilityValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuAvailabilityValidationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SkuAvailabilityValidationContent"/> for deserialization. </summary>
+        internal SkuAvailabilityValidationContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SkuAvailabilityValidationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuAvailabilityValidationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkuAvailabilityValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SkuAvailabilityValidationContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
@@ -50,79 +56,82 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        SkuAvailabilityValidationContent IJsonModel<SkuAvailabilityValidationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SkuAvailabilityValidationContent IJsonModel<SkuAvailabilityValidationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SkuAvailabilityValidationContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataBoxValidationInputContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuAvailabilityValidationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkuAvailabilityValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SkuAvailabilityValidationContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSkuAvailabilityValidationContent(document.RootElement, options);
         }
 
-        internal static SkuAvailabilityValidationContent DeserializeSkuAvailabilityValidationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SkuAvailabilityValidationContent DeserializeSkuAvailabilityValidationContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            DataBoxValidationInputDiscriminator validationType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataBoxSkuName deviceType = default;
             DataBoxJobTransferType transferType = default;
             string country = default;
             AzureLocation location = default;
             DeviceModelName? model = default;
-            DataBoxValidationInputDiscriminator validationType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceType"u8))
+                if (prop.NameEquals("validationType"u8))
                 {
-                    deviceType = property.Value.GetString().ToDataBoxSkuName();
+                    validationType = prop.Value.GetString().ToDataBoxValidationInputDiscriminator();
                     continue;
                 }
-                if (property.NameEquals("transferType"u8))
+                if (prop.NameEquals("deviceType"u8))
                 {
-                    transferType = property.Value.GetString().ToDataBoxJobTransferType();
+                    deviceType = prop.Value.GetString().ToDataBoxSkuName();
                     continue;
                 }
-                if (property.NameEquals("country"u8))
+                if (prop.NameEquals("transferType"u8))
                 {
-                    country = property.Value.GetString();
+                    transferType = prop.Value.GetString().ToDataBoxJobTransferType();
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("country"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    country = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("model"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("model"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    model = property.Value.GetString().ToDeviceModelName();
-                    continue;
-                }
-                if (property.NameEquals("validationType"u8))
-                {
-                    validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
+                    model = prop.Value.GetString().ToDeviceModelName();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SkuAvailabilityValidationContent(
                 validationType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 deviceType,
                 transferType,
                 country,
@@ -130,10 +139,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 model);
         }
 
-        BinaryData IPersistableModel<SkuAvailabilityValidationContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuAvailabilityValidationContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SkuAvailabilityValidationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SkuAvailabilityValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -143,15 +155,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        SkuAvailabilityValidationContent IPersistableModel<SkuAvailabilityValidationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuAvailabilityValidationContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SkuAvailabilityValidationContent IPersistableModel<SkuAvailabilityValidationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (SkuAvailabilityValidationContent)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataBoxValidationInputContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SkuAvailabilityValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSkuAvailabilityValidationContent(document.RootElement, options);
                     }
                 default:
@@ -159,6 +176,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SkuAvailabilityValidationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
