@@ -1,12 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// NOTE: This file has been commented out to use the generated SearchIndexClient instead.
+// The customizations from this manual client have been moved to SearchIndexClient.KnowledgeBases.Customizations.cs
+// See SearchIndexClient.KnowledgeBases.Customizations.cs for the partial class that extends the generated client.
+
+#if false // Commented out manual client - using generated client with customizations instead
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -15,12 +22,12 @@ namespace Azure.Search.Documents.Indexes
     /// </summary>
     public partial class SearchIndexClient
     {
-        private KnowledgeBasesRestClient _KnowledgeBasesRestClient;
+        private SearchIndexClient _KnowledgeBaseRetrievalClient;
 
         /// <summary>
-        /// Gets the generated <see cref="KnowledgeBasesRestClient"/> to make requests.
+        /// Gets the generated <see cref="KnowledgeBaseRetrievalClient"/> to make requests.
         /// </summary>
-        private KnowledgeBasesRestClient KnowledgeBasesClient => LazyInitializer.EnsureInitialized(ref _KnowledgeBasesRestClient, () => new KnowledgeBasesRestClient(
+        private KnowledgeBaseRetrievalClient KnowledgeBasesClient => LazyInitializer.EnsureInitialized(ref _KnowledgeBaseRetrievalClient, () => new KnowledgeBaseRetrievalClient(
             _clientDiagnostics,
             _pipeline,
             Endpoint.AbsoluteUri,
@@ -321,3 +328,5 @@ namespace Azure.Search.Documents.Indexes
         #endregion
     }
 }
+
+#endif // End of commented out manual client

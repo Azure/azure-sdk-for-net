@@ -7,50 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Statistical information about knowledge source synchronization history. </summary>
     public partial class KnowledgeSourceStatistics
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatistics"/>. </summary>
-        /// <param name="totalSynchronization"> The total number of synchronizations completed. </param>
-        /// <param name="averageSynchronizationDuration"> The average duration of synchronizations in HH:MM:SS format. </param>
-        /// <param name="averageItemsProcessedPerSynchronization"> The average number of items processed per synchronization. </param>
+        /// <param name="totalSynchronization"> Total number of synchronizations. </param>
+        /// <param name="averageSynchronizationDuration"> Average synchronization duration in HH:MM:SS format. </param>
+        /// <param name="averageItemsProcessedPerSynchronization"> Average items processed per synchronization. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="averageSynchronizationDuration"/> is null. </exception>
-        internal KnowledgeSourceStatistics(int totalSynchronization, string averageSynchronizationDuration, int averageItemsProcessedPerSynchronization)
+        public KnowledgeSourceStatistics(int totalSynchronization, string averageSynchronizationDuration, int averageItemsProcessedPerSynchronization)
         {
             Argument.AssertNotNull(averageSynchronizationDuration, nameof(averageSynchronizationDuration));
 
@@ -60,28 +32,25 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatistics"/>. </summary>
-        /// <param name="totalSynchronization"> The total number of synchronizations completed. </param>
-        /// <param name="averageSynchronizationDuration"> The average duration of synchronizations in HH:MM:SS format. </param>
-        /// <param name="averageItemsProcessedPerSynchronization"> The average number of items processed per synchronization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceStatistics(int totalSynchronization, string averageSynchronizationDuration, int averageItemsProcessedPerSynchronization, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="totalSynchronization"> Total number of synchronizations. </param>
+        /// <param name="averageSynchronizationDuration"> Average synchronization duration in HH:MM:SS format. </param>
+        /// <param name="averageItemsProcessedPerSynchronization"> Average items processed per synchronization. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeSourceStatistics(int totalSynchronization, string averageSynchronizationDuration, int averageItemsProcessedPerSynchronization, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TotalSynchronization = totalSynchronization;
             AverageSynchronizationDuration = averageSynchronizationDuration;
             AverageItemsProcessedPerSynchronization = averageItemsProcessedPerSynchronization;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatistics"/> for deserialization. </summary>
-        internal KnowledgeSourceStatistics()
-        {
-        }
+        /// <summary> Total number of synchronizations. </summary>
+        public int TotalSynchronization { get; set; }
 
-        /// <summary> The total number of synchronizations completed. </summary>
-        public int TotalSynchronization { get; }
-        /// <summary> The average duration of synchronizations in HH:MM:SS format. </summary>
-        public string AverageSynchronizationDuration { get; }
-        /// <summary> The average number of items processed per synchronization. </summary>
-        public int AverageItemsProcessedPerSynchronization { get; }
+        /// <summary> Average synchronization duration in HH:MM:SS format. </summary>
+        public string AverageSynchronizationDuration { get; set; }
+
+        /// <summary> Average items processed per synchronization. </summary>
+        public int AverageItemsProcessedPerSynchronization { get; set; }
     }
 }

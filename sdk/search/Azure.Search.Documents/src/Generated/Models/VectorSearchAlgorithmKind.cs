@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The algorithm used for indexing and querying. </summary>
-    internal readonly partial struct VectorSearchAlgorithmKind : IEquatable<VectorSearchAlgorithmKind>
+    public readonly partial struct VectorSearchAlgorithmKind : IEquatable<VectorSearchAlgorithmKind>
     {
         private readonly string _value;
+        /// <summary> HNSW (Hierarchical Navigable Small World), a type of approximate nearest neighbors algorithm. </summary>
+        private const string HnswValue = "hnsw";
+        /// <summary> Exhaustive KNN algorithm which will perform brute-force search. </summary>
+        private const string ExhaustiveKnnValue = "exhaustiveKnn";
 
         /// <summary> Initializes a new instance of <see cref="VectorSearchAlgorithmKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorSearchAlgorithmKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HnswValue = "hnsw";
-        private const string ExhaustiveKnnValue = "exhaustiveKnn";
+            _value = value;
+        }
 
         /// <summary> HNSW (Hierarchical Navigable Small World), a type of approximate nearest neighbors algorithm. </summary>
         public static VectorSearchAlgorithmKind Hnsw { get; } = new VectorSearchAlgorithmKind(HnswValue);
+
         /// <summary> Exhaustive KNN algorithm which will perform brute-force search. </summary>
         public static VectorSearchAlgorithmKind ExhaustiveKnn { get; } = new VectorSearchAlgorithmKind(ExhaustiveKnnValue);
+
         /// <summary> Determines if two <see cref="VectorSearchAlgorithmKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorSearchAlgorithmKind left, VectorSearchAlgorithmKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VectorSearchAlgorithmKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorSearchAlgorithmKind left, VectorSearchAlgorithmKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorSearchAlgorithmKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VectorSearchAlgorithmKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VectorSearchAlgorithmKind(string value) => new VectorSearchAlgorithmKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VectorSearchAlgorithmKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VectorSearchAlgorithmKind?(string value) => value == null ? null : new VectorSearchAlgorithmKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VectorSearchAlgorithmKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VectorSearchAlgorithmKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

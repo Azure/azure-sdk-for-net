@@ -4,18 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    // Hide the versioned SentimentSkill. We unify all within a single type.
-    [CodeGenModel("SentimentSkillV3")]
-    internal partial class SentimentSkillV3 { }
-
     /// <summary> Evaluates unstructured text and for each record, provides sentiment labels (such as "negative", "neutral" and "positive")
     /// based on the highest confidence score found by the service at a sentence and document-level using the Text Analytics API. </summary>
+    [CodeGenType("SentimentSkillV3")]
+
     public partial class SentimentSkill
     {
         private readonly SkillVersion _skillVersion = SkillVersion.V1;
@@ -30,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public SentimentSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, SkillVersion skillVersion) : this(inputs, outputs)
         {
             _skillVersion = skillVersion;
-            ODataType = skillVersion.ToString();
+            OdataType = skillVersion.ToString();
         }
 
         /// <summary> Initializes a new instance of SentimentSkill. </summary>
@@ -43,11 +41,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            ODataType = "#Microsoft.Skills.Text.SentimentSkill";
+            OdataType = "#Microsoft.Skills.Text.SentimentSkill";
         }
-
-        /// <summary> A value indicating which language code to use. Default is <see cref="SentimentSkillLanguage.En"/>. </summary>
-        public SentimentSkillLanguage? DefaultLanguageCode { get; set; } = SentimentSkillLanguage.En;
 
         /// <summary> If set to true, the skill output will include information from Text Analytics for opinion mining,
         /// namely targets (nouns or verbs) and their associated assessment (adjective) in the text. Default is <c>false</c>. </summary>

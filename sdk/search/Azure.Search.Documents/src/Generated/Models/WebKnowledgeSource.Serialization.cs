@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class WebKnowledgeSource : IUtf8JsonSerializable, IJsonModel<WebKnowledgeSource>
+    /// <summary> Knowledge Source targeting web results. </summary>
+    public partial class WebKnowledgeSource : KnowledgeSource, IJsonModel<WebKnowledgeSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebKnowledgeSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="WebKnowledgeSource"/> for deserialization. </summary>
+        internal WebKnowledgeSource()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebKnowledgeSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WebKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebKnowledgeSource)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(WebParameters))
             {
@@ -42,95 +47,101 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        WebKnowledgeSource IJsonModel<WebKnowledgeSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebKnowledgeSource IJsonModel<WebKnowledgeSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WebKnowledgeSource)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WebKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebKnowledgeSource)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWebKnowledgeSource(document.RootElement, options);
         }
 
-        internal static WebKnowledgeSource DeserializeWebKnowledgeSource(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WebKnowledgeSource DeserializeWebKnowledgeSource(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            WebKnowledgeSourceParameters webParameters = default;
             string name = default;
             string description = default;
             KnowledgeSourceKind kind = default;
-            string odataEtag = default;
             SearchResourceEncryptionKey encryptionKey = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string eTag = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            WebKnowledgeSourceParameters webParameters = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("webParameters"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    webParameters = WebKnowledgeSourceParameters.DeserializeWebKnowledgeSourceParameters(property.Value, options);
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    name = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    description = property.Value.GetString();
+                    kind = new KnowledgeSourceKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("encryptionKey"u8))
                 {
-                    kind = new KnowledgeSourceKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("@odata.etag"u8))
-                {
-                    odataEtag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("encryptionKey"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
                         continue;
                     }
-                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value, options);
+                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("@odata.etag"u8))
+                {
+                    eTag = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("webParameters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    webParameters = WebKnowledgeSourceParameters.DeserializeWebKnowledgeSourceParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new WebKnowledgeSource(
                 name,
                 description,
                 kind,
-                odataEtag,
                 encryptionKey,
-                serializedAdditionalRawData,
+                eTag,
+                additionalBinaryDataProperties,
                 webParameters);
         }
 
-        BinaryData IPersistableModel<WebKnowledgeSource>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WebKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WebKnowledgeSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -140,15 +151,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        WebKnowledgeSource IPersistableModel<WebKnowledgeSource>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WebKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebKnowledgeSource IPersistableModel<WebKnowledgeSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (WebKnowledgeSource)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWebKnowledgeSource(document.RootElement, options);
                     }
                 default:
@@ -156,22 +172,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WebKnowledgeSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new WebKnowledgeSource FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeWebKnowledgeSource(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

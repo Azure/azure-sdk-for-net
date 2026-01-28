@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
+    [CodeGenType("LexicalAnalyzerName")]
     public readonly partial struct LexicalAnalyzerName
     {
 #pragma warning disable CA1034 // Nested types should not be visible

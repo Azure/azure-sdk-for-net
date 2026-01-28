@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public readonly partial struct KnowledgeRetrievalIntentType : IEquatable<KnowledgeRetrievalIntentType>
     {
         private readonly string _value;
+        /// <summary> A natural language semantic query intent. </summary>
+        private const string SemanticValue = "semantic";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalIntentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KnowledgeRetrievalIntentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SemanticValue = "semantic";
+            _value = value;
+        }
 
         /// <summary> A natural language semantic query intent. </summary>
         public static KnowledgeRetrievalIntentType Semantic { get; } = new KnowledgeRetrievalIntentType(SemanticValue);
+
         /// <summary> Determines if two <see cref="KnowledgeRetrievalIntentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KnowledgeRetrievalIntentType left, KnowledgeRetrievalIntentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KnowledgeRetrievalIntentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KnowledgeRetrievalIntentType left, KnowledgeRetrievalIntentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KnowledgeRetrievalIntentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KnowledgeRetrievalIntentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KnowledgeRetrievalIntentType(string value) => new KnowledgeRetrievalIntentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KnowledgeRetrievalIntentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KnowledgeRetrievalIntentType?(string value) => value == null ? null : new KnowledgeRetrievalIntentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KnowledgeRetrievalIntentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KnowledgeRetrievalIntentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="AsciiFoldingTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AsciiFoldingTokenFilter(string name) : base(name)
+        public AsciiFoldingTokenFilter(string name) : base("#Microsoft.Azure.Search.AsciiFoldingTokenFilter", name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ODataType = "#Microsoft.Azure.Search.AsciiFoldingTokenFilter";
         }
 
         /// <summary> Initializes a new instance of <see cref="AsciiFoldingTokenFilter"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="preserveOriginal"> A value indicating whether the original token will be kept. Default is false. </param>
-        internal AsciiFoldingTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? preserveOriginal) : base(oDataType, name, serializedAdditionalRawData)
+        internal AsciiFoldingTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? preserveOriginal) : base(odataType, name, additionalBinaryDataProperties)
         {
             PreserveOriginal = preserveOriginal;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.AsciiFoldingTokenFilter";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AsciiFoldingTokenFilter"/> for deserialization. </summary>
-        internal AsciiFoldingTokenFilter()
-        {
         }
 
         /// <summary> A value indicating whether the original token will be kept. Default is false. </summary>

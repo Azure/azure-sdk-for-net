@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
         private readonly string _etag;
 
         /// <summary>
-        /// The <see cref="Azure.ETag"/> of the <see cref="SearchAlias"/>.
+        /// The <see cref="global::Azure.ETag"/> of the <see cref="SearchAlias"/>.
         /// </summary>
         public ETag? ETag
         {

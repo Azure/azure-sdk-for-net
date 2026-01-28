@@ -15,9 +15,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        internal KnowledgeBaseModelAnswerSynthesisActivityRecord(int id) : base(id)
+        internal KnowledgeBaseModelAnswerSynthesisActivityRecord(int id) : base(id, KnowledgeBaseActivityRecordType.ModelAnswerSynthesis)
         {
-            Type = "modelAnswerSynthesis";
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>. </summary>
@@ -25,23 +24,18 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM answer synthesis activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM answer synthesis activity. </param>
-        internal KnowledgeBaseModelAnswerSynthesisActivityRecord(int id, string type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> serializedAdditionalRawData, int? inputTokens, int? outputTokens) : base(id, type, elapsedMs, error, serializedAdditionalRawData)
+        internal KnowledgeBaseModelAnswerSynthesisActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokens, int? outputTokens) : base(id, @type, elapsedMs, error, additionalBinaryDataProperties)
         {
             InputTokens = inputTokens;
             OutputTokens = outputTokens;
-            Type = type ?? "modelAnswerSynthesis";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/> for deserialization. </summary>
-        internal KnowledgeBaseModelAnswerSynthesisActivityRecord()
-        {
         }
 
         /// <summary> The number of input tokens for the LLM answer synthesis activity. </summary>
         public int? InputTokens { get; }
+
         /// <summary> The number of output tokens for the LLM answer synthesis activity. </summary>
         public int? OutputTokens { get; }
     }

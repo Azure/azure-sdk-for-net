@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The compression method used for indexing and querying. </summary>
-    internal readonly partial struct VectorSearchCompressionKind : IEquatable<VectorSearchCompressionKind>
+    public readonly partial struct VectorSearchCompressionKind : IEquatable<VectorSearchCompressionKind>
     {
         private readonly string _value;
+        /// <summary> Scalar Quantization, a type of compression method. In scalar quantization, the original vectors values are compressed to a narrower type by discretizing and representing each component of a vector using a reduced set of quantized values, thereby reducing the overall data size. </summary>
+        private const string ScalarQuantizationValue = "scalarQuantization";
+        /// <summary> Binary Quantization, a type of compression method. In binary quantization, the original vectors values are compressed to the narrower binary type by discretizing and representing each component of a vector using binary values, thereby reducing the overall data size. </summary>
+        private const string BinaryQuantizationValue = "binaryQuantization";
 
         /// <summary> Initializes a new instance of <see cref="VectorSearchCompressionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorSearchCompressionKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ScalarQuantizationValue = "scalarQuantization";
-        private const string BinaryQuantizationValue = "binaryQuantization";
+            _value = value;
+        }
 
         /// <summary> Scalar Quantization, a type of compression method. In scalar quantization, the original vectors values are compressed to a narrower type by discretizing and representing each component of a vector using a reduced set of quantized values, thereby reducing the overall data size. </summary>
         public static VectorSearchCompressionKind ScalarQuantization { get; } = new VectorSearchCompressionKind(ScalarQuantizationValue);
+
         /// <summary> Binary Quantization, a type of compression method. In binary quantization, the original vectors values are compressed to the narrower binary type by discretizing and representing each component of a vector using binary values, thereby reducing the overall data size. </summary>
         public static VectorSearchCompressionKind BinaryQuantization { get; } = new VectorSearchCompressionKind(BinaryQuantizationValue);
+
         /// <summary> Determines if two <see cref="VectorSearchCompressionKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorSearchCompressionKind left, VectorSearchCompressionKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VectorSearchCompressionKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorSearchCompressionKind left, VectorSearchCompressionKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorSearchCompressionKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VectorSearchCompressionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VectorSearchCompressionKind(string value) => new VectorSearchCompressionKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VectorSearchCompressionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VectorSearchCompressionKind?(string value) => value == null ? null : new VectorSearchCompressionKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VectorSearchCompressionKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VectorSearchCompressionKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

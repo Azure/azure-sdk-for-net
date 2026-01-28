@@ -8,39 +8,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Provides the ability to override other stemming filters with custom dictionary-based stemming. Any dictionary-stemmed terms will be marked as keywords so that they will not be stemmed with stemmers down the chain. Must be placed before any stemming filters. This token filter is implemented using Apache Lucene. </summary>
+    /// <summary> Provides the ability to override other stemming filters with custom dictionary-based stemming. Any dictionary-stemmed terms will be marked as keywords so that they will not be stemmed with stemmers down the chain. Must be placed before any stemming filters. This token filter is implemented using Apache Lucene. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/StemmerOverrideFilter.html. </summary>
     public partial class StemmerOverrideTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of <see cref="StemmerOverrideTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="rules"> A list of stemming rules in the following format: "word =&gt; stem", for example: "ran =&gt; run". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="rules"/> is null. </exception>
-        public StemmerOverrideTokenFilter(string name, IEnumerable<string> rules) : base(name)
+        public StemmerOverrideTokenFilter(string name, IEnumerable<string> rules) : base("#Microsoft.Azure.Search.StemmerOverrideTokenFilter", name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(rules, nameof(rules));
 
             Rules = rules.ToList();
-            ODataType = "#Microsoft.Azure.Search.StemmerOverrideTokenFilter";
         }
 
         /// <summary> Initializes a new instance of <see cref="StemmerOverrideTokenFilter"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rules"> A list of stemming rules in the following format: "word =&gt; stem", for example: "ran =&gt; run". </param>
-        internal StemmerOverrideTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> rules) : base(oDataType, name, serializedAdditionalRawData)
+        internal StemmerOverrideTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> rules) : base(odataType, name, additionalBinaryDataProperties)
         {
             Rules = rules;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.StemmerOverrideTokenFilter";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StemmerOverrideTokenFilter"/> for deserialization. </summary>
-        internal StemmerOverrideTokenFilter()
-        {
         }
     }
 }

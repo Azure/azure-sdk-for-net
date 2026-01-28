@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Optional content extraction mode. Default is 'minimal'. </summary>
     public readonly partial struct KnowledgeSourceContentExtractionMode : IEquatable<KnowledgeSourceContentExtractionMode>
     {
         private readonly string _value;
+        /// <summary> Extracts only essential metadata while deferring most content processing. </summary>
+        private const string MinimalValue = "minimal";
+        /// <summary> Performs the full default content extraction pipeline. </summary>
+        private const string StandardValue = "standard";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceContentExtractionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KnowledgeSourceContentExtractionMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MinimalValue = "minimal";
-        private const string StandardValue = "standard";
+            _value = value;
+        }
 
         /// <summary> Extracts only essential metadata while deferring most content processing. </summary>
         public static KnowledgeSourceContentExtractionMode Minimal { get; } = new KnowledgeSourceContentExtractionMode(MinimalValue);
+
         /// <summary> Performs the full default content extraction pipeline. </summary>
         public static KnowledgeSourceContentExtractionMode Standard { get; } = new KnowledgeSourceContentExtractionMode(StandardValue);
+
         /// <summary> Determines if two <see cref="KnowledgeSourceContentExtractionMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KnowledgeSourceContentExtractionMode left, KnowledgeSourceContentExtractionMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KnowledgeSourceContentExtractionMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KnowledgeSourceContentExtractionMode left, KnowledgeSourceContentExtractionMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KnowledgeSourceContentExtractionMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KnowledgeSourceContentExtractionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KnowledgeSourceContentExtractionMode(string value) => new KnowledgeSourceContentExtractionMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KnowledgeSourceContentExtractionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KnowledgeSourceContentExtractionMode?(string value) => value == null ? null : new KnowledgeSourceContentExtractionMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KnowledgeSourceContentExtractionMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KnowledgeSourceContentExtractionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

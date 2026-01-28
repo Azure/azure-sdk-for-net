@@ -7,58 +7,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the result of an individual indexer execution. </summary>
     public partial class IndexerExecutionResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
-        /// <param name="status"> The outcome of this indexer execution. </param>
-        /// <param name="errors"> The item-level indexing errors. </param>
-        /// <param name="warnings"> The item-level indexing warnings. </param>
-        /// <param name="itemCount"> The number of items that were processed during this indexer execution. This includes both successfully processed items and items where indexing was attempted but failed. </param>
-        /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
-        internal IndexerExecutionResult(IndexerExecutionStatus status, IEnumerable<SearchIndexerError> errors, IEnumerable<SearchIndexerWarning> warnings, int itemCount, int failedItemCount)
+        internal IndexerExecutionResult()
         {
-            Status = status;
-            Errors = errors.ToList();
-            Warnings = warnings.ToList();
-            ItemCount = itemCount;
-            FailedItemCount = failedItemCount;
+            Errors = new ChangeTrackingList<SearchIndexerError>();
+            Warnings = new ChangeTrackingList<SearchIndexerWarning>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
@@ -74,8 +37,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexingMode? mode, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<SearchIndexerError> errors, IReadOnlyList<SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexingMode? mode, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<SearchIndexerError> errors, IReadOnlyList<SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StatusDetail = statusDetail;
@@ -89,36 +52,42 @@ namespace Azure.Search.Documents.Indexes.Models
             FailedItemCount = failedItemCount;
             InitialTrackingState = initialTrackingState;
             FinalTrackingState = finalTrackingState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/> for deserialization. </summary>
-        internal IndexerExecutionResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The outcome of this indexer execution. </summary>
         public IndexerExecutionStatus Status { get; }
+
         /// <summary> The outcome of this indexer execution. </summary>
         public IndexerExecutionStatusDetail? StatusDetail { get; }
+
         /// <summary> The mode the indexer is running in. </summary>
         public IndexingMode? Mode { get; }
+
         /// <summary> The error message indicating the top-level error, if any. </summary>
         public string ErrorMessage { get; }
+
         /// <summary> The start time of this indexer execution. </summary>
         public DateTimeOffset? StartTime { get; }
+
         /// <summary> The end time of this indexer execution, if the execution has already completed. </summary>
         public DateTimeOffset? EndTime { get; }
+
         /// <summary> The item-level indexing errors. </summary>
         public IReadOnlyList<SearchIndexerError> Errors { get; }
+
         /// <summary> The item-level indexing warnings. </summary>
         public IReadOnlyList<SearchIndexerWarning> Warnings { get; }
+
         /// <summary> The number of items that were processed during this indexer execution. This includes both successfully processed items and items where indexing was attempted but failed. </summary>
         public int ItemCount { get; }
+
         /// <summary> The number of items that failed to be indexed during this indexer execution. </summary>
         public int FailedItemCount { get; }
+
         /// <summary> Change tracking state with which an indexer execution started. </summary>
         public string InitialTrackingState { get; }
+
         /// <summary> Change tracking state with which an indexer execution finished. </summary>
         public string FinalTrackingState { get; }
     }

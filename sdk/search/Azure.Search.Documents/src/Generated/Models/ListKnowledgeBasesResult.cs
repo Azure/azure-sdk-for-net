@@ -11,66 +11,29 @@ using System.Linq;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The ListKnowledgeBasesResult. </summary>
-    internal partial class ListKnowledgeBasesResult
+    /// <summary> Result from listing knowledge bases. </summary>
+    public partial class ListKnowledgeBasesResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ListKnowledgeBasesResult"/>. </summary>
-        /// <param name="knowledgeBases"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBases"/> is null. </exception>
-        internal ListKnowledgeBasesResult(IEnumerable<KnowledgeBase> knowledgeBases)
+        /// <param name="value"> The knowledge bases in the service. </param>
+        internal ListKnowledgeBasesResult(IEnumerable<KnowledgeBase> value)
         {
-            Argument.AssertNotNull(knowledgeBases, nameof(knowledgeBases));
-
-            KnowledgeBases = knowledgeBases.ToList();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListKnowledgeBasesResult"/>. </summary>
-        /// <param name="knowledgeBases"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListKnowledgeBasesResult(IReadOnlyList<KnowledgeBase> knowledgeBases, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The knowledge bases in the service. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ListKnowledgeBasesResult(IList<KnowledgeBase> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            KnowledgeBases = knowledgeBases;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Value = value;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListKnowledgeBasesResult"/> for deserialization. </summary>
-        internal ListKnowledgeBasesResult()
-        {
-        }
-
-        /// <summary> Gets the knowledge bases. </summary>
-        public IReadOnlyList<KnowledgeBase> KnowledgeBases { get; }
+        /// <summary> The knowledge bases in the service. </summary>
+        public IList<KnowledgeBase> Value { get; }
     }
 }

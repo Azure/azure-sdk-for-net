@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,18 +17,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="WordDelimiterTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public WordDelimiterTokenFilter(string name) : base(name)
+        public WordDelimiterTokenFilter(string name) : base("#Microsoft.Azure.Search.WordDelimiterTokenFilter", name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             ProtectedWords = new ChangeTrackingList<string>();
-            ODataType = "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
         }
 
         /// <summary> Initializes a new instance of <see cref="WordDelimiterTokenFilter"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="generateWordParts"> A value indicating whether to generate part words. If set, causes parts of words to be generated; for example "AzureSearch" becomes "Azure" "Search". Default is true. </param>
         /// <param name="generateNumberParts"> A value indicating whether to generate number subwords. Default is true. </param>
         /// <param name="catenateWords"> A value indicating whether maximum runs of word parts will be catenated. For example, if this is set to true, "Azure-Search" becomes "AzureSearch". Default is false. </param>
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="splitOnNumerics"> A value indicating whether to split on numbers. For example, if this is set to true, "Azure1Search" becomes "Azure" "1" "Search". Default is true. </param>
         /// <param name="stemEnglishPossessive"> A value indicating whether to remove trailing "'s" for each subword. Default is true. </param>
         /// <param name="protectedWords"> A list of tokens to protect from being delimited. </param>
-        internal WordDelimiterTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? generateWordParts, bool? generateNumberParts, bool? catenateWords, bool? catenateNumbers, bool? catenateAll, bool? splitOnCaseChange, bool? preserveOriginal, bool? splitOnNumerics, bool? stemEnglishPossessive, IList<string> protectedWords) : base(oDataType, name, serializedAdditionalRawData)
+        internal WordDelimiterTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? generateWordParts, bool? generateNumberParts, bool? catenateWords, bool? catenateNumbers, bool? catenateAll, bool? splitOnCaseChange, bool? preserveOriginal, bool? splitOnNumerics, bool? stemEnglishPossessive, IList<string> protectedWords) : base(odataType, name, additionalBinaryDataProperties)
         {
             GenerateWordParts = generateWordParts;
             GenerateNumberParts = generateNumberParts;
@@ -50,30 +50,32 @@ namespace Azure.Search.Documents.Indexes.Models
             SplitOnNumerics = splitOnNumerics;
             StemEnglishPossessive = stemEnglishPossessive;
             ProtectedWords = protectedWords;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WordDelimiterTokenFilter"/> for deserialization. </summary>
-        internal WordDelimiterTokenFilter()
-        {
         }
 
         /// <summary> A value indicating whether to generate part words. If set, causes parts of words to be generated; for example "AzureSearch" becomes "Azure" "Search". Default is true. </summary>
         public bool? GenerateWordParts { get; set; }
+
         /// <summary> A value indicating whether to generate number subwords. Default is true. </summary>
         public bool? GenerateNumberParts { get; set; }
+
         /// <summary> A value indicating whether maximum runs of word parts will be catenated. For example, if this is set to true, "Azure-Search" becomes "AzureSearch". Default is false. </summary>
         public bool? CatenateWords { get; set; }
+
         /// <summary> A value indicating whether maximum runs of number parts will be catenated. For example, if this is set to true, "1-2" becomes "12". Default is false. </summary>
         public bool? CatenateNumbers { get; set; }
+
         /// <summary> A value indicating whether all subword parts will be catenated. For example, if this is set to true, "Azure-Search-1" becomes "AzureSearch1". Default is false. </summary>
         public bool? CatenateAll { get; set; }
+
         /// <summary> A value indicating whether to split words on caseChange. For example, if this is set to true, "AzureSearch" becomes "Azure" "Search". Default is true. </summary>
         public bool? SplitOnCaseChange { get; set; }
+
         /// <summary> A value indicating whether original words will be preserved and added to the subword list. Default is false. </summary>
         public bool? PreserveOriginal { get; set; }
+
         /// <summary> A value indicating whether to split on numbers. For example, if this is set to true, "Azure1Search" becomes "Azure" "1" "Search". Default is true. </summary>
         public bool? SplitOnNumerics { get; set; }
+
         /// <summary> A value indicating whether to remove trailing "'s" for each subword. Default is true. </summary>
         public bool? StemEnglishPossessive { get; set; }
     }

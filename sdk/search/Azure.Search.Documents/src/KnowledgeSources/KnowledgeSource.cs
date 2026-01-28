@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -11,7 +11,7 @@ namespace Azure.Search.Documents.Indexes.Models
         private string _eTag;
 
         /// <summary>
-        /// The <see cref="Azure.ETag"/> of the <see cref="KnowledgeSource"/>.
+        /// The <see cref="global::Azure.ETag"/> of the <see cref="KnowledgeSource"/>.
         /// </summary>
         public ETag? ETag
         {

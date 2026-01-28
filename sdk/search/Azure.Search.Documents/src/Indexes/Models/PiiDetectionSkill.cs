@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenModel("PIIDetectionSkill")]
+    [CodeGenType("PIIDetectionSkill")]
     public partial class PiiDetectionSkill
     {
         /// <summary> A value indicating which language code to use. Default is en. </summary>

@@ -5,32 +5,112 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Identifies the type of phonetic encoder to use with a PhoneticTokenFilter. </summary>
-    public enum PhoneticEncoder
+    public readonly partial struct PhoneticEncoder : IEquatable<PhoneticEncoder>
     {
+        private readonly string _value;
         /// <summary> Encodes a token into a Metaphone value. </summary>
-        Metaphone,
+        private const string MetaphoneValue = "metaphone";
         /// <summary> Encodes a token into a double metaphone value. </summary>
-        DoubleMetaphone,
+        private const string DoubleMetaphoneValue = "doubleMetaphone";
         /// <summary> Encodes a token into a Soundex value. </summary>
-        Soundex,
+        private const string SoundexValue = "soundex";
         /// <summary> Encodes a token into a Refined Soundex value. </summary>
-        RefinedSoundex,
+        private const string RefinedSoundexValue = "refinedSoundex";
         /// <summary> Encodes a token into a Caverphone 1.0 value. </summary>
-        Caverphone1,
+        private const string Caverphone1Value = "caverphone1";
         /// <summary> Encodes a token into a Caverphone 2.0 value. </summary>
-        Caverphone2,
+        private const string Caverphone2Value = "caverphone2";
         /// <summary> Encodes a token into a Cologne Phonetic value. </summary>
-        Cologne,
+        private const string CologneValue = "cologne";
         /// <summary> Encodes a token into a NYSIIS value. </summary>
-        Nysiis,
+        private const string NysiisValue = "nysiis";
         /// <summary> Encodes a token using the Kölner Phonetik algorithm. </summary>
-        KoelnerPhonetik,
+        private const string KoelnerPhonetikValue = "koelnerPhonetik";
         /// <summary> Encodes a token using the Haase refinement of the Kölner Phonetik algorithm. </summary>
-        HaasePhonetik,
+        private const string HaasePhonetikValue = "haasePhonetik";
         /// <summary> Encodes a token into a Beider-Morse value. </summary>
-        BeiderMorse
+        private const string BeiderMorseValue = "beiderMorse";
+
+        /// <summary> Initializes a new instance of <see cref="PhoneticEncoder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PhoneticEncoder(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Encodes a token into a Metaphone value. </summary>
+        public static PhoneticEncoder Metaphone { get; } = new PhoneticEncoder(MetaphoneValue);
+
+        /// <summary> Encodes a token into a double metaphone value. </summary>
+        public static PhoneticEncoder DoubleMetaphone { get; } = new PhoneticEncoder(DoubleMetaphoneValue);
+
+        /// <summary> Encodes a token into a Soundex value. </summary>
+        public static PhoneticEncoder Soundex { get; } = new PhoneticEncoder(SoundexValue);
+
+        /// <summary> Encodes a token into a Refined Soundex value. </summary>
+        public static PhoneticEncoder RefinedSoundex { get; } = new PhoneticEncoder(RefinedSoundexValue);
+
+        /// <summary> Encodes a token into a Caverphone 1.0 value. </summary>
+        public static PhoneticEncoder Caverphone1 { get; } = new PhoneticEncoder(Caverphone1Value);
+
+        /// <summary> Encodes a token into a Caverphone 2.0 value. </summary>
+        public static PhoneticEncoder Caverphone2 { get; } = new PhoneticEncoder(Caverphone2Value);
+
+        /// <summary> Encodes a token into a Cologne Phonetic value. </summary>
+        public static PhoneticEncoder Cologne { get; } = new PhoneticEncoder(CologneValue);
+
+        /// <summary> Encodes a token into a NYSIIS value. </summary>
+        public static PhoneticEncoder Nysiis { get; } = new PhoneticEncoder(NysiisValue);
+
+        /// <summary> Encodes a token using the Kölner Phonetik algorithm. </summary>
+        public static PhoneticEncoder KoelnerPhonetik { get; } = new PhoneticEncoder(KoelnerPhonetikValue);
+
+        /// <summary> Encodes a token using the Haase refinement of the Kölner Phonetik algorithm. </summary>
+        public static PhoneticEncoder HaasePhonetik { get; } = new PhoneticEncoder(HaasePhonetikValue);
+
+        /// <summary> Encodes a token into a Beider-Morse value. </summary>
+        public static PhoneticEncoder BeiderMorse { get; } = new PhoneticEncoder(BeiderMorseValue);
+
+        /// <summary> Determines if two <see cref="PhoneticEncoder"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(PhoneticEncoder left, PhoneticEncoder right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="PhoneticEncoder"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(PhoneticEncoder left, PhoneticEncoder right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="PhoneticEncoder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PhoneticEncoder(string value) => new PhoneticEncoder(value);
+
+        /// <summary> Converts a string to a <see cref="PhoneticEncoder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PhoneticEncoder?(string value) => value == null ? null : new PhoneticEncoder(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is PhoneticEncoder other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(PhoneticEncoder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

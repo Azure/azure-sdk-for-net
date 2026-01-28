@@ -15,25 +15,18 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="VectorSimilarityThreshold"/>. </summary>
         /// <param name="value"> The threshold will filter based on the similarity metric value. Note this is the canonical definition of similarity metric, not the 'distance' version. The threshold direction (larger or smaller) will be chosen automatically according to the metric used by the field. </param>
-        public VectorSimilarityThreshold(double value)
+        public VectorSimilarityThreshold(double value) : base(VectorThresholdKind.VectorSimilarity)
         {
             Value = value;
-            Kind = VectorThresholdKind.VectorSimilarity;
         }
 
         /// <summary> Initializes a new instance of <see cref="VectorSimilarityThreshold"/>. </summary>
-        /// <param name="kind"> The kind of threshold used to filter vector queries. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Type of threshold. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The threshold will filter based on the similarity metric value. Note this is the canonical definition of similarity metric, not the 'distance' version. The threshold direction (larger or smaller) will be chosen automatically according to the metric used by the field. </param>
-        internal VectorSimilarityThreshold(VectorThresholdKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value) : base(kind, serializedAdditionalRawData)
+        internal VectorSimilarityThreshold(VectorThresholdKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value) : base(kind, additionalBinaryDataProperties)
         {
             Value = value;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VectorSimilarityThreshold"/> for deserialization. </summary>
-        internal VectorSimilarityThreshold()
-        {
         }
 
         /// <summary> The threshold will filter based on the similarity metric value. Note this is the canonical definition of similarity metric, not the 'distance' version. The threshold direction (larger or smaller) will be chosen automatically according to the metric used by the field. </summary>

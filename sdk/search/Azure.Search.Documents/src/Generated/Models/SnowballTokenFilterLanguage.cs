@@ -5,54 +5,167 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language to use for a Snowball token filter. </summary>
-    public enum SnowballTokenFilterLanguage
+    public readonly partial struct SnowballTokenFilterLanguage : IEquatable<SnowballTokenFilterLanguage>
     {
+        private readonly string _value;
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Armenian. </summary>
-        Armenian,
+        private const string ArmenianValue = "armenian";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Basque. </summary>
-        Basque,
+        private const string BasqueValue = "basque";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Catalan. </summary>
-        Catalan,
+        private const string CatalanValue = "catalan";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Danish. </summary>
-        Danish,
+        private const string DanishValue = "danish";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Dutch. </summary>
-        Dutch,
+        private const string DutchValue = "dutch";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for English. </summary>
-        English,
+        private const string EnglishValue = "english";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Finnish. </summary>
-        Finnish,
+        private const string FinnishValue = "finnish";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for French. </summary>
-        French,
+        private const string FrenchValue = "french";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for German. </summary>
-        German,
+        private const string GermanValue = "german";
         /// <summary> Selects the Lucene Snowball stemming tokenizer that uses the German variant algorithm. </summary>
-        German2,
+        private const string German2Value = "german2";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Hungarian. </summary>
-        Hungarian,
+        private const string HungarianValue = "hungarian";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Italian. </summary>
-        Italian,
+        private const string ItalianValue = "italian";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Dutch that uses the Kraaij-Pohlmann stemming algorithm. </summary>
-        Kp,
+        private const string KpValue = "kp";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for English that uses the Lovins stemming algorithm. </summary>
-        Lovins,
+        private const string LovinsValue = "lovins";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Norwegian. </summary>
-        Norwegian,
+        private const string NorwegianValue = "norwegian";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for English that uses the Porter stemming algorithm. </summary>
-        Porter,
+        private const string PorterValue = "porter";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Portuguese. </summary>
-        Portuguese,
+        private const string PortugueseValue = "portuguese";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Romanian. </summary>
-        Romanian,
+        private const string RomanianValue = "romanian";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Russian. </summary>
-        Russian,
+        private const string RussianValue = "russian";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Spanish. </summary>
-        Spanish,
+        private const string SpanishValue = "spanish";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Swedish. </summary>
-        Swedish,
+        private const string SwedishValue = "swedish";
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Turkish. </summary>
-        Turkish
+        private const string TurkishValue = "turkish";
+
+        /// <summary> Initializes a new instance of <see cref="SnowballTokenFilterLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SnowballTokenFilterLanguage(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Armenian. </summary>
+        public static SnowballTokenFilterLanguage Armenian { get; } = new SnowballTokenFilterLanguage(ArmenianValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Basque. </summary>
+        public static SnowballTokenFilterLanguage Basque { get; } = new SnowballTokenFilterLanguage(BasqueValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Catalan. </summary>
+        public static SnowballTokenFilterLanguage Catalan { get; } = new SnowballTokenFilterLanguage(CatalanValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Danish. </summary>
+        public static SnowballTokenFilterLanguage Danish { get; } = new SnowballTokenFilterLanguage(DanishValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Dutch. </summary>
+        public static SnowballTokenFilterLanguage Dutch { get; } = new SnowballTokenFilterLanguage(DutchValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for English. </summary>
+        public static SnowballTokenFilterLanguage English { get; } = new SnowballTokenFilterLanguage(EnglishValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Finnish. </summary>
+        public static SnowballTokenFilterLanguage Finnish { get; } = new SnowballTokenFilterLanguage(FinnishValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for French. </summary>
+        public static SnowballTokenFilterLanguage French { get; } = new SnowballTokenFilterLanguage(FrenchValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for German. </summary>
+        public static SnowballTokenFilterLanguage German { get; } = new SnowballTokenFilterLanguage(GermanValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer that uses the German variant algorithm. </summary>
+        public static SnowballTokenFilterLanguage German2 { get; } = new SnowballTokenFilterLanguage(German2Value);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Hungarian. </summary>
+        public static SnowballTokenFilterLanguage Hungarian { get; } = new SnowballTokenFilterLanguage(HungarianValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Italian. </summary>
+        public static SnowballTokenFilterLanguage Italian { get; } = new SnowballTokenFilterLanguage(ItalianValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Dutch that uses the Kraaij-Pohlmann stemming algorithm. </summary>
+        public static SnowballTokenFilterLanguage Kp { get; } = new SnowballTokenFilterLanguage(KpValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for English that uses the Lovins stemming algorithm. </summary>
+        public static SnowballTokenFilterLanguage Lovins { get; } = new SnowballTokenFilterLanguage(LovinsValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Norwegian. </summary>
+        public static SnowballTokenFilterLanguage Norwegian { get; } = new SnowballTokenFilterLanguage(NorwegianValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for English that uses the Porter stemming algorithm. </summary>
+        public static SnowballTokenFilterLanguage Porter { get; } = new SnowballTokenFilterLanguage(PorterValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Portuguese. </summary>
+        public static SnowballTokenFilterLanguage Portuguese { get; } = new SnowballTokenFilterLanguage(PortugueseValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Romanian. </summary>
+        public static SnowballTokenFilterLanguage Romanian { get; } = new SnowballTokenFilterLanguage(RomanianValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Russian. </summary>
+        public static SnowballTokenFilterLanguage Russian { get; } = new SnowballTokenFilterLanguage(RussianValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Spanish. </summary>
+        public static SnowballTokenFilterLanguage Spanish { get; } = new SnowballTokenFilterLanguage(SpanishValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Swedish. </summary>
+        public static SnowballTokenFilterLanguage Swedish { get; } = new SnowballTokenFilterLanguage(SwedishValue);
+
+        /// <summary> Selects the Lucene Snowball stemming tokenizer for Turkish. </summary>
+        public static SnowballTokenFilterLanguage Turkish { get; } = new SnowballTokenFilterLanguage(TurkishValue);
+
+        /// <summary> Determines if two <see cref="SnowballTokenFilterLanguage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(SnowballTokenFilterLanguage left, SnowballTokenFilterLanguage right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="SnowballTokenFilterLanguage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(SnowballTokenFilterLanguage left, SnowballTokenFilterLanguage right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="SnowballTokenFilterLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SnowballTokenFilterLanguage(string value) => new SnowballTokenFilterLanguage(value);
+
+        /// <summary> Converts a string to a <see cref="SnowballTokenFilterLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SnowballTokenFilterLanguage?(string value) => value == null ? null : new SnowballTokenFilterLanguage(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is SnowballTokenFilterLanguage other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(SnowballTokenFilterLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

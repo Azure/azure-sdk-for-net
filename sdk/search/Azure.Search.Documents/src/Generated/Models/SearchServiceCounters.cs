@@ -13,37 +13,8 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents service-level resource counters and quotas. </summary>
     public partial class SearchServiceCounters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceCounters"/>. </summary>
         /// <param name="aliasCounter"> Total number of aliases. </param>
@@ -55,19 +26,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
         /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliasCounter"/>, <paramref name="documentCounter"/>, <paramref name="indexCounter"/>, <paramref name="indexerCounter"/>, <paramref name="dataSourceCounter"/>, <paramref name="storageSizeCounter"/>, <paramref name="synonymMapCounter"/>, <paramref name="skillsetCounter"/> or <paramref name="vectorIndexSizeCounter"/> is null. </exception>
         internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter)
         {
-            Argument.AssertNotNull(aliasCounter, nameof(aliasCounter));
-            Argument.AssertNotNull(documentCounter, nameof(documentCounter));
-            Argument.AssertNotNull(indexCounter, nameof(indexCounter));
-            Argument.AssertNotNull(indexerCounter, nameof(indexerCounter));
-            Argument.AssertNotNull(dataSourceCounter, nameof(dataSourceCounter));
-            Argument.AssertNotNull(storageSizeCounter, nameof(storageSizeCounter));
-            Argument.AssertNotNull(synonymMapCounter, nameof(synonymMapCounter));
-            Argument.AssertNotNull(skillsetCounter, nameof(skillsetCounter));
-            Argument.AssertNotNull(vectorIndexSizeCounter, nameof(vectorIndexSizeCounter));
-
             AliasCounter = aliasCounter;
             DocumentCounter = documentCounter;
             IndexCounter = indexCounter;
@@ -89,8 +49,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
         /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AliasCounter = aliasCounter;
             DocumentCounter = documentCounter;
@@ -101,30 +61,33 @@ namespace Azure.Search.Documents.Indexes.Models
             SynonymMapCounter = synonymMapCounter;
             SkillsetCounter = skillsetCounter;
             VectorIndexSizeCounter = vectorIndexSizeCounter;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SearchServiceCounters"/> for deserialization. </summary>
-        internal SearchServiceCounters()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Total number of aliases. </summary>
         public SearchResourceCounter AliasCounter { get; }
+
         /// <summary> Total number of documents across all indexes in the service. </summary>
         public SearchResourceCounter DocumentCounter { get; }
+
         /// <summary> Total number of indexes. </summary>
         public SearchResourceCounter IndexCounter { get; }
+
         /// <summary> Total number of indexers. </summary>
         public SearchResourceCounter IndexerCounter { get; }
+
         /// <summary> Total number of data sources. </summary>
         public SearchResourceCounter DataSourceCounter { get; }
+
         /// <summary> Total size of used storage in bytes. </summary>
         public SearchResourceCounter StorageSizeCounter { get; }
+
         /// <summary> Total number of synonym maps. </summary>
         public SearchResourceCounter SynonymMapCounter { get; }
+
         /// <summary> Total number of skillsets. </summary>
         public SearchResourceCounter SkillsetCounter { get; }
+
         /// <summary> Total memory consumption of all vector indexes within the service, in bytes. </summary>
         public SearchResourceCounter VectorIndexSizeCounter { get; }
     }

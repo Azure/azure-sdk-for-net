@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class SearchResult : IUtf8JsonSerializable, IJsonModel<SearchResult>
+    internal partial class SearchResult : IJsonModel<SearchResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchResult)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W")
             {
                 writer.WritePropertyName("@search.score"u8);
@@ -41,27 +40,13 @@ namespace Azure.Search.Documents.Models
             }
             if (options.Format != "W" && Optional.IsDefined(RerankerScore))
             {
-                if (RerankerScore != null)
-                {
-                    writer.WritePropertyName("@search.rerankerScore"u8);
-                    writer.WriteNumberValue(RerankerScore.Value);
-                }
-                else
-                {
-                    writer.WriteNull("@search.rerankerScore");
-                }
+                writer.WritePropertyName("@search.rerankerScore"u8);
+                writer.WriteNumberValue(RerankerScore.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(RerankerBoostedScore))
             {
-                if (RerankerBoostedScore != null)
-                {
-                    writer.WritePropertyName("@search.rerankerBoostedScore"u8);
-                    writer.WriteNumberValue(RerankerBoostedScore.Value);
-                }
-                else
-                {
-                    writer.WriteNull("@search.rerankerBoostedScore");
-                }
+                writer.WritePropertyName("@search.rerankerBoostedScore"u8);
+                writer.WriteNumberValue(RerankerBoostedScore.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Highlights))
             {
@@ -76,8 +61,13 @@ namespace Azure.Search.Documents.Models
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (var item0 in item.Value)
+                    foreach (string item0 in item.Value)
                     {
+                        if (item0 == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteStringValue(item0);
                     }
                     writer.WriteEndArray();
@@ -86,163 +76,168 @@ namespace Azure.Search.Documents.Models
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Captions))
             {
-                if (Captions != null)
+                writer.WritePropertyName("@search.captions"u8);
+                writer.WriteStartArray();
+                foreach (QueryCaptionResult item in Captions)
                 {
-                    writer.WritePropertyName("@search.captions"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Captions)
-                    {
-                        writer.WriteObjectValue(item, options);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item, options);
                 }
-                else
-                {
-                    writer.WriteNull("@search.captions");
-                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(DocumentDebugInfo))
             {
-                if (DocumentDebugInfo != null)
-                {
-                    writer.WritePropertyName("@search.documentDebugInfo"u8);
-                    writer.WriteObjectValue(DocumentDebugInfo, options);
-                }
-                else
-                {
-                    writer.WriteNull("@search.documentDebugInfo");
-                }
+                writer.WritePropertyName("@search.documentDebugInfo"u8);
+                writer.WriteObjectValue(DocumentDebugInfo, options);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<object>(item.Value, options);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
         }
 
-        SearchResult IJsonModel<SearchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchResult IJsonModel<SearchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchResult(document.RootElement, options);
         }
 
-        internal static SearchResult DeserializeSearchResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SearchResult DeserializeSearchResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            double searchScore = default;
-            double? searchRerankerScore = default;
-            double? searchRerankerBoostedScore = default;
-            IReadOnlyDictionary<string, IList<string>> searchHighlights = default;
-            IReadOnlyList<QueryCaptionResult> searchCaptions = default;
-            DocumentDebugInfo searchDocumentDebugInfo = default;
-            IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
+            double score = default;
+            double? rerankerScore = default;
+            double? rerankerBoostedScore = default;
+            IReadOnlyDictionary<string, IList<string>> highlights = default;
+            IReadOnlyList<QueryCaptionResult> captions = default;
+            DocumentDebugInfo documentDebugInfo = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("@search.score"u8))
+                if (prop.NameEquals("@search.score"u8))
                 {
-                    searchScore = property.Value.GetDouble();
+                    score = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("@search.rerankerScore"u8))
+                if (prop.NameEquals("@search.rerankerScore"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        searchRerankerScore = null;
+                        rerankerScore = null;
                         continue;
                     }
-                    searchRerankerScore = property.Value.GetDouble();
+                    rerankerScore = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("@search.rerankerBoostedScore"u8))
+                if (prop.NameEquals("@search.rerankerBoostedScore"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        searchRerankerBoostedScore = null;
+                        rerankerBoostedScore = null;
                         continue;
                     }
-                    searchRerankerBoostedScore = property.Value.GetDouble();
+                    rerankerBoostedScore = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("@search.highlights"u8))
+                if (prop.NameEquals("@search.highlights"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
                             List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
+                            foreach (var item in prop0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(item.GetString());
+                                }
                             }
-                            dictionary.Add(property0.Name, array);
+                            dictionary.Add(prop0.Name, array);
                         }
                     }
-                    searchHighlights = dictionary;
+                    highlights = dictionary;
                     continue;
                 }
-                if (property.NameEquals("@search.captions"u8))
+                if (prop.NameEquals("@search.captions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        searchCaptions = null;
                         continue;
                     }
                     List<QueryCaptionResult> array = new List<QueryCaptionResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(QueryCaptionResult.DeserializeQueryCaptionResult(item, options));
                     }
-                    searchCaptions = array;
+                    captions = array;
                     continue;
                 }
-                if (property.NameEquals("@search.documentDebugInfo"u8))
+                if (prop.NameEquals("@search.documentDebugInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        searchDocumentDebugInfo = null;
+                        documentDebugInfo = null;
                         continue;
                     }
-                    searchDocumentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(property.Value, options);
+                    documentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(prop.Value, options);
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new SearchResult(
-                searchScore,
-                searchRerankerScore,
-                searchRerankerBoostedScore,
-                searchHighlights ?? new ChangeTrackingDictionary<string, IList<string>>(),
-                searchCaptions ?? new ChangeTrackingList<QueryCaptionResult>(),
-                searchDocumentDebugInfo,
+                score,
+                rerankerScore,
+                rerankerBoostedScore,
+                highlights ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                captions ?? new ChangeTrackingList<QueryCaptionResult>(),
+                documentDebugInfo,
                 additionalProperties);
         }
 
-        BinaryData IPersistableModel<SearchResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SearchResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -252,15 +247,20 @@ namespace Azure.Search.Documents.Models
             }
         }
 
-        SearchResult IPersistableModel<SearchResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchResult IPersistableModel<SearchResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchResult(document.RootElement, options);
                     }
                 default:
@@ -268,22 +268,7 @@ namespace Azure.Search.Documents.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SearchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SearchResult FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchResult(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

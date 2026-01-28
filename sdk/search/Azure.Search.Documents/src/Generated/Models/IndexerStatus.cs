@@ -5,16 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the overall indexer status. </summary>
-    public enum IndexerStatus
+    public readonly partial struct IndexerStatus : IEquatable<IndexerStatus>
     {
+        private readonly string _value;
         /// <summary> Indicates that the indexer is in an unknown state. </summary>
-        Unknown,
+        private const string UnknownValue = "unknown";
         /// <summary> Indicates that the indexer experienced an error that cannot be corrected without human intervention. </summary>
-        Error,
+        private const string ErrorValue = "error";
         /// <summary> Indicates that the indexer is running normally. </summary>
-        Running
+        private const string RunningValue = "running";
+
+        /// <summary> Initializes a new instance of <see cref="IndexerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IndexerStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Indicates that the indexer is in an unknown state. </summary>
+        public static IndexerStatus Unknown { get; } = new IndexerStatus(UnknownValue);
+
+        /// <summary> Indicates that the indexer experienced an error that cannot be corrected without human intervention. </summary>
+        public static IndexerStatus Error { get; } = new IndexerStatus(ErrorValue);
+
+        /// <summary> Indicates that the indexer is running normally. </summary>
+        public static IndexerStatus Running { get; } = new IndexerStatus(RunningValue);
+
+        /// <summary> Determines if two <see cref="IndexerStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(IndexerStatus left, IndexerStatus right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="IndexerStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(IndexerStatus left, IndexerStatus right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="IndexerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IndexerStatus(string value) => new IndexerStatus(value);
+
+        /// <summary> Converts a string to a <see cref="IndexerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IndexerStatus?(string value) => value == null ? null : new IndexerStatus(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is IndexerStatus other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(IndexerStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct ChatCompletionExtraParametersBehavior : IEquatable<ChatCompletionExtraParametersBehavior>
     {
         private readonly string _value;
+        /// <summary> Passes any extra parameters directly to the model. </summary>
+        private const string PassThroughValue = "pass-through";
+        /// <summary> Drops all extra parameters. </summary>
+        private const string DropValue = "drop";
+        /// <summary> Raises an error if any extra parameter is present. </summary>
+        private const string ErrorValue = "error";
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionExtraParametersBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ChatCompletionExtraParametersBehavior(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PassThroughValue = "passThrough";
-        private const string DropValue = "drop";
-        private const string ErrorValue = "error";
+            _value = value;
+        }
 
         /// <summary> Passes any extra parameters directly to the model. </summary>
         public static ChatCompletionExtraParametersBehavior PassThrough { get; } = new ChatCompletionExtraParametersBehavior(PassThroughValue);
+
         /// <summary> Drops all extra parameters. </summary>
         public static ChatCompletionExtraParametersBehavior Drop { get; } = new ChatCompletionExtraParametersBehavior(DropValue);
+
         /// <summary> Raises an error if any extra parameter is present. </summary>
         public static ChatCompletionExtraParametersBehavior Error { get; } = new ChatCompletionExtraParametersBehavior(ErrorValue);
+
         /// <summary> Determines if two <see cref="ChatCompletionExtraParametersBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ChatCompletionExtraParametersBehavior left, ChatCompletionExtraParametersBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ChatCompletionExtraParametersBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ChatCompletionExtraParametersBehavior left, ChatCompletionExtraParametersBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ChatCompletionExtraParametersBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ChatCompletionExtraParametersBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ChatCompletionExtraParametersBehavior(string value) => new ChatCompletionExtraParametersBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ChatCompletionExtraParametersBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ChatCompletionExtraParametersBehavior?(string value) => value == null ? null : new ChatCompletionExtraParametersBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ChatCompletionExtraParametersBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ChatCompletionExtraParametersBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

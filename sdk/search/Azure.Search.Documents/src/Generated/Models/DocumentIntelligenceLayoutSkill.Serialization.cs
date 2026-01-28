@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class DocumentIntelligenceLayoutSkill : IUtf8JsonSerializable, IJsonModel<DocumentIntelligenceLayoutSkill>
+    /// <summary> A skill that extracts content and layout information, via Azure AI Services, from files within the enrichment pipeline. </summary>
+    public partial class DocumentIntelligenceLayoutSkill : SearchIndexerSkill, IJsonModel<DocumentIntelligenceLayoutSkill>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentIntelligenceLayoutSkill>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkill"/> for deserialization. </summary>
+        internal DocumentIntelligenceLayoutSkill()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DocumentIntelligenceLayoutSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,216 +34,182 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(OutputFormat))
             {
-                if (OutputFormat != null)
-                {
-                    writer.WritePropertyName("outputFormat"u8);
-                    writer.WriteStringValue(OutputFormat.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("outputFormat");
-                }
+                writer.WritePropertyName("outputFormat"u8);
+                writer.WriteStringValue(OutputFormat.Value.ToString());
             }
             if (Optional.IsDefined(OutputMode))
             {
-                if (OutputMode != null)
-                {
-                    writer.WritePropertyName("outputMode"u8);
-                    writer.WriteStringValue(OutputMode.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("outputMode");
-                }
+                writer.WritePropertyName("outputMode"u8);
+                writer.WriteStringValue(OutputMode.Value.ToString());
             }
             if (Optional.IsDefined(MarkdownHeaderDepth))
             {
-                if (MarkdownHeaderDepth != null)
-                {
-                    writer.WritePropertyName("markdownHeaderDepth"u8);
-                    writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("markdownHeaderDepth");
-                }
+                writer.WritePropertyName("markdownHeaderDepth"u8);
+                writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ExtractionOptions))
             {
-                if (ExtractionOptions != null)
+                writer.WritePropertyName("extractionOptions"u8);
+                writer.WriteStartArray();
+                foreach (DocumentIntelligenceLayoutSkillExtractionOptions item in ExtractionOptions)
                 {
-                    writer.WritePropertyName("extractionOptions"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in ExtractionOptions)
-                    {
-                        writer.WriteStringValue(item.ToString());
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.ToString());
                 }
-                else
-                {
-                    writer.WriteNull("extractionOptions");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(ChunkingProperties))
             {
-                if (ChunkingProperties != null)
-                {
-                    writer.WritePropertyName("chunkingProperties"u8);
-                    writer.WriteObjectValue(ChunkingProperties, options);
-                }
-                else
-                {
-                    writer.WriteNull("chunkingProperties");
-                }
+                writer.WritePropertyName("chunkingProperties"u8);
+                writer.WriteObjectValue(ChunkingProperties, options);
             }
         }
 
-        DocumentIntelligenceLayoutSkill IJsonModel<DocumentIntelligenceLayoutSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentIntelligenceLayoutSkill IJsonModel<DocumentIntelligenceLayoutSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DocumentIntelligenceLayoutSkill)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDocumentIntelligenceLayoutSkill(document.RootElement, options);
         }
 
-        internal static DocumentIntelligenceLayoutSkill DeserializeDocumentIntelligenceLayoutSkill(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DocumentIntelligenceLayoutSkill DeserializeDocumentIntelligenceLayoutSkill(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DocumentIntelligenceLayoutSkillOutputFormat? outputFormat = default;
-            DocumentIntelligenceLayoutSkillOutputMode? outputMode = default;
-            DocumentIntelligenceLayoutSkillMarkdownHeaderDepth? markdownHeaderDepth = default;
-            IList<DocumentIntelligenceLayoutSkillExtractionOptions> extractionOptions = default;
-            DocumentIntelligenceLayoutSkillChunkingProperties chunkingProperties = default;
-            string odataType = default;
+            string odataType = "#Microsoft.Skills.Util.DocumentIntelligenceLayoutSkill";
             string name = default;
             string description = default;
             string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DocumentIntelligenceLayoutSkillOutputFormat? outputFormat = default;
+            DocumentIntelligenceLayoutSkillOutputMode? outputMode = default;
+            DocumentIntelligenceLayoutSkillMarkdownHeaderDepth? markdownHeaderDepth = default;
+            IList<DocumentIntelligenceLayoutSkillExtractionOptions> extractionOptions = default;
+            DocumentIntelligenceLayoutSkillChunkingProperties chunkingProperties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("outputFormat"u8))
+                if (prop.NameEquals("@odata.type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        outputFormat = null;
-                        continue;
-                    }
-                    outputFormat = new DocumentIntelligenceLayoutSkillOutputFormat(property.Value.GetString());
+                    odataType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outputMode"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        outputMode = null;
-                        continue;
-                    }
-                    outputMode = new DocumentIntelligenceLayoutSkillOutputMode(property.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("markdownHeaderDepth"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        markdownHeaderDepth = null;
-                        continue;
-                    }
-                    markdownHeaderDepth = new DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(property.Value.GetString());
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extractionOptions"u8))
+                if (prop.NameEquals("context"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        extractionOptions = null;
-                        continue;
-                    }
-                    List<DocumentIntelligenceLayoutSkillExtractionOptions> array = new List<DocumentIntelligenceLayoutSkillExtractionOptions>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new DocumentIntelligenceLayoutSkillExtractionOptions(item.GetString()));
-                    }
-                    extractionOptions = array;
+                    context = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("chunkingProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        chunkingProperties = null;
-                        continue;
-                    }
-                    chunkingProperties = DocumentIntelligenceLayoutSkillChunkingProperties.DeserializeDocumentIntelligenceLayoutSkillChunkingProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("context"u8))
-                {
-                    context = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputs"u8))
+                if (prop.NameEquals("inputs"u8))
                 {
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
                 }
-                if (property.NameEquals("outputs"u8))
+                if (prop.NameEquals("outputs"u8))
                 {
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
+                if (prop.NameEquals("outputFormat"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        outputFormat = null;
+                        continue;
+                    }
+                    outputFormat = new DocumentIntelligenceLayoutSkillOutputFormat(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("outputMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        outputMode = null;
+                        continue;
+                    }
+                    outputMode = new DocumentIntelligenceLayoutSkillOutputMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("markdownHeaderDepth"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        markdownHeaderDepth = null;
+                        continue;
+                    }
+                    markdownHeaderDepth = new DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("extractionOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentIntelligenceLayoutSkillExtractionOptions> array = new List<DocumentIntelligenceLayoutSkillExtractionOptions>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new DocumentIntelligenceLayoutSkillExtractionOptions(item.GetString()));
+                    }
+                    extractionOptions = array;
+                    continue;
+                }
+                if (prop.NameEquals("chunkingProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        chunkingProperties = null;
+                        continue;
+                    }
+                    chunkingProperties = DocumentIntelligenceLayoutSkillChunkingProperties.DeserializeDocumentIntelligenceLayoutSkillChunkingProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DocumentIntelligenceLayoutSkill(
                 odataType,
                 name,
@@ -245,7 +217,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 context,
                 inputs,
                 outputs,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 outputFormat,
                 outputMode,
                 markdownHeaderDepth,
@@ -253,10 +225,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 chunkingProperties);
         }
 
-        BinaryData IPersistableModel<DocumentIntelligenceLayoutSkill>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DocumentIntelligenceLayoutSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -266,15 +241,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        DocumentIntelligenceLayoutSkill IPersistableModel<DocumentIntelligenceLayoutSkill>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentIntelligenceLayoutSkill IPersistableModel<DocumentIntelligenceLayoutSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentIntelligenceLayoutSkill)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDocumentIntelligenceLayoutSkill(document.RootElement, options);
                     }
                 default:
@@ -282,22 +262,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DocumentIntelligenceLayoutSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new DocumentIntelligenceLayoutSkill FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDocumentIntelligenceLayoutSkill(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

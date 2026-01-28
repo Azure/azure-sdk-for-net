@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ServiceIndexersRuntime : IUtf8JsonSerializable, IJsonModel<ServiceIndexersRuntime>
+    /// <summary> Represents service-level indexer runtime counters. </summary>
+    public partial class ServiceIndexersRuntime : IJsonModel<ServiceIndexersRuntime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceIndexersRuntime>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ServiceIndexersRuntime"/> for deserialization. </summary>
+        internal ServiceIndexersRuntime()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceIndexersRuntime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,39 +34,31 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceIndexersRuntime>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceIndexersRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceIndexersRuntime)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("usedSeconds"u8);
             writer.WriteNumberValue(UsedSeconds);
             if (Optional.IsDefined(RemainingSeconds))
             {
-                if (RemainingSeconds != null)
-                {
-                    writer.WritePropertyName("remainingSeconds"u8);
-                    writer.WriteNumberValue(RemainingSeconds.Value);
-                }
-                else
-                {
-                    writer.WriteNull("remainingSeconds");
-                }
+                writer.WritePropertyName("remainingSeconds"u8);
+                writer.WriteNumberValue(RemainingSeconds.Value);
             }
             writer.WritePropertyName("beginningTime"u8);
             writer.WriteStringValue(BeginningTime, "O");
             writer.WritePropertyName("endingTime"u8);
             writer.WriteStringValue(EndingTime, "O");
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -69,22 +67,27 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        ServiceIndexersRuntime IJsonModel<ServiceIndexersRuntime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceIndexersRuntime IJsonModel<ServiceIndexersRuntime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceIndexersRuntime JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceIndexersRuntime>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceIndexersRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceIndexersRuntime)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceIndexersRuntime(document.RootElement, options);
         }
 
-        internal static ServiceIndexersRuntime DeserializeServiceIndexersRuntime(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServiceIndexersRuntime DeserializeServiceIndexersRuntime(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -93,48 +96,49 @@ namespace Azure.Search.Documents.Indexes.Models
             long? remainingSeconds = default;
             DateTimeOffset beginningTime = default;
             DateTimeOffset endingTime = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("usedSeconds"u8))
+                if (prop.NameEquals("usedSeconds"u8))
                 {
-                    usedSeconds = property.Value.GetInt64();
+                    usedSeconds = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("remainingSeconds"u8))
+                if (prop.NameEquals("remainingSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         remainingSeconds = null;
                         continue;
                     }
-                    remainingSeconds = property.Value.GetInt64();
+                    remainingSeconds = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("beginningTime"u8))
+                if (prop.NameEquals("beginningTime"u8))
                 {
-                    beginningTime = property.Value.GetDateTimeOffset("O");
+                    beginningTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endingTime"u8))
+                if (prop.NameEquals("endingTime"u8))
                 {
-                    endingTime = property.Value.GetDateTimeOffset("O");
+                    endingTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceIndexersRuntime(usedSeconds, remainingSeconds, beginningTime, endingTime, serializedAdditionalRawData);
+            return new ServiceIndexersRuntime(usedSeconds, remainingSeconds, beginningTime, endingTime, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ServiceIndexersRuntime>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceIndexersRuntime>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceIndexersRuntime>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceIndexersRuntime>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -144,15 +148,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        ServiceIndexersRuntime IPersistableModel<ServiceIndexersRuntime>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceIndexersRuntime>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceIndexersRuntime IPersistableModel<ServiceIndexersRuntime>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceIndexersRuntime PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceIndexersRuntime>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceIndexersRuntime(document.RootElement, options);
                     }
                 default:
@@ -160,22 +169,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServiceIndexersRuntime>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ServiceIndexersRuntime FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeServiceIndexersRuntime(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

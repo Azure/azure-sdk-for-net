@@ -5,18 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the status of an individual indexer execution. </summary>
-    public enum IndexerExecutionStatus
+    public readonly partial struct IndexerExecutionStatus : IEquatable<IndexerExecutionStatus>
     {
+        private readonly string _value;
         /// <summary> An indexer invocation has failed, but the failure may be transient. Indexer invocations will continue per schedule. </summary>
-        TransientFailure,
+        private const string TransientFailureValue = "transientFailure";
         /// <summary> Indexer execution completed successfully. </summary>
-        Success,
+        private const string SuccessValue = "success";
         /// <summary> Indexer execution is in progress. </summary>
-        InProgress,
+        private const string InProgressValue = "inProgress";
         /// <summary> Indexer has been reset. </summary>
-        Reset
+        private const string ResetValue = "reset";
+
+        /// <summary> Initializes a new instance of <see cref="IndexerExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IndexerExecutionStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> An indexer invocation has failed, but the failure may be transient. Indexer invocations will continue per schedule. </summary>
+        public static IndexerExecutionStatus TransientFailure { get; } = new IndexerExecutionStatus(TransientFailureValue);
+
+        /// <summary> Indexer execution completed successfully. </summary>
+        public static IndexerExecutionStatus Success { get; } = new IndexerExecutionStatus(SuccessValue);
+
+        /// <summary> Indexer execution is in progress. </summary>
+        public static IndexerExecutionStatus InProgress { get; } = new IndexerExecutionStatus(InProgressValue);
+
+        /// <summary> Indexer has been reset. </summary>
+        public static IndexerExecutionStatus Reset { get; } = new IndexerExecutionStatus(ResetValue);
+
+        /// <summary> Determines if two <see cref="IndexerExecutionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(IndexerExecutionStatus left, IndexerExecutionStatus right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="IndexerExecutionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(IndexerExecutionStatus left, IndexerExecutionStatus right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="IndexerExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IndexerExecutionStatus(string value) => new IndexerExecutionStatus(value);
+
+        /// <summary> Converts a string to a <see cref="IndexerExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IndexerExecutionStatus?(string value) => value == null ? null : new IndexerExecutionStatus(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is IndexerExecutionStatus other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(IndexerExecutionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

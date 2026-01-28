@@ -11,49 +11,21 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
-    /// Base type for activity records.
-    /// Please note <see cref="KnowledgeBaseActivityRecord"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>, <see cref="KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBaseRetrievalActivityRecord"/>, <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBaseSearchIndexActivityRecord"/> and <see cref="KnowledgeBaseWebActivityRecord"/>.
+    /// Base type for activity records. Tracks execution details, timing, and errors for knowledge base operations.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, and <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>.
     /// </summary>
     public abstract partial class KnowledgeBaseActivityRecord
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        protected KnowledgeBaseActivityRecord(int id)
+        /// <param name="type"> The type of the activity record. </param>
+        private protected KnowledgeBaseActivityRecord(int id, KnowledgeBaseActivityRecordType @type)
         {
             Id = id;
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityRecord"/>. </summary>
@@ -61,27 +33,25 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseActivityRecord(int id, string type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeBaseActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Type = type;
+            Type = @type;
             ElapsedMs = elapsedMs;
             Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityRecord"/> for deserialization. </summary>
-        internal KnowledgeBaseActivityRecord()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the activity record. </summary>
         public int Id { get; }
+
         /// <summary> The type of the activity record. </summary>
-        internal string Type { get; set; }
+        internal KnowledgeBaseActivityRecordType Type { get; set; }
+
         /// <summary> The elapsed time in milliseconds for the retrieval activity. </summary>
         public int? ElapsedMs { get; }
+
         /// <summary> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </summary>
         public KnowledgeBaseErrorDetail Error { get; }
     }

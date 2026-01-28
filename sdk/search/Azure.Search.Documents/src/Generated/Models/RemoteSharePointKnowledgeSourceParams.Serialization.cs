@@ -9,15 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
-    public partial class RemoteSharePointKnowledgeSourceParams : IUtf8JsonSerializable, IJsonModel<RemoteSharePointKnowledgeSourceParams>
+    /// <summary> Specifies runtime parameters for a remote SharePoint knowledge source. </summary>
+    public partial class RemoteSharePointKnowledgeSourceParams : KnowledgeSourceParams, IJsonModel<RemoteSharePointKnowledgeSourceParams>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemoteSharePointKnowledgeSourceParams>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RemoteSharePointKnowledgeSourceParams"/> for deserialization. </summary>
+        internal RemoteSharePointKnowledgeSourceParams()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RemoteSharePointKnowledgeSourceParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +35,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoteSharePointKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RemoteSharePointKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RemoteSharePointKnowledgeSourceParams)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(FilterExpressionAddOn))
             {
@@ -43,94 +48,97 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
         }
 
-        RemoteSharePointKnowledgeSourceParams IJsonModel<RemoteSharePointKnowledgeSourceParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RemoteSharePointKnowledgeSourceParams IJsonModel<RemoteSharePointKnowledgeSourceParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RemoteSharePointKnowledgeSourceParams)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeSourceParams JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoteSharePointKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RemoteSharePointKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RemoteSharePointKnowledgeSourceParams)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRemoteSharePointKnowledgeSourceParams(document.RootElement, options);
         }
 
-        internal static RemoteSharePointKnowledgeSourceParams DeserializeRemoteSharePointKnowledgeSourceParams(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RemoteSharePointKnowledgeSourceParams DeserializeRemoteSharePointKnowledgeSourceParams(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string filterExpressionAddOn = default;
             string knowledgeSourceName = default;
             bool? includeReferences = default;
             bool? includeReferenceSourceData = default;
             bool? alwaysQuerySource = default;
             float? rerankerThreshold = default;
             KnowledgeSourceKind kind = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string filterExpressionAddOn = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("filterExpressionAddOn"u8))
+                if (prop.NameEquals("knowledgeSourceName"u8))
                 {
-                    filterExpressionAddOn = property.Value.GetString();
+                    knowledgeSourceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("knowledgeSourceName"u8))
+                if (prop.NameEquals("includeReferences"u8))
                 {
-                    knowledgeSourceName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("includeReferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    includeReferences = property.Value.GetBoolean();
+                    includeReferences = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("includeReferenceSourceData"u8))
+                if (prop.NameEquals("includeReferenceSourceData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    includeReferenceSourceData = property.Value.GetBoolean();
+                    includeReferenceSourceData = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("alwaysQuerySource"u8))
+                if (prop.NameEquals("alwaysQuerySource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    alwaysQuerySource = property.Value.GetBoolean();
+                    alwaysQuerySource = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rerankerThreshold"u8))
+                if (prop.NameEquals("rerankerThreshold"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rerankerThreshold = property.Value.GetSingle();
+                    rerankerThreshold = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    kind = new KnowledgeSourceKind(property.Value.GetString());
+                    kind = new KnowledgeSourceKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("filterExpressionAddOn"u8))
+                {
+                    filterExpressionAddOn = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RemoteSharePointKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
@@ -138,14 +146,17 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 alwaysQuerySource,
                 rerankerThreshold,
                 kind,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 filterExpressionAddOn);
         }
 
-        BinaryData IPersistableModel<RemoteSharePointKnowledgeSourceParams>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoteSharePointKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RemoteSharePointKnowledgeSourceParams>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RemoteSharePointKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -155,15 +166,20 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
         }
 
-        RemoteSharePointKnowledgeSourceParams IPersistableModel<RemoteSharePointKnowledgeSourceParams>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoteSharePointKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RemoteSharePointKnowledgeSourceParams IPersistableModel<RemoteSharePointKnowledgeSourceParams>.Create(BinaryData data, ModelReaderWriterOptions options) => (RemoteSharePointKnowledgeSourceParams)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeSourceParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RemoteSharePointKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRemoteSharePointKnowledgeSourceParams(document.RootElement, options);
                     }
                 default:
@@ -171,22 +187,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RemoteSharePointKnowledgeSourceParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new RemoteSharePointKnowledgeSourceParams FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRemoteSharePointKnowledgeSourceParams(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

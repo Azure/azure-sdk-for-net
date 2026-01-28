@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
+using Azure.Azure.Search.Documents.Documents.Indexes; // TODO: Fix this once Indexer client namespace is corrected in the SDK
 using Azure.Core.Extensions;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;

@@ -5,22 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the aggregation function used to combine the results of all the scoring functions in a scoring profile. </summary>
-    public enum ScoringFunctionAggregation
+    public readonly partial struct ScoringFunctionAggregation : IEquatable<ScoringFunctionAggregation>
     {
+        private readonly string _value;
         /// <summary> Boost scores by the sum of all scoring function results. </summary>
-        Sum,
+        private const string SumValue = "sum";
         /// <summary> Boost scores by the average of all scoring function results. </summary>
-        Average,
+        private const string AverageValue = "average";
         /// <summary> Boost scores by the minimum of all scoring function results. </summary>
-        Minimum,
+        private const string MinimumValue = "minimum";
         /// <summary> Boost scores by the maximum of all scoring function results. </summary>
-        Maximum,
+        private const string MaximumValue = "maximum";
         /// <summary> Boost scores using the first applicable scoring function in the scoring profile. </summary>
-        FirstMatching,
+        private const string FirstMatchingValue = "firstMatching";
         /// <summary> Boost scores by the product of all scoring function results. </summary>
-        Product
+        private const string ProductValue = "product";
+
+        /// <summary> Initializes a new instance of <see cref="ScoringFunctionAggregation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ScoringFunctionAggregation(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Boost scores by the sum of all scoring function results. </summary>
+        public static ScoringFunctionAggregation Sum { get; } = new ScoringFunctionAggregation(SumValue);
+
+        /// <summary> Boost scores by the average of all scoring function results. </summary>
+        public static ScoringFunctionAggregation Average { get; } = new ScoringFunctionAggregation(AverageValue);
+
+        /// <summary> Boost scores by the minimum of all scoring function results. </summary>
+        public static ScoringFunctionAggregation Minimum { get; } = new ScoringFunctionAggregation(MinimumValue);
+
+        /// <summary> Boost scores by the maximum of all scoring function results. </summary>
+        public static ScoringFunctionAggregation Maximum { get; } = new ScoringFunctionAggregation(MaximumValue);
+
+        /// <summary> Boost scores using the first applicable scoring function in the scoring profile. </summary>
+        public static ScoringFunctionAggregation FirstMatching { get; } = new ScoringFunctionAggregation(FirstMatchingValue);
+
+        /// <summary> Boost scores by the product of all scoring function results. </summary>
+        public static ScoringFunctionAggregation Product { get; } = new ScoringFunctionAggregation(ProductValue);
+
+        /// <summary> Determines if two <see cref="ScoringFunctionAggregation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ScoringFunctionAggregation left, ScoringFunctionAggregation right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ScoringFunctionAggregation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ScoringFunctionAggregation left, ScoringFunctionAggregation right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ScoringFunctionAggregation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScoringFunctionAggregation(string value) => new ScoringFunctionAggregation(value);
+
+        /// <summary> Converts a string to a <see cref="ScoringFunctionAggregation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScoringFunctionAggregation?(string value) => value == null ? null : new ScoringFunctionAggregation(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ScoringFunctionAggregation other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ScoringFunctionAggregation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

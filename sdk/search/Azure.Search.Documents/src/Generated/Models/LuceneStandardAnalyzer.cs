@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,30 +17,23 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="LuceneStandardAnalyzer"/>. </summary>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public LuceneStandardAnalyzer(string name) : base(name)
+        public LuceneStandardAnalyzer(string name) : base("#Microsoft.Azure.Search.StandardAnalyzer", name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Stopwords = new ChangeTrackingList<string>();
-            ODataType = "#Microsoft.Azure.Search.StandardAnalyzer";
         }
 
         /// <summary> Initializes a new instance of <see cref="LuceneStandardAnalyzer"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of analyzer. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
         /// <param name="stopwords"> A list of stopwords. </param>
-        internal LuceneStandardAnalyzer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxTokenLength, IList<string> stopwords) : base(oDataType, name, serializedAdditionalRawData)
+        internal LuceneStandardAnalyzer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxTokenLength, IList<string> stopwords) : base(odataType, name, additionalBinaryDataProperties)
         {
             MaxTokenLength = maxTokenLength;
             Stopwords = stopwords;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.StandardAnalyzer";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LuceneStandardAnalyzer"/> for deserialization. </summary>
-        internal LuceneStandardAnalyzer()
-        {
         }
 
         /// <summary> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </summary>

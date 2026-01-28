@@ -5,18 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the function used to interpolate score boosting across a range of documents. </summary>
-    public enum ScoringFunctionInterpolation
+    public readonly partial struct ScoringFunctionInterpolation : IEquatable<ScoringFunctionInterpolation>
     {
+        private readonly string _value;
         /// <summary> Boosts scores by a linearly decreasing amount. This is the default interpolation for scoring functions. </summary>
-        Linear,
+        private const string LinearValue = "linear";
         /// <summary> Boosts scores by a constant factor. </summary>
-        Constant,
+        private const string ConstantValue = "constant";
         /// <summary> Boosts scores by an amount that decreases quadratically. Boosts decrease slowly for higher scores, and more quickly as the scores decrease. This interpolation option is not allowed in tag scoring functions. </summary>
-        Quadratic,
+        private const string QuadraticValue = "quadratic";
         /// <summary> Boosts scores by an amount that decreases logarithmically. Boosts decrease quickly for higher scores, and more slowly as the scores decrease. This interpolation option is not allowed in tag scoring functions. </summary>
-        Logarithmic
+        private const string LogarithmicValue = "logarithmic";
+
+        /// <summary> Initializes a new instance of <see cref="ScoringFunctionInterpolation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ScoringFunctionInterpolation(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Boosts scores by a linearly decreasing amount. This is the default interpolation for scoring functions. </summary>
+        public static ScoringFunctionInterpolation Linear { get; } = new ScoringFunctionInterpolation(LinearValue);
+
+        /// <summary> Boosts scores by a constant factor. </summary>
+        public static ScoringFunctionInterpolation Constant { get; } = new ScoringFunctionInterpolation(ConstantValue);
+
+        /// <summary> Boosts scores by an amount that decreases quadratically. Boosts decrease slowly for higher scores, and more quickly as the scores decrease. This interpolation option is not allowed in tag scoring functions. </summary>
+        public static ScoringFunctionInterpolation Quadratic { get; } = new ScoringFunctionInterpolation(QuadraticValue);
+
+        /// <summary> Boosts scores by an amount that decreases logarithmically. Boosts decrease quickly for higher scores, and more slowly as the scores decrease. This interpolation option is not allowed in tag scoring functions. </summary>
+        public static ScoringFunctionInterpolation Logarithmic { get; } = new ScoringFunctionInterpolation(LogarithmicValue);
+
+        /// <summary> Determines if two <see cref="ScoringFunctionInterpolation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ScoringFunctionInterpolation left, ScoringFunctionInterpolation right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ScoringFunctionInterpolation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ScoringFunctionInterpolation left, ScoringFunctionInterpolation right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ScoringFunctionInterpolation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScoringFunctionInterpolation(string value) => new ScoringFunctionInterpolation(value);
+
+        /// <summary> Converts a string to a <see cref="ScoringFunctionInterpolation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScoringFunctionInterpolation?(string value) => value == null ? null : new ScoringFunctionInterpolation(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ScoringFunctionInterpolation other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ScoringFunctionInterpolation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

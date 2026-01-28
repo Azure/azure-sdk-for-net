@@ -1,2 +1,63 @@
 # SearchResults<T> can safely be made abstract because it has no public constructors
 CannotMakeTypeAbstract : Type 'Azure.Search.Documents.Models.SearchResults<T>' is abstract in the implementation but is not abstract in the contract.
+
+# Enum to extensible enum (struct) conversions - intentional migration to TypeSpec generator pattern
+# These types are now readonly partial structs to support adding new values without breaking changes
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.EdgeNGramTokenFilterSide' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.IndexerStatus' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.PhoneticEncoder' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.StopwordsList' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.TokenCharacterKind' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Models.AutocompleteMode' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Models.IndexActionType' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Models.ScoringStatistics' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Models.SearchMode' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+
+# SearchIndexerClient is not being generated in the right namespace - known emitter issue, will be fixed when emitter is updated
+TypesMustExist : Type 'Azure.Search.Documents.Indexes.SearchIndexerClient' does not exist in the implementation but it does exist in the contract.
+
+# Enum→Struct conversion side effects - being addressed in TypeSpec file
+# The value__ field exists on enums but not on extensible enum structs
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.EdgeNGramTokenFilterSide.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.IndexerStatus.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.PhoneticEncoder.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.StopwordsList.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Indexes.Models.TokenCharacterKind.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Models.AutocompleteMode.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Models.IndexActionType.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Models.ScoringStatistics.value__' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Int32 System.Int32 Azure.Search.Documents.Models.SearchMode.value__' does not exist in the implementation but it does exist in the contract.
+
+# Enum member conversions - static properties on structs instead of enum fields
+MembersMustExist : Member 'public Azure.Search.Documents.Models.AutocompleteMode Azure.Search.Documents.Models.AutocompleteMode Azure.Search.Documents.Models.AutocompleteMode.OneTerm' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Models.AutocompleteMode Azure.Search.Documents.Models.AutocompleteMode Azure.Search.Documents.Models.AutocompleteMode.OneTermWithContext' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Models.AutocompleteMode Azure.Search.Documents.Models.AutocompleteMode Azure.Search.Documents.Models.AutocompleteMode.TwoTerms' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Models.IndexActionType Azure.Search.Documents.Models.IndexActionType Azure.Search.Documents.Models.IndexActionType.Delete' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Models.IndexActionType Azure.Search.Documents.Models.IndexActionType Azure.Search.Documents.Models.IndexActionType.Merge' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Models.IndexActionType Azure.Search.Documents.Models.IndexActionType Azure.Search.Documents.Models.IndexActionType.MergeOrUpload' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Models.IndexActionType Azure.Search.Documents.Models.IndexActionType Azure.Search.Documents.Models.IndexActionType.Upload' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Models.ScoringStatistics Azure.Search.Documents.Models.ScoringStatistics Azure.Search.Documents.Models.ScoringStatistics.Global' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Models.ScoringStatistics Azure.Search.Documents.Models.ScoringStatistics Azure.Search.Documents.Models.ScoringStatistics.Local' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Models.SearchMode Azure.Search.Documents.Models.SearchMode Azure.Search.Documents.Models.SearchMode.All' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Models.SearchMode Azure.Search.Documents.Models.SearchMode Azure.Search.Documents.Models.SearchMode.Any' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Indexes.Models.TokenCharacterKind Azure.Search.Documents.Indexes.Models.TokenCharacterKind Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Digit' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Indexes.Models.TokenCharacterKind Azure.Search.Documents.Indexes.Models.TokenCharacterKind Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Letter' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Indexes.Models.TokenCharacterKind Azure.Search.Documents.Indexes.Models.TokenCharacterKind Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Punctuation' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Indexes.Models.TokenCharacterKind Azure.Search.Documents.Indexes.Models.TokenCharacterKind Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Symbol' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Indexes.Models.TokenCharacterKind Azure.Search.Documents.Indexes.Models.TokenCharacterKind Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Whitespace' does not exist in the implementation but it does exist in the contract.

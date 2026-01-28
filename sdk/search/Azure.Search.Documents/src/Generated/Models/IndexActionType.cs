@@ -5,18 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The operation to perform on a document in an indexing batch. </summary>
-    public enum IndexActionType
+    public readonly partial struct IndexActionType : IEquatable<IndexActionType>
     {
+        private readonly string _value;
         /// <summary> Inserts the document into the index if it is new and updates it if it exists. All fields are replaced in the update case. </summary>
-        Upload,
+        private const string UploadValue = "upload";
         /// <summary> Merges the specified field values with an existing document. If the document does not exist, the merge will fail. Any field you specify in a merge will replace the existing field in the document. This also applies to collections of primitive and complex types. </summary>
-        Merge,
+        private const string MergeValue = "merge";
         /// <summary> Behaves like merge if a document with the given key already exists in the index. If the document does not exist, it behaves like upload with a new document. </summary>
-        MergeOrUpload,
+        private const string MergeOrUploadValue = "mergeOrUpload";
         /// <summary> Removes the specified document from the index. Any field you specify in a delete operation other than the key field will be ignored. If you want to remove an individual field from a document, use merge instead and set the field explicitly to null. </summary>
-        Delete
+        private const string DeleteValue = "delete";
+
+        /// <summary> Initializes a new instance of <see cref="IndexActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IndexActionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Inserts the document into the index if it is new and updates it if it exists. All fields are replaced in the update case. </summary>
+        public static IndexActionType Upload { get; } = new IndexActionType(UploadValue);
+
+        /// <summary> Merges the specified field values with an existing document. If the document does not exist, the merge will fail. Any field you specify in a merge will replace the existing field in the document. This also applies to collections of primitive and complex types. </summary>
+        public static IndexActionType Merge { get; } = new IndexActionType(MergeValue);
+
+        /// <summary> Behaves like merge if a document with the given key already exists in the index. If the document does not exist, it behaves like upload with a new document. </summary>
+        public static IndexActionType MergeOrUpload { get; } = new IndexActionType(MergeOrUploadValue);
+
+        /// <summary> Removes the specified document from the index. Any field you specify in a delete operation other than the key field will be ignored. If you want to remove an individual field from a document, use merge instead and set the field explicitly to null. </summary>
+        public static IndexActionType Delete { get; } = new IndexActionType(DeleteValue);
+
+        /// <summary> Determines if two <see cref="IndexActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(IndexActionType left, IndexActionType right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="IndexActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(IndexActionType left, IndexActionType right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="IndexActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IndexActionType(string value) => new IndexActionType(value);
+
+        /// <summary> Converts a string to a <see cref="IndexActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IndexActionType?(string value) => value == null ? null : new IndexActionType(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is IndexActionType other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(IndexActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

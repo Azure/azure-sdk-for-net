@@ -15,9 +15,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        internal KnowledgeBaseModelQueryPlanningActivityRecord(int id) : base(id)
+        internal KnowledgeBaseModelQueryPlanningActivityRecord(int id) : base(id, KnowledgeBaseActivityRecordType.ModelQueryPlanning)
         {
-            Type = "modelQueryPlanning";
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>. </summary>
@@ -25,23 +24,18 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM query planning activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM query planning activity. </param>
-        internal KnowledgeBaseModelQueryPlanningActivityRecord(int id, string type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> serializedAdditionalRawData, int? inputTokens, int? outputTokens) : base(id, type, elapsedMs, error, serializedAdditionalRawData)
+        internal KnowledgeBaseModelQueryPlanningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokens, int? outputTokens) : base(id, @type, elapsedMs, error, additionalBinaryDataProperties)
         {
             InputTokens = inputTokens;
             OutputTokens = outputTokens;
-            Type = type ?? "modelQueryPlanning";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/> for deserialization. </summary>
-        internal KnowledgeBaseModelQueryPlanningActivityRecord()
-        {
         }
 
         /// <summary> The number of input tokens for the LLM query planning activity. </summary>
         public int? InputTokens { get; }
+
         /// <summary> The number of output tokens for the LLM query planning activity. </summary>
         public int? OutputTokens { get; }
     }

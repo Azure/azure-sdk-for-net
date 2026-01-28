@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The kind of vector query being performed. </summary>
-    internal readonly partial struct VectorQueryKind : IEquatable<VectorQueryKind>
+    public readonly partial struct VectorQueryKind : IEquatable<VectorQueryKind>
     {
         private readonly string _value;
+        /// <summary> Vector query where a raw vector value is provided. </summary>
+        private const string VectorValue = "vector";
+        /// <summary> Vector query where a text value that needs to be vectorized is provided. </summary>
+        private const string TextValue = "text";
+        /// <summary> Vector query where an url that represents an image value that needs to be vectorized is provided. </summary>
+        private const string ImageUrlValue = "imageUrl";
+        /// <summary> Vector query where a base 64 encoded binary of an image that needs to be vectorized is provided. </summary>
+        private const string ImageBinaryValue = "imageBinary";
 
         /// <summary> Initializes a new instance of <see cref="VectorQueryKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorQueryKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VectorValue = "vector";
-        private const string TextValue = "text";
-        private const string ImageUrlValue = "imageUrl";
-        private const string ImageBinaryValue = "imageBinary";
+            _value = value;
+        }
 
         /// <summary> Vector query where a raw vector value is provided. </summary>
         public static VectorQueryKind Vector { get; } = new VectorQueryKind(VectorValue);
+
         /// <summary> Vector query where a text value that needs to be vectorized is provided. </summary>
         public static VectorQueryKind Text { get; } = new VectorQueryKind(TextValue);
+
         /// <summary> Vector query where an url that represents an image value that needs to be vectorized is provided. </summary>
         public static VectorQueryKind ImageUrl { get; } = new VectorQueryKind(ImageUrlValue);
+
         /// <summary> Vector query where a base 64 encoded binary of an image that needs to be vectorized is provided. </summary>
         public static VectorQueryKind ImageBinary { get; } = new VectorQueryKind(ImageBinaryValue);
+
         /// <summary> Determines if two <see cref="VectorQueryKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorQueryKind left, VectorQueryKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VectorQueryKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorQueryKind left, VectorQueryKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorQueryKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VectorQueryKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VectorQueryKind(string value) => new VectorQueryKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VectorQueryKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VectorQueryKind?(string value) => value == null ? null : new VectorQueryKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VectorQueryKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VectorQueryKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenModel("LuceneStandardTokenizerV2")]
+    [CodeGenType("LuceneStandardTokenizerV2")]
     public partial class LuceneStandardTokenizer : IUtf8JsonSerializable
     {
         /// <summary>
@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ODataType = "#Microsoft.Azure.Search.StandardTokenizerV2";
+            OdataType = "#Microsoft.Azure.Search.StandardTokenizerV2";
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(ODataType);
+            writer.WriteStringValue(OdataType);
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
             return new LuceneStandardTokenizer(name)
             {
-                ODataType = odataType,
+                OdataType = odataType,
                 MaxTokenLength = maxTokenLength,
             };
         }

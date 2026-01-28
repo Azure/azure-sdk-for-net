@@ -5,94 +5,267 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Lists the languages supported by the Microsoft language tokenizer. </summary>
-    public enum MicrosoftTokenizerLanguage
+    public readonly partial struct MicrosoftTokenizerLanguage : IEquatable<MicrosoftTokenizerLanguage>
     {
+        private readonly string _value;
         /// <summary> Selects the Microsoft tokenizer for Bangla. </summary>
-        Bangla,
+        private const string BanglaValue = "bangla";
         /// <summary> Selects the Microsoft tokenizer for Bulgarian. </summary>
-        Bulgarian,
+        private const string BulgarianValue = "bulgarian";
         /// <summary> Selects the Microsoft tokenizer for Catalan. </summary>
-        Catalan,
+        private const string CatalanValue = "catalan";
         /// <summary> Selects the Microsoft tokenizer for Chinese (Simplified). </summary>
-        ChineseSimplified,
+        private const string ChineseSimplifiedValue = "chineseSimplified";
         /// <summary> Selects the Microsoft tokenizer for Chinese (Traditional). </summary>
-        ChineseTraditional,
+        private const string ChineseTraditionalValue = "chineseTraditional";
         /// <summary> Selects the Microsoft tokenizer for Croatian. </summary>
-        Croatian,
+        private const string CroatianValue = "croatian";
         /// <summary> Selects the Microsoft tokenizer for Czech. </summary>
-        Czech,
+        private const string CzechValue = "czech";
         /// <summary> Selects the Microsoft tokenizer for Danish. </summary>
-        Danish,
+        private const string DanishValue = "danish";
         /// <summary> Selects the Microsoft tokenizer for Dutch. </summary>
-        Dutch,
+        private const string DutchValue = "dutch";
         /// <summary> Selects the Microsoft tokenizer for English. </summary>
-        English,
+        private const string EnglishValue = "english";
         /// <summary> Selects the Microsoft tokenizer for French. </summary>
-        French,
+        private const string FrenchValue = "french";
         /// <summary> Selects the Microsoft tokenizer for German. </summary>
-        German,
+        private const string GermanValue = "german";
         /// <summary> Selects the Microsoft tokenizer for Greek. </summary>
-        Greek,
+        private const string GreekValue = "greek";
         /// <summary> Selects the Microsoft tokenizer for Gujarati. </summary>
-        Gujarati,
+        private const string GujaratiValue = "gujarati";
         /// <summary> Selects the Microsoft tokenizer for Hindi. </summary>
-        Hindi,
+        private const string HindiValue = "hindi";
         /// <summary> Selects the Microsoft tokenizer for Icelandic. </summary>
-        Icelandic,
+        private const string IcelandicValue = "icelandic";
         /// <summary> Selects the Microsoft tokenizer for Indonesian. </summary>
-        Indonesian,
+        private const string IndonesianValue = "indonesian";
         /// <summary> Selects the Microsoft tokenizer for Italian. </summary>
-        Italian,
+        private const string ItalianValue = "italian";
         /// <summary> Selects the Microsoft tokenizer for Japanese. </summary>
-        Japanese,
+        private const string JapaneseValue = "japanese";
         /// <summary> Selects the Microsoft tokenizer for Kannada. </summary>
-        Kannada,
+        private const string KannadaValue = "kannada";
         /// <summary> Selects the Microsoft tokenizer for Korean. </summary>
-        Korean,
+        private const string KoreanValue = "korean";
         /// <summary> Selects the Microsoft tokenizer for Malay. </summary>
-        Malay,
+        private const string MalayValue = "malay";
         /// <summary> Selects the Microsoft tokenizer for Malayalam. </summary>
-        Malayalam,
+        private const string MalayalamValue = "malayalam";
         /// <summary> Selects the Microsoft tokenizer for Marathi. </summary>
-        Marathi,
-        /// <summary> Selects the Microsoft tokenizer for Norwegian (Bokmål). </summary>
-        NorwegianBokmaal,
+        private const string MarathiValue = "marathi";
+        /// <summary> Selects the Microsoft tokenizer for Norwegian (BokmÃ¥l). </summary>
+        private const string NorwegianBokmaalValue = "norwegianBokmaal";
         /// <summary> Selects the Microsoft tokenizer for Polish. </summary>
-        Polish,
+        private const string PolishValue = "polish";
         /// <summary> Selects the Microsoft tokenizer for Portuguese. </summary>
-        Portuguese,
+        private const string PortugueseValue = "portuguese";
         /// <summary> Selects the Microsoft tokenizer for Portuguese (Brazil). </summary>
-        PortugueseBrazilian,
+        private const string PortugueseBrazilianValue = "portugueseBrazilian";
         /// <summary> Selects the Microsoft tokenizer for Punjabi. </summary>
-        Punjabi,
+        private const string PunjabiValue = "punjabi";
         /// <summary> Selects the Microsoft tokenizer for Romanian. </summary>
-        Romanian,
+        private const string RomanianValue = "romanian";
         /// <summary> Selects the Microsoft tokenizer for Russian. </summary>
-        Russian,
+        private const string RussianValue = "russian";
         /// <summary> Selects the Microsoft tokenizer for Serbian (Cyrillic). </summary>
-        SerbianCyrillic,
+        private const string SerbianCyrillicValue = "serbianCyrillic";
         /// <summary> Selects the Microsoft tokenizer for Serbian (Latin). </summary>
-        SerbianLatin,
+        private const string SerbianLatinValue = "serbianLatin";
         /// <summary> Selects the Microsoft tokenizer for Slovenian. </summary>
-        Slovenian,
+        private const string SlovenianValue = "slovenian";
         /// <summary> Selects the Microsoft tokenizer for Spanish. </summary>
-        Spanish,
+        private const string SpanishValue = "spanish";
         /// <summary> Selects the Microsoft tokenizer for Swedish. </summary>
-        Swedish,
+        private const string SwedishValue = "swedish";
         /// <summary> Selects the Microsoft tokenizer for Tamil. </summary>
-        Tamil,
+        private const string TamilValue = "tamil";
         /// <summary> Selects the Microsoft tokenizer for Telugu. </summary>
-        Telugu,
+        private const string TeluguValue = "telugu";
         /// <summary> Selects the Microsoft tokenizer for Thai. </summary>
-        Thai,
+        private const string ThaiValue = "thai";
         /// <summary> Selects the Microsoft tokenizer for Ukrainian. </summary>
-        Ukrainian,
+        private const string UkrainianValue = "ukrainian";
         /// <summary> Selects the Microsoft tokenizer for Urdu. </summary>
-        Urdu,
+        private const string UrduValue = "urdu";
         /// <summary> Selects the Microsoft tokenizer for Vietnamese. </summary>
-        Vietnamese
+        private const string VietnameseValue = "vietnamese";
+
+        /// <summary> Initializes a new instance of <see cref="MicrosoftTokenizerLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MicrosoftTokenizerLanguage(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Selects the Microsoft tokenizer for Bangla. </summary>
+        public static MicrosoftTokenizerLanguage Bangla { get; } = new MicrosoftTokenizerLanguage(BanglaValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Bulgarian. </summary>
+        public static MicrosoftTokenizerLanguage Bulgarian { get; } = new MicrosoftTokenizerLanguage(BulgarianValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Catalan. </summary>
+        public static MicrosoftTokenizerLanguage Catalan { get; } = new MicrosoftTokenizerLanguage(CatalanValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Chinese (Simplified). </summary>
+        public static MicrosoftTokenizerLanguage ChineseSimplified { get; } = new MicrosoftTokenizerLanguage(ChineseSimplifiedValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Chinese (Traditional). </summary>
+        public static MicrosoftTokenizerLanguage ChineseTraditional { get; } = new MicrosoftTokenizerLanguage(ChineseTraditionalValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Croatian. </summary>
+        public static MicrosoftTokenizerLanguage Croatian { get; } = new MicrosoftTokenizerLanguage(CroatianValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Czech. </summary>
+        public static MicrosoftTokenizerLanguage Czech { get; } = new MicrosoftTokenizerLanguage(CzechValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Danish. </summary>
+        public static MicrosoftTokenizerLanguage Danish { get; } = new MicrosoftTokenizerLanguage(DanishValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Dutch. </summary>
+        public static MicrosoftTokenizerLanguage Dutch { get; } = new MicrosoftTokenizerLanguage(DutchValue);
+
+        /// <summary> Selects the Microsoft tokenizer for English. </summary>
+        public static MicrosoftTokenizerLanguage English { get; } = new MicrosoftTokenizerLanguage(EnglishValue);
+
+        /// <summary> Selects the Microsoft tokenizer for French. </summary>
+        public static MicrosoftTokenizerLanguage French { get; } = new MicrosoftTokenizerLanguage(FrenchValue);
+
+        /// <summary> Selects the Microsoft tokenizer for German. </summary>
+        public static MicrosoftTokenizerLanguage German { get; } = new MicrosoftTokenizerLanguage(GermanValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Greek. </summary>
+        public static MicrosoftTokenizerLanguage Greek { get; } = new MicrosoftTokenizerLanguage(GreekValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Gujarati. </summary>
+        public static MicrosoftTokenizerLanguage Gujarati { get; } = new MicrosoftTokenizerLanguage(GujaratiValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Hindi. </summary>
+        public static MicrosoftTokenizerLanguage Hindi { get; } = new MicrosoftTokenizerLanguage(HindiValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Icelandic. </summary>
+        public static MicrosoftTokenizerLanguage Icelandic { get; } = new MicrosoftTokenizerLanguage(IcelandicValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Indonesian. </summary>
+        public static MicrosoftTokenizerLanguage Indonesian { get; } = new MicrosoftTokenizerLanguage(IndonesianValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Italian. </summary>
+        public static MicrosoftTokenizerLanguage Italian { get; } = new MicrosoftTokenizerLanguage(ItalianValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Japanese. </summary>
+        public static MicrosoftTokenizerLanguage Japanese { get; } = new MicrosoftTokenizerLanguage(JapaneseValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Kannada. </summary>
+        public static MicrosoftTokenizerLanguage Kannada { get; } = new MicrosoftTokenizerLanguage(KannadaValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Korean. </summary>
+        public static MicrosoftTokenizerLanguage Korean { get; } = new MicrosoftTokenizerLanguage(KoreanValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Malay. </summary>
+        public static MicrosoftTokenizerLanguage Malay { get; } = new MicrosoftTokenizerLanguage(MalayValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Malayalam. </summary>
+        public static MicrosoftTokenizerLanguage Malayalam { get; } = new MicrosoftTokenizerLanguage(MalayalamValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Marathi. </summary>
+        public static MicrosoftTokenizerLanguage Marathi { get; } = new MicrosoftTokenizerLanguage(MarathiValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Norwegian (BokmÃ¥l). </summary>
+        public static MicrosoftTokenizerLanguage NorwegianBokmaal { get; } = new MicrosoftTokenizerLanguage(NorwegianBokmaalValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Polish. </summary>
+        public static MicrosoftTokenizerLanguage Polish { get; } = new MicrosoftTokenizerLanguage(PolishValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Portuguese. </summary>
+        public static MicrosoftTokenizerLanguage Portuguese { get; } = new MicrosoftTokenizerLanguage(PortugueseValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Portuguese (Brazil). </summary>
+        public static MicrosoftTokenizerLanguage PortugueseBrazilian { get; } = new MicrosoftTokenizerLanguage(PortugueseBrazilianValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Punjabi. </summary>
+        public static MicrosoftTokenizerLanguage Punjabi { get; } = new MicrosoftTokenizerLanguage(PunjabiValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Romanian. </summary>
+        public static MicrosoftTokenizerLanguage Romanian { get; } = new MicrosoftTokenizerLanguage(RomanianValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Russian. </summary>
+        public static MicrosoftTokenizerLanguage Russian { get; } = new MicrosoftTokenizerLanguage(RussianValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Serbian (Cyrillic). </summary>
+        public static MicrosoftTokenizerLanguage SerbianCyrillic { get; } = new MicrosoftTokenizerLanguage(SerbianCyrillicValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Serbian (Latin). </summary>
+        public static MicrosoftTokenizerLanguage SerbianLatin { get; } = new MicrosoftTokenizerLanguage(SerbianLatinValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Slovenian. </summary>
+        public static MicrosoftTokenizerLanguage Slovenian { get; } = new MicrosoftTokenizerLanguage(SlovenianValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Spanish. </summary>
+        public static MicrosoftTokenizerLanguage Spanish { get; } = new MicrosoftTokenizerLanguage(SpanishValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Swedish. </summary>
+        public static MicrosoftTokenizerLanguage Swedish { get; } = new MicrosoftTokenizerLanguage(SwedishValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Tamil. </summary>
+        public static MicrosoftTokenizerLanguage Tamil { get; } = new MicrosoftTokenizerLanguage(TamilValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Telugu. </summary>
+        public static MicrosoftTokenizerLanguage Telugu { get; } = new MicrosoftTokenizerLanguage(TeluguValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Thai. </summary>
+        public static MicrosoftTokenizerLanguage Thai { get; } = new MicrosoftTokenizerLanguage(ThaiValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Ukrainian. </summary>
+        public static MicrosoftTokenizerLanguage Ukrainian { get; } = new MicrosoftTokenizerLanguage(UkrainianValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Urdu. </summary>
+        public static MicrosoftTokenizerLanguage Urdu { get; } = new MicrosoftTokenizerLanguage(UrduValue);
+
+        /// <summary> Selects the Microsoft tokenizer for Vietnamese. </summary>
+        public static MicrosoftTokenizerLanguage Vietnamese { get; } = new MicrosoftTokenizerLanguage(VietnameseValue);
+
+        /// <summary> Determines if two <see cref="MicrosoftTokenizerLanguage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(MicrosoftTokenizerLanguage left, MicrosoftTokenizerLanguage right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="MicrosoftTokenizerLanguage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(MicrosoftTokenizerLanguage left, MicrosoftTokenizerLanguage right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="MicrosoftTokenizerLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MicrosoftTokenizerLanguage(string value) => new MicrosoftTokenizerLanguage(value);
+
+        /// <summary> Converts a string to a <see cref="MicrosoftTokenizerLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MicrosoftTokenizerLanguage?(string value) => value == null ? null : new MicrosoftTokenizerLanguage(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is MicrosoftTokenizerLanguage other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(MicrosoftTokenizerLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

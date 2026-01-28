@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,28 +17,21 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ElisionTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ElisionTokenFilter(string name) : base(name)
+        public ElisionTokenFilter(string name) : base("#Microsoft.Azure.Search.ElisionTokenFilter", name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Articles = new ChangeTrackingList<string>();
-            ODataType = "#Microsoft.Azure.Search.ElisionTokenFilter";
         }
 
         /// <summary> Initializes a new instance of <see cref="ElisionTokenFilter"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="articles"> The set of articles to remove. </param>
-        internal ElisionTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> articles) : base(oDataType, name, serializedAdditionalRawData)
+        internal ElisionTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> articles) : base(odataType, name, additionalBinaryDataProperties)
         {
             Articles = articles;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.ElisionTokenFilter";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElisionTokenFilter"/> for deserialization. </summary>
-        internal ElisionTokenFilter()
-        {
         }
     }
 }

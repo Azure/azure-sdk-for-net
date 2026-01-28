@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenModel("IndexingResult")]
+    /// <summary>
+    /// Customizes the generated IndexingResult to rename StatusCode to Status.
+    /// </summary>
+    [CodeGenType("IndexingResult")]
     public partial class IndexingResult
     {
         /// <summary>

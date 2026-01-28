@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,29 +17,22 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="LengthTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public LengthTokenFilter(string name) : base(name)
+        public LengthTokenFilter(string name) : base("#Microsoft.Azure.Search.LengthTokenFilter", name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ODataType = "#Microsoft.Azure.Search.LengthTokenFilter";
         }
 
         /// <summary> Initializes a new instance of <see cref="LengthTokenFilter"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minLength"> The minimum length in characters. Default is 0. Maximum is 300. Must be less than the value of max. </param>
         /// <param name="maxLength"> The maximum length in characters. Default and maximum is 300. </param>
-        internal LengthTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? minLength, int? maxLength) : base(oDataType, name, serializedAdditionalRawData)
+        internal LengthTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? minLength, int? maxLength) : base(odataType, name, additionalBinaryDataProperties)
         {
             MinLength = minLength;
             MaxLength = maxLength;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.LengthTokenFilter";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LengthTokenFilter"/> for deserialization. </summary>
-        internal LengthTokenFilter()
-        {
         }
     }
 }

@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Azure.Core;
 using Azure.Search.Documents.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents
 {
@@ -15,7 +15,7 @@ namespace Azure.Search.Documents
     /// query behaviors.
     /// </summary>
     /// <seealso href="https://docs.microsoft.com/rest/api/searchservice/search-documents#query-parameters">Query Parameters.</seealso>
-    [CodeGenModel("SearchRequest")]
+    [CodeGenType("SearchRequest")]
     public partial class SearchOptions
     {
         /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
@@ -145,6 +145,40 @@ namespace Azure.Search.Documents
             get => HighlightFields.CommaJoin();
             set => HighlightFields = InternalSearchExtensions.CommaSplit(value);
         }
+
+        /// <summary> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &lt;/em&gt;. </summary>
+        [CodeGenMember("HighlightPostTag")]
+        public string HighlightPostTag { get; set; }
+
+        /// <summary> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. Default is &lt;em&gt;. </summary>
+        public string HighlightPreTag { get; set; }
+
+        /// <summary> A number between 0 and 100 indicating the percentage of the index that must be covered by a search query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 100. </summary>
+        public double? MinimumCoverage { get; set; }
+
+        /// <summary> A value that specifies the syntax of the search query. The default is 'simple'. Use 'full' if your query uses the Lucene query syntax. </summary>
+        public SearchQueryType? QueryType { get; set; }
+
+        /// <summary> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is 'local'. Use 'global' to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </summary>
+        public ScoringStatistics? ScoringStatistics { get; set; }
+
+        /// <summary> A value to be used to create a sticky session, which can help getting more consistent results. As long as the same sessionId is used, a best-effort attempt will be made to target the same replica set. Be wary that reusing the same sessionID values repeatedly can interfere with the load balancing of the requests across replicas and adversely affect the performance of the search service. The value used as sessionId cannot start with a '_' character. </summary>
+        public string SessionId { get; set; }
+
+        /// <summary> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </summary>
+        public string ScoringProfile { get; set; }
+
+        /// <summary> Enables a debugging tool that can be used to further explore your reranked results. </summary>
+        public QueryDebugMode? Debug { get; set; }
+
+        /// <summary> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </summary>
+        public SearchMode? SearchMode { get; set; }
+
+        /// <summary> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </summary>
+        public int? Skip { get; set; }
+
+        /// <summary> The query parameters to configure hybrid search behaviors. </summary>
+        public HybridSearch HybridSearch { get; set; }
 
         /// <summary>
         /// The list of field names to which to scope the full-text search.

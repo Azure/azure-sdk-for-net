@@ -12,52 +12,21 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
-    /// The KnowledgeSourceParams.
-    /// Please note <see cref="KnowledgeSourceParams"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="SearchIndexKnowledgeSourceParams"/> and <see cref="WebKnowledgeSourceParams"/>.
+    /// Base type for knowledge source runtime parameters.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, and <see cref="RemoteSharePointKnowledgeSourceParams"/>.
     /// </summary>
     public abstract partial class KnowledgeSourceParams
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeSourceName"/> is null. </exception>
-        protected KnowledgeSourceParams(string knowledgeSourceName)
+        /// <param name="kind"> The type of the knowledge source. </param>
+        private protected KnowledgeSourceParams(string knowledgeSourceName, KnowledgeSourceKind kind)
         {
-            Argument.AssertNotNull(knowledgeSourceName, nameof(knowledgeSourceName));
-
             KnowledgeSourceName = knowledgeSourceName;
+            Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceParams"/>. </summary>
@@ -67,8 +36,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
             IncludeReferences = includeReferences;
@@ -76,24 +45,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             AlwaysQuerySource = alwaysQuerySource;
             RerankerThreshold = rerankerThreshold;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceParams"/> for deserialization. </summary>
-        internal KnowledgeSourceParams()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the index the params apply to. </summary>
         public string KnowledgeSourceName { get; }
+
         /// <summary> Indicates whether references should be included for data retrieved from this source. </summary>
         public bool? IncludeReferences { get; set; }
+
         /// <summary> Indicates whether references should include the structured data obtained during retrieval in their payload. </summary>
         public bool? IncludeReferenceSourceData { get; set; }
+
         /// <summary> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </summary>
         public bool? AlwaysQuerySource { get; set; }
+
         /// <summary> The reranker threshold all retrieved documents must meet to be included in the response. </summary>
         public float? RerankerThreshold { get; set; }
+
         /// <summary> The type of the knowledge source. </summary>
         internal KnowledgeSourceKind Kind { get; set; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct VisualFeature : IEquatable<VisualFeature>
     {
         private readonly string _value;
+        /// <summary> Visual features recognized as adult persons. </summary>
+        private const string AdultValue = "adult";
+        /// <summary> Visual features recognized as commercial brands. </summary>
+        private const string BrandsValue = "brands";
+        /// <summary> Categories. </summary>
+        private const string CategoriesValue = "categories";
+        /// <summary> Description. </summary>
+        private const string DescriptionValue = "description";
+        /// <summary> Visual features recognized as people faces. </summary>
+        private const string FacesValue = "faces";
+        /// <summary> Visual features recognized as objects. </summary>
+        private const string ObjectsValue = "objects";
+        /// <summary> Tags. </summary>
+        private const string TagsValue = "tags";
 
         /// <summary> Initializes a new instance of <see cref="VisualFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VisualFeature(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AdultValue = "adult";
-        private const string BrandsValue = "brands";
-        private const string CategoriesValue = "categories";
-        private const string DescriptionValue = "description";
-        private const string FacesValue = "faces";
-        private const string ObjectsValue = "objects";
-        private const string TagsValue = "tags";
+            _value = value;
+        }
 
         /// <summary> Visual features recognized as adult persons. </summary>
         public static VisualFeature Adult { get; } = new VisualFeature(AdultValue);
+
         /// <summary> Visual features recognized as commercial brands. </summary>
         public static VisualFeature Brands { get; } = new VisualFeature(BrandsValue);
+
         /// <summary> Categories. </summary>
         public static VisualFeature Categories { get; } = new VisualFeature(CategoriesValue);
+
         /// <summary> Description. </summary>
         public static VisualFeature Description { get; } = new VisualFeature(DescriptionValue);
+
         /// <summary> Visual features recognized as people faces. </summary>
         public static VisualFeature Faces { get; } = new VisualFeature(FacesValue);
+
         /// <summary> Visual features recognized as objects. </summary>
         public static VisualFeature Objects { get; } = new VisualFeature(ObjectsValue);
+
         /// <summary> Tags. </summary>
         public static VisualFeature Tags { get; } = new VisualFeature(TagsValue);
+
         /// <summary> Determines if two <see cref="VisualFeature"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VisualFeature left, VisualFeature right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VisualFeature"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VisualFeature left, VisualFeature right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VisualFeature"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VisualFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VisualFeature(string value) => new VisualFeature(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VisualFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VisualFeature?(string value) => value == null ? null : new VisualFeature(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VisualFeature other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VisualFeature other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

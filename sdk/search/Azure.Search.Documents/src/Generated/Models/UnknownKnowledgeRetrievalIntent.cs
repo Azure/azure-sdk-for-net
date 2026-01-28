@@ -11,19 +11,12 @@ using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Unknown version of KnowledgeRetrievalIntent. </summary>
     internal partial class UnknownKnowledgeRetrievalIntent : KnowledgeRetrievalIntent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeRetrievalIntent"/>. </summary>
         /// <param name="type"> The type of the intent. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeRetrievalIntent(KnowledgeRetrievalIntentType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
-        {
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeRetrievalIntent"/> for deserialization. </summary>
-        internal UnknownKnowledgeRetrievalIntent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownKnowledgeRetrievalIntent(KnowledgeRetrievalIntentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

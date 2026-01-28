@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchServiceCounters : IUtf8JsonSerializable, IJsonModel<SearchServiceCounters>
+    /// <summary> Represents service-level resource counters and quotas. </summary>
+    public partial class SearchServiceCounters : IJsonModel<SearchServiceCounters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceCounters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SearchServiceCounters"/> for deserialization. </summary>
+        internal SearchServiceCounters()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchServiceCounters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceCounters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceCounters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchServiceCounters)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("aliasesCount"u8);
             writer.WriteObjectValue(AliasCounter, options);
             writer.WritePropertyName("documentCount"u8);
@@ -52,15 +57,15 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue(SkillsetCounter, options);
             writer.WritePropertyName("vectorIndexSize"u8);
             writer.WriteObjectValue(VectorIndexSizeCounter, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -69,107 +74,113 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        SearchServiceCounters IJsonModel<SearchServiceCounters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchServiceCounters IJsonModel<SearchServiceCounters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchServiceCounters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceCounters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceCounters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchServiceCounters)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchServiceCounters(document.RootElement, options);
         }
 
-        internal static SearchServiceCounters DeserializeSearchServiceCounters(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SearchServiceCounters DeserializeSearchServiceCounters(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SearchResourceCounter aliasesCount = default;
-            SearchResourceCounter documentCount = default;
-            SearchResourceCounter indexesCount = default;
-            SearchResourceCounter indexersCount = default;
-            SearchResourceCounter dataSourcesCount = default;
-            SearchResourceCounter storageSize = default;
-            SearchResourceCounter synonymMaps = default;
-            SearchResourceCounter skillsetCount = default;
-            SearchResourceCounter vectorIndexSize = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            SearchResourceCounter aliasCounter = default;
+            SearchResourceCounter documentCounter = default;
+            SearchResourceCounter indexCounter = default;
+            SearchResourceCounter indexerCounter = default;
+            SearchResourceCounter dataSourceCounter = default;
+            SearchResourceCounter storageSizeCounter = default;
+            SearchResourceCounter synonymMapCounter = default;
+            SearchResourceCounter skillsetCounter = default;
+            SearchResourceCounter vectorIndexSizeCounter = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("aliasesCount"u8))
+                if (prop.NameEquals("aliasesCount"u8))
                 {
-                    aliasesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value, options);
+                    aliasCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("documentCount"u8))
+                if (prop.NameEquals("documentCount"u8))
                 {
-                    documentCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value, options);
+                    documentCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("indexesCount"u8))
+                if (prop.NameEquals("indexesCount"u8))
                 {
-                    indexesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value, options);
+                    indexCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("indexersCount"u8))
+                if (prop.NameEquals("indexersCount"u8))
                 {
-                    indexersCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value, options);
+                    indexerCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataSourcesCount"u8))
+                if (prop.NameEquals("dataSourcesCount"u8))
                 {
-                    dataSourcesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value, options);
+                    dataSourceCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storageSize"u8))
+                if (prop.NameEquals("storageSize"u8))
                 {
-                    storageSize = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value, options);
+                    storageSizeCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("synonymMaps"u8))
+                if (prop.NameEquals("synonymMaps"u8))
                 {
-                    synonymMaps = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value, options);
+                    synonymMapCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("skillsetCount"u8))
+                if (prop.NameEquals("skillsetCount"u8))
                 {
-                    skillsetCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value, options);
+                    skillsetCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("vectorIndexSize"u8))
+                if (prop.NameEquals("vectorIndexSize"u8))
                 {
-                    vectorIndexSize = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value, options);
+                    vectorIndexSizeCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SearchServiceCounters(
-                aliasesCount,
-                documentCount,
-                indexesCount,
-                indexersCount,
-                dataSourcesCount,
-                storageSize,
-                synonymMaps,
-                skillsetCount,
-                vectorIndexSize,
-                serializedAdditionalRawData);
+                aliasCounter,
+                documentCounter,
+                indexCounter,
+                indexerCounter,
+                dataSourceCounter,
+                storageSizeCounter,
+                synonymMapCounter,
+                skillsetCounter,
+                vectorIndexSizeCounter,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SearchServiceCounters>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceCounters>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SearchServiceCounters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceCounters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -179,15 +190,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        SearchServiceCounters IPersistableModel<SearchServiceCounters>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceCounters>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchServiceCounters IPersistableModel<SearchServiceCounters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchServiceCounters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceCounters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchServiceCounters(document.RootElement, options);
                     }
                 default:
@@ -195,22 +211,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SearchServiceCounters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SearchServiceCounters FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchServiceCounters(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

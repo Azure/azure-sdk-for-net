@@ -5,16 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Specifies the mode for Autocomplete. The default is 'oneTerm'. Use 'twoTerms' to get shingles and 'oneTermWithContext' to use the current context in producing autocomplete terms. </summary>
-    public enum AutocompleteMode
+    public readonly partial struct AutocompleteMode : IEquatable<AutocompleteMode>
     {
+        private readonly string _value;
         /// <summary> Only one term is suggested. If the query has two terms, only the last term is completed. For example, if the input is 'washington medic', the suggested terms could include 'medicaid', 'medicare', and 'medicine'. </summary>
-        OneTerm,
+        private const string OneTermValue = "oneTerm";
         /// <summary> Matching two-term phrases in the index will be suggested. For example, if the input is 'medic', the suggested terms could include 'medicare coverage' and 'medical assistant'. </summary>
-        TwoTerms,
+        private const string TwoTermsValue = "twoTerms";
         /// <summary> Completes the last term in a query with two or more terms, where the last two terms are a phrase that exists in the index. For example, if the input is 'washington medic', the suggested terms could include 'washington medicaid' and 'washington medical'. </summary>
-        OneTermWithContext
+        private const string OneTermWithContextValue = "oneTermWithContext";
+
+        /// <summary> Initializes a new instance of <see cref="AutocompleteMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AutocompleteMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Only one term is suggested. If the query has two terms, only the last term is completed. For example, if the input is 'washington medic', the suggested terms could include 'medicaid', 'medicare', and 'medicine'. </summary>
+        public static AutocompleteMode OneTerm { get; } = new AutocompleteMode(OneTermValue);
+
+        /// <summary> Matching two-term phrases in the index will be suggested. For example, if the input is 'medic', the suggested terms could include 'medicare coverage' and 'medical assistant'. </summary>
+        public static AutocompleteMode TwoTerms { get; } = new AutocompleteMode(TwoTermsValue);
+
+        /// <summary> Completes the last term in a query with two or more terms, where the last two terms are a phrase that exists in the index. For example, if the input is 'washington medic', the suggested terms could include 'washington medicaid' and 'washington medical'. </summary>
+        public static AutocompleteMode OneTermWithContext { get; } = new AutocompleteMode(OneTermWithContextValue);
+
+        /// <summary> Determines if two <see cref="AutocompleteMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(AutocompleteMode left, AutocompleteMode right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="AutocompleteMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(AutocompleteMode left, AutocompleteMode right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="AutocompleteMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutocompleteMode(string value) => new AutocompleteMode(value);
+
+        /// <summary> Converts a string to a <see cref="AutocompleteMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutocompleteMode?(string value) => value == null ? null : new AutocompleteMode(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is AutocompleteMode other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(AutocompleteMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenModel("ResourceCounter")]
+    [CodeGenType("ResourceCounter")]
     public partial class SearchResourceCounter
     {
     }

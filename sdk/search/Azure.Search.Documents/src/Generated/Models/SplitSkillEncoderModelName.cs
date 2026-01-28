@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct SplitSkillEncoderModelName : IEquatable<SplitSkillEncoderModelName>
     {
         private readonly string _value;
+        /// <summary> Refers to a base model trained with a 50,000 token vocabulary, often used in general natural language processing tasks. </summary>
+        private const string R50kBaseValue = "r50k_base";
+        /// <summary> A base model with a 50,000 token vocabulary, optimized for prompt-based tasks. </summary>
+        private const string P50kBaseValue = "p50k_base";
+        /// <summary> Similar to p50k_base but fine-tuned for editing or rephrasing tasks with a 50,000 token vocabulary. </summary>
+        private const string P50kEditValue = "p50k_edit";
+        /// <summary> A base model with a 100,000 token vocabulary. </summary>
+        private const string CL100kBaseValue = "cl100k_base";
 
         /// <summary> Initializes a new instance of <see cref="SplitSkillEncoderModelName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SplitSkillEncoderModelName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string R50KBaseValue = "r50k_base";
-        private const string P50KBaseValue = "p50k_base";
-        private const string P50KEditValue = "p50k_edit";
-        private const string CL100KBaseValue = "cl100k_base";
-
         /// <summary> Refers to a base model trained with a 50,000 token vocabulary, often used in general natural language processing tasks. </summary>
-        public static SplitSkillEncoderModelName R50KBase { get; } = new SplitSkillEncoderModelName(R50KBaseValue);
+        public static SplitSkillEncoderModelName R50kBase { get; } = new SplitSkillEncoderModelName(R50kBaseValue);
+
         /// <summary> A base model with a 50,000 token vocabulary, optimized for prompt-based tasks. </summary>
-        public static SplitSkillEncoderModelName P50KBase { get; } = new SplitSkillEncoderModelName(P50KBaseValue);
+        public static SplitSkillEncoderModelName P50kBase { get; } = new SplitSkillEncoderModelName(P50kBaseValue);
+
         /// <summary> Similar to p50k_base but fine-tuned for editing or rephrasing tasks with a 50,000 token vocabulary. </summary>
-        public static SplitSkillEncoderModelName P50KEdit { get; } = new SplitSkillEncoderModelName(P50KEditValue);
+        public static SplitSkillEncoderModelName P50kEdit { get; } = new SplitSkillEncoderModelName(P50kEditValue);
+
         /// <summary> A base model with a 100,000 token vocabulary. </summary>
-        public static SplitSkillEncoderModelName CL100KBase { get; } = new SplitSkillEncoderModelName(CL100KBaseValue);
+        public static SplitSkillEncoderModelName CL100kBase { get; } = new SplitSkillEncoderModelName(CL100kBaseValue);
+
         /// <summary> Determines if two <see cref="SplitSkillEncoderModelName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SplitSkillEncoderModelName left, SplitSkillEncoderModelName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SplitSkillEncoderModelName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SplitSkillEncoderModelName left, SplitSkillEncoderModelName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SplitSkillEncoderModelName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SplitSkillEncoderModelName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SplitSkillEncoderModelName(string value) => new SplitSkillEncoderModelName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SplitSkillEncoderModelName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SplitSkillEncoderModelName?(string value) => value == null ? null : new SplitSkillEncoderModelName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SplitSkillEncoderModelName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SplitSkillEncoderModelName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

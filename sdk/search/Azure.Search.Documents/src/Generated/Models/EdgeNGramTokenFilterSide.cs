@@ -5,14 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies which side of the input an n-gram should be generated from. </summary>
-    public enum EdgeNGramTokenFilterSide
+    public readonly partial struct EdgeNGramTokenFilterSide : IEquatable<EdgeNGramTokenFilterSide>
     {
+        private readonly string _value;
         /// <summary> Specifies that the n-gram should be generated from the front of the input. </summary>
-        Front,
+        private const string FrontValue = "front";
         /// <summary> Specifies that the n-gram should be generated from the back of the input. </summary>
-        Back
+        private const string BackValue = "back";
+
+        /// <summary> Initializes a new instance of <see cref="EdgeNGramTokenFilterSide"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EdgeNGramTokenFilterSide(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Specifies that the n-gram should be generated from the front of the input. </summary>
+        public static EdgeNGramTokenFilterSide Front { get; } = new EdgeNGramTokenFilterSide(FrontValue);
+
+        /// <summary> Specifies that the n-gram should be generated from the back of the input. </summary>
+        public static EdgeNGramTokenFilterSide Back { get; } = new EdgeNGramTokenFilterSide(BackValue);
+
+        /// <summary> Determines if two <see cref="EdgeNGramTokenFilterSide"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(EdgeNGramTokenFilterSide left, EdgeNGramTokenFilterSide right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="EdgeNGramTokenFilterSide"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(EdgeNGramTokenFilterSide left, EdgeNGramTokenFilterSide right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="EdgeNGramTokenFilterSide"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeNGramTokenFilterSide(string value) => new EdgeNGramTokenFilterSide(value);
+
+        /// <summary> Converts a string to a <see cref="EdgeNGramTokenFilterSide"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeNGramTokenFilterSide?(string value) => value == null ? null : new EdgeNGramTokenFilterSide(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is EdgeNGramTokenFilterSide other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(EdgeNGramTokenFilterSide other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

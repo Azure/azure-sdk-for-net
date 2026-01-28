@@ -8,15 +8,21 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ScoringFunction : IUtf8JsonSerializable, IJsonModel<ScoringFunction>
+    /// <summary> Base type for functions that can modify document scores during ranking. </summary>
+    public partial class ScoringFunction : IJsonModel<ScoringFunction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScoringFunction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ScoringFunction"/> for deserialization. </summary>
+        internal ScoringFunction()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScoringFunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,14 +34,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScoringFunction)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
             writer.WritePropertyName("fieldName"u8);
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("boost"u8);
@@ -43,17 +46,19 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
-                writer.WriteStringValue(Interpolation.Value.ToSerialString());
+                writer.WriteStringValue(Interpolation.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,43 +67,55 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        ScoringFunction IJsonModel<ScoringFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScoringFunction IJsonModel<ScoringFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScoringFunction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScoringFunction)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScoringFunction(document.RootElement, options);
         }
 
-        internal static ScoringFunction DeserializeScoringFunction(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScoringFunction DeserializeScoringFunction(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "distance": return DistanceScoringFunction.DeserializeDistanceScoringFunction(element, options);
-                    case "freshness": return FreshnessScoringFunction.DeserializeFreshnessScoringFunction(element, options);
-                    case "magnitude": return MagnitudeScoringFunction.DeserializeMagnitudeScoringFunction(element, options);
-                    case "tag": return TagScoringFunction.DeserializeTagScoringFunction(element, options);
+                    case "distance":
+                        return DistanceScoringFunction.DeserializeDistanceScoringFunction(element, options);
+                    case "freshness":
+                        return FreshnessScoringFunction.DeserializeFreshnessScoringFunction(element, options);
+                    case "magnitude":
+                        return MagnitudeScoringFunction.DeserializeMagnitudeScoringFunction(element, options);
+                    case "tag":
+                        return TagScoringFunction.DeserializeTagScoringFunction(element, options);
                 }
             }
             return UnknownScoringFunction.DeserializeUnknownScoringFunction(element, options);
         }
 
-        BinaryData IPersistableModel<ScoringFunction>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScoringFunction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -108,15 +125,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        ScoringFunction IPersistableModel<ScoringFunction>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScoringFunction IPersistableModel<ScoringFunction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScoringFunction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScoringFunction(document.RootElement, options);
                     }
                 default:
@@ -124,22 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ScoringFunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ScoringFunction FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeScoringFunction(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

@@ -8,49 +8,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> The natural language message style object. </summary>
     public partial class KnowledgeBaseMessage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessage"/>. </summary>
-        /// <param name="content">
-        /// Please note <see cref="KnowledgeBaseMessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeBaseMessageImageContent"/> and <see cref="KnowledgeBaseMessageTextContent"/>.
-        /// </param>
+        /// <param name="content"> The content of the message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public KnowledgeBaseMessage(IEnumerable<KnowledgeBaseMessageContent> content)
         {
@@ -61,30 +30,19 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessage"/>. </summary>
         /// <param name="role"> The role of the tool response. </param>
-        /// <param name="content">
-        /// Please note <see cref="KnowledgeBaseMessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeBaseMessageImageContent"/> and <see cref="KnowledgeBaseMessageTextContent"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseMessage(string role, IList<KnowledgeBaseMessageContent> content, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="content"> The content of the message. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeBaseMessage(string role, IList<KnowledgeBaseMessageContent> content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessage"/> for deserialization. </summary>
-        internal KnowledgeBaseMessage()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The role of the tool response. </summary>
         public string Role { get; set; }
-        /// <summary>
-        /// Gets the content
-        /// Please note <see cref="KnowledgeBaseMessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeBaseMessageImageContent"/> and <see cref="KnowledgeBaseMessageTextContent"/>.
-        /// </summary>
+
+        /// <summary> The content of the message. </summary>
         public IList<KnowledgeBaseMessageContent> Content { get; }
     }
 }

@@ -8,22 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Unknown version of KnowledgeSourceVectorizer. </summary>
     internal partial class UnknownKnowledgeSourceVectorizer : KnowledgeSourceVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeSourceVectorizer"/>. </summary>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeSourceVectorizer(VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeSourceVectorizer"/> for deserialization. </summary>
-        internal UnknownKnowledgeSourceVectorizer()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownKnowledgeSourceVectorizer(VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

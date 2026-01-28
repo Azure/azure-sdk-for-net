@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// This file has been replaced by SearchIndexerClient.Customizations.cs which extends the generated client.
+// The generated client is in Generated/SearchIndexerClient.cs.
+
+#if false
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -1009,3 +1013,4 @@ namespace Azure.Search.Documents.Indexes
         }
     }
 }
+#endif
