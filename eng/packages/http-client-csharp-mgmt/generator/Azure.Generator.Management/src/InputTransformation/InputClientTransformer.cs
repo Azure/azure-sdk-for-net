@@ -13,6 +13,7 @@ namespace Azure.Generator.Management.InputTransformation
         {
             foreach (var method in client.Methods)
             {
+                // TODO -- method also has a parameters list. We need to modify that list as well.
                 var operation = method.Operation;
                 SetSubscriptionIdToMethodParameter(operation);
                 RemoveSubscriptionIdFromClient(client);
