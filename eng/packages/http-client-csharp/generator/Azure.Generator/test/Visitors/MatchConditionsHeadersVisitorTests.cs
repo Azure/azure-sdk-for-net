@@ -535,6 +535,54 @@ namespace Azure.Generator.Tests.Visitors
             }
         }
 
+        [Test]
+        public void TestMatchConditionsParameterDoesNotHaveIncorrectWireInfo()
+        {
+            var visitor = new TestMatchConditionsHeaderVisitor();
+            var parameters = new List<InputParameter>
+            {
+                CreateTestParameter("ifMatch", "If-Match", InputRequestLocation.Header),
+                CreateTestParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header)
+            };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("ifMatch", "If-Match", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header)
+            };
+            var responseModel = InputFactory.Model("foo");
+            var operation = InputFactory.Operation(
+                "foo",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var serviceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                operation,
+                parameters: methodParameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
+
+            foreach (var method in methodCollection)
+            {
+                visitor.VisitScmMethod(method);
+                // Verify that the MatchConditions parameter is added
+                Assert.AreEqual(2, method.Signature.Parameters.Count);
+                var matchConditionsParam = method.Signature.Parameters[0];
+                Assert.AreEqual("matchConditions", matchConditionsParam.Name);
+                Assert.IsTrue(matchConditionsParam.Type.Equals(MatchConditionsType));
+
+                // Verify that the WireInfo does not contain an incorrect SerializedName
+                // The matchConditions parameter is synthetic and should not have a SerializedName like "If-Match"
+                Assert.AreNotEqual("If-Match", matchConditionsParam.WireInfo.SerializedName);
+                Assert.AreNotEqual("If-None-Match", matchConditionsParam.WireInfo.SerializedName);
+            }
+        }
+
         // This test validates that the CollectionResultDefinition is generated correctly when the payload contains match conditions headers.
         [Test]
         public void TestCollectionResultDefinitionNextLinkInBody()

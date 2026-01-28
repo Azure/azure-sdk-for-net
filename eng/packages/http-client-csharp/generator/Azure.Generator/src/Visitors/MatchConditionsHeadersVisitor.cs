@@ -191,8 +191,6 @@ namespace Azure.Generator.Visitors
                 originalMatchConditionsParameter,
                 headerFlags);
 
-            updatedConditionsParameter.Update(wireInfo: originalMatchConditionsParameter.WireInfo);
-
             var updatedParams = new List<ParameterProvider>();
             var xmlParameterDocs = new List<XmlDocParamStatement>();
             bool addedConditionsParameter = false;
