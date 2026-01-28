@@ -159,32 +159,6 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchVmFamilyCoreQuota(name, coreQuota, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="location"> The region in which to create the account. </param>
-        /// <param name="tags"> The user-specified tags associated with the account. </param>
-        /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
-        /// <param name="poolAllocationMode"> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Microsoft Entra ID. If the mode is UserSubscription, clients must use Microsoft Entra ID. The default is BatchService. </param>
-        /// <param name="keyVaultReference"> A reference to the Azure key vault associated with the Batch account. </param>
-        /// <param name="publicNetworkAccess"> The network access type for operating on the resources in the Batch account. </param>
-        /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
-        /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
-        /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
-        /// <param name="identity"> The identity of the Batch account. </param>
-        /// <returns> A new <see cref="Models.BatchAccountCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static BatchAccountCreateOrUpdateContent BatchAccountCreateOrUpdateContent(string location = default, IDictionary<string, string> tags = default, BatchAccountAutoStorageBaseConfiguration autoStorage = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, BatchAccountEncryptionConfiguration encryption = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BatchAccountCreateOrUpdateContent(location, tags, autoStorage is null && poolAllocationMode is null && keyVaultReference is null && publicNetworkAccess is null && networkProfile is null && encryption is null && allowedAuthenticationModes is null ? default : new BatchAccountCreateProperties(
-                autoStorage,
-                poolAllocationMode,
-                keyVaultReference,
-                publicNetworkAccess,
-                networkProfile,
-                encryption,
-                (allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>()).ToList(),
-                null), identity, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="tags"> The user-specified tags associated with the account. </param>
         /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
         /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
@@ -193,7 +167,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
         /// <param name="identity"> The identity of the Batch account. </param>
         /// <returns> A new <see cref="Models.BatchAccountPatch"/> instance for mocking. </returns>
-        public static BatchAccountPatch BatchAccountPatch(IDictionary<string, string> tags = default, BatchAccountAutoStorageBaseConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, BatchAccountIdentity identity = default)
+        public static BatchAccountPatch BatchAccountPatch(IDictionary<string, string> tags = default, BatchAccountAutoStorageBaseConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -204,28 +178,6 @@ namespace Azure.ResourceManager.Batch.Models
                 publicNetworkAccess,
                 networkProfile,
                 null), identity, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The identity of the Batch account, if configured. This is used when the user specifies 'Microsoft.KeyVault' as their Batch account encryption configuration or when `ManagedIdentity` is selected as the auto-storage authentication mode. </summary>
-        /// <param name="principalId"> The principal id of the Batch account. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant id associated with the Batch account. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of identity used for the Batch account. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the Batch account. </param>
-        /// <returns> A new <see cref="Models.BatchAccountIdentity"/> instance for mocking. </returns>
-        public static BatchAccountIdentity BatchAccountIdentity(string principalId = default, string tenantId = default, ResourceIdentityType @type = default, IDictionary<string, UserAssignedIdentities> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentities>();
-
-            return new BatchAccountIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The list of associated user identities. </summary>
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentities"/> instance for mocking. </returns>
-        public static UserAssignedIdentities UserAssignedIdentities(string principalId = default, string clientId = default)
-        {
-            return new UserAssignedIdentities(principalId, clientId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters supplied to the RegenerateKey operation. </summary>
@@ -580,9 +532,22 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="results"> Each variable value is returned in the form $variable=value, and variables are separated by semicolons. </param>
         /// <param name="error"> An error that occurred when autoscaling a pool. </param>
         /// <returns> A new <see cref="Models.BatchAccountPoolAutoScaleRun"/> instance for mocking. </returns>
-        public static BatchAccountPoolAutoScaleRun BatchAccountPoolAutoScaleRun(DateTimeOffset evaluationOn = default, string results = default, AutoScaleRunError error = default)
+        public static BatchAccountPoolAutoScaleRun BatchAccountPoolAutoScaleRun(DateTimeOffset evaluationOn = default, string results = default, ResponseError error = default)
         {
             return new BatchAccountPoolAutoScaleRun(evaluationOn, results, error, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An error that occurred when autoscaling a pool. </summary>
+        /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
+        /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
+        /// <param name="details"> Additional details about the error. </param>
+        /// <param name="target"> The error target. </param>
+        /// <returns> A new <see cref="Models.ResponseError"/> instance for mocking. </returns>
+        public static ResponseError ResponseError(string code = default, string message = default, IEnumerable<AutoScaleRunError> details = default, string target = default)
+        {
+            details ??= new ChangeTrackingList<AutoScaleRunError>();
+
+            return new ResponseError(code, message, details.ToList(), target, additionalBinaryDataProperties: null);
         }
 
         /// <summary> An error that occurred when autoscaling a pool. </summary>
@@ -709,9 +674,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="startOn"> The time when this resize operation was started. </param>
         /// <param name="errors"> This property is set only if an error occurred during the last pool resize, and only when the pool allocationState is Steady. </param>
         /// <returns> A new <see cref="Models.BatchResizeOperationStatus"/> instance for mocking. </returns>
-        public static BatchResizeOperationStatus BatchResizeOperationStatus(int? targetDedicatedNodes = default, int? targetLowPriorityNodes = default, TimeSpan? resizeTimeout = default, BatchNodeDeallocationOption? nodeDeallocationOption = default, DateTimeOffset? startOn = default, IEnumerable<ResponseError> errors = default)
+        public static BatchResizeOperationStatus BatchResizeOperationStatus(int? targetDedicatedNodes = default, int? targetLowPriorityNodes = default, TimeSpan? resizeTimeout = default, BatchNodeDeallocationOption? nodeDeallocationOption = default, DateTimeOffset? startOn = default, IEnumerable<Azure.ResponseError> errors = default)
         {
-            errors ??= new ChangeTrackingList<ResponseError>();
+            errors ??= new ChangeTrackingList<Azure.ResponseError>();
 
             return new BatchResizeOperationStatus(
                 targetDedicatedNodes,
@@ -930,8 +895,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
         /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
         /// <returns> A new <see cref="Models.BatchAccountCreateOrUpdateContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BatchAccountCreateOrUpdateContent BatchAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, ManagedServiceIdentity identity, BatchAccountAutoStorageBaseConfiguration autoStorage, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, BatchAccountEncryptionConfiguration encryption, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes)
+        public static BatchAccountCreateOrUpdateContent BatchAccountCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, BatchAccountAutoStorageBaseConfiguration autoStorage = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, BatchAccountEncryptionConfiguration encryption = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             allowedAuthenticationModes ??= new ChangeTrackingList<BatchAuthenticationMode>();

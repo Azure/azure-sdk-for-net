@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Models;
 
@@ -20,11 +21,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The region in which to create the account. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public BatchAccountCreateOrUpdateContent(string location)
+        public BatchAccountCreateOrUpdateContent(AzureLocation location)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -35,7 +33,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="properties"> The properties of the Batch account. </param>
         /// <param name="identity"> The identity of the Batch account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountCreateOrUpdateContent(string location, IDictionary<string, string> tags, BatchAccountCreateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, BatchAccountCreateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Tags = tags;
@@ -45,7 +43,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> The region in which to create the account. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
 
         /// <summary> The user-specified tags associated with the account. </summary>
         public IDictionary<string, string> Tags { get; }
@@ -155,19 +153,6 @@ namespace Azure.ResourceManager.Batch.Models
                     Properties = new BatchAccountCreateProperties();
                 }
                 Properties.Encryption = value;
-            }
-        }
-
-        /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
-        public IList<BatchAuthenticationMode> AllowedAuthenticationModes
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new BatchAccountCreateProperties();
-                }
-                return Properties.AllowedAuthenticationModes;
             }
         }
     }

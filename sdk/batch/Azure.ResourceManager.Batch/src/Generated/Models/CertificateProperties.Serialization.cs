@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningStateTransitOn))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (options.Format != "W" && Optional.IsDefined(PreviousProvisioningState))
             {
                 writer.WritePropertyName("previousProvisioningState"u8);
-                writer.WriteStringValue(PreviousProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(PreviousProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(PreviousProvisioningStateTransitOn))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToBatchAccountCertificateProvisioningState();
+                    provisioningState = new BatchAccountCertificateProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningStateTransitionTime"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    previousProvisioningState = prop.Value.GetString().ToBatchAccountCertificateProvisioningState();
+                    previousProvisioningState = new BatchAccountCertificateProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("previousProvisioningStateTransitionTime"u8))

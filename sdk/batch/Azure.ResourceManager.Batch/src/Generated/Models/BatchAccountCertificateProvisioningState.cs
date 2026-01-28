@@ -5,16 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.ResourceManager.Batch;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary></summary>
-    public enum BatchAccountCertificateProvisioningState
+    public readonly partial struct BatchAccountCertificateProvisioningState : IEquatable<BatchAccountCertificateProvisioningState>
     {
+        private readonly string _value;
         /// <summary> The certificate is available for use in pools. </summary>
-        Succeeded,
+        private const string SucceededValue = "Succeeded";
         /// <summary> The user has requested that the certificate be deleted, but the delete operation has not yet completed. You may not reference the certificate when creating or updating pools. </summary>
-        Deleting,
+        private const string DeletingValue = "Deleting";
         /// <summary> The user requested that the certificate be deleted, but there are pools that still have references to the certificate, or it is still installed on one or more compute nodes. (The latter can occur if the certificate has been removed from the pool, but the node has not yet restarted. Nodes refresh their certificates only when they restart.) You may use the cancel certificate delete operation to cancel the delete, or the delete certificate operation to retry the delete. </summary>
-        Failed
+        private const string FailedValue = "Failed";
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BatchAccountCertificateProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> The certificate is available for use in pools. </summary>
+        public static BatchAccountCertificateProvisioningState Succeeded { get; } = new BatchAccountCertificateProvisioningState(SucceededValue);
+
+        /// <summary> The user has requested that the certificate be deleted, but the delete operation has not yet completed. You may not reference the certificate when creating or updating pools. </summary>
+        public static BatchAccountCertificateProvisioningState Deleting { get; } = new BatchAccountCertificateProvisioningState(DeletingValue);
+
+        /// <summary> The user requested that the certificate be deleted, but there are pools that still have references to the certificate, or it is still installed on one or more compute nodes. (The latter can occur if the certificate has been removed from the pool, but the node has not yet restarted. Nodes refresh their certificates only when they restart.) You may use the cancel certificate delete operation to cancel the delete, or the delete certificate operation to retry the delete. </summary>
+        public static BatchAccountCertificateProvisioningState Failed { get; } = new BatchAccountCertificateProvisioningState(FailedValue);
+
+        /// <summary> Determines if two <see cref="BatchAccountCertificateProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(BatchAccountCertificateProvisioningState left, BatchAccountCertificateProvisioningState right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="BatchAccountCertificateProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(BatchAccountCertificateProvisioningState left, BatchAccountCertificateProvisioningState right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="BatchAccountCertificateProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchAccountCertificateProvisioningState(string value) => new BatchAccountCertificateProvisioningState(value);
+
+        /// <summary> Converts a string to a <see cref="BatchAccountCertificateProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchAccountCertificateProvisioningState?(string value) => value == null ? null : new BatchAccountCertificateProvisioningState(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is BatchAccountCertificateProvisioningState other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(BatchAccountCertificateProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

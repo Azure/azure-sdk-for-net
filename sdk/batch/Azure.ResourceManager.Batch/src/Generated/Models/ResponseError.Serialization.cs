@@ -13,17 +13,17 @@ using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> The results and errors from an execution of a pool autoscale formula. </summary>
-    public partial class BatchAccountPoolAutoScaleRun : IJsonModel<BatchAccountPoolAutoScaleRun>
+    /// <summary> An error that occurred when autoscaling a pool. </summary>
+    public partial class ResponseError : IJsonModel<ResponseError>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchAccountPoolAutoScaleRun"/> for deserialization. </summary>
-        internal BatchAccountPoolAutoScaleRun()
+        /// <summary> Initializes a new instance of <see cref="ResponseError"/> for deserialization. </summary>
+        internal ResponseError()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchAccountPoolAutoScaleRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResponseError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,22 +34,29 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolAutoScaleRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolAutoScaleRun)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseError)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("evaluationTime"u8);
-            writer.WriteStringValue(EvaluationOn, "O");
-            if (Optional.IsDefined(Results))
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code);
+            writer.WritePropertyName("message"u8);
+            writer.WriteStringValue(Message);
+            if (Optional.IsCollectionDefined(Details))
             {
-                writer.WritePropertyName("results"u8);
-                writer.WriteStringValue(Results);
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartArray();
+                foreach (AutoScaleRunError item in Details)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Error))
+            if (options.Format != "W" && Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WritePropertyName("target"u8);
+                writer.WriteStringValue(Target);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -70,52 +77,63 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchAccountPoolAutoScaleRun IJsonModel<BatchAccountPoolAutoScaleRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResponseError IJsonModel<ResponseError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchAccountPoolAutoScaleRun JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResponseError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolAutoScaleRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolAutoScaleRun)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseError)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchAccountPoolAutoScaleRun(document.RootElement, options);
+            return DeserializeResponseError(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BatchAccountPoolAutoScaleRun DeserializeBatchAccountPoolAutoScaleRun(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResponseError DeserializeResponseError(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset evaluationOn = default;
-            string results = default;
-            ResponseError error = default;
+            string code = default;
+            string message = default;
+            IList<AutoScaleRunError> details = default;
+            string target = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("evaluationTime"u8))
+                if (prop.NameEquals("code"u8))
                 {
-                    evaluationOn = prop.Value.GetDateTimeOffset("O");
+                    code = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("results"u8))
+                if (prop.NameEquals("message"u8))
                 {
-                    results = prop.Value.GetString();
+                    message = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("error"u8))
+                if (prop.NameEquals("details"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = ResponseError.DeserializeResponseError(prop.Value, options);
+                    List<AutoScaleRunError> array = new List<AutoScaleRunError>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AutoScaleRunError.DeserializeAutoScaleRunError(item, options));
+                    }
+                    details = array;
+                    continue;
+                }
+                if (prop.NameEquals("target"u8))
+                {
+                    target = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,47 +141,47 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchAccountPoolAutoScaleRun(evaluationOn, results, error, additionalBinaryDataProperties);
+            return new ResponseError(code, message, details ?? new ChangeTrackingList<AutoScaleRunError>(), target, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchAccountPoolAutoScaleRun>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ResponseError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolAutoScaleRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolAutoScaleRun)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseError)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchAccountPoolAutoScaleRun IPersistableModel<BatchAccountPoolAutoScaleRun>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResponseError IPersistableModel<ResponseError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchAccountPoolAutoScaleRun PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResponseError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolAutoScaleRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchAccountPoolAutoScaleRun(document.RootElement, options);
+                        return DeserializeResponseError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolAutoScaleRun)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseError)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchAccountPoolAutoScaleRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResponseError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

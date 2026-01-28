@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="results"> Each variable value is returned in the form $variable=value, and variables are separated by semicolons. </param>
         /// <param name="error"> An error that occurred when autoscaling a pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountPoolAutoScaleRun(DateTimeOffset evaluationOn, string results, AutoScaleRunError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchAccountPoolAutoScaleRun(DateTimeOffset evaluationOn, string results, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EvaluationOn = evaluationOn;
             Results = results;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Batch.Models
         public string Results { get; }
 
         /// <summary> An error that occurred when autoscaling a pool. </summary>
-        public AutoScaleRunError Error { get; }
+        public ResponseError Error { get; }
     }
 }

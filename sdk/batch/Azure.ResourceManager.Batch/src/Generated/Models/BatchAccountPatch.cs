@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Batch;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="properties"> The properties of the account. </param>
         /// <param name="identity"> The identity of the Batch account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountPatch(IDictionary<string, string> tags, BatchAccountUpdateProperties properties, BatchAccountIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchAccountPatch(IDictionary<string, string> tags, BatchAccountUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
         internal BatchAccountUpdateProperties Properties { get; set; }
 
         /// <summary> The identity of the Batch account. </summary>
-        public BatchAccountIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The properties related to the auto-storage account. </summary>
         public BatchAccountAutoStorageBaseConfiguration AutoStorage
@@ -76,19 +77,6 @@ namespace Azure.ResourceManager.Batch.Models
                     Properties = new BatchAccountUpdateProperties();
                 }
                 Properties.Encryption = value;
-            }
-        }
-
-        /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
-        public IList<BatchAuthenticationMode> AllowedAuthenticationModes
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new BatchAccountUpdateProperties();
-                }
-                return Properties.AllowedAuthenticationModes;
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchEndpointAccessProfile(BatchEndpointAccessDefaultAction defaultAction)
         {
             DefaultAction = defaultAction;
-            IpRules = new ChangeTrackingList<BatchIPRule>();
+            IPRules = new ChangeTrackingList<BatchIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchEndpointAccessProfile"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
         internal BatchEndpointAccessProfile(BatchEndpointAccessDefaultAction defaultAction, IList<BatchIPRule> ipRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultAction = defaultAction;
-            IpRules = ipRules;
+            IPRules = ipRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchEndpointAccessDefaultAction DefaultAction { get; set; }
 
         /// <summary> Array of IP ranges to filter client IP address. </summary>
-        public IList<BatchIPRule> IpRules { get; }
+        public IList<BatchIPRule> IPRules { get; }
     }
 }

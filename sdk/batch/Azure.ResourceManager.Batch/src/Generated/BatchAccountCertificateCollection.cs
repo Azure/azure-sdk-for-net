@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, BatchAccountCertificatePatch.ToRequestContent(batchAccountCertificatePatch), matchConditions, context);
+                HttpMessage message = _certificateRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, BatchAccountCertificatePatch.ToRequestContent(batchAccountCertificatePatch), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BatchAccountCertificateData> response = Response.FromValue(BatchAccountCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, BatchAccountCertificatePatch.ToRequestContent(batchAccountCertificatePatch), matchConditions, context);
+                HttpMessage message = _certificateRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, BatchAccountCertificatePatch.ToRequestContent(batchAccountCertificatePatch), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BatchAccountCertificateData> response = Response.FromValue(BatchAccountCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

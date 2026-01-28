@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchDiskEncryptionTarget value) => value switch
         {
-            BatchDiskEncryptionTarget.OsDisk => "OsDisk",
+            BatchDiskEncryptionTarget.OSDisk => "OsDisk",
             BatchDiskEncryptionTarget.TemporaryDisk => "TemporaryDisk",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchDiskEncryptionTarget value.")
         };
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "OsDisk"))
             {
-                return BatchDiskEncryptionTarget.OsDisk;
+                return BatchDiskEncryptionTarget.OSDisk;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "TemporaryDisk"))
             {

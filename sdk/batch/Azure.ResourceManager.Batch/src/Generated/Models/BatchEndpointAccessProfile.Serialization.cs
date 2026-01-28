@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Batch.Models
             }
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToSerialString());
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (BatchIPRule item in IpRules)
+                foreach (BatchIPRule item in IPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }

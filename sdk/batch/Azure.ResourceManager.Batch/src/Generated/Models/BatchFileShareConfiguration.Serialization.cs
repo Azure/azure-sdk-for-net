@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
             writer.WritePropertyName("azureFileUrl"u8);
-            writer.WriteStringValue(Uri);
+            writer.WriteStringValue(FileUri.AbsoluteUri);
             writer.WritePropertyName("accountKey"u8);
             writer.WriteStringValue(AccountKey);
             writer.WritePropertyName("relativeMountPath"u8);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             string accountName = default;
-            string uri = default;
+            Uri fileUri = default;
             string accountKey = default;
             string relativeMountPath = default;
             string mountOptions = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("azureFileUrl"u8))
                 {
-                    uri = prop.Value.GetString();
+                    fileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("accountKey"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             return new BatchFileShareConfiguration(
                 accountName,
-                uri,
+                fileUri,
                 accountKey,
                 relativeMountPath,
                 mountOptions,

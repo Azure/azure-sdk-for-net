@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Placement))
             {
                 writer.WritePropertyName("placement"u8);
-                writer.WriteStringValue(Placement.Value.ToSerialString());
+                writer.WriteStringValue(Placement.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    placement = prop.Value.GetString().ToBatchDiffDiskPlacement();
+                    placement = new BatchDiffDiskPlacement(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
