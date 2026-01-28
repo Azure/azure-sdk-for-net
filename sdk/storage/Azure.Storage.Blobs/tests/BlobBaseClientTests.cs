@@ -6399,6 +6399,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetTierAsync_Smart()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
+
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
