@@ -15,7 +15,7 @@ steps:
       scriptLocation: scriptPath
       scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Mark-ReleasePlanCompletion.ps1
       arguments: >
-        -PackageInfoFilePath '${{ parameters.ConfigFileDir }}/${{ parameters.PackageArtifactName }}.json' -AzsdkExePath "$(Agent.TempDirectory)/azsdk$(if ($IsWindows) { '.exe' } else { '' })"
+        -PackageInfoFilePath '${{ parameters.ConfigFileDir }}/${{ parameters.PackageArtifactName }}.json' -AzsdkExePath '$(Agent.TempDirectory)/azsdk'
       workingDirectory: $(Pipeline.Workspace)
     displayName: Mark package as released
     continueOnError: true
