@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServices
             return message;
         }
 
-        internal HttpMessage CreateUndeleteRequest(string subscriptionId, string location, string deletedVaultName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateRestoreDeletedVaultRequest(string subscriptionId, string location, string deletedVaultName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

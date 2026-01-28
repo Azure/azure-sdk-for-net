@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UndeleteAsync(WaitUntil waitUntil, DeletedVaultRestoreInput content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestoreDeletedVaultAsync(WaitUntil waitUntil, DeletedVaultRestoreInput content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.Undelete");
+            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.RestoreDeletedVault");
             scope.Start();
             try
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateUndeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeletedVaultRestoreInput.ToRequestContent(content), context);
+                HttpMessage message = _deletedVaultsRestClient.CreateRestoreDeletedVaultRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeletedVaultRestoreInput.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesArmOperation operation = new RecoveryServicesArmOperation(_deletedVaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -266,11 +266,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation Undelete(WaitUntil waitUntil, DeletedVaultRestoreInput content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RestoreDeletedVault(WaitUntil waitUntil, DeletedVaultRestoreInput content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.Undelete");
+            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.RestoreDeletedVault");
             scope.Start();
             try
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateUndeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeletedVaultRestoreInput.ToRequestContent(content), context);
+                HttpMessage message = _deletedVaultsRestClient.CreateRestoreDeletedVaultRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeletedVaultRestoreInput.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesArmOperation operation = new RecoveryServicesArmOperation(_deletedVaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
