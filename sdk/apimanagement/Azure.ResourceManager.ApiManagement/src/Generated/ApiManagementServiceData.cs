@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <param name="identity"> Managed service identity of the Api Management service. </param>
         /// <param name="etag"> ETag of the resource. </param>
-        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <param name="notificationSenderEmail"> Email address from which the notification will be sent. </param>
         /// <param name="provisioningState"> The current provisioning state of the API Management service which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </param>
         /// <param name="targetProvisioningState"> The provisioning state of the API Management service, which is targeted by the long running operation started on the service. </param>
@@ -120,10 +120,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="platformVersion"> Compute Platform Version running the service in this location. </param>
         /// <param name="legacyPortalStatus"> Status of legacy portal in the API Management service. </param>
         /// <param name="developerPortalStatus"> Status of developer portal in this API Management service. </param>
+        /// <param name="releaseChannel"> Release Channel of this API Management service. </param>
+        /// <param name="zoneRedundant"> Zone Redundant Requirement when creating StandardV2 and PremiumV2. If this flag is set to True, will return a APIM service with Zone redundant or fail the request if any underneath component cannot be zone redundant. </param>
         /// <param name="publisherEmail"> Publisher email. </param>
         /// <param name="publisherName"> Publisher name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? etag, IList<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IList<HostnameConfiguration> hostnameConfigurations, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, ConfigurationApi configurationApi, VirtualNetworkConfiguration virtualNetworkConfiguration, IList<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IList<CertificateConfiguration> certificates, bool? enableClientCertificate, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, VirtualNetworkType? virtualNetworkType, ApiVersionConstraint apiVersionConstraint, bool? restore, IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, LegacyPortalStatus? legacyPortalStatus, DeveloperPortalStatus? developerPortalStatus, string publisherEmail, string publisherName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ApiManagementServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? etag, IList<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IList<HostnameConfiguration> hostnameConfigurations, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, ConfigurationApi configurationApi, VirtualNetworkConfiguration virtualNetworkConfiguration, IList<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IList<CertificateConfiguration> certificates, bool? enableClientCertificate, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, VirtualNetworkType? virtualNetworkType, ApiVersionConstraint apiVersionConstraint, bool? restore, IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, LegacyPortalStatus? legacyPortalStatus, DeveloperPortalStatus? developerPortalStatus, ReleaseChannel? releaseChannel, bool? zoneRedundant, string publisherEmail, string publisherName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -160,6 +162,8 @@ namespace Azure.ResourceManager.ApiManagement
             PlatformVersion = platformVersion;
             LegacyPortalStatus = legacyPortalStatus;
             DeveloperPortalStatus = developerPortalStatus;
+            ReleaseChannel = releaseChannel;
+            ZoneRedundant = zoneRedundant;
             PublisherEmail = publisherEmail;
             PublisherName = publisherName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -179,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> ETag of the resource. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
+        /// <summary> The availability zones. </summary>
         [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> Email address from which the notification will be sent. </summary>
@@ -299,6 +303,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Status of developer portal in this API Management service. </summary>
         [WirePath("properties.developerPortalStatus")]
         public DeveloperPortalStatus? DeveloperPortalStatus { get; set; }
+        /// <summary> Release Channel of this API Management service. </summary>
+        [WirePath("properties.releaseChannel")]
+        public ReleaseChannel? ReleaseChannel { get; set; }
+        /// <summary> Zone Redundant Requirement when creating StandardV2 and PremiumV2. If this flag is set to True, will return a APIM service with Zone redundant or fail the request if any underneath component cannot be zone redundant. </summary>
+        [WirePath("properties.zoneRedundant")]
+        public bool? ZoneRedundant { get; set; }
         /// <summary> Publisher email. </summary>
         [WirePath("properties.publisherEmail")]
         public string PublisherEmail { get; set; }

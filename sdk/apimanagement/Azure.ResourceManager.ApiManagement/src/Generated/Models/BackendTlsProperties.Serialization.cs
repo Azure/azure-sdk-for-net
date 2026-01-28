@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -44,6 +45,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("validateCertificateName"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateName.Value);
+            }
+            if (Optional.IsCollectionDefined(ServerCertificateThumbprints))
+            {
+                writer.WritePropertyName("serverCertificateThumbprints"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServerCertificateThumbprints)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ServerX509Names))
+            {
+                writer.WritePropertyName("serverX509Names"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServerX509Names)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,6 +105,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             bool? validateCertificateChain = default;
             bool? validateCertificateName = default;
+            IList<string> serverCertificateThumbprints = default;
+            IList<X509CertificateName> serverX509Names = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,13 +129,41 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     validateCertificateName = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("serverCertificateThumbprints"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    serverCertificateThumbprints = array;
+                    continue;
+                }
+                if (property.NameEquals("serverX509Names"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<X509CertificateName> array = new List<X509CertificateName>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(X509CertificateName.DeserializeX509CertificateName(item, options));
+                    }
+                    serverX509Names = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BackendTlsProperties(validateCertificateChain, validateCertificateName, serializedAdditionalRawData);
+            return new BackendTlsProperties(validateCertificateChain, validateCertificateName, serverCertificateThumbprints ?? new ChangeTrackingList<string>(), serverX509Names ?? new ChangeTrackingList<X509CertificateName>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -155,6 +206,65 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     builder.Append("  validateCertificateName: ");
                     var boolValue = ShouldValidateCertificateName.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCertificateThumbprints), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverCertificateThumbprints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServerCertificateThumbprints))
+                {
+                    if (ServerCertificateThumbprints.Any())
+                    {
+                        builder.Append("  serverCertificateThumbprints: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ServerCertificateThumbprints)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerX509Names), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverX509Names: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServerX509Names))
+                {
+                    if (ServerX509Names.Any())
+                    {
+                        builder.Append("  serverX509Names: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ServerX509Names)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  serverX509Names: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

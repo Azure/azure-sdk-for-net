@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string IsolatedValue = "Isolated";
         private const string BasicV2Value = "BasicV2";
         private const string StandardV2Value = "StandardV2";
+        private const string PremiumV2Value = "PremiumV2";
 
         /// <summary> Developer SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Developer { get; } = new ApiManagementServiceSkuType(DeveloperValue);
@@ -47,6 +48,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementServiceSkuType BasicV2 { get; } = new ApiManagementServiceSkuType(BasicV2Value);
         /// <summary> StandardV2 SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType StandardV2 { get; } = new ApiManagementServiceSkuType(StandardV2Value);
+        /// <summary> PremiumV2 SKU of Api Management. </summary>
+        public static ApiManagementServiceSkuType PremiumV2 { get; } = new ApiManagementServiceSkuType(PremiumV2Value);
         /// <summary> Determines if two <see cref="ApiManagementServiceSkuType"/> values are the same. </summary>
         public static bool operator ==(ApiManagementServiceSkuType left, ApiManagementServiceSkuType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiManagementServiceSkuType"/> values are not the same. </summary>

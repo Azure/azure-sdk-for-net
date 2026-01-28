@@ -47,10 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="GatewayTokenRequestContract"/>. </summary>
         /// <param name="keyType"> The Key to be used to generate gateway token. </param>
-        /// <param name="expiry">
-        /// The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
+        /// <param name="expiry"> The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         public GatewayTokenRequestContract(TokenGenerationUsedKeyType keyType, DateTimeOffset expiry)
         {
             KeyType = keyType;
@@ -59,10 +56,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="GatewayTokenRequestContract"/>. </summary>
         /// <param name="keyType"> The Key to be used to generate gateway token. </param>
-        /// <param name="expiry">
-        /// The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
+        /// <param name="expiry"> The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayTokenRequestContract(TokenGenerationUsedKeyType keyType, DateTimeOffset expiry, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,10 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The Key to be used to generate gateway token. </summary>
         [WirePath("keyType")]
         public TokenGenerationUsedKeyType KeyType { get; }
-        /// <summary>
-        /// The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </summary>
+        /// <summary> The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("expiry")]
         public DateTimeOffset Expiry { get; }
     }

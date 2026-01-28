@@ -101,6 +101,11 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
+            if (Optional.IsDefined(CertificateId))
+            {
+                writer.WritePropertyName("certificateId"u8);
+                writer.WriteStringValue(CertificateId);
+            }
             writer.WriteEndObject();
         }
 
@@ -139,6 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
             string clientLibrary = default;
             string clientId = default;
             string clientSecret = default;
+            ResourceIdentifier certificateId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,6 +250,15 @@ namespace Azure.ResourceManager.ApiManagement
                             clientSecret = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("certificateId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            certificateId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -269,6 +284,7 @@ namespace Azure.ResourceManager.ApiManagement
                 clientLibrary,
                 clientId,
                 clientSecret,
+                certificateId,
                 serializedAdditionalRawData);
         }
 
@@ -593,6 +609,21 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         builder.AppendLine($"'{ClientSecret}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    certificateId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertificateId))
+                {
+                    builder.Append("    certificateId: ");
+                    builder.AppendLine($"'{CertificateId.ToString()}'");
                 }
             }
 

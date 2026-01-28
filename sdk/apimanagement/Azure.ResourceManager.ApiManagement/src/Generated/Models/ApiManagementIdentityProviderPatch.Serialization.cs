@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
+            if (Optional.IsDefined(CertificateId))
+            {
+                writer.WritePropertyName("certificateId"u8);
+                writer.WriteStringValue(CertificateId);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -145,6 +150,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string clientLibrary = default;
             string clientId = default;
             string clientSecret = default;
+            ResourceIdentifier certificateId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,6 +232,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             clientSecret = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("certificateId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            certificateId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -247,6 +262,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 clientLibrary,
                 clientId,
                 clientSecret,
+                certificateId,
                 serializedAdditionalRawData);
         }
 

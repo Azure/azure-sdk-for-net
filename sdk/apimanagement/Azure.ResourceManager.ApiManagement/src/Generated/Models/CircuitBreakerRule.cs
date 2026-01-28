@@ -55,13 +55,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="failureCondition"> The conditions for tripping the circuit breaker. </param>
         /// <param name="tripDuration"> The duration for which the circuit will be tripped. </param>
         /// <param name="acceptRetryAfter"> flag to accept Retry-After header from the backend. </param>
+        /// <param name="failureResponse"> The response of the backend when the circuit breaker gets open. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CircuitBreakerRule(string name, CircuitBreakerFailureCondition failureCondition, TimeSpan? tripDuration, bool? acceptRetryAfter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CircuitBreakerRule(string name, CircuitBreakerFailureCondition failureCondition, TimeSpan? tripDuration, bool? acceptRetryAfter, BackendFailureResponse failureResponse, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FailureCondition = failureCondition;
             TripDuration = tripDuration;
             AcceptRetryAfter = acceptRetryAfter;
+            FailureResponse = failureResponse;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,5 +79,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> flag to accept Retry-After header from the backend. </summary>
         [WirePath("acceptRetryAfter")]
         public bool? AcceptRetryAfter { get; set; }
+        /// <summary> The response of the backend when the circuit breaker gets open. </summary>
+        internal BackendFailureResponse FailureResponse { get; set; }
+        /// <summary> The status code of the response. </summary>
+        [WirePath("failureResponse.statusCode")]
+        public int? FailureResponseStatusCode
+        {
+            get => FailureResponse is null ? default : FailureResponse.StatusCode;
+            set
+            {
+                if (FailureResponse is null)
+                    FailureResponse = new BackendFailureResponse();
+                FailureResponse.StatusCode = value;
+            }
+        }
     }
 }

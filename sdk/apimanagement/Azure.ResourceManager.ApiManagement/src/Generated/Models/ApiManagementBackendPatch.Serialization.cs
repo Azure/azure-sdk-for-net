@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("circuitBreaker"u8);
                 writer.WriteObjectValue(CircuitBreaker, options);
             }
+            if (Optional.IsDefined(AzureRegion))
+            {
+                writer.WritePropertyName("azureRegion"u8);
+                writer.WriteStringValue(AzureRegion);
+            }
             if (Optional.IsDefined(Pool))
             {
                 writer.WritePropertyName("pool"u8);
@@ -142,6 +147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             BackendProxyContract proxy = default;
             BackendTlsProperties tls = default;
             BackendCircuitBreaker circuitBreaker = default;
+            string azureRegion = default;
             BackendBaseParametersPool pool = default;
             BackendType? type = default;
             Uri uri = default;
@@ -223,6 +229,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             circuitBreaker = BackendCircuitBreaker.DeserializeBackendCircuitBreaker(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("azureRegion"u8))
+                        {
+                            azureRegion = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("pool"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -277,6 +288,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 proxy,
                 tls,
                 circuitBreaker,
+                azureRegion,
                 pool,
                 type,
                 uri,

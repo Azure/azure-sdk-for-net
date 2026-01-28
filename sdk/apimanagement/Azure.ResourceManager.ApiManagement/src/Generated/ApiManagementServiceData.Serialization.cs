@@ -270,6 +270,16 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("developerPortalStatus"u8);
                 writer.WriteStringValue(DeveloperPortalStatus.Value.ToString());
             }
+            if (Optional.IsDefined(ReleaseChannel))
+            {
+                writer.WritePropertyName("releaseChannel"u8);
+                writer.WriteStringValue(ReleaseChannel.Value.ToString());
+            }
+            if (Optional.IsDefined(ZoneRedundant))
+            {
+                writer.WritePropertyName("zoneRedundant"u8);
+                writer.WriteBooleanValue(ZoneRedundant.Value);
+            }
             writer.WritePropertyName("publisherEmail"u8);
             writer.WriteStringValue(PublisherEmail);
             writer.WritePropertyName("publisherName"u8);
@@ -338,6 +348,8 @@ namespace Azure.ResourceManager.ApiManagement
             PlatformVersion? platformVersion = default;
             LegacyPortalStatus? legacyPortalStatus = default;
             DeveloperPortalStatus? developerPortalStatus = default;
+            ReleaseChannel? releaseChannel = default;
+            bool? zoneRedundant = default;
             string publisherEmail = default;
             string publisherName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -754,6 +766,24 @@ namespace Azure.ResourceManager.ApiManagement
                             developerPortalStatus = new DeveloperPortalStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("releaseChannel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            releaseChannel = new ReleaseChannel(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("zoneRedundant"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            zoneRedundant = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("publisherEmail"u8))
                         {
                             publisherEmail = property0.Value.GetString();
@@ -815,6 +845,8 @@ namespace Azure.ResourceManager.ApiManagement
                 platformVersion,
                 legacyPortalStatus,
                 developerPortalStatus,
+                releaseChannel,
+                zoneRedundant,
                 publisherEmail,
                 publisherName,
                 serializedAdditionalRawData);
@@ -1617,6 +1649,37 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     builder.Append("    developerPortalStatus: ");
                     builder.AppendLine($"'{DeveloperPortalStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReleaseChannel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    releaseChannel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReleaseChannel))
+                {
+                    builder.Append("    releaseChannel: ");
+                    builder.AppendLine($"'{ReleaseChannel.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZoneRedundant), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    zoneRedundant: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ZoneRedundant))
+                {
+                    builder.Append("    zoneRedundant: ");
+                    var boolValue = ZoneRedundant.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 

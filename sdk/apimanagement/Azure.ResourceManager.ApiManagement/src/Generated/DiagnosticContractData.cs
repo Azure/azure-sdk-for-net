@@ -66,19 +66,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sampling"> Sampling settings for Diagnostic. </param>
         /// <param name="frontend"> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </param>
         /// <param name="backend"> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </param>
+        /// <param name="largeLanguageModel"> Large Language Models diagnostic settings. </param>
         /// <param name="isLogClientIPEnabled"> Log the ClientIP. Default is false. </param>
         /// <param name="httpCorrelationProtocol"> Sets correlation protocol to use for Application Insights diagnostics. </param>
         /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
         /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
         /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, LLMDiagnosticSettings largeLanguageModel, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AlwaysLog = alwaysLog;
             LoggerId = loggerId;
             Sampling = sampling;
             Frontend = frontend;
             Backend = backend;
+            LargeLanguageModel = largeLanguageModel;
             IsLogClientIPEnabled = isLogClientIPEnabled;
             HttpCorrelationProtocol = httpCorrelationProtocol;
             Verbosity = verbosity;
@@ -102,6 +104,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </summary>
         [WirePath("properties.backend")]
         public PipelineDiagnosticSettings Backend { get; set; }
+        /// <summary> Large Language Models diagnostic settings. </summary>
+        [WirePath("properties.largeLanguageModel")]
+        public LLMDiagnosticSettings LargeLanguageModel { get; set; }
         /// <summary> Log the ClientIP. Default is false. </summary>
         [WirePath("properties.logClientIp")]
         public bool? IsLogClientIPEnabled { get; set; }

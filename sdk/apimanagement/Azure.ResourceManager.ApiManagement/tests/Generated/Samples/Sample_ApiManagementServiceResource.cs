@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementServiceGetMultiRegionInternalVnet()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetMultiRegionInternalVnet.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementServiceGetMultiRegionInternalVnet.json
             // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementServiceGetService()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetService.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementServiceGetService.json
             // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementServiceGetServiceHavingMsi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetServiceHavingMsi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementServiceGetServiceHavingMsi.json
             // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementServiceDeleteService()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceDeleteService.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementServiceDeleteService.json
             // this example is just showing the usage of "ApiManagementService_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateServiceDisableTls10()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateServiceDisableTls10.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementUpdateServiceDisableTls10.json
             // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateServicePublisherDetails()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateServicePublisherDetails.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementUpdateServicePublisherDetails.json
             // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateServiceToNewVnetAndAvailabilityZones()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateServiceToNewVnetAndAZs.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementUpdateServiceToNewVnetAndAZs.json
             // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -260,9 +260,279 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task ApplyNetworkConfigurationUpdates_ApiManagementApplyNetworkConfigurationUpdates()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementApplyNetworkConfigurationUpdates.json
+            // this example is just showing the usage of "ApiManagementService_ApplyNetworkConfigurationUpdates" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServiceApplyNetworkConfigurationContent content = new ApiManagementServiceApplyNetworkConfigurationContent
+            {
+                Location = new AzureLocation("west us"),
+            };
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.ApplyNetworkConfigurationUpdatesAsync(WaitUntil.Completed, content: content);
+            ApiManagementServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Backup_ApiManagementBackupWithAccessKey()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementBackupWithAccessKey.json
+            // this example is just showing the usage of "ApiManagementService_Backup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServiceBackupRestoreContent content = new ApiManagementServiceBackupRestoreContent("teststorageaccount", "backupContainer", "apimService1backup_2017_03_19")
+            {
+                AccessType = StorageAccountAccessType.AccessKey,
+                AccessKey = "**************************************************",
+            };
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.BackupAsync(WaitUntil.Completed, content);
+            ApiManagementServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Backup_ApiManagementBackupWithSystemManagedIdentity()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementBackupWithSystemManagedIdentity.json
+            // this example is just showing the usage of "ApiManagementService_Backup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServiceBackupRestoreContent content = new ApiManagementServiceBackupRestoreContent("contosorpstorage", "apim-backups", "backup5")
+            {
+                AccessType = StorageAccountAccessType.SystemAssignedManagedIdentity,
+            };
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.BackupAsync(WaitUntil.Completed, content);
+            ApiManagementServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Backup_ApiManagementBackupWithUserAssignedManagedIdentity()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementBackupWithUserAssignedManagedIdentity.json
+            // this example is just showing the usage of "ApiManagementService_Backup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServiceBackupRestoreContent content = new ApiManagementServiceBackupRestoreContent("contosorpstorage", "apim-backups", "backup5")
+            {
+                AccessType = StorageAccountAccessType.UserAssignedManagedIdentity,
+                ClientId = "XXXXX-a154-4830-XXXX-46a12da1a1e2",
+            };
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.BackupAsync(WaitUntil.Completed, content);
+            ApiManagementServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetSsoToken_ApiManagementServiceGetSsoToken()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementServiceGetSsoToken.json
+            // this example is just showing the usage of "ApiManagementService_GetSsoToken" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServiceGetSsoTokenResult result = await apiManagementService.GetSsoTokenAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task MigrateToStv2_ApiManagementMigrateService()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementServiceMigrateToStv2.json
+            // this example is just showing the usage of "ApiManagementService_MigrateToStv2" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            MigrateToStv2Contract migrateToStv2Contract = new MigrateToStv2Contract
+            {
+                Mode = MigrateToStv2Mode.PreserveIP,
+            };
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.MigrateToStv2Async(WaitUntil.Completed, migrateToStv2Contract: migrateToStv2Contract);
+            ApiManagementServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task RefreshHostnames_ApiManagementServiceRefreshKeyVaultHostnames()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementServiceRefreshKeyVaultHostnames.json
+            // this example is just showing the usage of "ApiManagementService_RefreshHostnames" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.RefreshHostnamesAsync(WaitUntil.Completed);
+            ApiManagementServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Restore_ApiManagementRestoreService()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementRestoreWithAccessKey.json
+            // this example is just showing the usage of "ApiManagementService_Restore" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServiceBackupRestoreContent content = new ApiManagementServiceBackupRestoreContent("teststorageaccount", "backupContainer", "apimService1backup_2017_03_19")
+            {
+                AccessType = StorageAccountAccessType.AccessKey,
+                AccessKey = "**************************************************",
+            };
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.RestoreAsync(WaitUntil.Completed, content);
+            ApiManagementServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllPoliciesByService_ApiManagementListPolicyRestrictions()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementAllPolicies.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementAllPolicies.json
             // this example is just showing the usage of "AllPolicies_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -291,7 +561,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetApisByTags_ApiManagementListApisByTags()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListApisByTags.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListApisByTags.json
             // this example is just showing the usage of "Api_ListByTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -320,7 +590,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task PerformConnectivityCheckAsync_HTTPConnectivityCheck()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementPerformConnectivityCheckHttpConnect.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementPerformConnectivityCheckHttpConnect.json
             // this example is just showing the usage of "PerformConnectivityCheckAsync" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -357,7 +627,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task PerformConnectivityCheckAsync_TCPConnectivityCheck()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementPerformConnectivityCheck.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementPerformConnectivityCheck.json
             // this example is just showing the usage of "PerformConnectivityCheckAsync" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -388,7 +658,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetContentTypes_ApiManagementListContentTypes()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListContentTypes.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListContentTypes.json
             // this example is just showing the usage of "ContentType_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -417,7 +687,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetContentType_ApiManagementGetContentType()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetContentType.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetContentType.json
             // this example is just showing the usage of "ContentType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -444,7 +714,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateContentType_ApiManagementCreateContentType()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateContentType.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateContentType.json
             // this example is just showing the usage of "ContentType_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -471,7 +741,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteContentType_ApiManagementDeleteContentType()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteContentType.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementDeleteContentType.json
             // this example is just showing the usage of "ContentType_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -499,7 +769,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetContentItems_ApiManagementListContentTypeContentItems()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListContentTypeContentItems.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListContentTypeContentItems.json
             // this example is just showing the usage of "ContentItem_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -527,37 +797,9 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetContentItemEntityTag_ApiManagementHeadContentTypeContentItem()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadContentTypeContentItem.json
-            // this example is just showing the usage of "ContentItem_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            string contentTypeId = "page";
-            string contentItemId = "4e3cf6a5-574a-ba08-1f23-2e7a38faa6d8";
-            bool result = await apiManagementService.GetContentItemEntityTagAsync(contentTypeId, contentItemId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetContentItem_ApiManagementGetContentTypeContentItem()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetContentTypeContentItem.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetContentTypeContentItem.json
             // this example is just showing the usage of "ContentItem_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -585,7 +827,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateContentItem_ApiManagementCreateContentTypeContentItem()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateContentTypeContentItem.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateContentTypeContentItem.json
             // this example is just showing the usage of "ContentItem_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -613,7 +855,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteContentItem_ApiManagementDeleteContentTypeContentItem()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteContentTypeContentItem.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementDeleteContentTypeContentItem.json
             // this example is just showing the usage of "ContentItem_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -640,68 +882,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAvailableApiManagementServiceSkus_ApiManagementListSKUsConsumption()
+        public async Task GetContentItemEntityTag_ApiManagementHeadContentTypeContentItem()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListSKUs-Consumption.json
-            // this example is just showing the usage of "ApiManagementServiceSkus_ListAvailableServiceSkus" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AvailableApiManagementServiceSkuResult item in apiManagementService.GetAvailableApiManagementServiceSkusAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAvailableApiManagementServiceSkus_ApiManagementListSKUsDedicated()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListSKUs-Dedicated.json
-            // this example is just showing the usage of "ApiManagementServiceSkus_ListAvailableServiceSkus" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AvailableApiManagementServiceSkuResult item in apiManagementService.GetAvailableApiManagementServiceSkusAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Restore_ApiManagementRestoreService()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementRestoreWithAccessKey.json
-            // this example is just showing the usage of "ApiManagementService_Restore" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementHeadContentTypeContentItem.json
+            // this example is just showing the usage of "ContentItem_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -717,195 +901,19 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // invoke the operation
-            ApiManagementServiceBackupRestoreContent content = new ApiManagementServiceBackupRestoreContent("teststorageaccount", "backupContainer", "apimService1backup_2017_03_19")
-            {
-                AccessType = StorageAccountAccessType.AccessKey,
-                AccessKey = "**************************************************",
-            };
-            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.RestoreAsync(WaitUntil.Completed, content);
-            ApiManagementServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Backup_ApiManagementBackupWithAccessKey()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementBackupWithAccessKey.json
-            // this example is just showing the usage of "ApiManagementService_Backup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            ApiManagementServiceBackupRestoreContent content = new ApiManagementServiceBackupRestoreContent("teststorageaccount", "backupContainer", "apimService1backup_2017_03_19")
-            {
-                AccessType = StorageAccountAccessType.AccessKey,
-                AccessKey = "**************************************************",
-            };
-            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.BackupAsync(WaitUntil.Completed, content);
-            ApiManagementServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Backup_ApiManagementBackupWithSystemManagedIdentity()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementBackupWithSystemManagedIdentity.json
-            // this example is just showing the usage of "ApiManagementService_Backup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            ApiManagementServiceBackupRestoreContent content = new ApiManagementServiceBackupRestoreContent("contosorpstorage", "apim-backups", "backup5")
-            {
-                AccessType = StorageAccountAccessType.SystemAssignedManagedIdentity,
-            };
-            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.BackupAsync(WaitUntil.Completed, content);
-            ApiManagementServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Backup_ApiManagementBackupWithUserAssignedManagedIdentity()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementBackupWithUserAssignedManagedIdentity.json
-            // this example is just showing the usage of "ApiManagementService_Backup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            ApiManagementServiceBackupRestoreContent content = new ApiManagementServiceBackupRestoreContent("contosorpstorage", "apim-backups", "backup5")
-            {
-                AccessType = StorageAccountAccessType.UserAssignedManagedIdentity,
-                ClientId = "XXXXX-a154-4830-XXXX-46a12da1a1e2",
-            };
-            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.BackupAsync(WaitUntil.Completed, content);
-            ApiManagementServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task MigrateToStv2_ApiManagementMigrateService()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceMigrateToStv2.json
-            // this example is just showing the usage of "ApiManagementService_MigrateToStv2" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            MigrateToStv2Contract migrateToStv2Contract = new MigrateToStv2Contract
-            {
-                Mode = MigrateToStv2Mode.PreserveIP,
-            };
-            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.MigrateToStv2Async(WaitUntil.Completed, migrateToStv2Contract: migrateToStv2Contract);
-            ApiManagementServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetSsoToken_ApiManagementServiceGetSsoToken()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetSsoToken.json
-            // this example is just showing the usage of "ApiManagementService_GetSsoToken" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            ApiManagementServiceGetSsoTokenResult result = await apiManagementService.GetSsoTokenAsync();
+            string contentTypeId = "page";
+            string contentItemId = "4e3cf6a5-574a-ba08-1f23-2e7a38faa6d8";
+            bool result = await apiManagementService.GetContentItemEntityTagAsync(contentTypeId, contentItemId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ApplyNetworkConfigurationUpdates_ApiManagementApplyNetworkConfigurationUpdates()
+        public async Task GetNetworkStatusByLocation_ApiManagementServiceGetNetworkStatusByLocation()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementApplyNetworkConfigurationUpdates.json
-            // this example is just showing the usage of "ApiManagementService_ApplyNetworkConfigurationUpdates" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementServiceGetNetworkStatusByLocation.json
+            // this example is just showing the usage of "NetworkStatus_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -921,25 +929,17 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // invoke the operation
-            ApiManagementServiceApplyNetworkConfigurationContent content = new ApiManagementServiceApplyNetworkConfigurationContent
-            {
-                Location = new AzureLocation("west us"),
-            };
-            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.ApplyNetworkConfigurationUpdatesAsync(WaitUntil.Completed, content: content);
-            ApiManagementServiceResource result = lro.Value;
+            AzureLocation locationName = new AzureLocation("North Central US");
+            NetworkStatusContract result = await apiManagementService.GetNetworkStatusByLocationAsync(locationName);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkStatuses_ApiManagementServiceGetNetworkStatus()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetNetworkStatus.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementServiceGetNetworkStatus.json
             // this example is just showing the usage of "NetworkStatus_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -966,36 +966,9 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkStatusByLocation_ApiManagementServiceGetNetworkStatusByLocation()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetNetworkStatusByLocation.json
-            // this example is just showing the usage of "NetworkStatus_ListByLocation" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            AzureLocation locationName = new AzureLocation("North Central US");
-            NetworkStatusContract result = await apiManagementService.GetNetworkStatusByLocationAsync(locationName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetOutboundNetworkDependenciesEndpoints_ApiManagementServiceGetOutboundNetworkDependenciesEndpoints()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetOutboundNetworkDependenciesEndpoints.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementServiceGetOutboundNetworkDependenciesEndpoints.json
             // this example is just showing the usage of "OutboundNetworkDependenciesEndpoints_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1024,7 +997,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetPolicyDescriptions_ApiManagementListPolicyDescriptions()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListPolicyDescriptions.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListPolicyDescriptions.json
             // this example is just showing the usage of "PolicyDescription_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1052,36 +1025,9 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ByServicePolicyRestrictionValidation_ApiManagementListPolicyRestrictions()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementValidatePolicies.json
-            // this example is just showing the usage of "PolicyRestrictionValidations_ByService" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            ArmOperation<GitOperationResultContractData> lro = await apiManagementService.ByServicePolicyRestrictionValidationAsync(WaitUntil.Completed);
-            GitOperationResultContractData result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetPortalSettings_ApiManagementListPortalSettings()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListPortalSettings.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListPortalSettings.json
             // this example is just showing the usage of "PortalSettings_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1110,7 +1056,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetProductsByTags_ApiManagementListProductsByTags()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListProductsByTags.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListProductsByTags.json
             // this example is just showing the usage of "Product_ListByTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1139,7 +1085,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetQuotaByCounterKeys_ApiManagementGetQuotaCounterKeys()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetQuotaCounterKeys.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetQuotaCounterKeys.json
             // this example is just showing the usage of "QuotaByCounterKeys_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1169,7 +1115,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateQuotaByCounterKeys_ApiManagementUpdateQuotaCounterKey()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateQuotaCounterKey.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementUpdateQuotaCounterKey.json
             // this example is just showing the usage of "QuotaByCounterKeys_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1204,7 +1150,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetQuotaByPeriodKey_ApiManagementGetQuotaCounterKeysByQuotaPeriod()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetQuotaCounterKeysByQuotaPeriod.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetQuotaCounterKeysByQuotaPeriod.json
             // this example is just showing the usage of "QuotaByPeriodKeys_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1232,7 +1178,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateQuotaByPeriodKey_ApiManagementUpdateQuotaCounterKeyByQuotaPeriod()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateQuotaCounterKeyByQuotaPeriod.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementUpdateQuotaCounterKeyByQuotaPeriod.json
             // this example is just showing the usage of "QuotaByPeriodKeys_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1265,7 +1211,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetRegions_ApiManagementListRegions()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListRegions.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListRegions.json
             // this example is just showing the usage of "Region_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1294,7 +1240,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByApi_ApiManagementGetReportsByApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetReportsByApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetReportsByApi.json
             // this example is just showing the usage of "Reports_ListByApi" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1322,10 +1268,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetReportsByUser_ApiManagementGetReportsByUser()
+        public async Task GetReportsByGeo_ApiManagementGetReportsByGeo()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetReportsByUser.json
-            // this example is just showing the usage of "Reports_ListByUser" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetReportsByGeo.json
+            // this example is just showing the usage of "Reports_ListByGeo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -1342,7 +1288,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
             // invoke the operation and iterate over the result
             string filter = "timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'";
-            await foreach (ReportRecordContract item in apiManagementService.GetReportsByUserAsync(filter))
+            await foreach (ReportRecordContract item in apiManagementService.GetReportsByGeoAsync(filter))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -1354,7 +1300,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByOperation_ApiManagementGetReportsByOperation()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetReportsByOperation.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetReportsByOperation.json
             // this example is just showing the usage of "Reports_ListByOperation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1384,7 +1330,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByProduct_ApiManagementGetReportsByProduct()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetReportsByProduct.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetReportsByProduct.json
             // this example is just showing the usage of "Reports_ListByProduct" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1412,10 +1358,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetReportsByGeo_ApiManagementGetReportsByGeo()
+        public async Task GetReportsByRequest_ApiManagementGetReportsByRequest()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetReportsByGeo.json
-            // this example is just showing the usage of "Reports_ListByGeo" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetReportsByRequest.json
+            // this example is just showing the usage of "Reports_ListByRequest" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -1432,7 +1378,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
             // invoke the operation and iterate over the result
             string filter = "timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'";
-            await foreach (ReportRecordContract item in apiManagementService.GetReportsByGeoAsync(filter))
+            await foreach (RequestReportRecordContract item in apiManagementService.GetReportsByRequestAsync(filter))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -1444,7 +1390,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetReportsBySubscription_ApiManagementGetReportsBySubscription()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetReportsBySubscription.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetReportsBySubscription.json
             // this example is just showing the usage of "Reports_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1474,7 +1420,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByTime_ApiManagementGetReportsByTime()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetReportsByTime.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetReportsByTime.json
             // this example is just showing the usage of "Reports_ListByTime" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1503,10 +1449,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetReportsByRequest_ApiManagementGetReportsByRequest()
+        public async Task GetReportsByUser_ApiManagementGetReportsByUser()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetReportsByRequest.json
-            // this example is just showing the usage of "Reports_ListByRequest" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetReportsByUser.json
+            // this example is just showing the usage of "Reports_ListByUser" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -1523,7 +1469,65 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
             // invoke the operation and iterate over the result
             string filter = "timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'";
-            await foreach (RequestReportRecordContract item in apiManagementService.GetReportsByRequestAsync(filter))
+            await foreach (ReportRecordContract item in apiManagementService.GetReportsByUserAsync(filter))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAvailableApiManagementServiceSkus_ApiManagementListSKUsConsumption()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListSKUs-Consumption.json
+            // this example is just showing the usage of "ApiManagementServiceSkus_ListAvailableServiceSkus" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (AvailableApiManagementServiceSkuResult item in apiManagementService.GetAvailableApiManagementServiceSkusAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAvailableApiManagementServiceSkus_ApiManagementListSKUsDedicated()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListSKUs-Dedicated.json
+            // this example is just showing the usage of "ApiManagementServiceSkus_ListAvailableServiceSkus" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (AvailableApiManagementServiceSkuResult item in apiManagementService.GetAvailableApiManagementServiceSkusAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -1535,7 +1539,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetTagResources_ApiManagementListTagResources()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListTagResources.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListTagResources.json
             // this example is just showing the usage of "TagResource_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1564,7 +1568,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task DeployTenantConfiguration_ApiManagementTenantConfigurationDeploy()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementTenantConfigurationDeploy.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementTenantConfigurationDeploy.json
             // this example is just showing the usage of "TenantConfiguration_Deploy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1596,7 +1600,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
         [Ignore("Only validating compilation of examples")]
         public async Task SaveTenantConfiguration_ApiManagementTenantConfigurationSave()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementTenantConfigurationSave.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementTenantConfigurationSave.json
             // this example is just showing the usage of "TenantConfiguration_Save" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1626,9 +1630,36 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetTenantConfigurationSyncState_ApiManagementTenantAccessSyncState()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementTenantAccessSyncState.json
+            // this example is just showing the usage of "TenantConfiguration_GetSyncState" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ConfigurationName configurationName = ConfigurationName.Configuration;
+            TenantConfigurationSyncStateContract result = await apiManagementService.GetTenantConfigurationSyncStateAsync(configurationName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateTenantConfiguration_ApiManagementTenantConfigurationValidate()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementTenantConfigurationValidate.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementTenantConfigurationValidate.json
             // this example is just showing the usage of "TenantConfiguration_Validate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1658,10 +1689,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetTenantConfigurationSyncState_ApiManagementTenantAccessSyncState()
+        public async Task ByServicePolicyRestrictionValidation_ApiManagementListPolicyRestrictions()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementTenantAccessSyncState.json
-            // this example is just showing the usage of "TenantConfiguration_GetSyncState" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementValidatePolicies.json
+            // this example is just showing the usage of "PolicyRestrictionValidations_ByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -1677,8 +1708,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // invoke the operation
-            ConfigurationName configurationName = ConfigurationName.Configuration;
-            TenantConfigurationSyncStateContract result = await apiManagementService.GetTenantConfigurationSyncStateAsync(configurationName);
+            ArmOperation<GitOperationResultContractData> lro = await apiManagementService.ByServicePolicyRestrictionValidationAsync(WaitUntil.Completed);
+            GitOperationResultContractData result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

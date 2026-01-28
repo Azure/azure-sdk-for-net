@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Backend communication protocol. </summary>
+    /// <summary> Backend communication protocol. Required when backend type is 'Single'. </summary>
     public readonly partial struct BackendProtocol : IEquatable<BackendProtocol>
     {
         private readonly string _value;

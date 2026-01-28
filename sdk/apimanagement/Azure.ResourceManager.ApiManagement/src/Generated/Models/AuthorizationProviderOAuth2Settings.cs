@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOAuth2Settings"/>. </summary>
         /// <param name="redirectUri"> Redirect URL to be set in the OAuth application. </param>
         /// <param name="grantTypes"> OAuth2 settings. </param>
+        /// <param name="keyVault"> Key Vault reference for client secret storage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationProviderOAuth2Settings(Uri redirectUri, AuthorizationProviderOAuth2GrantTypes grantTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthorizationProviderOAuth2Settings(Uri redirectUri, AuthorizationProviderOAuth2GrantTypes grantTypes, AuthorizationProviderKeyVaultContract keyVault, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RedirectUri = redirectUri;
             GrantTypes = grantTypes;
+            KeyVault = keyVault;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,5 +69,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> OAuth2 settings. </summary>
         [WirePath("grantTypes")]
         public AuthorizationProviderOAuth2GrantTypes GrantTypes { get; set; }
+        /// <summary> Key Vault reference for client secret storage. </summary>
+        [WirePath("keyVault")]
+        public AuthorizationProviderKeyVaultContract KeyVault { get; set; }
     }
 }

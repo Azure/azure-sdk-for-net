@@ -61,6 +61,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("subscriptionsLimit"u8);
                 writer.WriteNumberValue(SubscriptionsLimit.Value);
             }
+            if (Optional.IsCollectionDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStartArray();
+                foreach (var item in AuthenticationType)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Application))
+            {
+                writer.WritePropertyName("application"u8);
+                writer.WriteObjectValue(Application, options);
+            }
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
@@ -114,6 +129,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             bool? subscriptionRequired = default;
             bool? approvalRequired = default;
             int? subscriptionsLimit = default;
+            IList<ProductAuthType> authenticationType = default;
+            ProductEntityBaseParametersApplication application = default;
             ApiManagementProductState? state = default;
             string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -166,6 +183,29 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             subscriptionsLimit = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ProductAuthType> array = new List<ProductAuthType>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ProductAuthType(item.GetString()));
+                            }
+                            authenticationType = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("application"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            application = ProductEntityBaseParametersApplication.DeserializeProductEntityBaseParametersApplication(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -195,6 +235,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 subscriptionRequired,
                 approvalRequired,
                 subscriptionsLimit,
+                authenticationType ?? new ChangeTrackingList<ProductAuthType>(),
+                application,
                 state,
                 displayName,
                 serializedAdditionalRawData);

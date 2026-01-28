@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("circuitBreaker"u8);
                 writer.WriteObjectValue(CircuitBreaker, options);
             }
+            if (Optional.IsDefined(AzureRegion))
+            {
+                writer.WritePropertyName("azureRegion"u8);
+                writer.WriteStringValue(AzureRegion);
+            }
             if (Optional.IsDefined(Pool))
             {
                 writer.WritePropertyName("pool"u8);
@@ -135,6 +140,7 @@ namespace Azure.ResourceManager.ApiManagement
             BackendProxyContract proxy = default;
             BackendTlsProperties tls = default;
             BackendCircuitBreaker circuitBreaker = default;
+            string azureRegion = default;
             BackendBaseParametersPool pool = default;
             BackendType? type0 = default;
             Uri uri = default;
@@ -240,6 +246,11 @@ namespace Azure.ResourceManager.ApiManagement
                             circuitBreaker = BackendCircuitBreaker.DeserializeBackendCircuitBreaker(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("azureRegion"u8))
+                        {
+                            azureRegion = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("pool"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -298,6 +309,7 @@ namespace Azure.ResourceManager.ApiManagement
                 proxy,
                 tls,
                 circuitBreaker,
+                azureRegion,
                 pool,
                 type0,
                 uri,
@@ -517,16 +529,34 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PoolServices", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureRegion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    azureRegion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureRegion))
+                {
+                    builder.Append("    azureRegion: ");
+                    if (AzureRegion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AzureRegion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AzureRegion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Pool), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    pool: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      pool: {");
-                builder.Append("        services: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
             }
             else
             {

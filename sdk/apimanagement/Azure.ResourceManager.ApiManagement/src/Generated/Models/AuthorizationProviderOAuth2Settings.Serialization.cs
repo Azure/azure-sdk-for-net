@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("grantTypes"u8);
                 writer.WriteObjectValue(GrantTypes, options);
             }
+            if (Optional.IsDefined(KeyVault))
+            {
+                writer.WritePropertyName("keyVault"u8);
+                writer.WriteObjectValue(KeyVault, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             Uri redirectUri = default;
             AuthorizationProviderOAuth2GrantTypes grantTypes = default;
+            AuthorizationProviderKeyVaultContract keyVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,13 +112,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     grantTypes = AuthorizationProviderOAuth2GrantTypes.DeserializeAuthorizationProviderOAuth2GrantTypes(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("keyVault"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVault = AuthorizationProviderKeyVaultContract.DeserializeAuthorizationProviderKeyVaultContract(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AuthorizationProviderOAuth2Settings(redirectUri, grantTypes, serializedAdditionalRawData);
+            return new AuthorizationProviderOAuth2Settings(redirectUri, grantTypes, keyVault, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -153,6 +168,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     builder.Append("  grantTypes: ");
                     BicepSerializationHelpers.AppendChildObject(builder, GrantTypes, options, 2, false, "  grantTypes: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyVault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyVault))
+                {
+                    builder.Append("  keyVault: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, KeyVault, options, 2, false, "  keyVault: ");
                 }
             }
 

@@ -69,8 +69,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="clientLibrary"> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </param>
         /// <param name="clientId"> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </param>
         /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="certificateId"> Certificate full resource ID used in external Identity Provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IList<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IList<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret, ResourceIdentifier certificateId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IdentityProviderType = identityProviderType;
             SignInTenant = signInTenant;
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ClientLibrary = clientLibrary;
             ClientId = clientId;
             ClientSecret = clientSecret;
+            CertificateId = certificateId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -119,5 +121,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("properties.clientSecret")]
         public string ClientSecret { get; set; }
+        /// <summary> Certificate full resource ID used in external Identity Provider. </summary>
+        [WirePath("properties.certificateId")]
+        public ResourceIdentifier CertificateId { get; set; }
     }
 }
