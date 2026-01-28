@@ -41,6 +41,12 @@ namespace Azure.Generator.Management.Utilities
             // and contains the correct types (e.g., MatchConditions instead of separate ifMatch/ifNoneMatch)
             foreach (var convenienceParam in convenienceMethod.Signature.Parameters)
             {
+                // Skip Content-Type - this is a workaround
+                // TODO -- remove this workaround until https://github.com/Azure/azure-sdk-for-net/issues/55300 is resolved
+                if (convenienceParam.WireInfo?.SerializedName == "Content-Type")
+                {
+                    continue;
+                }
                 // Skip CancellationToken - we add it at the end
                 if (convenienceParam.Type.Equals(typeof(System.Threading.CancellationToken)))
                 {

@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 
@@ -76,11 +75,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="data"> Resource create parameters. </param>
-        /// <param name="contentType"> Body parameter's content type. Known values are application/json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<GroupQuotaLimitListResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaLimitListData data = default, Models.CreateOrUpdateContentType? contentType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotaLimitListResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaLimitListData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
@@ -137,11 +135,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="data"> Resource create parameters. </param>
-        /// <param name="contentType"> Body parameter's content type. Known values are application/json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<GroupQuotaLimitListResource> CreateOrUpdate(WaitUntil waitUntil, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaLimitListData data = default, Models.CreateOrUpdateContentType? contentType = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotaLimitListResource> CreateOrUpdate(WaitUntil waitUntil, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaLimitListData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));

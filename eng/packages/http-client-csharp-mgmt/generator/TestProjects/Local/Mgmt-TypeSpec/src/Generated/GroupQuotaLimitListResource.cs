@@ -213,9 +213,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Resource create parameters. </param>
-        /// <param name="contentType"> Body parameter's content type. Known values are application/json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GroupQuotaLimitListResource>> UpdateAsync(WaitUntil waitUntil, GroupQuotaLimitListPatch patch = default, Models.UpdateContentType? contentType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotaLimitListResource>> UpdateAsync(WaitUntil waitUntil, GroupQuotaLimitListPatch patch = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Update");
             scope.Start();
@@ -271,9 +270,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Resource create parameters. </param>
-        /// <param name="contentType"> Body parameter's content type. Known values are application/json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GroupQuotaLimitListResource> Update(WaitUntil waitUntil, GroupQuotaLimitListPatch patch = default, Models.UpdateContentType? contentType = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotaLimitListResource> Update(WaitUntil waitUntil, GroupQuotaLimitListPatch patch = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Update");
             scope.Start();
