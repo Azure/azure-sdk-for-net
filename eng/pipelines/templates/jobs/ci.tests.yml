@@ -28,7 +28,7 @@ parameters:
     type: string
 
 jobs:
-  - job:
+  - job: Test
     displayName: "Test"
     dependsOn: ${{ parameters.DependsOn }}
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}

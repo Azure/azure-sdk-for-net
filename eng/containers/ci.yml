@@ -12,7 +12,7 @@ extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
     stages:
-    - stage:
+    - stage: DockerBuildAndPublish
       displayName: Docker Build and Publish
       variables:
       - template: /eng/pipelines/templates/variables/globals.yml
@@ -27,7 +27,7 @@ extends:
         value: $(build.buildid)
 
       jobs:
-      - job:
+      - job: DockerBuildAndPublish
         displayName: Docker Build and Publish
         pool:
           name: $(LINUXPOOL)

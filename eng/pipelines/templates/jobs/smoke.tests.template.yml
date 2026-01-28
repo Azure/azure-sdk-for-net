@@ -27,7 +27,7 @@ parameters:
     default: {}
 
 jobs:
-  - job:
+  - job: SmokeTest
     displayName: Smoke Test
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
     ${{ if eq(parameters.Daily, false) }}:
