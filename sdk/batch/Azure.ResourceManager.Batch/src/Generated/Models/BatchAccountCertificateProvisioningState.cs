@@ -11,7 +11,7 @@ using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary></summary>
+    /// <summary> The provisioning state of the certificate. </summary>
     public readonly partial struct BatchAccountCertificateProvisioningState : IEquatable<BatchAccountCertificateProvisioningState>
     {
         private readonly string _value;
