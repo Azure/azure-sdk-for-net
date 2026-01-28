@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Update apiVersion to '2025-12-15-preview'.
+- Update api-version to '2025-12-15-preview'.
 
 ### Breaking Changes
 
