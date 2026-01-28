@@ -15,6 +15,11 @@ namespace Azure.AI.AgentServer.Responses.Invocation;
 public static class ResponsesExtensions
 {
     /// <summary>
+    /// reserved function name for human-in-the-loop requests.
+    /// </summary>
+    public static readonly string HumanInTheLoopFunctionName = "__hosted_agent_adapter_hitl__";
+
+    /// <summary>
     /// Converts a create response request to a response object.
     /// </summary>
     /// <param name="request">The create response request.</param>
