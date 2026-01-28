@@ -28,12 +28,14 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Updatable managed service identity. </param>
         /// <param name="properties"> RP-specific properties. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeidServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DeidPropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeidServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DeidPropertiesUpdate properties, HealthDataAIServicesSkuPatch sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
             Properties = properties;
+            Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,6 +44,9 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
 
         /// <summary> RP-specific properties. </summary>
         internal DeidPropertiesUpdate Properties { get; set; }
+
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        public HealthDataAIServicesSkuPatch Sku { get; set; }
 
         /// <summary> Gets or sets allow or disallow public network access to resource. </summary>
         public HealthDataAIServicesPublicNetworkAccess? DeidPropertiesUpdatePublicNetworkAccess
