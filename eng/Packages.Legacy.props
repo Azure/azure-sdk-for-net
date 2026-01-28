@@ -26,34 +26,46 @@
   <!--
     Dependencies for legacy (Track 1) libraries.
   -->
+  <ItemGroup Condition="'$(IsTestProject)' != 'true' 
+    and '$(IsTestSupportProject)' != 'true'
+    and '$(IsPerfProject)' != 'true'
+    and '$(IsSamplesProject)' != 'true'
+    and'$(IsClientLibrary)' != 'true'
+    and $(MSBuildProjectName.StartsWith('Microsoft.Azure'))">
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageVersion Include="System.Net.Http" Version="4.3.4" />
+    <PackageVersion Include="System.Text.Encodings.Web" Version="4.5.1" />
+    <PackageVersion Include="System.Text.Json" Version="4.7.2" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(IsClientLibrary)' != 'true' and $(MSBuildProjectName.StartsWith('Microsoft.Azure'))">
-    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
-    <PackageVersion Include="Microsoft.Azure.Amqp" Version="2.4.11" />
+    <PackageVersion Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
+    <PackageVersion Update="Microsoft.Azure.Amqp" Version="2.4.11" />
     <PackageVersion Include="Microsoft.Azure.Batch" Version="16.3.1" />
-    <PackageVersion Include="Microsoft.Azure.Devices" Version="1.19.0" />
-    <PackageVersion Include="Microsoft.Azure.Devices.Client" Version="1.23.2" />
-    <PackageVersion Include="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
+    <PackageVersion Update="Microsoft.Azure.Devices" Version="1.19.0" />
+    <PackageVersion Update="Microsoft.Azure.Devices.Client" Version="1.23.2" />
+    <PackageVersion Update="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
     <PackageVersion Include="Microsoft.Azure.Management.Batch" Version="4.2.0" />
-    <PackageVersion Include="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
-    <PackageVersion Include="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
+    <PackageVersion Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
+    <PackageVersion Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
     <PackageVersion Include="Microsoft.Rest.ClientRuntime" Version="$(MicrosoftRestClientRuntimeVersion)" />
     <PackageVersion Include="Microsoft.Rest.ClientRuntime.Azure" Version="$(MicrosoftRestClientRuntimeAzureVersion)" />
     <PackageVersion Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="$(MicrosoftRestClientRuntimeAzureAuthenticationVersion)" />
     <PackageVersion Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="$(MicrosoftRestClientRuntimeAzureTestFrameworkVersion)" />
-    <PackageVersion Include="Microsoft.Spatial" Version="7.5.3" />
-    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageVersion Update="Microsoft.Spatial" Version="7.5.3" />
+    <PackageVersion Update="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
-    <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
-    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+    <PackageVersion Update="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
+    <PackageVersion Update="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
     <PackageVersion Include="System.Linq" Version="4.3.0" />
-    <PackageVersion Include="System.Memory.Data" Version="1.0.2" />
-    <PackageVersion Include="System.Net.Http" Version="4.3.4" />
-    <PackageVersion Include="System.Reflection.TypeExtensions" Version="[4.5.1, 4.9.0)" />
+    <PackageVersion Update="System.Memory.Data" Version="1.0.2" />
+    <PackageVersion Update="System.Net.Http" Version="4.3.4" />
+    <PackageVersion Update="System.Reflection.TypeExtensions" Version="[4.5.1, 4.9.0)" />
     <PackageVersion Include="System.Runtime" Version="4.3.0" />
-    <PackageVersion Include="System.Security.Cryptography.Cng" Version="4.3.0" />
-    <PackageVersion Include="System.Text.Encodings.Web" Version="4.5.1" />
-    <PackageVersion Include="System.Text.Json" Version="4.7.2" />
-    <PackageVersion Include="System.ValueTuple" Version="4.6.1" />
+    <PackageVersion Update="System.Security.Cryptography.Cng" Version="4.3.0" />
+    <PackageVersion Update="System.Text.Encodings.Web" Version="4.5.1" />
+    <PackageVersion Update="System.Text.Json" Version="4.7.2" />
+    <PackageVersion Update="System.ValueTuple" Version="4.6.1" />
     <PackageVersion Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
@@ -63,7 +75,7 @@
     cases and use a frozen versioning strategy as the package is not actively developed.
   -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))">
-    <PackageVersion Include="Azure.Storage.Blobs" Version="12.26.0" />
+    <PackageVersion Update="Azure.Storage.Blobs" Version="12.26.0" />
   </ItemGroup>
 
     <!--
@@ -125,7 +137,7 @@
   </ItemGroup>
 
   <!-- Legacy Batch tests require ADAL and specific MSAL versions -->
-  <ItemGroup Condition="'$(IsTestProject)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))">
+  <ItemGroup Condition="('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true') and $(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))">
     <PackageVersion Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.2, 4.0.0)" />
     <PackageVersion Update="Microsoft.Identity.Client" Version="4.61.3" />
   </ItemGroup>

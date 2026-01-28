@@ -1,11 +1,9 @@
+<!-- ALL TRACK 1 AND LEGACY PACKAGE VERSIONS ARE IN PACKAGES.LEGACY.PROPS-->
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
   </PropertyGroup>
-
-  <!-- ALL TRACK 1 AND LEGACY PACKAGE VERSIONS ARE IN PACKAGES.LEGACY.PROPS-->
-  <Import Project="$(MSBuildThisFileDirectory)Packages.Legacy.props" />
 
   <!--
     Shared version stamps; these packages are intentionally scoped but
@@ -493,5 +491,9 @@
     <PackageVersion Update="Azure.ResourceManager.IotHub" Version="1.2.0-beta.1" />
     <PackageVersion Update="Azure.ResourceManager.Logic" Version="1.2.0-beta.1" />
   </ItemGroup>
+
+
+  <!-- ALL TRACK 1 AND LEGACY PACKAGE VERSIONS ARE IN PACKAGES.LEGACY.PROPS-->
+  <Import Project="$(MSBuildThisFileDirectory)Packages.Legacy.props" />
 
 </Project>
