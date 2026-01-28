@@ -462,7 +462,7 @@
   </ItemGroup>
 
   <!-- The unbranded test framework is the first to use NUnit 4; the repository will migrate fully in the near future -->
-  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
     <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageVersion Include="NUnit" Version="4.4.0" />
   </ItemGroup>
