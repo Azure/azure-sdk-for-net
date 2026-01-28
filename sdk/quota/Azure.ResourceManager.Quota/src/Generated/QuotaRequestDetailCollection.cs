@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation.
+        /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID <b>id</b> is returned in the response of the PUT operation.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation.
+        /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID <b>id</b> is returned in the response of the PUT operation.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests.
+        /// For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the <b>oData</b> filter to select quota requests.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -160,13 +160,12 @@ namespace Azure.ResourceManager.Quota
         /// <param name="filter">
         /// | Field                    | Supported operators
         /// |---------------------|------------------------
-        /// 
         /// |requestSubmitTime | ge, le, eq, gt, lt
         /// |provisioningState eq {QuotaRequestState}
         /// |resourceName eq {resourceName}
         /// </param>
         /// <param name="top"> Number of records to return. </param>
-        /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skiptoken"> The <b>Skiptoken</b> parameter is used only if a previous operation returned a partial result. If a previous response contains a <b>nextLink</b> element, its value includes a <b>skiptoken</b> parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuotaRequestDetailResource> GetAllAsync(string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests.
+        /// For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the <b>oData</b> filter to select quota requests.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -204,13 +203,12 @@ namespace Azure.ResourceManager.Quota
         /// <param name="filter">
         /// | Field                    | Supported operators
         /// |---------------------|------------------------
-        /// 
         /// |requestSubmitTime | ge, le, eq, gt, lt
         /// |provisioningState eq {QuotaRequestState}
         /// |resourceName eq {resourceName}
         /// </param>
         /// <param name="top"> Number of records to return. </param>
-        /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skiptoken"> The <b>Skiptoken</b> parameter is used only if a previous operation returned a partial result. If a previous response contains a <b>nextLink</b> element, its value includes a <b>skiptoken</b> parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuotaRequestDetailResource> GetAll(string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
