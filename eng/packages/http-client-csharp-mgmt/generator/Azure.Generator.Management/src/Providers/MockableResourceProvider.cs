@@ -8,6 +8,7 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -209,14 +210,102 @@ namespace Azure.Generator.Management.Providers
                 }
             }
 
+            // Build unique method names for non-resource methods to avoid duplicate signatures
+            var clientToResourceName = BuildClientToResourceNameMap();
+            var methodNamesForNonResourceMethods = GetUniqueMethodNames(_nonResourceMethods, _clientInfos, clientToResourceName);
             foreach (var method in _nonResourceMethods)
             {
+                var methodName = methodNamesForNonResourceMethods.TryGetValue(method, out var uniqueName) ? uniqueName : null;
                 // Process both async and sync method variants
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true, methodName));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false, GetSyncMethodName(methodName)));
             }
 
             return [.. methods];
+        }
+
+        /// <summary>
+        /// Gets the sync version of a method name by removing the "Async" suffix if present.
+        /// </summary>
+        private static string? GetSyncMethodName(string? asyncMethodName)
+        {
+            if (asyncMethodName == null)
+                return null;
+            return asyncMethodName.EndsWith("Async") ? asyncMethodName[..^5] : asyncMethodName;
+        }
+
+        /// <summary>
+        /// Builds a mapping from InputClient to ResourceName using resource metadata from the input library.
+        /// </summary>
+        private static Dictionary<InputClient, string> BuildClientToResourceNameMap()
+        {
+            var map = new Dictionary<InputClient, string>();
+
+            // Build mapping from resource metadata methods
+            foreach (var resourceMetadata in ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas)
+            {
+                foreach (var method in resourceMetadata.Methods)
+                {
+                    map.TryAdd(method.InputClient, resourceMetadata.ResourceName);
+                }
+            }
+
+            return map;
+        }
+
+        /// <summary>
+        /// Generates unique method names for non-resource methods to avoid duplicate signatures.
+        /// When multiple methods would have the same signature, appends the resource name.
+        /// </summary>
+        private static Dictionary<NonResourceMethod, string> GetUniqueMethodNames(
+            IReadOnlyList<NonResourceMethod> nonResourceMethods,
+            Dictionary<InputClient, RestClientInfo> clientInfos,
+            Dictionary<InputClient, string> clientToResourceName)
+        {
+            var result = new Dictionary<NonResourceMethod, string>();
+
+            // Group methods by their base method name (sync version) to detect duplicates
+            var methodsByBaseName = new Dictionary<string, List<NonResourceMethod>>();
+            foreach (var method in nonResourceMethods)
+            {
+                if (!clientInfos.TryGetValue(method.InputClient, out var clientInfo))
+                    continue;
+
+                var convenienceMethod = clientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.InputMethod.Operation, true);
+                var baseName = convenienceMethod.Signature.Name;
+                if (baseName.EndsWith("Async"))
+                    baseName = baseName[..^5];
+
+                if (!methodsByBaseName.TryGetValue(baseName, out var list))
+                {
+                    list = [];
+                    methodsByBaseName[baseName] = list;
+                }
+                list.Add(method);
+            }
+
+            // For groups with duplicates, generate unique names based on resource name
+            foreach (var (baseName, group) in methodsByBaseName)
+            {
+                if (group.Count <= 1)
+                    continue;
+
+                foreach (var method in group)
+                {
+                    // Get resource name from InputClient mapping - only resource clients have a resource name
+                    if (clientToResourceName.TryGetValue(method.InputClient, out var resourceName))
+                    {
+                        // Create unique method name like "GetFoosBySubscriptionAsync" or "GetZoosBySubscriptionAsync"
+                        // Insert the pluralized resource name after "Get" prefix
+                        var uniqueName = baseName.StartsWith("Get")
+                            ? $"Get{resourceName.Pluralize()}{baseName[3..]}Async"
+                            : $"{baseName}{resourceName.Pluralize()}Async";
+                        result[method] = uniqueName;
+                    }
+                }
+            }
+
+            return result;
         }
 
         private IEnumerable<MethodProvider> BuildMethodsForResource(ResourceClientProvider resource)

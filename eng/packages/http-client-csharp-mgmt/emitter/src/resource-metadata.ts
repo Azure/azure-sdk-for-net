@@ -233,10 +233,10 @@ export interface ParentResourceLookupContext {
 /**
  * Post-processes ARM resources to populate parent IDs, merge incomplete resources,
  * populate resource scopes, sort methods, and filter invalid resources.
- * 
+ *
  * This is a shared post-processing step used by both resolveArmResources
  * and buildArmProviderSchema to ensure consistent behavior.
- * 
+ *
  * @param resources - Initial list of resources to process
  * @param nonResourceMethods - Array to collect non-resource methods
  * @param parentLookup - Context for looking up parent resources
@@ -265,8 +265,13 @@ export function postProcessArmResources(
   for (const resource of resources) {
     // Use the provided parent lookup context to find parent
     const parentResource = parentLookup.getParentResource(resource);
-    if (parentResource && validResourceMap.has(parentResource.metadata.resourceIdPattern)) {
-      const parent = validResourceMap.get(parentResource.metadata.resourceIdPattern);
+    if (
+      parentResource &&
+      validResourceMap.has(parentResource.metadata.resourceIdPattern)
+    ) {
+      const parent = validResourceMap.get(
+        parentResource.metadata.resourceIdPattern
+      );
       if (parent) {
         resource.metadata.parentResourceId = parent.metadata.resourceIdPattern;
         resource.metadata.parentResourceModelId = parent.resourceModelId;
@@ -322,14 +327,19 @@ export function postProcessArmResources(
       for (const otherResource of validResources) {
         if (
           otherResource.metadata.resourceIdPattern &&
-          isPrefix(otherResource.metadata.resourceIdPattern, method.operationPath)
+          isPrefix(
+            otherResource.metadata.resourceIdPattern,
+            method.operationPath
+          )
         ) {
           candidates.push(otherResource.metadata.resourceIdPattern);
         }
       }
       // Use the longest resource path as the resourceScope
       if (candidates.length > 0) {
-        method.resourceScope = candidates.reduce((a, b) => (a.length > b.length ? a : b));
+        method.resourceScope = candidates.reduce((a, b) =>
+          a.length > b.length ? a : b
+        );
       }
     }
   }
@@ -356,13 +366,13 @@ export function postProcessArmResources(
     const listOperationPathSegments = listOp.operationPath
       .split("/")
       .filter((s) => s.length > 0);
-    
+
     for (const candidatePath of resourceInstancePaths) {
       if (canBeListResourceScope(listOperationPathSegments, candidatePath)) {
         validCandidates.push(candidatePath);
       }
     }
-    
+
     // Take the longest matching path as the resourceScope
     if (validCandidates.length > 0) {
       validCandidates.sort((a, b) => b.length - a.length);
@@ -387,7 +397,7 @@ export function postProcessArmResources(
     if (!hasReadOperation && !resource.metadata.singletonResourceName) {
       // Try to move all methods to parent resource first, otherwise non-resource methods
       let movedToParent = false;
-      
+
       if (resource.metadata.parentResourceModelId) {
         // Find parent resource
         const parent = validResources.find(
@@ -406,7 +416,7 @@ export function postProcessArmResources(
           movedToParent = true;
         }
       }
-      
+
       // If no parent or parent not found, move to non-resource methods
       if (!movedToParent) {
         for (const method of resource.metadata.methods) {

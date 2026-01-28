@@ -111,7 +111,9 @@ export function resolveArmResources(
   // In this case, parent information comes from ResolvedResource objects
   // Build validResourceMap once for efficient lookup
   const validResourceMap = new Map<string, ArmResourceSchema>();
-  for (const r of resources.filter(r => r.metadata.resourceIdPattern !== "")) {
+  for (const r of resources.filter(
+    (r) => r.metadata.resourceIdPattern !== ""
+  )) {
     const resolvedR = schemaToResolvedResource.get(r);
     if (resolvedR) {
       validResourceMap.set(resolvedR.resourceInstancePath, r);
@@ -119,14 +121,18 @@ export function resolveArmResources(
   }
 
   const parentLookup: ParentResourceLookupContext = {
-    getParentResource: (resource: ArmResourceSchema): ArmResourceSchema | undefined => {
+    getParentResource: (
+      resource: ArmResourceSchema
+    ): ArmResourceSchema | undefined => {
       const resolved = schemaToResolvedResource.get(resource);
       if (!resolved) return undefined;
 
       // Walk up the parent chain to find a valid parent
       let parent = resolved.parent;
       while (parent) {
-        const parentResource = validResourceMap.get(parent.resourceInstancePath);
+        const parentResource = validResourceMap.get(
+          parent.resourceInstancePath
+        );
         if (parentResource) {
           return parentResource;
         }
@@ -183,7 +189,7 @@ export function resolveArmResources(
     for (const method of client.methods) {
       const methodId = method.crossLanguageDefinitionId;
       const operation = method.operation;
-      
+
       // Skip if already included
       if (includedOperationIds.has(methodId)) {
         continue;
@@ -255,7 +261,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Create,
             operationPath: createOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(createOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              createOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -273,7 +282,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Update,
             operationPath: updateOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(updateOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              updateOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -291,7 +303,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Delete,
             operationPath: deleteOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(deleteOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              deleteOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -299,10 +314,23 @@ function convertResolvedResourceToMetadata(
   }
 
   // Convert list operations
+  // Note: The resolveArmResources library may incorrectly associate list operations with resources
+  // based only on resource type matching, ignoring path structure. We need to filter out list operations
+  // that don't match the resource's path hierarchy (e.g., subscription-level lists for resource-group resources).
   if (resolvedResource.operations.lists) {
     for (const listOp of resolvedResource.operations.lists) {
       const methodId = getMethodIdFromOperation(sdkContext, listOp.operation);
       if (methodId) {
+        // Validate that the list operation's path is compatible with this resource's path structure.
+        // A list operation is valid for a resource if the list path matches the resource's collection path
+        // (i.e., the resource instance path without the last segment) or is a proper prefix of it when
+        // walking up the parent hierarchy.
+        if (!isValidListOperationForResource(listOp.path, resolvedResource)) {
+          // Skip this list operation - it will be added as a non-resource method later
+          // when we detect missing operations
+          continue;
+        }
+
         methods.push({
           methodId,
           kind: ResourceOperationKind.List,
@@ -450,7 +478,6 @@ function extractSingletonName(path: string): string | undefined {
   return undefined;
 }
 
-
 function calculateResourceScope(
   operationPath: string,
   resolvedResource: ResolvedResource
@@ -468,4 +495,153 @@ function calculateResourceScope(
   }
 
   return undefined;
+}
+
+/**
+ * Determines if a list operation is valid for a given resource based on path matching.
+ *
+ * The resolveArmResources library may incorrectly associate list operations with resources
+ * based only on resource type matching (e.g., both have "experiments" in the type), ignoring
+ * the path structure. This causes subscription-level lists to be associated with resource-group
+ * level resources.
+ *
+ * A list operation is valid for a resource if:
+ * 1. The list path is the resource's collection path (resource instance path without the last segment), OR
+ * 2. The list path matches a parent resource's scope (for listing from parent context), OR
+ * 3. The list path is a valid prefix when walking up the parent hierarchy, OR
+ * 4. The list path has the same resource type segments (after /providers/) including parent types
+ *
+ * Example:
+ * - Resource instance path: /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Foo/foos/{fooName}
+ * - Valid list paths:
+ *   - /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Foo/foos (list in resource group)
+ *   - /subscriptions/{sub}/providers/Microsoft.Foo/foos (subscription-level list with matching type)
+ *   - /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Foo/foos/{fooName}/bars (if child resource)
+ * - Invalid list paths:
+ *   - /subscriptions/{sub}/providers/Microsoft.Bar/foos (different provider)
+ *
+ * For nested resources:
+ * - Resource: /subs/{s}/rgs/{r}/providers/P/parents/{p}/children/{c}
+ * - Valid: /subs/{s}/providers/P/parents/{p}/children (includes parent type)
+ * - Invalid: /subs/{s}/providers/P/children (missing parent type - would be a top-level list)
+ */
+function isValidListOperationForResource(
+  listPath: string,
+  resolvedResource: ResolvedResource
+): boolean {
+  const resourceInstancePath = resolvedResource.resourceInstancePath;
+
+  // Get the collection path by removing the last segment (resource name parameter)
+  const resourceSegments = resourceInstancePath
+    .split("/")
+    .filter((s) => s.length > 0);
+  const listSegments = listPath.split("/").filter((s) => s.length > 0);
+
+  // Collection path is the resource path without the last segment
+  const collectionSegments = resourceSegments.slice(0, -1);
+
+  // Check if the list path matches the collection path exactly
+  if (pathSegmentsMatch(listSegments, collectionSegments)) {
+    return true;
+  }
+
+  // Check if the list path is a prefix of the resource path structure
+  // This handles the case where a list operation is valid for the resource hierarchy
+  if (isPrefix(listPath, resourceInstancePath)) {
+    return true;
+  }
+
+  // For nested resources only: check if the resource type portions match (segments after /providers/)
+  // This handles cases like subscription-level lists for nested resources where the parent type is preserved
+  // e.g., /subs/{s}/providers/P/parents/{p}/children is valid for /subs/{s}/rgs/{r}/providers/P/parents/{p}/children/{c}
+  // But /subs/{s}/providers/P/foos is NOT valid for /subs/{s}/rgs/{r}/providers/P/foos/{f} (top-level resource, different scope)
+  const listResourceTypeSegments = getResourceTypeSegments(listSegments);
+  const resourceTypeSegments = getResourceTypeSegments(resourceSegments);
+
+  // For a valid list, the list's resource type segments should match the resource's
+  // collection type segments (resource type without the last name parameter)
+  const resourceCollectionTypeSegments = resourceTypeSegments.slice(0, -1);
+
+  // Only apply resource type matching for NESTED resources (more than one type/name pair).
+  // Count only non-parameter segments (resource type names) to determine nesting.
+  // For top-level resources (single type like "foos"), a subscription-level list at a different scope
+  // should be treated as a non-resource method.
+  const resourceTypeNames = resourceTypeSegments.filter((s) => !isVariableSegment(s));
+  const isNestedResource = resourceTypeNames.length > 1;
+  if (
+    isNestedResource &&
+    pathSegmentsMatch(listResourceTypeSegments, resourceCollectionTypeSegments)
+  ) {
+    return true;
+  }
+
+  // Walk up the parent chain to check if the list path matches any parent's scope
+  let parent = resolvedResource.parent;
+  while (parent) {
+    const parentSegments = parent.resourceInstancePath
+      .split("/")
+      .filter((s) => s.length > 0);
+    const parentCollectionSegments = parentSegments.slice(0, -1);
+
+    if (pathSegmentsMatch(listSegments, parentCollectionSegments)) {
+      return true;
+    }
+
+    if (isPrefix(listPath, parent.resourceInstancePath)) {
+      return true;
+    }
+
+    parent = parent.parent;
+  }
+
+  return false;
+}
+
+/**
+ * Extracts the resource type segments from a path (segments after /providers/ProviderName).
+ * For example: /subs/{s}/rgs/{r}/providers/Microsoft.Foo/foos/{f}/bars/{b}
+ * Returns: ["foos", "{f}", "bars", "{b}"]
+ */
+function getResourceTypeSegments(segments: string[]): string[] {
+  // Find the index of "providers"
+  const providersIndex = segments.findIndex(
+    (s) => s.toLowerCase() === "providers"
+  );
+  if (providersIndex === -1 || providersIndex >= segments.length - 1) {
+    return [];
+  }
+
+  // Skip "providers" and the provider name, return the rest
+  return segments.slice(providersIndex + 2);
+}
+
+/**
+ * Checks if two path segment arrays match, treating variable segments as equivalent.
+ */
+function pathSegmentsMatch(segments1: string[], segments2: string[]): boolean {
+  if (segments1.length !== segments2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < segments1.length; i++) {
+    const seg1 = segments1[i];
+    const seg2 = segments2[i];
+
+    // If both are variable segments, they match
+    if (isVariableSegment(seg1) && isVariableSegment(seg2)) {
+      continue;
+    }
+
+    // If one is variable and the other is not, they don't match
+    if (isVariableSegment(seg1) || isVariableSegment(seg2)) {
+      return false;
+    }
+
+    // Both are fixed segments, they must be equal (case-insensitive)
+    if (seg1.toLowerCase() !== seg2.toLowerCase()) {
+      return false;
+    }
+  }
+
+  return true;
 }

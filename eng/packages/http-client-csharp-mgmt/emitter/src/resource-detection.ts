@@ -160,11 +160,32 @@ export function buildArmProviderSchema(
               // If we can't calculate resource type, try string matching
             }
 
-            // If resource types match exactly, this list operation belongs to this resource
+            // If resource types match exactly, check if the scope is compatible
             if (
               existingResourceType &&
               operationResourceType === existingResourceType
             ) {
+              // For List operations, we need additional validation:
+              // A subscription-level list for a top-level RG-scoped resource should NOT be a resource operation
+              // because it lists at a different scope than where the resource exists.
+              // Only nested resources (with parent types in the path) should match across scopes.
+              if (kind === ResourceOperationKind.List) {
+                const isValidListMatch = isValidListPathForResource(
+                  operationPath,
+                  existingPath
+                );
+                if (!isValidListMatch) {
+                  // This list operation is at a different scope - treat as non-resource method
+                  nonResourceMethods.set(method.crossLanguageDefinitionId, {
+                    methodId: method.crossLanguageDefinitionId,
+                    operationPath: method.operation.path,
+                    operationScope: getOperationScopeFromPath(
+                      method.operation.path
+                    )
+                  });
+                  return;
+                }
+              }
               resourcePath = existingPath;
               foundMatchingResource = true;
               break;
@@ -194,7 +215,7 @@ export function buildArmProviderSchema(
           const model = resourceModelMap.get(modelId);
           const resourceTypeName = model?.name?.toLowerCase();
           const pathLower = operationPath.toLowerCase();
-          
+
           // If the path doesn't include the resource type segment (e.g., "scheduledactions"),
           // it's a provider operation, not a resource action
           if (resourceTypeName && !pathLower.includes(resourceTypeName)) {
@@ -310,11 +331,11 @@ export function buildArmProviderSchema(
   // Convert metadata map to ArmResourceSchema[] for post-processing
   const resources: ArmResourceSchema[] = [];
   const metadataKeyToResource = new Map<string, ArmResourceSchema>();
-  
+
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     const modelId = metadataKey.split("|")[0];
     const model = resourceModelMap.get(modelId);
-    
+
     // Emit diagnostic for resources without resourceIdPattern
     if (metadata.resourceIdPattern === "" && model) {
       sdkContext.logger.reportDiagnostic({
@@ -326,7 +347,7 @@ export function buildArmProviderSchema(
         target: NoTarget
       });
     }
-    
+
     const resource: ArmResourceSchema = {
       resourceModelId: modelId,
       metadata: metadata
@@ -386,13 +407,18 @@ export function buildArmProviderSchema(
   // Create parent lookup context for legacy resource detection
   // In this case, parent information comes from decorators and path matching (already populated above)
   const parentLookup: ParentResourceLookupContext = {
-    getParentResource: (resource: ArmResourceSchema): ArmResourceSchema | undefined => {
+    getParentResource: (
+      resource: ArmResourceSchema
+    ): ArmResourceSchema | undefined => {
       const parentModelId = resource.metadata.parentResourceModelId;
       if (!parentModelId) return undefined;
 
       // Find parent resource with matching model ID and a valid resourceIdPattern
       for (const r of resources) {
-        if (r.resourceModelId === parentModelId && r.metadata.resourceIdPattern) {
+        if (
+          r.resourceModelId === parentModelId &&
+          r.metadata.resourceIdPattern
+        ) {
           return r;
         }
       }
@@ -401,10 +427,14 @@ export function buildArmProviderSchema(
   };
 
   // Convert non-resource methods map to array
-  const nonResourceMethodsArray: NonResourceMethod[] = Array.from(nonResourceMethods.values());
+  const nonResourceMethodsArray: NonResourceMethod[] = Array.from(
+    nonResourceMethods.values()
+  );
 
   // Track resources before post-processing to emit diagnostics for filtered resources
-  const resourcesBeforeFiltering = new Set(resources.filter(r => r.metadata.resourceIdPattern !== ""));
+  const resourcesBeforeFiltering = new Set(
+    resources.filter((r) => r.metadata.resourceIdPattern !== "")
+  );
 
   // Use the shared post-processing function
   const filteredResources = postProcessArmResources(
@@ -873,4 +903,104 @@ function applyArmProviderSchemaDecorator(
     name: armProviderSchema,
     arguments: convertArmProviderSchemaToArguments(schema)
   });
+}
+
+/**
+ * Determines if a list operation path is valid for a given resource path.
+ *
+ * For top-level resources (single resource type like "foos"), a subscription-level list
+ * at a different scope than the resource should NOT be matched as a resource operation.
+ * Only nested resources (with parent types in the path) should match across scopes.
+ *
+ * @param listPath - The path of the list operation
+ * @param resourcePath - The path of the resource (instance path)
+ * @returns true if the list path is valid for this resource, false otherwise
+ */
+function isValidListPathForResource(
+  listPath: string,
+  resourcePath: string
+): boolean {
+  const listSegments = listPath.split("/").filter((s) => s.length > 0);
+  const resourceSegments = resourcePath.split("/").filter((s) => s.length > 0);
+
+  // Collection path is the resource path without the last segment (the resource name parameter)
+  const collectionSegments = resourceSegments.slice(0, -1);
+
+  // Check if the list path matches the collection path exactly
+  if (pathSegmentsMatchLegacy(listSegments, collectionSegments)) {
+    return true;
+  }
+
+  // Check if the list path is a prefix of the resource path
+  if (isPrefix(listPath, resourcePath)) {
+    return true;
+  }
+
+  // Extract resource type segments (after /providers/)
+  const listTypeSegments = getResourceTypeSegmentsLegacy(listSegments);
+  const resourceTypeSegments = getResourceTypeSegmentsLegacy(resourceSegments);
+
+  // Collection type segments = resource type without last name param
+  const resourceCollectionTypeSegments = resourceTypeSegments.slice(0, -1);
+
+  // Only allow type-based matching for NESTED resources (more than one type/name pair)
+  // For top-level resources, a subscription-level list at a different scope is NOT valid
+  const isNestedResource = resourceCollectionTypeSegments.length > 1;
+  if (
+    isNestedResource &&
+    pathSegmentsMatchLegacy(listTypeSegments, resourceCollectionTypeSegments)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Checks if two path segment arrays match, treating variable segments as equivalent.
+ */
+function pathSegmentsMatchLegacy(
+  segments1: string[],
+  segments2: string[]
+): boolean {
+  if (segments1.length !== segments2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < segments1.length; i++) {
+    const seg1 = segments1[i];
+    const seg2 = segments2[i];
+
+    // Variable segments (like {subscriptionId}) are considered matching
+    const isVar1 = seg1.startsWith("{") && seg1.endsWith("}");
+    const isVar2 = seg2.startsWith("{") && seg2.endsWith("}");
+
+    if (isVar1 && isVar2) {
+      continue;
+    }
+
+    if (isVar1 || isVar2) {
+      return false;
+    }
+
+    if (seg1.toLowerCase() !== seg2.toLowerCase()) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Extracts resource type segments from a path (segments after /providers/ProviderName).
+ */
+function getResourceTypeSegmentsLegacy(segments: string[]): string[] {
+  const providersIndex = segments.findIndex(
+    (s) => s.toLowerCase() === "providers"
+  );
+  if (providersIndex === -1 || providersIndex >= segments.length - 1) {
+    return [];
+  }
+  // Skip "providers" and the provider name, return the rest
+  return segments.slice(providersIndex + 2);
 }
