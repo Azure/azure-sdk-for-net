@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="objectId"> The objectId of the Active Directory administrator. </param>
         /// <param name="tenantId"> The tenantId of the Active Directory administrator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerActiveDirectoryAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? objectId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PostgreSqlFlexibleServerActiveDirectoryAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? objectId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrincipalType = principalType;
             PrincipalName = principalName;

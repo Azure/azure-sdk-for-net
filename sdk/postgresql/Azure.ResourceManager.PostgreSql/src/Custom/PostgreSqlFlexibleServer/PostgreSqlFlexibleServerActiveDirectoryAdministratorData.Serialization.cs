@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Azure.ResourceManager.Models.SystemData systemData = default;
             PostgreSqlFlexibleServerPrincipalType? principalType = default;
             string principalName = default;
             Guid? objectId = default;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPostgreSqlContext.Default);
+                    systemData = ModelReaderWriter.Read<Azure.ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPostgreSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
