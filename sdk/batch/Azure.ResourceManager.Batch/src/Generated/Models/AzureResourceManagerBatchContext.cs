@@ -6,17 +6,20 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ApplicationPackageProperties))]
+    [ModelReaderWriterBuildable(typeof(ApplicationProperties))]
     [ModelReaderWriterBuildable(typeof(AutomaticOSUpgradePolicy))]
+    [ModelReaderWriterBuildable(typeof(AzureProxyResource))]
     [ModelReaderWriterBuildable(typeof(BatchAccessRule))]
     [ModelReaderWriterBuildable(typeof(BatchAccessRuleProperties))]
     [ModelReaderWriterBuildable(typeof(BatchAccountAutoScaleSettings))]
@@ -26,6 +29,7 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(BatchAccountCertificateData))]
     [ModelReaderWriterBuildable(typeof(BatchAccountCertificateResource))]
     [ModelReaderWriterBuildable(typeof(BatchAccountCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(BatchAccountCreateProperties))]
     [ModelReaderWriterBuildable(typeof(BatchAccountData))]
     [ModelReaderWriterBuildable(typeof(BatchAccountDetectorData))]
     [ModelReaderWriterBuildable(typeof(BatchAccountDetectorResource))]
@@ -42,8 +46,10 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(BatchAccountPoolResource))]
     [ModelReaderWriterBuildable(typeof(BatchAccountPoolScaleSettings))]
     [ModelReaderWriterBuildable(typeof(BatchAccountPoolStartTask))]
+    [ModelReaderWriterBuildable(typeof(BatchAccountProperties))]
     [ModelReaderWriterBuildable(typeof(BatchAccountRegenerateKeyContent))]
     [ModelReaderWriterBuildable(typeof(BatchAccountResource))]
+    [ModelReaderWriterBuildable(typeof(BatchAccountUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(BatchApplicationData))]
     [ModelReaderWriterBuildable(typeof(BatchApplicationPackageActivateContent))]
     [ModelReaderWriterBuildable(typeof(BatchApplicationPackageData))]
@@ -77,6 +83,7 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(BatchPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(BatchPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(BatchPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(BatchPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(BatchPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(BatchProvisioningIssue))]
     [ModelReaderWriterBuildable(typeof(BatchProvisioningIssueProperties))]
@@ -98,9 +105,13 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(BatchVmExtension))]
     [ModelReaderWriterBuildable(typeof(BatchVmFamilyCoreQuota))]
     [ModelReaderWriterBuildable(typeof(BatchWindowsUserConfiguration))]
+    [ModelReaderWriterBuildable(typeof(CertificateBaseProperties))]
+    [ModelReaderWriterBuildable(typeof(CertificateCreateOrUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(CertificateProperties))]
     [ModelReaderWriterBuildable(typeof(ComputeNodeIdentityReference))]
     [ModelReaderWriterBuildable(typeof(ContainerHostBatchBindMountEntry))]
     [ModelReaderWriterBuildable(typeof(DetectorListResult))]
+    [ModelReaderWriterBuildable(typeof(DetectorResponseProperties))]
     [ModelReaderWriterBuildable(typeof(DiffDiskSettings))]
     [ModelReaderWriterBuildable(typeof(DiskEncryptionConfiguration))]
     [ModelReaderWriterBuildable(typeof(Models.KeyVaultProperties))]
@@ -112,26 +123,27 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(ListPrivateLinkResourcesResult))]
     [ModelReaderWriterBuildable(typeof(ManagedDisk))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeter))]
-    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationData))]
+    [ModelReaderWriterBuildable(typeof(Models.NetworkSecurityPerimeter))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationListResult))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationProperties))]
-    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(NodePlacementConfiguration))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointCollection))]
     [ModelReaderWriterBuildable(typeof(PoolEndpointConfiguration))]
+    [ModelReaderWriterBuildable(typeof(PoolProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RollingUpgradePolicy))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(ServiceArtifactReference))]
     [ModelReaderWriterBuildable(typeof(SupportedSkusResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TaskSchedulingPolicy))]
     [ModelReaderWriterBuildable(typeof(UpgradePolicy))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(VmDiskSecurityProfile))]
+    [ModelReaderWriterBuildable(typeof(VMDiskSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(WindowsConfiguration))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerBatchContext : ModelReaderWriterContext
     {
     }

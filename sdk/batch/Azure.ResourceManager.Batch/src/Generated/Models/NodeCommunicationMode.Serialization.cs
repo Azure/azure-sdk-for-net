@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class NodeCommunicationModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this NodeCommunicationMode value) => value switch
         {
             NodeCommunicationMode.Default => "Default",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NodeCommunicationMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static NodeCommunicationMode ToNodeCommunicationMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return NodeCommunicationMode.Default;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Classic")) return NodeCommunicationMode.Classic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Simplified")) return NodeCommunicationMode.Simplified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default"))
+            {
+                return NodeCommunicationMode.Default;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Classic"))
+            {
+                return NodeCommunicationMode.Classic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Simplified"))
+            {
+                return NodeCommunicationMode.Simplified;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NodeCommunicationMode value.");
         }
     }

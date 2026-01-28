@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchNodeDeallocationOptionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchNodeDeallocationOption value) => value switch
         {
             BatchNodeDeallocationOption.Requeue => "Requeue",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNodeDeallocationOption value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchNodeDeallocationOption ToBatchNodeDeallocationOption(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Requeue")) return BatchNodeDeallocationOption.Requeue;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Terminate")) return BatchNodeDeallocationOption.Terminate;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TaskCompletion")) return BatchNodeDeallocationOption.TaskCompletion;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RetainedData")) return BatchNodeDeallocationOption.RetainedData;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Requeue"))
+            {
+                return BatchNodeDeallocationOption.Requeue;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Terminate"))
+            {
+                return BatchNodeDeallocationOption.Terminate;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TaskCompletion"))
+            {
+                return BatchNodeDeallocationOption.TaskCompletion;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RetainedData"))
+            {
+                return BatchNodeDeallocationOption.RetainedData;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNodeDeallocationOption value.");
         }
     }

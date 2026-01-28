@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class NetworkSecurityPerimeterConfigurationProperties : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterConfigurationProperties>
+    /// <summary> Network security configuration properties. </summary>
+    public partial class NetworkSecurityPerimeterConfigurationProperties : IJsonModel<NetworkSecurityPerimeterConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkSecurityPerimeterConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();
-                foreach (var item in ProvisioningIssues)
+                foreach (BatchProvisioningIssue item in ProvisioningIssues)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("profile"u8);
                 writer.WriteObjectValue(Profile, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +81,27 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        NetworkSecurityPerimeterConfigurationProperties IJsonModel<NetworkSecurityPerimeterConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkSecurityPerimeterConfigurationProperties IJsonModel<NetworkSecurityPerimeterConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkSecurityPerimeterConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkSecurityPerimeterConfigurationProperties(document.RootElement, options);
         }
 
-        internal static NetworkSecurityPerimeterConfigurationProperties DeserializeNetworkSecurityPerimeterConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkSecurityPerimeterConfigurationProperties DeserializeNetworkSecurityPerimeterConfigurationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,79 +111,80 @@ namespace Azure.ResourceManager.Batch.Models
             NetworkSecurityPerimeter networkSecurityPerimeter = default;
             BatchResourceAssociation resourceAssociation = default;
             NetworkSecurityProfile profile = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new NetworkSecurityPerimeterConfigurationProvisioningState(property.Value.GetString());
+                    provisioningState = new NetworkSecurityPerimeterConfigurationProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningIssues"u8))
+                if (prop.NameEquals("provisioningIssues"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BatchProvisioningIssue> array = new List<BatchProvisioningIssue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BatchProvisioningIssue.DeserializeBatchProvisioningIssue(item, options));
                     }
                     provisioningIssues = array;
                     continue;
                 }
-                if (property.NameEquals("networkSecurityPerimeter"u8))
+                if (prop.NameEquals("networkSecurityPerimeter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkSecurityPerimeter = NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(property.Value, options);
+                    networkSecurityPerimeter = NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resourceAssociation"u8))
+                if (prop.NameEquals("resourceAssociation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceAssociation = BatchResourceAssociation.DeserializeBatchResourceAssociation(property.Value, options);
+                    resourceAssociation = BatchResourceAssociation.DeserializeBatchResourceAssociation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("profile"u8))
+                if (prop.NameEquals("profile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    profile = NetworkSecurityProfile.DeserializeNetworkSecurityProfile(property.Value, options);
+                    profile = NetworkSecurityProfile.DeserializeNetworkSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
                 provisioningIssues ?? new ChangeTrackingList<BatchProvisioningIssue>(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -188,15 +194,20 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        NetworkSecurityPerimeterConfigurationProperties IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkSecurityPerimeterConfigurationProperties IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkSecurityPerimeterConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkSecurityPerimeterConfigurationProperties(document.RootElement, options);
                     }
                 default:
@@ -204,6 +215,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

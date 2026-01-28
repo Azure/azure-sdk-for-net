@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountAutoStorageConfiguration : IUtf8JsonSerializable, IJsonModel<BatchAccountAutoStorageConfiguration>
+    /// <summary> Contains information about the auto-storage account associated with a Batch account. </summary>
+    public partial class BatchAccountAutoStorageConfiguration : BatchAccountAutoStorageBaseConfiguration, IJsonModel<BatchAccountAutoStorageConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountAutoStorageConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BatchAccountAutoStorageConfiguration"/> for deserialization. </summary>
+        internal BatchAccountAutoStorageConfiguration()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchAccountAutoStorageConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,86 +35,91 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchAccountAutoStorageConfiguration)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("lastKeySync"u8);
             writer.WriteStringValue(LastKeySyncedOn, "O");
         }
 
-        BatchAccountAutoStorageConfiguration IJsonModel<BatchAccountAutoStorageConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchAccountAutoStorageConfiguration IJsonModel<BatchAccountAutoStorageConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BatchAccountAutoStorageConfiguration)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BatchAccountAutoStorageBaseConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchAccountAutoStorageConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchAccountAutoStorageConfiguration(document.RootElement, options);
         }
 
-        internal static BatchAccountAutoStorageConfiguration DeserializeBatchAccountAutoStorageConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BatchAccountAutoStorageConfiguration DeserializeBatchAccountAutoStorageConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset lastKeySync = default;
             ResourceIdentifier storageAccountId = default;
             BatchAutoStorageAuthenticationMode? authenticationMode = default;
-            ComputeNodeIdentityReference nodeIdentityReference = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ComputeNodeIdentityReference nodeIdentity = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DateTimeOffset lastKeySyncedOn = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("lastKeySync"u8))
+                if (prop.NameEquals("storageAccountId"u8))
                 {
-                    lastKeySync = property.Value.GetDateTimeOffset("O");
+                    storageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccountId"u8))
+                if (prop.NameEquals("authenticationMode"u8))
                 {
-                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("authenticationMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authenticationMode = property.Value.GetString().ToBatchAutoStorageAuthenticationMode();
+                    authenticationMode = prop.Value.GetString().ToBatchAutoStorageAuthenticationMode();
                     continue;
                 }
-                if (property.NameEquals("nodeIdentityReference"u8))
+                if (prop.NameEquals("nodeIdentityReference"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodeIdentityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
+                    nodeIdentity = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("lastKeySync"u8))
+                {
+                    lastKeySyncedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BatchAccountAutoStorageConfiguration(storageAccountId, authenticationMode, nodeIdentityReference, serializedAdditionalRawData, lastKeySync);
+            return new BatchAccountAutoStorageConfiguration(storageAccountId, authenticationMode, nodeIdentity, additionalBinaryDataProperties, lastKeySyncedOn);
         }
 
-        BinaryData IPersistableModel<BatchAccountAutoStorageConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchAccountAutoStorageConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -117,15 +129,20 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        BatchAccountAutoStorageConfiguration IPersistableModel<BatchAccountAutoStorageConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchAccountAutoStorageConfiguration IPersistableModel<BatchAccountAutoStorageConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (BatchAccountAutoStorageConfiguration)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BatchAccountAutoStorageBaseConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchAccountAutoStorageConfiguration(document.RootElement, options);
                     }
                 default:
@@ -133,6 +150,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchAccountAutoStorageConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

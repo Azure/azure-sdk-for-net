@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Network security configuration properties. </summary>
     public partial class NetworkSecurityPerimeterConfigurationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
         internal NetworkSecurityPerimeterConfigurationProperties()
@@ -52,31 +24,35 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        /// <param name="provisioningState"> Provisioning state of a network security perimeter configuration that is being created or updated. </param>
+        /// <param name="provisioningState"></param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
-        /// <param name="networkSecurityPerimeter"> Information about a network security perimeter (NSP). </param>
-        /// <param name="resourceAssociation"> Information about resource association. </param>
-        /// <param name="profile"> Network security perimeter configuration profile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<BatchProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, BatchResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="networkSecurityPerimeter"></param>
+        /// <param name="resourceAssociation"></param>
+        /// <param name="profile"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<BatchProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, BatchResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
             NetworkSecurityPerimeter = networkSecurityPerimeter;
             ResourceAssociation = resourceAssociation;
             Profile = profile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Provisioning state of a network security perimeter configuration that is being created or updated. </summary>
+        /// <summary> Gets the ProvisioningState. </summary>
         public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
+
         /// <summary> List of provisioning issues, if any. </summary>
         public IReadOnlyList<BatchProvisioningIssue> ProvisioningIssues { get; }
-        /// <summary> Information about a network security perimeter (NSP). </summary>
+
+        /// <summary> Gets the NetworkSecurityPerimeter. </summary>
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
-        /// <summary> Information about resource association. </summary>
+
+        /// <summary> Gets the ResourceAssociation. </summary>
         public BatchResourceAssociation ResourceAssociation { get; }
-        /// <summary> Network security perimeter configuration profile. </summary>
+
+        /// <summary> Gets the Profile. </summary>
         public NetworkSecurityProfile Profile { get; }
     }
 }

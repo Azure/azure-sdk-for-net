@@ -7,67 +7,44 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The configuration for container-enabled pools. </summary>
     public partial class BatchVmContainerConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchVmContainerConfiguration"/>. </summary>
-        /// <param name="containerType"> The container technology to be used. </param>
-        public BatchVmContainerConfiguration(BatchVmContainerType containerType)
+        /// <param name="type"> The container technology to be used. </param>
+        public BatchVmContainerConfiguration(BatchVmContainerType @type)
         {
-            ContainerType = containerType;
+            Type = @type;
             ContainerImageNames = new ChangeTrackingList<string>();
             ContainerRegistries = new ChangeTrackingList<BatchVmContainerRegistry>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchVmContainerConfiguration"/>. </summary>
-        /// <param name="containerType"> The container technology to be used. </param>
+        /// <param name="type"> The container technology to be used. </param>
         /// <param name="containerImageNames"> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </param>
         /// <param name="containerRegistries"> If any images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchVmContainerConfiguration(BatchVmContainerType containerType, IList<string> containerImageNames, IList<BatchVmContainerRegistry> containerRegistries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchVmContainerConfiguration(BatchVmContainerType @type, IList<string> containerImageNames, IList<BatchVmContainerRegistry> containerRegistries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ContainerType = containerType;
+            Type = @type;
             ContainerImageNames = containerImageNames;
             ContainerRegistries = containerRegistries;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The container technology to be used. </summary>
+        public BatchVmContainerType Type { get; set; }
+
         /// <summary> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </summary>
         public IList<string> ContainerImageNames { get; }
+
         /// <summary> If any images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </summary>
         public IList<BatchVmContainerRegistry> ContainerRegistries { get; }
     }

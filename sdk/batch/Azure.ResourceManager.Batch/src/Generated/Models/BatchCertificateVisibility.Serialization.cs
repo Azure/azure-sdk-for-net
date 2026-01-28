@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchCertificateVisibilityExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchCertificateVisibility value) => value switch
         {
             BatchCertificateVisibility.StartTask => "StartTask",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchCertificateVisibility value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchCertificateVisibility ToBatchCertificateVisibility(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StartTask")) return BatchCertificateVisibility.StartTask;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Task")) return BatchCertificateVisibility.Task;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RemoteUser")) return BatchCertificateVisibility.RemoteUser;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StartTask"))
+            {
+                return BatchCertificateVisibility.StartTask;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Task"))
+            {
+                return BatchCertificateVisibility.Task;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RemoteUser"))
+            {
+                return BatchCertificateVisibility.RemoteUser;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchCertificateVisibility value.");
         }
     }

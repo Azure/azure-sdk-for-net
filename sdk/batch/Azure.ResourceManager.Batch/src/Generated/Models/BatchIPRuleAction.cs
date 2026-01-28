@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Action when client IP address is matched. </summary>
+    /// <summary> The action when client IP address is matched. </summary>
     public readonly partial struct BatchIPRuleAction : IEquatable<BatchIPRuleAction>
     {
         private readonly string _value;
+        /// <summary> Allow access for the matched client IP address. </summary>
+        private const string AllowValue = "Allow";
 
         /// <summary> Initializes a new instance of <see cref="BatchIPRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchIPRuleAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AllowValue = "Allow";
-
-        /// <summary> Allow. </summary>
+        /// <summary> Allow access for the matched client IP address. </summary>
         public static BatchIPRuleAction Allow { get; } = new BatchIPRuleAction(AllowValue);
+
         /// <summary> Determines if two <see cref="BatchIPRuleAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchIPRuleAction left, BatchIPRuleAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchIPRuleAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchIPRuleAction left, BatchIPRuleAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchIPRuleAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchIPRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchIPRuleAction(string value) => new BatchIPRuleAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BatchIPRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchIPRuleAction?(string value) => value == null ? null : new BatchIPRuleAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchIPRuleAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchIPRuleAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

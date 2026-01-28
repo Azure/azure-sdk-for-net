@@ -7,119 +7,108 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Contains information about a certificate. </summary>
-    public partial class BatchAccountCertificateCreateOrUpdateContent : ResourceData
+    public partial class BatchAccountCertificateCreateOrUpdateContent : AzureProxyResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
         public BatchAccountCertificateCreateOrUpdateContent()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="thumbprintAlgorithm"> This must match the first portion of the certificate name. Currently required to be 'SHA1'. </param>
-        /// <param name="thumbprintString"> This must match the thumbprint from the name. </param>
-        /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
-        /// <param name="data"> The maximum size is 10KB. </param>
-        /// <param name="password"> This must not be specified if the certificate format is Cer. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="id"> The ID of the resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. </param>
+        /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprintString, BatchAccountCertificateFormat? format, BinaryData data, string password, ETag? etag, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties associated with the certificate. </param>
+        internal BatchAccountCertificateCreateOrUpdateContent(string id, string name, string @type, string eTag, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CertificateCreateOrUpdateProperties properties) : base(id, name, @type, eTag, tags, additionalBinaryDataProperties)
         {
-            ThumbprintAlgorithm = thumbprintAlgorithm;
-            ThumbprintString = thumbprintString;
-            Format = format;
-            Data = data;
-            Password = password;
-            ETag = etag;
-            Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
+        /// <summary> The properties associated with the certificate. </summary>
+        internal CertificateCreateOrUpdateProperties Properties { get; set; }
+
         /// <summary> This must match the first portion of the certificate name. Currently required to be 'SHA1'. </summary>
-        public string ThumbprintAlgorithm { get; set; }
+        public string ThumbprintAlgorithm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThumbprintAlgorithm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateCreateOrUpdateProperties();
+                }
+                Properties.ThumbprintAlgorithm = value;
+            }
+        }
+
         /// <summary> This must match the thumbprint from the name. </summary>
-        public string ThumbprintString { get; set; }
+        public string ThumbprintString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThumbprintString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateCreateOrUpdateProperties();
+                }
+                Properties.ThumbprintString = value;
+            }
+        }
+
         /// <summary> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </summary>
-        public BatchAccountCertificateFormat? Format { get; set; }
-        /// <summary>
-        /// The maximum size is 10KB.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Data { get; set; }
+        public BatchAccountCertificateFormat? Format
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Format;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateCreateOrUpdateProperties();
+                }
+                Properties.Format = value.Value;
+            }
+        }
+
+        /// <summary> The maximum size is 10KB. </summary>
+        public BinaryData Data
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Data;
+            }
+        }
+
         /// <summary> This must not be specified if the certificate format is Cer. </summary>
-        public string Password { get; set; }
-        /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The tags of the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public string Password
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Password;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateCreateOrUpdateProperties();
+                }
+                Properties.Password = value;
+            }
+        }
     }
 }

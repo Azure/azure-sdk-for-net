@@ -3,9 +3,13 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Batch.Models
 {
+    // temperatory until https://github.com/Azure/azure-sdk-for-net/issues/55147 is resolved in the code generator
+    [CodeGenType("BatchAccountCertificatePatch")]
     public partial class BatchAccountCertificateCreateOrUpdateContent
     {
         /// <summary>
