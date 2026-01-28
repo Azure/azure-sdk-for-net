@@ -72,7 +72,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             TranscriptionResult result = response.Value;
 
             // Display results
-            Console.WriteLine($"Duration: {result.DurationMilliseconds / 1000.0:F1}s | Speakers: {result.PhrasesByChannel.First().Phrases.Select(p => p.Speaker).Distinct().Count()}");
+            Console.WriteLine($"Duration: {result.Duration.TotalSeconds:F1}s | Speakers: {result.PhrasesByChannel.First().Phrases.Select(p => p.Speaker).Distinct().Count()}");
             Console.WriteLine();
             Console.WriteLine("Full Transcript:");
             Console.WriteLine(result.CombinedPhrases.First().Text);

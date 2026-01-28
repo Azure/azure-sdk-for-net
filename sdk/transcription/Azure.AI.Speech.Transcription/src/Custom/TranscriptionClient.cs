@@ -14,7 +14,6 @@ namespace Azure.AI.Speech.Transcription
     /// <summary> The Transcription service client. </summary>
     public partial class TranscriptionClient
     {
-        private const string JsonContentType = "application/json";
         private const string MultipartDefinitionPartContentType = "application/json";
         private const string DefinitionPartName = "definition";
         private const string AudioPartName = "audio";

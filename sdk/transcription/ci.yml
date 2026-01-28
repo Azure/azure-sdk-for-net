@@ -11,7 +11,7 @@ trigger:
     - sdk/transcription/
 
 parameters:
-  - name: release_azureaispeachtranscription
+  - name: release_azureaispeechtranscription
     displayName: "Azure.AI.Speech.Transcription"
     type: boolean
     default: false
@@ -24,4 +24,4 @@ extends:
     Artifacts:
     - name: Azure.AI.Speech.Transcription
       safeName: AzureAISpeechTranscription
-      releaseInBatch: ${{ parameters.release_azureaispeachtranscription }}
+      releaseInBatch: ${{ parameters.release_azureaispeechtranscription }}
