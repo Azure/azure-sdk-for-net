@@ -85,7 +85,7 @@
 
   <!-- SignalRService compat issue with Microsoft.Azure.SignalR.Management (tracked by #51460) -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.SignalRService')) and '$(TargetFramework)' == 'netstandard2.0'">
-    <PackageVersion Include="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
+    <PackageVersion Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
   </ItemGroup>
 
   <!--
@@ -264,8 +264,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.Playwright'))">
-    <PackageVersion Include="MSTest.TestFramework" Version="$(MSTestVersion)" />
-    <PackageVersion Include="NUnit" Version="$(NUnitVersion)" />
+    <PackageVersion Update="MSTest.TestFramework" Version="$(MSTestVersion)" />
+    <PackageVersion Update="NUnit" Version="$(NUnitVersion)" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
@@ -328,16 +328,16 @@
 
   <!-- Packages intended for WCF/CoreWCF Extensions libraries only -->
   <ItemGroup Condition="'$(IsWcfLibrary)' == 'true'">
-    <PackageVersion Include="Azure.Storage.Files.Shares" Version="12.21.0" />
-    <PackageVersion Include="Azure.Storage.Queues" Version="12.21.0" />
+    <PackageVersion Update="Azure.Storage.Files.Shares" Version="12.21.0" />
+    <PackageVersion Update="Azure.Storage.Queues" Version="12.21.0" />
     <PackageVersion Include="CoreWCF.Primitives" Version="1.7.0" />
     <PackageVersion Include="CoreWCF.Queue" Version="1.7.0" />
     <PackageVersion Include="Microsoft.AspNetCore" Version="2.3.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" />
+    <PackageVersion Update="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" />
     <PackageVersion Include="System.Formats.Asn1" Version="10.0.1" />
-    <PackageVersion Include="System.IO.Pipelines" Version="10.0.1" />
+    <PackageVersion Update="System.IO.Pipelines" Version="10.0.1" />
     <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.1" />
     <PackageVersion Include="System.ServiceModel.Primitives" Version="6.2.0" />
   </ItemGroup>
@@ -418,8 +418,8 @@
     <PackageVersion Include="Microsoft.AspNetCore.Server.WebListener" Version="1.1.4" />
     <PackageVersion Include="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
     <PackageVersion Include="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
-    <PackageVersion Include="Microsoft.Azure.Devices" Version="1.41.0" />
-    <PackageVersion Include="Microsoft.Azure.Devices.Client" Version="1.42.3" />
+    <PackageVersion Update="Microsoft.Azure.Devices" Version="1.41.0" />
+    <PackageVersion Update="Microsoft.Azure.Devices.Client" Version="1.42.3" />
     <PackageVersion Include="Microsoft.Azure.EventHubs" Version="4.3.2" />
     <PackageVersion Include="Microsoft.Azure.EventHubs.Processor" Version="4.3.2" />
     <PackageVersion Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
@@ -427,7 +427,7 @@
     <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.3.0" />
     <PackageVersion Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.7" />
     <PackageVersion Include="Microsoft.Azure.KeyVault" Version="3.0.5" />
-    <PackageVersion Include="Microsoft.Azure.KeyVault.Core" Version="3.0.5" />
+    <PackageVersion Update="Microsoft.Azure.KeyVault.Core" Version="3.0.5" />
     <PackageVersion Include="Microsoft.Azure.Management.ContainerRegistry" Version="4.0.0" />
     <PackageVersion Include="Microsoft.Azure.Management.ContainerRegistry.Fluent" Version="1.37.1" />
     <PackageVersion Include="Microsoft.Azure.Management.EventGrid" Version="4.0.1-preview" />
@@ -437,8 +437,8 @@
     <PackageVersion Include="Microsoft.Azure.Management.Sql" Version="1.22.0-preview" />
     <PackageVersion Include="Microsoft.Azure.Management.Storage" Version="25.0.0" />
     <PackageVersion Include="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
-    <PackageVersion Include="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
-    <PackageVersion Include="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
+    <PackageVersion Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
+    <PackageVersion Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
     <PackageVersion Include="Microsoft.Azure.Storage.DataMovement" Version="2.0.5" />
     <PackageVersion Include="Microsoft.Azure.Storage.File" Version="11.2.2" />
     <PackageVersion Include="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
@@ -475,7 +475,7 @@
     <PackageVersion Include="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageVersion Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageVersion Include="System.Runtime.InteropServices" Version="4.3.0" />
-    <PackageVersion Include="System.Security.Cryptography.Cng" Version="5.0.0" />
+    <PackageVersion Update="System.Security.Cryptography.Cng" Version="5.0.0" />
     <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
     <PackageVersion Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
 
@@ -557,7 +557,7 @@
     ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true')
       and ($(MSBuildProjectName.StartsWith('Azure.Developer.Playwright.MSTest')))"
   >
-    <PackageVersion Include="MSTest.TestFramework" Version="$(MSTestVersion)" />
+    <PackageVersion Update="MSTest.TestFramework" Version="$(MSTestVersion)" />
   </ItemGroup>
 
   <!-- Source Generation for System.ClientModel requires a specific set of analysis rules -->
@@ -586,7 +586,7 @@
   <!-- Legacy Batch tests require ADAL and specific MSAL versions -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))">
     <PackageVersion Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.2, 4.0.0)" />
-    <PackageVersion Include="Microsoft.Identity.Client" Version="4.61.3" />
+    <PackageVersion Update="Microsoft.Identity.Client" Version="4.61.3" />
   </ItemGroup>
 
   <!-- Azure.Core.TestFramework needs pinned AutoRest version (workaround for pipeline conflicts) -->
@@ -608,8 +608,8 @@
 
   <!-- SecurityCenter.Tests needs beta versions of IotHub and Logic -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.ResourceManager.SecurityCenter'))">
-    <PackageVersion Include="Azure.ResourceManager.IotHub" Version="1.2.0-beta.1" />
-    <PackageVersion Include="Azure.ResourceManager.Logic" Version="1.2.0-beta.1" />
+    <PackageVersion Update="Azure.ResourceManager.IotHub" Version="1.2.0-beta.1" />
+    <PackageVersion Update="Azure.ResourceManager.Logic" Version="1.2.0-beta.1" />
   </ItemGroup>
 
   <!-- Tables.Tests needs legacy WebJobs.Extensions.Storage for T1 testing -->
