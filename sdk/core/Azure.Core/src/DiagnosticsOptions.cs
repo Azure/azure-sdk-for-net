@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,12 @@ namespace Azure.Core
 
         internal DiagnosticsOptions(IConfigurationSection section)
         {
+            if (section is null || !section.Exists())
+            {
+                InitializeDefaults();
+                return;
+            }
+
             ApplicationId = section["ApplicationId"];
             if (bool.TryParse(section["IsLoggingEnabled"], out var isLoggingEnabled))
             {
@@ -35,21 +42,35 @@ namespace Azure.Core
             {
                 IsTelemetryEnabled = isTelemetryEnabled;
             }
-            if (section["IsLoggedHeaderNames"] is not null)
+            else
             {
-                LoggedHeaderNames = [.. section.GetSection("LoggedHeaderNames").GetChildren().Select(c => c.Value!)];
+                IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
+            }
+            IConfigurationSection loggedHeaderSection = section.GetSection("LoggedHeaderNames");
+            if (loggedHeaderSection.Exists())
+            {
+                LoggedHeaderNames = loggedHeaderSection
+                    .GetChildren()
+                    .Where(c => c.Value is not null)
+                    .Select(c => c.Value!)
+                    .ToList();
             }
             else
             {
                 LoggedHeaderNames = GetDefaultLoggedHeaders();
             }
-            if (section["IsLoggedQueryParameters"] is not null)
+            IConfigurationSection loggedQueryParametersSection = section.GetSection("LoggedQueryParameters");
+            if (loggedQueryParametersSection.Exists())
             {
-                LoggedQueryParameters = [.. section.GetSection("LoggedQueryParameters").GetChildren().Select(c => c.Value!)];
+                LoggedQueryParameters = loggedQueryParametersSection
+                    .GetChildren()
+                    .Where(c => c.Value is not null)
+                    .Select(c => c.Value!)
+                    .ToList();
             }
             else
             {
-                LoggedQueryParameters = ["api-version"];
+                LoggedQueryParameters = new List<string> { "api-version" };
             }
             if (int.TryParse(section["LoggedContentSizeLimit"], out var loggedContentSizeLimit))
             {
@@ -58,6 +79,10 @@ namespace Azure.Core
             if (bool.TryParse(section["IsDistributedTracingEnabled"], out var isDistributedTracingEnabled))
             {
                 IsDistributedTracingEnabled = isDistributedTracingEnabled;
+            }
+            else
+            {
+                IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
             }
             if (bool.TryParse(section["IsLoggingContentEnabled"], out var isLoggingContentEnabled))
             {
@@ -84,11 +109,17 @@ namespace Azure.Core
             }
             else
             {
-                LoggedHeaderNames = GetDefaultLoggedHeaders();
-                LoggedQueryParameters = new List<string> { "api-version" };
-                IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
-                IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
+                InitializeDefaults();
             }
+        }
+
+        [MemberNotNull(nameof(LoggedHeaderNames), nameof(LoggedQueryParameters))]
+        private void InitializeDefaults()
+        {
+            LoggedHeaderNames = GetDefaultLoggedHeaders();
+            LoggedQueryParameters = ["api-version"];
+            IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
+            IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
         }
 
         private static IList<string> GetDefaultLoggedHeaders()
@@ -96,7 +127,7 @@ namespace Azure.Core
             // These values are similar to the default values in System.ClientModel.Primitives.ClientLoggingOptions and both
             // should be kept in sync. When updating, update the default values in both classes.
             return
-               [
+            [
                 "x-ms-request-id",
                 "x-ms-client-request-id",
                 "x-ms-return-client-request-id",

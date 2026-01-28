@@ -78,8 +78,16 @@ namespace Azure.Core
         protected ClientOptions(IConfigurationSection section)
         {
             _transport = HttpPipelineTransport.Create();
-            Diagnostics = section is null ? new DiagnosticsOptions((DiagnosticsOptions?)null) : new DiagnosticsOptions(section.GetSection("Diagnostics"));
-            Retry = section is null ? new RetryOptions((RetryOptions?)null) : new RetryOptions(section.GetSection("Retry"));
+            if (section is null || !section.Exists())
+            {
+                Diagnostics = new DiagnosticsOptions((DiagnosticsOptions?)null);
+                Retry = new RetryOptions((RetryOptions?)null);
+            }
+            else
+            {
+                Diagnostics = new DiagnosticsOptions(section.GetSection("Diagnostics"));
+                Retry = new RetryOptions(section.GetSection("Retry"));
+            }
         }
 
         /// <summary>

@@ -25,6 +25,11 @@ namespace Azure.Core
 
         internal RetryOptions(IConfigurationSection section)
         {
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+
             if (int.TryParse(section["MaxRetries"], out int maxRetries))
             {
                 MaxRetries = maxRetries;
