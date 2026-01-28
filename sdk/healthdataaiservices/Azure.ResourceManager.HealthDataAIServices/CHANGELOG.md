@@ -4,6 +4,12 @@
 
 ### Features Added
 
+- Added support for new API version 2026-01-27-preview
+- Added `SkuTier` enum with Free, Basic, and Standard options
+- Added `Sku` model with name, tier, and capacity properties
+- Added `Sku` property to `DeidService` resource
+- Added `Sku` property to `DeidUpdate` for PATCH operations
+
 ### Breaking Changes
 
 ### Bugs Fixed
