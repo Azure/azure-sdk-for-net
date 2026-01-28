@@ -1,4 +1,4 @@
 commit: e098f8e5791c54e51fb3dc471b8a6ceda685ef8f
 repo: Azure/azure-rest-api-specs
 directory: specification/programmableconnectivity/Azure.ProgrammableConnectivity
-emitterPackageJsonPath: eng/legacy-emitter-package.json
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

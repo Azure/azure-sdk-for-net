@@ -1,0 +1,4664 @@
+{
+  "name": "Azure.Communication.ProgrammableConnectivity",
+  "apiVersions": [
+    "2024-02-09-preview"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "APCVersions",
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.APCVersions",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "v2024_02_09_preview",
+          "value": "2024-02-09-preview",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Version 2024-02-09-preview",
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "doc": "APC Versions",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": []
+    }
+  ],
+  "constants": [
+    {
+      "$id": "4",
+      "kind": "constant",
+      "name": "verifyContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "5",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "6",
+      "kind": "constant",
+      "name": "verifyContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "7",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "8",
+      "kind": "constant",
+      "name": "retrieveContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "9",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "10",
+      "kind": "constant",
+      "name": "retrieveContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "11",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "12",
+      "kind": "constant",
+      "name": "verifyWithoutCodeContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "13",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "14",
+      "kind": "constant",
+      "name": "verifyWithCodeContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "15",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "16",
+      "kind": "constant",
+      "name": "verifyWithCodeContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "17",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "18",
+      "kind": "constant",
+      "name": "retrieveContentType2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "19",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "20",
+      "kind": "constant",
+      "name": "retrieveContentType3",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "21",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "22",
+      "kind": "constant",
+      "name": "verifyContentType2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "23",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "24",
+      "kind": "constant",
+      "name": "verifyContentType3",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "25",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "26",
+      "kind": "model",
+      "name": "DeviceLocationVerificationContent",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocationVerificationContent",
+      "usage": "Input,Json",
+      "doc": "Request to verify Location",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "27",
+          "kind": "property",
+          "name": "networkIdentifier",
+          "serializedName": "networkIdentifier",
+          "doc": "Network to query for this device, or device information to enable network routing.",
+          "type": {
+            "$id": "28",
+            "kind": "model",
+            "name": "NetworkIdentifier",
+            "namespace": "Azure.Communication.ProgrammableConnectivity",
+            "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NetworkIdentifier",
+            "usage": "Input,Json",
+            "doc": "Identifier for the network to be queried",
+            "decorators": [],
+            "properties": [
+              {
+                "$id": "29",
+                "kind": "property",
+                "name": "identifierType",
+                "serializedName": "identifierType",
+                "doc": "The type of identifier for the network. one of: 'IPv4', 'IPv6', 'MSISDN', 'NetworkCode'",
+                "type": {
+                  "$id": "30",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NetworkIdentifier.identifierType",
+                "serializationOptions": {
+                  "json": {
+                    "name": "identifierType"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "31",
+                "kind": "property",
+                "name": "identifier",
+                "serializedName": "identifier",
+                "doc": "The network identifier, based on the identifierType: an IPv4 address, an IPv6 address, an MSISDN, or a Network Code.\nA Network Code may be obtained from APC documentation or from the APC /Network:retrieve endpoint.",
+                "type": {
+                  "$id": "32",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NetworkIdentifier.identifier",
+                "serializationOptions": {
+                  "json": {
+                    "name": "identifier"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocationVerificationContent.networkIdentifier",
+          "serializationOptions": {
+            "json": {
+              "name": "networkIdentifier"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "33",
+          "kind": "property",
+          "name": "latitude",
+          "serializedName": "latitude",
+          "doc": "Latitude of location to be verified",
+          "type": {
+            "$id": "34",
+            "kind": "float64",
+            "name": "float64",
+            "crossLanguageDefinitionId": "TypeSpec.float64",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocationVerificationContent.latitude",
+          "serializationOptions": {
+            "json": {
+              "name": "latitude"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "35",
+          "kind": "property",
+          "name": "longitude",
+          "serializedName": "longitude",
+          "doc": "Longitude of location to be verified",
+          "type": {
+            "$id": "36",
+            "kind": "float64",
+            "name": "float64",
+            "crossLanguageDefinitionId": "TypeSpec.float64",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocationVerificationContent.longitude",
+          "serializationOptions": {
+            "json": {
+              "name": "longitude"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "37",
+          "kind": "property",
+          "name": "accuracy",
+          "serializedName": "accuracy",
+          "doc": "Accuracy expected for location verification in kilometers",
+          "type": {
+            "$id": "38",
+            "kind": "int32",
+            "name": "int32",
+            "crossLanguageDefinitionId": "TypeSpec.int32",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocationVerificationContent.accuracy",
+          "serializationOptions": {
+            "json": {
+              "name": "accuracy"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "39",
+          "kind": "property",
+          "name": "device",
+          "serializedName": "device",
+          "doc": "The device to find the location for. Exactly one of Network Access Code, Phone Number, IPv4 address, or IPv6 address",
+          "type": {
+            "$id": "40",
+            "kind": "model",
+            "name": "LocationDevice",
+            "namespace": "Azure.Communication.ProgrammableConnectivity",
+            "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.LocationDevice",
+            "usage": "Input,Json",
+            "doc": "Device information needed by operator to provide location information. Include exactly one of these properties to identify your device.",
+            "decorators": [],
+            "properties": [
+              {
+                "$id": "41",
+                "kind": "property",
+                "name": "networkAccessIdentifier",
+                "serializedName": "networkAccessIdentifier",
+                "doc": "External identifier or network access identifier of the device",
+                "type": {
+                  "$id": "42",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.LocationDevice.networkAccessIdentifier",
+                "serializationOptions": {
+                  "json": {
+                    "name": "networkAccessIdentifier"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "43",
+                "kind": "property",
+                "name": "phoneNumber",
+                "serializedName": "phoneNumber",
+                "doc": "Phone number in E.164 format (starting with country code), and optionally prefixed with '+'",
+                "type": {
+                  "$id": "44",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.LocationDevice.phoneNumber",
+                "serializationOptions": {
+                  "json": {
+                    "name": "phoneNumber"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "45",
+                "kind": "property",
+                "name": "ipv4Address",
+                "serializedName": "ipv4Address",
+                "doc": "The Ipv4 address",
+                "type": {
+                  "$id": "46",
+                  "kind": "model",
+                  "name": "Ipv4Address",
+                  "namespace": "Azure.Communication.ProgrammableConnectivity",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.Ipv4Address",
+                  "usage": "Input,Json",
+                  "doc": "IPv4 device indicator",
+                  "decorators": [],
+                  "properties": [
+                    {
+                      "$id": "47",
+                      "kind": "property",
+                      "name": "ipv4",
+                      "serializedName": "ipv4",
+                      "doc": "An IPv4 address. This may be specified as an exact address, or as a subnet in CIDR notation.",
+                      "type": {
+                        "$id": "48",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.Ipv4Address.ipv4",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "ipv4"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    },
+                    {
+                      "$id": "49",
+                      "kind": "property",
+                      "name": "port",
+                      "serializedName": "port",
+                      "doc": "User equipment port.",
+                      "type": {
+                        "$id": "50",
+                        "kind": "int32",
+                        "name": "int32",
+                        "crossLanguageDefinitionId": "TypeSpec.int32",
+                        "decorators": []
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.Ipv4Address.port",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "port"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    }
+                  ]
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.LocationDevice.ipv4Address",
+                "serializationOptions": {
+                  "json": {
+                    "name": "ipv4Address"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "51",
+                "kind": "property",
+                "name": "ipv6Address",
+                "serializedName": "ipv6Address",
+                "doc": "The Ipv6 address",
+                "type": {
+                  "$id": "52",
+                  "kind": "model",
+                  "name": "Ipv6Address",
+                  "namespace": "Azure.Communication.ProgrammableConnectivity",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.Ipv6Address",
+                  "usage": "Input,Json",
+                  "doc": "IPv6 device indicator",
+                  "decorators": [],
+                  "properties": [
+                    {
+                      "$id": "53",
+                      "kind": "property",
+                      "name": "ipv6",
+                      "serializedName": "ipv6",
+                      "doc": "An IPv6 address. This may be specified as an exact address, or as a subnet in CIDR notation.",
+                      "type": {
+                        "$id": "54",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.Ipv6Address.ipv6",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "ipv6"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    },
+                    {
+                      "$id": "55",
+                      "kind": "property",
+                      "name": "port",
+                      "serializedName": "port",
+                      "doc": "User equipment port.",
+                      "type": {
+                        "$id": "56",
+                        "kind": "int32",
+                        "name": "int32",
+                        "crossLanguageDefinitionId": "TypeSpec.int32",
+                        "decorators": []
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.Ipv6Address.port",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "port"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    }
+                  ]
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.LocationDevice.ipv6Address",
+                "serializationOptions": {
+                  "json": {
+                    "name": "ipv6Address"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocationVerificationContent.device",
+          "serializationOptions": {
+            "json": {
+              "name": "device"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$ref": "28"
+    },
+    {
+      "$ref": "40"
+    },
+    {
+      "$ref": "46"
+    },
+    {
+      "$ref": "52"
+    },
+    {
+      "$id": "57",
+      "kind": "model",
+      "name": "DeviceLocationVerificationResult",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocationVerificationResult",
+      "usage": "Output,Json",
+      "doc": "Response verifying location",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "58",
+          "kind": "property",
+          "name": "verificationResult",
+          "serializedName": "verificationResult",
+          "doc": "True if the location is in the specified area, False otherwise",
+          "type": {
+            "$id": "59",
+            "kind": "boolean",
+            "name": "boolean",
+            "crossLanguageDefinitionId": "TypeSpec.boolean",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocationVerificationResult.verificationResult",
+          "serializationOptions": {
+            "json": {
+              "name": "verificationResult"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "60",
+      "kind": "model",
+      "name": "ErrorResponse",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse",
+      "usage": "Json,Exception",
+      "doc": "A response containing error details.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "61",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "doc": "The error object.",
+          "type": {
+            "$id": "62",
+            "kind": "model",
+            "name": "Error",
+            "namespace": "Azure.Communication.ProgrammableConnectivity",
+            "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
+            "usage": "Json,Exception",
+            "doc": "The error object.",
+            "decorators": [],
+            "properties": [
+              {
+                "$id": "63",
+                "kind": "property",
+                "name": "code",
+                "serializedName": "code",
+                "doc": "One of a server-defined set of error codes.",
+                "type": {
+                  "$id": "64",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.code",
+                "serializationOptions": {
+                  "json": {
+                    "name": "code"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "65",
+                "kind": "property",
+                "name": "message",
+                "serializedName": "message",
+                "doc": "A human-readable representation of the error.",
+                "type": {
+                  "$id": "66",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.message",
+                "serializationOptions": {
+                  "json": {
+                    "name": "message"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "67",
+                "kind": "property",
+                "name": "target",
+                "serializedName": "target",
+                "doc": "The target of the error.",
+                "type": {
+                  "$id": "68",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.target",
+                "serializationOptions": {
+                  "json": {
+                    "name": "target"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "69",
+                "kind": "property",
+                "name": "details",
+                "serializedName": "details",
+                "doc": "An array of details about specific errors that led to this reported error.",
+                "type": {
+                  "$id": "70",
+                  "kind": "array",
+                  "name": "ArrayError",
+                  "valueType": {
+                    "$ref": "62"
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.details",
+                "serializationOptions": {
+                  "json": {
+                    "name": "details"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "71",
+                "kind": "property",
+                "name": "innererror",
+                "serializedName": "innererror",
+                "doc": "An object containing more specific information than the current object about the error.",
+                "type": {
+                  "$id": "72",
+                  "kind": "model",
+                  "name": "InnerError",
+                  "namespace": "Azure.Communication.ProgrammableConnectivity",
+                  "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
+                  "usage": "Json,Exception",
+                  "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
+                  "decorators": [],
+                  "properties": [
+                    {
+                      "$id": "73",
+                      "kind": "property",
+                      "name": "code",
+                      "serializedName": "code",
+                      "doc": "One of a server-defined set of error codes.",
+                      "type": {
+                        "$id": "74",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.code",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "code"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    },
+                    {
+                      "$id": "75",
+                      "kind": "property",
+                      "name": "innererror",
+                      "serializedName": "innererror",
+                      "doc": "Inner error.",
+                      "type": {
+                        "$ref": "72"
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.innererror",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "innererror"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    }
+                  ]
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.innererror",
+                "serializationOptions": {
+                  "json": {
+                    "name": "innererror"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "76",
+          "kind": "property",
+          "name": "errorCode",
+          "serializedName": "errorCode",
+          "doc": "String error code indicating what went wrong.",
+          "type": {
+            "$id": "77",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse.errorCode",
+          "serializationOptions": {
+            "json": {
+              "name": "errorCode"
+            }
+          },
+          "isHttpMetadata": true
+        }
+      ]
+    },
+    {
+      "$ref": "62"
+    },
+    {
+      "$ref": "72"
+    },
+    {
+      "$id": "78",
+      "kind": "model",
+      "name": "NetworkRetrievalResult",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NetworkRetrievalResult",
+      "usage": "Output,Json",
+      "doc": "The network that the device is on.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "79",
+          "kind": "property",
+          "name": "networkCode",
+          "serializedName": "networkCode",
+          "doc": "The identifier for the network. This can be used as the networkIdentifier for the service APIs.",
+          "type": {
+            "$id": "80",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NetworkRetrievalResult.networkCode",
+          "serializationOptions": {
+            "json": {
+              "name": "networkCode"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "81",
+      "kind": "model",
+      "name": "NumberVerificationWithoutCodeContent",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationWithoutCodeContent",
+      "usage": "Input,Json",
+      "doc": "Request to verify number of device - first call",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "82",
+          "kind": "property",
+          "name": "networkIdentifier",
+          "serializedName": "networkIdentifier",
+          "doc": "Identifier for the network to query for this device.",
+          "type": {
+            "$ref": "28"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationWithoutCodeContent.networkIdentifier",
+          "serializationOptions": {
+            "json": {
+              "name": "networkIdentifier"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "83",
+          "kind": "property",
+          "name": "phoneNumber",
+          "serializedName": "phoneNumber",
+          "doc": "Phone number in E.164 format (starting with country code), and optionally prefixed with '+'",
+          "type": {
+            "$id": "84",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationWithoutCodeContent.phoneNumber",
+          "serializationOptions": {
+            "json": {
+              "name": "phoneNumber"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "85",
+          "kind": "property",
+          "name": "hashedPhoneNumber",
+          "serializedName": "hashedPhoneNumber",
+          "doc": "Hashed phone number. SHA-256 (in hexadecimal representation) of the mobile phone number in **E.164 format (starting with country code)**. Optionally prefixed with '+'.",
+          "type": {
+            "$id": "86",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationWithoutCodeContent.hashedPhoneNumber",
+          "serializationOptions": {
+            "json": {
+              "name": "hashedPhoneNumber"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "87",
+          "kind": "property",
+          "name": "redirectUri",
+          "serializedName": "redirectUri",
+          "doc": "Redirect URI to backend application.",
+          "type": {
+            "$id": "88",
+            "kind": "url",
+            "name": "url",
+            "crossLanguageDefinitionId": "TypeSpec.url",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationWithoutCodeContent.redirectUri",
+          "serializationOptions": {
+            "json": {
+              "name": "redirectUri"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "89",
+      "kind": "model",
+      "name": "NumberVerificationWithCodeContent",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationWithCodeContent",
+      "usage": "Input,Json",
+      "doc": "Request to verify number of device - second call",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "90",
+          "kind": "property",
+          "name": "apcCode",
+          "serializedName": "apcCode",
+          "doc": "The code provided by APC in exchange for the operator code.",
+          "type": {
+            "$id": "91",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationWithCodeContent.apcCode",
+          "serializationOptions": {
+            "json": {
+              "name": "apcCode"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "92",
+      "kind": "model",
+      "name": "NumberVerificationResult",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationResult",
+      "usage": "Output,Json",
+      "doc": "Response verifying number of device",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "93",
+          "kind": "property",
+          "name": "verificationResult",
+          "serializedName": "verificationResult",
+          "doc": "True if number if the phone number matches the device, False otherwise",
+          "type": {
+            "$id": "94",
+            "kind": "boolean",
+            "name": "boolean",
+            "crossLanguageDefinitionId": "TypeSpec.boolean",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerificationResult.verificationResult",
+          "serializationOptions": {
+            "json": {
+              "name": "verificationResult"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "95",
+      "kind": "model",
+      "name": "SimSwapRetrievalContent",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapRetrievalContent",
+      "usage": "Input,Json",
+      "doc": "Request to retrieve SimSwap date",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "96",
+          "kind": "property",
+          "name": "phoneNumber",
+          "serializedName": "phoneNumber",
+          "doc": "Phone number in E.164 format (starting with country code), and optionally prefixed with '+'",
+          "type": {
+            "$id": "97",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapRetrievalContent.phoneNumber",
+          "serializationOptions": {
+            "json": {
+              "name": "phoneNumber"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "98",
+          "kind": "property",
+          "name": "networkIdentifier",
+          "serializedName": "networkIdentifier",
+          "doc": "Network to query for this device",
+          "type": {
+            "$ref": "28"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapRetrievalContent.networkIdentifier",
+          "serializationOptions": {
+            "json": {
+              "name": "networkIdentifier"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "99",
+      "kind": "model",
+      "name": "SimSwapRetrievalResult",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapRetrievalResult",
+      "usage": "Output,Json",
+      "doc": "Response with SimSwap date",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "100",
+          "kind": "property",
+          "name": "date",
+          "serializedName": "date",
+          "doc": "Datetime of most recent swap for SIM",
+          "type": {
+            "$id": "101",
+            "kind": "utcDateTime",
+            "name": "utcDateTime",
+            "encode": "rfc3339",
+            "wireType": {
+              "$id": "102",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapRetrievalResult.date",
+          "serializationOptions": {
+            "json": {
+              "name": "date"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "103",
+      "kind": "model",
+      "name": "SimSwapVerificationContent",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapVerificationContent",
+      "usage": "Input,Json",
+      "doc": "Request to verify SimSwap in period",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "104",
+          "kind": "property",
+          "name": "phoneNumber",
+          "serializedName": "phoneNumber",
+          "doc": "Phone number in E.164 format (starting with country code), and optionally prefixed with '+'",
+          "type": {
+            "$id": "105",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapVerificationContent.phoneNumber",
+          "serializationOptions": {
+            "json": {
+              "name": "phoneNumber"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "106",
+          "kind": "property",
+          "name": "maxAgeHours",
+          "serializedName": "maxAgeHours",
+          "doc": "Maximum lookback for SimSwap verification",
+          "type": {
+            "$id": "107",
+            "kind": "int32",
+            "name": "int32",
+            "crossLanguageDefinitionId": "TypeSpec.int32",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapVerificationContent.maxAgeHours",
+          "serializationOptions": {
+            "json": {
+              "name": "maxAgeHours"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "108",
+          "kind": "property",
+          "name": "networkIdentifier",
+          "serializedName": "networkIdentifier",
+          "doc": "Identifier for the network to query for this device.",
+          "type": {
+            "$ref": "28"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapVerificationContent.networkIdentifier",
+          "serializationOptions": {
+            "json": {
+              "name": "networkIdentifier"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "109",
+      "kind": "model",
+      "name": "SimSwapVerificationResult",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapVerificationResult",
+      "usage": "Output,Json",
+      "doc": "Response verifying SimSwap in period",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "110",
+          "kind": "property",
+          "name": "verificationResult",
+          "serializedName": "verificationResult",
+          "doc": "True if the SIM has swapped in the specified period, False otherwise",
+          "type": {
+            "$id": "111",
+            "kind": "boolean",
+            "name": "boolean",
+            "crossLanguageDefinitionId": "TypeSpec.boolean",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwapVerificationResult.verificationResult",
+          "serializationOptions": {
+            "json": {
+              "name": "verificationResult"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "112",
+      "kind": "client",
+      "name": "ProgrammableConnectivityClient",
+      "namespace": "Azure.Communication.ProgrammableConnectivity",
+      "doc": "Azure Programmable Connectivity (APC) provides a unified interface to the Network APIs of multiple Telecom Operators. Note that Operators may deprecate a Network API with less advance notice than the Azure standard, in which case APC will also deprecate that Network API.",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "113",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "An Azure Programmable Connectivity Endpoint providing access to Network APIs, for example https://{region}.apcgatewayapi.azure.com",
+          "type": {
+            "$id": "114",
+            "kind": "string",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.string"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.endpoint"
+        },
+        {
+          "$id": "115",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "The API version to use for this operation.",
+          "type": {
+            "$id": "116",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "117",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2024-02-09-preview"
+          },
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity",
+      "apiVersions": [
+        "2024-02-09-preview"
+      ],
+      "children": [
+        {
+          "$id": "118",
+          "kind": "client",
+          "name": "DeviceLocation",
+          "namespace": "Azure.Communication.ProgrammableConnectivity",
+          "methods": [
+            {
+              "$id": "119",
+              "kind": "basic",
+              "name": "verify",
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-02-09-preview"
+              ],
+              "doc": "Verifies whether a device is within a specified location area, defined as an accuracy (radius) around a point, specified by longitude and latitude.",
+              "operation": {
+                "$id": "120",
+                "name": "verify",
+                "resourceName": "DeviceLocation",
+                "doc": "Verifies whether a device is within a specified location area, defined as an accuracy (radius) around a point, specified by longitude and latitude.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "121",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "122",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "123",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-02-09-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "124",
+                    "kind": "header",
+                    "name": "clientRequestId",
+                    "serializedName": "x-ms-client-request-id",
+                    "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                    "type": {
+                      "$id": "125",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "126",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": true,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.clientRequestId"
+                  },
+                  {
+                    "$id": "127",
+                    "kind": "header",
+                    "name": "apcGatewayId",
+                    "serializedName": "apc-gateway-id",
+                    "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                    "type": {
+                      "$id": "128",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.apcGatewayId"
+                  },
+                  {
+                    "$id": "129",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "4"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.contentType"
+                  },
+                  {
+                    "$id": "130",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "6"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.accept"
+                  },
+                  {
+                    "$id": "131",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "doc": "Body parameter.",
+                    "type": {
+                      "$ref": "26"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.body"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "57"
+                    },
+                    "headers": [
+                      {
+                        "name": "clientRequestId",
+                        "nameInResponse": "x-ms-client-request-id",
+                        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                        "type": {
+                          "$id": "132",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "133",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "requestId",
+                        "nameInResponse": "x-ms-request-id",
+                        "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                        "type": {
+                          "$id": "134",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "135",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/device-location/location:verify",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify",
+                "decorators": [],
+                "examples": [
+                  {
+                    "$id": "136",
+                    "kind": "http",
+                    "name": "DeviceLocation_Verify",
+                    "description": "DeviceLocation_Verify",
+                    "filePath": "2024-02-09-preview/DeviceLocation_Verify_MaximumSet_Gen.json",
+                    "parameters": [
+                      {
+                        "parameter": {
+                          "$ref": "121"
+                        },
+                        "value": {
+                          "$id": "137",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "122"
+                          },
+                          "value": "2024-02-09-preview"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "124"
+                        },
+                        "value": {
+                          "$id": "138",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "125"
+                          },
+                          "value": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "127"
+                        },
+                        "value": {
+                          "$id": "139",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "128"
+                          },
+                          "value": "zdgrzzaxlodrvewbksn"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "131"
+                        },
+                        "value": {
+                          "$id": "140",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "26"
+                          },
+                          "value": {
+                            "networkIdentifier": {
+                              "$id": "141",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "28"
+                              },
+                              "value": {
+                                "identifierType": {
+                                  "$id": "142",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "30"
+                                  },
+                                  "value": "ipv4"
+                                },
+                                "identifier": {
+                                  "$id": "143",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "32"
+                                  },
+                                  "value": "12.12.12.12"
+                                }
+                              }
+                            },
+                            "latitude": {
+                              "$id": "144",
+                              "kind": "number",
+                              "type": {
+                                "$ref": "34"
+                              },
+                              "value": 70
+                            },
+                            "longitude": {
+                              "$id": "145",
+                              "kind": "number",
+                              "type": {
+                                "$ref": "36"
+                              },
+                              "value": -161
+                            },
+                            "accuracy": {
+                              "$id": "146",
+                              "kind": "number",
+                              "type": {
+                                "$ref": "38"
+                              },
+                              "value": 91
+                            },
+                            "device": {
+                              "$id": "147",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "40"
+                              },
+                              "value": {
+                                "networkAccessIdentifier": {
+                                  "$id": "148",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "42"
+                                  },
+                                  "value": "122345@domain.com"
+                                },
+                                "phoneNumber": {
+                                  "$id": "149",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "44"
+                                  },
+                                  "value": "+447000000000"
+                                },
+                                "ipv4Address": {
+                                  "$id": "150",
+                                  "kind": "model",
+                                  "type": {
+                                    "$ref": "46"
+                                  },
+                                  "value": {
+                                    "ipv4": {
+                                      "$id": "151",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "48"
+                                      },
+                                      "value": "12.12.12.12"
+                                    },
+                                    "port": {
+                                      "$id": "152",
+                                      "kind": "number",
+                                      "type": {
+                                        "$ref": "50"
+                                      },
+                                      "value": 2442
+                                    }
+                                  }
+                                },
+                                "ipv6Address": {
+                                  "$id": "153",
+                                  "kind": "model",
+                                  "type": {
+                                    "$ref": "52"
+                                  },
+                                  "value": {
+                                    "ipv6": {
+                                      "$id": "154",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "54"
+                                      },
+                                      "value": "3001:0da8:75a3:0000:0000:8a2e:0370:7334"
+                                    },
+                                    "port": {
+                                      "$id": "155",
+                                      "kind": "number",
+                                      "type": {
+                                        "$ref": "56"
+                                      },
+                                      "value": 1643
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "response": {
+                          "statusCodes": [
+                            200
+                          ],
+                          "bodyType": {
+                            "$ref": "57"
+                          },
+                          "headers": [
+                            {
+                              "name": "clientRequestId",
+                              "nameInResponse": "x-ms-client-request-id",
+                              "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "132"
+                              }
+                            },
+                            {
+                              "name": "requestId",
+                              "nameInResponse": "x-ms-request-id",
+                              "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "134"
+                              }
+                            }
+                          ],
+                          "isErrorResponse": false,
+                          "contentTypes": [
+                            "application/json"
+                          ]
+                        },
+                        "statusCode": 200,
+                        "bodyValue": {
+                          "$id": "156",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "57"
+                          },
+                          "value": {
+                            "verificationResult": {
+                              "$id": "157",
+                              "kind": "boolean",
+                              "type": {
+                                "$ref": "59"
+                              },
+                              "value": true
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "namespace": "Azure.Communication.ProgrammableConnectivity"
+              },
+              "parameters": [
+                {
+                  "$id": "158",
+                  "kind": "method",
+                  "name": "body",
+                  "serializedName": "body",
+                  "doc": "Body parameter.",
+                  "type": {
+                    "$ref": "26"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "159",
+                  "kind": "method",
+                  "name": "clientRequestId",
+                  "serializedName": "x-ms-client-request-id",
+                  "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                  "type": {
+                    "$id": "160",
+                    "kind": "string",
+                    "name": "uuid",
+                    "crossLanguageDefinitionId": "Azure.Core.uuid",
+                    "baseType": {
+                      "$id": "161",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": true,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.clientRequestId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "162",
+                  "kind": "method",
+                  "name": "apcGatewayId",
+                  "serializedName": "apc-gateway-id",
+                  "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                  "type": {
+                    "$id": "163",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.apcGatewayId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "164",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "4"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "165",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "6"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "57"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.verify"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "166",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "An Azure Programmable Connectivity Endpoint providing access to Network APIs, for example https://{region}.apcgatewayapi.azure.com",
+              "type": {
+                "$id": "167",
+                "kind": "string",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.string"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation.endpoint"
+            },
+            {
+              "$ref": "115"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceLocation",
+          "apiVersions": [
+            "2024-02-09-preview"
+          ],
+          "parent": {
+            "$ref": "112"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "168",
+          "kind": "client",
+          "name": "DeviceNetwork",
+          "namespace": "Azure.Communication.ProgrammableConnectivity",
+          "methods": [
+            {
+              "$id": "169",
+              "kind": "basic",
+              "name": "retrieve",
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-02-09-preview"
+              ],
+              "doc": "Retrieves the network a given device is on. Returns network in a networkCode format that can be used for other APIs.",
+              "operation": {
+                "$id": "170",
+                "name": "retrieve",
+                "resourceName": "DeviceNetwork",
+                "doc": "Retrieves the network a given device is on. Returns network in a networkCode format that can be used for other APIs.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "171",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "172",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "173",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-02-09-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "174",
+                    "kind": "header",
+                    "name": "clientRequestId",
+                    "serializedName": "x-ms-client-request-id",
+                    "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                    "type": {
+                      "$id": "175",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "176",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": true,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.clientRequestId"
+                  },
+                  {
+                    "$id": "177",
+                    "kind": "header",
+                    "name": "apcGatewayId",
+                    "serializedName": "apc-gateway-id",
+                    "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                    "type": {
+                      "$id": "178",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.apcGatewayId"
+                  },
+                  {
+                    "$id": "179",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "8"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.contentType"
+                  },
+                  {
+                    "$id": "180",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "10"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.accept"
+                  },
+                  {
+                    "$id": "181",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "doc": "Body parameter.",
+                    "type": {
+                      "$ref": "28"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.body"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "78"
+                    },
+                    "headers": [
+                      {
+                        "name": "clientRequestId",
+                        "nameInResponse": "x-ms-client-request-id",
+                        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                        "type": {
+                          "$id": "182",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "183",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "requestId",
+                        "nameInResponse": "x-ms-request-id",
+                        "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                        "type": {
+                          "$id": "184",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "185",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/device-network/network:retrieve",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve",
+                "decorators": [],
+                "examples": [
+                  {
+                    "$id": "186",
+                    "kind": "http",
+                    "name": "DeviceNetwork_Retrieve",
+                    "description": "DeviceNetwork_Retrieve",
+                    "filePath": "2024-02-09-preview/DeviceNetwork_Retrieve_MaximumSet_Gen.json",
+                    "parameters": [
+                      {
+                        "parameter": {
+                          "$ref": "171"
+                        },
+                        "value": {
+                          "$id": "187",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "172"
+                          },
+                          "value": "2024-02-09-preview"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "174"
+                        },
+                        "value": {
+                          "$id": "188",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "175"
+                          },
+                          "value": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "177"
+                        },
+                        "value": {
+                          "$id": "189",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "178"
+                          },
+                          "value": "zdgrzzaxlodrvewbksn"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "181"
+                        },
+                        "value": {
+                          "$id": "190",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "28"
+                          },
+                          "value": {
+                            "identifierType": {
+                              "$id": "191",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "30"
+                              },
+                              "value": "ipv6"
+                            },
+                            "identifier": {
+                              "$id": "192",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "32"
+                              },
+                              "value": "3001:0da8:75a3:0000:0000:8a2e:0370:7334"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "response": {
+                          "statusCodes": [
+                            200
+                          ],
+                          "bodyType": {
+                            "$ref": "78"
+                          },
+                          "headers": [
+                            {
+                              "name": "clientRequestId",
+                              "nameInResponse": "x-ms-client-request-id",
+                              "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "182"
+                              }
+                            },
+                            {
+                              "name": "requestId",
+                              "nameInResponse": "x-ms-request-id",
+                              "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "184"
+                              }
+                            }
+                          ],
+                          "isErrorResponse": false,
+                          "contentTypes": [
+                            "application/json"
+                          ]
+                        },
+                        "statusCode": 200,
+                        "bodyValue": {
+                          "$id": "193",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "78"
+                          },
+                          "value": {
+                            "networkCode": {
+                              "$id": "194",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "80"
+                              },
+                              "value": "Example_Network"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "namespace": "Azure.Communication.ProgrammableConnectivity"
+              },
+              "parameters": [
+                {
+                  "$id": "195",
+                  "kind": "method",
+                  "name": "body",
+                  "serializedName": "body",
+                  "doc": "Body parameter.",
+                  "type": {
+                    "$ref": "28"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "196",
+                  "kind": "method",
+                  "name": "clientRequestId",
+                  "serializedName": "x-ms-client-request-id",
+                  "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                  "type": {
+                    "$id": "197",
+                    "kind": "string",
+                    "name": "uuid",
+                    "crossLanguageDefinitionId": "Azure.Core.uuid",
+                    "baseType": {
+                      "$id": "198",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": true,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.clientRequestId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "199",
+                  "kind": "method",
+                  "name": "apcGatewayId",
+                  "serializedName": "apc-gateway-id",
+                  "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                  "type": {
+                    "$id": "200",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.apcGatewayId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "201",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "8"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "202",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "10"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "78"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "203",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "An Azure Programmable Connectivity Endpoint providing access to Network APIs, for example https://{region}.apcgatewayapi.azure.com",
+              "type": {
+                "$id": "204",
+                "kind": "string",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.string"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.endpoint"
+            },
+            {
+              "$id": "205",
+              "kind": "method",
+              "name": "apiVersion",
+              "serializedName": "apiVersion",
+              "doc": "The API version to use for this operation.",
+              "type": {
+                "$id": "206",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "",
+              "isApiVersion": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "207",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "2024-02-09-preview"
+              },
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork.retrieve.apiVersion",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.DeviceNetwork",
+          "apiVersions": [
+            "2024-02-09-preview"
+          ],
+          "parent": {
+            "$ref": "112"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "208",
+          "kind": "client",
+          "name": "NumberVerification",
+          "namespace": "Azure.Communication.ProgrammableConnectivity",
+          "doc": "  Number operations include Frontend Authentication.\n\n  Users first make a call to the endpoint /Number:verify, which returns a redirect to the device's \n  Network. This is followed by the device to authenticate directly with the Network. The Network \n  responds with a token and a redirect. This token can be exchanged with APC for a code.\n  \n  Users make a second call to the endpoint /Number:verify including the code. The code is used \n  to verify the device number. The second response is a 200 containing the result of the query.\n\n  For more information on the steps required to use Number Verificaiton, see the APC documentation.",
+          "methods": [
+            {
+              "$id": "209",
+              "kind": "basic",
+              "name": "verifyWithoutCode",
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-02-09-preview"
+              ],
+              "doc": "Verifies the phone number (MSISDN) associated with a device. As part of the frontend authorization flow, the device is redirected to the operator network to authenticate directly.",
+              "operation": {
+                "$id": "210",
+                "name": "verifyWithoutCode",
+                "resourceName": "NumberVerification",
+                "doc": "Verifies the phone number (MSISDN) associated with a device. As part of the frontend authorization flow, the device is redirected to the operator network to authenticate directly.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "211",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "212",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "213",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-02-09-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "214",
+                    "kind": "header",
+                    "name": "clientRequestId",
+                    "serializedName": "x-ms-client-request-id",
+                    "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                    "type": {
+                      "$id": "215",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "216",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": true,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode.clientRequestId"
+                  },
+                  {
+                    "$id": "217",
+                    "kind": "header",
+                    "name": "apcGatewayId",
+                    "serializedName": "apc-gateway-id",
+                    "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                    "type": {
+                      "$id": "218",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode.apcGatewayId"
+                  },
+                  {
+                    "$id": "219",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "12"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode.contentType"
+                  },
+                  {
+                    "$id": "220",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "doc": "Body parameter.",
+                    "type": {
+                      "$ref": "81"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode.body"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      302
+                    ],
+                    "headers": [
+                      {
+                        "name": "location",
+                        "nameInResponse": "location",
+                        "doc": "The URI of the network's authorization endpoint, which should be followed by the front-end application.",
+                        "type": {
+                          "$id": "221",
+                          "kind": "url",
+                          "name": "url",
+                          "crossLanguageDefinitionId": "TypeSpec.url",
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "requestId",
+                        "nameInResponse": "x-ms-request-id",
+                        "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                        "type": {
+                          "$id": "222",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "223",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "clientRequestId",
+                        "nameInResponse": "x-ms-client-request-id",
+                        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                        "type": {
+                          "$id": "224",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "225",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/number-verification/number:verify",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode",
+                "decorators": [],
+                "examples": [
+                  {
+                    "$id": "226",
+                    "kind": "http",
+                    "name": "NumberVerification_VerifyWithoutCode",
+                    "description": "NumberVerification_VerifyWithoutCode",
+                    "filePath": "2024-02-09-preview/NumberVerification_VerifyWithoutCode_MaximumSet_Gen.json",
+                    "parameters": [
+                      {
+                        "parameter": {
+                          "$ref": "211"
+                        },
+                        "value": {
+                          "$id": "227",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "212"
+                          },
+                          "value": "2024-02-09-preview"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "214"
+                        },
+                        "value": {
+                          "$id": "228",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "215"
+                          },
+                          "value": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "217"
+                        },
+                        "value": {
+                          "$id": "229",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "218"
+                          },
+                          "value": "zdgrzzaxlodrvewbksn"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "220"
+                        },
+                        "value": {
+                          "$id": "230",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "81"
+                          },
+                          "value": {
+                            "networkIdentifier": {
+                              "$id": "231",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "28"
+                              },
+                              "value": {
+                                "identifierType": {
+                                  "$id": "232",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "30"
+                                  },
+                                  "value": "ipv4"
+                                },
+                                "identifier": {
+                                  "$id": "233",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "32"
+                                  },
+                                  "value": "12.12.12.12"
+                                }
+                              }
+                            },
+                            "phoneNumber": {
+                              "$id": "234",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "84"
+                              },
+                              "value": "+14424318793"
+                            },
+                            "hashedPhoneNumber": {
+                              "$id": "235",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "86"
+                              },
+                              "value": "bwsl"
+                            },
+                            "redirectUri": {
+                              "$id": "236",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "88"
+                              },
+                              "value": "https://www.contoso.com"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "response": {
+                          "statusCodes": [
+                            302
+                          ],
+                          "headers": [
+                            {
+                              "name": "location",
+                              "nameInResponse": "location",
+                              "doc": "The URI of the network's authorization endpoint, which should be followed by the front-end application.",
+                              "type": {
+                                "$ref": "221"
+                              }
+                            },
+                            {
+                              "name": "requestId",
+                              "nameInResponse": "x-ms-request-id",
+                              "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "222"
+                              }
+                            },
+                            {
+                              "name": "clientRequestId",
+                              "nameInResponse": "x-ms-client-request-id",
+                              "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "224"
+                              }
+                            }
+                          ],
+                          "isErrorResponse": false
+                        },
+                        "statusCode": 302
+                      }
+                    ]
+                  }
+                ],
+                "namespace": "Azure.Communication.ProgrammableConnectivity"
+              },
+              "parameters": [
+                {
+                  "$id": "237",
+                  "kind": "method",
+                  "name": "body",
+                  "serializedName": "body",
+                  "doc": "Body parameter.",
+                  "type": {
+                    "$ref": "81"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "238",
+                  "kind": "method",
+                  "name": "clientRequestId",
+                  "serializedName": "x-ms-client-request-id",
+                  "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                  "type": {
+                    "$id": "239",
+                    "kind": "string",
+                    "name": "uuid",
+                    "crossLanguageDefinitionId": "Azure.Core.uuid",
+                    "baseType": {
+                      "$id": "240",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": true,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode.clientRequestId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "241",
+                  "kind": "method",
+                  "name": "apcGatewayId",
+                  "serializedName": "apc-gateway-id",
+                  "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                  "type": {
+                    "$id": "242",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode.apcGatewayId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "243",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "12"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode"
+            },
+            {
+              "$id": "244",
+              "kind": "basic",
+              "name": "verifyWithCode",
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-02-09-preview"
+              ],
+              "doc": "Verifies the phone number (MSISDN) associated with a device.",
+              "operation": {
+                "$id": "245",
+                "name": "verifyWithCode",
+                "resourceName": "NumberVerification",
+                "doc": "Verifies the phone number (MSISDN) associated with a device.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "246",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "247",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "248",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-02-09-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "249",
+                    "kind": "header",
+                    "name": "clientRequestId",
+                    "serializedName": "x-ms-client-request-id",
+                    "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                    "type": {
+                      "$id": "250",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "251",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": true,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode.clientRequestId"
+                  },
+                  {
+                    "$id": "252",
+                    "kind": "header",
+                    "name": "apcGatewayId",
+                    "serializedName": "apc-gateway-id",
+                    "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                    "type": {
+                      "$id": "253",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode.apcGatewayId"
+                  },
+                  {
+                    "$id": "254",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "14"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode.contentType"
+                  },
+                  {
+                    "$id": "255",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "16"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode.accept"
+                  },
+                  {
+                    "$id": "256",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "doc": "Body parameter.",
+                    "type": {
+                      "$ref": "89"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode.body"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "92"
+                    },
+                    "headers": [
+                      {
+                        "name": "clientRequestId",
+                        "nameInResponse": "x-ms-client-request-id",
+                        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                        "type": {
+                          "$id": "257",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "258",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "requestId",
+                        "nameInResponse": "x-ms-request-id",
+                        "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                        "type": {
+                          "$id": "259",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "260",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/number-verification/number:verify",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode",
+                "decorators": [],
+                "examples": [
+                  {
+                    "$id": "261",
+                    "kind": "http",
+                    "name": "NumberVerification_VerifyWithCode",
+                    "description": "NumberVerification_VerifyWithCode",
+                    "filePath": "2024-02-09-preview/NumberVerification_VerifyWithCode_MaximumSet_Gen.json",
+                    "parameters": [
+                      {
+                        "parameter": {
+                          "$ref": "246"
+                        },
+                        "value": {
+                          "$id": "262",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "247"
+                          },
+                          "value": "2024-02-09-preview"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "249"
+                        },
+                        "value": {
+                          "$id": "263",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "250"
+                          },
+                          "value": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "252"
+                        },
+                        "value": {
+                          "$id": "264",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "253"
+                          },
+                          "value": "zdgrzzaxlodrvewbksn"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "256"
+                        },
+                        "value": {
+                          "$id": "265",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "89"
+                          },
+                          "value": {
+                            "apcCode": {
+                              "$id": "266",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "91"
+                              },
+                              "value": "yn"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "response": {
+                          "statusCodes": [
+                            200
+                          ],
+                          "bodyType": {
+                            "$ref": "92"
+                          },
+                          "headers": [
+                            {
+                              "name": "clientRequestId",
+                              "nameInResponse": "x-ms-client-request-id",
+                              "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "257"
+                              }
+                            },
+                            {
+                              "name": "requestId",
+                              "nameInResponse": "x-ms-request-id",
+                              "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "259"
+                              }
+                            }
+                          ],
+                          "isErrorResponse": false,
+                          "contentTypes": [
+                            "application/json"
+                          ]
+                        },
+                        "statusCode": 200,
+                        "bodyValue": {
+                          "$id": "267",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "92"
+                          },
+                          "value": {
+                            "verificationResult": {
+                              "$id": "268",
+                              "kind": "boolean",
+                              "type": {
+                                "$ref": "94"
+                              },
+                              "value": true
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "namespace": "Azure.Communication.ProgrammableConnectivity"
+              },
+              "parameters": [
+                {
+                  "$id": "269",
+                  "kind": "method",
+                  "name": "body",
+                  "serializedName": "body",
+                  "doc": "Body parameter.",
+                  "type": {
+                    "$ref": "89"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "270",
+                  "kind": "method",
+                  "name": "clientRequestId",
+                  "serializedName": "x-ms-client-request-id",
+                  "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                  "type": {
+                    "$id": "271",
+                    "kind": "string",
+                    "name": "uuid",
+                    "crossLanguageDefinitionId": "Azure.Core.uuid",
+                    "baseType": {
+                      "$id": "272",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": true,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode.clientRequestId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "273",
+                  "kind": "method",
+                  "name": "apcGatewayId",
+                  "serializedName": "apc-gateway-id",
+                  "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                  "type": {
+                    "$id": "274",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode.apcGatewayId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "275",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "14"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "276",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "16"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "92"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithCode"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "277",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "An Azure Programmable Connectivity Endpoint providing access to Network APIs, for example https://{region}.apcgatewayapi.azure.com",
+              "type": {
+                "$id": "278",
+                "kind": "string",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.string"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.endpoint"
+            },
+            {
+              "$id": "279",
+              "kind": "method",
+              "name": "apiVersion",
+              "serializedName": "apiVersion",
+              "doc": "The API version to use for this operation.",
+              "type": {
+                "$id": "280",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "",
+              "isApiVersion": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "281",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "2024-02-09-preview"
+              },
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification.verifyWithoutCode.apiVersion",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.NumberVerification",
+          "apiVersions": [
+            "2024-02-09-preview"
+          ],
+          "parent": {
+            "$ref": "112"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "282",
+          "kind": "client",
+          "name": "SimSwap",
+          "namespace": "Azure.Communication.ProgrammableConnectivity",
+          "doc": "SIM Swap API provides the customer the ability to obtain information on any recent SIM pairing change related to the User's mobile account.",
+          "methods": [
+            {
+              "$id": "283",
+              "kind": "basic",
+              "name": "retrieve",
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-02-09-preview"
+              ],
+              "doc": "Provides timestamp of latest SIM swap",
+              "operation": {
+                "$id": "284",
+                "name": "retrieve",
+                "resourceName": "SimSwap",
+                "doc": "Provides timestamp of latest SIM swap",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "285",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "286",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "287",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-02-09-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "288",
+                    "kind": "header",
+                    "name": "clientRequestId",
+                    "serializedName": "x-ms-client-request-id",
+                    "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                    "type": {
+                      "$id": "289",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "290",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": true,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.clientRequestId"
+                  },
+                  {
+                    "$id": "291",
+                    "kind": "header",
+                    "name": "apcGatewayId",
+                    "serializedName": "apc-gateway-id",
+                    "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                    "type": {
+                      "$id": "292",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.apcGatewayId"
+                  },
+                  {
+                    "$id": "293",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "18"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.contentType"
+                  },
+                  {
+                    "$id": "294",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "20"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.accept"
+                  },
+                  {
+                    "$id": "295",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "doc": "Body parameter.",
+                    "type": {
+                      "$ref": "95"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.body"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "99"
+                    },
+                    "headers": [
+                      {
+                        "name": "clientRequestId",
+                        "nameInResponse": "x-ms-client-request-id",
+                        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                        "type": {
+                          "$id": "296",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "297",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "requestId",
+                        "nameInResponse": "x-ms-request-id",
+                        "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                        "type": {
+                          "$id": "298",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "299",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/sim-swap/sim-swap:retrieve",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve",
+                "decorators": [],
+                "examples": [
+                  {
+                    "$id": "300",
+                    "kind": "http",
+                    "name": "SimSwap_Retrieve",
+                    "description": "SimSwap_Retrieve",
+                    "filePath": "2024-02-09-preview/SimSwap_Retrieve_MaximumSet_Gen.json",
+                    "parameters": [
+                      {
+                        "parameter": {
+                          "$ref": "285"
+                        },
+                        "value": {
+                          "$id": "301",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "286"
+                          },
+                          "value": "2024-02-09-preview"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "288"
+                        },
+                        "value": {
+                          "$id": "302",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "289"
+                          },
+                          "value": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "291"
+                        },
+                        "value": {
+                          "$id": "303",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "292"
+                          },
+                          "value": "zdgrzzaxlodrvewbksn"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "295"
+                        },
+                        "value": {
+                          "$id": "304",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "95"
+                          },
+                          "value": {
+                            "phoneNumber": {
+                              "$id": "305",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "97"
+                              },
+                              "value": "+61215310263792"
+                            },
+                            "networkIdentifier": {
+                              "$id": "306",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "28"
+                              },
+                              "value": {
+                                "identifierType": {
+                                  "$id": "307",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "30"
+                                  },
+                                  "value": "IPv6"
+                                },
+                                "identifier": {
+                                  "$id": "308",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "32"
+                                  },
+                                  "value": "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "response": {
+                          "statusCodes": [
+                            200
+                          ],
+                          "bodyType": {
+                            "$ref": "99"
+                          },
+                          "headers": [
+                            {
+                              "name": "clientRequestId",
+                              "nameInResponse": "x-ms-client-request-id",
+                              "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "296"
+                              }
+                            },
+                            {
+                              "name": "requestId",
+                              "nameInResponse": "x-ms-request-id",
+                              "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "298"
+                              }
+                            }
+                          ],
+                          "isErrorResponse": false,
+                          "contentTypes": [
+                            "application/json"
+                          ]
+                        },
+                        "statusCode": 200,
+                        "bodyValue": {
+                          "$id": "309",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "99"
+                          },
+                          "value": {
+                            "date": {
+                              "$id": "310",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "101"
+                              },
+                              "value": "2023-12-12T09:01:33.333Z"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "namespace": "Azure.Communication.ProgrammableConnectivity"
+              },
+              "parameters": [
+                {
+                  "$id": "311",
+                  "kind": "method",
+                  "name": "body",
+                  "serializedName": "body",
+                  "doc": "Body parameter.",
+                  "type": {
+                    "$ref": "95"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "312",
+                  "kind": "method",
+                  "name": "clientRequestId",
+                  "serializedName": "x-ms-client-request-id",
+                  "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                  "type": {
+                    "$id": "313",
+                    "kind": "string",
+                    "name": "uuid",
+                    "crossLanguageDefinitionId": "Azure.Core.uuid",
+                    "baseType": {
+                      "$id": "314",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": true,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.clientRequestId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "315",
+                  "kind": "method",
+                  "name": "apcGatewayId",
+                  "serializedName": "apc-gateway-id",
+                  "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                  "type": {
+                    "$id": "316",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.apcGatewayId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "317",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "18"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "318",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "20"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "99"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve"
+            },
+            {
+              "$id": "319",
+              "kind": "basic",
+              "name": "verify",
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-02-09-preview"
+              ],
+              "doc": "Verifies if a SIM swap has been performed during a past period (defined in the request with 'maxAgeHours' attribute). Returns 'True' if a SIM swap has occured.",
+              "operation": {
+                "$id": "320",
+                "name": "verify",
+                "resourceName": "SimSwap",
+                "doc": "Verifies if a SIM swap has been performed during a past period (defined in the request with 'maxAgeHours' attribute). Returns 'True' if a SIM swap has occured.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "321",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "322",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "323",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-02-09-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "324",
+                    "kind": "header",
+                    "name": "clientRequestId",
+                    "serializedName": "x-ms-client-request-id",
+                    "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                    "type": {
+                      "$id": "325",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "326",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": true,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify.clientRequestId"
+                  },
+                  {
+                    "$id": "327",
+                    "kind": "header",
+                    "name": "apcGatewayId",
+                    "serializedName": "apc-gateway-id",
+                    "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                    "type": {
+                      "$id": "328",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify.apcGatewayId"
+                  },
+                  {
+                    "$id": "329",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "22"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify.contentType"
+                  },
+                  {
+                    "$id": "330",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "24"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify.accept"
+                  },
+                  {
+                    "$id": "331",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "doc": "Body parameter.",
+                    "type": {
+                      "$ref": "103"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify.body"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "109"
+                    },
+                    "headers": [
+                      {
+                        "name": "clientRequestId",
+                        "nameInResponse": "x-ms-client-request-id",
+                        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                        "type": {
+                          "$id": "332",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "333",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "requestId",
+                        "nameInResponse": "x-ms-request-id",
+                        "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                        "type": {
+                          "$id": "334",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "335",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/sim-swap/sim-swap:verify",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify",
+                "decorators": [],
+                "examples": [
+                  {
+                    "$id": "336",
+                    "kind": "http",
+                    "name": "SimSwap_Verify",
+                    "description": "SimSwap_Verify",
+                    "filePath": "2024-02-09-preview/SimSwap_Verify_MaximumSet_Gen.json",
+                    "parameters": [
+                      {
+                        "parameter": {
+                          "$ref": "321"
+                        },
+                        "value": {
+                          "$id": "337",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "322"
+                          },
+                          "value": "2024-02-09-preview"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "324"
+                        },
+                        "value": {
+                          "$id": "338",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "325"
+                          },
+                          "value": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "327"
+                        },
+                        "value": {
+                          "$id": "339",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "328"
+                          },
+                          "value": "zdgrzzaxlodrvewbksn"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "331"
+                        },
+                        "value": {
+                          "$id": "340",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "103"
+                          },
+                          "value": {
+                            "maxAgeHours": {
+                              "$id": "341",
+                              "kind": "number",
+                              "type": {
+                                "$ref": "107"
+                              },
+                              "value": 941
+                            },
+                            "networkIdentifier": {
+                              "$id": "342",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "28"
+                              },
+                              "value": {
+                                "identifierType": {
+                                  "$id": "343",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "30"
+                                  },
+                                  "value": "ipv4"
+                                },
+                                "identifier": {
+                                  "$id": "344",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "32"
+                                  },
+                                  "value": "12.12.12.12"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "response": {
+                          "statusCodes": [
+                            200
+                          ],
+                          "bodyType": {
+                            "$ref": "109"
+                          },
+                          "headers": [
+                            {
+                              "name": "clientRequestId",
+                              "nameInResponse": "x-ms-client-request-id",
+                              "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "332"
+                              }
+                            },
+                            {
+                              "name": "requestId",
+                              "nameInResponse": "x-ms-request-id",
+                              "doc": "An opaque, globally-unique, server-generated string identifier for the request.",
+                              "type": {
+                                "$ref": "334"
+                              }
+                            }
+                          ],
+                          "isErrorResponse": false,
+                          "contentTypes": [
+                            "application/json"
+                          ]
+                        },
+                        "statusCode": 200,
+                        "bodyValue": {
+                          "$id": "345",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "109"
+                          },
+                          "value": {
+                            "verificationResult": {
+                              "$id": "346",
+                              "kind": "boolean",
+                              "type": {
+                                "$ref": "111"
+                              },
+                              "value": true
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "namespace": "Azure.Communication.ProgrammableConnectivity"
+              },
+              "parameters": [
+                {
+                  "$id": "347",
+                  "kind": "method",
+                  "name": "body",
+                  "serializedName": "body",
+                  "doc": "Body parameter.",
+                  "type": {
+                    "$ref": "103"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "348",
+                  "kind": "method",
+                  "name": "clientRequestId",
+                  "serializedName": "x-ms-client-request-id",
+                  "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                  "type": {
+                    "$id": "349",
+                    "kind": "string",
+                    "name": "uuid",
+                    "crossLanguageDefinitionId": "Azure.Core.uuid",
+                    "baseType": {
+                      "$id": "350",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": true,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify.clientRequestId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "351",
+                  "kind": "method",
+                  "name": "apcGatewayId",
+                  "serializedName": "apc-gateway-id",
+                  "doc": "The identifier of the APC Gateway resource which should handle this request.",
+                  "type": {
+                    "$id": "352",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify.apcGatewayId",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "353",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "22"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "354",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "24"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "109"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.verify"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "355",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "An Azure Programmable Connectivity Endpoint providing access to Network APIs, for example https://{region}.apcgatewayapi.azure.com",
+              "type": {
+                "$id": "356",
+                "kind": "string",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.string"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.endpoint"
+            },
+            {
+              "$id": "357",
+              "kind": "method",
+              "name": "apiVersion",
+              "serializedName": "apiVersion",
+              "doc": "The API version to use for this operation.",
+              "type": {
+                "$id": "358",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "",
+              "isApiVersion": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "359",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "2024-02-09-preview"
+              },
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap.retrieve.apiVersion",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ProgrammableConnectivity.SimSwap",
+          "apiVersions": [
+            "2024-02-09-preview"
+          ],
+          "parent": {
+            "$ref": "112"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": false
+    }
+  ],
+  "auth": {
+    "oAuth2": {
+      "flows": [
+        {
+          "scopes": [
+            "https://management.azure.com//.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+      ]
+    }
+  }
+}
