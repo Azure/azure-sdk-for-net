@@ -2171,7 +2171,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withAnd",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -2284,7 +2285,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withAs",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -2397,7 +2399,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withAssert",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -2510,7 +2513,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withAsync",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -2623,7 +2627,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withAwait",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -2736,7 +2741,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withBreak",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -2849,7 +2855,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withClass",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -2962,7 +2969,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withConstructor",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -3075,7 +3083,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withContinue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -3188,7 +3197,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withDef",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -3301,7 +3311,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withDel",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -3414,7 +3425,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withElif",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -3527,7 +3539,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withElse",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -3640,7 +3653,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withExcept",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -3753,7 +3767,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withExec",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -3866,7 +3881,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withFinally",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -3979,7 +3995,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withFor",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -4092,7 +4109,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withFrom",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -4205,7 +4223,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withGlobal",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -4318,7 +4337,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withIf",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -4431,7 +4451,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withImport",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -4544,7 +4565,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withIn",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -4657,7 +4679,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withIs",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -4770,7 +4793,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withLambda",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -4883,7 +4907,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withNot",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -4996,7 +5021,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withOr",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -5109,7 +5135,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withPass",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -5222,7 +5249,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withRaise",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -5335,7 +5363,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withReturn",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -5448,7 +5477,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withTry",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -5561,7 +5591,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withWhile",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -5674,7 +5705,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withWith",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -5787,7 +5819,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Models.withYield",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.Models"
               },
               "parameters": [
                 {
@@ -5949,7 +5982,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.ModelProperties.sameAsModel",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.ModelProperties"
               },
               "parameters": [
                 {
@@ -6062,7 +6096,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.ModelProperties.dictMethods",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords.ModelProperties"
               },
               "parameters": [
                 {
@@ -6184,7 +6219,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.and",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6221,7 +6257,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.as",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6258,7 +6295,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.assert",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6295,7 +6333,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.async",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6332,7 +6371,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.await",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6369,7 +6409,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.break",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6406,7 +6447,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.class",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6443,7 +6485,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.constructor",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6480,7 +6523,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.continue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6517,7 +6561,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.def",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6554,7 +6599,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.del",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6591,7 +6637,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.elif",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6628,7 +6675,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.else",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6665,7 +6713,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.except",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6702,7 +6751,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.exec",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6739,7 +6789,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.finally",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6776,7 +6827,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.for",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6813,7 +6865,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.from",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6850,7 +6903,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.global",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6887,7 +6941,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.if",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6924,7 +6979,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.import",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6961,7 +7017,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.in",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -6998,7 +7055,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.is",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -7035,7 +7093,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.lambda",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -7072,7 +7131,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.not",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -7109,7 +7169,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.or",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -7146,7 +7207,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.pass",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -7183,7 +7245,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.raise",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -7220,7 +7283,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.return",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -7257,7 +7321,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.try",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -7294,7 +7359,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.while",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -7331,7 +7397,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.with",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -7368,7 +7435,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Operations.yield",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [],
               "response": {},
@@ -7475,7 +7543,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withAnd",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -7555,7 +7624,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withAs",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -7635,7 +7705,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withAssert",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -7715,7 +7786,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withAsync",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -7795,7 +7867,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withAwait",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -7875,7 +7948,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withBreak",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -7955,7 +8029,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withClass",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8035,7 +8110,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withConstructor",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8115,7 +8191,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withContinue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8195,7 +8272,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withDef",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8275,7 +8353,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withDel",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8355,7 +8434,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withElif",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8435,7 +8515,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withElse",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8515,7 +8596,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withExcept",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8595,7 +8677,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withExec",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8675,7 +8758,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withFinally",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8755,7 +8839,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withFor",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8835,7 +8920,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withFrom",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8915,7 +9001,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withGlobal",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -8995,7 +9082,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withIf",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9075,7 +9163,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withImport",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9155,7 +9244,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withIn",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9235,7 +9325,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withIs",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9315,7 +9406,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withLambda",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9395,7 +9487,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withNot",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9475,7 +9568,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withOr",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9555,7 +9649,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withPass",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9635,7 +9730,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withRaise",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9715,7 +9811,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withReturn",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9795,7 +9892,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withTry",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9875,7 +9973,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withWhile",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -9955,7 +10054,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withWith",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -10035,7 +10135,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withYield",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {
@@ -10115,7 +10216,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "SpecialWords.Parameters.withCancellationToken",
-                "decorators": []
+                "decorators": [],
+                "namespace": "SpecialWords"
               },
               "parameters": [
                 {

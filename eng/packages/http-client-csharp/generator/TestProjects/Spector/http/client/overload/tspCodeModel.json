@@ -190,7 +190,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Overload.list",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Overload"
           },
           "parameters": [
             {
@@ -295,7 +296,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Overload.listByScope",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Overload"
           },
           "parameters": [
             {
