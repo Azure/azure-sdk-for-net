@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -73,21 +72,6 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
         IReadOnlyList<ParameterProvider> methodParameters)
     {
         var arguments = new List<ValueExpression>();
-        // Track whether we've already added a MatchConditions/RequestConditions parameter
-        // to avoid adding the same parameter multiple times for If-Match and If-None-Match
-        bool matchConditionsAdded = false;
-        ParameterProvider? matchConditionsParam = null;
-
-        // Pre-scan for MatchConditions/RequestConditions parameter in method parameters
-        foreach (var param in methodParameters)
-        {
-            if (MatchConditionsHelper.IsMatchConditionsType(param.Type))
-            {
-                matchConditionsParam = param;
-                break;
-            }
-        }
-
         // here we always assume that the parameter name matches the parameter name in the request path.
         foreach (var parameter in requestParameters)
         {
@@ -102,7 +86,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 else
                 {
                     // contextual is null then this is a pass through parameter
-                    arguments.Add(FindParameter(methodParameters, parameter, matchConditionsParam, ref matchConditionsAdded));
+                    arguments.Add(FindParameter(methodParameters, parameter));
                 }
             }
             else if (parameter.Type.Equals(typeof(RequestContent)))
@@ -125,33 +109,18 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             else
             {
                 // we did not find it and this parameter does not fall into any known conversion case, so we just pass it through.
-                arguments.Add(FindParameter(methodParameters, parameter, matchConditionsParam, ref matchConditionsAdded));
+                arguments.Add(FindParameter(methodParameters, parameter));
             }
         }
 
         return arguments;
 
-        static ValueExpression FindParameter(
-            IReadOnlyList<ParameterProvider> parameters,
-            ParameterProvider parameterToFind,
-            ParameterProvider? matchConditionsParam,
-            ref bool matchConditionsAdded)
+        static ValueExpression FindParameter(IReadOnlyList<ParameterProvider> parameters, ParameterProvider parameterToFind)
         {
-            var serializedName = parameterToFind.WireInfo?.SerializedName;
-            var methodParam = parameters.SingleOrDefault(p => p.WireInfo?.SerializedName == serializedName);
+            var methodParam = parameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameterToFind.WireInfo.SerializedName);
             if (methodParam != null)
             {
                 return Convert(methodParam, methodParam.Type, parameterToFind.Type);
-            }
-
-            // Check if this is a conditional header parameter (If-Match, If-None-Match, etc.)
-            // that should be mapped to a MatchConditions/RequestConditions parameter.
-            // When the MatchConditionsHeadersVisitor transforms If-Match + If-None-Match into a single
-            // MatchConditions parameter, we need to use that parameter for both headers.
-            if (matchConditionsParam != null && !matchConditionsAdded && MatchConditionsHelper.IsConditionalHeader(serializedName))
-            {
-                matchConditionsAdded = true;
-                return Convert(matchConditionsParam, matchConditionsParam.Type, parameterToFind.Type);
             }
 
             return Default;

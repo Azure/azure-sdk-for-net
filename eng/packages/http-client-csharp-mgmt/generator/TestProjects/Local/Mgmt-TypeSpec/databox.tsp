@@ -54,25 +54,6 @@ interface JobResources {
       `If-Match`?: string;
     }
   >;
-
-  /**
-   * Creates or updates a job with both If-Match and If-None-Match conditions.
-   */
-  createOrUpdate is ArmResourceCreateOrReplaceAsync<
-    JobResource,
-    Parameters = {
-      /**
-       * Defines the If-Match condition. The create/update will be performed only if the ETag of the job on the server matches this value.
-       */
-      @header("If-Match")
-      `If-Match`?: string;
-      /**
-       * Defines the If-None-Match condition. The create will be performed only if the job does not exist.
-       */
-      @header("If-None-Match")
-      `If-None-Match`?: string;
-    }
-  >;
 }
 
 model JobResourceUpdateParameter {

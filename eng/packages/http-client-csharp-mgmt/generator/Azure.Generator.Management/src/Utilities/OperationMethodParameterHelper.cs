@@ -16,6 +16,10 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class OperationMethodParameterHelper
     {
+        /// <summary>
+        /// Builds the operation method parameters by taking parameters from the convenience method
+        /// and filtering out contextual parameters that can be derived from the resource identifier.
+        /// </summary>
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             MethodProvider convenienceMethod,
@@ -33,76 +37,45 @@ namespace Azure.Generator.Management.Utilities
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
-            // Build a dictionary of convenience method parameters by name for efficient lookup
-            var convenienceParamsByName = convenienceMethod.Signature.Parameters
-                .Where(p => !p.Type.Equals(typeof(System.Threading.CancellationToken)))
-                .ToDictionary(p => p.Name, p => p);
+            // Build a dictionary of input parameters by serialized name for looking up additional info (like IsRequired)
+            var inputParamsBySerializedName = serviceMethod.Operation.Parameters
+                .Where(p => p.Scope == InputParameterScope.Method)
+                .ToDictionary(p => p.SerializedName, p => p);
 
-            // Track whether we've added a MatchConditions/RequestConditions parameter
-            bool matchConditionsAdded = false;
-
-            // Find if there's a MatchConditions/RequestConditions parameter in the convenience method
-            ParameterProvider? matchConditionsParam = null;
-            foreach (var param in convenienceMethod.Signature.Parameters)
+            // Iterate through the convenience method parameters directly
+            // The convenience method has already been processed by visitors (e.g., MatchConditionsHeadersVisitor)
+            // and contains the correct types (e.g., MatchConditions instead of separate ifMatch/ifNoneMatch)
+            foreach (var convenienceParam in convenienceMethod.Signature.Parameters)
             {
-                if (MatchConditionsHelper.IsMatchConditionsType(param.Type))
-                {
-                    matchConditionsParam = param;
-                    break;
-                }
-            }
-
-            // Loop through service method parameters and check their scope
-            foreach (var inputParameter in serviceMethod.Operation.Parameters)
-            {
-                // Only include parameters with Method scope
-                if (inputParameter.Scope != InputParameterScope.Method)
+                // Skip CancellationToken - we add it at the end
+                if (convenienceParam.Type.Equals(typeof(System.Threading.CancellationToken)))
                 {
                     continue;
                 }
 
-                // Create temporary parameter to check filtering conditions
-                var tempParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(inputParameter)!;
+                // Get the serialized name from WireInfo if available
+                var serializedName = convenienceParam.WireInfo?.SerializedName;
 
-                // Skip contextual parameters
-                var serializedName = tempParameter.WireInfo?.SerializedName;
-                if (serializedName != null && parameterMapping.TryGetValue(serializedName, out var mapping) && mapping.ContextualParameter is not null)
+                // Check if this is a contextual parameter (can be derived from resource ID)
+                // If contextual, skip it - it will be resolved from the resource identifier
+                if (serializedName != null &&
+                    parameterMapping.TryGetValue(serializedName, out var mapping) &&
+                    mapping.ContextualParameter is not null)
                 {
                     continue;
                 }
 
-                // Check if this is a conditional header parameter (If-Match, If-None-Match, etc.)
-                bool isConditionalHeaderParam = MatchConditionsHelper.IsConditionalHeader(serializedName);
+                ParameterProvider outputParameter = convenienceParam;
 
-                // If this is a conditional header and we have a MatchConditions parameter, use it instead
-                if (isConditionalHeaderParam && matchConditionsParam != null)
+                // Look up corresponding input parameter for additional transformations
+                InputParameter? inputParameter = null;
+                if (serializedName != null)
                 {
-                    // Only add the MatchConditions parameter once, even if there are multiple conditional headers
-                    if (!matchConditionsAdded)
-                    {
-                        optionalParameters.Add(matchConditionsParam);
-                        matchConditionsAdded = true;
-                    }
-                    continue;
-                }
-
-                // Try to find corresponding parameter in convenience method by name
-                ParameterProvider? outputParameter = null;
-                var inputParamName = tempParameter.Name;
-
-                // Check if convenience method has a parameter with the same name
-                if (convenienceParamsByName.TryGetValue(inputParamName, out var matchedParam))
-                {
-                    outputParameter = matchedParam;
-                }
-                else
-                {
-                    // If no match by name, create it from input parameter
-                    outputParameter = tempParameter;
+                    inputParamsBySerializedName.TryGetValue(serializedName, out inputParameter);
                 }
 
                 // Rename resource model parameters to "data"
-                if (inputParameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
+                if (inputParameter?.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
                 {
                     outputParameter = RenameWithNewInstance(outputParameter, "data");
                 }
@@ -111,7 +84,7 @@ namespace Azure.Generator.Management.Utilities
                 // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope
                 if (enclosingTypeProvider is MockableArmClientProvider &&
                     !scopeParameterTransformed &&
-                    inputParameter.Type is InputPrimitiveType primitiveType &&
+                    inputParameter?.Type is InputPrimitiveType primitiveType &&
                     primitiveType.Kind == InputPrimitiveTypeKind.String)
                 {
                     outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
@@ -129,7 +102,10 @@ namespace Azure.Generator.Management.Utilities
                     }
                 }
 
-                if (inputParameter.IsRequired)
+                // Determine if required based on whether parameter has a default value
+                bool isRequired = outputParameter.DefaultValue == null;
+
+                if (isRequired)
                 {
                     requiredParameters.Add(outputParameter);
                 }
