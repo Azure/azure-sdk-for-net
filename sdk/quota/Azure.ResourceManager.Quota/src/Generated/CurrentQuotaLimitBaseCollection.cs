@@ -44,8 +44,7 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Create or update the quota limit for the specified resource with the requested value. To update the quota, follow these steps:
-        /// 1. Use the GET operation for quotas and usages to determine how much quota remains for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).
-        /// 2. Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.
+        /// <list type="number"><item><description>Use the GET operation for quotas and usages to determine how much quota remains for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).</description></item><item><description>Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.</description></item></list>
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -64,8 +63,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="data"> Quota request payload. </param>
@@ -109,8 +107,7 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Create or update the quota limit for the specified resource with the requested value. To update the quota, follow these steps:
-        /// 1. Use the GET operation for quotas and usages to determine how much quota remains for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).
-        /// 2. Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.
+        /// <list type="number"><item><description>Use the GET operation for quotas and usages to determine how much quota remains for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).</description></item><item><description>Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.</description></item></list>
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -129,8 +126,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="data"> Quota request payload. </param>
@@ -191,8 +187,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -245,8 +240,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -355,8 +349,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -417,8 +410,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -479,8 +471,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -545,8 +536,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
