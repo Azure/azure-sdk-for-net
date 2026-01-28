@@ -191,6 +191,14 @@ namespace Azure.Generator.Visitors
                 originalMatchConditionsParameter,
                 headerFlags);
 
+            // Set a special serialized name to avoid conflicts with real parameters
+            // Use angle brackets to make it clear this is a synthetic parameter
+            var specialSerializedName = $"<{updatedConditionsParameter.Name}>";
+            var customWireInfo = new WireInformation(
+                originalMatchConditionsParameter.WireInfo.SerializationFormat,
+                specialSerializedName);
+            updatedConditionsParameter.Update(wireInfo: customWireInfo);
+
             var updatedParams = new List<ParameterProvider>();
             var xmlParameterDocs = new List<XmlDocParamStatement>();
             bool addedConditionsParameter = false;

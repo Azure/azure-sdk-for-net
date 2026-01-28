@@ -579,13 +579,13 @@ namespace Azure.Generator.Tests.Visitors
                 // Verify that the WireInfo does not contain an incorrect SerializedName
                 // The matchConditions parameter is synthetic and should not have a SerializedName
                 // from the original conditional headers like "If-Match" or "If-None-Match"
-                // It should use the parameter name as the SerializedName
+                // It should use a special serialized name with angle brackets to avoid conflicts
                 Assert.AreNotEqual("If-Match", matchConditionsParam.WireInfo.SerializedName,
                     "MatchConditions parameter should not have 'If-Match' as SerializedName");
                 Assert.AreNotEqual("If-None-Match", matchConditionsParam.WireInfo.SerializedName,
                     "MatchConditions parameter should not have 'If-None-Match' as SerializedName");
-                Assert.AreEqual("matchConditions", matchConditionsParam.WireInfo.SerializedName,
-                    "MatchConditions parameter should have its own name as SerializedName");
+                Assert.AreEqual("<matchConditions>", matchConditionsParam.WireInfo.SerializedName,
+                    "MatchConditions parameter should have a special SerializedName with angle brackets");
             }
         }
 
