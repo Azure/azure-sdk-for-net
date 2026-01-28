@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added support for checking settings from the Azure App Configuration store using a HEAD request, returning only headers without the response body. [#54669](https://github.com/Azure/azure-sdk-for-net/pull/54669)
+- Added new methods, `CheckConfigurationSettings` and `CheckConfigurationSettingsAsync`, which can be used to check settings from the Azure App Configuration store using HEAD requests, returning only headers without the response body. [#54669](https://github.com/Azure/azure-sdk-for-net/pull/54669)
 
 ### Other Changes
 
