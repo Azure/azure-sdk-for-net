@@ -72,6 +72,21 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
         IReadOnlyList<ParameterProvider> methodParameters)
     {
         var arguments = new List<ValueExpression>();
+        // Track whether we've already added a MatchConditions/RequestConditions parameter
+        // to avoid adding the same parameter multiple times for If-Match and If-None-Match
+        bool matchConditionsAdded = false;
+        ParameterProvider? matchConditionsParam = null;
+
+        // Pre-scan for MatchConditions/RequestConditions parameter in method parameters
+        foreach (var param in methodParameters)
+        {
+            if (IsMatchConditionsType(param.Type))
+            {
+                matchConditionsParam = param;
+                break;
+            }
+        }
+
         // here we always assume that the parameter name matches the parameter name in the request path.
         foreach (var parameter in requestParameters)
         {
@@ -86,7 +101,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 else
                 {
                     // contextual is null then this is a pass through parameter
-                    arguments.Add(FindParameter(methodParameters, parameter));
+                    arguments.Add(FindParameter(methodParameters, parameter, matchConditionsParam, ref matchConditionsAdded));
                 }
             }
             else if (parameter.Type.Equals(typeof(RequestContent)))
@@ -109,18 +124,38 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             else
             {
                 // we did not find it and this parameter does not fall into any known conversion case, so we just pass it through.
-                arguments.Add(FindParameter(methodParameters, parameter));
+                arguments.Add(FindParameter(methodParameters, parameter, matchConditionsParam, ref matchConditionsAdded));
             }
         }
 
         return arguments;
 
-        static ValueExpression FindParameter(IReadOnlyList<ParameterProvider> parameters, ParameterProvider parameterToFind)
+        static ValueExpression FindParameter(
+            IReadOnlyList<ParameterProvider> parameters,
+            ParameterProvider parameterToFind,
+            ParameterProvider? matchConditionsParam,
+            ref bool matchConditionsAdded)
         {
-            var methodParam = parameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameterToFind.WireInfo.SerializedName);
+            var methodParam = parameters.SingleOrDefault(p => p.WireInfo?.SerializedName == parameterToFind.WireInfo.SerializedName);
             if (methodParam != null)
             {
                 return Convert(methodParam, methodParam.Type, parameterToFind.Type);
+            }
+
+            // Check if this is a conditional header parameter (If-Match, If-None-Match, etc.)
+            // that should be mapped to a MatchConditions/RequestConditions parameter
+            if (matchConditionsParam != null && IsConditionalHeader(parameterToFind.WireInfo.SerializedName))
+            {
+                // If we already added the matchConditions argument, skip this parameter
+                // This handles the case where both If-Match and If-None-Match are mapped to a single MatchConditions param
+                if (matchConditionsAdded)
+                {
+                    // Return a special marker that signals this argument should be skipped
+                    // Actually, we can't skip - the REST client expects both parameters
+                    // So we return the same MatchConditions parameter again
+                }
+                matchConditionsAdded = true;
+                return Convert(matchConditionsParam, matchConditionsParam.Type, parameterToFind.Type);
             }
 
             return Default;
@@ -152,5 +187,35 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             // other unhandled cases, we will add when we need them in the future.
             return expression;
         }
+    }
+
+    // Set of header names that correspond to conditional request headers (used by MatchConditions/RequestConditions)
+    private static readonly HashSet<string> _conditionalHeaders = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "If-Match",
+        "ifMatch",
+        "If-None-Match",
+        "ifNoneMatch",
+        "If-Modified-Since",
+        "ifModifiedSince",
+        "If-Unmodified-Since",
+        "ifUnmodifiedSince",
+    };
+
+    /// <summary>
+    /// Checks if the given header name is a conditional request header.
+    /// </summary>
+    private static bool IsConditionalHeader(string headerName)
+    {
+        return _conditionalHeaders.Contains(headerName);
+    }
+
+    /// <summary>
+    /// Checks if the given type is a MatchConditions or RequestConditions type.
+    /// </summary>
+    private static bool IsMatchConditionsType(CSharpType type)
+    {
+        var underlyingType = type.IsNullable ? type.WithNullable(false) : type;
+        return underlyingType.Equals(typeof(MatchConditions)) || underlyingType.Equals(typeof(RequestConditions));
     }
 }

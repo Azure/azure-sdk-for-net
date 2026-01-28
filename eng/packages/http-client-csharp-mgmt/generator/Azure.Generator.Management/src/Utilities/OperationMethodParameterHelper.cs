@@ -6,6 +6,7 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
@@ -16,7 +17,19 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class OperationMethodParameterHelper
     {
-        // TODO -- we should be able to just use the parameters from convenience method. But currently the xml doc provider has some bug that we build the parameters prematurely.
+        // Set of header names that correspond to conditional request headers (used by MatchConditions/RequestConditions)
+        private static readonly HashSet<string> _conditionalHeaders = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "If-Match",
+            "ifMatch",
+            "If-None-Match",
+            "ifNoneMatch",
+            "If-Modified-Since",
+            "ifModifiedSince",
+            "If-Unmodified-Since",
+            "ifUnmodifiedSince",
+        };
+
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             MethodProvider convenienceMethod,
@@ -39,6 +52,20 @@ namespace Azure.Generator.Management.Utilities
                 .Where(p => !p.Type.Equals(typeof(System.Threading.CancellationToken)))
                 .ToDictionary(p => p.Name, p => p);
 
+            // Track whether we've added a MatchConditions/RequestConditions parameter
+            bool matchConditionsAdded = false;
+
+            // Find if there's a MatchConditions/RequestConditions parameter in the convenience method
+            ParameterProvider? matchConditionsParam = null;
+            foreach (var param in convenienceMethod.Signature.Parameters)
+            {
+                if (IsMatchConditionsType(param.Type))
+                {
+                    matchConditionsParam = param;
+                    break;
+                }
+            }
+
             // Loop through service method parameters and check their scope
             foreach (var inputParameter in serviceMethod.Operation.Parameters)
             {
@@ -57,6 +84,21 @@ namespace Azure.Generator.Management.Utilities
                     continue;
                 }
 
+                // Check if this is a conditional header parameter (If-Match, If-None-Match, etc.)
+                bool isConditionalHeaderParam = IsConditionalHeader(tempParameter.WireInfo.SerializedName);
+
+                // If this is a conditional header and we have a MatchConditions parameter, use it instead
+                if (isConditionalHeaderParam && matchConditionsParam != null)
+                {
+                    // Only add the MatchConditions parameter once, even if there are multiple conditional headers
+                    if (!matchConditionsAdded)
+                    {
+                        optionalParameters.Add(matchConditionsParam);
+                        matchConditionsAdded = true;
+                    }
+                    continue;
+                }
+
                 // Try to find corresponding parameter in convenience method by name
                 ParameterProvider? outputParameter = null;
                 var inputParamName = tempParameter.Name;
@@ -71,9 +113,6 @@ namespace Azure.Generator.Management.Utilities
                     // If no match by name, create it from input parameter
                     outputParameter = tempParameter;
                 }
-
-                // TODO -- we should be able to just update the parameters from convenience method.
-                // But currently the xml doc provider has some bug that we build the parameters prematurely, we create new instance here instead.
 
                 // Rename resource model parameters to "data"
                 if (inputParameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
@@ -116,6 +155,23 @@ namespace Azure.Generator.Management.Utilities
             optionalParameters.Add(KnownParameters.CancellationTokenParameter);
 
             return [.. requiredParameters, .. optionalParameters];
+        }
+
+        /// <summary>
+        /// Checks if the given header name is a conditional request header.
+        /// </summary>
+        private static bool IsConditionalHeader(string headerName)
+        {
+            return _conditionalHeaders.Contains(headerName);
+        }
+
+        /// <summary>
+        /// Checks if the given type is a MatchConditions or RequestConditions type.
+        /// </summary>
+        private static bool IsMatchConditionsType(CSharpType type)
+        {
+            var underlyingType = type.IsNullable ? type.WithNullable(false) : type;
+            return underlyingType.Equals(typeof(MatchConditions)) || underlyingType.Equals(typeof(RequestConditions));
         }
 
         private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null)
