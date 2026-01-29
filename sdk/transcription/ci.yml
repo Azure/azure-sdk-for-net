@@ -1,0 +1,27 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/transcription/
+
+parameters:
+  - name: release_azureaispeechtranscription
+    displayName: "Azure.AI.Speech.Transcription"
+    type: boolean
+    default: false
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: transcription
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.AI.Speech.Transcription
+      safeName: AzureAISpeechTranscription
+      releaseInBatch: ${{ parameters.release_azureaispeechtranscription }}
