@@ -449,7 +449,7 @@
   <!--
     Central Package Management Enforcement
     
-    These targets prevent partner teams from bypassing central package version management
+    These targets prevent projects from bypassing central package version management
     by re-enabling VersionOverride or disabling central package management in their
     local Directory.Build.props files.
     
@@ -457,22 +457,16 @@
     to eng/Directory.Packages.props with appropriate conditions.
   -->
   <Target Name="EnforceCentralPackageManagement" BeforeTargets="Restore;Build;CollectPackageReferences">
-    <!-- Block re-enabling VersionOverride (legacy custom SDK property - kept for safety) -->
-    <Error 
-      Condition="'$(EnablePackageVersionOverride)' == 'true'" 
-      Text="Package version overrides are disabled in this repository. Do not set EnablePackageVersionOverride='true'. If you need a specific package version, add a scoped entry to eng/Directory.Packages.props."
-      Code="AZSDK0001" />
-    
-    <!-- Block re-enabling VersionOverride (modern .NET CPM) -->
+    <!-- Block re-enabling VersionOverride -->
     <Error 
       Condition="'$(CentralPackageVersionOverrideEnabled)' == 'true'" 
       Text="Package version overrides are disabled in this repository. Do not set CentralPackageVersionOverrideEnabled='true'. If you need a specific package version, add a scoped entry to eng/Directory.Packages.props."
-      Code="AZSDK0002" />
+      Code="AZSDK0001" />
     
     <!-- Block disabling central package management entirely -->
     <Error 
       Condition="'$(ManagePackageVersionsCentrally)' == 'false'" 
       Text="Central Package Management is required in this repository. Do not set ManagePackageVersionsCentrally='false'."
-      Code="AZSDK0003" />
+      Code="AZSDK0001" />
   </Target>
 </Project>

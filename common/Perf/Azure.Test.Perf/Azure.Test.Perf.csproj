@@ -2,7 +2,7 @@
   <ItemGroup>
     <!--
       Perf framework should depend on lowest version of Azure.Core for maximum compat, allowing test
-      projects to choose a higher version if desired. Version is scoped in eng/Packages.Data.props.
+      projects to choose a higher version if desired. Version is scoped in eng/Directory.Packages.props.
     -->
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="CommandLineParser" />
