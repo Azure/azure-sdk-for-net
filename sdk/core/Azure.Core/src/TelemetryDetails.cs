@@ -15,7 +15,6 @@ namespace Azure.Core
     /// </summary>
     public class TelemetryDetails
     {
-        private const int MaxApplicationIdLength = 24;
         private readonly string _userAgent;
 
         /// <summary>
@@ -35,15 +34,15 @@ namespace Azure.Core
         /// <param name="applicationId">An optional value to be prepended to the <see cref="TelemetryDetails"/>.
         /// This value overrides the behavior of the <see cref="DiagnosticsOptions.ApplicationId"/> property for the <see cref="HttpMessage"/> it is applied to.</param>
         public TelemetryDetails(Assembly assembly, string? applicationId = null)
-            : this(assembly, applicationId, new RuntimeInformationWrapper())
+            : this(assembly, applicationId, new RuntimeInformationWrapper(), maxApplicationIdLength: 24)
         { }
 
-        internal TelemetryDetails(Assembly assembly, string? applicationId = null, RuntimeInformationWrapper? runtimeInformation = default)
+        internal TelemetryDetails(Assembly assembly, string? applicationId = null, RuntimeInformationWrapper? runtimeInformation = default, int maxApplicationIdLength = 24)
         {
             Argument.AssertNotNull(assembly, nameof(assembly));
-            if (applicationId?.Length > MaxApplicationIdLength)
+            if (applicationId != null && applicationId.Length > maxApplicationIdLength)
             {
-                throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
+                throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {maxApplicationIdLength + 1} characters");
             }
 
             Assembly = assembly;

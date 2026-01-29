@@ -233,8 +233,75 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public void DefaultMaxApplicationIdLengthIs24()
+        {
+            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(24);
+            Assert.AreEqual(24, options.GetMaxApplicationIdLength());
+        }
+
+        [Test]
+        public void ApplicationIdExceedingDefaultMaxLengthThrows()
+        {
+            var options = new TestClientOptions();
+            var longApplicationId = new string('a', 25);
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => options.Diagnostics.ApplicationId = longApplicationId);
+            Assert.That(ex.Message, Does.Contain("ApplicationId must be shorter than 25 characters"));
+        }
+
+        [Test]
+        public void ApplicationIdAtDefaultMaxLengthSucceeds()
+        {
+            var options = new TestClientOptions();
+            var applicationId = new string('a', 24);
+
+            options.Diagnostics.ApplicationId = applicationId;
+
+            Assert.AreEqual(applicationId, options.Diagnostics.ApplicationId);
+        }
+
+        [Test]
+        public void DerivedOptionsCanSetCustomMaxApplicationIdLength()
+        {
+            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
+
+            Assert.AreEqual(50, options.GetMaxApplicationIdLength());
+        }
+
+        [Test]
+        public void CustomMaxApplicationIdLengthAllowsLongerApplicationId()
+        {
+            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
+            var longApplicationId = new string('a', 50);
+
+            options.Diagnostics.ApplicationId = longApplicationId;
+
+            Assert.AreEqual(longApplicationId, options.Diagnostics.ApplicationId);
+        }
+
+        [Test]
+        public void CustomMaxApplicationIdLengthStillEnforcesLimit()
+        {
+            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
+            var tooLongApplicationId = new string('a', 51);
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => options.Diagnostics.ApplicationId = tooLongApplicationId);
+            Assert.That(ex.Message, Does.Contain("ApplicationId must be shorter than 51 characters"));
+        }
+
         private class TestClientOptions : ClientOptions
         {
+        }
+
+        private class TestClientOptionsWithCustomMaxApplicationIdLength : ClientOptions
+        {
+            public TestClientOptionsWithCustomMaxApplicationIdLength(int maxApplicationIdLength)
+            {
+                MaxApplicationIdLength = maxApplicationIdLength;
+            }
+
+            public int GetMaxApplicationIdLength() => MaxApplicationIdLength;
         }
 
         private class TestDiagnosticsOptions : DiagnosticsOptions

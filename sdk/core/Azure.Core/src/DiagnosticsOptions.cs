@@ -15,9 +15,12 @@ namespace Azure.Core
     /// </summary>
     public class DiagnosticsOptions
     {
-        private const int MaxApplicationIdLength = 24;
-
         private string? _applicationId;
+
+        /// <summary>
+        /// Gets or sets the maximum allowed length for <see cref="ApplicationId"/>. Defaults to 24.
+        /// </summary>
+        internal int MaxApplicationIdLength { get; set; } = 24;
 
         /// <summary>
         /// Creates a new instance of <see cref="DiagnosticsOptions"/> with default values.
@@ -98,6 +101,7 @@ namespace Azure.Core
         {
             if (diagnosticsOptions != null)
             {
+                MaxApplicationIdLength = diagnosticsOptions.MaxApplicationIdLength;
                 ApplicationId = diagnosticsOptions.ApplicationId;
                 IsLoggingEnabled = diagnosticsOptions.IsLoggingEnabled;
                 IsTelemetryEnabled = diagnosticsOptions.IsTelemetryEnabled;

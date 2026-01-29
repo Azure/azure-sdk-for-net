@@ -53,6 +53,44 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ApplicationIdExceedingDefaultMaxLengthThrows()
+        {
+            var longApplicationId = new string('a', 25);
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, longApplicationId));
+            Assert.That(ex.Message, Does.Contain("applicationId must be shorter than 25 characters"));
+        }
+
+        [Test]
+        public void ApplicationIdAtDefaultMaxLengthSucceeds()
+        {
+            var applicationId = new string('a', 24);
+
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, applicationId);
+
+            Assert.AreEqual(applicationId, target.ApplicationId);
+        }
+
+        [Test]
+        public void CustomMaxApplicationIdLengthAllowsLongerApplicationId()
+        {
+            var longApplicationId = new string('a', 50);
+
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, longApplicationId, maxApplicationIdLength: 50);
+
+            Assert.AreEqual(longApplicationId, target.ApplicationId);
+        }
+
+        [Test]
+        public void CustomMaxApplicationIdLengthStillEnforcesLimit()
+        {
+            var tooLongApplicationId = new string('a', 51);
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, tooLongApplicationId, maxApplicationIdLength: 50));
+            Assert.That(ex.Message, Does.Contain("applicationId must be shorter than 51 characters"));
+        }
+
+        [Test]
         public void AppliesToMessage()
         {
             var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, default);
