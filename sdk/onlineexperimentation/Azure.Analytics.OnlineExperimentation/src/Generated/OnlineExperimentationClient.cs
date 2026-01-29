@@ -417,15 +417,15 @@ namespace Azure.Analytics.OnlineExperimentation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetMetrics(int? top, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetMetrics(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            return new OnlineExperimentationClientGetMetricsCollectionResult(this, top, skip, maxpagesize, context);
+            return new OnlineExperimentationClientGetMetricsCollectionResult(this, maxCount, skip, maxpagesize, context);
         }
 
         /// <summary>
@@ -436,37 +436,37 @@ namespace Azure.Analytics.OnlineExperimentation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetMetricsAsync(int? top, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetMetricsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            return new OnlineExperimentationClientGetMetricsAsyncCollectionResult(this, top, skip, maxpagesize, context);
+            return new OnlineExperimentationClientGetMetricsAsyncCollectionResult(this, maxCount, skip, maxpagesize, context);
         }
 
         /// <summary> Lists experiment metrics. </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ExperimentMetric> GetMetrics(int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ExperimentMetric> GetMetrics(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new OnlineExperimentationClientGetMetricsCollectionResultOfT(this, top, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new OnlineExperimentationClientGetMetricsCollectionResultOfT(this, maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Lists experiment metrics. </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ExperimentMetric> GetMetricsAsync(int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ExperimentMetric> GetMetricsAsync(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new OnlineExperimentationClientGetMetricsAsyncCollectionResultOfT(this, top, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new OnlineExperimentationClientGetMetricsAsyncCollectionResultOfT(this, maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
     }
 }
