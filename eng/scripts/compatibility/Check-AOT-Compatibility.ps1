@@ -66,8 +66,7 @@ $csprojContent = @"
       <TrimmerRootAssembly Include="$PackageNameFromPath" />
   </ItemGroup>
   <ItemGroup>
-    <!-- Update this dependency to its latest, which has all the annotations -->
-    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" />
   </ItemGroup>
 </Project>
 "@
