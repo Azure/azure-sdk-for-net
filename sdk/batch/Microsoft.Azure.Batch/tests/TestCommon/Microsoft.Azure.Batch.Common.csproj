@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Batch" />
-    <!-- Legacy ADAL version scoped in eng/Packages.Data.props -->
+    <!-- Legacy ADAL version scoped in eng/Directory.Packages.props -->
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" />
   </ItemGroup>
 </Project>

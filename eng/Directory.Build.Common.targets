@@ -191,8 +191,6 @@
 
   <!-- CentralPackageVersions properties -->
   <PropertyGroup>
-    <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>
-    <CentralPackageVersionPackagePath>$(MSBuildThisFileDirectory)Microsoft.Build.CentralPackageVersions\2.0.46\Sdk</CentralPackageVersionPackagePath>
     <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
     
     <!-- Disable package version overrides to enforce central package management -->

@@ -831,7 +831,8 @@ try {
                 "eng/packages/http-client-csharp/package-lock.json"
                 "eng/packages/http-client-csharp-mgmt/package.json"
                 "eng/packages/http-client-csharp-mgmt/package-lock.json"
-                "eng/Packages.Data.props"
+                "eng/Directory.Packages.props"
+                "eng/Packages.Legacy.props"
                 "NuGet.Config"
             )
             $restoreCmd = "git restore $($filesToRestore -join ' ')"
