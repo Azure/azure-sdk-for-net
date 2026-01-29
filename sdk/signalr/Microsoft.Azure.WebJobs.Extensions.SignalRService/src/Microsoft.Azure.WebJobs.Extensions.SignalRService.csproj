@@ -21,6 +21,7 @@
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
