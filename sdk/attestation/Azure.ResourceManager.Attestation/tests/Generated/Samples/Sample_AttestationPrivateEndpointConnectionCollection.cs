@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Attestation.Samples
             string privateEndpointConnectionName = "{privateEndpointConnectionName}";
             AttestationPrivateEndpointConnectionData data = new AttestationPrivateEndpointConnectionData
             {
-                ConnectionState = new AttestationPrivateLinkServiceConnectionState
+                PrivateLinkServiceConnectionState = new AttestationPrivateLinkServiceConnectionState
                 {
                     Status = AttestationPrivateEndpointServiceConnectionStatus.Approved,
                     Description = "Auto-Approved",

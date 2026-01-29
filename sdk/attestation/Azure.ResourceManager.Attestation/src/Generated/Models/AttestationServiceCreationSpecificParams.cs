@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Client supplied parameters used to create a new attestation provider. </summary>
     public partial class AttestationServiceCreationSpecificParams
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AttestationServiceCreationSpecificParams"/>. </summary>
         public AttestationServiceCreationSpecificParams()
@@ -53,18 +24,25 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Initializes a new instance of <see cref="AttestationServiceCreationSpecificParams"/>. </summary>
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
         /// <param name="policySigningCertificates"> JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationServiceCreationSpecificParams(PublicNetworkAccessType? publicNetworkAccess, JsonWebKeySet policySigningCertificates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationServiceCreationSpecificParams(AttestationPublicNetworkAccessType? publicNetworkAccess, JsonWebKeySet policySigningCertificates, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicNetworkAccess = publicNetworkAccess;
             PolicySigningCertificates = policySigningCertificates;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            TpmAttestationAuthentication = tpmAttestationAuthentication;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+        public AttestationPublicNetworkAccessType? PublicNetworkAccess { get; set; }
+
         /// <summary> JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations. </summary>
         internal JsonWebKeySet PolicySigningCertificates { get; set; }
+
+        /// <summary> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </summary>
+        public TpmAttestationAuthenticationType? TpmAttestationAuthentication { get; set; }
+
         /// <summary>
         /// The value of the "keys" parameter is an array of JWK values.  By
         /// default, the order of the JWK values within the array does not imply
@@ -72,12 +50,14 @@ namespace Azure.ResourceManager.Attestation.Models
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
         /// </summary>
-        public IList<JsonWebKey> PolicySigningCertificatesKeys
+        public IList<AttestationJsonWebKey> PolicySigningCertificatesKeys
         {
             get
             {
                 if (PolicySigningCertificates is null)
+                {
                     PolicySigningCertificates = new JsonWebKeySet();
+                }
                 return PolicySigningCertificates.Keys;
             }
         }
