@@ -1,5 +1,6 @@
 parameters:
   InstallDirectory: $(Agent.TempDirectory)
+  SourceRootPath: '$(System.DefaultWorkingDirectory)'
 
 steps:
   - task: Powershell@2
@@ -7,9 +8,9 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        ./eng/common/mcp/azure-sdk-mcp.ps1 -InstallDirectory ${{ parameters.InstallDirectory }}
+        & "${{ parameters.SourceRootPath }}/eng/common/mcp/azure-sdk-mcp.ps1" -InstallDirectory ${{ parameters.InstallDirectory }}
         $azsdkPath = Join-Path "${{ parameters.InstallDirectory }}" "azsdk"
         Write-Host "##vso[task.setvariable variable=AZSDK]$azsdkPath"
         Write-Host "Set AZSDK variable to: $azsdkPath"
       pwsh: true
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      workingDirectory: $(Pipeline.Workspace)
