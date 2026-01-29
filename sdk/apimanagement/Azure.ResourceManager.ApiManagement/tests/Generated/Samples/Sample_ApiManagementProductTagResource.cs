@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetProductTag()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetProductTag.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetProductTag.json
             // this example is just showing the usage of "Tag_GetByProduct" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteProductTag()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteProductTag.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementDeleteProductTag.json
             // this example is just showing the usage of "Tag_DetachFromProduct" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementCreateProductTag()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateProductTag.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateProductTag.json
             // this example is just showing the usage of "Tag_AssignToProduct" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetEntityStateByProduct_ApiManagementHeadProductTag()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadProductTag.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementHeadProductTag.json
             // this example is just showing the usage of "Tag_GetEntityStateByProduct" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

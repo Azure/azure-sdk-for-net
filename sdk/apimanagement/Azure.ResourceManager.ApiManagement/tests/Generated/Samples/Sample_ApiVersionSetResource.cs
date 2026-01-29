@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetApiVersionSet()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetApiVersionSet.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetApiVersionSet.json
             // this example is just showing the usage of "ApiVersionSet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteApiVersionSet()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteApiVersionSet.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementDeleteApiVersionSet.json
             // this example is just showing the usage of "ApiVersionSet_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateApiVersionSet()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateApiVersionSet.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementUpdateApiVersionSet.json
             // this example is just showing the usage of "ApiVersionSet_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetEntityTag_ApiManagementHeadApiVersionSet()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadApiVersionSet.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementHeadApiVersionSet.json
             // this example is just showing the usage of "ApiVersionSet_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

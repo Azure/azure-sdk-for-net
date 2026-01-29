@@ -60,12 +60,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="id"> The unique ARM id of the backend entity. The ARM id should refer to an already existing backend entity. </param>
         /// <param name="weight"> The weight of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified. </param>
         /// <param name="priority"> The priority of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified. </param>
+        /// <param name="preferredCarbonEmission"> Scope 2 carbon emission preference for the backend. When specified, the load balancer will optimize traffic flow by routing to regions that have carbon emission less than or equal to the specified category. However, when all other backends are not available it will route traffic to these regions anyway. This requires the backend to be attributed with 'azureRegion' information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackendPoolItem(ResourceIdentifier id, int? weight, int? priority, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackendPoolItem(ResourceIdentifier id, int? weight, int? priority, CarbonEmissionCategory? preferredCarbonEmission, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Weight = weight;
             Priority = priority;
+            PreferredCarbonEmission = preferredCarbonEmission;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,5 +85,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The priority of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified. </summary>
         [WirePath("priority")]
         public int? Priority { get; set; }
+        /// <summary> Scope 2 carbon emission preference for the backend. When specified, the load balancer will optimize traffic flow by routing to regions that have carbon emission less than or equal to the specified category. However, when all other backends are not available it will route traffic to these regions anyway. This requires the backend to be attributed with 'azureRegion' information. </summary>
+        [WirePath("preferredCarbonEmission")]
+        public CarbonEmissionCategory? PreferredCarbonEmission { get; set; }
     }
 }

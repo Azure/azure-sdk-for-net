@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiClone()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApiClone.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApiClone.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiNewVersionUsingExistingApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApiNewVersionUsingExistingApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApiNewVersionUsingExistingApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiRevisionFromExistingApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApiRevisionFromExistingApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApiRevisionFromExistingApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiUsingImportOverrideServiceUrl()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApiUsingImportOverrideServiceUrl.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApiUsingImportOverrideServiceUrl.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiUsingOai3Import()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApiUsingOai3Import.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApiUsingOai3Import.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiUsingOai3ImportWithTranslateRequiredQueryParametersConduct()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApiUsingOai3ImportWithTranslateRequiredQueryParametersConduct.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApiUsingOai3ImportWithTranslateRequiredQueryParametersConduct.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiUsingSwaggerImport()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApiUsingSwaggerImport.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApiUsingSwaggerImport.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiUsingWadlImport()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApiUsingWadlImport.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApiUsingWadlImport.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiWithMultipleAuthServers()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApiWithMultipleAuthServers.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApiWithMultipleAuthServers.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -479,7 +479,7 @@ Scope = "oauth2scope2581",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiWithMultipleOpenIdConnectProviders()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApiWithMultipleOpenIdConnectProviders.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApiWithMultipleOpenIdConnectProviders.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -539,7 +539,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiWithOpenIdConnect()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateApiWithOpenIdConnect.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateApiWithOpenIdConnect.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -595,7 +595,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateGraphQLApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateGraphQLApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateGraphQLApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -639,7 +639,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateGrpcApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateGrpcApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateGrpcApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -685,7 +685,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateODataApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateODataApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateODataApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -731,7 +731,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateSoapPassThroughApiUsingWsdlImport()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateSoapPassThroughApiUsingWsdlImport.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateSoapPassThroughApiUsingWsdlImport.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -778,7 +778,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateSoapToRestApiUsingWsdlImport()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateSoapToRestApiUsingWsdlImport.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateSoapToRestApiUsingWsdlImport.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -824,7 +824,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateWebSocketApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWebsocketApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateWebsocketApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -868,7 +868,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetApiContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetApiContract.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetApiContract.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -902,7 +902,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetApiRevisionContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetApiRevision.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetApiRevision.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -936,7 +936,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ApiManagementListApis()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListApis.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListApis.json
             // this example is just showing the usage of "Api_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -972,7 +972,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementGetApiContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetApiContract.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetApiContract.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1002,7 +1002,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementGetApiRevisionContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetApiRevision.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetApiRevision.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1032,7 +1032,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementGetApiContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetApiContract.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetApiContract.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1074,7 +1074,7 @@ BearerTokenSendingMethods = {BearerTokenSendingMethod.AuthorizationHeader},
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementGetApiRevisionContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetApiRevision.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetApiRevision.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The Key being regenerated. </summary>
+    /// <summary> The Key to be used to generate token for user. </summary>
     public enum GatewayRegenerateKeyType
     {
         /// <summary> primary. </summary>

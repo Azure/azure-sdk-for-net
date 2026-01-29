@@ -95,73 +95,73 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ServiceWorkspaceApiReleaseResources in the ServiceWorkspaceApi. </summary>
-        /// <returns> An object representing collection of ServiceWorkspaceApiReleaseResources and their operations over a ServiceWorkspaceApiReleaseResource. </returns>
-        public virtual ServiceWorkspaceApiReleaseCollection GetServiceWorkspaceApiReleases()
+        /// <summary> Gets a collection of ServiceWorkspaceApiDiagnosticResources in the ServiceWorkspaceApi. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceApiDiagnosticResources and their operations over a ServiceWorkspaceApiDiagnosticResource. </returns>
+        public virtual ServiceWorkspaceApiDiagnosticCollection GetServiceWorkspaceApiDiagnostics()
         {
-            return GetCachedClient(client => new ServiceWorkspaceApiReleaseCollection(client, Id));
+            return GetCachedClient(client => new ServiceWorkspaceApiDiagnosticCollection(client, Id));
         }
 
         /// <summary>
-        /// Returns the details of an API release.
+        /// Gets the details of the Diagnostic for an API specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/releases/{releaseId}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/diagnostics/{diagnosticId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkspaceApiRelease_Get</description>
+        /// <description>WorkspaceApiDiagnostic_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiReleaseResource"/></description>
+        /// <description><see cref="ServiceWorkspaceApiDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceWorkspaceApiReleaseResource>> GetServiceWorkspaceApiReleaseAsync(string releaseId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceApiDiagnosticResource>> GetServiceWorkspaceApiDiagnosticAsync(string diagnosticId, CancellationToken cancellationToken = default)
         {
-            return await GetServiceWorkspaceApiReleases().GetAsync(releaseId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceWorkspaceApiDiagnostics().GetAsync(diagnosticId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Returns the details of an API release.
+        /// Gets the details of the Diagnostic for an API specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/releases/{releaseId}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/diagnostics/{diagnosticId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkspaceApiRelease_Get</description>
+        /// <description>WorkspaceApiDiagnostic_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiReleaseResource"/></description>
+        /// <description><see cref="ServiceWorkspaceApiDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceWorkspaceApiReleaseResource> GetServiceWorkspaceApiRelease(string releaseId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceApiDiagnosticResource> GetServiceWorkspaceApiDiagnostic(string diagnosticId, CancellationToken cancellationToken = default)
         {
-            return GetServiceWorkspaceApiReleases().Get(releaseId, cancellationToken);
+            return GetServiceWorkspaceApiDiagnostics().Get(diagnosticId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceWorkspaceApiOperationResources in the ServiceWorkspaceApi. </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -298,6 +298,75 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<ServiceWorkspaceApiPolicyResource> GetServiceWorkspaceApiPolicy(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             return GetServiceWorkspaceApiPolicies().Get(policyId, format, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceWorkspaceApiReleaseResources in the ServiceWorkspaceApi. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceApiReleaseResources and their operations over a ServiceWorkspaceApiReleaseResource. </returns>
+        public virtual ServiceWorkspaceApiReleaseCollection GetServiceWorkspaceApiReleases()
+        {
+            return GetCachedClient(client => new ServiceWorkspaceApiReleaseCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns the details of an API release.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/releases/{releaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceApiRelease_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceWorkspaceApiReleaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceWorkspaceApiReleaseResource>> GetServiceWorkspaceApiReleaseAsync(string releaseId, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceWorkspaceApiReleases().GetAsync(releaseId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the details of an API release.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/releases/{releaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceApiRelease_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceWorkspaceApiReleaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceWorkspaceApiReleaseResource> GetServiceWorkspaceApiRelease(string releaseId, CancellationToken cancellationToken = default)
+        {
+            return GetServiceWorkspaceApiReleases().Get(releaseId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceWorkspaceApiSchemaResources in the ServiceWorkspaceApi. </summary>
@@ -320,7 +389,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +420,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,75 +438,6 @@ namespace Azure.ResourceManager.ApiManagement
             return GetServiceWorkspaceApiSchemas().Get(schemaId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceWorkspaceApiDiagnosticResources in the ServiceWorkspaceApi. </summary>
-        /// <returns> An object representing collection of ServiceWorkspaceApiDiagnosticResources and their operations over a ServiceWorkspaceApiDiagnosticResource. </returns>
-        public virtual ServiceWorkspaceApiDiagnosticCollection GetServiceWorkspaceApiDiagnostics()
-        {
-            return GetCachedClient(client => new ServiceWorkspaceApiDiagnosticCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the Diagnostic for an API specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/diagnostics/{diagnosticId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiDiagnostic_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiDiagnosticResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceWorkspaceApiDiagnosticResource>> GetServiceWorkspaceApiDiagnosticAsync(string diagnosticId, CancellationToken cancellationToken = default)
-        {
-            return await GetServiceWorkspaceApiDiagnostics().GetAsync(diagnosticId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of the Diagnostic for an API specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/diagnostics/{diagnosticId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiDiagnostic_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiDiagnosticResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ServiceWorkspaceApiDiagnosticResource> GetServiceWorkspaceApiDiagnostic(string diagnosticId, CancellationToken cancellationToken = default)
-        {
-            return GetServiceWorkspaceApiDiagnostics().Get(diagnosticId, cancellationToken);
-        }
-
         /// <summary>
         /// Gets the details of the API specified by its identifier.
         /// <list type="bullet">
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

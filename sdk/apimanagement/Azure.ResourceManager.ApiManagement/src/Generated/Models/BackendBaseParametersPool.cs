@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> The BackendBaseParametersPool. </summary>
-    internal partial class BackendBaseParametersPool : BackendPool
+    public partial class BackendBaseParametersPool : BackendPool
     {
         /// <summary> Initializes a new instance of <see cref="BackendBaseParametersPool"/>. </summary>
         public BackendBaseParametersPool()
@@ -20,8 +20,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="BackendBaseParametersPool"/>. </summary>
         /// <param name="services"> The list of backend entities belonging to a pool. </param>
+        /// <param name="failureResponse"> The response to be returned when all the backends in the pool are inactive. </param>
+        /// <param name="sessionAffinity"> The session stickiness properties of the backend pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackendBaseParametersPool(IList<BackendPoolItem> services, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(services, serializedAdditionalRawData)
+        internal BackendBaseParametersPool(IList<BackendPoolItem> services, BackendFailureResponse failureResponse, BackendSessionAffinity sessionAffinity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(services, failureResponse, sessionAffinity, serializedAdditionalRawData)
         {
         }
     }

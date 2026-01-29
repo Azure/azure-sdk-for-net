@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
+            if (Optional.IsDefined(PreferredCarbonEmission))
+            {
+                writer.WritePropertyName("preferredCarbonEmission"u8);
+                writer.WriteStringValue(PreferredCarbonEmission.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,6 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             int? weight = default;
             int? priority = default;
+            CarbonEmissionCategory? preferredCarbonEmission = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,13 +120,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     priority = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("preferredCarbonEmission"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preferredCarbonEmission = new CarbonEmissionCategory(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BackendPoolItem(id, weight, priority, serializedAdditionalRawData);
+            return new BackendPoolItem(id, weight, priority, preferredCarbonEmission, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -176,6 +191,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     builder.Append("  priority: ");
                     builder.AppendLine($"{Priority.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredCarbonEmission), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preferredCarbonEmission: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreferredCarbonEmission))
+                {
+                    builder.Append("  preferredCarbonEmission: ");
+                    builder.AppendLine($"'{PreferredCarbonEmission.Value.ToString()}'");
                 }
             }
 

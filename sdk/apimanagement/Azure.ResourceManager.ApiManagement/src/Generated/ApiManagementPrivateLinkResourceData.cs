@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing the ApiManagementPrivateLinkResource data model.
-    /// A private link resource
+    /// A private link resource.
     /// </summary>
     public partial class ApiManagementPrivateLinkResourceData : ResourceData
     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> The private link resource required member names. </summary>
         [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary> The private link resource Private link DNS zone name. </summary>
+        /// <summary> The private link resource private link DNS zone name. </summary>
         [WirePath("properties.requiredZoneNames")]
         public IList<string> RequiredZoneNames { get; }
     }

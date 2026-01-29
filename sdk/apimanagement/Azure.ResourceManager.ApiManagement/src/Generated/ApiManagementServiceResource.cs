@@ -48,16 +48,12 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ContentTypeRestOperations _contentTypeRestClient;
         private readonly ClientDiagnostics _contentItemClientDiagnostics;
         private readonly ContentItemRestOperations _contentItemRestClient;
-        private readonly ClientDiagnostics _apiManagementServiceSkusClientDiagnostics;
-        private readonly ApiManagementServiceSkusRestOperations _apiManagementServiceSkusRestClient;
         private readonly ClientDiagnostics _networkStatusClientDiagnostics;
         private readonly NetworkStatusRestOperations _networkStatusRestClient;
         private readonly ClientDiagnostics _outboundNetworkDependenciesEndpointsClientDiagnostics;
         private readonly OutboundNetworkDependenciesEndpointsRestOperations _outboundNetworkDependenciesEndpointsRestClient;
         private readonly ClientDiagnostics _policyDescriptionClientDiagnostics;
         private readonly PolicyDescriptionRestOperations _policyDescriptionRestClient;
-        private readonly ClientDiagnostics _policyRestrictionValidationsClientDiagnostics;
-        private readonly PolicyRestrictionValidationsRestOperations _policyRestrictionValidationsRestClient;
         private readonly ClientDiagnostics _apiManagementServicePortalSettingsClientDiagnostics;
         private readonly PortalSettingsRestOperations _apiManagementServicePortalSettingsRestClient;
         private readonly ClientDiagnostics _apiManagementProductProductClientDiagnostics;
@@ -70,10 +66,14 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly RegionRestOperations _regionRestClient;
         private readonly ClientDiagnostics _reportsClientDiagnostics;
         private readonly ReportsRestOperations _reportsRestClient;
+        private readonly ClientDiagnostics _apiManagementServiceSkusClientDiagnostics;
+        private readonly ApiManagementServiceSkusRestOperations _apiManagementServiceSkusRestClient;
         private readonly ClientDiagnostics _tagResourceClientDiagnostics;
         private readonly TagResourceRestOperations _tagResourceRestClient;
         private readonly ClientDiagnostics _tenantConfigurationClientDiagnostics;
         private readonly TenantConfigurationRestOperations _tenantConfigurationRestClient;
+        private readonly ClientDiagnostics _policyRestrictionValidationsClientDiagnostics;
+        private readonly PolicyRestrictionValidationsRestOperations _policyRestrictionValidationsRestClient;
         private readonly ApiManagementServiceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -112,16 +112,12 @@ namespace Azure.ResourceManager.ApiManagement
             _contentTypeRestClient = new ContentTypeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _contentItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _contentItemRestClient = new ContentItemRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _apiManagementServiceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _apiManagementServiceSkusRestClient = new ApiManagementServiceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _networkStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _networkStatusRestClient = new NetworkStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _outboundNetworkDependenciesEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _outboundNetworkDependenciesEndpointsRestClient = new OutboundNetworkDependenciesEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _policyDescriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _policyDescriptionRestClient = new PolicyDescriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _policyRestrictionValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _policyRestrictionValidationsRestClient = new PolicyRestrictionValidationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _apiManagementServicePortalSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string apiManagementServicePortalSettingsApiVersion);
             _apiManagementServicePortalSettingsRestClient = new PortalSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServicePortalSettingsApiVersion);
@@ -136,10 +132,14 @@ namespace Azure.ResourceManager.ApiManagement
             _regionRestClient = new RegionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _reportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _reportsRestClient = new ReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _apiManagementServiceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _apiManagementServiceSkusRestClient = new ApiManagementServiceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _tagResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _tagResourceRestClient = new TagResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _tenantConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _tenantConfigurationRestClient = new TenantConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _policyRestrictionValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _policyRestrictionValidationsRestClient = new PolicyRestrictionValidationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -166,6 +166,75 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ApiVersionSetResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiVersionSetResources and their operations over a ApiVersionSetResource. </returns>
+        public virtual ApiVersionSetCollection GetApiVersionSets()
+        {
+            return GetCachedClient(client => new ApiVersionSetCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the Api Version Set specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiVersionSet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiVersionSetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiVersionSetResource>> GetApiVersionSetAsync(string versionSetId, CancellationToken cancellationToken = default)
+        {
+            return await GetApiVersionSets().GetAsync(versionSetId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Api Version Set specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiVersionSet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiVersionSetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiVersionSetResource> GetApiVersionSet(string versionSetId, CancellationToken cancellationToken = default)
+        {
+            return GetApiVersionSets().Get(versionSetId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ApiResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ApiResources and their operations over a ApiResource. </returns>
         public virtual ApiCollection GetApis()
@@ -186,7 +255,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -217,7 +286,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -233,142 +302,6 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<ApiResource> GetApi(string apiId, CancellationToken cancellationToken = default)
         {
             return GetApis().Get(apiId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApiManagementPolicyResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiManagementPolicyResources and their operations over a ApiManagementPolicyResource. </returns>
-        public virtual ApiManagementPolicyCollection GetApiManagementPolicies()
-        {
-            return GetCachedClient(client => new ApiManagementPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the Global policy definition of the Api Management service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policy_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="format"> Policy Export Format. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementPolicyResource>> GetApiManagementPolicyAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
-        {
-            return await GetApiManagementPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the Global policy definition of the Api Management service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policy_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="format"> Policy Export Format. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ApiManagementPolicyResource> GetApiManagementPolicy(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
-        {
-            return GetApiManagementPolicies().Get(policyId, format, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApiManagementTagResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiManagementTagResources and their operations over a ApiManagementTagResource. </returns>
-        public virtual ApiManagementTagCollection GetApiManagementTags()
-        {
-            return GetCachedClient(client => new ApiManagementTagCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the tag specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Tag_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementTagResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementTagResource>> GetApiManagementTagAsync(string tagId, CancellationToken cancellationToken = default)
-        {
-            return await GetApiManagementTags().GetAsync(tagId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of the tag specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Tag_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementTagResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiManagementTagResource> GetApiManagementTag(string tagId, CancellationToken cancellationToken = default)
-        {
-            return GetApiManagementTags().Get(tagId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementDiagnosticResources in the ApiManagementService. </summary>
@@ -391,7 +324,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -422,7 +355,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +393,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -491,7 +424,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -509,73 +442,140 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementIssues().Get(issueId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiVersionSetResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiVersionSetResources and their operations over a ApiVersionSetResource. </returns>
-        public virtual ApiVersionSetCollection GetApiVersionSets()
+        /// <summary> Gets a collection of ApiManagementPolicyResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementPolicyResources and their operations over a ApiManagementPolicyResource. </returns>
+        public virtual ApiManagementPolicyCollection GetApiManagementPolicies()
         {
-            return GetCachedClient(client => new ApiVersionSetCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementPolicyCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets the details of the Api Version Set specified by its identifier.
+        /// Get the Global policy definition of the Api Management service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApiVersionSet_Get</description>
+        /// <description>Policy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiVersionSetResource"/></description>
+        /// <description><see cref="ApiManagementPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiVersionSetResource>> GetApiVersionSetAsync(string versionSetId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementPolicyResource>> GetApiManagementPolicyAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            return await GetApiVersionSets().GetAsync(versionSetId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets the details of the Api Version Set specified by its identifier.
+        /// Get the Global policy definition of the Api Management service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApiVersionSet_Get</description>
+        /// <description>Policy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiVersionSetResource"/></description>
+        /// <description><see cref="ApiManagementPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiVersionSetResource> GetApiVersionSet(string versionSetId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementPolicyResource> GetApiManagementPolicy(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            return GetApiVersionSets().Get(versionSetId, cancellationToken);
+            return GetApiManagementPolicies().Get(policyId, format, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiManagementTagResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementTagResources and their operations over a ApiManagementTagResource. </returns>
+        public virtual ApiManagementTagCollection GetApiManagementTags()
+        {
+            return GetCachedClient(client => new ApiManagementTagCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the tag specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tag_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiManagementTagResource>> GetApiManagementTagAsync(string tagId, CancellationToken cancellationToken = default)
+        {
+            return await GetApiManagementTags().GetAsync(tagId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the tag specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tag_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementTagResource> GetApiManagementTag(string tagId, CancellationToken cancellationToken = default)
+        {
+            return GetApiManagementTags().Get(tagId, cancellationToken);
         }
 
         /// <summary> Gets a collection of AuthorizationProviderContractResources in the ApiManagementService. </summary>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -921,6 +921,75 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<ApiManagementCertificateResource> GetApiManagementCertificate(string certificateId, CancellationToken cancellationToken = default)
         {
             return GetApiManagementCertificates().Get(certificateId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ClientApplicationContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ClientApplicationContractResources and their operations over a ClientApplicationContractResource. </returns>
+        public virtual ClientApplicationContractCollection GetClientApplicationContracts()
+        {
+            return GetCachedClient(client => new ClientApplicationContractCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the client application specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/clientApplications/{clientApplicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClientApplication_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ClientApplicationContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientApplicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ClientApplicationContractResource>> GetClientApplicationContractAsync(string clientApplicationId, CancellationToken cancellationToken = default)
+        {
+            return await GetClientApplicationContracts().GetAsync(clientApplicationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the client application specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/clientApplications/{clientApplicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClientApplication_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ClientApplicationContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientApplicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ClientApplicationContractResource> GetClientApplicationContract(string clientApplicationId, CancellationToken cancellationToken = default)
+        {
+            return GetClientApplicationContracts().Get(clientApplicationId, cancellationToken);
         }
 
         /// <summary> Gets a collection of DocumentationContractResources in the ApiManagementService. </summary>
@@ -943,7 +1012,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -974,7 +1043,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -990,71 +1059,6 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<DocumentationContractResource> GetDocumentationContract(string documentationId, CancellationToken cancellationToken = default)
         {
             return GetDocumentationContracts().Get(documentationId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApiManagementEmailTemplateResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiManagementEmailTemplateResources and their operations over a ApiManagementEmailTemplateResource. </returns>
-        public virtual ApiManagementEmailTemplateCollection GetApiManagementEmailTemplates()
-        {
-            return GetCachedClient(client => new ApiManagementEmailTemplateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the email template specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates/{templateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EmailTemplate_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementEmailTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="templateName"> Email Template Name Identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementEmailTemplateResource>> GetApiManagementEmailTemplateAsync(TemplateName templateName, CancellationToken cancellationToken = default)
-        {
-            return await GetApiManagementEmailTemplates().GetAsync(templateName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of the email template specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates/{templateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EmailTemplate_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementEmailTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="templateName"> Email Template Name Identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ApiManagementEmailTemplateResource> GetApiManagementEmailTemplate(TemplateName templateName, CancellationToken cancellationToken = default)
-        {
-            return GetApiManagementEmailTemplates().Get(templateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementGatewayResources in the ApiManagementService. </summary>
@@ -1077,7 +1081,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1108,7 +1112,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1146,7 +1150,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1177,7 +1181,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1215,7 +1219,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1244,7 +1248,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1280,7 +1284,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1311,7 +1315,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1349,7 +1353,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1380,7 +1384,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1418,7 +1422,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1447,7 +1451,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1483,7 +1487,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1514,7 +1518,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1552,7 +1556,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1584,7 +1588,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1623,7 +1627,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1654,7 +1658,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1670,75 +1674,6 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<PolicyRestrictionContractResource> GetPolicyRestrictionContract(string policyRestrictionId, CancellationToken cancellationToken = default)
         {
             return GetPolicyRestrictionContracts().Get(policyRestrictionId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PortalConfigContractResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of PortalConfigContractResources and their operations over a PortalConfigContractResource. </returns>
-        public virtual PortalConfigContractCollection GetPortalConfigContracts()
-        {
-            return GetCachedClient(client => new PortalConfigContractCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the developer portal configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="portalConfigId"> Portal configuration identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PortalConfigContractResource>> GetPortalConfigContractAsync(string portalConfigId, CancellationToken cancellationToken = default)
-        {
-            return await GetPortalConfigContracts().GetAsync(portalConfigId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the developer portal configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="portalConfigId"> Portal configuration identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PortalConfigContractResource> GetPortalConfigContract(string portalConfigId, CancellationToken cancellationToken = default)
-        {
-            return GetPortalConfigContracts().Get(portalConfigId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementPortalRevisionResources in the ApiManagementService. </summary>
@@ -1761,7 +1696,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1792,7 +1727,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1810,6 +1745,82 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementPortalRevisions().Get(portalRevisionId, cancellationToken);
         }
 
+        /// <summary> Gets a collection of PortalConfigContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of PortalConfigContractResources and their operations over a PortalConfigContractResource. </returns>
+        public virtual PortalConfigContractCollection GetPortalConfigContracts()
+        {
+            return GetCachedClient(client => new PortalConfigContractCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the developer portal configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PortalConfig_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portalConfigId"> Portal configuration identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PortalConfigContractResource>> GetPortalConfigContractAsync(string portalConfigId, CancellationToken cancellationToken = default)
+        {
+            return await GetPortalConfigContracts().GetAsync(portalConfigId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the developer portal configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PortalConfig_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portalConfigId"> Portal configuration identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PortalConfigContractResource> GetPortalConfigContract(string portalConfigId, CancellationToken cancellationToken = default)
+        {
+            return GetPortalConfigContracts().Get(portalConfigId, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a ApiManagementPortalDelegationSettingResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
+        /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource"/> object. </returns>
+        public virtual ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSetting()
+        {
+            return new ApiManagementPortalDelegationSettingResource(Client, Id.AppendChildResource("portalsettings", "delegation"));
+        }
+
         /// <summary> Gets an object representing a ApiManagementPortalSignInSettingResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
         /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource"/> object. </returns>
         public virtual ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSetting()
@@ -1822,13 +1833,6 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSetting()
         {
             return new ApiManagementPortalSignUpSettingResource(Client, Id.AppendChildResource("portalsettings", "signup"));
-        }
-
-        /// <summary> Gets an object representing a ApiManagementPortalDelegationSettingResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
-        /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource"/> object. </returns>
-        public virtual ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSetting()
-        {
-            return new ApiManagementPortalDelegationSettingResource(Client, Id.AppendChildResource("portalsettings", "delegation"));
         }
 
         /// <summary> Gets a collection of ApiManagementPrivateEndpointConnectionResources in the ApiManagementService. </summary>
@@ -1851,7 +1855,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1859,7 +1863,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1882,7 +1886,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1890,7 +1894,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1920,7 +1924,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1928,7 +1932,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkSubResourceName"> Name of the private link resource. </param>
+        /// <param name="privateLinkSubResourceName"> The name of the private link associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkSubResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1951,7 +1955,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1959,7 +1963,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkSubResourceName"> Name of the private link resource. </param>
+        /// <param name="privateLinkSubResourceName"> The name of the private link associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkSubResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1989,7 +1993,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2020,7 +2024,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2058,7 +2062,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2089,7 +2093,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2127,7 +2131,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2156,7 +2160,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2192,7 +2196,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2223,7 +2227,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2239,6 +2243,71 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<ApiManagementSubscriptionResource> GetApiManagementSubscription(string sid, CancellationToken cancellationToken = default)
         {
             return GetApiManagementSubscriptions().Get(sid, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiManagementEmailTemplateResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementEmailTemplateResources and their operations over a ApiManagementEmailTemplateResource. </returns>
+        public virtual ApiManagementEmailTemplateCollection GetApiManagementEmailTemplates()
+        {
+            return GetCachedClient(client => new ApiManagementEmailTemplateCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the email template specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates/{templateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailTemplate_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementEmailTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="templateName"> Email Template Name Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiManagementEmailTemplateResource>> GetApiManagementEmailTemplateAsync(TemplateName templateName, CancellationToken cancellationToken = default)
+        {
+            return await GetApiManagementEmailTemplates().GetAsync(templateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the email template specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates/{templateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailTemplate_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementEmailTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="templateName"> Email Template Name Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementEmailTemplateResource> GetApiManagementEmailTemplate(TemplateName templateName, CancellationToken cancellationToken = default)
+        {
+            return GetApiManagementEmailTemplates().Get(templateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of TenantAccessInfoResources in the ApiManagementService. </summary>
@@ -2261,7 +2330,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2290,7 +2359,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2326,7 +2395,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2357,7 +2426,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2395,7 +2464,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2426,7 +2495,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2464,7 +2533,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2495,7 +2564,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2526,7 +2595,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2566,7 +2635,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2606,7 +2675,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2648,7 +2717,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2690,7 +2759,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2736,7 +2805,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2770,156 +2839,37 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Status of all policies of API Management services.
+        /// Updates the Microsoft.ApiManagement resource running in the Virtual network to pick the updated DNS changes.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/allPolicies</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/applynetworkconfigurationupdates</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AllPolicies_ListByService</description>
+        /// <description>ApiManagementService_ApplyNetworkConfigurationUpdates</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AllPoliciesContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AllPoliciesContract> GetAllPoliciesByServiceAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _allPoliciesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allPoliciesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AllPoliciesContract.DeserializeAllPoliciesContract(e), _allPoliciesClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAllPoliciesByService", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Status of all policies of API Management services.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/allPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AllPolicies_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AllPoliciesContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AllPoliciesContract> GetAllPoliciesByService(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _allPoliciesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allPoliciesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AllPoliciesContract.DeserializeAllPoliciesContract(e), _allPoliciesClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAllPoliciesByService", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists a collection of apis associated with tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apisByTags</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Api_ListByTags</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| isCurrent | filter | eq |     |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContractDetails> GetApisByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists a collection of apis associated with tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apisByTags</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Api_ListByTags</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| isCurrent | filter | eq |     |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContractDetails> GetApisByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Performs a connectivity check between the API Management service and a given destination, and returns metrics for the connection, as well as errors encountered while trying to establish it.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/connectivityCheck</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PerformConnectivityCheckAsync</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Connectivity Check request parameters. </param>
+        /// <param name="content"> Parameters supplied to the Apply Network Configuration operation. If the parameters are empty, all the regions in which the Api Management service is deployed will be updated sequentially without incurring downtime in the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConnectivityCheckResult>> PerformConnectivityCheckAsyncAsync(WaitUntil waitUntil, ConnectivityCheckContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementServiceResource>> ApplyNetworkConfigurationUpdatesAsync(WaitUntil waitUntil, ApiManagementServiceApplyNetworkConfigurationContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _defaultClientDiagnostics.CreateScope("ApiManagementServiceResource.PerformConnectivityCheckAsync");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.ApplyNetworkConfigurationUpdates");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.PerformConnectivityCheckAsyncAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ConnectivityCheckResult>(new ConnectivityCheckResultOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreatePerformConnectivityCheckAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _apiManagementServiceRestClient.ApplyNetworkConfigurationUpdatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateApplyNetworkConfigurationUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2932,797 +2882,19 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Performs a connectivity check between the API Management service and a given destination, and returns metrics for the connection, as well as errors encountered while trying to establish it.
+        /// Updates the Microsoft.ApiManagement resource running in the Virtual network to pick the updated DNS changes.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/connectivityCheck</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/applynetworkconfigurationupdates</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PerformConnectivityCheckAsync</description>
+        /// <description>ApiManagementService_ApplyNetworkConfigurationUpdates</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Connectivity Check request parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ConnectivityCheckResult> PerformConnectivityCheckAsync(WaitUntil waitUntil, ConnectivityCheckContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _defaultClientDiagnostics.CreateScope("ApiManagementServiceResource.PerformConnectivityCheckAsync");
-            scope.Start();
-            try
-            {
-                var response = _defaultRestClient.PerformConnectivityCheckAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ApiManagementArmOperation<ConnectivityCheckResult>(new ConnectivityCheckResultOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreatePerformConnectivityCheckAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentType_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementContentType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementContentType> GetContentTypesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentTypeRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentTypeRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApiManagementContentType.DeserializeApiManagementContentType(e), _contentTypeClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentTypes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentType_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementContentType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementContentType> GetContentTypes(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentTypeRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentTypeRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApiManagementContentType.DeserializeApiManagementContentType(e), _contentTypeClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentTypes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the details of the developer portal's content type. Content types describe content items' properties, validation rules, and constraints.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementContentType>> GetContentTypeAsync(string contentTypeId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-
-            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentType");
-            scope.Start();
-            try
-            {
-                var response = await _contentTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the details of the developer portal's content type. Content types describe content items' properties, validation rules, and constraints.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual Response<ApiManagementContentType> GetContentType(string contentTypeId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-
-            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentType");
-            scope.Start();
-            try
-            {
-                var response = _contentTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates or updates the developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Custom content types' identifiers need to start with the `c-` prefix. Built-in content types can't be modified.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentType_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementContentType>> CreateOrUpdateContentTypeAsync(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-
-            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
-            scope.Start();
-            try
-            {
-                var response = await _contentTypeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates or updates the developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Custom content types' identifiers need to start with the `c-` prefix. Built-in content types can't be modified.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentType_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual Response<ApiManagementContentType> CreateOrUpdateContentType(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-
-            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
-            scope.Start();
-            try
-            {
-                var response = _contentTypeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes the specified developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can't be removed.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentType_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual async Task<Response> DeleteContentTypeAsync(string contentTypeId, ETag ifMatch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-
-            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentType");
-            scope.Start();
-            try
-            {
-                var response = await _contentTypeRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes the specified developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can't be removed.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentType_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual Response DeleteContentType(string contentTypeId, ETag ifMatch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-
-            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentType");
-            scope.Start();
-            try
-            {
-                var response = _contentTypeRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists developer portal's content items specified by the provided content type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentItem_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ApiManagementContentItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementContentItem> GetContentItemsAsync(string contentTypeId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentItemRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentItemRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApiManagementContentItem.DeserializeApiManagementContentItem(e), _contentItemClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentItems", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists developer portal's content items specified by the provided content type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentItem_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApiManagementContentItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementContentItem> GetContentItems(string contentTypeId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentItemRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentItemRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApiManagementContentItem.DeserializeApiManagementContentItem(e), _contentItemClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentItems", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns the entity state (ETag) version of the developer portal's content item specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentItem_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="contentItemId"> Content item identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual async Task<Response<bool>> GetContentItemEntityTagAsync(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
-
-            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItemEntityTag");
-            scope.Start();
-            try
-            {
-                var response = await _contentItemRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns the entity state (ETag) version of the developer portal's content item specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentItem_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="contentItemId"> Content item identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual Response<bool> GetContentItemEntityTag(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
-
-            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItemEntityTag");
-            scope.Start();
-            try
-            {
-                var response = _contentItemRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns the developer portal's content item specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentItem_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="contentItemId"> Content item identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementContentItem>> GetContentItemAsync(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
-
-            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItem");
-            scope.Start();
-            try
-            {
-                var response = await _contentItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns the developer portal's content item specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentItem_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="contentItemId"> Content item identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual Response<ApiManagementContentItem> GetContentItem(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
-
-            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItem");
-            scope.Start();
-            try
-            {
-                var response = _contentItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new developer portal's content item specified by the provided content type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentItem_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="contentItemId"> Content item identifier. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementContentItem>> CreateOrUpdateContentItemAsync(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
-
-            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
-            scope.Start();
-            try
-            {
-                var response = await _contentItemRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new developer portal's content item specified by the provided content type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentItem_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="contentItemId"> Content item identifier. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual Response<ApiManagementContentItem> CreateOrUpdateContentItem(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
-
-            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
-            scope.Start();
-            try
-            {
-                var response = _contentItemRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes the specified developer portal's content item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentItem_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="contentItemId"> Content item identifier. </param>
-        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual async Task<Response> DeleteContentItemAsync(string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
-
-            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentItem");
-            scope.Start();
-            try
-            {
-                var response = await _contentItemRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes the specified developer portal's content item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentItem_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="contentItemId"> Content item identifier. </param>
-        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual Response DeleteContentItem(string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
-            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
-
-            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentItem");
-            scope.Start();
-            try
-            {
-                var response = _contentItemRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets all available SKU for a given API Management service
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementServiceSkus_ListAvailableServiceSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableApiManagementServiceSkuResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkusAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult(e), _apiManagementServiceSkusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAvailableApiManagementServiceSkus", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all available SKU for a given API Management service
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementServiceSkus_ListAvailableServiceSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableApiManagementServiceSkuResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkus(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult(e), _apiManagementServiceSkusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAvailableApiManagementServiceSkus", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Restores a backup of an API Management service created using the ApiManagementService_Backup operation on the current service. This is a long running operation and could take several minutes to complete.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/restore</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementService_Restore</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3731,65 +2903,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the Restore API Management service from backup operation. </param>
+        /// <param name="content"> Parameters supplied to the Apply Network Configuration operation. If the parameters are empty, all the regions in which the Api Management service is deployed will be updated sequentially without incurring downtime in the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementServiceResource>> RestoreAsync(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementServiceResource> ApplyNetworkConfigurationUpdates(WaitUntil waitUntil, ApiManagementServiceApplyNetworkConfigurationContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Restore");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.ApplyNetworkConfigurationUpdates");
             scope.Start();
             try
             {
-                var response = await _apiManagementServiceRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Restores a backup of an API Management service created using the ApiManagementService_Backup operation on the current service. This is a long running operation and could take several minutes to complete.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/restore</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementService_Restore</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the Restore API Management service from backup operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementServiceResource> Restore(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Restore");
-            scope.Start();
-            try
-            {
-                var response = _apiManagementServiceRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _apiManagementServiceRestClient.ApplyNetworkConfigurationUpdates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateApplyNetworkConfigurationUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -3814,7 +2937,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3860,7 +2983,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3894,6 +3017,82 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Gets the Single-Sign-On token for the API Management Service which is valid for 5 Minutes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/getssotoken</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_GetSsoToken</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ApiManagementServiceGetSsoTokenResult>> GetSsoTokenAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSsoToken");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementServiceRestClient.GetSsoTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Single-Sign-On token for the API Management Service which is valid for 5 Minutes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/getssotoken</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_GetSsoToken</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ApiManagementServiceGetSsoTokenResult> GetSsoToken(CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSsoToken");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementServiceRestClient.GetSsoToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Upgrades an API Management service to the Stv2 platform. For details refer to https://aka.ms/apim-migrate-stv2. This change is not reversible. This is long running operation and could take several minutes to complete.
         /// <list type="bullet">
         /// <item>
@@ -3906,7 +3105,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3949,7 +3148,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3980,95 +3179,19 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the Single-Sign-On token for the API Management Service which is valid for 5 Minutes.
+        /// Force Refresh the SSL certificate attached to the Custom Hostnames configured using secret from KeyVault on the Api Management service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/getssotoken</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/refreshHostnames</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApiManagementService_GetSsoToken</description>
+        /// <description>ApiManagementService_RefreshHostnames</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementServiceGetSsoTokenResult>> GetSsoTokenAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSsoToken");
-            scope.Start();
-            try
-            {
-                var response = await _apiManagementServiceRestClient.GetSsoTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the Single-Sign-On token for the API Management Service which is valid for 5 Minutes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/getssotoken</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementService_GetSsoToken</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementServiceGetSsoTokenResult> GetSsoToken(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSsoToken");
-            scope.Start();
-            try
-            {
-                var response = _apiManagementServiceRestClient.GetSsoToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the Microsoft.ApiManagement resource running in the Virtual network to pick the updated DNS changes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/applynetworkconfigurationupdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementService_ApplyNetworkConfigurationUpdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4077,16 +3200,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the Apply Network Configuration operation. If the parameters are empty, all the regions in which the Api Management service is deployed will be updated sequentially without incurring downtime in the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ApiManagementServiceResource>> ApplyNetworkConfigurationUpdatesAsync(WaitUntil waitUntil, ApiManagementServiceApplyNetworkConfigurationContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementServiceResource>> RefreshHostnamesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.ApplyNetworkConfigurationUpdates");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RefreshHostnames");
             scope.Start();
             try
             {
-                var response = await _apiManagementServiceRestClient.ApplyNetworkConfigurationUpdatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateApplyNetworkConfigurationUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _apiManagementServiceRestClient.RefreshHostnamesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateRefreshHostnamesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -4099,19 +3221,19 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Updates the Microsoft.ApiManagement resource running in the Virtual network to pick the updated DNS changes.
+        /// Force Refresh the SSL certificate attached to the Custom Hostnames configured using secret from KeyVault on the Api Management service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/applynetworkconfigurationupdates</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/refreshHostnames</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApiManagementService_ApplyNetworkConfigurationUpdates</description>
+        /// <description>ApiManagementService_RefreshHostnames</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4120,16 +3242,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the Apply Network Configuration operation. If the parameters are empty, all the regions in which the Api Management service is deployed will be updated sequentially without incurring downtime in the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ApiManagementServiceResource> ApplyNetworkConfigurationUpdates(WaitUntil waitUntil, ApiManagementServiceApplyNetworkConfigurationContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementServiceResource> RefreshHostnames(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.ApplyNetworkConfigurationUpdates");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RefreshHostnames");
             scope.Start();
             try
             {
-                var response = _apiManagementServiceRestClient.ApplyNetworkConfigurationUpdates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateApplyNetworkConfigurationUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _apiManagementServiceRestClient.RefreshHostnames(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateRefreshHostnamesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -4142,53 +3263,983 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the Connectivity Status to the external resources on which the Api Management service depends from inside the Cloud Service. This also returns the DNS Servers as visible to the CloudService.
+        /// Restores a backup of an API Management service created using the ApiManagementService_Backup operation on the current service. This is a long running operation and could take several minutes to complete.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/networkstatus</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/restore</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkStatus_ListByService</description>
+        /// <description>ApiManagementService_Restore</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to the Restore API Management service from backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkStatusContractWithLocation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkStatusContractWithLocation> GetNetworkStatusesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ApiManagementServiceResource>> RestoreAsync(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkStatusRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(e), _networkStatusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetNetworkStatuses", "", null, cancellationToken);
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Restore");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementServiceRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Gets the Connectivity Status to the external resources on which the Api Management service depends from inside the Cloud Service. This also returns the DNS Servers as visible to the CloudService.
+        /// Restores a backup of an API Management service created using the ApiManagementService_Backup operation on the current service. This is a long running operation and could take several minutes to complete.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/networkstatus</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/restore</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkStatus_ListByService</description>
+        /// <description>ApiManagementService_Restore</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to the Restore API Management service from backup operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ApiManagementServiceResource> Restore(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Restore");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementServiceRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Status of all policies of API Management services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/allPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AllPolicies_ListByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkStatusContractWithLocation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkStatusContractWithLocation> GetNetworkStatuses(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AllPoliciesContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AllPoliciesContract> GetAllPoliciesByServiceAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkStatusRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(e), _networkStatusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetNetworkStatuses", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _allPoliciesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allPoliciesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AllPoliciesContract.DeserializeAllPoliciesContract(e), _allPoliciesClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAllPoliciesByService", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Status of all policies of API Management services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/allPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AllPolicies_ListByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AllPoliciesContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AllPoliciesContract> GetAllPoliciesByService(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _allPoliciesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allPoliciesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AllPoliciesContract.DeserializeAllPoliciesContract(e), _allPoliciesClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAllPoliciesByService", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of apis associated with tags.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apisByTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Api_ListByTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| isCurrent | filter | eq |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TagResourceContractDetails> GetApisByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of apis associated with tags.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apisByTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Api_ListByTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| isCurrent | filter | eq |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TagResourceContractDetails> GetApisByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs a connectivity check between the API Management service and a given destination, and returns metrics for the connection, as well as errors encountered while trying to establish it.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/connectivityCheck</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PerformConnectivityCheckAsync</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Connectivity Check request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ConnectivityCheckResult>> PerformConnectivityCheckAsyncAsync(WaitUntil waitUntil, ConnectivityCheckContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _defaultClientDiagnostics.CreateScope("ApiManagementServiceResource.PerformConnectivityCheckAsync");
+            scope.Start();
+            try
+            {
+                var response = await _defaultRestClient.PerformConnectivityCheckAsyncAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ConnectivityCheckResult>(new ConnectivityCheckResultOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreatePerformConnectivityCheckAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Performs a connectivity check between the API Management service and a given destination, and returns metrics for the connection, as well as errors encountered while trying to establish it.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/connectivityCheck</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PerformConnectivityCheckAsync</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Connectivity Check request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ConnectivityCheckResult> PerformConnectivityCheckAsync(WaitUntil waitUntil, ConnectivityCheckContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _defaultClientDiagnostics.CreateScope("ApiManagementServiceResource.PerformConnectivityCheckAsync");
+            scope.Start();
+            try
+            {
+                var response = _defaultRestClient.PerformConnectivityCheckAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ApiManagementArmOperation<ConnectivityCheckResult>(new ConnectivityCheckResultOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreatePerformConnectivityCheckAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentType_ListByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApiManagementContentType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementContentType> GetContentTypesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentTypeRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentTypeRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApiManagementContentType.DeserializeApiManagementContentType(e), _contentTypeClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentTypes", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentType_ListByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiManagementContentType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementContentType> GetContentTypes(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentTypeRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentTypeRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApiManagementContentType.DeserializeApiManagementContentType(e), _contentTypeClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentTypes", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the details of the developer portal's content type. Content types describe content items' properties, validation rules, and constraints.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentType_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentType>> GetContentTypeAsync(string contentTypeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentType");
+            scope.Start();
+            try
+            {
+                var response = await _contentTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the details of the developer portal's content type. Content types describe content items' properties, validation rules, and constraints.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentType_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual Response<ApiManagementContentType> GetContentType(string contentTypeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentType");
+            scope.Start();
+            try
+            {
+                var response = _contentTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates the developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Custom content types' identifiers need to start with the `c-` prefix. Built-in content types can't be modified.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentType_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentType>> CreateOrUpdateContentTypeAsync(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
+            scope.Start();
+            try
+            {
+                var response = await _contentTypeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates the developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Custom content types' identifiers need to start with the `c-` prefix. Built-in content types can't be modified.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentType_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual Response<ApiManagementContentType> CreateOrUpdateContentType(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
+            scope.Start();
+            try
+            {
+                var response = _contentTypeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can't be removed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentType_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual async Task<Response> DeleteContentTypeAsync(string contentTypeId, ETag ifMatch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentType");
+            scope.Start();
+            try
+            {
+                var response = await _contentTypeRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can't be removed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentType_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual Response DeleteContentType(string contentTypeId, ETag ifMatch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentType");
+            scope.Start();
+            try
+            {
+                var response = _contentTypeRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists developer portal's content items specified by the provided content type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentItem_ListByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ApiManagementContentItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementContentItem> GetContentItemsAsync(string contentTypeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentItemRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentItemRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApiManagementContentItem.DeserializeApiManagementContentItem(e), _contentItemClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentItems", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists developer portal's content items specified by the provided content type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentItem_ListByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementContentItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementContentItem> GetContentItems(string contentTypeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentItemRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentItemRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApiManagementContentItem.DeserializeApiManagementContentItem(e), _contentItemClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentItems", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the developer portal's content item specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentItem_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentItem>> GetContentItemAsync(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItem");
+            scope.Start();
+            try
+            {
+                var response = await _contentItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the developer portal's content item specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentItem_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual Response<ApiManagementContentItem> GetContentItem(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItem");
+            scope.Start();
+            try
+            {
+                var response = _contentItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new developer portal's content item specified by the provided content type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentItem_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentItem>> CreateOrUpdateContentItemAsync(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
+            scope.Start();
+            try
+            {
+                var response = await _contentItemRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new developer portal's content item specified by the provided content type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentItem_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual Response<ApiManagementContentItem> CreateOrUpdateContentItem(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
+            scope.Start();
+            try
+            {
+                var response = _contentItemRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified developer portal's content item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentItem_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual async Task<Response> DeleteContentItemAsync(string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentItem");
+            scope.Start();
+            try
+            {
+                var response = await _contentItemRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified developer portal's content item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentItem_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual Response DeleteContentItem(string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentItem");
+            scope.Start();
+            try
+            {
+                var response = _contentItemRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the entity state (ETag) version of the developer portal's content item specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentItem_GetEntityTag</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual async Task<Response<bool>> GetContentItemEntityTagAsync(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItemEntityTag");
+            scope.Start();
+            try
+            {
+                var response = await _contentItemRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the entity state (ETag) version of the developer portal's content item specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentItem_GetEntityTag</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual Response<bool> GetContentItemEntityTag(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItemEntityTag");
+            scope.Start();
+            try
+            {
+                var response = _contentItemRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -4204,7 +4255,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4239,7 +4290,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4262,6 +4313,56 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Gets the Connectivity Status to the external resources on which the Api Management service depends from inside the Cloud Service. This also returns the DNS Servers as visible to the CloudService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/networkstatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkStatus_ListByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkStatusContractWithLocation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkStatusContractWithLocation> GetNetworkStatusesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkStatusRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(e), _networkStatusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetNetworkStatuses", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the Connectivity Status to the external resources on which the Api Management service depends from inside the Cloud Service. This also returns the DNS Servers as visible to the CloudService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/networkstatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkStatus_ListByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkStatusContractWithLocation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkStatusContractWithLocation> GetNetworkStatuses(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkStatusRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(e), _networkStatusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetNetworkStatuses", "", null, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the network endpoints of all outbound dependencies of a ApiManagement service.
         /// <list type="bullet">
         /// <item>
@@ -4274,7 +4375,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4299,7 +4400,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4324,7 +4425,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4350,7 +4451,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4361,82 +4462,6 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDescriptionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scope);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicyDescriptionContractData.DeserializePolicyDescriptionContractData(e), _policyDescriptionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPolicyDescriptions", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Validate all policies of API Management services.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/validatePolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestrictionValidations_ByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GitOperationResultContractData>> ByServicePolicyRestrictionValidationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _policyRestrictionValidationsClientDiagnostics.CreateScope("ApiManagementServiceResource.ByServicePolicyRestrictionValidation");
-            scope.Start();
-            try
-            {
-                var response = await _policyRestrictionValidationsRestClient.ByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _policyRestrictionValidationsClientDiagnostics, Pipeline, _policyRestrictionValidationsRestClient.CreateByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate all policies of API Management services.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/validatePolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestrictionValidations_ByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GitOperationResultContractData> ByServicePolicyRestrictionValidation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _policyRestrictionValidationsClientDiagnostics.CreateScope("ApiManagementServiceResource.ByServicePolicyRestrictionValidation");
-            scope.Start();
-            try
-            {
-                var response = _policyRestrictionValidationsRestClient.ByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _policyRestrictionValidationsClientDiagnostics, Pipeline, _policyRestrictionValidationsRestClient.CreateByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -4452,7 +4477,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4481,7 +4506,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4510,7 +4535,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4544,7 +4569,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4578,11 +4603,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> is null. </exception>
@@ -4608,11 +4633,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> is null. </exception>
@@ -4638,11 +4663,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="content"> The value of the quota counter to be applied to all quota counter periods. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4670,11 +4695,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="content"> The value of the quota counter to be applied to all quota counter periods. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4702,11 +4727,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4743,11 +4768,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4784,11 +4809,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="content"> The value of the Quota counter to be applied on the specified period. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4827,11 +4852,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="content"> The value of the Quota counter to be applied on the specified period. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4870,7 +4895,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4896,7 +4921,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4922,7 +4947,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4955,7 +4980,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4976,69 +5001,67 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists report records by User.
+        /// Lists report records by geography.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byUser</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byGeo</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_ListByUser</description>
+        /// <description>Reports_ListByGeo</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByUserAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByGeoAsync(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByUserNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ReportRecordContract.DeserializeReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByUser", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByGeoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByGeoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ReportRecordContract.DeserializeReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByGeo", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists report records by User.
+        /// Lists report records by geography.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byUser</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byGeo</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_ListByUser</description>
+        /// <description>Reports_ListByGeo</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByUser(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByGeo(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByUserNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ReportRecordContract.DeserializeReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByUser", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByGeoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByGeoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ReportRecordContract.DeserializeReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByGeo", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -5054,7 +5077,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5087,7 +5110,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5120,7 +5143,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5153,7 +5176,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5174,67 +5197,67 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists report records by geography.
+        /// Lists report records by Request.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byGeo</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byRequest</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_ListByGeo</description>
+        /// <description>Reports_ListByRequest</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByGeoAsync(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RequestReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RequestReportRecordContract> GetReportsByRequestAsync(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByGeoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByGeoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ReportRecordContract.DeserializeReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByGeo", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByRequestNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RequestReportRecordContract.DeserializeRequestReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists report records by geography.
+        /// Lists report records by Request.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byGeo</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byRequest</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_ListByGeo</description>
+        /// <description>Reports_ListByRequest</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByGeo(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RequestReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RequestReportRecordContract> GetReportsByRequest(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByGeoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByGeoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ReportRecordContract.DeserializeReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByGeo", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByRequestNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RequestReportRecordContract.DeserializeRequestReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -5250,7 +5273,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5283,7 +5306,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5316,7 +5339,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5350,7 +5373,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5372,65 +5395,121 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists report records by Request.
+        /// Lists report records by User.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byRequest</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byUser</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_ListByRequest</description>
+        /// <description>Reports_ListByUser</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="RequestReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RequestReportRecordContract> GetReportsByRequestAsync(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByUserAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RequestReportRecordContract.DeserializeRequestReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByUserNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ReportRecordContract.DeserializeReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByUser", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists report records by Request.
+        /// Lists report records by User.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byRequest</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byUser</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_ListByRequest</description>
+        /// <description>Reports_ListByUser</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="RequestReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RequestReportRecordContract> GetReportsByRequest(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ReportRecordContract> GetReportsByUser(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RequestReportRecordContract.DeserializeRequestReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByUserNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ReportRecordContract.DeserializeReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByUser", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all available SKU for a given API Management service
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementServiceSkus_ListAvailableServiceSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AvailableApiManagementServiceSkuResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkusAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult(e), _apiManagementServiceSkusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAvailableApiManagementServiceSkus", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all available SKU for a given API Management service
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementServiceSkus_ListAvailableServiceSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AvailableApiManagementServiceSkuResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkus(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult(e), _apiManagementServiceSkusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAvailableApiManagementServiceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -5446,7 +5525,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5475,7 +5554,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5504,12 +5583,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
+        /// <param name="configurationName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="content"> Deploy Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -5547,12 +5626,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
+        /// <param name="configurationName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="content"> Deploy Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -5590,12 +5669,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
+        /// <param name="configurationName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="content"> Save Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -5633,12 +5712,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
+        /// <param name="configurationName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="content"> Save Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -5664,6 +5743,76 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Gets the status of the most recent synchronization between the configuration database and the Git repository.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/syncState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TenantConfiguration_GetSyncState</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<TenantConfigurationSyncStateContract>> GetTenantConfigurationSyncStateAsync(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTenantConfigurationSyncState");
+            scope.Start();
+            try
+            {
+                var response = await _tenantConfigurationRestClient.GetSyncStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the status of the most recent synchronization between the configuration database and the Git repository.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/syncState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TenantConfiguration_GetSyncState</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<TenantConfigurationSyncStateContract> GetTenantConfigurationSyncState(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTenantConfigurationSyncState");
+            scope.Start();
+            try
+            {
+                var response = _tenantConfigurationRestClient.GetSyncState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// This operation validates the changes in the specified Git branch. This is a long running operation and could take several minutes to complete.
         /// <list type="bullet">
         /// <item>
@@ -5676,12 +5825,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
+        /// <param name="configurationName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="content"> Validate Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -5719,12 +5868,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
+        /// <param name="configurationName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="content"> Validate Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -5750,32 +5899,35 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the status of the most recent synchronization between the configuration database and the Git repository.
+        /// Validate all policies of API Management services.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/syncState</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/validatePolicies</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TenantConfiguration_GetSyncState</description>
+        /// <description>PolicyRestrictionValidations_ByService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TenantConfigurationSyncStateContract>> GetTenantConfigurationSyncStateAsync(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GitOperationResultContractData>> ByServicePolicyRestrictionValidationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTenantConfigurationSyncState");
+            using var scope = _policyRestrictionValidationsClientDiagnostics.CreateScope("ApiManagementServiceResource.ByServicePolicyRestrictionValidation");
             scope.Start();
             try
             {
-                var response = await _tenantConfigurationRestClient.GetSyncStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
-                return response;
+                var response = await _policyRestrictionValidationsRestClient.ByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _policyRestrictionValidationsClientDiagnostics, Pipeline, _policyRestrictionValidationsRestClient.CreateByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -5785,32 +5937,35 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the status of the most recent synchronization between the configuration database and the Git repository.
+        /// Validate all policies of API Management services.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/syncState</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/validatePolicies</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TenantConfiguration_GetSyncState</description>
+        /// <description>PolicyRestrictionValidations_ByService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TenantConfigurationSyncStateContract> GetTenantConfigurationSyncState(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GitOperationResultContractData> ByServicePolicyRestrictionValidation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTenantConfigurationSyncState");
+            using var scope = _policyRestrictionValidationsClientDiagnostics.CreateScope("ApiManagementServiceResource.ByServicePolicyRestrictionValidation");
             scope.Start();
             try
             {
-                var response = _tenantConfigurationRestClient.GetSyncState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
-                return response;
+                var response = _policyRestrictionValidationsRestClient.ByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _policyRestrictionValidationsClientDiagnostics, Pipeline, _policyRestrictionValidationsRestClient.CreateByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -5832,7 +5987,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5894,7 +6049,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5956,7 +6111,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6013,7 +6168,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6070,7 +6225,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6130,7 +6285,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

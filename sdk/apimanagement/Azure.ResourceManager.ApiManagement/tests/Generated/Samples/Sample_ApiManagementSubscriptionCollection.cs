@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateSubscription()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateSubscription.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateSubscription.json
             // this example is just showing the usage of "Subscription_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetSubscription()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetSubscription.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetSubscription.json
             // this example is just showing the usage of "Subscription_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ApiManagementListSubscriptions()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListSubscriptions.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListSubscriptions.json
             // this example is just showing the usage of "Subscription_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementGetSubscription()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetSubscription.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetSubscription.json
             // this example is just showing the usage of "Subscription_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementGetSubscription()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetSubscription.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetSubscription.json
             // this example is just showing the usage of "Subscription_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

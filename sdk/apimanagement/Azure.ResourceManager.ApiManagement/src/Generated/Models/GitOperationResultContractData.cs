@@ -60,14 +60,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="operationResultIdentifier"> Operation result identifier. </param>
         /// <param name="status"> Status of an async operation. </param>
-        /// <param name="startedOn">
-        /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
-        /// <param name="updatedOn">
-        /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
+        /// <param name="startedOn"> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="updatedOn"> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="resultInfo"> Optional result info. </param>
         /// <param name="error"> Error Body Contract. </param>
         /// <param name="actionLog"> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </param>
@@ -90,16 +84,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Status of an async operation. </summary>
         [WirePath("properties.status")]
         public AsyncOperationStatus? Status { get; set; }
-        /// <summary>
-        /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </summary>
+        /// <summary> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.started")]
         public DateTimeOffset? StartedOn { get; set; }
-        /// <summary>
-        /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </summary>
+        /// <summary> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.updated")]
         public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Optional result info. </summary>

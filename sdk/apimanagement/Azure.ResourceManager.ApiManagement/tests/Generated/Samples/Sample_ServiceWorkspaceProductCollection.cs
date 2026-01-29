@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateWorkspaceProduct()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceProduct.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateWorkspaceProduct.json
             // this example is just showing the usage of "WorkspaceProduct_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetWorkspaceProduct()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceProduct.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetWorkspaceProduct.json
             // this example is just showing the usage of "WorkspaceProduct_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ApiManagementListWorkspaceProducts()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListWorkspaceProducts.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListWorkspaceProducts.json
             // this example is just showing the usage of "WorkspaceProduct_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementGetWorkspaceProduct()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceProduct.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetWorkspaceProduct.json
             // this example is just showing the usage of "WorkspaceProduct_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementGetWorkspaceProduct()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceProduct.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetWorkspaceProduct.json
             // this example is just showing the usage of "WorkspaceProduct_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

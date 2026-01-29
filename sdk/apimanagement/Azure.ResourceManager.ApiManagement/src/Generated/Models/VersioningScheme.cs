@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string QueryValue = "Query";
         private const string HeaderValue = "Header";
 
-        /// <summary> Segment. </summary>
+        /// <summary> The API Version is passed in a path segment. </summary>
         public static VersioningScheme Segment { get; } = new VersioningScheme(SegmentValue);
-        /// <summary> Query. </summary>
+        /// <summary> The API Version is passed in a query parameter. </summary>
         public static VersioningScheme Query { get; } = new VersioningScheme(QueryValue);
-        /// <summary> Header. </summary>
+        /// <summary> The API Version is passed in a HTTP header. </summary>
         public static VersioningScheme Header { get; } = new VersioningScheme(HeaderValue);
         /// <summary> Determines if two <see cref="VersioningScheme"/> values are the same. </summary>
         public static bool operator ==(VersioningScheme left, VersioningScheme right) => left.Equals(right);

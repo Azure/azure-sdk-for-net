@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,84 +409,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Checks that user entity specified by identifier is associated with the group entity.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupUser_CheckEntityExists</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual async Task<Response<bool>> CheckGroupUserEntityExistsAsync(string userId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.CheckGroupUserEntityExists");
-            scope.Start();
-            try
-            {
-                var response = await _groupUserRestClient.CheckEntityExistsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks that user entity specified by identifier is associated with the group entity.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupUser_CheckEntityExists</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual Response<bool> CheckGroupUserEntityExists(string userId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.CheckGroupUserEntityExists");
-            scope.Start();
-            try
-            {
-                var response = _groupUserRestClient.CheckEntityExists(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Add existing user to existing group
         /// <list type="bullet">
         /// <item>
@@ -499,7 +421,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -538,7 +460,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -577,7 +499,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -616,7 +538,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -643,6 +565,84 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Checks that user entity specified by identifier is associated with the group entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{userId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupUser_CheckEntityExists</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        public virtual async Task<Response<bool>> CheckGroupUserEntityExistsAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.CheckGroupUserEntityExists");
+            scope.Start();
+            try
+            {
+                var response = await _groupUserRestClient.CheckEntityExistsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks that user entity specified by identifier is associated with the group entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{userId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupUser_CheckEntityExists</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        public virtual Response<bool> CheckGroupUserEntityExists(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.CheckGroupUserEntityExists");
+            scope.Start();
+            try
+            {
+                var response = _groupUserRestClient.CheckEntityExists(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets the entity state (Etag) version of the group specified by its identifier.
         /// <list type="bullet">
         /// <item>
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

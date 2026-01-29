@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/tagResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -59,7 +60,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -77,6 +77,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/tagResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -89,7 +90,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

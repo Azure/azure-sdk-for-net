@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="AuthorizationAccessPolicyListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
-        /// <param name="nextLink"> Next page link if any. </param>
+        /// <param name="nextLink"> Paged Authorization Access Policy list representation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationAccessPolicyListResult(IReadOnlyList<AuthorizationAccessPolicyContractData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public IReadOnlyList<AuthorizationAccessPolicyContractData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
-        /// <summary> Next page link if any. </summary>
+        /// <summary> Paged Authorization Access Policy list representation. </summary>
         public string NextLink { get; }
     }
 }

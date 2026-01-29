@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetNotification()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetNotification.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetNotification.json
             // this example is just showing the usage of "Notification_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementCreateNotification()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateNotification.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateNotification.json
             // this example is just showing the usage of "Notification_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,123 +81,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNotificationRecipientUsers_ApiManagementListNotificationRecipientUsers()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListNotificationRecipientUsers.json
-            // this example is just showing the usage of "NotificationRecipientUser_ListByNotification" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementNotificationResource created on azure
-            // for more information of creating ApiManagementNotificationResource, please refer to the document of ApiManagementNotificationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            NotificationName notificationName = NotificationName.RequestPublisherNotificationMessage;
-            ResourceIdentifier apiManagementNotificationResourceId = ApiManagementNotificationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, notificationName);
-            ApiManagementNotificationResource apiManagementNotification = client.GetApiManagementNotificationResource(apiManagementNotificationResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (RecipientUserContract item in apiManagementNotification.GetNotificationRecipientUsersAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckNotificationRecipientUserEntityExists_ApiManagementHeadNotificationRecipientUser()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadNotificationRecipientUser.json
-            // this example is just showing the usage of "NotificationRecipientUser_CheckEntityExists" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementNotificationResource created on azure
-            // for more information of creating ApiManagementNotificationResource, please refer to the document of ApiManagementNotificationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            NotificationName notificationName = NotificationName.RequestPublisherNotificationMessage;
-            ResourceIdentifier apiManagementNotificationResourceId = ApiManagementNotificationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, notificationName);
-            ApiManagementNotificationResource apiManagementNotification = client.GetApiManagementNotificationResource(apiManagementNotificationResourceId);
-
-            // invoke the operation
-            string userId = "576823d0a40f7e74ec07d642";
-            bool result = await apiManagementNotification.CheckNotificationRecipientUserEntityExistsAsync(userId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdateNotificationRecipientUser_ApiManagementCreateNotificationRecipientUser()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateNotificationRecipientUser.json
-            // this example is just showing the usage of "NotificationRecipientUser_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementNotificationResource created on azure
-            // for more information of creating ApiManagementNotificationResource, please refer to the document of ApiManagementNotificationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            NotificationName notificationName = NotificationName.RequestPublisherNotificationMessage;
-            ResourceIdentifier apiManagementNotificationResourceId = ApiManagementNotificationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, notificationName);
-            ApiManagementNotificationResource apiManagementNotification = client.GetApiManagementNotificationResource(apiManagementNotificationResourceId);
-
-            // invoke the operation
-            string userId = "576823d0a40f7e74ec07d642";
-            RecipientUserContract result = await apiManagementNotification.CreateOrUpdateNotificationRecipientUserAsync(userId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task DeleteNotificationRecipientUser_ApiManagementDeleteNotificationRecipientUser()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteNotificationRecipientUser.json
-            // this example is just showing the usage of "NotificationRecipientUser_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementNotificationResource created on azure
-            // for more information of creating ApiManagementNotificationResource, please refer to the document of ApiManagementNotificationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            NotificationName notificationName = NotificationName.RequestPublisherNotificationMessage;
-            ResourceIdentifier apiManagementNotificationResourceId = ApiManagementNotificationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, notificationName);
-            ApiManagementNotificationResource apiManagementNotification = client.GetApiManagementNotificationResource(apiManagementNotificationResourceId);
-
-            // invoke the operation
-            string userId = "576823d0a40f7e74ec07d642";
-            await apiManagementNotification.DeleteNotificationRecipientUserAsync(userId);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetNotificationRecipientEmails_ApiManagementListNotificationRecipientEmails()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListNotificationRecipientEmails.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListNotificationRecipientEmails.json
             // this example is just showing the usage of "NotificationRecipientEmail_ListByNotification" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -225,37 +111,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckNotificationRecipientEmailEntityExists_ApiManagementHeadNotificationRecipientEmail()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadNotificationRecipientEmail.json
-            // this example is just showing the usage of "NotificationRecipientEmail_CheckEntityExists" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementNotificationResource created on azure
-            // for more information of creating ApiManagementNotificationResource, please refer to the document of ApiManagementNotificationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            NotificationName notificationName = NotificationName.RequestPublisherNotificationMessage;
-            ResourceIdentifier apiManagementNotificationResourceId = ApiManagementNotificationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, notificationName);
-            ApiManagementNotificationResource apiManagementNotification = client.GetApiManagementNotificationResource(apiManagementNotificationResourceId);
-
-            // invoke the operation
-            string email = "contoso@live.com";
-            bool result = await apiManagementNotification.CheckNotificationRecipientEmailEntityExistsAsync(email);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateNotificationRecipientEmail_ApiManagementCreateNotificationRecipientEmail()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateNotificationRecipientEmail.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateNotificationRecipientEmail.json
             // this example is just showing the usage of "NotificationRecipientEmail_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -283,7 +141,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteNotificationRecipientEmail_ApiManagementDeleteNotificationRecipientEmail()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteNotificationRecipientEmail.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementDeleteNotificationRecipientEmail.json
             // this example is just showing the usage of "NotificationRecipientEmail_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -305,6 +163,148 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             await apiManagementNotification.DeleteNotificationRecipientEmailAsync(email);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CheckNotificationRecipientEmailEntityExists_ApiManagementHeadNotificationRecipientEmail()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementHeadNotificationRecipientEmail.json
+            // this example is just showing the usage of "NotificationRecipientEmail_CheckEntityExists" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementNotificationResource created on azure
+            // for more information of creating ApiManagementNotificationResource, please refer to the document of ApiManagementNotificationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            NotificationName notificationName = NotificationName.RequestPublisherNotificationMessage;
+            ResourceIdentifier apiManagementNotificationResourceId = ApiManagementNotificationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, notificationName);
+            ApiManagementNotificationResource apiManagementNotification = client.GetApiManagementNotificationResource(apiManagementNotificationResourceId);
+
+            // invoke the operation
+            string email = "contoso@live.com";
+            bool result = await apiManagementNotification.CheckNotificationRecipientEmailEntityExistsAsync(email);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNotificationRecipientUsers_ApiManagementListNotificationRecipientUsers()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListNotificationRecipientUsers.json
+            // this example is just showing the usage of "NotificationRecipientUser_ListByNotification" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementNotificationResource created on azure
+            // for more information of creating ApiManagementNotificationResource, please refer to the document of ApiManagementNotificationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            NotificationName notificationName = NotificationName.RequestPublisherNotificationMessage;
+            ResourceIdentifier apiManagementNotificationResourceId = ApiManagementNotificationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, notificationName);
+            ApiManagementNotificationResource apiManagementNotification = client.GetApiManagementNotificationResource(apiManagementNotificationResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (RecipientUserContract item in apiManagementNotification.GetNotificationRecipientUsersAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdateNotificationRecipientUser_ApiManagementCreateNotificationRecipientUser()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateNotificationRecipientUser.json
+            // this example is just showing the usage of "NotificationRecipientUser_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementNotificationResource created on azure
+            // for more information of creating ApiManagementNotificationResource, please refer to the document of ApiManagementNotificationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            NotificationName notificationName = NotificationName.RequestPublisherNotificationMessage;
+            ResourceIdentifier apiManagementNotificationResourceId = ApiManagementNotificationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, notificationName);
+            ApiManagementNotificationResource apiManagementNotification = client.GetApiManagementNotificationResource(apiManagementNotificationResourceId);
+
+            // invoke the operation
+            string userId = "576823d0a40f7e74ec07d642";
+            RecipientUserContract result = await apiManagementNotification.CreateOrUpdateNotificationRecipientUserAsync(userId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DeleteNotificationRecipientUser_ApiManagementDeleteNotificationRecipientUser()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementDeleteNotificationRecipientUser.json
+            // this example is just showing the usage of "NotificationRecipientUser_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementNotificationResource created on azure
+            // for more information of creating ApiManagementNotificationResource, please refer to the document of ApiManagementNotificationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            NotificationName notificationName = NotificationName.RequestPublisherNotificationMessage;
+            ResourceIdentifier apiManagementNotificationResourceId = ApiManagementNotificationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, notificationName);
+            ApiManagementNotificationResource apiManagementNotification = client.GetApiManagementNotificationResource(apiManagementNotificationResourceId);
+
+            // invoke the operation
+            string userId = "576823d0a40f7e74ec07d642";
+            await apiManagementNotification.DeleteNotificationRecipientUserAsync(userId);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CheckNotificationRecipientUserEntityExists_ApiManagementHeadNotificationRecipientUser()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementHeadNotificationRecipientUser.json
+            // this example is just showing the usage of "NotificationRecipientUser_CheckEntityExists" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementNotificationResource created on azure
+            // for more information of creating ApiManagementNotificationResource, please refer to the document of ApiManagementNotificationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            NotificationName notificationName = NotificationName.RequestPublisherNotificationMessage;
+            ResourceIdentifier apiManagementNotificationResourceId = ApiManagementNotificationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, notificationName);
+            ApiManagementNotificationResource apiManagementNotification = client.GetApiManagementNotificationResource(apiManagementNotificationResourceId);
+
+            // invoke the operation
+            string userId = "576823d0a40f7e74ec07d642";
+            bool result = await apiManagementNotification.CheckNotificationRecipientUserEntityExistsAsync(userId);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

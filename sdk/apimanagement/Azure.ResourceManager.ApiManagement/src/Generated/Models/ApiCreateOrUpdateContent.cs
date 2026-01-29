@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="wsdlSelector"> Criteria to limit import of WSDL to a subset of the document. </param>
         /// <param name="soapApiType">
         /// Type of API to create.
-        ///  * `http` creates a REST API
-        ///  * `soap` creates a SOAP pass-through API
-        ///  * `websocket` creates websocket API
-        ///  * `graphql` creates GraphQL API.
-        ///  New types can be added in the future.
+        /// * `http` creates a REST API
+        /// * `soap` creates a SOAP pass-through API
+        /// * `websocket` creates websocket API
+        /// * `graphql` creates GraphQL API.
+        /// New types can be added in the future.
         /// </param>
         /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -197,11 +197,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public ApiCreateOrUpdatePropertiesWsdlSelector WsdlSelector { get; set; }
         /// <summary>
         /// Type of API to create.
-        ///  * `http` creates a REST API
-        ///  * `soap` creates a SOAP pass-through API
-        ///  * `websocket` creates websocket API
-        ///  * `graphql` creates GraphQL API.
-        ///  New types can be added in the future.
+        /// * `http` creates a REST API
+        /// * `soap` creates a SOAP pass-through API
+        /// * `websocket` creates websocket API
+        /// * `graphql` creates GraphQL API.
+        /// New types can be added in the future.
         /// </summary>
         [WirePath("properties.apiType")]
         public SoapApiType? SoapApiType { get; set; }

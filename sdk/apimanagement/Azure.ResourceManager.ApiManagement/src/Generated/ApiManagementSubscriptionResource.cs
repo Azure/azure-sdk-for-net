@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,8 +284,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="patch"> Update parameters. </param>
         /// <param name="notify">
         /// Notify change in Subscription State.
-        ///  - If false, do not send any email notification for change of state of subscription
-        ///  - If true, send email notification of change of state of subscription
+        /// - If false, do not send any email notification for change of state of subscription
+        /// - If true, send email notification of change of state of subscription
         /// </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -333,8 +333,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="patch"> Update parameters. </param>
         /// <param name="notify">
         /// Notify change in Subscription State.
-        ///  - If false, do not send any email notification for change of state of subscription
-        ///  - If true, send email notification of change of state of subscription
+        /// - If false, do not send any email notification for change of state of subscription
+        /// - If true, send email notification of change of state of subscription
         /// </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -358,158 +358,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Regenerates primary key of existing subscription of the API Management service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}/regeneratePrimaryKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_RegeneratePrimaryKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RegeneratePrimaryKeyAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.RegeneratePrimaryKey");
-            scope.Start();
-            try
-            {
-                var response = await _apiManagementSubscriptionSubscriptionRestClient.RegeneratePrimaryKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates primary key of existing subscription of the API Management service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}/regeneratePrimaryKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_RegeneratePrimaryKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RegeneratePrimaryKey(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.RegeneratePrimaryKey");
-            scope.Start();
-            try
-            {
-                var response = _apiManagementSubscriptionSubscriptionRestClient.RegeneratePrimaryKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates secondary key of existing subscription of the API Management service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}/regenerateSecondaryKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_RegenerateSecondaryKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RegenerateSecondaryKeyAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.RegenerateSecondaryKey");
-            scope.Start();
-            try
-            {
-                var response = await _apiManagementSubscriptionSubscriptionRestClient.RegenerateSecondaryKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates secondary key of existing subscription of the API Management service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}/regenerateSecondaryKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_RegenerateSecondaryKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RegenerateSecondaryKey(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.RegenerateSecondaryKey");
-            scope.Start();
-            try
-            {
-                var response = _apiManagementSubscriptionSubscriptionRestClient.RegenerateSecondaryKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gets the specified Subscription keys.
         /// <list type="bullet">
         /// <item>
@@ -522,7 +370,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -560,7 +408,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -586,6 +434,158 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Regenerates primary key of existing subscription of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}/regeneratePrimaryKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_RegeneratePrimaryKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> RegeneratePrimaryKeyAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.RegeneratePrimaryKey");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementSubscriptionSubscriptionRestClient.RegeneratePrimaryKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates primary key of existing subscription of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}/regeneratePrimaryKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_RegeneratePrimaryKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response RegeneratePrimaryKey(CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.RegeneratePrimaryKey");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementSubscriptionSubscriptionRestClient.RegeneratePrimaryKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates secondary key of existing subscription of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}/regenerateSecondaryKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_RegenerateSecondaryKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> RegenerateSecondaryKeyAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.RegenerateSecondaryKey");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementSubscriptionSubscriptionRestClient.RegenerateSecondaryKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates secondary key of existing subscription of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}/regenerateSecondaryKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_RegenerateSecondaryKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response RegenerateSecondaryKey(CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.RegenerateSecondaryKey");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementSubscriptionSubscriptionRestClient.RegenerateSecondaryKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets the entity state (Etag) version of the apimanagement subscription specified by its identifier.
         /// <list type="bullet">
         /// <item>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/reports/byApi", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -60,7 +61,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/reports/byApi", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -91,7 +92,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateListByUserRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
+        internal RequestUriBuilder CreateListByGeoRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -176,7 +176,8 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
-            uri.AppendPath("/reports/byUser", false);
+            uri.AppendPath("/reports/byGeo", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -186,15 +187,10 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("$orderby", orderBy, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByUserRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
+        internal HttpMessage CreateListByGeoRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -207,7 +203,8 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
-            uri.AppendPath("/reports/byUser", false);
+            uri.AppendPath("/reports/byGeo", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -217,36 +214,30 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("$orderby", orderBy, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Lists report records by User. </summary>
+        /// <summary> Lists report records by geography. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportListResult>> ListByUserAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByGeoAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByUserRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
+            using var message = CreateListByGeoRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -262,25 +253,24 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Lists report records by User. </summary>
+        /// <summary> Lists report records by geography. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportListResult> ListByUser(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByGeo(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByUserRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
+            using var message = CreateListByGeoRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -307,6 +297,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/reports/byOperation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -320,7 +311,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -338,6 +328,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/reports/byOperation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -351,7 +342,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -437,6 +427,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/reports/byProduct", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -450,7 +441,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -468,6 +458,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/reports/byProduct", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -481,7 +472,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -556,7 +546,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateListByGeoRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
+        internal RequestUriBuilder CreateListByRequestRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -566,7 +556,8 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
-            uri.AppendPath("/reports/byGeo", false);
+            uri.AppendPath("/reports/byRequest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -576,11 +567,10 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByGeoRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
+        internal HttpMessage CreateListByRequestRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -593,7 +583,8 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
-            uri.AppendPath("/reports/byGeo", false);
+            uri.AppendPath("/reports/byRequest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -603,39 +594,38 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Lists report records by geography. </summary>
+        /// <summary> Lists report records by Request. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportListResult>> ListByGeoAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RequestReportListResult>> ListByRequestAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByGeoRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip);
+            using var message = CreateListByRequestRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportListResult value = default;
+                        RequestReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
+                        value = RequestReportListResult.DeserializeRequestReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -643,32 +633,32 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Lists report records by geography. </summary>
+        /// <summary> Lists report records by Request. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportListResult> ListByGeo(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<RequestReportListResult> ListByRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByGeoRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip);
+            using var message = CreateListByRequestRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportListResult value = default;
+                        RequestReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
+                        value = RequestReportListResult.DeserializeRequestReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -687,6 +677,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/reports/bySubscription", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -700,7 +691,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -718,6 +708,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/reports/bySubscription", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -731,7 +722,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -817,6 +807,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/reports/byTime", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -831,7 +822,6 @@ namespace Azure.ResourceManager.ApiManagement
                 uri.AppendQuery("$orderby", orderBy, true);
             }
             uri.AppendQuery("interval", interval, "P", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -849,6 +839,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/reports/byTime", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -863,7 +854,6 @@ namespace Azure.ResourceManager.ApiManagement
                 uri.AppendQuery("$orderby", orderBy, true);
             }
             uri.AppendQuery("interval", interval, "P", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -940,7 +930,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateListByRequestRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
+        internal RequestUriBuilder CreateListByUserRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -950,7 +940,8 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
-            uri.AppendPath("/reports/byRequest", false);
+            uri.AppendPath("/reports/byUser", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -960,11 +951,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (orderBy != null)
+            {
+                uri.AppendQuery("$orderby", orderBy, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateListByRequestRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
+        internal HttpMessage CreateListByUserRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -977,7 +971,8 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
-            uri.AppendPath("/reports/byRequest", false);
+            uri.AppendPath("/reports/byUser", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             if (top != null)
             {
@@ -987,39 +982,43 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (orderBy != null)
+            {
+                uri.AppendQuery("$orderby", orderBy, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Lists report records by Request. </summary>
+        /// <summary> Lists report records by User. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RequestReportListResult>> ListByRequestAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByUserAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByRequestRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip);
+            using var message = CreateListByUserRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RequestReportListResult value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RequestReportListResult.DeserializeRequestReportListResult(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1027,32 +1026,33 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Lists report records by Request. </summary>
+        /// <summary> Lists report records by User. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RequestReportListResult> ListByRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByUser(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByRequestRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip);
+            using var message = CreateListByUserRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RequestReportListResult value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RequestReportListResult.DeserializeRequestReportListResult(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1154,7 +1154,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateListByUserNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
+        internal RequestUriBuilder CreateListByGeoNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1162,7 +1162,7 @@ namespace Azure.ResourceManager.ApiManagement
             return uri;
         }
 
-        internal HttpMessage CreateListByUserNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
+        internal HttpMessage CreateListByGeoNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1176,19 +1176,18 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        /// <summary> Lists report records by User. </summary>
+        /// <summary> Lists report records by geography. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportListResult>> ListByUserNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByGeoNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1196,7 +1195,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByUserNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
+            using var message = CreateListByGeoNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1212,19 +1211,18 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Lists report records by User. </summary>
+        /// <summary> Lists report records by geography. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportListResult> ListByUserNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByGeoNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1232,7 +1230,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByUserNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
+            using var message = CreateListByGeoNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1436,7 +1434,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateListByGeoNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
+        internal RequestUriBuilder CreateListByRequestNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1444,7 +1442,7 @@ namespace Azure.ResourceManager.ApiManagement
             return uri;
         }
 
-        internal HttpMessage CreateListByGeoNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
+        internal HttpMessage CreateListByRequestNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1458,18 +1456,18 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        /// <summary> Lists report records by geography. </summary>
+        /// <summary> Lists report records by Request. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportListResult>> ListByGeoNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RequestReportListResult>> ListByRequestNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1477,15 +1475,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByGeoNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip);
+            using var message = CreateListByRequestNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportListResult value = default;
+                        RequestReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
+                        value = RequestReportListResult.DeserializeRequestReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1493,18 +1491,18 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Lists report records by geography. </summary>
+        /// <summary> Lists report records by Request. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| country | select |     |     | &lt;/br&gt;| region | select |     |     | &lt;/br&gt;| zip | select |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select |     |     | &lt;/br&gt;| callCountBlocked | select |     |     | &lt;/br&gt;| callCountFailed | select |     |     | &lt;/br&gt;| callCountOther | select |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportListResult> ListByGeoNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<RequestReportListResult> ListByRequestNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1512,15 +1510,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByGeoNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip);
+            using var message = CreateListByRequestNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportListResult value = default;
+                        RequestReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
+                        value = RequestReportListResult.DeserializeRequestReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1703,6 +1701,100 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(filter, nameof(filter));
 
             using var message = CreateListByTimeNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, interval, top, skip, orderBy);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ReportListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByUserNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByUserNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists report records by User. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ReportListResult>> ListByUserNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(filter, nameof(filter));
+
+            using var message = CreateListByUserNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ReportListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists report records by User. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ReportListResult> ListByUserNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(filter, nameof(filter));
+
+            using var message = CreateListByUserNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

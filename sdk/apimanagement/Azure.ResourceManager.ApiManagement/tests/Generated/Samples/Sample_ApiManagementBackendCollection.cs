@@ -18,9 +18,107 @@ namespace Azure.ResourceManager.ApiManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateBackendCustomAssignedCertificateThumbprint()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagamentCreateBackendWithCustomAssignedCertificate_Thumbprints.json
+            // this example is just showing the usage of "Backend_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // get the collection of this ApiManagementBackendResource
+            ApiManagementBackendCollection collection = apiManagementService.GetApiManagementBackends();
+
+            // invoke the operation
+            string backendId = "cabackend";
+            ApiManagementBackendData data = new ApiManagementBackendData
+            {
+                Description = "Custom Assigned certificate Example",
+                Tls = new BackendTlsProperties
+                {
+                    ShouldValidateCertificateChain = true,
+                    ShouldValidateCertificateName = true,
+                    ServerCertificateThumbprints = { "1365083bae61ee876fc26850b825d05d3eb2e503" },
+                },
+                Uri = new Uri("https://self-signed.badssl.com/"),
+                Protocol = BackendProtocol.Http,
+            };
+            ArmOperation<ApiManagementBackendResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backendId, data);
+            ApiManagementBackendResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementBackendData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateBackendCustomAssignedCertificateX509Names()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateBackendWithCustomAssignedCertificate_X509Names.json
+            // this example is just showing the usage of "Backend_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // get the collection of this ApiManagementBackendResource
+            ApiManagementBackendCollection collection = apiManagementService.GetApiManagementBackends();
+
+            // invoke the operation
+            string backendId = "cabackend";
+            ApiManagementBackendData data = new ApiManagementBackendData
+            {
+                Description = "Custom Assigned certificate Example",
+                Tls = new BackendTlsProperties
+                {
+                    ShouldValidateCertificateChain = true,
+                    ShouldValidateCertificateName = true,
+                    ServerX509Names = {new X509CertificateName
+{
+Name = "*.badssl.com",
+IssuerCertificateThumbprint = null,
+}},
+                },
+                Uri = new Uri("https://self-signed.badssl.com/"),
+                Protocol = BackendProtocol.Http,
+            };
+            ArmOperation<ApiManagementBackendResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backendId, data);
+            ApiManagementBackendResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementBackendData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateBackendProxyBackend()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateBackendProxyBackend.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateBackendProxyBackend.json
             // this example is just showing the usage of "Backend_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +181,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateBackendServiceFabric()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateBackendServiceFabric.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateBackendServiceFabric.json
             // this example is just showing the usage of "Backend_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,9 +230,249 @@ IssuerCertificateThumbprint = "IssuerCertificateThumbprint1",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateBackendWithAzureRegion()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateBackendWithAzureRegion.json
+            // this example is just showing the usage of "Backend_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // get the collection of this ApiManagementBackendResource
+            ApiManagementBackendCollection collection = apiManagementService.GetApiManagementBackends();
+
+            // invoke the operation
+            string backendId = "azurebackend";
+            ApiManagementBackendData data = new ApiManagementBackendData
+            {
+                AzureRegion = "northeurope",
+                Uri = new Uri("https://backendname2644/"),
+                Protocol = BackendProtocol.Http,
+            };
+            ArmOperation<ApiManagementBackendResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backendId, data);
+            ApiManagementBackendResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementBackendData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateBackendWithCarbonAwareLoadBalancer()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateBackendWithCarbonAwareLoadBalancer.json
+            // this example is just showing the usage of "Backend_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // get the collection of this ApiManagementBackendResource
+            ApiManagementBackendCollection collection = apiManagementService.GetApiManagementBackends();
+
+            // invoke the operation
+            string backendId = "carbonawareloadbalancerbackend";
+            ApiManagementBackendData data = new ApiManagementBackendData
+            {
+                Pool = new BackendBaseParametersPool
+                {
+                    Services = {new BackendPoolItem(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/backends/sustainable-backend-europe-north"))
+{
+Weight = 1,
+Priority = 1,
+PreferredCarbonEmission = CarbonEmissionCategory.Medium,
+}, new BackendPoolItem(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/backends/proxybackend"))
+{
+Weight = 1,
+Priority = 1,
+}},
+                },
+                TypePropertiesType = BackendType.Pool,
+            };
+            ArmOperation<ApiManagementBackendResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backendId, data);
+            ApiManagementBackendResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementBackendData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateBackendWithPriorityBasedLoadBalancer()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateBackendWithPriorityBasedLoadBalancer.json
+            // this example is just showing the usage of "Backend_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // get the collection of this ApiManagementBackendResource
+            ApiManagementBackendCollection collection = apiManagementService.GetApiManagementBackends();
+
+            // invoke the operation
+            string backendId = "priority-based-load-balancer";
+            ApiManagementBackendData data = new ApiManagementBackendData
+            {
+                Pool = new BackendBaseParametersPool
+                {
+                    Services = {new BackendPoolItem(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/backends/backend-1"))
+{
+Priority = 1,
+}, new BackendPoolItem(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/backends/backend-2"))
+{
+Priority = 1,
+}, new BackendPoolItem(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/backends/backend-3"))
+{
+Priority = 2,
+}, new BackendPoolItem(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/backends/backend-4"))
+{
+Priority = 2,
+}},
+                },
+                TypePropertiesType = BackendType.Pool,
+            };
+            ArmOperation<ApiManagementBackendResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backendId, data);
+            ApiManagementBackendResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementBackendData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateBackendWithSimpleLoadBalancer()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateBackendWithSimpleLoadBalancer.json
+            // this example is just showing the usage of "Backend_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // get the collection of this ApiManagementBackendResource
+            ApiManagementBackendCollection collection = apiManagementService.GetApiManagementBackends();
+
+            // invoke the operation
+            string backendId = "simple-load-balancer";
+            ApiManagementBackendData data = new ApiManagementBackendData
+            {
+                Pool = new BackendBaseParametersPool
+                {
+                    Services = { new BackendPoolItem(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/backends/backend-1")), new BackendPoolItem(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/backends/backend-2")) },
+                },
+                TypePropertiesType = BackendType.Pool,
+            };
+            ArmOperation<ApiManagementBackendResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backendId, data);
+            ApiManagementBackendResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementBackendData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateBackendWithWeightedLoadBalancer()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateBackendWithWeightedLoadBalancer.json
+            // this example is just showing the usage of "Backend_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // get the collection of this ApiManagementBackendResource
+            ApiManagementBackendCollection collection = apiManagementService.GetApiManagementBackends();
+
+            // invoke the operation
+            string backendId = "weighted-load-balancer";
+            ApiManagementBackendData data = new ApiManagementBackendData
+            {
+                Pool = new BackendBaseParametersPool
+                {
+                    Services = {new BackendPoolItem(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/backends/backend-1"))
+{
+Weight = 75,
+}, new BackendPoolItem(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/backends/backend-2"))
+{
+Weight = 25,
+}},
+                },
+                TypePropertiesType = BackendType.Pool,
+            };
+            ArmOperation<ApiManagementBackendResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backendId, data);
+            ApiManagementBackendResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementBackendData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetBackend()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetBackend.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetBackend.json
             // this example is just showing the usage of "Backend_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -168,7 +506,7 @@ IssuerCertificateThumbprint = "IssuerCertificateThumbprint1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ApiManagementListBackends()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListBackends.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListBackends.json
             // this example is just showing the usage of "Backend_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -204,7 +542,7 @@ IssuerCertificateThumbprint = "IssuerCertificateThumbprint1",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementGetBackend()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetBackend.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetBackend.json
             // this example is just showing the usage of "Backend_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -234,7 +572,7 @@ IssuerCertificateThumbprint = "IssuerCertificateThumbprint1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementGetBackend()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetBackend.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetBackend.json
             // this example is just showing the usage of "Backend_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

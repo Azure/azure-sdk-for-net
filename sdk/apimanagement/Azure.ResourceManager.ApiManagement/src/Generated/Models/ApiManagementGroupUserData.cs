@@ -65,10 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="email"> Email address. </param>
-        /// <param name="registriesOn">
-        /// Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
+        /// <param name="registriesOn"> Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="groups"> Collection of groups user is part of. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementGroupUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string firstName, string lastName, string email, DateTimeOffset? registriesOn, IReadOnlyList<GroupContractProperties> groups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -102,10 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Email address. </summary>
         [WirePath("properties.email")]
         public string Email { get; set; }
-        /// <summary>
-        /// Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </summary>
+        /// <summary> Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.registrationDate")]
         public DateTimeOffset? RegistriesOn { get; set; }
         /// <summary> Collection of groups user is part of. </summary>

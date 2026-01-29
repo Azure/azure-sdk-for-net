@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetWorkspaceGroup()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceGroup.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetWorkspaceGroup.json
             // this example is just showing the usage of "WorkspaceGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteWorkspaceGroup()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteWorkspaceGroup.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementDeleteWorkspaceGroup.json
             // this example is just showing the usage of "WorkspaceGroup_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateWorkspaceGroup()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateWorkspaceGroup.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementUpdateWorkspaceGroup.json
             // this example is just showing the usage of "WorkspaceGroup_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetWorkspaceGroupUsers_ApiManagementListWorkspaceGroupUsers()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListWorkspaceGroupUsers.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListWorkspaceGroupUsers.json
             // this example is just showing the usage of "WorkspaceGroupUser_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,38 +151,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckEntityExistsWorkspaceGroupUser_ApiManagementHeadWorkspaceGroupUser()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadWorkspaceGroupUser.json
-            // this example is just showing the usage of "WorkspaceGroupUser_CheckEntityExists" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspaceGroupResource created on azure
-            // for more information of creating ServiceWorkspaceGroupResource, please refer to the document of ServiceWorkspaceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string groupId = "59306a29e4bbd510dc24e5f9";
-            ResourceIdentifier serviceWorkspaceGroupResourceId = ServiceWorkspaceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, groupId);
-            ServiceWorkspaceGroupResource serviceWorkspaceGroup = client.GetServiceWorkspaceGroupResource(serviceWorkspaceGroupResourceId);
-
-            // invoke the operation
-            string userId = "5931a75ae4bbd512a88c680b";
-            bool result = await serviceWorkspaceGroup.CheckEntityExistsWorkspaceGroupUserAsync(userId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateWorkspaceGroupUser_ApiManagementCreateWorkspaceGroupUser()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceGroupUser.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateWorkspaceGroupUser.json
             // this example is just showing the usage of "WorkspaceGroupUser_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -215,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteWorkspaceGroupUser_ApiManagementDeleteWorkspaceGroupUser()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteWorkspaceGroupUser.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementDeleteWorkspaceGroupUser.json
             // this example is just showing the usage of "WorkspaceGroupUser_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -242,9 +213,38 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CheckEntityExistsWorkspaceGroupUser_ApiManagementHeadWorkspaceGroupUser()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementHeadWorkspaceGroupUser.json
+            // this example is just showing the usage of "WorkspaceGroupUser_CheckEntityExists" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspaceGroupResource created on azure
+            // for more information of creating ServiceWorkspaceGroupResource, please refer to the document of ServiceWorkspaceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string groupId = "59306a29e4bbd510dc24e5f9";
+            ResourceIdentifier serviceWorkspaceGroupResourceId = ServiceWorkspaceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, groupId);
+            ServiceWorkspaceGroupResource serviceWorkspaceGroup = client.GetServiceWorkspaceGroupResource(serviceWorkspaceGroupResourceId);
+
+            // invoke the operation
+            string userId = "5931a75ae4bbd512a88c680b";
+            bool result = await serviceWorkspaceGroup.CheckEntityExistsWorkspaceGroupUserAsync(userId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetEntityTag_ApiManagementHeadWorkspaceGroup()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadWorkspaceGroup.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementHeadWorkspaceGroup.json
             // this example is just showing the usage of "WorkspaceGroup_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

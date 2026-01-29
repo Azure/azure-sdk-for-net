@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="quotaCounterKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="quotaCounterKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="content"> The value of the quota counter to be applied to all quota counter periods. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="quotaCounterKey"/> or <paramref name="content"/> is null. </exception>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="content"> The value of the quota counter to be applied to all quota counter periods. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="quotaCounterKey"/> or <paramref name="content"/> is null. </exception>

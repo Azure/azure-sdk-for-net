@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using static Azure.Core.Pipeline.TaskExtensions;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -380,6 +381,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 path: path,
                 protocols: protocols,
                 apiVersionSet: apiVersionSet);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementBackendData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="title"> Backend Title. </param>
+        /// <param name="description"> Backend Description. </param>
+        /// <param name="resourceUri"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
+        /// <param name="backendServiceFabricCluster"> Backend Properties contract. </param>
+        /// <param name="credentials"> Backend Credentials Contract Properties. </param>
+        /// <param name="proxy"> Backend gateway Contract Properties. </param>
+        /// <param name="tls"> Backend TLS Properties. </param>
+        /// <param name="circuitBreakerRules"> Backend Circuit Breaker Configuration. </param>
+        /// <param name="poolServices"></param>
+        /// <param name="typePropertiesType"> Type of the backend. A backend can be either Single or Pool. </param>
+        /// <param name="uri"> Runtime Url of the Backend. </param>
+        /// <param name="protocol"> Backend communication protocol. </param>
+        /// <returns> A new <see cref="ApiManagement.ApiManagementBackendData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, Uri resourceUri, BackendServiceFabricClusterProperties backendServiceFabricCluster, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, IEnumerable<CircuitBreakerRule> circuitBreakerRules, IEnumerable<BackendPoolItem> poolServices, BackendType? typePropertiesType = null, Uri uri = null, BackendProtocol? protocol = null)
+        {
+            var pool = new BackendBaseParametersPool();
+            if (poolServices != null)
+            {
+                foreach (var item in poolServices)
+                {
+                    pool.Services.Add(item);
+                }
+            }
+            return ApiManagementBackendData(id, name, resourceType, systemData, title, description, resourceUri, backendServiceFabricCluster, credentials, proxy, tls, circuitBreakerRules, default, pool, typePropertiesType, uri, protocol);
         }
     }
 }

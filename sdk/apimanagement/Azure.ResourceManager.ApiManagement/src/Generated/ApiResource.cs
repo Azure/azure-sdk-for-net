@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiClientDiagnostics;
         private readonly ApiRestOperations _apiRestClient;
-        private readonly ClientDiagnostics _apiRevisionClientDiagnostics;
-        private readonly ApiRevisionRestOperations _apiRevisionRestClient;
-        private readonly ClientDiagnostics _apiProductClientDiagnostics;
-        private readonly ApiProductRestOperations _apiProductRestClient;
         private readonly ClientDiagnostics _operationClientDiagnostics;
         private readonly OperationRestOperations _operationRestClient;
+        private readonly ClientDiagnostics _apiProductClientDiagnostics;
+        private readonly ApiProductRestOperations _apiProductRestClient;
+        private readonly ClientDiagnostics _apiRevisionClientDiagnostics;
+        private readonly ApiRevisionRestOperations _apiRevisionRestClient;
         private readonly ApiData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.ApiManagement
             _apiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string apiApiVersion);
             _apiRestClient = new ApiRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiApiVersion);
-            _apiRevisionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _apiRevisionRestClient = new ApiRevisionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _apiProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _apiProductRestClient = new ApiProductRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _operationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _operationRestClient = new OperationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _apiProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _apiProductRestClient = new ApiProductRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _apiRevisionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _apiRevisionRestClient = new ApiRevisionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -102,418 +102,6 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ApiReleaseResources in the Api. </summary>
-        /// <returns> An object representing collection of ApiReleaseResources and their operations over a ApiReleaseResource. </returns>
-        public virtual ApiReleaseCollection GetApiReleases()
-        {
-            return GetCachedClient(client => new ApiReleaseCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns the details of an API release.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiRelease_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiReleaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiReleaseResource>> GetApiReleaseAsync(string releaseId, CancellationToken cancellationToken = default)
-        {
-            return await GetApiReleases().GetAsync(releaseId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the details of an API release.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiRelease_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiReleaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiReleaseResource> GetApiRelease(string releaseId, CancellationToken cancellationToken = default)
-        {
-            return GetApiReleases().Get(releaseId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApiOperationResources in the Api. </summary>
-        /// <returns> An object representing collection of ApiOperationResources and their operations over a ApiOperationResource. </returns>
-        public virtual ApiOperationCollection GetApiOperations()
-        {
-            return GetCachedClient(client => new ApiOperationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the API Operation specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiOperation_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiOperationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiOperationResource>> GetApiOperationAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            return await GetApiOperations().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of the API Operation specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiOperation_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiOperationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiOperationResource> GetApiOperation(string operationId, CancellationToken cancellationToken = default)
-        {
-            return GetApiOperations().Get(operationId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApiPolicyResources in the Api. </summary>
-        /// <returns> An object representing collection of ApiPolicyResources and their operations over a ApiPolicyResource. </returns>
-        public virtual ApiPolicyCollection GetApiPolicies()
-        {
-            return GetCachedClient(client => new ApiPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the policy configuration at the API level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/policies/{policyId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiPolicy_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="format"> Policy Export Format. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiPolicyResource>> GetApiPolicyAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
-        {
-            return await GetApiPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the policy configuration at the API level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/policies/{policyId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiPolicy_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="format"> Policy Export Format. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ApiPolicyResource> GetApiPolicy(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
-        {
-            return GetApiPolicies().Get(policyId, format, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApiTagResources in the Api. </summary>
-        /// <returns> An object representing collection of ApiTagResources and their operations over a ApiTagResource. </returns>
-        public virtual ApiTagCollection GetApiTags()
-        {
-            return GetCachedClient(client => new ApiTagCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get tag associated with the API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tags/{tagId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Tag_GetByApi</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiTagResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiTagResource>> GetApiTagAsync(string tagId, CancellationToken cancellationToken = default)
-        {
-            return await GetApiTags().GetAsync(tagId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get tag associated with the API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tags/{tagId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Tag_GetByApi</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiTagResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiTagResource> GetApiTag(string tagId, CancellationToken cancellationToken = default)
-        {
-            return GetApiTags().Get(tagId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ResolverContractResources in the Api. </summary>
-        /// <returns> An object representing collection of ResolverContractResources and their operations over a ResolverContractResource. </returns>
-        public virtual ResolverContractCollection GetResolverContracts()
-        {
-            return GetCachedClient(client => new ResolverContractCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the GraphQL API Resolver specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/resolvers/{resolverId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GraphQLApiResolver_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResolverContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resolverId"> Resolver identifier within a GraphQL API. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resolverId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resolverId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ResolverContractResource>> GetResolverContractAsync(string resolverId, CancellationToken cancellationToken = default)
-        {
-            return await GetResolverContracts().GetAsync(resolverId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of the GraphQL API Resolver specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/resolvers/{resolverId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GraphQLApiResolver_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResolverContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resolverId"> Resolver identifier within a GraphQL API. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resolverId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resolverId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ResolverContractResource> GetResolverContract(string resolverId, CancellationToken cancellationToken = default)
-        {
-            return GetResolverContracts().Get(resolverId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApiSchemaResources in the Api. </summary>
-        /// <returns> An object representing collection of ApiSchemaResources and their operations over a ApiSchemaResource. </returns>
-        public virtual ApiSchemaCollection GetApiSchemas()
-        {
-            return GetCachedClient(client => new ApiSchemaCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the schema configuration at the API level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/schemas/{schemaId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiSchema_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiSchemaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiSchemaResource>> GetApiSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
-        {
-            return await GetApiSchemas().GetAsync(schemaId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the schema configuration at the API level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/schemas/{schemaId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiSchema_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiSchemaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiSchemaResource> GetApiSchema(string schemaId, CancellationToken cancellationToken = default)
-        {
-            return GetApiSchemas().Get(schemaId, cancellationToken);
-        }
-
         /// <summary> Gets a collection of ApiDiagnosticResources in the Api. </summary>
         /// <returns> An object representing collection of ApiDiagnosticResources and their operations over a ApiDiagnosticResource. </returns>
         public virtual ApiDiagnosticCollection GetApiDiagnostics()
@@ -534,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -565,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -603,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -635,7 +223,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -652,6 +240,418 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<ApiIssueResource> GetApiIssue(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
             return GetApiIssues().Get(issueId, expandCommentsAttachments, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiOperationResources in the Api. </summary>
+        /// <returns> An object representing collection of ApiOperationResources and their operations over a ApiOperationResource. </returns>
+        public virtual ApiOperationCollection GetApiOperations()
+        {
+            return GetCachedClient(client => new ApiOperationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the API Operation specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiOperation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiOperationResource>> GetApiOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            return await GetApiOperations().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the API Operation specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiOperation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiOperationResource> GetApiOperation(string operationId, CancellationToken cancellationToken = default)
+        {
+            return GetApiOperations().Get(operationId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiPolicyResources in the Api. </summary>
+        /// <returns> An object representing collection of ApiPolicyResources and their operations over a ApiPolicyResource. </returns>
+        public virtual ApiPolicyCollection GetApiPolicies()
+        {
+            return GetCachedClient(client => new ApiPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the policy configuration at the API level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/policies/{policyId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="format"> Policy Export Format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiPolicyResource>> GetApiPolicyAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        {
+            return await GetApiPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the policy configuration at the API level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/policies/{policyId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="format"> Policy Export Format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ApiPolicyResource> GetApiPolicy(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        {
+            return GetApiPolicies().Get(policyId, format, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiTagResources in the Api. </summary>
+        /// <returns> An object representing collection of ApiTagResources and their operations over a ApiTagResource. </returns>
+        public virtual ApiTagCollection GetApiTags()
+        {
+            return GetCachedClient(client => new ApiTagCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get tag associated with the API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tags/{tagId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tag_GetByApi</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiTagResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiTagResource>> GetApiTagAsync(string tagId, CancellationToken cancellationToken = default)
+        {
+            return await GetApiTags().GetAsync(tagId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get tag associated with the API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tags/{tagId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tag_GetByApi</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiTagResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiTagResource> GetApiTag(string tagId, CancellationToken cancellationToken = default)
+        {
+            return GetApiTags().Get(tagId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiReleaseResources in the Api. </summary>
+        /// <returns> An object representing collection of ApiReleaseResources and their operations over a ApiReleaseResource. </returns>
+        public virtual ApiReleaseCollection GetApiReleases()
+        {
+            return GetCachedClient(client => new ApiReleaseCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns the details of an API release.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiRelease_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiReleaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiReleaseResource>> GetApiReleaseAsync(string releaseId, CancellationToken cancellationToken = default)
+        {
+            return await GetApiReleases().GetAsync(releaseId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the details of an API release.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiRelease_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiReleaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiReleaseResource> GetApiRelease(string releaseId, CancellationToken cancellationToken = default)
+        {
+            return GetApiReleases().Get(releaseId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ResolverContractResources in the Api. </summary>
+        /// <returns> An object representing collection of ResolverContractResources and their operations over a ResolverContractResource. </returns>
+        public virtual ResolverContractCollection GetResolverContracts()
+        {
+            return GetCachedClient(client => new ResolverContractCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the GraphQL API Resolver specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/resolvers/{resolverId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GraphQLApiResolver_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResolverContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resolverId"> Resolver identifier within a GraphQL API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resolverId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resolverId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ResolverContractResource>> GetResolverContractAsync(string resolverId, CancellationToken cancellationToken = default)
+        {
+            return await GetResolverContracts().GetAsync(resolverId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the GraphQL API Resolver specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/resolvers/{resolverId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GraphQLApiResolver_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResolverContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resolverId"> Resolver identifier within a GraphQL API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resolverId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resolverId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ResolverContractResource> GetResolverContract(string resolverId, CancellationToken cancellationToken = default)
+        {
+            return GetResolverContracts().Get(resolverId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiSchemaResources in the Api. </summary>
+        /// <returns> An object representing collection of ApiSchemaResources and their operations over a ApiSchemaResource. </returns>
+        public virtual ApiSchemaCollection GetApiSchemas()
+        {
+            return GetCachedClient(client => new ApiSchemaCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the schema configuration at the API level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/schemas/{schemaId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiSchema_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiSchemaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiSchemaResource>> GetApiSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
+        {
+            return await GetApiSchemas().GetAsync(schemaId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the schema configuration at the API level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/schemas/{schemaId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiSchema_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiSchemaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiSchemaResource> GetApiSchema(string schemaId, CancellationToken cancellationToken = default)
+        {
+            return GetApiSchemas().Get(schemaId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiTagDescriptionResources in the Api. </summary>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -721,6 +721,75 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<ApiTagDescriptionResource> GetApiTagDescription(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
             return GetApiTagDescriptions().Get(tagDescriptionId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ToolContractResources in the Api. </summary>
+        /// <returns> An object representing collection of ToolContractResources and their operations over a ToolContractResource. </returns>
+        public virtual ToolContractCollection GetToolContracts()
+        {
+            return GetCachedClient(client => new ToolContractCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the API Tool specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tools/{toolId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiTool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ToolContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="toolId"> Tool identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="toolId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="toolId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ToolContractResource>> GetToolContractAsync(string toolId, CancellationToken cancellationToken = default)
+        {
+            return await GetToolContracts().GetAsync(toolId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the API Tool specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tools/{toolId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiTool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ToolContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="toolId"> Tool identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="toolId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="toolId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ToolContractResource> GetToolContract(string toolId, CancellationToken cancellationToken = default)
+        {
+            return GetToolContracts().Get(toolId, cancellationToken);
         }
 
         /// <summary> Gets an object representing a ServiceApiWikiResource along with the instance operations that can be performed on it in the Api. </summary>
@@ -743,7 +812,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -783,7 +852,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -823,7 +892,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -867,7 +936,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -911,7 +980,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -954,7 +1023,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -985,64 +1054,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists all revisions of an API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/revisions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiRevision_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiRevisionContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiRevisionContract> GetApiRevisionsByServiceAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRevisionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApiRevisionContract.DeserializeApiRevisionContract(e), _apiRevisionClientDiagnostics, Pipeline, "ApiResource.GetApiRevisionsByService", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all revisions of an API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/revisions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiRevision_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiRevisionContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiRevisionContract> GetApiRevisionsByService(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRevisionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApiRevisionContract.DeserializeApiRevisionContract(e), _apiRevisionClientDiagnostics, Pipeline, "ApiResource.GetApiRevisionsByService", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Lists a collection of operations associated with tags.
         /// <list type="bullet">
         /// <item>
@@ -1055,7 +1066,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1085,7 +1096,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1103,6 +1114,64 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Lists all revisions of an API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/revisions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiRevision_ListByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApiRevisionContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiRevisionContract> GetApiRevisionsByServiceAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRevisionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApiRevisionContract.DeserializeApiRevisionContract(e), _apiRevisionClientDiagnostics, Pipeline, "ApiResource.GetApiRevisionsByService", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all revisions of an API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/revisions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiRevision_ListByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiRevisionContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiRevisionContract> GetApiRevisionsByService(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRevisionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApiRevisionContract.DeserializeApiRevisionContract(e), _apiRevisionClientDiagnostics, Pipeline, "ApiResource.GetApiRevisionsByService", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the entity state (Etag) version of the API specified by its identifier.
         /// <list type="bullet">
         /// <item>
@@ -1115,7 +1184,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1153,7 +1222,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

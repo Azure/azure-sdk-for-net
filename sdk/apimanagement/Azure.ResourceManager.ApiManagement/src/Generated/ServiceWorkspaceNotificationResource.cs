@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _serviceWorkspaceNotificationWorkspaceNotificationClientDiagnostics;
         private readonly WorkspaceNotificationRestOperations _serviceWorkspaceNotificationWorkspaceNotificationRestClient;
-        private readonly ClientDiagnostics _workspaceNotificationRecipientUserClientDiagnostics;
-        private readonly WorkspaceNotificationRecipientUserRestOperations _workspaceNotificationRecipientUserRestClient;
         private readonly ClientDiagnostics _workspaceNotificationRecipientEmailClientDiagnostics;
         private readonly WorkspaceNotificationRecipientEmailRestOperations _workspaceNotificationRecipientEmailRestClient;
+        private readonly ClientDiagnostics _workspaceNotificationRecipientUserClientDiagnostics;
+        private readonly WorkspaceNotificationRecipientUserRestOperations _workspaceNotificationRecipientUserRestClient;
         private readonly ApiManagementNotificationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ApiManagement
             _serviceWorkspaceNotificationWorkspaceNotificationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serviceWorkspaceNotificationWorkspaceNotificationApiVersion);
             _serviceWorkspaceNotificationWorkspaceNotificationRestClient = new WorkspaceNotificationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceNotificationWorkspaceNotificationApiVersion);
-            _workspaceNotificationRecipientUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _workspaceNotificationRecipientUserRestClient = new WorkspaceNotificationRecipientUserRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _workspaceNotificationRecipientEmailClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _workspaceNotificationRecipientEmailRestClient = new WorkspaceNotificationRecipientEmailRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _workspaceNotificationRecipientUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _workspaceNotificationRecipientUserRestClient = new WorkspaceNotificationRecipientUserRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -270,290 +270,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the list of the Notification Recipient User subscribed to the notification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceNotificationRecipientUser_ListByNotification</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecipientUserContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecipientUserContract> GetWorkspaceNotificationRecipientUsersByNotificationAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceNotificationRecipientUserRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RecipientUserContract.DeserializeRecipientUserContract(e), _workspaceNotificationRecipientUserClientDiagnostics, Pipeline, "ServiceWorkspaceNotificationResource.GetWorkspaceNotificationRecipientUsersByNotification", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of the Notification Recipient User subscribed to the notification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceNotificationRecipientUser_ListByNotification</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecipientUserContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecipientUserContract> GetWorkspaceNotificationRecipientUsersByNotification(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceNotificationRecipientUserRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RecipientUserContract.DeserializeRecipientUserContract(e), _workspaceNotificationRecipientUserClientDiagnostics, Pipeline, "ServiceWorkspaceNotificationResource.GetWorkspaceNotificationRecipientUsersByNotification", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Determine if the Notification Recipient User is subscribed to the notification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceNotificationRecipientUser_CheckEntityExists</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual async Task<Response<bool>> CheckEntityExistsWorkspaceNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CheckEntityExistsWorkspaceNotificationRecipientUser");
-            scope.Start();
-            try
-            {
-                var response = await _workspaceNotificationRecipientUserRestClient.CheckEntityExistsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Determine if the Notification Recipient User is subscribed to the notification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceNotificationRecipientUser_CheckEntityExists</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual Response<bool> CheckEntityExistsWorkspaceNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CheckEntityExistsWorkspaceNotificationRecipientUser");
-            scope.Start();
-            try
-            {
-                var response = _workspaceNotificationRecipientUserRestClient.CheckEntityExists(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Adds the API Management User to the list of Recipients for the Notification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceNotificationRecipientUser_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual async Task<Response<RecipientUserContract>> CreateOrUpdateWorkspaceNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CreateOrUpdateWorkspaceNotificationRecipientUser");
-            scope.Start();
-            try
-            {
-                var response = await _workspaceNotificationRecipientUserRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Adds the API Management User to the list of Recipients for the Notification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceNotificationRecipientUser_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual Response<RecipientUserContract> CreateOrUpdateWorkspaceNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CreateOrUpdateWorkspaceNotificationRecipientUser");
-            scope.Start();
-            try
-            {
-                var response = _workspaceNotificationRecipientUserRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes the API Management user from the list of Notification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceNotificationRecipientUser_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual async Task<Response> DeleteWorkspaceNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.DeleteWorkspaceNotificationRecipientUser");
-            scope.Start();
-            try
-            {
-                var response = await _workspaceNotificationRecipientUserRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes the API Management user from the list of Notification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceNotificationRecipientUser_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual Response DeleteWorkspaceNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.DeleteWorkspaceNotificationRecipientUser");
-            scope.Start();
-            try
-            {
-                var response = _workspaceNotificationRecipientUserRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gets the list of the Notification Recipient Emails subscribed to a notification.
         /// <list type="bullet">
         /// <item>
@@ -566,7 +282,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -591,7 +307,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -601,84 +317,6 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceNotificationRecipientEmailRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RecipientEmailContract.DeserializeRecipientEmailContract(e), _workspaceNotificationRecipientEmailClientDiagnostics, Pipeline, "ServiceWorkspaceNotificationResource.GetWorkspaceNotificationRecipientEmailsByNotification", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Determine if Notification Recipient Email subscribed to the notification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientEmails/{email}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceNotificationRecipientEmail_CheckEntityExists</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="email"> Email identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="email"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
-        public virtual async Task<Response<bool>> CheckEntityExistsWorkspaceNotificationRecipientEmailAsync(string email, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(email, nameof(email));
-
-            using var scope = _workspaceNotificationRecipientEmailClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CheckEntityExistsWorkspaceNotificationRecipientEmail");
-            scope.Start();
-            try
-            {
-                var response = await _workspaceNotificationRecipientEmailRestClient.CheckEntityExistsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, email, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Determine if Notification Recipient Email subscribed to the notification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientEmails/{email}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceNotificationRecipientEmail_CheckEntityExists</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="email"> Email identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="email"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
-        public virtual Response<bool> CheckEntityExistsWorkspaceNotificationRecipientEmail(string email, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(email, nameof(email));
-
-            using var scope = _workspaceNotificationRecipientEmailClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CheckEntityExistsWorkspaceNotificationRecipientEmail");
-            scope.Start();
-            try
-            {
-                var response = _workspaceNotificationRecipientEmailRestClient.CheckEntityExists(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, email, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -694,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -733,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -772,7 +410,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -811,7 +449,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -828,6 +466,368 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _workspaceNotificationRecipientEmailRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, email, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Determine if Notification Recipient Email subscribed to the notification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientEmails/{email}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceNotificationRecipientEmail_CheckEntityExists</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="email"> Email identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="email"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
+        public virtual async Task<Response<bool>> CheckEntityExistsWorkspaceNotificationRecipientEmailAsync(string email, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
+
+            using var scope = _workspaceNotificationRecipientEmailClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CheckEntityExistsWorkspaceNotificationRecipientEmail");
+            scope.Start();
+            try
+            {
+                var response = await _workspaceNotificationRecipientEmailRestClient.CheckEntityExistsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, email, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Determine if Notification Recipient Email subscribed to the notification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientEmails/{email}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceNotificationRecipientEmail_CheckEntityExists</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="email"> Email identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="email"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
+        public virtual Response<bool> CheckEntityExistsWorkspaceNotificationRecipientEmail(string email, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
+
+            using var scope = _workspaceNotificationRecipientEmailClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CheckEntityExistsWorkspaceNotificationRecipientEmail");
+            scope.Start();
+            try
+            {
+                var response = _workspaceNotificationRecipientEmailRestClient.CheckEntityExists(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, email, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of the Notification Recipient User subscribed to the notification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceNotificationRecipientUser_ListByNotification</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="RecipientUserContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecipientUserContract> GetWorkspaceNotificationRecipientUsersByNotificationAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceNotificationRecipientUserRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RecipientUserContract.DeserializeRecipientUserContract(e), _workspaceNotificationRecipientUserClientDiagnostics, Pipeline, "ServiceWorkspaceNotificationResource.GetWorkspaceNotificationRecipientUsersByNotification", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of the Notification Recipient User subscribed to the notification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceNotificationRecipientUser_ListByNotification</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RecipientUserContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecipientUserContract> GetWorkspaceNotificationRecipientUsersByNotification(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceNotificationRecipientUserRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RecipientUserContract.DeserializeRecipientUserContract(e), _workspaceNotificationRecipientUserClientDiagnostics, Pipeline, "ServiceWorkspaceNotificationResource.GetWorkspaceNotificationRecipientUsersByNotification", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Adds the API Management User to the list of Recipients for the Notification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceNotificationRecipientUser_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        public virtual async Task<Response<RecipientUserContract>> CreateOrUpdateWorkspaceNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CreateOrUpdateWorkspaceNotificationRecipientUser");
+            scope.Start();
+            try
+            {
+                var response = await _workspaceNotificationRecipientUserRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Adds the API Management User to the list of Recipients for the Notification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceNotificationRecipientUser_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        public virtual Response<RecipientUserContract> CreateOrUpdateWorkspaceNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CreateOrUpdateWorkspaceNotificationRecipientUser");
+            scope.Start();
+            try
+            {
+                var response = _workspaceNotificationRecipientUserRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the API Management user from the list of Notification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceNotificationRecipientUser_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        public virtual async Task<Response> DeleteWorkspaceNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.DeleteWorkspaceNotificationRecipientUser");
+            scope.Start();
+            try
+            {
+                var response = await _workspaceNotificationRecipientUserRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the API Management user from the list of Notification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceNotificationRecipientUser_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        public virtual Response DeleteWorkspaceNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.DeleteWorkspaceNotificationRecipientUser");
+            scope.Start();
+            try
+            {
+                var response = _workspaceNotificationRecipientUserRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Determine if the Notification Recipient User is subscribed to the notification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceNotificationRecipientUser_CheckEntityExists</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        public virtual async Task<Response<bool>> CheckEntityExistsWorkspaceNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CheckEntityExistsWorkspaceNotificationRecipientUser");
+            scope.Start();
+            try
+            {
+                var response = await _workspaceNotificationRecipientUserRestClient.CheckEntityExistsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Determine if the Notification Recipient User is subscribed to the notification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceNotificationRecipientUser_CheckEntityExists</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        public virtual Response<bool> CheckEntityExistsWorkspaceNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            using var scope = _workspaceNotificationRecipientUserClientDiagnostics.CreateScope("ServiceWorkspaceNotificationResource.CheckEntityExistsWorkspaceNotificationRecipientUser");
+            scope.Start();
+            try
+            {
+                var response = _workspaceNotificationRecipientUserRestClient.CheckEntityExists(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userId, cancellationToken);
                 return response;
             }
             catch (Exception e)

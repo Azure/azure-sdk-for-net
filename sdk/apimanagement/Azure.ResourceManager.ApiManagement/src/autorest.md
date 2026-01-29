@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
-require: https://github.com/Azure/azure-rest-api-specs/blob/86d7e7d7c7ea9428a3a8e983d746a270f0581bc7/specification/apimanagement/resource-manager/readme.md
-tag: package-2024-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/87136914a4aea5bd9c9ac24f4b6974348d7560d9/specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/readme.md
+# tag: package-preview-2025-03-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,11 +21,13 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
+  prenamer: true
 use-model-reader-writer: true
 skip-serialization-format-xml: true
 enable-bicep-serialization: true
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 list-exception:
@@ -168,7 +170,7 @@ rename-mapping:
   RegistrationDelegationSettingsProperties: RegistrationDelegationSettingProperties
   OpenidConnectProviderContract: ApiManagementOpenIdConnectProvider
   OpenidConnectProviderUpdateContract: OpenIdConnectProviderUpdateContract
-  VirtualNetworkConfiguration.vnetid: VnetId
+  VirtualNetworkConfiguration.vnetid: VnetId|uuid
   AccessInformationContract: TenantAccessInfo
   AccessInformationContract.properties.id: AccessInfoType
   AccessIdName: AccessName
@@ -245,7 +247,7 @@ rename-mapping:
   NameAvailabilityReason: ApiManagementServiceNameUnavailableReason
   ApiType.websocket: WebSocket
   ApiType.graphql: GraphQL
-  ProvisioningState: AssociationEntityProvisioningState
+  AssociationContractPropertiesProvisioningState: AssociationEntityProvisioningState
   AuthenticationSettingsContract.openid: OpenId
   CertificateInformation.expiry: ExpireOn
   Confirmation: ConfirmationEmailType
@@ -329,6 +331,53 @@ rename-mapping:
   AllPoliciesContract.properties.referencePolicyId: -|arm-id
   DiagnosticUpdateContract.properties.logClientIp: IsLogClientIPEnabled
   DiagnosticContract.properties.logClientIp: IsLogClientIPEnabled
+  AuthorizationServerContract.properties.clientAuthenticationMethod: ClientAuthenticationMethods
+  ApiEntityBaseContract.subscriptionRequired: IsSubscriptionRequired
+  CacheContract.properties.resourceId: resourceUri
+  CacheUpdateParameters.properties.resourceId: resourceUri
+  IdentityProviderContract.properties.signinTenant: SignInTenant
+  IdentityProviderContract.properties.signupPolicyName: SignUpPolicyName
+  IdentityProviderContract.properties.signinPolicyName: SignInPolicyName
+  IssueContract.properties.apiId: -|arm-id
+  IssueContract.properties.userId: -|arm-id
+  LoggerContract.properties.resourceId: -|arm-id
+  NamedValueContract.properties.secret: IsSecret
+  ProductEntityBaseParameters.subscriptionRequired: IsSubscriptionRequired
+  ProductEntityBaseParameters.approvalRequired: IsApprovalRequired
+  ConnectivityHop.address: -|ip-address
+  ConnectivityHop.resourceId: -|arm-id
+  RemotePrivateEndpointConnectionWrapper.id: -|arm-id
+  RemotePrivateEndpointConnectionWrapper.type: -|resource-type
+  ApiReleaseContract.properties.apiId: -|arm-id
+  IssueCommentContract.properties.userId: -|arm-id
+  AuthorizationServerContract.properties.supportState: DoesSupportState
+  DeletedServiceContract.properties.serviceId: -|arm-id
+  PortalSettingsContract.properties.subscriptions: IsSubscriptions
+  PortalSettingsContract.properties.userRegistration: IsUserRegistration
+  PrivateEndpointConnectionRequest.id: -|arm-id
+  VirtualNetworkConfiguration.subnetResourceId: -|arm-id
+  ApiManagementServiceResource.properties.publicIpAddressId: -|arm-id
+  AdditionalLocation.publicIpAddressId: -|arm-id
+  ApiContract.properties.subscriptionRequired: IsSubscriptionRequired
+  ApiUpdateContract.properties.subscriptionRequired: IsSubscriptionRequired
+  ApiCreateOrUpdateParameter.properties.subscriptionRequired: IsSubscriptionRequired
+  NamedValueUpdateParameters.properties.secret: IsSecret
+  ProductUpdateParameters.properties.subscriptionRequired: IsSubscriptionRequired
+  ProductUpdateParameters.properties.approvalRequired: IsApprovalRequired
+  NamedValueCreateContract.properties.secret: IsSecret
+  IdentityProviderUpdateParameters.properties.signupPolicyName: SignUpPolicyName
+  IdentityProviderUpdateParameters.properties.signinPolicyName: SignInPolicyName
+  IdentityProviderUpdateParameters.properties.signinTenant: SignInTenant
+  IdentityProviderUpdateParameters.properties.type: IdentityProviderType
+  IdentityProviderCreateContract.properties.signupPolicyName: SignUpPolicyName
+  IdentityProviderCreateContract.properties.signinPolicyName: SignInPolicyName
+  IdentityProviderCreateContract.properties.signinTenant: SignInTenant
+  IdentityProviderCreateContract.properties.type: IdentityProviderType
+  AuthorizationServerUpdateContract.properties.supportState: DoesSupportState
+  ProductContract.properties.subscriptionRequired: IsSubscriptionRequired
+  ProductContract.properties.approvalRequired: IsApprovalRequired
+  ResourceSkuResult.resourceType: -|resource-type
+  AuthorizationServerUpdateContract.properties.clientAuthenticationMethod: ClientAuthenticationMethods
 
 keep-plural-resource-data:
   - ApiManagementWorkspaceLinks
@@ -336,35 +385,10 @@ keep-plural-resource-data:
 directive:
   - remove-operation: 'ApiManagementOperations_List'
   - remove-operation: 'OperationStatus_Get'
-  - from: definitions.json
+  - from: openapi.json
     where: $.definitions
     transform: >
-      $.AuthorizationServerContractBaseProperties.properties.bearerTokenSendingMethods.items['x-ms-enum']['name'] = 'BearerTokenSendingMethod';
-      $.AuthorizationServerContractBaseProperties.properties.clientAuthenticationMethod['x-ms-client-name'] = 'ClientAuthenticationMethods';
-      $.BearerTokenSendingMethodsContract['x-ms-enum']['name'] = 'BearerTokenSendingMethod';
-      $.ApiEntityBaseContract.properties.subscriptionRequired['x-ms-client-name'] = 'IsSubscriptionRequired';
-      $.CacheContractProperties.properties.resourceId['x-ms-client-name'] = 'resourceUri';
-      $.CacheUpdateProperties.properties.resourceId['x-ms-client-name'] = 'resourceUri';
-      $.IdentityProviderBaseParameters.properties.type['x-ms-client-name'] = 'IdentityProviderType';
-      $.IdentityProviderBaseParameters.properties.signinTenant['x-ms-client-name'] = 'SignInTenant';
-      $.IdentityProviderBaseParameters.properties.signupPolicyName['x-ms-client-name'] = 'SignUpPolicyName';
-      $.IdentityProviderBaseParameters.properties.signinPolicyName['x-ms-client-name'] = 'SignInPolicyName';
-      $.IssueContractBaseProperties.properties.apiId['x-ms-format'] = 'arm-id';
-      $.IssueContractProperties.properties.userId['x-ms-format'] = 'arm-id';
-      $.LoggerContractProperties.properties.resourceId['x-ms-format'] = 'arm-id';
-      $.NamedValueEntityBaseParameters.properties.secret['x-ms-client-name'] = 'IsSecret';
-      $.ProductEntityBaseParameters.properties.subscriptionRequired['x-ms-client-name'] = 'IsSubscriptionRequired';
-      $.ProductEntityBaseParameters.properties.approvalRequired['x-ms-client-name'] = 'IsApprovalRequired';
-      $.ApiVersionSetContractDetails.properties.versioningScheme['x-ms-enum'] = {
-          "name": "versioningScheme",
-          "modelAsString": true
-        }
-      $.ConnectivityHop.properties.address['x-ms-format'] = 'ip-address';
-      $.ConnectivityHop.properties.resourceId['x-ms-format'] = 'arm-id';
-      $.RemotePrivateEndpointConnectionWrapper.properties.id['x-ms-format'] = 'arm-id';
-      $.RemotePrivateEndpointConnectionWrapper.properties.type['x-ms-format'] = 'resource-type';
-      $.ApiReleaseContractProperties.properties.apiId['x-ms-format'] = 'arm-id';
-      $.GatewayKeyRegenerationRequestContract.properties.keyType['x-ms-enum']['name'] = 'GatewayRegenerateKeyType';
+      $.KeyType['x-ms-enum']['name'] = 'GatewayRegenerateKeyType';
       for (var key in $) {
           if (key.endsWith('Collection')) {
               for (var property in $[key].properties) {
@@ -374,33 +398,57 @@ directive:
               }
           }
         }
-      $.IssueCommentContractProperties.properties.userId['x-ms-format'] = 'arm-id';
-      $.AuthorizationServerContractBaseProperties.properties.supportState['x-ms-client-name'] = 'DoesSupportState';
-      $.DeletedServiceContractProperties.properties.serviceId['x-ms-format'] = 'arm-id';
-      $.PortalSettingsContractProperties.properties.subscriptions['x-ms-client-name'] = 'IsSubscriptions';
-      $.PortalSettingsContractProperties.properties.userRegistration['x-ms-client-name'] = 'IsUserRegistration';
-      $.PrivateEndpointConnectionRequest.properties.id['x-ms-format'] = 'arm-id';
-  - from: apimskus.json
-    where: $.definitions
-    transform: >
-      $.ApiManagementSku.properties.locations.items['x-ms-format'] = 'azure-location';
-  - from: apimdeployment.json
+  - from: openapi.json
     where: $.definitions
     transform: >
       delete $.Operation;
       delete $.OperationListResult;
-      $.VirtualNetworkConfiguration.properties.vnetid['format'] = 'uuid';
-      $.VirtualNetworkConfiguration.properties.subnetResourceId['x-ms-format'] = 'arm-id';
-      $.ResourceSkuResult.properties.resourceType['x-ms-format'] = 'resource-type';
-      $.ApiManagementServiceBaseProperties.properties.publicIpAddressId['x-ms-format'] = 'arm-id';
-      $.AdditionalLocation.properties.publicIpAddressId['x-ms-format'] = 'arm-id';
-  - from: apimanagement.json
-    where: $.parameters
+  - from: openapi.json
+    where: $
     transform: >
-      $.OpenIdConnectIdParameter['x-ms-client-name'] = 'OpenId';
-      $.IfMatchOptionalParameter['x-ms-format'] = 'etag';
-      $.IfMatchRequiredParameter['x-ms-format'] = 'etag';
-  - from: apimgroups.json
+      for (var pathName in $.paths) {
+          var path = $.paths[pathName];
+          if (path.parameters) {
+              for (var i = 0; i < path.parameters.length; i++) {
+                  if (path.parameters[i].name === 'If-Match') {
+                      path.parameters[i]['x-ms-format'] = 'etag';
+                  }
+              }
+          }
+          for (var methodName in path) {
+              if (methodName === 'parameters') continue;
+              var operation = path[methodName];
+              if (operation.parameters) {
+                  for (var i = 0; i < operation.parameters.length; i++) {
+                      if (operation.parameters[i].name === 'If-Match') {
+                          operation.parameters[i]['x-ms-format'] = 'etag';
+                      }
+                  }
+              }
+          }
+      }
+      for (var pathName in $.paths) {
+          var path = $.paths[pathName];
+          if (path.parameters) {
+              for (var i = 0; i < path.parameters.length; i++) {
+                  if (path.parameters[i].name === 'opid') {
+                      path.parameters[i]['x-ms-client-name'] = 'OpenId';
+                  }
+              }
+          }
+          for (var methodName in path) {
+              if (methodName === 'parameters') continue;
+              var operation = path[methodName];
+              if (operation.parameters) {
+                  for (var i = 0; i < operation.parameters.length; i++) {
+                      if (operation.parameters[i].name === 'opid') {
+                          operation.parameters[i]['x-ms-client-name'] = 'OpenId';
+                      }
+                  }
+              }
+          }
+      }
+  - from: openapi.json
     where: $.paths
     transform: >
       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users'].get.responses['200'].schema = {
@@ -414,7 +462,7 @@ directive:
                       "type": "object",
                       "allOf": [
                           {
-                              "$ref": "./definitions.json#/definitions/UserContract"
+                              "$ref": "#/definitions/UserContract"
                           }
                       ]
                   },
@@ -437,7 +485,7 @@ directive:
           "type": "object",
           "allOf": [
               {
-                  "$ref": "./definitions.json#/definitions/UserContract"
+                  "$ref": "#/definitions/UserContract"
               }
           ]
         }
@@ -446,12 +494,12 @@ directive:
           "type": "object",
           "allOf": [
               {
-                  "$ref": "./definitions.json#/definitions/UserContract"
+                  "$ref": "#/definitions/UserContract"
               }
           ]
         }
     reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementUserResource.
-  - from: apimgateways.json
+  - from: openapi.json
     where: $.paths
     transform: >
       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/apis'].get.responses['200'].schema = {
@@ -465,7 +513,7 @@ directive:
                       "type": "object",
                       "allOf": [
                           {
-                              "$ref": "./definitions.json#/definitions/ApiContract"
+                              "$ref": "#/definitions/ApiContract"
                           }
                       ]
                   },
@@ -490,7 +538,7 @@ directive:
           "type": "object",
           "allOf": [
               {
-                  "$ref": "./definitions.json#/definitions/ApiContract"
+                  "$ref": "#/definitions/ApiContract"
               }
           ]
         }
@@ -499,12 +547,12 @@ directive:
           "type": "object",
           "allOf": [
               {
-                  "$ref": "./definitions.json#/definitions/ApiContract"
+                  "$ref": "#/definitions/ApiContract"
               }
           ]
         }
     reason: Modify the original swagger since the id in the real response is slightly different from the ApiResource.
-  - from: apimproducts.json
+  - from: openapi.json
     where: $.paths
     transform: >
       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/apis'].get.responses['200'].schema = {
@@ -518,7 +566,7 @@ directive:
                       "type": "object",
                       "allOf": [
                           {
-                              "$ref": "./definitions.json#/definitions/ApiContract"
+                              "$ref": "#/definitions/ApiContract"
                           }
                       ]
                   },
@@ -543,7 +591,7 @@ directive:
           "type": "object",
           "allOf": [
               {
-                  "$ref": "./definitions.json#/definitions/ApiContract"
+                  "$ref": "#/definitions/ApiContract"
               }
           ]
         }
@@ -552,12 +600,12 @@ directive:
           "type": "object",
           "allOf": [
               {
-                  "$ref": "./definitions.json#/definitions/ApiContract"
+                  "$ref": "#/definitions/ApiContract"
               }
           ]
         }
     reason: Modify the original swagger since the id in the real response is slightly different from the ApiResource.
-  - from: apimproducts.json
+  - from: openapi.json
     where: $.paths
     transform: >
       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/groups'].get.responses['200'].schema = {
@@ -571,7 +619,7 @@ directive:
                       "type": "object",
                       "allOf": [
                           {
-                              "$ref": "./definitions.json#/definitions/GroupContract"
+                              "$ref": "#/definitions/GroupContract"
                           }
                       ]
                   },
@@ -595,7 +643,7 @@ directive:
           "type": "object",
           "allOf": [
               {
-                  "$ref": "./definitions.json#/definitions/GroupContract"
+                  "$ref": "#/definitions/GroupContract"
               }
           ]
         }
@@ -604,7 +652,7 @@ directive:
           "type": "object",
           "allOf": [
               {
-                  "$ref": "./definitions.json#/definitions/GroupContract"
+                  "$ref": "#/definitions/GroupContract"
               }
           ]
         }
@@ -612,53 +660,129 @@ directive:
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
     transform: $['x-ms-client-name'] = 'orderBy'
-  - from: apimcontenttypes.json
+  - from: openapi.json
     where: $.paths.['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}'].put
     transform: >
                 $['parameters']=[
                       {
-                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+                          "name": "resourceGroupName",
+                          "in": "path",
+                          "description": "The name of the resource group. The name is case insensitive.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 90,
+                          "x-ms-parameter-location": "method"
+                        },
+                      {
+                        "name": "serviceName",
+                        "in": "path",
+                        "description": "The name of the API Management service.",
+                        "required": true,
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50,
+                        "pattern": "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
                       },
                       {
-                        "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+                        "name": "contentTypeId",
+                        "in": "path",
+                        "description": "Content type identifier.",
+                        "required": true,
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 80
                       },
                       {
-                        "$ref": "./apimanagement.json#/parameters/ContentTypeIdParameter"
+                        "name": "If-Match",
+                        "in": "header",
+                        "description": "ETag of the Entity. Not required when creating an entity, but required when updating an entity.",
+                        "required": false,
+                        "type": "string",
+                        "x-ms-format": "etag"
                       },
                       {
-                        "$ref": "./apimanagement.json#/parameters/IfMatchOptionalParameter"
-                      },
+                          "name": "api-version",
+                          "in": "query",
+                          "description": "The API version to use for this operation.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1
+                        },
                       {
-                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
-                      },
-                      {
-                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
-                      }
+                          "name": "subscriptionId",
+                          "in": "path",
+                          "description": "The ID of the target subscription.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1
+                        }
                 ]
-  - from: apimcontenttypes.json
+  - from: openapi.json
     where: $.paths.['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}'].put
     transform: >
-                $['parameters']=[      
+                $['parameters']=[
                       {
-                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+                          "name": "resourceGroupName",
+                          "in": "path",
+                          "description": "The name of the resource group. The name is case insensitive.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 90,
+                          "x-ms-parameter-location": "method"
+                        },
+                      {
+                        "name": "serviceName",
+                        "in": "path",
+                        "description": "The name of the API Management service.",
+                        "required": true,
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50,
+                        "pattern": "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
                       },
                       {
-                        "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+                        "name": "contentTypeId",
+                        "in": "path",
+                        "description": "Content type identifier.",
+                        "required": true,
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 80
                       },
                       {
-                        "$ref": "./apimanagement.json#/parameters/ContentTypeIdParameter"
+                        "name": "contentItemId",
+                        "in": "path",
+                        "description": "Content item identifier.",
+                        "required": true,
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 80
                       },
                       {
-                        "$ref": "./apimanagement.json#/parameters/ContentItemIdParameter"
+                        "name": "If-Match",
+                        "in": "header",
+                        "description": "ETag of the Entity. Not required when creating an entity, but required when updating an entity.",
+                        "required": false,
+                        "type": "string",
+                        "x-ms-format": "etag"
                       },
                       {
-                        "$ref": "./apimanagement.json#/parameters/IfMatchOptionalParameter"
-                      },
+                          "name": "api-version",
+                          "in": "query",
+                          "description": "The API version to use for this operation.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1
+                        },
                       {
-                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
-                      },
-                      {
-                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
-                      }
+                          "name": "subscriptionId",
+                          "in": "path",
+                          "description": "The ID of the target subscription.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1
+                        }
                 ]
 ```

@@ -15,7 +15,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class BackendPool : IUtf8JsonSerializable, IJsonModel<BackendPool>
+    public partial class BackendPool : IUtf8JsonSerializable, IJsonModel<BackendPool>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendPool>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -45,6 +45,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FailureResponse))
+            {
+                writer.WritePropertyName("failureResponse"u8);
+                writer.WriteObjectValue(FailureResponse, options);
+            }
+            if (Optional.IsDefined(SessionAffinity))
+            {
+                writer.WritePropertyName("sessionAffinity"u8);
+                writer.WriteObjectValue(SessionAffinity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,6 +94,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IList<BackendPoolItem> services = default;
+            BackendFailureResponse failureResponse = default;
+            BackendSessionAffinity sessionAffinity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,13 +114,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     services = array;
                     continue;
                 }
+                if (property.NameEquals("failureResponse"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failureResponse = BackendFailureResponse.DeserializeBackendFailureResponse(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("sessionAffinity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sessionAffinity = BackendSessionAffinity.DeserializeBackendSessionAffinity(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BackendPool(services ?? new ChangeTrackingList<BackendPoolItem>(), serializedAdditionalRawData);
+            return new BackendPool(services ?? new ChangeTrackingList<BackendPoolItem>(), failureResponse, sessionAffinity, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -142,6 +172,42 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         }
                         builder.AppendLine("  ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FailureResponseStatusCode", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failureResponse: ");
+                builder.AppendLine("{");
+                builder.Append("    statusCode: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FailureResponse))
+                {
+                    builder.Append("  failureResponse: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FailureResponse, options, 2, false, "  failureResponse: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SessionId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sessionAffinity: ");
+                builder.AppendLine("{");
+                builder.Append("    sessionId: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SessionAffinity))
+                {
+                    builder.Append("  sessionAffinity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SessionAffinity, options, 2, false, "  sessionAffinity: ");
                 }
             }
 
