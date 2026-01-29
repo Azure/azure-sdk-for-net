@@ -235,6 +235,11 @@
   </ItemGroup>
 
   <!-- Packages intended for current generation integration libraries only -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.'))">
+    <PackageVersion Include="Microsoft.Azure.WebJobs" Version="3.0.44" />
+    <PackageVersion Include="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.1" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'
       and '$(IsTestProject)' != 'true'
       and '$(IsTestSupportProject)' != 'true'
@@ -251,16 +256,19 @@
     <PackageVersion Include="Microsoft.Azure.SignalR.Management" Version="1.32.0" />
     <PackageVersion Include="Microsoft.Azure.SignalR.Protocols" Version="1.32.0" />
     <PackageVersion Include="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.10.0" />
-    <PackageVersion Include="Microsoft.Azure.WebJobs" Version="3.0.44" />
     <PackageVersion Include="Microsoft.Azure.WebJobs.Sources" Version="3.0.44" PrivateAssets="All"/>
     <PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.44" />
-    <PackageVersion Include="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.1" />
     <PackageVersion Include="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" />
     <PackageVersion Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
-  <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
+  <ItemGroup Condition="'$(IsTestProject)' != 'true'
+      and '$(IsTestSupportProject)' != 'true'
+      and '$(IsPerfProject)' != 'true'
+      and '$(IsStressProject)' != 'true'
+      and '$(IsSamplesProject)' != 'true'
+      and'$(IsExtensionClientLibrary)' == 'true'">
     <PackageVersion Include="Microsoft.AspNetCore.DataProtection" Version="10.0.1" />
     <PackageVersion Include="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Http.Connections" Version="1.2.0" />
