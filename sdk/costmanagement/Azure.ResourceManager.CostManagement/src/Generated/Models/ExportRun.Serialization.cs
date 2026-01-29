@@ -74,10 +74,25 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("processingEndTime"u8);
                 writer.WriteStringValue(ProcessingEndOn.Value, "O");
             }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDate"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endDate"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
+            }
+            if (Optional.IsDefined(ManifestFile))
+            {
+                writer.WritePropertyName("manifestFile"u8);
+                writer.WriteStringValue(ManifestFile);
             }
             if (Optional.IsDefined(RunSettings))
             {
@@ -123,7 +138,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             DateTimeOffset? submittedTime = default;
             DateTimeOffset? processingStartTime = default;
             DateTimeOffset? processingEndTime = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? endDate = default;
             string fileName = default;
+            string manifestFile = default;
             CommonExportProperties runSettings = default;
             ExportRunErrorDetails error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -222,9 +240,32 @@ namespace Azure.ResourceManager.CostManagement.Models
                             processingEndTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("startDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            startDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("endDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            endDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                         if (property0.NameEquals("fileName"u8))
                         {
                             fileName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("manifestFile"u8))
+                        {
+                            manifestFile = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("runSettings"u8))
@@ -265,7 +306,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 submittedTime,
                 processingStartTime,
                 processingEndTime,
+                startDate,
+                endDate,
                 fileName,
+                manifestFile,
                 runSettings,
                 error,
                 eTag,

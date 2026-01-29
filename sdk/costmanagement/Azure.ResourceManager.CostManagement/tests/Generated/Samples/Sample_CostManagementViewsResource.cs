@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ResourceGroupView()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ViewByResourceGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ViewByResourceGroup.json
             // this example is just showing the usage of "Views_GetByScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ResourceGroupDeleteView()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ViewDeleteByResourceGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ViewDeleteByResourceGroup.json
             // this example is just showing the usage of "Views_DeleteByScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ResourceGroupCreateOrUpdateView()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ViewCreateOrUpdateByResourceGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ViewCreateOrUpdateByResourceGroup.json
             // this example is just showing the usage of "Views_CreateOrUpdateByScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,6 +92,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             CostManagementViewData data = new CostManagementViewData
             {
+                ETag = new ETag("\"1d4ff9fe66f1d10\""),
                 DisplayName = "swagger Example",
                 Chart = ViewChartType.Table,
                 Accumulated = AccumulatedType.True,
@@ -135,7 +136,6 @@ Name = "swaggerTagKey",
 Direction = ReportConfigSortingType.Ascending,
 }},
                 },
-                ETag = new ETag("\"1d4ff9fe66f1d10\""),
             };
             ArmOperation<CostManagementViewsResource> lro = await costManagementViews.UpdateAsync(WaitUntil.Completed, data);
             CostManagementViewsResource result = lro.Value;
