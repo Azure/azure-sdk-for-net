@@ -196,6 +196,7 @@ namespace Azure.AI.Speech.Transcription.Tests
         [RecordedTest]
         public async Task TranscribeWithPhraseList()
         {
+            TestTimeoutInSeconds = 20; // This test takes longer due to large recording
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleAudioFile);
 

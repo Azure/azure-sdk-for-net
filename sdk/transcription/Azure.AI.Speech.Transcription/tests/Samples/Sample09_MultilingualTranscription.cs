@@ -27,6 +27,7 @@ namespace Azure.AI.Speech.Transcription.Samples
         [RecordedTest]
         public async Task TranscribeWithMultilingualModel()
         {
+            TestTimeoutInSeconds = 20; // This test takes longer due to large recording
 #if !SNIPPET
             var client = CreateClient();
 #else
