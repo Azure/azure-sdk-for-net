@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 domainName,
                 createdOn,
                 status,
                 validationToken,
                 errorMessage,
-                kind,
                 serializedAdditionalRawData);
         }
 

@@ -815,6 +815,122 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Retrieve the list of certificate actions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveCertificateActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_RetrieveCertificateActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CertificateOrderAction"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CertificateOrderAction> RetrieveCertificateActionsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CertificateOrderAction.DeserializeCertificateOrderAction(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Retrieve the list of certificate actions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveCertificateActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_RetrieveCertificateActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CertificateOrderAction"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CertificateOrderAction> RetrieveCertificateActions(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CertificateOrderAction.DeserializeCertificateOrderAction(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Retrieve email history.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveEmailHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_RetrieveCertificateEmailHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AppServiceCertificateEmail"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceCertificateEmail> RetrieveCertificateEmailHistoryAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateEmailHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Retrieve email history.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveEmailHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_RetrieveCertificateEmailHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AppServiceCertificateEmail"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceCertificateEmail> RetrieveCertificateEmailHistory(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateEmailHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
+        }
+
+        /// <summary>
         /// This method is used to obtain the site seal information for an issued certificate. A site seal is a graphic that the certificate purchaser can embed on their web site to show their visitors information about their SSL certificate. If a web site visitor clicks on the site seal image, a pop-up page is displayed that contains detailed information about the SSL certificate. The site seal token is used to link the site seal graphic image to the appropriate certificate details pop-up page display when a user clicks on the site seal. The site seal images are expected to be static images and hosted by the reseller, to minimize delays for customer page load times.
         /// <list type="bullet">
         /// <item>
@@ -972,122 +1088,6 @@ namespace Azure.ResourceManager.AppService
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Description for Retrieve the list of certificate actions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveCertificateActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceCertificateOrders_RetrieveCertificateActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CertificateOrderAction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CertificateOrderAction> RetrieveCertificateActionsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CertificateOrderAction.DeserializeCertificateOrderAction(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Retrieve the list of certificate actions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveCertificateActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceCertificateOrders_RetrieveCertificateActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateOrderAction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CertificateOrderAction> RetrieveCertificateActions(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CertificateOrderAction.DeserializeCertificateOrderAction(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Retrieve email history.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveEmailHistory</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceCertificateOrders_RetrieveCertificateEmailHistory</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServiceCertificateEmail"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServiceCertificateEmail> RetrieveCertificateEmailHistoryAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateEmailHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Retrieve email history.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveEmailHistory</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceCertificateOrders_RetrieveCertificateEmailHistory</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServiceCertificateEmail"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServiceCertificateEmail> RetrieveCertificateEmailHistory(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateEmailHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
         }
     }
 }

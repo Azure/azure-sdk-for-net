@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isHidden"> &lt;code&gt;true&lt;/code&gt; if this stack should be hidden for new customers on portal, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appSettingsDictionary">
         /// &lt;appSettings&gt;
-        ///  &lt;appSetting name="FUNCTIONS_WORKER_RUNTIME" value="dotnet" /&gt;
+        /// &lt;appSetting name="FUNCTIONS_WORKER_RUNTIME" value="dotnet" /&gt;
         /// &lt;/appSettings&gt;
-        ///  Example: All the function apps need AppSetting: "FUNCTIONS_WORKER_RUNTIME" to be set stack name
+        /// Example: All the function apps need AppSetting: "FUNCTIONS_WORKER_RUNTIME" to be set stack name
         /// </param>
         /// <param name="siteConfigPropertiesDictionary">
         /// &lt;siteConfigProperties&gt;
-        ///  &lt;siteConfigProperty name="Use32BitWorkerProcess" value="false" /&gt;
+        /// &lt;siteConfigProperty name="Use32BitWorkerProcess" value="false" /&gt;
         /// &lt;/siteConfigProperties&gt;
-        ///  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
+        /// Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StackMajorVersion(string displayVersion, string runtimeVersion, bool? isDefault, IList<StackMinorVersion> minorVersions, bool? isApplicationInsights, bool? isPreview, bool? isDeprecated, bool? isHidden, IDictionary<string, BinaryData> appSettingsDictionary, IDictionary<string, BinaryData> siteConfigPropertiesDictionary, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -116,9 +116,9 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsHidden { get; set; }
         /// <summary>
         /// &lt;appSettings&gt;
-        ///  &lt;appSetting name="FUNCTIONS_WORKER_RUNTIME" value="dotnet" /&gt;
+        /// &lt;appSetting name="FUNCTIONS_WORKER_RUNTIME" value="dotnet" /&gt;
         /// &lt;/appSettings&gt;
-        ///  Example: All the function apps need AppSetting: "FUNCTIONS_WORKER_RUNTIME" to be set stack name
+        /// Example: All the function apps need AppSetting: "FUNCTIONS_WORKER_RUNTIME" to be set stack name
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.AppService.Models
         public IDictionary<string, BinaryData> AppSettingsDictionary { get; }
         /// <summary>
         /// &lt;siteConfigProperties&gt;
-        ///  &lt;siteConfigProperty name="Use32BitWorkerProcess" value="false" /&gt;
+        /// &lt;siteConfigProperty name="Use32BitWorkerProcess" value="false" /&gt;
         /// &lt;/siteConfigProperties&gt;
-        ///  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
+        /// Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

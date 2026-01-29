@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
             DateTimeOffset? createdTimeUtc = default;
             DateTimeOffset? lastUpdatedOn = default;
             StaticSiteBuildStatus? status = default;
-            IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
+            IReadOnlyList<StaticSiteUserProvidedFunctionAppProperties> userProvidedFunctionApps = default;
             IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends = default;
             IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -244,10 +244,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<StaticSiteUserProvidedFunctionAppData> array = new List<StaticSiteUserProvidedFunctionAppData>();
+                            List<StaticSiteUserProvidedFunctionAppProperties> array = new List<StaticSiteUserProvidedFunctionAppProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item, options));
+                                array.Add(StaticSiteUserProvidedFunctionAppProperties.DeserializeStaticSiteUserProvidedFunctionAppProperties(item, options));
                             }
                             userProvidedFunctionApps = array;
                             continue;
@@ -294,6 +294,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 buildId,
                 sourceBranch,
                 pullRequestTitle,
@@ -301,10 +302,9 @@ namespace Azure.ResourceManager.AppService
                 createdTimeUtc,
                 lastUpdatedOn,
                 status,
-                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
+                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppProperties>(),
                 linkedBackends ?? new ChangeTrackingList<StaticSiteLinkedBackendInfo>(),
                 databaseConnections ?? new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

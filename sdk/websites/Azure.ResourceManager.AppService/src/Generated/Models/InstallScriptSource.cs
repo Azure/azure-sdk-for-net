@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Process Thread properties. </summary>
-    public partial class WebAppProcessThreadProperties
+    /// <summary> Object to hold install script reference. </summary>
+    public partial class InstallScriptSource
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,27 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadProperties"/>. </summary>
-        public WebAppProcessThreadProperties()
+        /// <summary> Initializes a new instance of <see cref="InstallScriptSource"/>. </summary>
+        public InstallScriptSource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadProperties"/>. </summary>
-        /// <param name="id"> Thread ID. </param>
-        /// <param name="href"> HRef URI. </param>
-        /// <param name="state"> Thread state. </param>
+        /// <summary> Initializes a new instance of <see cref="InstallScriptSource"/>. </summary>
+        /// <param name="sourceUri"> Install script source URI where the install script file will be fetched from. </param>
+        /// <param name="scriptType"> Type of the install script. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppProcessThreadProperties(int? id, Uri href, string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InstallScriptSource(Uri sourceUri, InstallScriptType? scriptType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            Href = href;
-            State = state;
+            SourceUri = sourceUri;
+            ScriptType = scriptType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Thread ID. </summary>
-        [WirePath("id")]
-        public int? Id { get; }
-        /// <summary> HRef URI. </summary>
-        [WirePath("href")]
-        public Uri Href { get; set; }
-        /// <summary> Thread state. </summary>
-        [WirePath("state")]
-        public string State { get; set; }
+        /// <summary> Install script source URI where the install script file will be fetched from. </summary>
+        [WirePath("sourceUri")]
+        public Uri SourceUri { get; set; }
+        /// <summary> Type of the install script. </summary>
+        [WirePath("type")]
+        public InstallScriptType? ScriptType { get; set; }
     }
 }

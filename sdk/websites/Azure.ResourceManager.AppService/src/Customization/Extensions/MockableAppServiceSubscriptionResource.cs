@@ -7,6 +7,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 
@@ -171,6 +172,35 @@ namespace Azure.ResourceManager.AppService.Mocking
             var response = CheckAppServiceNameAvailability(nameAvailabilityContent, cancellationToken);
 
             return Response.FromValue(new ResourceNameAvailability(response.Value.IsNameAvailable, response.Value.Reason.ToString(), response.Value.Message, null), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Description for Get a list of available geographical regions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListGeoRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sku"> Name of SKU used to filter the regions. </param>
+        /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
+        /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
+        /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AppServiceGeoRegion"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<AppServiceGeoRegion> GetGeoRegions(AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        {
+            return GetGeoRegions(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, default, cancellationToken);
         }
     }
 }

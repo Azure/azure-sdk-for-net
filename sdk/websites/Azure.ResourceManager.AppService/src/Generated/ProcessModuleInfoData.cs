@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="baseAddress"> Base address. Used as module identifier in ARM resource URI. </param>
         /// <param name="fileName"> File name. </param>
         /// <param name="href"> HRef URI. </param>
@@ -71,10 +72,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="productVersion"> Product version. </param>
         /// <param name="isDebug"> Is debug?. </param>
         /// <param name="language"> Module language (locale). </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             BaseAddress = baseAddress;
             FileName = fileName;
             Href = href;
@@ -86,10 +87,12 @@ namespace Azure.ResourceManager.AppService
             ProductVersion = productVersion;
             IsDebug = isDebug;
             Language = language;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Base address. Used as module identifier in ARM resource URI. </summary>
         [WirePath("properties.base_address")]
         public string BaseAddress { get; set; }
@@ -123,8 +126,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Module language (locale). </summary>
         [WirePath("properties.language")]
         public string Language { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

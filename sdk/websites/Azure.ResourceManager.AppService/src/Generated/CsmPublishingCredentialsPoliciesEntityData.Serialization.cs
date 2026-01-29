@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
-                allow,
                 kind,
+                allow,
                 serializedAdditionalRawData);
         }
 

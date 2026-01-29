@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyDictionary<string, BinaryData> files = default;
+            IDictionary<string, BinaryData> files = default;
             WorkflowState? flowState = default;
             WorkflowHealth health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

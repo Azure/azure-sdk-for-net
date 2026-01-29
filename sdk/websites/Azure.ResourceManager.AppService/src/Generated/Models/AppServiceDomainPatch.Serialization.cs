@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
             bool? readyForDnsRecordManagement = default;
             IReadOnlyList<AppServiceHostName> managedHostNames = default;
             DomainPurchaseConsent consent = default;
-            IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons = default;
+            IReadOnlyList<AppServiceCertificateNotRenewableReason> domainNotRenewableReasons = default;
             AppServiceDnsType? dnsType = default;
             string dnsZoneId = default;
             AppServiceDnsType? targetDnsType = default;
@@ -401,10 +401,10 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            List<DomainNotRenewableReason> array = new List<DomainNotRenewableReason>();
+                            List<AppServiceCertificateNotRenewableReason> array = new List<AppServiceCertificateNotRenewableReason>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new DomainNotRenewableReason(item.GetString()));
+                                array.Add(new AppServiceCertificateNotRenewableReason(item.GetString()));
                             }
                             domainNotRenewableReasons = array;
                             continue;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.AppService.Models
                 readyForDnsRecordManagement,
                 managedHostNames ?? new ChangeTrackingList<AppServiceHostName>(),
                 consent,
-                domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>(),
+                domainNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
                 dnsType,
                 dnsZoneId,
                 targetDnsType,

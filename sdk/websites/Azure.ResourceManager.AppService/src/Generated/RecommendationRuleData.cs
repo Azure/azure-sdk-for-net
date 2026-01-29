@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="recommendationName"> Unique name of the rule. </param>
         /// <param name="displayName"> UI friendly name of the rule. </param>
         /// <param name="message"> Localized name of the rule (Good for UI). </param>
@@ -78,10 +79,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="extensionName"> Extension name of the portal if exists. Applicable to dynamic rule only. </param>
         /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             RecommendationName = recommendationName;
             DisplayName = displayName;
             Message = message;
@@ -95,10 +96,12 @@ namespace Azure.ResourceManager.AppService
             ExtensionName = extensionName;
             BladeName = bladeName;
             ForwardLink = forwardLink;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Unique name of the rule. </summary>
         [WirePath("properties.recommendationName")]
         public string RecommendationName { get; set; }
@@ -141,8 +144,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </summary>
         [WirePath("properties.forwardLink")]
         public string ForwardLink { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

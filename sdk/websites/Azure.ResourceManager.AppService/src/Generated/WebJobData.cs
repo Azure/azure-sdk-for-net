@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="runCommand"> Run command. </param>
         /// <param name="uri"> Job URL. </param>
         /// <param name="extraInfoUri"> Extra Info URL. </param>
@@ -69,10 +70,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="error"> Error information. </param>
         /// <param name="isUsingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             RunCommand = runCommand;
             Uri = uri;
             ExtraInfoUri = extraInfoUri;
@@ -80,10 +81,12 @@ namespace Azure.ResourceManager.AppService
             Error = error;
             IsUsingSdk = isUsingSdk;
             Settings = settings;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Run command. </summary>
         [WirePath("properties.run_command")]
         public string RunCommand { get; set; }
@@ -134,8 +137,5 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.settings")]
         public IDictionary<string, BinaryData> Settings { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 connectionStringNames ?? new ChangeTrackingList<string>(),
                 appSettingNames ?? new ChangeTrackingList<string>(),
                 azureStorageConfigNames ?? new ChangeTrackingList<string>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

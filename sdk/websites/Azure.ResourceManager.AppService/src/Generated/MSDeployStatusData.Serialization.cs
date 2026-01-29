@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 deployer,
                 provisioningState,
                 startTime,
                 endTime,
                 complete,
-                kind,
                 serializedAdditionalRawData);
         }
 

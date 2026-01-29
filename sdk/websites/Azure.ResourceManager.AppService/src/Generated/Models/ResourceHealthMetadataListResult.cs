@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthMetadataListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value"> The ResourceHealthMetadata items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceHealthMetadataListResult(IEnumerable<ResourceHealthMetadataData> value)
         {
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthMetadataListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value"> The ResourceHealthMetadata items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceHealthMetadataListResult(IReadOnlyList<ResourceHealthMetadataData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary> The ResourceHealthMetadata items on this page. </summary>
         public IReadOnlyList<ResourceHealthMetadataData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }
 }

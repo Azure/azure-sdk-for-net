@@ -60,22 +60,25 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="displayName"> Display name of the detector. </param>
         /// <param name="description"> Description of the detector. </param>
         /// <param name="rank"> Detector Rank. </param>
         /// <param name="isEnabled"> Flag representing whether detector is enabled or not. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorDefinitionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, double? rank, bool? isEnabled, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DetectorDefinitionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string displayName, string description, double? rank, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             DisplayName = displayName;
             Description = description;
             Rank = rank;
             IsEnabled = isEnabled;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Display name of the detector. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; }
@@ -88,8 +91,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Flag representing whether detector is enabled or not. </summary>
         [WirePath("properties.isEnabled")]
         public bool? IsEnabled { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

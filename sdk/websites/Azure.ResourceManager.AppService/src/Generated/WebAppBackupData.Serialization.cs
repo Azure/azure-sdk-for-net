@@ -334,6 +334,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 id0,
                 storageAccountUrl,
                 blobName,
@@ -348,7 +349,6 @@ namespace Azure.ResourceManager.AppService
                 finishedTimeStamp,
                 correlationId,
                 websiteSizeInBytes,
-                kind,
                 serializedAdditionalRawData);
         }
 

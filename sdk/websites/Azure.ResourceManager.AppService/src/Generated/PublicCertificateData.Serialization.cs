@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 blob,
                 publicCertificateLocation,
                 thumbprint,
-                kind,
                 serializedAdditionalRawData);
         }
 

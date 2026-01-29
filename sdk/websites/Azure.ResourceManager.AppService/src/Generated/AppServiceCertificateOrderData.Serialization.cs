@@ -458,6 +458,7 @@ namespace Azure.ResourceManager.AppService
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                kind,
                 certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(),
                 distinguishedName,
                 domainVerificationToken,
@@ -478,7 +479,6 @@ namespace Azure.ResourceManager.AppService
                 appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
                 nextAutoRenewalTimeStamp,
                 contact,
-                kind,
                 serializedAdditionalRawData);
         }
 

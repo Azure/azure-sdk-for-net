@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_CreateOrUpdate.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/AppServiceEnvironments_CreateOrUpdate.json
             // this example is just showing the usage of "AppServiceEnvironments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.AppService.Samples
             string name = "test-ase";
             AppServiceEnvironmentData data = new AppServiceEnvironmentData(new AzureLocation("South Central US"))
             {
-                VirtualNetwork = new AppServiceVirtualNetworkProfile(new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/delegated")),
                 Kind = "Asev3",
+                VirtualNetwork = new AppServiceVirtualNetworkProfile(new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/delegated")),
             };
             ArmOperation<AppServiceEnvironmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             AppServiceEnvironmentResource result = lro.Value;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetThePropertiesOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_Get.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/AppServiceEnvironments_Get.json
             // this example is just showing the usage of "AppServiceEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAllAppServiceEnvironmentsInAResourceGroup()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_ListByResourceGroup.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/AppServiceEnvironments_ListByResourceGroup.json
             // this example is just showing the usage of "AppServiceEnvironments_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetThePropertiesOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_Get.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/AppServiceEnvironments_Get.json
             // this example is just showing the usage of "AppServiceEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetThePropertiesOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_Get.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/AppServiceEnvironments_Get.json
             // this example is just showing the usage of "AppServiceEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

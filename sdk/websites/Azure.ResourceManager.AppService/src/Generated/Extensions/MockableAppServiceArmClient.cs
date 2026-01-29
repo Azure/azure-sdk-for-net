@@ -35,111 +35,75 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AppServiceCertificateOrderResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppServiceCertificateOrderResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateOrderResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PublishingUserResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublishingUserResource.CreateResourceIdentifier" /> to create a <see cref="PublishingUserResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServiceCertificateOrderResource"/> object. </returns>
-        public virtual AppServiceCertificateOrderResource GetAppServiceCertificateOrderResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PublishingUserResource"/> object. </returns>
+        public virtual PublishingUserResource GetPublishingUserResource(ResourceIdentifier id)
         {
-            AppServiceCertificateOrderResource.ValidateResourceId(id);
-            return new AppServiceCertificateOrderResource(Client, id);
+            PublishingUserResource.ValidateResourceId(id);
+            return new PublishingUserResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AppServiceCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppServiceCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AppServiceSourceControlResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceSourceControlResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceSourceControlResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServiceCertificateResource"/> object. </returns>
-        public virtual AppServiceCertificateResource GetAppServiceCertificateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServiceSourceControlResource"/> object. </returns>
+        public virtual AppServiceSourceControlResource GetAppServiceSourceControlResource(ResourceIdentifier id)
         {
-            AppServiceCertificateResource.ValidateResourceId(id);
-            return new AppServiceCertificateResource(Client, id);
+            AppServiceSourceControlResource.ValidateResourceId(id);
+            return new AppServiceSourceControlResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateOrderDetectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateOrderDetectorResource.CreateResourceIdentifier" /> to create a <see cref="CertificateOrderDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AppCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateOrderDetectorResource"/> object. </returns>
-        public virtual CertificateOrderDetectorResource GetCertificateOrderDetectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppCertificateResource"/> object. </returns>
+        public virtual AppCertificateResource GetAppCertificateResource(ResourceIdentifier id)
         {
-            CertificateOrderDetectorResource.ValidateResourceId(id);
-            return new CertificateOrderDetectorResource(Client, id);
+            AppCertificateResource.ValidateResourceId(id);
+            return new AppCertificateResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HostingEnvironmentDetectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HostingEnvironmentDetectorResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SiteCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HostingEnvironmentDetectorResource"/> object. </returns>
-        public virtual HostingEnvironmentDetectorResource GetHostingEnvironmentDetectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteCertificateResource"/> object. </returns>
+        public virtual SiteCertificateResource GetSiteCertificateResource(ResourceIdentifier id)
         {
-            HostingEnvironmentDetectorResource.ValidateResourceId(id);
-            return new HostingEnvironmentDetectorResource(Client, id);
+            SiteCertificateResource.ValidateResourceId(id);
+            return new SiteCertificateResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteDetectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SiteSlotCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDetectorResource"/> object. </returns>
-        public virtual SiteDetectorResource GetSiteDetectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotCertificateResource"/> object. </returns>
+        public virtual SiteSlotCertificateResource GetSiteSlotCertificateResource(ResourceIdentifier id)
         {
-            SiteDetectorResource.ValidateResourceId(id);
-            return new SiteDetectorResource(Client, id);
+            SiteSlotCertificateResource.ValidateResourceId(id);
+            return new SiteSlotCertificateResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotDetectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DeletedSiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedSiteResource.CreateResourceIdentifier" /> to create a <see cref="DeletedSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDetectorResource"/> object. </returns>
-        public virtual SiteSlotDetectorResource GetSiteSlotDetectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeletedSiteResource"/> object. </returns>
+        public virtual DeletedSiteResource GetDeletedSiteResource(ResourceIdentifier id)
         {
-            SiteSlotDetectorResource.ValidateResourceId(id);
-            return new SiteSlotDetectorResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AppServiceDomainResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppServiceDomainResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServiceDomainResource"/> object. </returns>
-        public virtual AppServiceDomainResource GetAppServiceDomainResource(ResourceIdentifier id)
-        {
-            AppServiceDomainResource.ValidateResourceId(id);
-            return new AppServiceDomainResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DomainOwnershipIdentifierResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DomainOwnershipIdentifierResource.CreateResourceIdentifier" /> to create a <see cref="DomainOwnershipIdentifierResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DomainOwnershipIdentifierResource"/> object. </returns>
-        public virtual DomainOwnershipIdentifierResource GetDomainOwnershipIdentifierResource(ResourceIdentifier id)
-        {
-            DomainOwnershipIdentifierResource.ValidateResourceId(id);
-            return new DomainOwnershipIdentifierResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="TopLevelDomainResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TopLevelDomainResource.CreateResourceIdentifier" /> to create a <see cref="TopLevelDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TopLevelDomainResource"/> object. </returns>
-        public virtual TopLevelDomainResource GetTopLevelDomainResource(ResourceIdentifier id)
-        {
-            TopLevelDomainResource.ValidateResourceId(id);
-            return new TopLevelDomainResource(Client, id);
+            DeletedSiteResource.ValidateResourceId(id);
+            return new DeletedSiteResource(Client, id);
         }
 
         /// <summary>
@@ -248,6 +212,186 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             SiteSlotPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new SiteSlotPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="KubeEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubeEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="KubeEnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="KubeEnvironmentResource"/> object. </returns>
+        public virtual KubeEnvironmentResource GetKubeEnvironmentResource(ResourceIdentifier id)
+        {
+            KubeEnvironmentResource.ValidateResourceId(id);
+            return new KubeEnvironmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StaticSiteResource"/> object. </returns>
+        public virtual StaticSiteResource GetStaticSiteResource(ResourceIdentifier id)
+        {
+            StaticSiteResource.ValidateResourceId(id);
+            return new StaticSiteResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBasicAuthPropertyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBasicAuthPropertyResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBasicAuthPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StaticSiteBasicAuthPropertyResource"/> object. </returns>
+        public virtual StaticSiteBasicAuthPropertyResource GetStaticSiteBasicAuthPropertyResource(ResourceIdentifier id)
+        {
+            StaticSiteBasicAuthPropertyResource.ValidateResourceId(id);
+            return new StaticSiteBasicAuthPropertyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBuildResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StaticSiteBuildResource"/> object. </returns>
+        public virtual StaticSiteBuildResource GetStaticSiteBuildResource(ResourceIdentifier id)
+        {
+            StaticSiteBuildResource.ValidateResourceId(id);
+            return new StaticSiteBuildResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBuildDatabaseConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildDatabaseConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildDatabaseConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StaticSiteBuildDatabaseConnectionResource"/> object. </returns>
+        public virtual StaticSiteBuildDatabaseConnectionResource GetStaticSiteBuildDatabaseConnectionResource(ResourceIdentifier id)
+        {
+            StaticSiteBuildDatabaseConnectionResource.ValidateResourceId(id);
+            return new StaticSiteBuildDatabaseConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteDatabaseConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteDatabaseConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteDatabaseConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StaticSiteDatabaseConnectionResource"/> object. </returns>
+        public virtual StaticSiteDatabaseConnectionResource GetStaticSiteDatabaseConnectionResource(ResourceIdentifier id)
+        {
+            StaticSiteDatabaseConnectionResource.ValidateResourceId(id);
+            return new StaticSiteDatabaseConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBuildLinkedBackendResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildLinkedBackendResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildLinkedBackendResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StaticSiteBuildLinkedBackendResource"/> object. </returns>
+        public virtual StaticSiteBuildLinkedBackendResource GetStaticSiteBuildLinkedBackendResource(ResourceIdentifier id)
+        {
+            StaticSiteBuildLinkedBackendResource.ValidateResourceId(id);
+            return new StaticSiteBuildLinkedBackendResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteLinkedBackendResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteLinkedBackendResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteLinkedBackendResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StaticSiteLinkedBackendResource"/> object. </returns>
+        public virtual StaticSiteLinkedBackendResource GetStaticSiteLinkedBackendResource(ResourceIdentifier id)
+        {
+            StaticSiteLinkedBackendResource.ValidateResourceId(id);
+            return new StaticSiteLinkedBackendResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> object. </returns>
+        public virtual StaticSiteBuildUserProvidedFunctionAppResource GetStaticSiteBuildUserProvidedFunctionAppResource(ResourceIdentifier id)
+        {
+            StaticSiteBuildUserProvidedFunctionAppResource.ValidateResourceId(id);
+            return new StaticSiteBuildUserProvidedFunctionAppResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteUserProvidedFunctionAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteUserProvidedFunctionAppResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StaticSiteUserProvidedFunctionAppResource"/> object. </returns>
+        public virtual StaticSiteUserProvidedFunctionAppResource GetStaticSiteUserProvidedFunctionAppResource(ResourceIdentifier id)
+        {
+            StaticSiteUserProvidedFunctionAppResource.ValidateResourceId(id);
+            return new StaticSiteUserProvidedFunctionAppResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteCustomDomainOverviewResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteCustomDomainOverviewResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteCustomDomainOverviewResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewResource"/> object. </returns>
+        public virtual StaticSiteCustomDomainOverviewResource GetStaticSiteCustomDomainOverviewResource(ResourceIdentifier id)
+        {
+            StaticSiteCustomDomainOverviewResource.ValidateResourceId(id);
+            return new StaticSiteCustomDomainOverviewResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HostingEnvironmentRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostingEnvironmentRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentRecommendationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HostingEnvironmentRecommendationResource"/> object. </returns>
+        public virtual HostingEnvironmentRecommendationResource GetHostingEnvironmentRecommendationResource(ResourceIdentifier id)
+        {
+            HostingEnvironmentRecommendationResource.ValidateResourceId(id);
+            return new HostingEnvironmentRecommendationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecommendationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteRecommendationResource"/> object. </returns>
+        public virtual SiteRecommendationResource GetSiteRecommendationResource(ResourceIdentifier id)
+        {
+            SiteRecommendationResource.ValidateResourceId(id);
+            return new SiteRecommendationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WebSiteResourceHealthMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteResourceHealthMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WebSiteResourceHealthMetadataResource"/> object. </returns>
+        public virtual WebSiteResourceHealthMetadataResource GetWebSiteResourceHealthMetadataResource(ResourceIdentifier id)
+        {
+            WebSiteResourceHealthMetadataResource.ValidateResourceId(id);
+            return new WebSiteResourceHealthMetadataResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WebSiteSlotResourceHealthMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotResourceHealthMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource"/> object. </returns>
+        public virtual WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadataResource(ResourceIdentifier id)
+        {
+            WebSiteSlotResourceHealthMetadataResource.ValidateResourceId(id);
+            return new WebSiteSlotResourceHealthMetadataResource(Client, id);
         }
 
         /// <summary>
@@ -380,330 +524,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             SiteVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
             return new SiteVirtualNetworkConnectionGatewayResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AppCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppCertificateResource"/> object. </returns>
-        public virtual AppCertificateResource GetAppCertificateResource(ResourceIdentifier id)
-        {
-            AppCertificateResource.ValidateResourceId(id);
-            return new AppCertificateResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteCertificateResource"/> object. </returns>
-        public virtual SiteCertificateResource GetSiteCertificateResource(ResourceIdentifier id)
-        {
-            SiteCertificateResource.ValidateResourceId(id);
-            return new SiteCertificateResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotCertificateResource"/> object. </returns>
-        public virtual SiteSlotCertificateResource GetSiteSlotCertificateResource(ResourceIdentifier id)
-        {
-            SiteSlotCertificateResource.ValidateResourceId(id);
-            return new SiteSlotCertificateResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDiagnosticResource"/> object. </returns>
-        public virtual SiteDiagnosticResource GetSiteDiagnosticResource(ResourceIdentifier id)
-        {
-            SiteDiagnosticResource.ValidateResourceId(id);
-            return new SiteDiagnosticResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDiagnosticResource"/> object. </returns>
-        public virtual SiteSlotDiagnosticResource GetSiteSlotDiagnosticResource(ResourceIdentifier id)
-        {
-            SiteSlotDiagnosticResource.ValidateResourceId(id);
-            return new SiteSlotDiagnosticResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteDiagnosticAnalysisResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticAnalysisResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDiagnosticAnalysisResource"/> object. </returns>
-        public virtual SiteDiagnosticAnalysisResource GetSiteDiagnosticAnalysisResource(ResourceIdentifier id)
-        {
-            SiteDiagnosticAnalysisResource.ValidateResourceId(id);
-            return new SiteDiagnosticAnalysisResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotDiagnosticAnalysisResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticAnalysisResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysisResource"/> object. </returns>
-        public virtual SiteSlotDiagnosticAnalysisResource GetSiteSlotDiagnosticAnalysisResource(ResourceIdentifier id)
-        {
-            SiteSlotDiagnosticAnalysisResource.ValidateResourceId(id);
-            return new SiteSlotDiagnosticAnalysisResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteDiagnosticDetectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDiagnosticDetectorResource"/> object. </returns>
-        public virtual SiteDiagnosticDetectorResource GetSiteDiagnosticDetectorResource(ResourceIdentifier id)
-        {
-            SiteDiagnosticDetectorResource.ValidateResourceId(id);
-            return new SiteDiagnosticDetectorResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotDiagnosticDetectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDiagnosticDetectorResource"/> object. </returns>
-        public virtual SiteSlotDiagnosticDetectorResource GetSiteSlotDiagnosticDetectorResource(ResourceIdentifier id)
-        {
-            SiteSlotDiagnosticDetectorResource.ValidateResourceId(id);
-            return new SiteSlotDiagnosticDetectorResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DeletedSiteResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedSiteResource.CreateResourceIdentifier" /> to create a <see cref="DeletedSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedSiteResource"/> object. </returns>
-        public virtual DeletedSiteResource GetDeletedSiteResource(ResourceIdentifier id)
-        {
-            DeletedSiteResource.ValidateResourceId(id);
-            return new DeletedSiteResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="KubeEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KubeEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="KubeEnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubeEnvironmentResource"/> object. </returns>
-        public virtual KubeEnvironmentResource GetKubeEnvironmentResource(ResourceIdentifier id)
-        {
-            KubeEnvironmentResource.ValidateResourceId(id);
-            return new KubeEnvironmentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HostingEnvironmentRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HostingEnvironmentRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentRecommendationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HostingEnvironmentRecommendationResource"/> object. </returns>
-        public virtual HostingEnvironmentRecommendationResource GetHostingEnvironmentRecommendationResource(ResourceIdentifier id)
-        {
-            HostingEnvironmentRecommendationResource.ValidateResourceId(id);
-            return new HostingEnvironmentRecommendationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecommendationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecommendationResource"/> object. </returns>
-        public virtual SiteRecommendationResource GetSiteRecommendationResource(ResourceIdentifier id)
-        {
-            SiteRecommendationResource.ValidateResourceId(id);
-            return new SiteRecommendationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WebSiteResourceHealthMetadataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteResourceHealthMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteResourceHealthMetadataResource"/> object. </returns>
-        public virtual WebSiteResourceHealthMetadataResource GetWebSiteResourceHealthMetadataResource(ResourceIdentifier id)
-        {
-            WebSiteResourceHealthMetadataResource.ValidateResourceId(id);
-            return new WebSiteResourceHealthMetadataResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WebSiteSlotResourceHealthMetadataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteSlotResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotResourceHealthMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource"/> object. </returns>
-        public virtual WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadataResource(ResourceIdentifier id)
-        {
-            WebSiteSlotResourceHealthMetadataResource.ValidateResourceId(id);
-            return new WebSiteSlotResourceHealthMetadataResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PublishingUserResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublishingUserResource.CreateResourceIdentifier" /> to create a <see cref="PublishingUserResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PublishingUserResource"/> object. </returns>
-        public virtual PublishingUserResource GetPublishingUserResource(ResourceIdentifier id)
-        {
-            PublishingUserResource.ValidateResourceId(id);
-            return new PublishingUserResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AppServiceSourceControlResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppServiceSourceControlResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceSourceControlResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServiceSourceControlResource"/> object. </returns>
-        public virtual AppServiceSourceControlResource GetAppServiceSourceControlResource(ResourceIdentifier id)
-        {
-            AppServiceSourceControlResource.ValidateResourceId(id);
-            return new AppServiceSourceControlResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteResource"/> object. </returns>
-        public virtual StaticSiteResource GetStaticSiteResource(ResourceIdentifier id)
-        {
-            StaticSiteResource.ValidateResourceId(id);
-            return new StaticSiteResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBuildResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBuildResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteBuildResource"/> object. </returns>
-        public virtual StaticSiteBuildResource GetStaticSiteBuildResource(ResourceIdentifier id)
-        {
-            StaticSiteBuildResource.ValidateResourceId(id);
-            return new StaticSiteBuildResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBuildDatabaseConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBuildDatabaseConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildDatabaseConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteBuildDatabaseConnectionResource"/> object. </returns>
-        public virtual StaticSiteBuildDatabaseConnectionResource GetStaticSiteBuildDatabaseConnectionResource(ResourceIdentifier id)
-        {
-            StaticSiteBuildDatabaseConnectionResource.ValidateResourceId(id);
-            return new StaticSiteBuildDatabaseConnectionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteDatabaseConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteDatabaseConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteDatabaseConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteDatabaseConnectionResource"/> object. </returns>
-        public virtual StaticSiteDatabaseConnectionResource GetStaticSiteDatabaseConnectionResource(ResourceIdentifier id)
-        {
-            StaticSiteDatabaseConnectionResource.ValidateResourceId(id);
-            return new StaticSiteDatabaseConnectionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBuildUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> object. </returns>
-        public virtual StaticSiteBuildUserProvidedFunctionAppResource GetStaticSiteBuildUserProvidedFunctionAppResource(ResourceIdentifier id)
-        {
-            StaticSiteBuildUserProvidedFunctionAppResource.ValidateResourceId(id);
-            return new StaticSiteBuildUserProvidedFunctionAppResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteUserProvidedFunctionAppResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteUserProvidedFunctionAppResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteUserProvidedFunctionAppResource"/> object. </returns>
-        public virtual StaticSiteUserProvidedFunctionAppResource GetStaticSiteUserProvidedFunctionAppResource(ResourceIdentifier id)
-        {
-            StaticSiteUserProvidedFunctionAppResource.ValidateResourceId(id);
-            return new StaticSiteUserProvidedFunctionAppResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBasicAuthPropertyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBasicAuthPropertyResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBasicAuthPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteBasicAuthPropertyResource"/> object. </returns>
-        public virtual StaticSiteBasicAuthPropertyResource GetStaticSiteBasicAuthPropertyResource(ResourceIdentifier id)
-        {
-            StaticSiteBasicAuthPropertyResource.ValidateResourceId(id);
-            return new StaticSiteBasicAuthPropertyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteCustomDomainOverviewResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteCustomDomainOverviewResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteCustomDomainOverviewResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewResource"/> object. </returns>
-        public virtual StaticSiteCustomDomainOverviewResource GetStaticSiteCustomDomainOverviewResource(ResourceIdentifier id)
-        {
-            StaticSiteCustomDomainOverviewResource.ValidateResourceId(id);
-            return new StaticSiteCustomDomainOverviewResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteLinkedBackendResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteLinkedBackendResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteLinkedBackendResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteLinkedBackendResource"/> object. </returns>
-        public virtual StaticSiteLinkedBackendResource GetStaticSiteLinkedBackendResource(ResourceIdentifier id)
-        {
-            StaticSiteLinkedBackendResource.ValidateResourceId(id);
-            return new StaticSiteLinkedBackendResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBuildLinkedBackendResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBuildLinkedBackendResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildLinkedBackendResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteBuildLinkedBackendResource"/> object. </returns>
-        public virtual StaticSiteBuildLinkedBackendResource GetStaticSiteBuildLinkedBackendResource(ResourceIdentifier id)
-        {
-            StaticSiteBuildLinkedBackendResource.ValidateResourceId(id);
-            return new StaticSiteBuildLinkedBackendResource(Client, id);
         }
 
         /// <summary>
@@ -1487,6 +1307,114 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="HostingEnvironmentDetectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostingEnvironmentDetectorResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HostingEnvironmentDetectorResource"/> object. </returns>
+        public virtual HostingEnvironmentDetectorResource GetHostingEnvironmentDetectorResource(ResourceIdentifier id)
+        {
+            HostingEnvironmentDetectorResource.ValidateResourceId(id);
+            return new HostingEnvironmentDetectorResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDetectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteDetectorResource"/> object. </returns>
+        public virtual SiteDetectorResource GetSiteDetectorResource(ResourceIdentifier id)
+        {
+            SiteDetectorResource.ValidateResourceId(id);
+            return new SiteDetectorResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDetectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteSlotDetectorResource"/> object. </returns>
+        public virtual SiteSlotDetectorResource GetSiteSlotDetectorResource(ResourceIdentifier id)
+        {
+            SiteSlotDetectorResource.ValidateResourceId(id);
+            return new SiteSlotDetectorResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteDiagnosticResource"/> object. </returns>
+        public virtual SiteDiagnosticResource GetSiteDiagnosticResource(ResourceIdentifier id)
+        {
+            SiteDiagnosticResource.ValidateResourceId(id);
+            return new SiteDiagnosticResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticResource"/> object. </returns>
+        public virtual SiteSlotDiagnosticResource GetSiteSlotDiagnosticResource(ResourceIdentifier id)
+        {
+            SiteSlotDiagnosticResource.ValidateResourceId(id);
+            return new SiteSlotDiagnosticResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDiagnosticAnalysisResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticAnalysisResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteDiagnosticAnalysisResource"/> object. </returns>
+        public virtual SiteDiagnosticAnalysisResource GetSiteDiagnosticAnalysisResource(ResourceIdentifier id)
+        {
+            SiteDiagnosticAnalysisResource.ValidateResourceId(id);
+            return new SiteDiagnosticAnalysisResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticAnalysisResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticAnalysisResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysisResource"/> object. </returns>
+        public virtual SiteSlotDiagnosticAnalysisResource GetSiteSlotDiagnosticAnalysisResource(ResourceIdentifier id)
+        {
+            SiteSlotDiagnosticAnalysisResource.ValidateResourceId(id);
+            return new SiteSlotDiagnosticAnalysisResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDiagnosticDetectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteDiagnosticDetectorResource"/> object. </returns>
+        public virtual SiteDiagnosticDetectorResource GetSiteDiagnosticDetectorResource(ResourceIdentifier id)
+        {
+            SiteDiagnosticDetectorResource.ValidateResourceId(id);
+            return new SiteDiagnosticDetectorResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticDetectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticDetectorResource"/> object. </returns>
+        public virtual SiteSlotDiagnosticDetectorResource GetSiteSlotDiagnosticDetectorResource(ResourceIdentifier id)
+        {
+            SiteSlotDiagnosticDetectorResource.ValidateResourceId(id);
+            return new SiteSlotDiagnosticDetectorResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="WorkflowRunResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkflowRunResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -1580,6 +1508,78 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             WorkflowVersionResource.ValidateResourceId(id);
             return new WorkflowVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppServiceCertificateOrderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceCertificateOrderResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateOrderResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppServiceCertificateOrderResource"/> object. </returns>
+        public virtual AppServiceCertificateOrderResource GetAppServiceCertificateOrderResource(ResourceIdentifier id)
+        {
+            AppServiceCertificateOrderResource.ValidateResourceId(id);
+            return new AppServiceCertificateOrderResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppServiceCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppServiceCertificateResource"/> object. </returns>
+        public virtual AppServiceCertificateResource GetAppServiceCertificateResource(ResourceIdentifier id)
+        {
+            AppServiceCertificateResource.ValidateResourceId(id);
+            return new AppServiceCertificateResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CertificateOrderDetectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CertificateOrderDetectorResource.CreateResourceIdentifier" /> to create a <see cref="CertificateOrderDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CertificateOrderDetectorResource"/> object. </returns>
+        public virtual CertificateOrderDetectorResource GetCertificateOrderDetectorResource(ResourceIdentifier id)
+        {
+            CertificateOrderDetectorResource.ValidateResourceId(id);
+            return new CertificateOrderDetectorResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppServiceDomainResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceDomainResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppServiceDomainResource"/> object. </returns>
+        public virtual AppServiceDomainResource GetAppServiceDomainResource(ResourceIdentifier id)
+        {
+            AppServiceDomainResource.ValidateResourceId(id);
+            return new AppServiceDomainResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DomainOwnershipIdentifierResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DomainOwnershipIdentifierResource.CreateResourceIdentifier" /> to create a <see cref="DomainOwnershipIdentifierResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DomainOwnershipIdentifierResource"/> object. </returns>
+        public virtual DomainOwnershipIdentifierResource GetDomainOwnershipIdentifierResource(ResourceIdentifier id)
+        {
+            DomainOwnershipIdentifierResource.ValidateResourceId(id);
+            return new DomainOwnershipIdentifierResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TopLevelDomainResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TopLevelDomainResource.CreateResourceIdentifier" /> to create a <see cref="TopLevelDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TopLevelDomainResource"/> object. </returns>
+        public virtual TopLevelDomainResource GetTopLevelDomainResource(ResourceIdentifier id)
+        {
+            TopLevelDomainResource.ValidateResourceId(id);
+            return new TopLevelDomainResource(Client, id);
         }
     }
 }

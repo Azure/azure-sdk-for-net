@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="waitReason"> Wait reason. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? identifier, string href, string process, string startAddress, int? currentPriority, string priorityLevel, int? basePriority, DateTimeOffset? startOn, string totalProcessorTime, string userProcessorTime, string state, string waitReason, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, int? identifier, string href, string process, string startAddress, int? currentPriority, string priorityLevel, int? basePriority, DateTimeOffset? startOn, string totalProcessorTime, string userProcessorTime, string state, string waitReason, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identifier = identifier;
             Href = href;
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="webAppProcessThreadInfo"> The instance of WebAppProcessThreadInfo. </param>
         internal ProcessThreadInfo(WebAppProcessThreadInfo webAppProcessThreadInfo)
         {
-            Identifier = webAppProcessThreadInfo.Properties.Id;
-            Href = webAppProcessThreadInfo.Properties.Href.AbsolutePath;
+            Identifier = webAppProcessThreadInfo.Identifier;
+            Href = webAppProcessThreadInfo.Href;
             Process = default;
             StartAddress = default;
             CurrentPriority = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
             StartOn = default;
             TotalProcessorTime = default;
             UserProcessorTime = default;
-            State = webAppProcessThreadInfo.Properties.State;
+            State = webAppProcessThreadInfo.State;
             WaitReason = default;
             Kind = default;
             _serializedAdditionalRawData = default;

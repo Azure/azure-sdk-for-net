@@ -220,6 +220,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 deletedSiteId,
                 deletedTimestamp,
                 subscription,
@@ -228,7 +229,6 @@ namespace Azure.ResourceManager.AppService
                 slot,
                 kind0,
                 geoRegionName,
-                kind,
                 serializedAdditionalRawData);
         }
 

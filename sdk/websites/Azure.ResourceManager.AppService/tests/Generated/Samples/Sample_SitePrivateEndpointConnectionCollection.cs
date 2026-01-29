@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApprovesOrRejectsAPrivateEndpointConnectionForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ApproveRejectSitePrivateEndpointConnection.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/ApproveRejectSitePrivateEndpointConnection.json
             // this example is just showing the usage of "WebApps_ApproveOrRejectPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPrivateEndpointConnectionForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetSitePrivateEndpointConnection.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetSitePrivateEndpointConnection.json
             // this example is just showing the usage of "WebApps_GetPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAPrivateEndpointConnectionForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetSitePrivateEndpointConnection.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetSitePrivateEndpointConnection.json
             // this example is just showing the usage of "WebApps_GetPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAPrivateEndpointConnectionForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetSitePrivateEndpointConnection.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetSitePrivateEndpointConnection.json
             // this example is just showing the usage of "WebApps_GetPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

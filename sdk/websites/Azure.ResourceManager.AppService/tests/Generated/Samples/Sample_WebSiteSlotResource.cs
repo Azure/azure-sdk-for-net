@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWebAppSlot()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebAppSlot.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetWebAppSlot.json
             // this example is just showing the usage of "WebApps_GetSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteWebAppSlot()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/DeleteWebAppSlot.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/DeleteWebAppSlot.json
             // this example is just showing the usage of "WebApps_DeleteSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateWebAppSlot()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/UpdateWebAppSlot.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/UpdateWebAppSlot.json
             // this example is just showing the usage of "WebApps_UpdateSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task AnalyzeCustomHostnameSlot_AnalyzeCustomHostnameForSlot()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AnalyzeCustomHostNameSlot.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/AnalyzeCustomHostNameSlot.json
             // this example is just showing the usage of "WebApps_AnalyzeCustomHostnameSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,365 +139,9 @@ namespace Azure.ResourceManager.AppService.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetSlotSiteDeploymentStatusesSlot_ListDeploymentStatusSlot()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListSiteDeploymentStatusSlot.json
-            // this example is just showing the usage of "WebApps_ListSlotSiteDeploymentStatusesSlot" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rg";
-            string name = "testSite";
-            string slot = "stage";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CsmDeploymentStatus item in webSiteSlot.GetSlotSiteDeploymentStatusesSlotAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetSlotSiteDeploymentStatusSlot_GetDeploymentStatusSlot()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetSiteDeploymentStatusSlot.json
-            // this example is just showing the usage of "WebApps_GetSlotSiteDeploymentStatusSlot" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rg";
-            string name = "testSite";
-            string slot = "stage";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation
-            string deploymentStatusId = "eacfd68b-3bbd-4ad9-99c5-98614d89c8e5";
-            ArmOperation<CsmDeploymentStatus> lro = await webSiteSlot.GetSlotSiteDeploymentStatusSlotAsync(WaitUntil.Completed, deploymentStatusId);
-            CsmDeploymentStatus result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAllSiteBackupSlotData_ListBackups()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListSlotBackups.json
-            // this example is just showing the usage of "WebApps_ListSiteBackupsSlot" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testrg123";
-            string name = "tests346";
-            string slot = "staging";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (WebAppBackupData item in webSiteSlot.GetAllSiteBackupSlotDataAsync())
-            {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkTraceOperationSlot_GetTheCurrentStatusOfANetworkTraceOperationForASite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebSiteNetworkTraceOperation.json
-            // this example is just showing the usage of "WebApps_GetNetworkTraceOperationSlot" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testrg123";
-            string name = "SampleApp";
-            string slot = "Production";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation and iterate over the result
-            string operationId = "c291433b-53ad-4c49-8cae-0a293eae1c6d";
-            await foreach (WebAppNetworkTrace item in webSiteSlot.GetNetworkTraceOperationSlotAsync(operationId))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task StartWebSiteNetworkTraceOperationSlot_StartANewNetworkTraceOperationForASite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/StartWebSiteNetworkTraceOperation.json
-            // this example is just showing the usage of "WebApps_StartWebSiteNetworkTraceOperationSlot" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testrg123";
-            string name = "SampleApp";
-            string slot = "Production";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation
-            int? durationInSeconds = 60;
-            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSiteSlot.StartWebSiteNetworkTraceOperationSlotAsync(WaitUntil.Completed, durationInSeconds: durationInSeconds);
-            IList<WebAppNetworkTrace> result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task StopWebSiteNetworkTraceSlot_StopACurrentlyRunningNetworkTraceOperationForASite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/StopWebSiteNetworkTrace.json
-            // this example is just showing the usage of "WebApps_StopWebSiteNetworkTraceSlot" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testrg123";
-            string name = "SampleApp";
-            string slot = "Production";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation
-            await webSiteSlot.StopWebSiteNetworkTraceSlotAsync();
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkTracesSlot_GetNetworkTracesForASite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebSiteNetworkTraces.json
-            // this example is just showing the usage of "WebApps_GetNetworkTracesSlot" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testrg123";
-            string name = "SampleApp";
-            string slot = "Production";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation and iterate over the result
-            string operationId = "c291433b-53ad-4c49-8cae-0a293eae1c6d";
-            await foreach (WebAppNetworkTrace item in webSiteSlot.GetNetworkTracesSlotAsync(operationId))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkTraceOperationSlotV2_GetTheCurrentStatusOfANetworkTraceOperationForASite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebSiteNetworkTraceOperation.json
-            // this example is just showing the usage of "WebApps_GetNetworkTraceOperationSlotV2" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testrg123";
-            string name = "SampleApp";
-            string slot = "Production";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation and iterate over the result
-            string operationId = "c291433b-53ad-4c49-8cae-0a293eae1c6d";
-            await foreach (WebAppNetworkTrace item in webSiteSlot.GetNetworkTraceOperationSlotV2Async(operationId))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkTracesSlotV2_GetNetworkTracesForASite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebSiteNetworkTraces.json
-            // this example is just showing the usage of "WebApps_GetNetworkTracesSlotV2" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testrg123";
-            string name = "SampleApp";
-            string slot = "Production";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation and iterate over the result
-            string operationId = "c291433b-53ad-4c49-8cae-0a293eae1c6d";
-            await foreach (WebAppNetworkTrace item in webSiteSlot.GetNetworkTracesSlotV2Async(operationId))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetPrivateLinkResourcesSlot_GetPrivateLinkResourcesOfASite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetSitePrivateLinkResourcesSlot.json
-            // this example is just showing the usage of "WebApps_GetPrivateLinkResourcesSlot" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rg";
-            string name = "testSite";
-            string slot = "stage";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AppServicePrivateLinkResourceData item in webSiteSlot.GetPrivateLinkResourcesSlotAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task StartNetworkTraceSlot_StartANewNetworkTraceOperationForASite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/StartWebSiteNetworkTraceOperation.json
-            // this example is just showing the usage of "WebApps_StartNetworkTraceSlot" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testrg123";
-            string name = "SampleApp";
-            string slot = "Production";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation
-            int? durationInSeconds = 60;
-            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSiteSlot.StartNetworkTraceSlotAsync(WaitUntil.Completed, durationInSeconds: durationInSeconds);
-            IList<WebAppNetworkTrace> result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task StopNetworkTraceSlot_StopACurrentlyRunningNetworkTraceOperationForASite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/StopWebSiteNetworkTrace.json
-            // this example is just showing the usage of "WebApps_StopNetworkTraceSlot" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WebSiteSlotResource created on azure
-            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testrg123";
-            string name = "SampleApp";
-            string slot = "Production";
-            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
-            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
-
-            // invoke the operation
-            await webSiteSlot.StopNetworkTraceSlotAsync();
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task DeployWorkflowArtifactsSlot_DeploysWorkflowArtifactsSlot()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/PostDeployWorkflowArtifactsSlot.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/PostDeployWorkflowArtifactsSlot.json
             // this example is just showing the usage of "WebApps_DeployWorkflowArtifactsSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -583,9 +227,68 @@ kind = "Stateful",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetSlotSiteDeploymentStatusesSlot_ListDeploymentStatusSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/ListSiteDeploymentStatusSlot.json
+            // this example is just showing the usage of "WebApps_ListSlotSiteDeploymentStatusesSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testSite";
+            string slot = "stage";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (CsmDeploymentStatus item in webSiteSlot.GetSlotSiteDeploymentStatusesSlotAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetSlotSiteDeploymentStatusSlot_GetDeploymentStatusSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetSiteDeploymentStatusSlot.json
+            // this example is just showing the usage of "WebApps_GetSlotSiteDeploymentStatusSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testSite";
+            string slot = "stage";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            string deploymentStatusId = "eacfd68b-3bbd-4ad9-99c5-98614d89c8e5";
+            ArmOperation<CsmDeploymentStatus> lro = await webSiteSlot.GetSlotSiteDeploymentStatusSlotAsync(WaitUntil.Completed, deploymentStatusId);
+            CsmDeploymentStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWorkflowsConnectionsSlot_ListTheInstanceWorkflowsConfigurationConnectionsSlot()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListWorkflowsConfigurationConnections.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/ListWorkflowsConfigurationConnections_Slot.json
             // this example is just showing the usage of "WebApps_ListWorkflowsConnectionsSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -607,6 +310,303 @@ kind = "Stateful",
 
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {result.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAllSiteBackupSlotData_ListBackups()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/ListSiteBackupsSlot.json
+            // this example is just showing the usage of "WebApps_ListSiteBackupsSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "tests346";
+            string slot = "staging";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (WebAppBackupData item in webSiteSlot.GetAllSiteBackupSlotDataAsync())
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task StartWebSiteNetworkTraceOperationSlot_StartANewNetworkTraceOperationForASite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/StartWebSiteNetworkTraceOperation_Slot.json
+            // this example is just showing the usage of "WebApps_StartWebSiteNetworkTraceOperationSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "SampleApp";
+            string slot = "Production";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            int? durationInSeconds = 60;
+            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSiteSlot.StartWebSiteNetworkTraceOperationSlotAsync(WaitUntil.Completed, durationInSeconds: durationInSeconds);
+            IList<WebAppNetworkTrace> result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task StopWebSiteNetworkTraceSlot_StopACurrentlyRunningNetworkTraceOperationForASite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/StopWebSiteNetworkTrace_Slot.json
+            // this example is just showing the usage of "WebApps_StopWebSiteNetworkTraceSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "SampleApp";
+            string slot = "Production";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            await webSiteSlot.StopWebSiteNetworkTraceSlotAsync();
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetPrivateLinkResourcesSlot_GetPrivateLinkResourcesOfASite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetSitePrivateLinkResourcesSlot.json
+            // this example is just showing the usage of "WebApps_GetPrivateLinkResourcesSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testSite";
+            string slot = "stage";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (AppServicePrivateLinkResourceData item in webSiteSlot.GetPrivateLinkResourcesSlotAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task StartNetworkTraceSlot_StartANewNetworkTraceOperationForASite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/StartWebSiteNetworkTraceOperation_StartNetworkTraceSlot.json
+            // this example is just showing the usage of "WebApps_StartNetworkTraceSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "SampleApp";
+            string slot = "Production";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            int? durationInSeconds = 60;
+            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSiteSlot.StartNetworkTraceSlotAsync(WaitUntil.Completed, durationInSeconds: durationInSeconds);
+            IList<WebAppNetworkTrace> result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task StopNetworkTraceSlot_StopACurrentlyRunningNetworkTraceOperationForASite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/StopWebSiteNetworkTrace_StopNetworkTraceSlot.json
+            // this example is just showing the usage of "WebApps_StopNetworkTraceSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "SampleApp";
+            string slot = "Production";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            await webSiteSlot.StopNetworkTraceSlotAsync();
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetworkTracesSlot_GetNetworkTracesForASite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetWebSiteNetworkTraces_Slot.json
+            // this example is just showing the usage of "WebApps_GetNetworkTracesSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "SampleApp";
+            string slot = "Production";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation and iterate over the result
+            string operationId = "c291433b-53ad-4c49-8cae-0a293eae1c6d";
+            await foreach (WebAppNetworkTrace item in webSiteSlot.GetNetworkTracesSlotAsync(operationId))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetworkTraceOperationSlot_GetTheCurrentStatusOfANetworkTraceOperationForASite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetWebSiteNetworkTraceOperation_Slot.json
+            // this example is just showing the usage of "WebApps_GetNetworkTraceOperationSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "SampleApp";
+            string slot = "Production";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation and iterate over the result
+            string operationId = "c291433b-53ad-4c49-8cae-0a293eae1c6d";
+            await foreach (WebAppNetworkTrace item in webSiteSlot.GetNetworkTraceOperationSlotAsync(operationId))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetworkTracesSlotV2_GetNetworkTracesForASite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetWebSiteNetworkTraces_GetNetworkTracesSlotV2.json
+            // this example is just showing the usage of "WebApps_GetNetworkTracesSlotV2" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "SampleApp";
+            string slot = "Production";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation and iterate over the result
+            string operationId = "c291433b-53ad-4c49-8cae-0a293eae1c6d";
+            await foreach (WebAppNetworkTrace item in webSiteSlot.GetNetworkTracesSlotV2Async(operationId))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetworkTraceOperationSlotV2_GetTheCurrentStatusOfANetworkTraceOperationForASite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetWebSiteNetworkTraceOperation_SlotV2.json
+            // this example is just showing the usage of "WebApps_GetNetworkTraceOperationSlotV2" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "SampleApp";
+            string slot = "Production";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation and iterate over the result
+            string operationId = "c291433b-53ad-4c49-8cae-0a293eae1c6d";
+            await foreach (WebAppNetworkTrace item in webSiteSlot.GetNetworkTraceOperationSlotV2Async(operationId))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

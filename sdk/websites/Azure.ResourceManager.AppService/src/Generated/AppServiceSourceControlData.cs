@@ -60,22 +60,25 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="token"> OAuth access token. </param>
         /// <param name="tokenSecret"> OAuth access token secret. </param>
         /// <param name="refreshToken"> OAuth refresh token. </param>
         /// <param name="expireOn"> OAuth token expiration. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string token, string tokenSecret, string refreshToken, DateTimeOffset? expireOn, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string token, string tokenSecret, string refreshToken, DateTimeOffset? expireOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Token = token;
             TokenSecret = tokenSecret;
             RefreshToken = refreshToken;
             ExpireOn = expireOn;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> OAuth access token. </summary>
         [WirePath("properties.token")]
         public string Token { get; set; }
@@ -88,8 +91,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> OAuth token expiration. </summary>
         [WirePath("properties.expirationTime")]
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

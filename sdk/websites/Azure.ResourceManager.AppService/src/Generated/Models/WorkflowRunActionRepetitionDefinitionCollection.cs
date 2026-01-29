@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionCollection"/>. </summary>
-        internal WorkflowRunActionRepetitionDefinitionCollection()
+        /// <param name="value"> The WorkflowRunActionRepetitionDefinition items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal WorkflowRunActionRepetitionDefinitionCollection(IEnumerable<WorkflowRunActionRepetitionDefinitionData> value)
         {
-            Value = new ChangeTrackingList<WorkflowRunActionRepetitionDefinitionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionCollection"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of recommendations. </param>
-        /// <param name="value"></param>
+        /// <param name="value"> The WorkflowRunActionRepetitionDefinition items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunActionRepetitionDefinitionCollection(string nextLink, IReadOnlyList<WorkflowRunActionRepetitionDefinitionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkflowRunActionRepetitionDefinitionCollection(IReadOnlyList<WorkflowRunActionRepetitionDefinitionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of recommendations. </summary>
-        public string NextLink { get; }
-        /// <summary> Gets the value. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionCollection"/> for deserialization. </summary>
+        internal WorkflowRunActionRepetitionDefinitionCollection()
+        {
+        }
+
+        /// <summary> The WorkflowRunActionRepetitionDefinition items on this page. </summary>
         public IReadOnlyList<WorkflowRunActionRepetitionDefinitionData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

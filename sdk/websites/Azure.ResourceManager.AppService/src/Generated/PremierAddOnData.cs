@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="sku"> Premier add on SKU. </param>
         /// <param name="product"> Premier add on Product. </param>
         /// <param name="vendor"> Premier add on Vendor. </param>
         /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
         /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PremierAddOnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PremierAddOnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Kind = kind;
             Sku = sku;
             Product = product;
             Vendor = vendor;
             MarketplacePublisher = marketplacePublisher;
             MarketplaceOffer = marketplaceOffer;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,6 +86,9 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Premier add on SKU. </summary>
         [WirePath("properties.sku")]
         public string Sku { get; set; }
@@ -101,8 +104,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Premier add on Marketplace offer. </summary>
         [WirePath("properties.marketplaceOffer")]
         public string MarketplaceOffer { get; set; }
-        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

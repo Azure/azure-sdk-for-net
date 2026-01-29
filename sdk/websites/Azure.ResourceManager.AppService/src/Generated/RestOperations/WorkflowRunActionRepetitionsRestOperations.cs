@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-11-01";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Get all of a workflow run action repetitions. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="runName"> The workflow run name. </param>
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Get all of a workflow run action repetitions. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="runName"> The workflow run name. </param>
@@ -205,8 +205,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Get a workflow run action repetition. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="runName"> The workflow run name. </param>
@@ -244,8 +244,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Get a workflow run action repetition. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="runName"> The workflow run name. </param>
@@ -335,8 +335,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Lists a workflow run expression trace. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="runName"> The workflow run name. </param>
@@ -372,8 +372,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Lists a workflow run expression trace. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="runName"> The workflow run name. </param>
@@ -432,8 +432,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Get all of a workflow run action repetitions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="runName"> The workflow run name. </param>
@@ -469,8 +469,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Get all of a workflow run action repetitions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="runName"> The workflow run name. </param>
@@ -528,8 +528,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Lists a workflow run expression trace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="runName"> The workflow run name. </param>
@@ -567,8 +567,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Lists a workflow run expression trace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="runName"> The workflow run name. </param>

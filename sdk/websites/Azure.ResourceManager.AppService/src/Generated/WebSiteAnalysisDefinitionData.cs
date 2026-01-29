@@ -60,21 +60,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description of the Analysis. </param>
         /// <param name="kind"> Kind of resource. </param>
+        /// <param name="description"> Description of the Analysis. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebSiteAnalysisDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebSiteAnalysisDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Description = description;
             Kind = kind;
+            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Description of the Analysis. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary> Description of the Analysis. </summary>
+        [WirePath("properties.description")]
+        public string Description { get; }
     }
 }

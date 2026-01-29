@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 provisioningState,
                 privateEndpoint,
                 privateLinkServiceConnectionState,
                 ipAddresses ?? new ChangeTrackingList<IPAddress>(),
-                kind,
                 serializedAdditionalRawData);
         }
 
