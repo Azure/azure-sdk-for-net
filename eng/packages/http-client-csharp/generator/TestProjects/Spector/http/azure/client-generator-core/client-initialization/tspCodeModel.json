@@ -93,6 +93,11 @@
       "crossLanguageDefinitionId": "Service.Input",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Input"
+        }
+      },
       "properties": [
         {
           "$id": "12",
@@ -129,6 +134,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.withBody.Request.anonymous",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "15",
@@ -166,6 +176,11 @@
       "usage": "Output,Json",
       "doc": "Properties of a blob",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BlobProperties"
+        }
+      },
       "properties": [
         {
           "$id": "18",
