@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultPropertiesMoveDetails : IUtf8JsonSerializable, IJsonModel<VaultPropertiesMoveDetails>
+    /// <summary> The details of the latest move operation performed on the Azure Resource. </summary>
+    public partial class VaultPropertiesMoveDetails : IJsonModel<VaultPropertiesMoveDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultPropertiesMoveDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VaultPropertiesMoveDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VaultPropertiesMoveDetails)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
@@ -59,15 +60,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,95 +77,101 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        VaultPropertiesMoveDetails IJsonModel<VaultPropertiesMoveDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VaultPropertiesMoveDetails IJsonModel<VaultPropertiesMoveDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VaultPropertiesMoveDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VaultPropertiesMoveDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVaultPropertiesMoveDetails(document.RootElement, options);
         }
 
-        internal static VaultPropertiesMoveDetails DeserializeVaultPropertiesMoveDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VaultPropertiesMoveDetails DeserializeVaultPropertiesMoveDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string operationId = default;
-            DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? completionTimeUtc = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? completedOn = default;
             ResourceIdentifier sourceResourceId = default;
             ResourceIdentifier targetResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("operationId"u8))
+                if (prop.NameEquals("operationId"u8))
                 {
-                    operationId = property.Value.GetString();
+                    operationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"u8))
+                if (prop.NameEquals("startTimeUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTimeUtc = property.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("completionTimeUtc"u8))
+                if (prop.NameEquals("completionTimeUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    completionTimeUtc = property.Value.GetDateTimeOffset("O");
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceResourceId"u8))
+                if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
+                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetResourceId"u8))
+                if (prop.NameEquals("targetResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
+                    targetResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VaultPropertiesMoveDetails(
                 operationId,
-                startTimeUtc,
-                completionTimeUtc,
+                startOn,
+                completedOn,
                 sourceResourceId,
                 targetResourceId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<VaultPropertiesMoveDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VaultPropertiesMoveDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -174,15 +181,20 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        VaultPropertiesMoveDetails IPersistableModel<VaultPropertiesMoveDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VaultPropertiesMoveDetails IPersistableModel<VaultPropertiesMoveDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VaultPropertiesMoveDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVaultPropertiesMoveDetails(document.RootElement, options);
                     }
                 default:
@@ -190,6 +202,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VaultPropertiesMoveDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
