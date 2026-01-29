@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -39,23 +40,56 @@ namespace Azure.SdkAnalyzers
 
         private int CountWords(string name)
         {
-            // For interfaces, ignore the 'I' prefix when counting words
-            string nameToCount = name;
-            if (name.Length > 1 && name.StartsWith("I") && char.IsUpper(name[1]))
+            if (string.IsNullOrEmpty(name))
             {
-                nameToCount = name.Substring(1);
+                return 0;
             }
 
-            int i = 0;
-            foreach (var c in nameToCount)
+            // For interfaces, ignore the 'I' prefix when counting words
+            ReadOnlySpan<char> nameToCount = name.AsSpan();
+            if (name.Length > 1 && name[0] == 'I' && char.IsUpper(name[1]))
             {
-                if (char.IsUpper(c))
+                nameToCount = nameToCount.Slice(1);
+            }
+
+            if (nameToCount.IsEmpty)
+            {
+                return 0;
+            }
+
+            int wordCount = 0;
+            bool inAcronym = false;
+
+            for (int i = 0; i < nameToCount.Length; i++)
+            {
+                char current = nameToCount[i];
+                bool isCurrentUpper = char.IsUpper(current);
+                bool hasNext = i < nameToCount.Length - 1;
+                bool isNextLower = hasNext && char.IsLower(nameToCount[i + 1]);
+
+                if (isCurrentUpper)
                 {
-                    i++;
+                    if (!inAcronym)
+                    {
+                        // Start of a new word
+                        wordCount++;
+                        inAcronym = !isNextLower; // If next is lower, this is a regular word, not acronym
+                    }
+                    else if (isNextLower)
+                    {
+                        // End of acronym, start of new word (e.g., "HTTPClient" -> HTTP + Client)
+                        wordCount++;
+                        inAcronym = false;
+                    }
+                    // else: continue in acronym (e.g., "HTTP")
+                }
+                else
+                {
+                    inAcronym = false;
                 }
             }
 
-            return i;
+            return wordCount;
         }
     }
 }
