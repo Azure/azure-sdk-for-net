@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -90,6 +95,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             AzureLocation location = default;
             DeidServiceProperties properties = default;
             ManagedServiceIdentity identity = default;
+            HealthDataAIServicesSku sku = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -168,6 +174,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHealthDataAIServicesContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("sku"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = HealthDataAIServicesSku.DeserializeHealthDataAIServicesSku(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -182,7 +197,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
+                identity,
+                sku);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
