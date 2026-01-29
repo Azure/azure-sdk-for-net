@@ -16,38 +16,29 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRemoteSharePointReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal KnowledgeBaseRemoteSharePointReference(string id, int activitySource) : base(id, activitySource)
+        internal KnowledgeBaseRemoteSharePointReference(string id, int activitySource) : base(KnowledgeBaseReferenceType.RemoteSharePoint, id, activitySource)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            Type = "remoteSharePoint";
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRemoteSharePointReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="sourceData"> The source data for the reference. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="webUrl"> The url the reference data originated from. </param>
-        /// <param name="searchSensitivityLabelInfo"> Information about the sensitivity label applied to a SharePoint document. </param>
-        internal KnowledgeBaseRemoteSharePointReference(string type, string id, int activitySource, IReadOnlyDictionary<string, object> sourceData, float? rerankerScore, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri webUrl, SharePointSensitivityLabelInfo searchSensitivityLabelInfo) : base(type, id, activitySource, sourceData, rerankerScore, serializedAdditionalRawData)
+        /// <param name="searchSensitivityLabelInfo"> Information about the sensitivity label applied to the SharePoint document. </param>
+        internal KnowledgeBaseRemoteSharePointReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri webUrl, SharePointSensitivityLabelInfo searchSensitivityLabelInfo) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
             WebUrl = webUrl;
             SearchSensitivityLabelInfo = searchSensitivityLabelInfo;
-            Type = type ?? "remoteSharePoint";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRemoteSharePointReference"/> for deserialization. </summary>
-        internal KnowledgeBaseRemoteSharePointReference()
-        {
         }
 
         /// <summary> The url the reference data originated from. </summary>
         public Uri WebUrl { get; }
-        /// <summary> Information about the sensitivity label applied to a SharePoint document. </summary>
+
+        /// <summary> Information about the sensitivity label applied to the SharePoint document. </summary>
         public SharePointSensitivityLabelInfo SearchSensitivityLabelInfo { get; }
     }
 }

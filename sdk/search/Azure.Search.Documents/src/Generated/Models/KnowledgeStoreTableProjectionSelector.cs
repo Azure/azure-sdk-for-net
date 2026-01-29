@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,31 +15,36 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class KnowledgeStoreTableProjectionSelector : KnowledgeStoreProjectionSelector
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeStoreTableProjectionSelector"/>. </summary>
+        /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="tableName"> Name of the Azure table to store projected data in. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public KnowledgeStoreTableProjectionSelector(string tableName)
+        /// <exception cref="ArgumentNullException"> <paramref name="generatedKeyName"/> or <paramref name="tableName"/> is null. </exception>
+        public KnowledgeStoreTableProjectionSelector(string generatedKeyName, string tableName)
         {
+            Argument.AssertNotNull(generatedKeyName, nameof(generatedKeyName));
             Argument.AssertNotNull(tableName, nameof(tableName));
 
+            _generatedKeyName = generatedKeyName;
             TableName = tableName;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeStoreTableProjectionSelector"/>. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
-        /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="tableName"> Name of the Azure table to store projected data in. </param>
-        internal KnowledgeStoreTableProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string tableName) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs, serializedAdditionalRawData)
+        internal KnowledgeStoreTableProjectionSelector(string referenceKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string generatedKeyName, string tableName) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs, additionalBinaryDataProperties)
         {
             TableName = tableName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreTableProjectionSelector"/> for deserialization. </summary>
-        internal KnowledgeStoreTableProjectionSelector()
+        /// <summary> Name of generated key to store projection under. </summary>
+        public new string GeneratedKeyName
         {
+            get => _generatedKeyName ?? default;
+            set => _generatedKeyName = value;
         }
 
         /// <summary> Name of the Azure table to store projected data in. </summary>

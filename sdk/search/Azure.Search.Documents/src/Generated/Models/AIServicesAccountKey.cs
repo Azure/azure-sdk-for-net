@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,36 +18,30 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="key"> The key used to provision the Azure AI service resource attached to a skillset. </param>
         /// <param name="subdomainUrl"> The subdomain url for the corresponding AI Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="subdomainUrl"/> is null. </exception>
-        public AIServicesAccountKey(string key, string subdomainUrl)
+        public AIServicesAccountKey(string key, string subdomainUrl) : base("#Microsoft.Azure.Search.AIServicesByKey")
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(subdomainUrl, nameof(subdomainUrl));
 
             Key = key;
             SubdomainUrl = subdomainUrl;
-            ODataType = "#Microsoft.Azure.Search.AIServicesByKey";
         }
 
         /// <summary> Initializes a new instance of <see cref="AIServicesAccountKey"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of Azure AI service resource attached to a skillset. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The key used to provision the Azure AI service resource attached to a skillset. </param>
         /// <param name="subdomainUrl"> The subdomain url for the corresponding AI Service. </param>
-        internal AIServicesAccountKey(string oDataType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, string key, string subdomainUrl) : base(oDataType, description, serializedAdditionalRawData)
+        internal AIServicesAccountKey(string odataType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key, string subdomainUrl) : base(odataType, description, additionalBinaryDataProperties)
         {
             Key = key;
             SubdomainUrl = subdomainUrl;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.AIServicesByKey";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AIServicesAccountKey"/> for deserialization. </summary>
-        internal AIServicesAccountKey()
-        {
         }
 
         /// <summary> The key used to provision the Azure AI service resource attached to a skillset. </summary>
         public string Key { get; set; }
+
         /// <summary> The subdomain url for the corresponding AI Service. </summary>
         public string SubdomainUrl { get; set; }
     }

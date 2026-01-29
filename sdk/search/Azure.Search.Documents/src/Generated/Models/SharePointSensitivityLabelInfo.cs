@@ -13,37 +13,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Information about the sensitivity label applied to a SharePoint document. </summary>
     public partial class SharePointSensitivityLabelInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SharePointSensitivityLabelInfo"/>. </summary>
         internal SharePointSensitivityLabelInfo()
@@ -57,8 +28,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="priority"> The priority in which the sensitivity label is applied. </param>
         /// <param name="color"> The color that the UI should display for the label, if configured. </param>
         /// <param name="isEncrypted"> Indicates whether the sensitivity label enforces encryption. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharePointSensitivityLabelInfo(string displayName, string sensitivityLabelId, string tooltip, int? priority, string color, bool? isEncrypted, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SharePointSensitivityLabelInfo(string displayName, string sensitivityLabelId, string tooltip, int? priority, string color, bool? isEncrypted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             SensitivityLabelId = sensitivityLabelId;
@@ -66,19 +37,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             Priority = priority;
             Color = color;
             IsEncrypted = isEncrypted;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The display name for the sensitivity label. </summary>
         public string DisplayName { get; }
+
         /// <summary> The ID of the sensitivity label. </summary>
         public string SensitivityLabelId { get; }
+
         /// <summary> The tooltip that should be displayed for the label in a UI. </summary>
         public string Tooltip { get; }
+
         /// <summary> The priority in which the sensitivity label is applied. </summary>
         public int? Priority { get; }
+
         /// <summary> The color that the UI should display for the label, if configured. </summary>
         public string Color { get; }
+
         /// <summary> Indicates whether the sensitivity label enforces encryption. </summary>
         public bool? IsEncrypted { get; }
     }

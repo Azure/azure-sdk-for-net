@@ -7,40 +7,33 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
-    /// <summary> Text message type. </summary>
+    /// <summary> Image message type. </summary>
     public partial class KnowledgeBaseMessageImageContent : KnowledgeBaseMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageImageContent"/>. </summary>
-        /// <param name="image"></param>
+        /// <param name="image"> The image content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
-        public KnowledgeBaseMessageImageContent(KnowledgeBaseMessageImageContentImage image)
+        public KnowledgeBaseMessageImageContent(KnowledgeBaseImageContent image) : base(KnowledgeBaseMessageContentType.Image)
         {
             Argument.AssertNotNull(image, nameof(image));
 
             Image = image;
-            Type = KnowledgeBaseMessageContentType.Image;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageImageContent"/>. </summary>
         /// <param name="type"> The type of the message. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="image"></param>
-        internal KnowledgeBaseMessageImageContent(KnowledgeBaseMessageContentType type, IDictionary<string, BinaryData> serializedAdditionalRawData, KnowledgeBaseMessageImageContentImage image) : base(type, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="image"> The image content. </param>
+        internal KnowledgeBaseMessageImageContent(KnowledgeBaseMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, KnowledgeBaseImageContent image) : base(@type, additionalBinaryDataProperties)
         {
             Image = image;
-            Type = type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageImageContent"/> for deserialization. </summary>
-        internal KnowledgeBaseMessageImageContent()
-        {
-        }
-
-        /// <summary> Gets or sets the image. </summary>
-        public KnowledgeBaseMessageImageContentImage Image { get; set; }
+        /// <summary> The image content. </summary>
+        public KnowledgeBaseImageContent Image { get; set; }
     }
 }

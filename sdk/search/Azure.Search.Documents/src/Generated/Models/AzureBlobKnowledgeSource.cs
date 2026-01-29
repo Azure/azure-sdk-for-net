@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,32 +18,25 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="azureBlobParameters"> The type of the knowledge source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="azureBlobParameters"/> is null. </exception>
-        public AzureBlobKnowledgeSource(string name, AzureBlobKnowledgeSourceParameters azureBlobParameters) : base(name)
+        public AzureBlobKnowledgeSource(string name, AzureBlobKnowledgeSourceParameters azureBlobParameters) : base(name, KnowledgeSourceKind.AzureBlob)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(azureBlobParameters, nameof(azureBlobParameters));
 
             AzureBlobParameters = azureBlobParameters;
-            Kind = KnowledgeSourceKind.AzureBlob;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSource"/>. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="eTag"> The ETag of the knowledge base. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge base definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge base definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge base definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureBlobParameters"> The type of the knowledge source. </param>
-        internal AzureBlobKnowledgeSource(string name, string description, KnowledgeSourceKind kind, string eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureBlobKnowledgeSourceParameters azureBlobParameters) : base(name, description, kind, eTag, encryptionKey, serializedAdditionalRawData)
+        internal AzureBlobKnowledgeSource(string name, string description, KnowledgeSourceKind kind, SearchResourceEncryptionKey encryptionKey, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureBlobKnowledgeSourceParameters azureBlobParameters) : base(name, description, kind, encryptionKey, eTag, additionalBinaryDataProperties)
         {
             AzureBlobParameters = azureBlobParameters;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSource"/> for deserialization. </summary>
-        internal AzureBlobKnowledgeSource()
-        {
         }
 
         /// <summary> The type of the knowledge source. </summary>

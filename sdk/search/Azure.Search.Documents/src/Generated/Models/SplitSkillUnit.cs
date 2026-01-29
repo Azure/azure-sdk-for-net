@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct SplitSkillUnit : IEquatable<SplitSkillUnit>
     {
         private readonly string _value;
+        /// <summary> The length will be measured by character. </summary>
+        private const string CharactersValue = "characters";
+        /// <summary> The length will be measured by an AzureOpenAI tokenizer from the tiktoken library. </summary>
+        private const string AzureOpenAITokensValue = "azureOpenAITokens";
 
         /// <summary> Initializes a new instance of <see cref="SplitSkillUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SplitSkillUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CharactersValue = "characters";
-        private const string AzureOpenAITokensValue = "azureOpenAITokens";
+            _value = value;
+        }
 
         /// <summary> The length will be measured by character. </summary>
         public static SplitSkillUnit Characters { get; } = new SplitSkillUnit(CharactersValue);
+
         /// <summary> The length will be measured by an AzureOpenAI tokenizer from the tiktoken library. </summary>
         public static SplitSkillUnit AzureOpenAITokens { get; } = new SplitSkillUnit(AzureOpenAITokensValue);
+
         /// <summary> Determines if two <see cref="SplitSkillUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SplitSkillUnit left, SplitSkillUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SplitSkillUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SplitSkillUnit left, SplitSkillUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SplitSkillUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SplitSkillUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SplitSkillUnit(string value) => new SplitSkillUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SplitSkillUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SplitSkillUnit?(string value) => value == null ? null : new SplitSkillUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SplitSkillUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SplitSkillUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

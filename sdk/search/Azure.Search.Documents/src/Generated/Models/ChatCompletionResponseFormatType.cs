@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Specifies how the LLM should format the response. Possible values: 'text' (plain string), 'json_object' (arbitrary JSON), or 'json_schema' (adheres to provided schema). </summary>
+    /// <summary> Specifies how the LLM should format the response. </summary>
     public readonly partial struct ChatCompletionResponseFormatType : IEquatable<ChatCompletionResponseFormatType>
     {
         private readonly string _value;
+        /// <summary> Plain text response format. </summary>
+        private const string TextValue = "text";
+        /// <summary> Arbitrary JSON object response format. </summary>
+        private const string JsonObjectValue = "jsonObject";
+        /// <summary> JSON schema-adhering response format. </summary>
+        private const string JsonSchemaValue = "jsonSchema";
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionResponseFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ChatCompletionResponseFormatType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TextValue = "text";
-        private const string JsonObjectValue = "jsonObject";
-        private const string JsonSchemaValue = "jsonSchema";
-
-        /// <summary> text. </summary>
+        /// <summary> Plain text response format. </summary>
         public static ChatCompletionResponseFormatType Text { get; } = new ChatCompletionResponseFormatType(TextValue);
-        /// <summary> jsonObject. </summary>
+
+        /// <summary> Arbitrary JSON object response format. </summary>
         public static ChatCompletionResponseFormatType JsonObject { get; } = new ChatCompletionResponseFormatType(JsonObjectValue);
-        /// <summary> jsonSchema. </summary>
+
+        /// <summary> JSON schema-adhering response format. </summary>
         public static ChatCompletionResponseFormatType JsonSchema { get; } = new ChatCompletionResponseFormatType(JsonSchemaValue);
+
         /// <summary> Determines if two <see cref="ChatCompletionResponseFormatType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ChatCompletionResponseFormatType left, ChatCompletionResponseFormatType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ChatCompletionResponseFormatType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ChatCompletionResponseFormatType left, ChatCompletionResponseFormatType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ChatCompletionResponseFormatType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ChatCompletionResponseFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ChatCompletionResponseFormatType(string value) => new ChatCompletionResponseFormatType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ChatCompletionResponseFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ChatCompletionResponseFormatType?(string value) => value == null ? null : new ChatCompletionResponseFormatType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ChatCompletionResponseFormatType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ChatCompletionResponseFormatType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

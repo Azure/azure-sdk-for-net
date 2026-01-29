@@ -14,18 +14,16 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class DefaultCognitiveServicesAccount : CognitiveServicesAccount
     {
         /// <summary> Initializes a new instance of <see cref="DefaultCognitiveServicesAccount"/>. </summary>
-        public DefaultCognitiveServicesAccount()
+        public DefaultCognitiveServicesAccount() : base("#Microsoft.Azure.Search.DefaultCognitiveServices")
         {
-            ODataType = "#Microsoft.Azure.Search.DefaultCognitiveServices";
         }
 
         /// <summary> Initializes a new instance of <see cref="DefaultCognitiveServicesAccount"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of Azure AI service resource attached to a skillset. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultCognitiveServicesAccount(string oDataType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, description, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DefaultCognitiveServicesAccount(string odataType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType, description, additionalBinaryDataProperties)
         {
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.DefaultCognitiveServices";
         }
     }
 }

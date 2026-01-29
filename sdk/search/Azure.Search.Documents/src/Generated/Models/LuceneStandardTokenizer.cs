@@ -14,19 +14,13 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class LuceneStandardTokenizer : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of <see cref="LuceneStandardTokenizer"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of tokenizer. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
-        internal LuceneStandardTokenizer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxTokenLength) : base(oDataType, name, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. </param>
+        internal LuceneStandardTokenizer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxTokenLength) : base(odataType, name, additionalBinaryDataProperties)
         {
             MaxTokenLength = maxTokenLength;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.StandardTokenizerV2";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LuceneStandardTokenizer"/> for deserialization. </summary>
-        internal LuceneStandardTokenizer()
-        {
         }
     }
 }

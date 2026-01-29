@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public readonly partial struct KnowledgeRetrievalReasoningEffortKind : IEquatable<KnowledgeRetrievalReasoningEffortKind>
     {
         private readonly string _value;
+        /// <summary> Does not perform any source selections, query planning, or iterative search. </summary>
+        private const string MinimalValue = "minimal";
+        /// <summary> Use low reasoning during retrieval. </summary>
+        private const string LowValue = "low";
+        /// <summary> Use a moderate amount of reasoning during retrieval. </summary>
+        private const string MediumValue = "medium";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalReasoningEffortKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KnowledgeRetrievalReasoningEffortKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MinimalValue = "minimal";
-        private const string LowValue = "low";
-        private const string MediumValue = "medium";
+            _value = value;
+        }
 
         /// <summary> Does not perform any source selections, query planning, or iterative search. </summary>
         public static KnowledgeRetrievalReasoningEffortKind Minimal { get; } = new KnowledgeRetrievalReasoningEffortKind(MinimalValue);
+
         /// <summary> Use low reasoning during retrieval. </summary>
         public static KnowledgeRetrievalReasoningEffortKind Low { get; } = new KnowledgeRetrievalReasoningEffortKind(LowValue);
+
         /// <summary> Use a moderate amount of reasoning during retrieval. </summary>
         public static KnowledgeRetrievalReasoningEffortKind Medium { get; } = new KnowledgeRetrievalReasoningEffortKind(MediumValue);
+
         /// <summary> Determines if two <see cref="KnowledgeRetrievalReasoningEffortKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KnowledgeRetrievalReasoningEffortKind left, KnowledgeRetrievalReasoningEffortKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KnowledgeRetrievalReasoningEffortKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KnowledgeRetrievalReasoningEffortKind left, KnowledgeRetrievalReasoningEffortKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KnowledgeRetrievalReasoningEffortKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KnowledgeRetrievalReasoningEffortKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KnowledgeRetrievalReasoningEffortKind(string value) => new KnowledgeRetrievalReasoningEffortKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KnowledgeRetrievalReasoningEffortKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KnowledgeRetrievalReasoningEffortKind?(string value) => value == null ? null : new KnowledgeRetrievalReasoningEffortKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KnowledgeRetrievalReasoningEffortKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KnowledgeRetrievalReasoningEffortKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,12 @@ using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Unknown version of KnowledgeBaseMessageContent. </summary>
     internal partial class UnknownKnowledgeBaseMessageContent : KnowledgeBaseMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeBaseMessageContent"/>. </summary>
         /// <param name="type"> The type of the message. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeBaseMessageContent(KnowledgeBaseMessageContentType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
-        {
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeBaseMessageContent"/> for deserialization. </summary>
-        internal UnknownKnowledgeBaseMessageContent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownKnowledgeBaseMessageContent(KnowledgeBaseMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

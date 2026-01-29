@@ -4,13 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 // suppress the generated type for the property `SearchMode`
-[assembly: CodeGenSuppressType("SuggesterMode")]
+// [assembly: CodeGenSuppressType("SuggesterMode")] TODO: Fix CodeGenSuppressType attribute usage. Need to understand this or mgirate it
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenModel("Suggester")]
+    [CodeGenType("SearchSuggester")]
     public partial class SearchSuggester
     {
         private const string AnalyzingInfixMatching = "analyzingInfixMatching";

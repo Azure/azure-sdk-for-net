@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The current synchronization status of the knowledge source. </summary>
     public readonly partial struct KnowledgeSourceSynchronizationStatus : IEquatable<KnowledgeSourceSynchronizationStatus>
     {
         private readonly string _value;
+        /// <summary> The knowledge source is being provisioned. </summary>
+        private const string CreatingValue = "creating";
+        /// <summary> The knowledge source is active and synchronization runs are occurring. </summary>
+        private const string ActiveValue = "active";
+        /// <summary> The knowledge source is being deleted and synchronization is paused. </summary>
+        private const string DeletingValue = "deleting";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceSynchronizationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KnowledgeSourceSynchronizationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "creating";
-        private const string ActiveValue = "active";
-        private const string DeletingValue = "deleting";
+            _value = value;
+        }
 
         /// <summary> The knowledge source is being provisioned. </summary>
         public static KnowledgeSourceSynchronizationStatus Creating { get; } = new KnowledgeSourceSynchronizationStatus(CreatingValue);
+
         /// <summary> The knowledge source is active and synchronization runs are occurring. </summary>
         public static KnowledgeSourceSynchronizationStatus Active { get; } = new KnowledgeSourceSynchronizationStatus(ActiveValue);
+
         /// <summary> The knowledge source is being deleted and synchronization is paused. </summary>
         public static KnowledgeSourceSynchronizationStatus Deleting { get; } = new KnowledgeSourceSynchronizationStatus(DeletingValue);
+
         /// <summary> Determines if two <see cref="KnowledgeSourceSynchronizationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KnowledgeSourceSynchronizationStatus left, KnowledgeSourceSynchronizationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KnowledgeSourceSynchronizationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KnowledgeSourceSynchronizationStatus left, KnowledgeSourceSynchronizationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KnowledgeSourceSynchronizationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KnowledgeSourceSynchronizationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KnowledgeSourceSynchronizationStatus(string value) => new KnowledgeSourceSynchronizationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KnowledgeSourceSynchronizationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KnowledgeSourceSynchronizationStatus?(string value) => value == null ? null : new KnowledgeSourceSynchronizationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KnowledgeSourceSynchronizationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KnowledgeSourceSynchronizationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

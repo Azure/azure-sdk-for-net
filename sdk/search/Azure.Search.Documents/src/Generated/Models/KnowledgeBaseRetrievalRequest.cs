@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> The input contract for the retrieval request. </summary>
     public partial class KnowledgeBaseRetrievalRequest
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalRequest"/>. </summary>
         public KnowledgeBaseRetrievalRequest()
@@ -55,26 +27,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalRequest"/>. </summary>
         /// <param name="messages"> A list of chat message style input. </param>
-        /// <param name="intents">
-        /// A list of intended queries to execute without model query planning.
-        /// Please note <see cref="KnowledgeRetrievalIntent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeRetrievalSemanticIntent"/>.
-        /// </param>
+        /// <param name="intents"> A list of intended queries to execute without model query planning. </param>
         /// <param name="maxRuntimeInSeconds"> The maximum runtime in seconds. </param>
         /// <param name="maxOutputSize"> Limits the maximum size of the content in the output. </param>
-        /// <param name="retrievalReasoningEffort">
-        /// Please note <see cref="KnowledgeRetrievalReasoningEffort"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeRetrievalMediumReasoningEffort"/> and <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>.
-        /// </param>
+        /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
         /// <param name="includeActivity"> Indicates retrieval results should include activity information. </param>
         /// <param name="outputMode"> The output configuration for this retrieval. </param>
-        /// <param name="knowledgeSourceParams">
-        /// A list of runtime parameters for the knowledge sources.
-        /// Please note <see cref="Models.KnowledgeSourceParams"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="SearchIndexKnowledgeSourceParams"/> and <see cref="WebKnowledgeSourceParams"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseRetrievalRequest(IList<KnowledgeBaseMessage> messages, IList<KnowledgeRetrievalIntent> intents, int? maxRuntimeInSeconds, int? maxOutputSize, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, bool? includeActivity, KnowledgeRetrievalOutputMode? outputMode, IList<KnowledgeSourceParams> knowledgeSourceParams, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="knowledgeSourceParams"> A list of runtime parameters for the knowledge sources. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeBaseRetrievalRequest(IList<KnowledgeBaseMessage> messages, IList<KnowledgeRetrievalIntent> intents, int? maxRuntimeInSeconds, int? maxOutputSize, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, bool? includeActivity, KnowledgeRetrievalOutputMode? outputMode, IList<KnowledgeSourceParams> knowledgeSourceParams, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Messages = messages;
             Intents = intents;
@@ -84,36 +45,31 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IncludeActivity = includeActivity;
             OutputMode = outputMode;
             KnowledgeSourceParams = knowledgeSourceParams;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of chat message style input. </summary>
         public IList<KnowledgeBaseMessage> Messages { get; }
-        /// <summary>
-        /// A list of intended queries to execute without model query planning.
-        /// Please note <see cref="KnowledgeRetrievalIntent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeRetrievalSemanticIntent"/>.
-        /// </summary>
+
+        /// <summary> A list of intended queries to execute without model query planning. </summary>
         public IList<KnowledgeRetrievalIntent> Intents { get; }
+
         /// <summary> The maximum runtime in seconds. </summary>
         public int? MaxRuntimeInSeconds { get; set; }
+
         /// <summary> Limits the maximum size of the content in the output. </summary>
         public int? MaxOutputSize { get; set; }
-        /// <summary>
-        /// Gets or sets the retrieval reasoning effort
-        /// Please note <see cref="KnowledgeRetrievalReasoningEffort"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeRetrievalMediumReasoningEffort"/> and <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>.
-        /// </summary>
+
+        /// <summary> The retrieval reasoning effort configuration. </summary>
         public KnowledgeRetrievalReasoningEffort RetrievalReasoningEffort { get; set; }
+
         /// <summary> Indicates retrieval results should include activity information. </summary>
         public bool? IncludeActivity { get; set; }
+
         /// <summary> The output configuration for this retrieval. </summary>
         public KnowledgeRetrievalOutputMode? OutputMode { get; set; }
-        /// <summary>
-        /// A list of runtime parameters for the knowledge sources.
-        /// Please note <see cref="Models.KnowledgeSourceParams"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="SearchIndexKnowledgeSourceParams"/> and <see cref="WebKnowledgeSourceParams"/>.
-        /// </summary>
+
+        /// <summary> A list of runtime parameters for the knowledge sources. </summary>
         public IList<KnowledgeSourceParams> KnowledgeSourceParams { get; }
     }
 }

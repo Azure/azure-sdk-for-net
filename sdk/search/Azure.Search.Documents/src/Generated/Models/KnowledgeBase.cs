@@ -8,48 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Search.Documents;
 using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The KnowledgeBase. </summary>
+    /// <summary> Represents a knowledge base definition. </summary>
     public partial class KnowledgeBase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>
-        /// <param name="name"> The name of the knowledge knowledge base. </param>
-        /// <param name="knowledgeSources"></param>
+        /// <param name="name"> The name of the knowledge base. </param>
+        /// <param name="knowledgeSources"> Knowledge sources referenced by this knowledge base. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="knowledgeSources"/> is null. </exception>
         public KnowledgeBase(string name, IEnumerable<KnowledgeSourceReference> knowledgeSources)
         {
@@ -62,71 +34,57 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>
-        /// <param name="name"> The name of the knowledge knowledge base. </param>
-        /// <param name="knowledgeSources"></param>
-        /// <param name="models">
-        /// Contains configuration options on how to connect to AI models.
-        /// Please note <see cref="KnowledgeBaseModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeBaseAzureOpenAIModel"/>.
-        /// </param>
-        /// <param name="retrievalReasoningEffort">
-        /// Please note <see cref="KnowledgeRetrievalReasoningEffort"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeRetrievalMediumReasoningEffort"/> and <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>.
-        /// </param>
-        /// <param name="outputMode"> The output configuration for this retrieval. </param>
-        /// <param name="eTag"> The ETag of the knowledge base. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge base definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge base definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge base definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="name"> The name of the knowledge base. </param>
+        /// <param name="knowledgeSources"> Knowledge sources referenced by this knowledge base. </param>
+        /// <param name="models"> Contains configuration options on how to connect to AI models. </param>
+        /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
+        /// <param name="outputMode"> The output mode for the knowledge base. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. </param>
         /// <param name="description"> The description of the knowledge base. </param>
-        /// <param name="retrievalInstructions"> Instructions considered by the knowledge knowledge base when developing query plan. </param>
-        /// <param name="answerInstructions"> Instructions considered by the knowledge knowledge base when generating answers. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBase(string name, IList<KnowledgeSourceReference> knowledgeSources, IList<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, string eTag, SearchResourceEncryptionKey encryptionKey, string description, string retrievalInstructions, string answerInstructions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="retrievalInstructions"> Instructions considered by the knowledge base when developing query plan. </param>
+        /// <param name="answerInstructions"> Instructions considered by the knowledge base when generating answers. </param>
+        /// <param name="etag"> The ETag of the knowledge base. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeBase(string name, IList<KnowledgeSourceReference> knowledgeSources, IList<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, SearchResourceEncryptionKey encryptionKey, string description, string retrievalInstructions, string answerInstructions, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             KnowledgeSources = knowledgeSources;
             Models = models;
             RetrievalReasoningEffort = retrievalReasoningEffort;
             OutputMode = outputMode;
-            ETag = eTag;
             EncryptionKey = encryptionKey;
             Description = description;
             RetrievalInstructions = retrievalInstructions;
             AnswerInstructions = answerInstructions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _etag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/> for deserialization. </summary>
-        internal KnowledgeBase()
-        {
-        }
-
-        /// <summary> The name of the knowledge knowledge base. </summary>
+        /// <summary> The name of the knowledge base. </summary>
         public string Name { get; set; }
-        /// <summary> Gets the knowledge sources. </summary>
+
+        /// <summary> Knowledge sources referenced by this knowledge base. </summary>
         public IList<KnowledgeSourceReference> KnowledgeSources { get; }
-        /// <summary>
-        /// Contains configuration options on how to connect to AI models.
-        /// Please note <see cref="KnowledgeBaseModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeBaseAzureOpenAIModel"/>.
-        /// </summary>
+
+        /// <summary> Contains configuration options on how to connect to AI models. </summary>
         public IList<KnowledgeBaseModel> Models { get; }
-        /// <summary>
-        /// Gets or sets the retrieval reasoning effort
-        /// Please note <see cref="KnowledgeRetrievalReasoningEffort"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeRetrievalMediumReasoningEffort"/> and <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>.
-        /// </summary>
+
+        /// <summary> The retrieval reasoning effort configuration. </summary>
         public KnowledgeRetrievalReasoningEffort RetrievalReasoningEffort { get; set; }
-        /// <summary> The output configuration for this retrieval. </summary>
+
+        /// <summary> The output mode for the knowledge base. </summary>
         public KnowledgeRetrievalOutputMode? OutputMode { get; set; }
-        /// <summary> The ETag of the knowledge base. </summary>
-        public string ETag { get; set; }
-        /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge base definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge base definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge base definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
+
+        /// <summary> A description of an encryption key that you create in Azure Key Vault. </summary>
         public SearchResourceEncryptionKey EncryptionKey { get; set; }
+
         /// <summary> The description of the knowledge base. </summary>
         public string Description { get; set; }
-        /// <summary> Instructions considered by the knowledge knowledge base when developing query plan. </summary>
+
+        /// <summary> Instructions considered by the knowledge base when developing query plan. </summary>
         public string RetrievalInstructions { get; set; }
-        /// <summary> Instructions considered by the knowledge knowledge base when generating answers. </summary>
+
+        /// <summary> Instructions considered by the knowledge base when generating answers. </summary>
         public string AnswerInstructions { get; set; }
     }
 }

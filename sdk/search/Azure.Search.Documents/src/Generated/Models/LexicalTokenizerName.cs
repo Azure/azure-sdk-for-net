@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,71 +15,112 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct LexicalTokenizerName : IEquatable<LexicalTokenizerName>
     {
         private readonly string _value;
+        /// <summary> Grammar-based tokenizer that is suitable for processing most European-language documents. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/ClassicTokenizer.html. </summary>
+        private const string ClassicValue = "classic";
+        /// <summary> Tokenizes the input from an edge into n-grams of the given size(s). See https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenizer.html. </summary>
+        private const string EdgeNGramValue = "edgeNGram";
+        /// <summary> Emits the entire input as a single token. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html. </summary>
+        private const string KeywordValue = "keyword_v2";
+        /// <summary> Divides text at non-letters. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LetterTokenizer.html. </summary>
+        private const string LetterValue = "letter";
+        /// <summary> Divides text at non-letters and converts them to lower case. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LowerCaseTokenizer.html. </summary>
+        private const string LowercaseValue = "lowercase";
+        /// <summary> Divides text using language-specific rules. </summary>
+        private const string MicrosoftLanguageTokenizerValue = "microsoft_language_tokenizer";
+        /// <summary> Divides text using language-specific rules and reduces words to their base forms. </summary>
+        private const string MicrosoftLanguageStemmingTokenizerValue = "microsoft_language_stemming_tokenizer";
+        /// <summary> Tokenizes the input into n-grams of the given size(s). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenizer.html. </summary>
+        private const string NGramValue = "nGram";
+        /// <summary> Tokenizer for path-like hierarchies. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/path/PathHierarchyTokenizer.html. </summary>
+        private const string PathHierarchyValue = "path_hierarchy_v2";
+        /// <summary> Tokenizer that uses regex pattern matching to construct distinct tokens. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternTokenizer.html. </summary>
+        private const string PatternValue = "pattern";
+        /// <summary> Standard Lucene analyzer; Composed of the standard tokenizer, lowercase filter and stop filter. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html. </summary>
+        private const string StandardValue = "standard_v2";
+        /// <summary> Tokenizes urls and emails as one token. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/UAX29URLEmailTokenizer.html. </summary>
+        private const string UaxUrlEmailValue = "uax_url_email";
+        /// <summary> Divides text at whitespace. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceTokenizer.html. </summary>
+        private const string WhitespaceValue = "whitespace";
 
         /// <summary> Initializes a new instance of <see cref="LexicalTokenizerName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LexicalTokenizerName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ClassicValue = "classic";
-        private const string EdgeNGramValue = "edgeNGram";
-        private const string KeywordValue = "keyword_v2";
-        private const string LetterValue = "letter";
-        private const string LowercaseValue = "lowercase";
-        private const string MicrosoftLanguageTokenizerValue = "microsoft_language_tokenizer";
-        private const string MicrosoftLanguageStemmingTokenizerValue = "microsoft_language_stemming_tokenizer";
-        private const string NGramValue = "nGram";
-        private const string PathHierarchyValue = "path_hierarchy_v2";
-        private const string PatternValue = "pattern";
-        private const string StandardValue = "standard_v2";
-        private const string UaxUrlEmailValue = "uax_url_email";
-        private const string WhitespaceValue = "whitespace";
+            _value = value;
+        }
 
         /// <summary> Grammar-based tokenizer that is suitable for processing most European-language documents. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/ClassicTokenizer.html. </summary>
         public static LexicalTokenizerName Classic { get; } = new LexicalTokenizerName(ClassicValue);
+
         /// <summary> Tokenizes the input from an edge into n-grams of the given size(s). See https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenizer.html. </summary>
         public static LexicalTokenizerName EdgeNGram { get; } = new LexicalTokenizerName(EdgeNGramValue);
+
         /// <summary> Emits the entire input as a single token. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html. </summary>
         public static LexicalTokenizerName Keyword { get; } = new LexicalTokenizerName(KeywordValue);
+
         /// <summary> Divides text at non-letters. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LetterTokenizer.html. </summary>
         public static LexicalTokenizerName Letter { get; } = new LexicalTokenizerName(LetterValue);
+
         /// <summary> Divides text at non-letters and converts them to lower case. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LowerCaseTokenizer.html. </summary>
         public static LexicalTokenizerName Lowercase { get; } = new LexicalTokenizerName(LowercaseValue);
+
         /// <summary> Divides text using language-specific rules. </summary>
         public static LexicalTokenizerName MicrosoftLanguageTokenizer { get; } = new LexicalTokenizerName(MicrosoftLanguageTokenizerValue);
+
         /// <summary> Divides text using language-specific rules and reduces words to their base forms. </summary>
         public static LexicalTokenizerName MicrosoftLanguageStemmingTokenizer { get; } = new LexicalTokenizerName(MicrosoftLanguageStemmingTokenizerValue);
+
         /// <summary> Tokenizes the input into n-grams of the given size(s). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenizer.html. </summary>
         public static LexicalTokenizerName NGram { get; } = new LexicalTokenizerName(NGramValue);
+
         /// <summary> Tokenizer for path-like hierarchies. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/path/PathHierarchyTokenizer.html. </summary>
         public static LexicalTokenizerName PathHierarchy { get; } = new LexicalTokenizerName(PathHierarchyValue);
+
         /// <summary> Tokenizer that uses regex pattern matching to construct distinct tokens. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternTokenizer.html. </summary>
         public static LexicalTokenizerName Pattern { get; } = new LexicalTokenizerName(PatternValue);
+
         /// <summary> Standard Lucene analyzer; Composed of the standard tokenizer, lowercase filter and stop filter. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html. </summary>
         public static LexicalTokenizerName Standard { get; } = new LexicalTokenizerName(StandardValue);
+
         /// <summary> Tokenizes urls and emails as one token. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/UAX29URLEmailTokenizer.html. </summary>
         public static LexicalTokenizerName UaxUrlEmail { get; } = new LexicalTokenizerName(UaxUrlEmailValue);
+
         /// <summary> Divides text at whitespace. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceTokenizer.html. </summary>
         public static LexicalTokenizerName Whitespace { get; } = new LexicalTokenizerName(WhitespaceValue);
+
         /// <summary> Determines if two <see cref="LexicalTokenizerName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LexicalTokenizerName left, LexicalTokenizerName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LexicalTokenizerName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LexicalTokenizerName left, LexicalTokenizerName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LexicalTokenizerName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LexicalTokenizerName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LexicalTokenizerName(string value) => new LexicalTokenizerName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LexicalTokenizerName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LexicalTokenizerName?(string value) => value == null ? null : new LexicalTokenizerName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LexicalTokenizerName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LexicalTokenizerName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

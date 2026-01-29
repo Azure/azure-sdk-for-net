@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,39 +18,35 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public ContentUnderstandingSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
+        public ContentUnderstandingSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Util.ContentUnderstandingSkill", inputs, outputs)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
             ExtractionOptions = new ChangeTrackingList<ContentUnderstandingSkillExtractionOptions>();
-            ODataType = "#Microsoft.Skills.Util.ContentUnderstandingSkill";
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingSkill"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of skill. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extractionOptions"> Controls the cardinality of the content extracted from the document by the skill. </param>
         /// <param name="chunkingProperties"> Controls the cardinality for chunking the content. </param>
-        internal ContentUnderstandingSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ContentUnderstandingSkillExtractionOptions> extractionOptions, ContentUnderstandingSkillChunkingProperties chunkingProperties) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
+        /// <param name="odataType0"> A URI fragment specifying the type of skill. </param>
+        internal ContentUnderstandingSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ContentUnderstandingSkillExtractionOptions> extractionOptions, ContentUnderstandingSkillChunkingProperties chunkingProperties, string odataType0) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             ExtractionOptions = extractionOptions;
             ChunkingProperties = chunkingProperties;
-            ODataType = oDataType ?? "#Microsoft.Skills.Util.ContentUnderstandingSkill";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContentUnderstandingSkill"/> for deserialization. </summary>
-        internal ContentUnderstandingSkill()
-        {
+            OdataType = odataType0;
         }
 
         /// <summary> Controls the cardinality of the content extracted from the document by the skill. </summary>
         public IList<ContentUnderstandingSkillExtractionOptions> ExtractionOptions { get; set; }
+
         /// <summary> Controls the cardinality for chunking the content. </summary>
         public ContentUnderstandingSkillChunkingProperties ChunkingProperties { get; set; }
     }

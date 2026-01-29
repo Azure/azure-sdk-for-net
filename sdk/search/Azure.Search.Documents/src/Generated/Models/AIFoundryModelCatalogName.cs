@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct AIFoundryModelCatalogName : IEquatable<AIFoundryModelCatalogName>
     {
         private readonly string _value;
+        /// <summary> OpenAI-CLIP-Image-Text-Embeddings-vit-base-patch32. </summary>
+        private const string OpenAICLIPImageTextEmbeddingsVitBasePatch32Value = "OpenAI-CLIP-Image-Text-Embeddings-vit-base-patch32";
+        /// <summary> OpenAI-CLIP-Image-Text-Embeddings-ViT-Large-Patch14-336. </summary>
+        private const string OpenAICLIPImageTextEmbeddingsViTLargePatch14336Value = "OpenAI-CLIP-Image-Text-Embeddings-ViT-Large-Patch14-336";
+        /// <summary> Facebook-DinoV2-Image-Embeddings-ViT-Base. </summary>
+        private const string FacebookDinoV2ImageEmbeddingsViTBaseValue = "Facebook-DinoV2-Image-Embeddings-ViT-Base";
+        /// <summary> Facebook-DinoV2-Image-Embeddings-ViT-Giant. </summary>
+        private const string FacebookDinoV2ImageEmbeddingsViTGiantValue = "Facebook-DinoV2-Image-Embeddings-ViT-Giant";
+        /// <summary> Cohere-embed-v3-english. </summary>
+        private const string CohereEmbedV3EnglishValue = "Cohere-embed-v3-english";
+        /// <summary> Cohere-embed-v3-multilingual. </summary>
+        private const string CohereEmbedV3MultilingualValue = "Cohere-embed-v3-multilingual";
+        /// <summary> Cohere embed v4 model for generating embeddings from both text and images. </summary>
+        private const string CohereEmbedV4Value = "Cohere-embed-v4";
 
         /// <summary> Initializes a new instance of <see cref="AIFoundryModelCatalogName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AIFoundryModelCatalogName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string OpenAIClipImageTextEmbeddingsVitBasePatch32Value = "OpenAI-CLIP-Image-Text-Embeddings-vit-base-patch32";
-        private const string OpenAIClipImageTextEmbeddingsViTLargePatch14336Value = "OpenAI-CLIP-Image-Text-Embeddings-ViT-Large-Patch14-336";
-        private const string FacebookDinoV2ImageEmbeddingsViTBaseValue = "Facebook-DinoV2-Image-Embeddings-ViT-Base";
-        private const string FacebookDinoV2ImageEmbeddingsViTGiantValue = "Facebook-DinoV2-Image-Embeddings-ViT-Giant";
-        private const string CohereEmbedV3EnglishValue = "Cohere-embed-v3-english";
-        private const string CohereEmbedV3MultilingualValue = "Cohere-embed-v3-multilingual";
-        private const string CohereEmbedV4Value = "Cohere-embed-v4";
-
         /// <summary> OpenAI-CLIP-Image-Text-Embeddings-vit-base-patch32. </summary>
-        public static AIFoundryModelCatalogName OpenAIClipImageTextEmbeddingsVitBasePatch32 { get; } = new AIFoundryModelCatalogName(OpenAIClipImageTextEmbeddingsVitBasePatch32Value);
+        public static AIFoundryModelCatalogName OpenAICLIPImageTextEmbeddingsVitBasePatch32 { get; } = new AIFoundryModelCatalogName(OpenAICLIPImageTextEmbeddingsVitBasePatch32Value);
+
         /// <summary> OpenAI-CLIP-Image-Text-Embeddings-ViT-Large-Patch14-336. </summary>
-        public static AIFoundryModelCatalogName OpenAIClipImageTextEmbeddingsViTLargePatch14336 { get; } = new AIFoundryModelCatalogName(OpenAIClipImageTextEmbeddingsViTLargePatch14336Value);
+        public static AIFoundryModelCatalogName OpenAICLIPImageTextEmbeddingsViTLargePatch14336 { get; } = new AIFoundryModelCatalogName(OpenAICLIPImageTextEmbeddingsViTLargePatch14336Value);
+
         /// <summary> Facebook-DinoV2-Image-Embeddings-ViT-Base. </summary>
         public static AIFoundryModelCatalogName FacebookDinoV2ImageEmbeddingsViTBase { get; } = new AIFoundryModelCatalogName(FacebookDinoV2ImageEmbeddingsViTBaseValue);
+
         /// <summary> Facebook-DinoV2-Image-Embeddings-ViT-Giant. </summary>
         public static AIFoundryModelCatalogName FacebookDinoV2ImageEmbeddingsViTGiant { get; } = new AIFoundryModelCatalogName(FacebookDinoV2ImageEmbeddingsViTGiantValue);
+
         /// <summary> Cohere-embed-v3-english. </summary>
         public static AIFoundryModelCatalogName CohereEmbedV3English { get; } = new AIFoundryModelCatalogName(CohereEmbedV3EnglishValue);
+
         /// <summary> Cohere-embed-v3-multilingual. </summary>
         public static AIFoundryModelCatalogName CohereEmbedV3Multilingual { get; } = new AIFoundryModelCatalogName(CohereEmbedV3MultilingualValue);
+
         /// <summary> Cohere embed v4 model for generating embeddings from both text and images. </summary>
         public static AIFoundryModelCatalogName CohereEmbedV4 { get; } = new AIFoundryModelCatalogName(CohereEmbedV4Value);
+
         /// <summary> Determines if two <see cref="AIFoundryModelCatalogName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AIFoundryModelCatalogName left, AIFoundryModelCatalogName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AIFoundryModelCatalogName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AIFoundryModelCatalogName left, AIFoundryModelCatalogName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AIFoundryModelCatalogName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AIFoundryModelCatalogName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AIFoundryModelCatalogName(string value) => new AIFoundryModelCatalogName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AIFoundryModelCatalogName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AIFoundryModelCatalogName?(string value) => value == null ? null : new AIFoundryModelCatalogName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AIFoundryModelCatalogName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AIFoundryModelCatalogName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -9,15 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class IndexedSharePointKnowledgeSourceParameters : IUtf8JsonSerializable, IJsonModel<IndexedSharePointKnowledgeSourceParameters>
+    /// <summary> Parameters for SharePoint knowledge source. </summary>
+    public partial class IndexedSharePointKnowledgeSourceParameters : IJsonModel<IndexedSharePointKnowledgeSourceParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IndexedSharePointKnowledgeSourceParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="IndexedSharePointKnowledgeSourceParameters"/> for deserialization. </summary>
+        internal IndexedSharePointKnowledgeSourceParameters()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IndexedSharePointKnowledgeSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,60 +35,39 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IndexedSharePointKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IndexedSharePointKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IndexedSharePointKnowledgeSourceParameters)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName.ToString());
             if (Optional.IsDefined(Query))
             {
-                if (Query != null)
-                {
-                    writer.WritePropertyName("query"u8);
-                    writer.WriteStringValue(Query);
-                }
-                else
-                {
-                    writer.WriteNull("query");
-                }
+                writer.WritePropertyName("query"u8);
+                writer.WriteStringValue(Query);
             }
             if (Optional.IsDefined(IngestionParameters))
             {
-                if (IngestionParameters != null)
-                {
-                    writer.WritePropertyName("ingestionParameters"u8);
-                    writer.WriteObjectValue(IngestionParameters, options);
-                }
-                else
-                {
-                    writer.WriteNull("ingestionParameters");
-                }
+                writer.WritePropertyName("ingestionParameters"u8);
+                writer.WriteObjectValue(IngestionParameters, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CreatedResources))
+            if (options.Format != "W" && Optional.IsDefined(CreatedResources))
             {
                 writer.WritePropertyName("createdResources"u8);
-                writer.WriteStartObject();
-                foreach (var item in CreatedResources)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(CreatedResources, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,22 +76,27 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        IndexedSharePointKnowledgeSourceParameters IJsonModel<IndexedSharePointKnowledgeSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IndexedSharePointKnowledgeSourceParameters IJsonModel<IndexedSharePointKnowledgeSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IndexedSharePointKnowledgeSourceParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IndexedSharePointKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IndexedSharePointKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IndexedSharePointKnowledgeSourceParameters)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIndexedSharePointKnowledgeSourceParameters(document.RootElement, options);
         }
 
-        internal static IndexedSharePointKnowledgeSourceParameters DeserializeIndexedSharePointKnowledgeSourceParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IndexedSharePointKnowledgeSourceParameters DeserializeIndexedSharePointKnowledgeSourceParameters(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -115,74 +105,70 @@ namespace Azure.Search.Documents.Indexes.Models
             IndexedSharePointContainerName containerName = default;
             string query = default;
             KnowledgeSourceIngestionParameters ingestionParameters = default;
-            IReadOnlyDictionary<string, string> createdResources = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            CreatedResources createdResources = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionString"u8))
+                if (prop.NameEquals("connectionString"u8))
                 {
-                    connectionString = property.Value.GetString();
+                    connectionString = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerName"u8))
+                if (prop.NameEquals("containerName"u8))
                 {
-                    containerName = new IndexedSharePointContainerName(property.Value.GetString());
+                    containerName = new IndexedSharePointContainerName(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("query"u8))
+                if (prop.NameEquals("query"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         query = null;
                         continue;
                     }
-                    query = property.Value.GetString();
+                    query = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ingestionParameters"u8))
+                if (prop.NameEquals("ingestionParameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         ingestionParameters = null;
                         continue;
                     }
-                    ingestionParameters = KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(property.Value, options);
+                    ingestionParameters = KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("createdResources"u8))
+                if (prop.NameEquals("createdResources"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    createdResources = dictionary;
+                    createdResources = CreatedResources.DeserializeCreatedResources(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new IndexedSharePointKnowledgeSourceParameters(
                 connectionString,
                 containerName,
                 query,
                 ingestionParameters,
-                createdResources ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData);
+                createdResources,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<IndexedSharePointKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IndexedSharePointKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IndexedSharePointKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IndexedSharePointKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -192,15 +178,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        IndexedSharePointKnowledgeSourceParameters IPersistableModel<IndexedSharePointKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IndexedSharePointKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IndexedSharePointKnowledgeSourceParameters IPersistableModel<IndexedSharePointKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IndexedSharePointKnowledgeSourceParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IndexedSharePointKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIndexedSharePointKnowledgeSourceParameters(document.RootElement, options);
                     }
                 default:
@@ -208,22 +199,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IndexedSharePointKnowledgeSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static IndexedSharePointKnowledgeSourceParameters FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIndexedSharePointKnowledgeSourceParameters(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

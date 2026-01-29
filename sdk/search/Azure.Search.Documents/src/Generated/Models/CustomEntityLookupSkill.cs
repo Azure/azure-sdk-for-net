@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,30 +18,29 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public CustomEntityLookupSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
+        public CustomEntityLookupSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.CustomEntityLookupSkill", inputs, outputs)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
             InlineEntitiesDefinition = new ChangeTrackingList<CustomEntity>();
-            ODataType = "#Microsoft.Skills.Text.CustomEntityLookupSkill";
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomEntityLookupSkill"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of skill. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
         /// <param name="entitiesDefinitionUri"> Path to a JSON or CSV file containing all the target text to match against. This entity definition is read at the beginning of an indexer run. Any updates to this file during an indexer run will not take effect until subsequent runs. This config must be accessible over HTTPS. </param>
         /// <param name="inlineEntitiesDefinition"> The inline CustomEntity definition. </param>
         /// <param name="globalDefaultCaseSensitive"> A global flag for CaseSensitive. If CaseSensitive is not set in CustomEntity, this value will be the default value. </param>
         /// <param name="globalDefaultAccentSensitive"> A global flag for AccentSensitive. If AccentSensitive is not set in CustomEntity, this value will be the default value. </param>
         /// <param name="globalDefaultFuzzyEditDistance"> A global flag for FuzzyEditDistance. If FuzzyEditDistance is not set in CustomEntity, this value will be the default value. </param>
-        internal CustomEntityLookupSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData, CustomEntityLookupSkillLanguage? defaultLanguageCode, Uri entitiesDefinitionUri, IList<CustomEntity> inlineEntitiesDefinition, bool? globalDefaultCaseSensitive, bool? globalDefaultAccentSensitive, int? globalDefaultFuzzyEditDistance) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
+        internal CustomEntityLookupSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomEntityLookupSkillLanguage? defaultLanguageCode, string entitiesDefinitionUri, IList<CustomEntity> inlineEntitiesDefinition, bool? globalDefaultCaseSensitive, bool? globalDefaultAccentSensitive, int? globalDefaultFuzzyEditDistance) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             DefaultLanguageCode = defaultLanguageCode;
             EntitiesDefinitionUri = entitiesDefinitionUri;
@@ -48,20 +48,23 @@ namespace Azure.Search.Documents.Indexes.Models
             GlobalDefaultCaseSensitive = globalDefaultCaseSensitive;
             GlobalDefaultAccentSensitive = globalDefaultAccentSensitive;
             GlobalDefaultFuzzyEditDistance = globalDefaultFuzzyEditDistance;
-            ODataType = oDataType ?? "#Microsoft.Skills.Text.CustomEntityLookupSkill";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomEntityLookupSkill"/> for deserialization. </summary>
-        internal CustomEntityLookupSkill()
-        {
         }
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
         public CustomEntityLookupSkillLanguage? DefaultLanguageCode { get; set; }
+
+        /// <summary> Path to a JSON or CSV file containing all the target text to match against. This entity definition is read at the beginning of an indexer run. Any updates to this file during an indexer run will not take effect until subsequent runs. This config must be accessible over HTTPS. </summary>
+        public string EntitiesDefinitionUri { get; set; }
+
+        /// <summary> The inline CustomEntity definition. </summary>
+        public IList<CustomEntity> InlineEntitiesDefinition { get; set; }
+
         /// <summary> A global flag for CaseSensitive. If CaseSensitive is not set in CustomEntity, this value will be the default value. </summary>
         public bool? GlobalDefaultCaseSensitive { get; set; }
+
         /// <summary> A global flag for AccentSensitive. If AccentSensitive is not set in CustomEntity, this value will be the default value. </summary>
         public bool? GlobalDefaultAccentSensitive { get; set; }
+
         /// <summary> A global flag for FuzzyEditDistance. If FuzzyEditDistance is not set in CustomEntity, this value will be the default value. </summary>
         public int? GlobalDefaultFuzzyEditDistance { get; set; }
     }

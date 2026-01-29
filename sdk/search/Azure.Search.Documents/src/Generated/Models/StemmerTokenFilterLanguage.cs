@@ -5,118 +5,327 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language to use for a stemmer token filter. </summary>
-    public enum StemmerTokenFilterLanguage
+    public readonly partial struct StemmerTokenFilterLanguage : IEquatable<StemmerTokenFilterLanguage>
     {
+        private readonly string _value;
         /// <summary> Selects the Lucene stemming tokenizer for Arabic. </summary>
-        Arabic,
+        private const string ArabicValue = "arabic";
         /// <summary> Selects the Lucene stemming tokenizer for Armenian. </summary>
-        Armenian,
+        private const string ArmenianValue = "armenian";
         /// <summary> Selects the Lucene stemming tokenizer for Basque. </summary>
-        Basque,
+        private const string BasqueValue = "basque";
         /// <summary> Selects the Lucene stemming tokenizer for Portuguese (Brazil). </summary>
-        Brazilian,
+        private const string BrazilianValue = "brazilian";
         /// <summary> Selects the Lucene stemming tokenizer for Bulgarian. </summary>
-        Bulgarian,
+        private const string BulgarianValue = "bulgarian";
         /// <summary> Selects the Lucene stemming tokenizer for Catalan. </summary>
-        Catalan,
+        private const string CatalanValue = "catalan";
         /// <summary> Selects the Lucene stemming tokenizer for Czech. </summary>
-        Czech,
+        private const string CzechValue = "czech";
         /// <summary> Selects the Lucene stemming tokenizer for Danish. </summary>
-        Danish,
+        private const string DanishValue = "danish";
         /// <summary> Selects the Lucene stemming tokenizer for Dutch. </summary>
-        Dutch,
+        private const string DutchValue = "dutch";
         /// <summary> Selects the Lucene stemming tokenizer for Dutch that uses the Kraaij-Pohlmann stemming algorithm. </summary>
-        DutchKp,
+        private const string DutchKpValue = "dutchKp";
         /// <summary> Selects the Lucene stemming tokenizer for English. </summary>
-        English,
+        private const string EnglishValue = "english";
         /// <summary> Selects the Lucene stemming tokenizer for English that does light stemming. </summary>
-        LightEnglish,
+        private const string LightEnglishValue = "lightEnglish";
         /// <summary> Selects the Lucene stemming tokenizer for English that does minimal stemming. </summary>
-        MinimalEnglish,
+        private const string MinimalEnglishValue = "minimalEnglish";
         /// <summary> Selects the Lucene stemming tokenizer for English that removes trailing possessives from words. </summary>
-        PossessiveEnglish,
+        private const string PossessiveEnglishValue = "possessiveEnglish";
         /// <summary> Selects the Lucene stemming tokenizer for English that uses the Porter2 stemming algorithm. </summary>
-        Porter2,
+        private const string Porter2Value = "porter2";
         /// <summary> Selects the Lucene stemming tokenizer for English that uses the Lovins stemming algorithm. </summary>
-        Lovins,
+        private const string LovinsValue = "lovins";
         /// <summary> Selects the Lucene stemming tokenizer for Finnish. </summary>
-        Finnish,
+        private const string FinnishValue = "finnish";
         /// <summary> Selects the Lucene stemming tokenizer for Finnish that does light stemming. </summary>
-        LightFinnish,
+        private const string LightFinnishValue = "lightFinnish";
         /// <summary> Selects the Lucene stemming tokenizer for French. </summary>
-        French,
+        private const string FrenchValue = "french";
         /// <summary> Selects the Lucene stemming tokenizer for French that does light stemming. </summary>
-        LightFrench,
+        private const string LightFrenchValue = "lightFrench";
         /// <summary> Selects the Lucene stemming tokenizer for French that does minimal stemming. </summary>
-        MinimalFrench,
+        private const string MinimalFrenchValue = "minimalFrench";
         /// <summary> Selects the Lucene stemming tokenizer for Galician. </summary>
-        Galician,
+        private const string GalicianValue = "galician";
         /// <summary> Selects the Lucene stemming tokenizer for Galician that does minimal stemming. </summary>
-        MinimalGalician,
+        private const string MinimalGalicianValue = "minimalGalician";
         /// <summary> Selects the Lucene stemming tokenizer for German. </summary>
-        German,
+        private const string GermanValue = "german";
         /// <summary> Selects the Lucene stemming tokenizer that uses the German variant algorithm. </summary>
-        German2,
+        private const string German2Value = "german2";
         /// <summary> Selects the Lucene stemming tokenizer for German that does light stemming. </summary>
-        LightGerman,
+        private const string LightGermanValue = "lightGerman";
         /// <summary> Selects the Lucene stemming tokenizer for German that does minimal stemming. </summary>
-        MinimalGerman,
+        private const string MinimalGermanValue = "minimalGerman";
         /// <summary> Selects the Lucene stemming tokenizer for Greek. </summary>
-        Greek,
+        private const string GreekValue = "greek";
         /// <summary> Selects the Lucene stemming tokenizer for Hindi. </summary>
-        Hindi,
+        private const string HindiValue = "hindi";
         /// <summary> Selects the Lucene stemming tokenizer for Hungarian. </summary>
-        Hungarian,
+        private const string HungarianValue = "hungarian";
         /// <summary> Selects the Lucene stemming tokenizer for Hungarian that does light stemming. </summary>
-        LightHungarian,
+        private const string LightHungarianValue = "lightHungarian";
         /// <summary> Selects the Lucene stemming tokenizer for Indonesian. </summary>
-        Indonesian,
+        private const string IndonesianValue = "indonesian";
         /// <summary> Selects the Lucene stemming tokenizer for Irish. </summary>
-        Irish,
+        private const string IrishValue = "irish";
         /// <summary> Selects the Lucene stemming tokenizer for Italian. </summary>
-        Italian,
+        private const string ItalianValue = "italian";
         /// <summary> Selects the Lucene stemming tokenizer for Italian that does light stemming. </summary>
-        LightItalian,
+        private const string LightItalianValue = "lightItalian";
         /// <summary> Selects the Lucene stemming tokenizer for Sorani. </summary>
-        Sorani,
+        private const string SoraniValue = "sorani";
         /// <summary> Selects the Lucene stemming tokenizer for Latvian. </summary>
-        Latvian,
-        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Bokmål). </summary>
-        Norwegian,
-        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Bokmål) that does light stemming. </summary>
-        LightNorwegian,
-        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Bokmål) that does minimal stemming. </summary>
-        MinimalNorwegian,
+        private const string LatvianValue = "latvian";
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l). </summary>
+        private const string NorwegianValue = "norwegian";
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l) that does light stemming. </summary>
+        private const string LightNorwegianValue = "lightNorwegian";
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l) that does minimal stemming. </summary>
+        private const string MinimalNorwegianValue = "minimalNorwegian";
         /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Nynorsk) that does light stemming. </summary>
-        LightNynorsk,
+        private const string LightNynorskValue = "lightNynorsk";
         /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Nynorsk) that does minimal stemming. </summary>
-        MinimalNynorsk,
+        private const string MinimalNynorskValue = "minimalNynorsk";
         /// <summary> Selects the Lucene stemming tokenizer for Portuguese. </summary>
-        Portuguese,
+        private const string PortugueseValue = "portuguese";
         /// <summary> Selects the Lucene stemming tokenizer for Portuguese that does light stemming. </summary>
-        LightPortuguese,
+        private const string LightPortugueseValue = "lightPortuguese";
         /// <summary> Selects the Lucene stemming tokenizer for Portuguese that does minimal stemming. </summary>
-        MinimalPortuguese,
+        private const string MinimalPortugueseValue = "minimalPortuguese";
         /// <summary> Selects the Lucene stemming tokenizer for Portuguese that uses the RSLP stemming algorithm. </summary>
-        PortugueseRslp,
+        private const string PortugueseRslpValue = "portugueseRslp";
         /// <summary> Selects the Lucene stemming tokenizer for Romanian. </summary>
-        Romanian,
+        private const string RomanianValue = "romanian";
         /// <summary> Selects the Lucene stemming tokenizer for Russian. </summary>
-        Russian,
+        private const string RussianValue = "russian";
         /// <summary> Selects the Lucene stemming tokenizer for Russian that does light stemming. </summary>
-        LightRussian,
+        private const string LightRussianValue = "lightRussian";
         /// <summary> Selects the Lucene stemming tokenizer for Spanish. </summary>
-        Spanish,
+        private const string SpanishValue = "spanish";
         /// <summary> Selects the Lucene stemming tokenizer for Spanish that does light stemming. </summary>
-        LightSpanish,
+        private const string LightSpanishValue = "lightSpanish";
         /// <summary> Selects the Lucene stemming tokenizer for Swedish. </summary>
-        Swedish,
+        private const string SwedishValue = "swedish";
         /// <summary> Selects the Lucene stemming tokenizer for Swedish that does light stemming. </summary>
-        LightSwedish,
+        private const string LightSwedishValue = "lightSwedish";
         /// <summary> Selects the Lucene stemming tokenizer for Turkish. </summary>
-        Turkish
+        private const string TurkishValue = "turkish";
+
+        /// <summary> Initializes a new instance of <see cref="StemmerTokenFilterLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StemmerTokenFilterLanguage(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Selects the Lucene stemming tokenizer for Arabic. </summary>
+        public static StemmerTokenFilterLanguage Arabic { get; } = new StemmerTokenFilterLanguage(ArabicValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Armenian. </summary>
+        public static StemmerTokenFilterLanguage Armenian { get; } = new StemmerTokenFilterLanguage(ArmenianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Basque. </summary>
+        public static StemmerTokenFilterLanguage Basque { get; } = new StemmerTokenFilterLanguage(BasqueValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Portuguese (Brazil). </summary>
+        public static StemmerTokenFilterLanguage Brazilian { get; } = new StemmerTokenFilterLanguage(BrazilianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Bulgarian. </summary>
+        public static StemmerTokenFilterLanguage Bulgarian { get; } = new StemmerTokenFilterLanguage(BulgarianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Catalan. </summary>
+        public static StemmerTokenFilterLanguage Catalan { get; } = new StemmerTokenFilterLanguage(CatalanValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Czech. </summary>
+        public static StemmerTokenFilterLanguage Czech { get; } = new StemmerTokenFilterLanguage(CzechValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Danish. </summary>
+        public static StemmerTokenFilterLanguage Danish { get; } = new StemmerTokenFilterLanguage(DanishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Dutch. </summary>
+        public static StemmerTokenFilterLanguage Dutch { get; } = new StemmerTokenFilterLanguage(DutchValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Dutch that uses the Kraaij-Pohlmann stemming algorithm. </summary>
+        public static StemmerTokenFilterLanguage DutchKp { get; } = new StemmerTokenFilterLanguage(DutchKpValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for English. </summary>
+        public static StemmerTokenFilterLanguage English { get; } = new StemmerTokenFilterLanguage(EnglishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for English that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightEnglish { get; } = new StemmerTokenFilterLanguage(LightEnglishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for English that does minimal stemming. </summary>
+        public static StemmerTokenFilterLanguage MinimalEnglish { get; } = new StemmerTokenFilterLanguage(MinimalEnglishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for English that removes trailing possessives from words. </summary>
+        public static StemmerTokenFilterLanguage PossessiveEnglish { get; } = new StemmerTokenFilterLanguage(PossessiveEnglishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for English that uses the Porter2 stemming algorithm. </summary>
+        public static StemmerTokenFilterLanguage Porter2 { get; } = new StemmerTokenFilterLanguage(Porter2Value);
+
+        /// <summary> Selects the Lucene stemming tokenizer for English that uses the Lovins stemming algorithm. </summary>
+        public static StemmerTokenFilterLanguage Lovins { get; } = new StemmerTokenFilterLanguage(LovinsValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Finnish. </summary>
+        public static StemmerTokenFilterLanguage Finnish { get; } = new StemmerTokenFilterLanguage(FinnishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Finnish that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightFinnish { get; } = new StemmerTokenFilterLanguage(LightFinnishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for French. </summary>
+        public static StemmerTokenFilterLanguage French { get; } = new StemmerTokenFilterLanguage(FrenchValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for French that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightFrench { get; } = new StemmerTokenFilterLanguage(LightFrenchValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for French that does minimal stemming. </summary>
+        public static StemmerTokenFilterLanguage MinimalFrench { get; } = new StemmerTokenFilterLanguage(MinimalFrenchValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Galician. </summary>
+        public static StemmerTokenFilterLanguage Galician { get; } = new StemmerTokenFilterLanguage(GalicianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Galician that does minimal stemming. </summary>
+        public static StemmerTokenFilterLanguage MinimalGalician { get; } = new StemmerTokenFilterLanguage(MinimalGalicianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for German. </summary>
+        public static StemmerTokenFilterLanguage German { get; } = new StemmerTokenFilterLanguage(GermanValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer that uses the German variant algorithm. </summary>
+        public static StemmerTokenFilterLanguage German2 { get; } = new StemmerTokenFilterLanguage(German2Value);
+
+        /// <summary> Selects the Lucene stemming tokenizer for German that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightGerman { get; } = new StemmerTokenFilterLanguage(LightGermanValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for German that does minimal stemming. </summary>
+        public static StemmerTokenFilterLanguage MinimalGerman { get; } = new StemmerTokenFilterLanguage(MinimalGermanValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Greek. </summary>
+        public static StemmerTokenFilterLanguage Greek { get; } = new StemmerTokenFilterLanguage(GreekValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Hindi. </summary>
+        public static StemmerTokenFilterLanguage Hindi { get; } = new StemmerTokenFilterLanguage(HindiValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Hungarian. </summary>
+        public static StemmerTokenFilterLanguage Hungarian { get; } = new StemmerTokenFilterLanguage(HungarianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Hungarian that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightHungarian { get; } = new StemmerTokenFilterLanguage(LightHungarianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Indonesian. </summary>
+        public static StemmerTokenFilterLanguage Indonesian { get; } = new StemmerTokenFilterLanguage(IndonesianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Irish. </summary>
+        public static StemmerTokenFilterLanguage Irish { get; } = new StemmerTokenFilterLanguage(IrishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Italian. </summary>
+        public static StemmerTokenFilterLanguage Italian { get; } = new StemmerTokenFilterLanguage(ItalianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Italian that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightItalian { get; } = new StemmerTokenFilterLanguage(LightItalianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Sorani. </summary>
+        public static StemmerTokenFilterLanguage Sorani { get; } = new StemmerTokenFilterLanguage(SoraniValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Latvian. </summary>
+        public static StemmerTokenFilterLanguage Latvian { get; } = new StemmerTokenFilterLanguage(LatvianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l). </summary>
+        public static StemmerTokenFilterLanguage Norwegian { get; } = new StemmerTokenFilterLanguage(NorwegianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l) that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightNorwegian { get; } = new StemmerTokenFilterLanguage(LightNorwegianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l) that does minimal stemming. </summary>
+        public static StemmerTokenFilterLanguage MinimalNorwegian { get; } = new StemmerTokenFilterLanguage(MinimalNorwegianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Nynorsk) that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightNynorsk { get; } = new StemmerTokenFilterLanguage(LightNynorskValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Nynorsk) that does minimal stemming. </summary>
+        public static StemmerTokenFilterLanguage MinimalNynorsk { get; } = new StemmerTokenFilterLanguage(MinimalNynorskValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Portuguese. </summary>
+        public static StemmerTokenFilterLanguage Portuguese { get; } = new StemmerTokenFilterLanguage(PortugueseValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Portuguese that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightPortuguese { get; } = new StemmerTokenFilterLanguage(LightPortugueseValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Portuguese that does minimal stemming. </summary>
+        public static StemmerTokenFilterLanguage MinimalPortuguese { get; } = new StemmerTokenFilterLanguage(MinimalPortugueseValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Portuguese that uses the RSLP stemming algorithm. </summary>
+        public static StemmerTokenFilterLanguage PortugueseRslp { get; } = new StemmerTokenFilterLanguage(PortugueseRslpValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Romanian. </summary>
+        public static StemmerTokenFilterLanguage Romanian { get; } = new StemmerTokenFilterLanguage(RomanianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Russian. </summary>
+        public static StemmerTokenFilterLanguage Russian { get; } = new StemmerTokenFilterLanguage(RussianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Russian that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightRussian { get; } = new StemmerTokenFilterLanguage(LightRussianValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Spanish. </summary>
+        public static StemmerTokenFilterLanguage Spanish { get; } = new StemmerTokenFilterLanguage(SpanishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Spanish that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightSpanish { get; } = new StemmerTokenFilterLanguage(LightSpanishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Swedish. </summary>
+        public static StemmerTokenFilterLanguage Swedish { get; } = new StemmerTokenFilterLanguage(SwedishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Swedish that does light stemming. </summary>
+        public static StemmerTokenFilterLanguage LightSwedish { get; } = new StemmerTokenFilterLanguage(LightSwedishValue);
+
+        /// <summary> Selects the Lucene stemming tokenizer for Turkish. </summary>
+        public static StemmerTokenFilterLanguage Turkish { get; } = new StemmerTokenFilterLanguage(TurkishValue);
+
+        /// <summary> Determines if two <see cref="StemmerTokenFilterLanguage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(StemmerTokenFilterLanguage left, StemmerTokenFilterLanguage right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="StemmerTokenFilterLanguage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(StemmerTokenFilterLanguage left, StemmerTokenFilterLanguage right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="StemmerTokenFilterLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StemmerTokenFilterLanguage(string value) => new StemmerTokenFilterLanguage(value);
+
+        /// <summary> Converts a string to a <see cref="StemmerTokenFilterLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StemmerTokenFilterLanguage?(string value) => value == null ? null : new StemmerTokenFilterLanguage(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is StemmerTokenFilterLanguage other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(StemmerTokenFilterLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

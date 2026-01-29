@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents all of the state that defines and dictates the indexer&apos;s current execution. </summary>
-    [CodeGenModel("IndexerCurrentState")]
+    [CodeGenType("IndexerCurrentState")]
     public partial class IndexerState
     {
         /// <summary> Change tracking state used when indexing starts on all documents in the datasource. </summary>

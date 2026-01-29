@@ -5,31 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
     /// <summary> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
     public partial class SearchIndexerKnowledgeStoreParameters
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="SearchIndexerKnowledgeStoreParameters"/>. </summary>
         public SearchIndexerKnowledgeStoreParameters()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerKnowledgeStoreParameters"/>. </summary>
         /// <param name="synthesizeGeneratedKeyName"> Whether or not projections should synthesize a generated key name if one isn't already present. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SearchIndexerKnowledgeStoreParameters(bool? synthesizeGeneratedKeyName, IDictionary<string, object> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal SearchIndexerKnowledgeStoreParameters(bool? synthesizeGeneratedKeyName, IDictionary<string, BinaryData> additionalProperties)
         {
             SynthesizeGeneratedKeyName = synthesizeGeneratedKeyName;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Whether or not projections should synthesize a generated key name if one isn't already present. </summary>
         public bool? SynthesizeGeneratedKeyName { get; set; }
-        /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

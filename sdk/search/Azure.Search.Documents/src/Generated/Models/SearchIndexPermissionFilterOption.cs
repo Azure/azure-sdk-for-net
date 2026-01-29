@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A value indicating whether permission filtering is enabled for the index. </summary>
     public readonly partial struct SearchIndexPermissionFilterOption : IEquatable<SearchIndexPermissionFilterOption>
     {
         private readonly string _value;
+        /// <summary> enabled. </summary>
+        private const string EnabledValue = "enabled";
+        /// <summary> disabled. </summary>
+        private const string DisabledValue = "disabled";
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexPermissionFilterOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchIndexPermissionFilterOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "enabled";
-        private const string DisabledValue = "disabled";
+            _value = value;
+        }
 
         /// <summary> enabled. </summary>
         public static SearchIndexPermissionFilterOption Enabled { get; } = new SearchIndexPermissionFilterOption(EnabledValue);
+
         /// <summary> disabled. </summary>
         public static SearchIndexPermissionFilterOption Disabled { get; } = new SearchIndexPermissionFilterOption(DisabledValue);
+
         /// <summary> Determines if two <see cref="SearchIndexPermissionFilterOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchIndexPermissionFilterOption left, SearchIndexPermissionFilterOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchIndexPermissionFilterOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchIndexPermissionFilterOption left, SearchIndexPermissionFilterOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchIndexPermissionFilterOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchIndexPermissionFilterOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchIndexPermissionFilterOption(string value) => new SearchIndexPermissionFilterOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchIndexPermissionFilterOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchIndexPermissionFilterOption?(string value) => value == null ? null : new SearchIndexPermissionFilterOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchIndexPermissionFilterOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchIndexPermissionFilterOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

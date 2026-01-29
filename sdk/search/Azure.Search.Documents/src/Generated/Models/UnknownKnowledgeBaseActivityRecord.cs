@@ -11,7 +11,6 @@ using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Unknown version of KnowledgeBaseActivityRecord. </summary>
     internal partial class UnknownKnowledgeBaseActivityRecord : KnowledgeBaseActivityRecord
     {
         /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeBaseActivityRecord"/>. </summary>
@@ -19,14 +18,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeBaseActivityRecord(int id, string type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, type, elapsedMs, error, serializedAdditionalRawData)
-        {
-            Type = type ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeBaseActivityRecord"/> for deserialization. </summary>
-        internal UnknownKnowledgeBaseActivityRecord()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownKnowledgeBaseActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, @type != default ? @type : "unknown", elapsedMs, error, additionalBinaryDataProperties)
         {
         }
     }

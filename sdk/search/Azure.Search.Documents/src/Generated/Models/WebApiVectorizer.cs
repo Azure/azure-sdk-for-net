@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,30 +17,23 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="WebApiVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
-        public WebApiVectorizer(string vectorizerName) : base(vectorizerName)
+        public WebApiVectorizer(string vectorizerName) : base(vectorizerName, VectorSearchVectorizerKind.CustomWebApi)
         {
             Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
 
-            Kind = VectorSearchVectorizerKind.CustomWebApi;
         }
 
         /// <summary> Initializes a new instance of <see cref="WebApiVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
-        /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="parameters"> Specifies the properties of the user-defined vectorizer. </param>
-        internal WebApiVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, WebApiVectorizerParameters parameters) : base(vectorizerName, kind, serializedAdditionalRawData)
+        /// <param name="kind"> Type of VectorSearchVectorizer. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="webApiParameters"> Specifies the properties of the user-defined vectorizer. </param>
+        internal WebApiVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApiVectorizerParameters webApiParameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
         {
-            Parameters = parameters;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WebApiVectorizer"/> for deserialization. </summary>
-        internal WebApiVectorizer()
-        {
+            WebApiParameters = webApiParameters;
         }
 
         /// <summary> Specifies the properties of the user-defined vectorizer. </summary>
-        public WebApiVectorizerParameters Parameters { get; set; }
+        public WebApiVectorizerParameters WebApiParameters { get; set; }
     }
 }

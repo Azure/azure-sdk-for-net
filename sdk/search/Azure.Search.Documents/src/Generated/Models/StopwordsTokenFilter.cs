@@ -7,48 +7,45 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Removes stop words from a token stream. This token filter is implemented using Apache Lucene. </summary>
+    /// <summary> Removes stop words from a token stream. This token filter is implemented using Apache Lucene. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopFilter.html. </summary>
     public partial class StopwordsTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of <see cref="StopwordsTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public StopwordsTokenFilter(string name) : base(name)
+        public StopwordsTokenFilter(string name) : base("#Microsoft.Azure.Search.StopwordsTokenFilter", name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Stopwords = new ChangeTrackingList<string>();
-            ODataType = "#Microsoft.Azure.Search.StopwordsTokenFilter";
         }
 
         /// <summary> Initializes a new instance of <see cref="StopwordsTokenFilter"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="stopwords"> The list of stopwords. This property and the stopwords list property cannot both be set. </param>
         /// <param name="stopwordsList"> A predefined list of stopwords to use. This property and the stopwords property cannot both be set. Default is English. </param>
         /// <param name="ignoreCase"> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </param>
         /// <param name="removeTrailingStopWords"> A value indicating whether to ignore the last search term if it's a stop word. Default is true. </param>
-        internal StopwordsTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> stopwords, StopwordsList? stopwordsList, bool? ignoreCase, bool? removeTrailingStopWords) : base(oDataType, name, serializedAdditionalRawData)
+        internal StopwordsTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> stopwords, StopwordsList? stopwordsList, bool? ignoreCase, bool? removeTrailingStopWords) : base(odataType, name, additionalBinaryDataProperties)
         {
             Stopwords = stopwords;
             StopwordsList = stopwordsList;
             IgnoreCase = ignoreCase;
             RemoveTrailingStopWords = removeTrailingStopWords;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.StopwordsTokenFilter";
         }
 
-        /// <summary> Initializes a new instance of <see cref="StopwordsTokenFilter"/> for deserialization. </summary>
-        internal StopwordsTokenFilter()
-        {
-        }
         /// <summary> A predefined list of stopwords to use. This property and the stopwords property cannot both be set. Default is English. </summary>
         public StopwordsList? StopwordsList { get; set; }
+
         /// <summary> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </summary>
         public bool? IgnoreCase { get; set; }
+
         /// <summary> A value indicating whether to ignore the last search term if it's a stop word. Default is true. </summary>
         public bool? RemoveTrailingStopWords { get; set; }
     }

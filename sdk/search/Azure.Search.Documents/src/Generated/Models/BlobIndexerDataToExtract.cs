@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct BlobIndexerDataToExtract : IEquatable<BlobIndexerDataToExtract>
     {
         private readonly string _value;
+        /// <summary> Indexes just the standard blob properties and user-specified metadata. </summary>
+        private const string StorageMetadataValue = "storageMetadata";
+        /// <summary> Extracts metadata provided by the Azure blob storage subsystem and the content-type specific metadata (for example, metadata unique to just .png files are indexed). </summary>
+        private const string AllMetadataValue = "allMetadata";
+        /// <summary> Extracts all metadata and textual content from each blob. </summary>
+        private const string ContentAndMetadataValue = "contentAndMetadata";
 
         /// <summary> Initializes a new instance of <see cref="BlobIndexerDataToExtract"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobIndexerDataToExtract(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StorageMetadataValue = "storageMetadata";
-        private const string AllMetadataValue = "allMetadata";
-        private const string ContentAndMetadataValue = "contentAndMetadata";
+            _value = value;
+        }
 
         /// <summary> Indexes just the standard blob properties and user-specified metadata. </summary>
         public static BlobIndexerDataToExtract StorageMetadata { get; } = new BlobIndexerDataToExtract(StorageMetadataValue);
+
         /// <summary> Extracts metadata provided by the Azure blob storage subsystem and the content-type specific metadata (for example, metadata unique to just .png files are indexed). </summary>
         public static BlobIndexerDataToExtract AllMetadata { get; } = new BlobIndexerDataToExtract(AllMetadataValue);
+
         /// <summary> Extracts all metadata and textual content from each blob. </summary>
         public static BlobIndexerDataToExtract ContentAndMetadata { get; } = new BlobIndexerDataToExtract(ContentAndMetadataValue);
+
         /// <summary> Determines if two <see cref="BlobIndexerDataToExtract"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlobIndexerDataToExtract left, BlobIndexerDataToExtract right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BlobIndexerDataToExtract"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlobIndexerDataToExtract left, BlobIndexerDataToExtract right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobIndexerDataToExtract"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BlobIndexerDataToExtract"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BlobIndexerDataToExtract(string value) => new BlobIndexerDataToExtract(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BlobIndexerDataToExtract"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BlobIndexerDataToExtract?(string value) => value == null ? null : new BlobIndexerDataToExtract(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BlobIndexerDataToExtract other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BlobIndexerDataToExtract other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

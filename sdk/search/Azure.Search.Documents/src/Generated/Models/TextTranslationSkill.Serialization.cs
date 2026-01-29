@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class TextTranslationSkill : IUtf8JsonSerializable, IJsonModel<TextTranslationSkill>
+    /// <summary> A skill to translate text from one language to another. </summary>
+    public partial class TextTranslationSkill : SearchIndexerSkill, IJsonModel<TextTranslationSkill>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextTranslationSkill>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TextTranslationSkill"/> for deserialization. </summary>
+        internal TextTranslationSkill()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TextTranslationSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,145 +34,132 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TextTranslationSkill)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("defaultToLanguageCode"u8);
             writer.WriteStringValue(DefaultToLanguageCode.ToString());
             if (Optional.IsDefined(DefaultFromLanguageCode))
             {
-                if (DefaultFromLanguageCode != null)
-                {
-                    writer.WritePropertyName("defaultFromLanguageCode"u8);
-                    writer.WriteStringValue(DefaultFromLanguageCode.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("defaultFromLanguageCode");
-                }
+                writer.WritePropertyName("defaultFromLanguageCode"u8);
+                writer.WriteStringValue(DefaultFromLanguageCode.Value.ToString());
             }
             if (Optional.IsDefined(SuggestedFrom))
             {
-                if (SuggestedFrom != null)
-                {
-                    writer.WritePropertyName("suggestedFrom"u8);
-                    writer.WriteStringValue(SuggestedFrom.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("suggestedFrom");
-                }
+                writer.WritePropertyName("suggestedFrom"u8);
+                writer.WriteStringValue(SuggestedFrom.Value.ToString());
             }
         }
 
-        TextTranslationSkill IJsonModel<TextTranslationSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TextTranslationSkill IJsonModel<TextTranslationSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TextTranslationSkill)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TextTranslationSkill)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTextTranslationSkill(document.RootElement, options);
         }
 
-        internal static TextTranslationSkill DeserializeTextTranslationSkill(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TextTranslationSkill DeserializeTextTranslationSkill(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            TextTranslationSkillLanguage defaultToLanguageCode = default;
-            TextTranslationSkillLanguage? defaultFromLanguageCode = default;
-            TextTranslationSkillLanguage? suggestedFrom = default;
-            string odataType = default;
+            string odataType = "#Microsoft.Skills.Text.TranslationSkill";
             string name = default;
             string description = default;
             string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            TextTranslationSkillLanguage defaultToLanguageCode = default;
+            TextTranslationSkillLanguage? defaultFromLanguageCode = default;
+            TextTranslationSkillLanguage? suggestedFrom = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultToLanguageCode"u8))
+                if (prop.NameEquals("@odata.type"u8))
                 {
-                    defaultToLanguageCode = new TextTranslationSkillLanguage(property.Value.GetString());
+                    odataType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultFromLanguageCode"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        defaultFromLanguageCode = null;
-                        continue;
-                    }
-                    defaultFromLanguageCode = new TextTranslationSkillLanguage(property.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("suggestedFrom"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        suggestedFrom = null;
-                        continue;
-                    }
-                    suggestedFrom = new TextTranslationSkillLanguage(property.Value.GetString());
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"u8))
+                if (prop.NameEquals("context"u8))
                 {
-                    odataType = property.Value.GetString();
+                    context = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("context"u8))
-                {
-                    context = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputs"u8))
+                if (prop.NameEquals("inputs"u8))
                 {
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
                 }
-                if (property.NameEquals("outputs"u8))
+                if (prop.NameEquals("outputs"u8))
                 {
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
+                if (prop.NameEquals("defaultToLanguageCode"u8))
+                {
+                    defaultToLanguageCode = new TextTranslationSkillLanguage(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("defaultFromLanguageCode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    defaultFromLanguageCode = new TextTranslationSkillLanguage(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("suggestedFrom"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        suggestedFrom = null;
+                        continue;
+                    }
+                    suggestedFrom = new TextTranslationSkillLanguage(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TextTranslationSkill(
                 odataType,
                 name,
@@ -174,16 +167,19 @@ namespace Azure.Search.Documents.Indexes.Models
                 context,
                 inputs,
                 outputs,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 defaultToLanguageCode,
                 defaultFromLanguageCode,
                 suggestedFrom);
         }
 
-        BinaryData IPersistableModel<TextTranslationSkill>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TextTranslationSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -193,15 +189,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        TextTranslationSkill IPersistableModel<TextTranslationSkill>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TextTranslationSkill IPersistableModel<TextTranslationSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (TextTranslationSkill)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTextTranslationSkill(document.RootElement, options);
                     }
                 default:
@@ -209,22 +210,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TextTranslationSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new TextTranslationSkill FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTextTranslationSkill(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

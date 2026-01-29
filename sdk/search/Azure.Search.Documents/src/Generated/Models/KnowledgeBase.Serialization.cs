@@ -9,15 +9,23 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Search.Documents;
 using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KnowledgeBase : IUtf8JsonSerializable, IJsonModel<KnowledgeBase>
+    /// <summary> Represents a knowledge base definition. </summary>
+    public partial class KnowledgeBase : IJsonModel<KnowledgeBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/> for deserialization. </summary>
+        internal KnowledgeBase()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,17 +37,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KnowledgeBase)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("knowledgeSources"u8);
             writer.WriteStartArray();
-            foreach (var item in KnowledgeSources)
+            foreach (KnowledgeSourceReference item in KnowledgeSources)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -48,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("models"u8);
                 writer.WriteStartArray();
-                foreach (var item in Models)
+                foreach (KnowledgeBaseModel item in Models)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -64,22 +71,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("outputMode"u8);
                 writer.WriteStringValue(OutputMode.Value.ToString());
             }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(ETag);
-            }
             if (Optional.IsDefined(EncryptionKey))
             {
-                if (EncryptionKey != null)
-                {
-                    writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey, options);
-                }
-                else
-                {
-                    writer.WriteNull("encryptionKey");
-                }
+                writer.WritePropertyName("encryptionKey"u8);
+                writer.WriteObjectValue(EncryptionKey, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -96,15 +91,20 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("answerInstructions"u8);
                 writer.WriteStringValue(AnswerInstructions);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(_etag))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("@odata.etag"u8);
+                writer.WriteStringValue(_etag);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -113,22 +113,27 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        KnowledgeBase IJsonModel<KnowledgeBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeBase IJsonModel<KnowledgeBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KnowledgeBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KnowledgeBase)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKnowledgeBase(document.RootElement, options);
         }
 
-        internal static KnowledgeBase DeserializeKnowledgeBase(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KnowledgeBase DeserializeKnowledgeBase(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -138,116 +143,117 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<KnowledgeBaseModel> models = default;
             KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
             KnowledgeRetrievalOutputMode? outputMode = default;
-            string odataEtag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             string description = default;
             string retrievalInstructions = default;
             string answerInstructions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string etag = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("knowledgeSources"u8))
+                if (prop.NameEquals("knowledgeSources"u8))
                 {
                     List<KnowledgeSourceReference> array = new List<KnowledgeSourceReference>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(KnowledgeSourceReference.DeserializeKnowledgeSourceReference(item, options));
                     }
                     knowledgeSources = array;
                     continue;
                 }
-                if (property.NameEquals("models"u8))
+                if (prop.NameEquals("models"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<KnowledgeBaseModel> array = new List<KnowledgeBaseModel>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(KnowledgeBaseModel.DeserializeKnowledgeBaseModel(item, options));
                     }
                     models = array;
                     continue;
                 }
-                if (property.NameEquals("retrievalReasoningEffort"u8))
+                if (prop.NameEquals("retrievalReasoningEffort"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retrievalReasoningEffort = KnowledgeRetrievalReasoningEffort.DeserializeKnowledgeRetrievalReasoningEffort(property.Value, options);
+                    retrievalReasoningEffort = KnowledgeRetrievalReasoningEffort.DeserializeKnowledgeRetrievalReasoningEffort(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("outputMode"u8))
+                if (prop.NameEquals("outputMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    outputMode = new KnowledgeRetrievalOutputMode(property.Value.GetString());
+                    outputMode = new KnowledgeRetrievalOutputMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("@odata.etag"u8))
+                if (prop.NameEquals("encryptionKey"u8))
                 {
-                    odataEtag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("encryptionKey"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
                         continue;
                     }
-                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value, options);
+                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retrievalInstructions"u8))
+                if (prop.NameEquals("retrievalInstructions"u8))
                 {
-                    retrievalInstructions = property.Value.GetString();
+                    retrievalInstructions = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("answerInstructions"u8))
+                if (prop.NameEquals("answerInstructions"u8))
                 {
-                    answerInstructions = property.Value.GetString();
+                    answerInstructions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("@odata.etag"u8))
+                {
+                    etag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KnowledgeBase(
                 name,
                 knowledgeSources,
                 models ?? new ChangeTrackingList<KnowledgeBaseModel>(),
                 retrievalReasoningEffort,
                 outputMode,
-                odataEtag,
                 encryptionKey,
                 description,
                 retrievalInstructions,
                 answerInstructions,
-                serializedAdditionalRawData);
+                etag,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<KnowledgeBase>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBase>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KnowledgeBase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -257,15 +263,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        KnowledgeBase IPersistableModel<KnowledgeBase>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBase>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeBase IPersistableModel<KnowledgeBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KnowledgeBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKnowledgeBase(document.RootElement, options);
                     }
                 default:
@@ -273,22 +284,26 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static KnowledgeBase FromResponse(Response response)
+        /// <param name="knowledgeBase"> The <see cref="KnowledgeBase"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(KnowledgeBase knowledgeBase)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeBase(document.RootElement);
+            if (knowledgeBase == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(knowledgeBase, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeBase"/> from. </param>
+        public static explicit operator KnowledgeBase(Response response)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKnowledgeBase(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

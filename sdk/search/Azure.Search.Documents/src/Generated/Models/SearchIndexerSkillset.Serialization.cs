@@ -9,14 +9,22 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerSkillset : IUtf8JsonSerializable, IJsonModel<SearchIndexerSkillset>
+    /// <summary> A list of skills. </summary>
+    public partial class SearchIndexerSkillset : IJsonModel<SearchIndexerSkillset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchIndexerSkillset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerSkillset"/> for deserialization. </summary>
+        internal SearchIndexerSkillset()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchIndexerSkillset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +36,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkillset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkillset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchIndexerSkillset)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
@@ -43,9 +50,9 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("skills"u8);
             writer.WriteStartArray();
-            foreach (var item in Skills)
+            foreach (SearchIndexerSkill item in Skills)
             {
-                writer.WriteObjectValue<SearchIndexerSkill>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(CognitiveServicesAccount))
@@ -63,32 +70,25 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("indexProjections"u8);
                 writer.WriteObjectValue(IndexProjection, options);
             }
+            if (Optional.IsDefined(EncryptionKey))
+            {
+                writer.WritePropertyName("encryptionKey"u8);
+                writer.WriteObjectValue(EncryptionKey, options);
+            }
             if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                if (EncryptionKey != null)
-                {
-                    writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey, options);
-                }
-                else
-                {
-                    writer.WriteNull("encryptionKey");
-                }
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -97,22 +97,27 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        SearchIndexerSkillset IJsonModel<SearchIndexerSkillset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchIndexerSkillset IJsonModel<SearchIndexerSkillset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchIndexerSkillset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkillset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkillset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchIndexerSkillset)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchIndexerSkillset(document.RootElement, options);
         }
 
-        internal static SearchIndexerSkillset DeserializeSearchIndexerSkillset(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SearchIndexerSkillset DeserializeSearchIndexerSkillset(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -120,99 +125,100 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             IList<SearchIndexerSkill> skills = default;
-            CognitiveServicesAccount cognitiveServices = default;
+            CognitiveServicesAccount cognitiveServicesAccount = default;
             KnowledgeStore knowledgeStore = default;
-            SearchIndexerIndexProjection indexProjections = default;
-            string odataEtag = default;
+            SearchIndexerIndexProjection indexProjection = default;
             SearchResourceEncryptionKey encryptionKey = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string etag = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skills"u8))
+                if (prop.NameEquals("skills"u8))
                 {
                     List<SearchIndexerSkill> array = new List<SearchIndexerSkill>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchIndexerSkill.DeserializeSearchIndexerSkill(item, options));
                     }
                     skills = array;
                     continue;
                 }
-                if (property.NameEquals("cognitiveServices"u8))
+                if (prop.NameEquals("cognitiveServices"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cognitiveServices = CognitiveServicesAccount.DeserializeCognitiveServicesAccount(property.Value, options);
+                    cognitiveServicesAccount = CognitiveServicesAccount.DeserializeCognitiveServicesAccount(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("knowledgeStore"u8))
+                if (prop.NameEquals("knowledgeStore"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    knowledgeStore = KnowledgeStore.DeserializeKnowledgeStore(property.Value, options);
+                    knowledgeStore = KnowledgeStore.DeserializeKnowledgeStore(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("indexProjections"u8))
+                if (prop.NameEquals("indexProjections"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    indexProjections = SearchIndexerIndexProjection.DeserializeSearchIndexerIndexProjection(property.Value, options);
+                    indexProjection = SearchIndexerIndexProjection.DeserializeSearchIndexerIndexProjection(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("@odata.etag"u8))
+                if (prop.NameEquals("encryptionKey"u8))
                 {
-                    odataEtag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("encryptionKey"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
                         continue;
                     }
-                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value, options);
+                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("@odata.etag"u8))
+                {
+                    etag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SearchIndexerSkillset(
                 name,
                 description,
                 skills,
-                cognitiveServices,
+                cognitiveServicesAccount,
                 knowledgeStore,
-                indexProjections,
-                odataEtag,
+                indexProjection,
                 encryptionKey,
-                serializedAdditionalRawData);
+                etag,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SearchIndexerSkillset>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkillset>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SearchIndexerSkillset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkillset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -222,15 +228,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        SearchIndexerSkillset IPersistableModel<SearchIndexerSkillset>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkillset>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchIndexerSkillset IPersistableModel<SearchIndexerSkillset>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchIndexerSkillset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkillset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchIndexerSkillset(document.RootElement, options);
                     }
                 default:
@@ -238,22 +249,26 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SearchIndexerSkillset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SearchIndexerSkillset FromResponse(Response response)
+        /// <param name="searchIndexerSkillset"> The <see cref="SearchIndexerSkillset"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(SearchIndexerSkillset searchIndexerSkillset)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchIndexerSkillset(document.RootElement);
+            if (searchIndexerSkillset == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(searchIndexerSkillset, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchIndexerSkillset"/> from. </param>
+        public static explicit operator SearchIndexerSkillset(Response response)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSearchIndexerSkillset(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

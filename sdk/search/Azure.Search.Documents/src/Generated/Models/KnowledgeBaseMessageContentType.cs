@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public readonly partial struct KnowledgeBaseMessageContentType : IEquatable<KnowledgeBaseMessageContentType>
     {
         private readonly string _value;
+        /// <summary> Text message content kind. </summary>
+        private const string TextValue = "text";
+        /// <summary> Image message content kind. </summary>
+        private const string ImageValue = "image";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KnowledgeBaseMessageContentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TextValue = "text";
-        private const string ImageValue = "image";
+            _value = value;
+        }
 
         /// <summary> Text message content kind. </summary>
         public static KnowledgeBaseMessageContentType Text { get; } = new KnowledgeBaseMessageContentType(TextValue);
+
         /// <summary> Image message content kind. </summary>
         public static KnowledgeBaseMessageContentType Image { get; } = new KnowledgeBaseMessageContentType(ImageValue);
+
         /// <summary> Determines if two <see cref="KnowledgeBaseMessageContentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KnowledgeBaseMessageContentType left, KnowledgeBaseMessageContentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KnowledgeBaseMessageContentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KnowledgeBaseMessageContentType left, KnowledgeBaseMessageContentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KnowledgeBaseMessageContentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KnowledgeBaseMessageContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KnowledgeBaseMessageContentType(string value) => new KnowledgeBaseMessageContentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KnowledgeBaseMessageContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KnowledgeBaseMessageContentType?(string value) => value == null ? null : new KnowledgeBaseMessageContentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KnowledgeBaseMessageContentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KnowledgeBaseMessageContentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

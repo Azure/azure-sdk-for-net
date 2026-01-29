@@ -5,20 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents classes of characters on which a token filter can operate. </summary>
-    public enum TokenCharacterKind
+    public readonly partial struct TokenCharacterKind : IEquatable<TokenCharacterKind>
     {
+        private readonly string _value;
         /// <summary> Keeps letters in tokens. </summary>
-        Letter,
+        private const string LetterValue = "letter";
         /// <summary> Keeps digits in tokens. </summary>
-        Digit,
+        private const string DigitValue = "digit";
         /// <summary> Keeps whitespace in tokens. </summary>
-        Whitespace,
+        private const string WhitespaceValue = "whitespace";
         /// <summary> Keeps punctuation in tokens. </summary>
-        Punctuation,
+        private const string PunctuationValue = "punctuation";
         /// <summary> Keeps symbols in tokens. </summary>
-        Symbol
+        private const string SymbolValue = "symbol";
+
+        /// <summary> Initializes a new instance of <see cref="TokenCharacterKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TokenCharacterKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Keeps letters in tokens. </summary>
+        public static TokenCharacterKind Letter { get; } = new TokenCharacterKind(LetterValue);
+
+        /// <summary> Keeps digits in tokens. </summary>
+        public static TokenCharacterKind Digit { get; } = new TokenCharacterKind(DigitValue);
+
+        /// <summary> Keeps whitespace in tokens. </summary>
+        public static TokenCharacterKind Whitespace { get; } = new TokenCharacterKind(WhitespaceValue);
+
+        /// <summary> Keeps punctuation in tokens. </summary>
+        public static TokenCharacterKind Punctuation { get; } = new TokenCharacterKind(PunctuationValue);
+
+        /// <summary> Keeps symbols in tokens. </summary>
+        public static TokenCharacterKind Symbol { get; } = new TokenCharacterKind(SymbolValue);
+
+        /// <summary> Determines if two <see cref="TokenCharacterKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(TokenCharacterKind left, TokenCharacterKind right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="TokenCharacterKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(TokenCharacterKind left, TokenCharacterKind right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="TokenCharacterKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TokenCharacterKind(string value) => new TokenCharacterKind(value);
+
+        /// <summary> Converts a string to a <see cref="TokenCharacterKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TokenCharacterKind?(string value) => value == null ? null : new TokenCharacterKind(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is TokenCharacterKind other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(TokenCharacterKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

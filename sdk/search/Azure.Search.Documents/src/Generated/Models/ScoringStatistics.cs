@@ -5,14 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is 'local'. Use 'global' to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </summary>
-    public enum ScoringStatistics
+    public readonly partial struct ScoringStatistics : IEquatable<ScoringStatistics>
     {
+        private readonly string _value;
         /// <summary> The scoring statistics will be calculated locally for lower latency. </summary>
-        Local,
+        private const string LocalValue = "local";
         /// <summary> The scoring statistics will be calculated globally for more consistent scoring. </summary>
-        Global
+        private const string GlobalValue = "global";
+
+        /// <summary> Initializes a new instance of <see cref="ScoringStatistics"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ScoringStatistics(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> The scoring statistics will be calculated locally for lower latency. </summary>
+        public static ScoringStatistics Local { get; } = new ScoringStatistics(LocalValue);
+
+        /// <summary> The scoring statistics will be calculated globally for more consistent scoring. </summary>
+        public static ScoringStatistics Global { get; } = new ScoringStatistics(GlobalValue);
+
+        /// <summary> Determines if two <see cref="ScoringStatistics"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ScoringStatistics left, ScoringStatistics right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ScoringStatistics"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ScoringStatistics left, ScoringStatistics right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ScoringStatistics"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScoringStatistics(string value) => new ScoringStatistics(value);
+
+        /// <summary> Converts a string to a <see cref="ScoringStatistics"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScoringStatistics?(string value) => value == null ? null : new ScoringStatistics(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ScoringStatistics other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ScoringStatistics other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

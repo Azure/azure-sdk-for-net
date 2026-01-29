@@ -11,19 +11,12 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Unknown version of KnowledgeBaseModel. </summary>
     internal partial class UnknownKnowledgeBaseModel : KnowledgeBaseModel
     {
         /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeBaseModel"/>. </summary>
-        /// <param name="kind"> The type of AI model. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeBaseModel(KnowledgeBaseModelKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeBaseModel"/> for deserialization. </summary>
-        internal UnknownKnowledgeBaseModel()
+        /// <param name="kind"> The AI model to be used for query planning. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownKnowledgeBaseModel(KnowledgeBaseModelKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

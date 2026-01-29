@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct MarkdownHeaderDepth : IEquatable<MarkdownHeaderDepth>
     {
         private readonly string _value;
+        /// <summary> Indicates that headers up to a level of h1 will be considered while grouping markdown content. </summary>
+        private const string H1Value = "h1";
+        /// <summary> Indicates that headers up to a level of h2 will be considered while grouping markdown content. </summary>
+        private const string H2Value = "h2";
+        /// <summary> Indicates that headers up to a level of h3 will be considered while grouping markdown content. </summary>
+        private const string H3Value = "h3";
+        /// <summary> Indicates that headers up to a level of h4 will be considered while grouping markdown content. </summary>
+        private const string H4Value = "h4";
+        /// <summary> Indicates that headers up to a level of h5 will be considered while grouping markdown content. </summary>
+        private const string H5Value = "h5";
+        /// <summary> Indicates that headers up to a level of h6 will be considered while grouping markdown content. This is the default. </summary>
+        private const string H6Value = "h6";
 
         /// <summary> Initializes a new instance of <see cref="MarkdownHeaderDepth"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MarkdownHeaderDepth(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string H1Value = "h1";
-        private const string H2Value = "h2";
-        private const string H3Value = "h3";
-        private const string H4Value = "h4";
-        private const string H5Value = "h5";
-        private const string H6Value = "h6";
+            _value = value;
+        }
 
         /// <summary> Indicates that headers up to a level of h1 will be considered while grouping markdown content. </summary>
         public static MarkdownHeaderDepth H1 { get; } = new MarkdownHeaderDepth(H1Value);
+
         /// <summary> Indicates that headers up to a level of h2 will be considered while grouping markdown content. </summary>
         public static MarkdownHeaderDepth H2 { get; } = new MarkdownHeaderDepth(H2Value);
+
         /// <summary> Indicates that headers up to a level of h3 will be considered while grouping markdown content. </summary>
         public static MarkdownHeaderDepth H3 { get; } = new MarkdownHeaderDepth(H3Value);
+
         /// <summary> Indicates that headers up to a level of h4 will be considered while grouping markdown content. </summary>
         public static MarkdownHeaderDepth H4 { get; } = new MarkdownHeaderDepth(H4Value);
+
         /// <summary> Indicates that headers up to a level of h5 will be considered while grouping markdown content. </summary>
         public static MarkdownHeaderDepth H5 { get; } = new MarkdownHeaderDepth(H5Value);
+
         /// <summary> Indicates that headers up to a level of h6 will be considered while grouping markdown content. This is the default. </summary>
         public static MarkdownHeaderDepth H6 { get; } = new MarkdownHeaderDepth(H6Value);
+
         /// <summary> Determines if two <see cref="MarkdownHeaderDepth"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MarkdownHeaderDepth left, MarkdownHeaderDepth right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MarkdownHeaderDepth"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MarkdownHeaderDepth left, MarkdownHeaderDepth right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MarkdownHeaderDepth"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MarkdownHeaderDepth"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MarkdownHeaderDepth(string value) => new MarkdownHeaderDepth(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MarkdownHeaderDepth"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MarkdownHeaderDepth?(string value) => value == null ? null : new MarkdownHeaderDepth(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MarkdownHeaderDepth other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MarkdownHeaderDepth other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

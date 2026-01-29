@@ -1,6 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// NOTE: This file has been commented out to use the generated SearchIndexClient instead.
+// The customizations from this manual client have been moved to SearchIndexClient.Customizations.cs
+// See SearchIndexClient.Customizations.cs for the partial class that extends the generated client.
+
+#if false // Commented out manual client - using generated client with customizations instead
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -1411,3 +1417,5 @@ namespace Azure.Search.Documents.Indexes
         #endregion
     }
 }
+
+#endif // End of commented out manual client

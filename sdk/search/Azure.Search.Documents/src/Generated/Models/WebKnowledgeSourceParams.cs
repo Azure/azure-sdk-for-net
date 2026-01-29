@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
@@ -17,11 +18,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="WebKnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeSourceName"/> is null. </exception>
-        public WebKnowledgeSourceParams(string knowledgeSourceName) : base(knowledgeSourceName)
+        public WebKnowledgeSourceParams(string knowledgeSourceName) : base(knowledgeSourceName, KnowledgeSourceKind.Web)
         {
             Argument.AssertNotNull(knowledgeSourceName, nameof(knowledgeSourceName));
 
-            Kind = KnowledgeSourceKind.Web;
         }
 
         /// <summary> Initializes a new instance of <see cref="WebKnowledgeSourceParams"/>. </summary>
@@ -31,31 +31,28 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="language"> The language of the web results. </param>
         /// <param name="market"> The market of the web results. </param>
         /// <param name="count"> The number of web results to return. </param>
         /// <param name="freshness"> The freshness of web results. </param>
-        internal WebKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string language, string market, int? count, string freshness) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, rerankerThreshold, kind, serializedAdditionalRawData)
+        internal WebKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string language, string market, int? count, string freshness) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, rerankerThreshold, kind, additionalBinaryDataProperties)
         {
             Language = language;
             Market = market;
             Count = count;
             Freshness = freshness;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WebKnowledgeSourceParams"/> for deserialization. </summary>
-        internal WebKnowledgeSourceParams()
-        {
         }
 
         /// <summary> The language of the web results. </summary>
         public string Language { get; set; }
+
         /// <summary> The market of the web results. </summary>
         public string Market { get; set; }
+
         /// <summary> The number of web results to return. </summary>
         public int? Count { get; set; }
+
         /// <summary> The freshness of web results. </summary>
         public string Freshness { get; set; }
     }

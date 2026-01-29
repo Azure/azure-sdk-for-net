@@ -5,72 +5,212 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Identifies a predefined list of language-specific stopwords. </summary>
-    public enum StopwordsList
+    public readonly partial struct StopwordsList : IEquatable<StopwordsList>
     {
+        private readonly string _value;
         /// <summary> Selects the stopword list for Arabic. </summary>
-        Arabic,
+        private const string ArabicValue = "arabic";
         /// <summary> Selects the stopword list for Armenian. </summary>
-        Armenian,
+        private const string ArmenianValue = "armenian";
         /// <summary> Selects the stopword list for Basque. </summary>
-        Basque,
+        private const string BasqueValue = "basque";
         /// <summary> Selects the stopword list for Portuguese (Brazil). </summary>
-        Brazilian,
+        private const string BrazilianValue = "brazilian";
         /// <summary> Selects the stopword list for Bulgarian. </summary>
-        Bulgarian,
+        private const string BulgarianValue = "bulgarian";
         /// <summary> Selects the stopword list for Catalan. </summary>
-        Catalan,
+        private const string CatalanValue = "catalan";
         /// <summary> Selects the stopword list for Czech. </summary>
-        Czech,
+        private const string CzechValue = "czech";
         /// <summary> Selects the stopword list for Danish. </summary>
-        Danish,
+        private const string DanishValue = "danish";
         /// <summary> Selects the stopword list for Dutch. </summary>
-        Dutch,
+        private const string DutchValue = "dutch";
         /// <summary> Selects the stopword list for English. </summary>
-        English,
+        private const string EnglishValue = "english";
         /// <summary> Selects the stopword list for Finnish. </summary>
-        Finnish,
+        private const string FinnishValue = "finnish";
         /// <summary> Selects the stopword list for French. </summary>
-        French,
+        private const string FrenchValue = "french";
         /// <summary> Selects the stopword list for Galician. </summary>
-        Galician,
+        private const string GalicianValue = "galician";
         /// <summary> Selects the stopword list for German. </summary>
-        German,
+        private const string GermanValue = "german";
         /// <summary> Selects the stopword list for Greek. </summary>
-        Greek,
+        private const string GreekValue = "greek";
         /// <summary> Selects the stopword list for Hindi. </summary>
-        Hindi,
+        private const string HindiValue = "hindi";
         /// <summary> Selects the stopword list for Hungarian. </summary>
-        Hungarian,
+        private const string HungarianValue = "hungarian";
         /// <summary> Selects the stopword list for Indonesian. </summary>
-        Indonesian,
+        private const string IndonesianValue = "indonesian";
         /// <summary> Selects the stopword list for Irish. </summary>
-        Irish,
+        private const string IrishValue = "irish";
         /// <summary> Selects the stopword list for Italian. </summary>
-        Italian,
+        private const string ItalianValue = "italian";
         /// <summary> Selects the stopword list for Latvian. </summary>
-        Latvian,
+        private const string LatvianValue = "latvian";
         /// <summary> Selects the stopword list for Norwegian. </summary>
-        Norwegian,
+        private const string NorwegianValue = "norwegian";
         /// <summary> Selects the stopword list for Persian. </summary>
-        Persian,
+        private const string PersianValue = "persian";
         /// <summary> Selects the stopword list for Portuguese. </summary>
-        Portuguese,
+        private const string PortugueseValue = "portuguese";
         /// <summary> Selects the stopword list for Romanian. </summary>
-        Romanian,
+        private const string RomanianValue = "romanian";
         /// <summary> Selects the stopword list for Russian. </summary>
-        Russian,
+        private const string RussianValue = "russian";
         /// <summary> Selects the stopword list for Sorani. </summary>
-        Sorani,
+        private const string SoraniValue = "sorani";
         /// <summary> Selects the stopword list for Spanish. </summary>
-        Spanish,
+        private const string SpanishValue = "spanish";
         /// <summary> Selects the stopword list for Swedish. </summary>
-        Swedish,
+        private const string SwedishValue = "swedish";
         /// <summary> Selects the stopword list for Thai. </summary>
-        Thai,
+        private const string ThaiValue = "thai";
         /// <summary> Selects the stopword list for Turkish. </summary>
-        Turkish
+        private const string TurkishValue = "turkish";
+
+        /// <summary> Initializes a new instance of <see cref="StopwordsList"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StopwordsList(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Selects the stopword list for Arabic. </summary>
+        public static StopwordsList Arabic { get; } = new StopwordsList(ArabicValue);
+
+        /// <summary> Selects the stopword list for Armenian. </summary>
+        public static StopwordsList Armenian { get; } = new StopwordsList(ArmenianValue);
+
+        /// <summary> Selects the stopword list for Basque. </summary>
+        public static StopwordsList Basque { get; } = new StopwordsList(BasqueValue);
+
+        /// <summary> Selects the stopword list for Portuguese (Brazil). </summary>
+        public static StopwordsList Brazilian { get; } = new StopwordsList(BrazilianValue);
+
+        /// <summary> Selects the stopword list for Bulgarian. </summary>
+        public static StopwordsList Bulgarian { get; } = new StopwordsList(BulgarianValue);
+
+        /// <summary> Selects the stopword list for Catalan. </summary>
+        public static StopwordsList Catalan { get; } = new StopwordsList(CatalanValue);
+
+        /// <summary> Selects the stopword list for Czech. </summary>
+        public static StopwordsList Czech { get; } = new StopwordsList(CzechValue);
+
+        /// <summary> Selects the stopword list for Danish. </summary>
+        public static StopwordsList Danish { get; } = new StopwordsList(DanishValue);
+
+        /// <summary> Selects the stopword list for Dutch. </summary>
+        public static StopwordsList Dutch { get; } = new StopwordsList(DutchValue);
+
+        /// <summary> Selects the stopword list for English. </summary>
+        public static StopwordsList English { get; } = new StopwordsList(EnglishValue);
+
+        /// <summary> Selects the stopword list for Finnish. </summary>
+        public static StopwordsList Finnish { get; } = new StopwordsList(FinnishValue);
+
+        /// <summary> Selects the stopword list for French. </summary>
+        public static StopwordsList French { get; } = new StopwordsList(FrenchValue);
+
+        /// <summary> Selects the stopword list for Galician. </summary>
+        public static StopwordsList Galician { get; } = new StopwordsList(GalicianValue);
+
+        /// <summary> Selects the stopword list for German. </summary>
+        public static StopwordsList German { get; } = new StopwordsList(GermanValue);
+
+        /// <summary> Selects the stopword list for Greek. </summary>
+        public static StopwordsList Greek { get; } = new StopwordsList(GreekValue);
+
+        /// <summary> Selects the stopword list for Hindi. </summary>
+        public static StopwordsList Hindi { get; } = new StopwordsList(HindiValue);
+
+        /// <summary> Selects the stopword list for Hungarian. </summary>
+        public static StopwordsList Hungarian { get; } = new StopwordsList(HungarianValue);
+
+        /// <summary> Selects the stopword list for Indonesian. </summary>
+        public static StopwordsList Indonesian { get; } = new StopwordsList(IndonesianValue);
+
+        /// <summary> Selects the stopword list for Irish. </summary>
+        public static StopwordsList Irish { get; } = new StopwordsList(IrishValue);
+
+        /// <summary> Selects the stopword list for Italian. </summary>
+        public static StopwordsList Italian { get; } = new StopwordsList(ItalianValue);
+
+        /// <summary> Selects the stopword list for Latvian. </summary>
+        public static StopwordsList Latvian { get; } = new StopwordsList(LatvianValue);
+
+        /// <summary> Selects the stopword list for Norwegian. </summary>
+        public static StopwordsList Norwegian { get; } = new StopwordsList(NorwegianValue);
+
+        /// <summary> Selects the stopword list for Persian. </summary>
+        public static StopwordsList Persian { get; } = new StopwordsList(PersianValue);
+
+        /// <summary> Selects the stopword list for Portuguese. </summary>
+        public static StopwordsList Portuguese { get; } = new StopwordsList(PortugueseValue);
+
+        /// <summary> Selects the stopword list for Romanian. </summary>
+        public static StopwordsList Romanian { get; } = new StopwordsList(RomanianValue);
+
+        /// <summary> Selects the stopword list for Russian. </summary>
+        public static StopwordsList Russian { get; } = new StopwordsList(RussianValue);
+
+        /// <summary> Selects the stopword list for Sorani. </summary>
+        public static StopwordsList Sorani { get; } = new StopwordsList(SoraniValue);
+
+        /// <summary> Selects the stopword list for Spanish. </summary>
+        public static StopwordsList Spanish { get; } = new StopwordsList(SpanishValue);
+
+        /// <summary> Selects the stopword list for Swedish. </summary>
+        public static StopwordsList Swedish { get; } = new StopwordsList(SwedishValue);
+
+        /// <summary> Selects the stopword list for Thai. </summary>
+        public static StopwordsList Thai { get; } = new StopwordsList(ThaiValue);
+
+        /// <summary> Selects the stopword list for Turkish. </summary>
+        public static StopwordsList Turkish { get; } = new StopwordsList(TurkishValue);
+
+        /// <summary> Determines if two <see cref="StopwordsList"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(StopwordsList left, StopwordsList right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="StopwordsList"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(StopwordsList left, StopwordsList right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="StopwordsList"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StopwordsList(string value) => new StopwordsList(value);
+
+        /// <summary> Converts a string to a <see cref="StopwordsList"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StopwordsList?(string value) => value == null ? null : new StopwordsList(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is StopwordsList other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(StopwordsList other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

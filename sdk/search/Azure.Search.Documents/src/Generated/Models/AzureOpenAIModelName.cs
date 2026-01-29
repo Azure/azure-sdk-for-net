@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,65 +15,102 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct AzureOpenAIModelName : IEquatable<AzureOpenAIModelName>
     {
         private readonly string _value;
+        /// <summary> TextEmbeddingAda002 model. </summary>
+        private const string TextEmbeddingAda002Value = "text-embedding-ada-002";
+        /// <summary> TextEmbedding3Large model. </summary>
+        private const string TextEmbedding3LargeValue = "text-embedding-3-large";
+        /// <summary> TextEmbedding3Small model. </summary>
+        private const string TextEmbedding3SmallValue = "text-embedding-3-small";
+        /// <summary> Gpt4o model. </summary>
+        private const string Gpt4oValue = "gpt-4o";
+        /// <summary> Gpt4oMini model. </summary>
+        private const string Gpt4oMiniValue = "gpt-4o-mini";
+        /// <summary> Gpt41 model. </summary>
+        private const string Gpt41Value = "gpt-4.1";
+        /// <summary> Gpt41Mini model. </summary>
+        private const string Gpt41MiniValue = "gpt-4.1-mini";
+        /// <summary> Gpt41Nano model. </summary>
+        private const string Gpt41NanoValue = "gpt-4.1-nano";
+        /// <summary> Gpt5 model. </summary>
+        private const string Gpt5Value = "gpt-5";
+        /// <summary> Gpt5Mini model. </summary>
+        private const string Gpt5MiniValue = "gpt-5-mini";
+        /// <summary> Gpt5Nano model. </summary>
+        private const string Gpt5NanoValue = "gpt-5-nano";
 
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIModelName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureOpenAIModelName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TextEmbeddingAda002Value = "text-embedding-ada-002";
-        private const string TextEmbedding3LargeValue = "text-embedding-3-large";
-        private const string TextEmbedding3SmallValue = "text-embedding-3-small";
-        private const string Gpt4OValue = "gpt-4o";
-        private const string Gpt4OMiniValue = "gpt-4o-mini";
-        private const string Gpt41Value = "gpt-4.1";
-        private const string Gpt41MiniValue = "gpt-4.1-mini";
-        private const string Gpt41NanoValue = "gpt-4.1-nano";
-        private const string Gpt5Value = "gpt-5";
-        private const string Gpt5MiniValue = "gpt-5-mini";
-        private const string Gpt5NanoValue = "gpt-5-nano";
-
-        /// <summary> text-embedding-ada-002. </summary>
+        /// <summary> TextEmbeddingAda002 model. </summary>
         public static AzureOpenAIModelName TextEmbeddingAda002 { get; } = new AzureOpenAIModelName(TextEmbeddingAda002Value);
-        /// <summary> text-embedding-3-large. </summary>
+
+        /// <summary> TextEmbedding3Large model. </summary>
         public static AzureOpenAIModelName TextEmbedding3Large { get; } = new AzureOpenAIModelName(TextEmbedding3LargeValue);
-        /// <summary> text-embedding-3-small. </summary>
+
+        /// <summary> TextEmbedding3Small model. </summary>
         public static AzureOpenAIModelName TextEmbedding3Small { get; } = new AzureOpenAIModelName(TextEmbedding3SmallValue);
-        /// <summary> gpt-4o. </summary>
-        public static AzureOpenAIModelName Gpt4O { get; } = new AzureOpenAIModelName(Gpt4OValue);
-        /// <summary> gpt-4o-mini. </summary>
-        public static AzureOpenAIModelName Gpt4OMini { get; } = new AzureOpenAIModelName(Gpt4OMiniValue);
-        /// <summary> gpt-4.1. </summary>
+
+        /// <summary> Gpt4o model. </summary>
+        public static AzureOpenAIModelName Gpt4o { get; } = new AzureOpenAIModelName(Gpt4oValue);
+
+        /// <summary> Gpt4oMini model. </summary>
+        public static AzureOpenAIModelName Gpt4oMini { get; } = new AzureOpenAIModelName(Gpt4oMiniValue);
+
+        /// <summary> Gpt41 model. </summary>
         public static AzureOpenAIModelName Gpt41 { get; } = new AzureOpenAIModelName(Gpt41Value);
-        /// <summary> gpt-4.1-mini. </summary>
+
+        /// <summary> Gpt41Mini model. </summary>
         public static AzureOpenAIModelName Gpt41Mini { get; } = new AzureOpenAIModelName(Gpt41MiniValue);
-        /// <summary> gpt-4.1-nano. </summary>
+
+        /// <summary> Gpt41Nano model. </summary>
         public static AzureOpenAIModelName Gpt41Nano { get; } = new AzureOpenAIModelName(Gpt41NanoValue);
-        /// <summary> gpt-5. </summary>
+
+        /// <summary> Gpt5 model. </summary>
         public static AzureOpenAIModelName Gpt5 { get; } = new AzureOpenAIModelName(Gpt5Value);
-        /// <summary> gpt-5-mini. </summary>
+
+        /// <summary> Gpt5Mini model. </summary>
         public static AzureOpenAIModelName Gpt5Mini { get; } = new AzureOpenAIModelName(Gpt5MiniValue);
-        /// <summary> gpt-5-nano. </summary>
+
+        /// <summary> Gpt5Nano model. </summary>
         public static AzureOpenAIModelName Gpt5Nano { get; } = new AzureOpenAIModelName(Gpt5NanoValue);
+
         /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureOpenAIModelName left, AzureOpenAIModelName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureOpenAIModelName left, AzureOpenAIModelName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureOpenAIModelName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureOpenAIModelName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureOpenAIModelName(string value) => new AzureOpenAIModelName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureOpenAIModelName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureOpenAIModelName?(string value) => value == null ? null : new AzureOpenAIModelName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureOpenAIModelName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureOpenAIModelName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

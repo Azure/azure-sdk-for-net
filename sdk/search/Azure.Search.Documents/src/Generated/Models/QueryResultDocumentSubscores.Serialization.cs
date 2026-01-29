@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class QueryResultDocumentSubscores : IUtf8JsonSerializable, IJsonModel<QueryResultDocumentSubscores>
+    /// <summary> The breakdown of subscores between the text and vector query components of the search query for this document. Each vector query is shown as a separate object in the same order they were received. </summary>
+    public partial class QueryResultDocumentSubscores : IJsonModel<QueryResultDocumentSubscores>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryResultDocumentSubscores>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QueryResultDocumentSubscores>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSubscores>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSubscores>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QueryResultDocumentSubscores)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("vectors"u8);
                 writer.WriteStartArray();
-                foreach (var item in Vectors)
+                foreach (IDictionary<string, SingleVectorFieldResult> item in Vectors)
                 {
                     if (item == null)
                     {
@@ -65,15 +65,15 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("documentBoost"u8);
                 writer.WriteNumberValue(DocumentBoost.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,22 +82,27 @@ namespace Azure.Search.Documents.Models
             }
         }
 
-        QueryResultDocumentSubscores IJsonModel<QueryResultDocumentSubscores>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QueryResultDocumentSubscores IJsonModel<QueryResultDocumentSubscores>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QueryResultDocumentSubscores JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSubscores>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSubscores>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QueryResultDocumentSubscores)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeQueryResultDocumentSubscores(document.RootElement, options);
         }
 
-        internal static QueryResultDocumentSubscores DeserializeQueryResultDocumentSubscores(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static QueryResultDocumentSubscores DeserializeQueryResultDocumentSubscores(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,27 +110,26 @@ namespace Azure.Search.Documents.Models
             TextResult text = default;
             IReadOnlyList<IDictionary<string, SingleVectorFieldResult>> vectors = default;
             double? documentBoost = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("text"u8))
+                if (prop.NameEquals("text"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    text = TextResult.DeserializeTextResult(property.Value, options);
+                    text = TextResult.DeserializeTextResult(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("vectors"u8))
+                if (prop.NameEquals("vectors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IDictionary<string, SingleVectorFieldResult>> array = new List<IDictionary<string, SingleVectorFieldResult>>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -134,9 +138,9 @@ namespace Azure.Search.Documents.Models
                         else
                         {
                             Dictionary<string, SingleVectorFieldResult> dictionary = new Dictionary<string, SingleVectorFieldResult>();
-                            foreach (var property0 in item.EnumerateObject())
+                            foreach (var prop0 in item.EnumerateObject())
                             {
-                                dictionary.Add(property0.Name, SingleVectorFieldResult.DeserializeSingleVectorFieldResult(property0.Value, options));
+                                dictionary.Add(prop0.Name, SingleVectorFieldResult.DeserializeSingleVectorFieldResult(prop0.Value, options));
                             }
                             array.Add(dictionary);
                         }
@@ -144,28 +148,30 @@ namespace Azure.Search.Documents.Models
                     vectors = array;
                     continue;
                 }
-                if (property.NameEquals("documentBoost"u8))
+                if (prop.NameEquals("documentBoost"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    documentBoost = property.Value.GetDouble();
+                    documentBoost = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new QueryResultDocumentSubscores(text, vectors ?? new ChangeTrackingList<IDictionary<string, SingleVectorFieldResult>>(), documentBoost, serializedAdditionalRawData);
+            return new QueryResultDocumentSubscores(text, vectors ?? new ChangeTrackingList<IDictionary<string, SingleVectorFieldResult>>(), documentBoost, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<QueryResultDocumentSubscores>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSubscores>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<QueryResultDocumentSubscores>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSubscores>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -175,15 +181,20 @@ namespace Azure.Search.Documents.Models
             }
         }
 
-        QueryResultDocumentSubscores IPersistableModel<QueryResultDocumentSubscores>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSubscores>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QueryResultDocumentSubscores IPersistableModel<QueryResultDocumentSubscores>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QueryResultDocumentSubscores PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSubscores>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeQueryResultDocumentSubscores(document.RootElement, options);
                     }
                 default:
@@ -191,22 +202,7 @@ namespace Azure.Search.Documents.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QueryResultDocumentSubscores>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static QueryResultDocumentSubscores FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeQueryResultDocumentSubscores(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

@@ -11,20 +11,13 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Unknown version of VectorSearchVectorizer. </summary>
     internal partial class UnknownVectorSearchVectorizer : VectorSearchVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVectorSearchVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
-        /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(vectorizerName, kind, serializedAdditionalRawData)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownVectorSearchVectorizer"/> for deserialization. </summary>
-        internal UnknownVectorSearchVectorizer()
+        /// <param name="kind"> Type of VectorSearchVectorizer. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownVectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(vectorizerName, kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

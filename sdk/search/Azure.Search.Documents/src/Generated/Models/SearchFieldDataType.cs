@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,46 +15,76 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct SearchFieldDataType : IEquatable<SearchFieldDataType>
     {
         private readonly string _value;
+        /// <summary> Indicates that a field contains a string. </summary>
+        private const string StringValue = "Edm.String";
+        /// <summary> Indicates that a field contains a 32-bit signed integer. </summary>
+        private const string Int32Value = "Edm.Int32";
+        /// <summary> Indicates that a field contains a 64-bit signed integer. </summary>
+        private const string Int64Value = "Edm.Int64";
+        /// <summary> Indicates that a field contains an IEEE double-precision floating point number. </summary>
+        private const string DoubleValue = "Edm.Double";
+        /// <summary> Indicates that a field contains a Boolean value (true or false). </summary>
+        private const string BooleanValue = "Edm.Boolean";
+        /// <summary> Indicates that a field contains a date/time value, including timezone information. </summary>
+        private const string DateTimeOffsetValue = "Edm.DateTimeOffset";
+        /// <summary> Indicates that a field contains a geo-location in terms of longitude and latitude. </summary>
+        private const string GeographyPointValue = "Edm.GeographyPoint";
+        /// <summary> Indicates that a field contains one or more complex objects that in turn have sub-fields of other types. </summary>
+        private const string ComplexValue = "Edm.ComplexType";
+        /// <summary> Indicates that a field contains a single-precision floating point number. This is only valid when used with Collection(Edm.Single). </summary>
+        private const string SingleValue = "Edm.Single";
+        /// <summary> Indicates that a field contains a half-precision floating point number. This is only valid when used with Collection(Edm.Half). </summary>
+        private const string HalfValue = "Edm.Half";
+        /// <summary> Indicates that a field contains a 16-bit signed integer. This is only valid when used with Collection(Edm.Int16). </summary>
+        private const string Int16Value = "Edm.Int16";
+        /// <summary> Indicates that a field contains a 8-bit signed integer. This is only valid when used with Collection(Edm.SByte). </summary>
+        private const string SByteValue = "Edm.SByte";
+        /// <summary> Indicates that a field contains a 8-bit unsigned integer. This is only valid when used with Collection(Edm.Byte). </summary>
+        private const string ByteValue = "Edm.Byte";
 
         /// <summary> Initializes a new instance of <see cref="SearchFieldDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchFieldDataType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string StringValue = "Edm.String";
-        private const string Int32Value = "Edm.Int32";
-        private const string Int64Value = "Edm.Int64";
-        private const string DoubleValue = "Edm.Double";
-        private const string BooleanValue = "Edm.Boolean";
-        private const string DateTimeOffsetValue = "Edm.DateTimeOffset";
-        private const string GeographyPointValue = "Edm.GeographyPoint";
-        private const string ComplexValue = "Edm.ComplexType";
-        private const string SingleValue = "Edm.Single";
-        private const string HalfValue = "Edm.Half";
-        private const string Int16Value = "Edm.Int16";
-        private const string SByteValue = "Edm.SByte";
-        private const string ByteValue = "Edm.Byte";
         /// <summary> Indicates that a field contains a half-precision floating point number. This is only valid when used with Collection(Edm.Half). </summary>
         public static SearchFieldDataType Half { get; } = new SearchFieldDataType(HalfValue);
+
         /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchFieldDataType left, SearchFieldDataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchFieldDataType left, SearchFieldDataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchFieldDataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchFieldDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchFieldDataType(string value) => new SearchFieldDataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchFieldDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchFieldDataType?(string value) => value == null ? null : new SearchFieldDataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchFieldDataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchFieldDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

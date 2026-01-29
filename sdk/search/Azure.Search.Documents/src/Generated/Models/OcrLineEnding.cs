@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct OcrLineEnding : IEquatable<OcrLineEnding>
     {
         private readonly string _value;
+        /// <summary> Lines are separated by a single space character. </summary>
+        private const string SpaceValue = "space";
+        /// <summary> Lines are separated by a carriage return ('\r') character. </summary>
+        private const string CarriageReturnValue = "carriageReturn";
+        /// <summary> Lines are separated by a single line feed ('\n') character. </summary>
+        private const string LineFeedValue = "lineFeed";
+        /// <summary> Lines are separated by a carriage return and a line feed ('\r\n') character. </summary>
+        private const string CarriageReturnLineFeedValue = "carriageReturnLineFeed";
 
         /// <summary> Initializes a new instance of <see cref="OcrLineEnding"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OcrLineEnding(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SpaceValue = "space";
-        private const string CarriageReturnValue = "carriageReturn";
-        private const string LineFeedValue = "lineFeed";
-        private const string CarriageReturnLineFeedValue = "carriageReturnLineFeed";
+            _value = value;
+        }
 
         /// <summary> Lines are separated by a single space character. </summary>
         public static OcrLineEnding Space { get; } = new OcrLineEnding(SpaceValue);
+
         /// <summary> Lines are separated by a carriage return ('\r') character. </summary>
         public static OcrLineEnding CarriageReturn { get; } = new OcrLineEnding(CarriageReturnValue);
+
         /// <summary> Lines are separated by a single line feed ('\n') character. </summary>
         public static OcrLineEnding LineFeed { get; } = new OcrLineEnding(LineFeedValue);
+
         /// <summary> Lines are separated by a carriage return and a line feed ('\r\n') character. </summary>
         public static OcrLineEnding CarriageReturnLineFeed { get; } = new OcrLineEnding(CarriageReturnLineFeedValue);
+
         /// <summary> Determines if two <see cref="OcrLineEnding"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OcrLineEnding left, OcrLineEnding right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OcrLineEnding"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OcrLineEnding left, OcrLineEnding right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OcrLineEnding"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OcrLineEnding"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OcrLineEnding(string value) => new OcrLineEnding(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OcrLineEnding"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OcrLineEnding?(string value) => value == null ? null : new OcrLineEnding(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OcrLineEnding other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OcrLineEnding other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

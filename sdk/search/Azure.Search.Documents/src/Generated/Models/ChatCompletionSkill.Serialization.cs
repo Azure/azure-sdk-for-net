@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ChatCompletionSkill : IUtf8JsonSerializable, IJsonModel<ChatCompletionSkill>
+    /// <summary> A skill that calls a language model via Azure AI Foundry's Chat Completions endpoint. </summary>
+    public partial class ChatCompletionSkill : SearchIndexerSkill, IJsonModel<ChatCompletionSkill>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletionSkill>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionSkill"/> for deserialization. </summary>
+        internal ChatCompletionSkill()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ChatCompletionSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,13 +34,49 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChatCompletionSkill)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri);
+            if (Optional.IsDefined(HttpHeaders))
+            {
+                writer.WritePropertyName("httpHeaders"u8);
+                writer.WriteObjectValue(HttpHeaders, options);
+            }
+            if (Optional.IsDefined(HttpMethod))
+            {
+                writer.WritePropertyName("httpMethod"u8);
+                writer.WriteStringValue(HttpMethod);
+            }
+            if (Optional.IsDefined(Timeout))
+            {
+                writer.WritePropertyName("timeout"u8);
+                writer.WriteStringValue(Timeout.Value, "P");
+            }
+            if (Optional.IsDefined(BatchSize))
+            {
+                writer.WritePropertyName("batchSize"u8);
+                writer.WriteNumberValue(BatchSize.Value);
+            }
+            if (Optional.IsDefined(DegreeOfParallelism))
+            {
+                writer.WritePropertyName("degreeOfParallelism"u8);
+                writer.WriteNumberValue(DegreeOfParallelism.Value);
+            }
+            if (Optional.IsDefined(AuthResourceId))
+            {
+                writer.WritePropertyName("authResourceId"u8);
+                writer.WriteStringValue(AuthResourceId);
+            }
+            if (Optional.IsDefined(AuthIdentity))
+            {
+                writer.WritePropertyName("authIdentity"u8);
+                writer.WriteObjectValue(AuthIdentity, options);
+            }
             if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
@@ -47,26 +89,26 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(ExtraParameters))
             {
-                if (ExtraParameters != null)
+                writer.WritePropertyName("extraParameters"u8);
+                writer.WriteStartObject();
+                foreach (var item in ExtraParameters)
                 {
-                    writer.WritePropertyName("extraParameters"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in ExtraParameters)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-                        writer.WriteObjectValue<object>(item.Value, options);
+                        writer.WriteNullValue();
+                        continue;
                     }
-                    writer.WriteEndObject();
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
-                else
-                {
-                    writer.WriteNull("extraParameters");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(ExtraParametersBehavior))
             {
@@ -78,226 +120,229 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("responseFormat"u8);
                 writer.WriteObjectValue(ResponseFormat, options);
             }
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(OdataType);
         }
 
-        ChatCompletionSkill IJsonModel<ChatCompletionSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ChatCompletionSkill IJsonModel<ChatCompletionSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ChatCompletionSkill)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChatCompletionSkill)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeChatCompletionSkill(document.RootElement, options);
         }
 
-        internal static ChatCompletionSkill DeserializeChatCompletionSkill(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ChatCompletionSkill DeserializeChatCompletionSkill(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string apiKey = default;
-            CommonModelParameters commonModelParameters = default;
-            IDictionary<string, object> extraParameters = default;
-            ChatCompletionExtraParametersBehavior? extraParametersBehavior = default;
-            ChatCompletionResponseFormat responseFormat = default;
-            string uri = default;
-            IDictionary<string, string> httpHeaders = default;
-            string httpMethod = default;
-            TimeSpan? timeout = default;
-            int? batchSize = default;
-            int? degreeOfParallelism = default;
-            ResourceIdentifier authResourceId = default;
-            SearchIndexerDataIdentity authIdentity = default;
-            string odataType = default;
+            string odataType = "#Microsoft.Skills.Custom.ChatCompletionSkill";
             string name = default;
             string description = default;
             string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string uri = default;
+            WebApiHttpHeaders httpHeaders = default;
+            string httpMethod = default;
+            TimeSpan? timeout = default;
+            int? batchSize = default;
+            int? degreeOfParallelism = default;
+            string authResourceId = default;
+            SearchIndexerDataIdentity authIdentity = default;
+            string apiKey = default;
+            ChatCompletionCommonModelParameters commonModelParameters = default;
+            IDictionary<string, BinaryData> extraParameters = default;
+            ChatCompletionExtraParametersBehavior? extraParametersBehavior = default;
+            ChatCompletionResponseFormat responseFormat = default;
+            string odataType0 = "#Microsoft.Skills.Custom.ChatCompletionSkill";
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("apiKey"u8))
+                if (prop.NameEquals("@odata.type"u8))
                 {
-                    apiKey = property.Value.GetString();
+                    odataType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("commonModelParameters"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    commonModelParameters = CommonModelParameters.DeserializeCommonModelParameters(property.Value, options);
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extraParameters"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        extraParameters = null;
-                        continue;
-                    }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
-                        }
-                    }
-                    extraParameters = dictionary;
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extraParametersBehavior"u8))
+                if (prop.NameEquals("context"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    extraParametersBehavior = new ChatCompletionExtraParametersBehavior(property.Value.GetString());
+                    context = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("responseFormat"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    responseFormat = ChatCompletionResponseFormat.DeserializeChatCompletionResponseFormat(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("uri"u8))
-                {
-                    uri = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("httpHeaders"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        httpHeaders = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    httpHeaders = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("httpMethod"u8))
-                {
-                    httpMethod = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("timeout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        timeout = null;
-                        continue;
-                    }
-                    timeout = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("batchSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        batchSize = null;
-                        continue;
-                    }
-                    batchSize = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("degreeOfParallelism"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        degreeOfParallelism = null;
-                        continue;
-                    }
-                    degreeOfParallelism = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("authResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        authResourceId = null;
-                        continue;
-                    }
-                    authResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("authIdentity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        authIdentity = null;
-                        continue;
-                    }
-                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("context"u8))
-                {
-                    context = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputs"u8))
+                if (prop.NameEquals("inputs"u8))
                 {
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
                 }
-                if (property.NameEquals("outputs"u8))
+                if (prop.NameEquals("outputs"u8))
                 {
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
+                if (prop.NameEquals("uri"u8))
+                {
+                    uri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("httpHeaders"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    httpHeaders = WebApiHttpHeaders.DeserializeWebApiHttpHeaders(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("httpMethod"u8))
+                {
+                    httpMethod = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("timeout"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeout = prop.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (prop.NameEquals("batchSize"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        batchSize = null;
+                        continue;
+                    }
+                    batchSize = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("degreeOfParallelism"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        degreeOfParallelism = null;
+                        continue;
+                    }
+                    degreeOfParallelism = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("authResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        authResourceId = null;
+                        continue;
+                    }
+                    authResourceId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("authIdentity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        authIdentity = null;
+                        continue;
+                    }
+                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("apiKey"u8))
+                {
+                    apiKey = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("commonModelParameters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    commonModelParameters = ChatCompletionCommonModelParameters.DeserializeChatCompletionCommonModelParameters(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("extraParameters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    extraParameters = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("extraParametersBehavior"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extraParametersBehavior = new ChatCompletionExtraParametersBehavior(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("responseFormat"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    responseFormat = ChatCompletionResponseFormat.DeserializeChatCompletionResponseFormat(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("@odata.type"u8))
+                {
+                    odataType0 = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ChatCompletionSkill(
                 odataType,
                 name,
@@ -305,9 +350,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 context,
                 inputs,
                 outputs,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 uri,
-                httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                httpHeaders,
                 httpMethod,
                 timeout,
                 batchSize,
@@ -316,15 +361,19 @@ namespace Azure.Search.Documents.Indexes.Models
                 authIdentity,
                 apiKey,
                 commonModelParameters,
-                extraParameters ?? new ChangeTrackingDictionary<string, object>(),
+                extraParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 extraParametersBehavior,
-                responseFormat);
+                responseFormat,
+                odataType0);
         }
 
-        BinaryData IPersistableModel<ChatCompletionSkill>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ChatCompletionSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -334,15 +383,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        ChatCompletionSkill IPersistableModel<ChatCompletionSkill>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ChatCompletionSkill IPersistableModel<ChatCompletionSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (ChatCompletionSkill)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChatCompletionSkill(document.RootElement, options);
                     }
                 default:
@@ -350,22 +404,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ChatCompletionSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ChatCompletionSkill FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeChatCompletionSkill(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

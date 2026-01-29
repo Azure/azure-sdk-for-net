@@ -5,31 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A dictionary of index projection-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
     public partial class SearchIndexerIndexProjectionsParameters
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionsParameters"/>. </summary>
         public SearchIndexerIndexProjectionsParameters()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionsParameters"/>. </summary>
         /// <param name="projectionMode"> Defines behavior of the index projections in relation to the rest of the indexer. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SearchIndexerIndexProjectionsParameters(IndexProjectionMode? projectionMode, IDictionary<string, object> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal SearchIndexerIndexProjectionsParameters(IndexProjectionMode? projectionMode, IDictionary<string, BinaryData> additionalProperties)
         {
             ProjectionMode = projectionMode;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Defines behavior of the index projections in relation to the rest of the indexer. </summary>
         public IndexProjectionMode? ProjectionMode { get; set; }
-        /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The breakdown of subscores between the text and vector query components of the search query for this document. Each vector query is shown as a separate object in the same order they were received. </summary>
     public partial class QueryResultDocumentSubscores
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QueryResultDocumentSubscores"/>. </summary>
         internal QueryResultDocumentSubscores()
@@ -53,21 +25,23 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of <see cref="QueryResultDocumentSubscores"/>. </summary>
         /// <param name="text"> The BM25 or Classic score for the text portion of the query. </param>
-        /// <param name="vectors"> The vector similarity and @search.score values for each vector query. </param>
+        /// <param name="vectors"> The vector similarity and. </param>
         /// <param name="documentBoost"> The BM25 or Classic score for the text portion of the query. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueryResultDocumentSubscores(TextResult text, IReadOnlyList<IDictionary<string, SingleVectorFieldResult>> vectors, double? documentBoost, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QueryResultDocumentSubscores(TextResult text, IReadOnlyList<IDictionary<string, SingleVectorFieldResult>> vectors, double? documentBoost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Vectors = vectors;
             DocumentBoost = documentBoost;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The BM25 or Classic score for the text portion of the query. </summary>
         public TextResult Text { get; }
-        /// <summary> The vector similarity and @search.score values for each vector query. </summary>
+
+        /// <summary> The vector similarity and. </summary>
         public IReadOnlyList<IDictionary<string, SingleVectorFieldResult>> Vectors { get; }
+
         /// <summary> The BM25 or Classic score for the text portion of the query. </summary>
         public double? DocumentBoost { get; }
     }

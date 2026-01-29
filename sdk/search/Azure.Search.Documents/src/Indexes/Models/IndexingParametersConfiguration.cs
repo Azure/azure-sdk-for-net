@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.Core;
+using System.Text.Json;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -122,6 +124,202 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             get => AdditionalProperties[key];
             set => AdditionalProperties[key] = value;
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IndexingParametersConfiguration DeserializeIndexingParametersConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            BlobIndexerParsingMode? parsingMode = default;
+            string excludedFileNameExtensions = default;
+            string indexedFileNameExtensions = default;
+            bool? failOnUnsupportedContentType = default;
+            bool? failOnUnprocessableDocument = default;
+            bool? indexStorageMetadataOnlyForOversizedDocuments = default;
+            string delimitedTextHeaders = default;
+            string delimitedTextDelimiter = default;
+            bool? firstLineContainsHeaders = default;
+            MarkdownParsingSubmode? markdownParsingSubmode = default;
+            MarkdownHeaderDepth? markdownHeaderDepth = default;
+            string documentRoot = default;
+            BlobIndexerDataToExtract? dataToExtract = default;
+            BlobIndexerImageAction? imageAction = default;
+            bool? allowSkillsetToReadFileData = default;
+            BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm = default;
+            IndexerExecutionEnvironment? executionEnvironment = default;
+            string queryTimeout = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("parsingMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parsingMode = new BlobIndexerParsingMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("excludedFileNameExtensions"u8))
+                {
+                    excludedFileNameExtensions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("indexedFileNameExtensions"u8))
+                {
+                    indexedFileNameExtensions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("failOnUnsupportedContentType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failOnUnsupportedContentType = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("failOnUnprocessableDocument"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failOnUnprocessableDocument = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("indexStorageMetadataOnlyForOversizedDocuments"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    indexStorageMetadataOnlyForOversizedDocuments = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("delimitedTextHeaders"u8))
+                {
+                    delimitedTextHeaders = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("delimitedTextDelimiter"u8))
+                {
+                    delimitedTextDelimiter = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("firstLineContainsHeaders"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    firstLineContainsHeaders = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("markdownParsingSubmode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        markdownParsingSubmode = null;
+                        continue;
+                    }
+                    markdownParsingSubmode = new MarkdownParsingSubmode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("markdownHeaderDepth"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        markdownHeaderDepth = null;
+                        continue;
+                    }
+                    markdownHeaderDepth = new MarkdownHeaderDepth(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("documentRoot"u8))
+                {
+                    documentRoot = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("dataToExtract"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataToExtract = new BlobIndexerDataToExtract(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("imageAction"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imageAction = new BlobIndexerImageAction(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("allowSkillsetToReadFileData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowSkillsetToReadFileData = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("pdfTextRotationAlgorithm"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pdfTextRotationAlgorithm = new BlobIndexerPdfTextRotationAlgorithm(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("executionEnvironment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    executionEnvironment = new IndexerExecutionEnvironment(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("queryTimeout"u8))
+                {
+                    queryTimeout = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new IndexingParametersConfiguration(
+                parsingMode,
+                excludedFileNameExtensions,
+                indexedFileNameExtensions,
+                failOnUnsupportedContentType,
+                failOnUnprocessableDocument,
+                indexStorageMetadataOnlyForOversizedDocuments,
+                delimitedTextHeaders,
+                delimitedTextDelimiter,
+                firstLineContainsHeaders,
+                markdownParsingSubmode,
+                markdownHeaderDepth,
+                documentRoot,
+                dataToExtract,
+                imageAction,
+                allowSkillsetToReadFileData,
+                pdfTextRotationAlgorithm,
+                executionEnvironment,
+                queryTimeout,
+                additionalProperties);
         }
     }
 }

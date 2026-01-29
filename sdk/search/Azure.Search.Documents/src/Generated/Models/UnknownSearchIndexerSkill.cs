@@ -11,24 +11,17 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Unknown version of SearchIndexerSkill. </summary>
     internal partial class UnknownSearchIndexerSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSearchIndexerSkill"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of skill. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSearchIndexerSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
-        {
-            ODataType = oDataType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownSearchIndexerSkill"/> for deserialization. </summary>
-        internal UnknownSearchIndexerSkill()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSearchIndexerSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType ?? "unknown", name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
         }
     }

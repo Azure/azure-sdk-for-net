@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
-        public AzureMachineLearningVectorizer(string vectorizerName) : base(vectorizerName)
+        public AzureMachineLearningVectorizer(string vectorizerName) : base(vectorizerName, VectorSearchVectorizerKind.AML)
         {
             Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
 
-            Kind = VectorSearchVectorizerKind.AML;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
-        /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Type of VectorSearchVectorizer. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="amlParameters"> Specifies the properties of the AML vectorizer. </param>
-        internal AzureMachineLearningVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureMachineLearningParameters amlParameters) : base(vectorizerName, kind, serializedAdditionalRawData)
+        internal AzureMachineLearningVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureMachineLearningParameters amlParameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
         {
             AMLParameters = amlParameters;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningVectorizer"/> for deserialization. </summary>
-        internal AzureMachineLearningVectorizer()
-        {
         }
 
         /// <summary> Specifies the properties of the AML vectorizer. </summary>

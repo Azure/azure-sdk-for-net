@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct BlobIndexerImageAction : IEquatable<BlobIndexerImageAction>
     {
         private readonly string _value;
+        /// <summary> Ignores embedded images or image files in the data set.  This is the default. </summary>
+        private const string NoneValue = "none";
+        /// <summary> Extracts text from images (for example, the word "STOP" from a traffic stop sign), and embeds it into the content field.  This action requires that "dataToExtract" is set to "contentAndMetadata".  A normalized image refers to additional processing resulting in uniform image output, sized and rotated to promote consistent rendering when you include images in visual search results. This information is generated for each image when you use this option. </summary>
+        private const string GenerateNormalizedImagesValue = "generateNormalizedImages";
+        /// <summary> Extracts text from images (for example, the word "STOP" from a traffic stop sign), and embeds it into the content field, but treats PDF files differently in that each page will be rendered as an image and normalized accordingly, instead of extracting embedded images.  Non-PDF file types will be treated the same as if "generateNormalizedImages" was set. </summary>
+        private const string GenerateNormalizedImagePerPageValue = "generateNormalizedImagePerPage";
 
         /// <summary> Initializes a new instance of <see cref="BlobIndexerImageAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobIndexerImageAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "none";
-        private const string GenerateNormalizedImagesValue = "generateNormalizedImages";
-        private const string GenerateNormalizedImagePerPageValue = "generateNormalizedImagePerPage";
+            _value = value;
+        }
 
         /// <summary> Ignores embedded images or image files in the data set.  This is the default. </summary>
         public static BlobIndexerImageAction None { get; } = new BlobIndexerImageAction(NoneValue);
+
         /// <summary> Extracts text from images (for example, the word "STOP" from a traffic stop sign), and embeds it into the content field.  This action requires that "dataToExtract" is set to "contentAndMetadata".  A normalized image refers to additional processing resulting in uniform image output, sized and rotated to promote consistent rendering when you include images in visual search results. This information is generated for each image when you use this option. </summary>
         public static BlobIndexerImageAction GenerateNormalizedImages { get; } = new BlobIndexerImageAction(GenerateNormalizedImagesValue);
+
         /// <summary> Extracts text from images (for example, the word "STOP" from a traffic stop sign), and embeds it into the content field, but treats PDF files differently in that each page will be rendered as an image and normalized accordingly, instead of extracting embedded images.  Non-PDF file types will be treated the same as if "generateNormalizedImages" was set. </summary>
         public static BlobIndexerImageAction GenerateNormalizedImagePerPage { get; } = new BlobIndexerImageAction(GenerateNormalizedImagePerPageValue);
+
         /// <summary> Determines if two <see cref="BlobIndexerImageAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlobIndexerImageAction left, BlobIndexerImageAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BlobIndexerImageAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlobIndexerImageAction left, BlobIndexerImageAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobIndexerImageAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BlobIndexerImageAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BlobIndexerImageAction(string value) => new BlobIndexerImageAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BlobIndexerImageAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BlobIndexerImageAction?(string value) => value == null ? null : new BlobIndexerImageAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BlobIndexerImageAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BlobIndexerImageAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

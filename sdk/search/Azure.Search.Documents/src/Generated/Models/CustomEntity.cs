@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> An object that contains information about the matches that were found, and related metadata. </summary>
     public partial class CustomEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomEntity"/>. </summary>
         /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </param>
@@ -69,12 +41,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="defaultAccentSensitive"> Changes the default accent sensitivity value for this entity. It be used to change the default value of all aliases accentSensitive values. </param>
         /// <param name="defaultFuzzyEditDistance"> Changes the default fuzzy edit distance value for this entity. It can be used to change the default value of all aliases fuzzyEditDistance values. </param>
         /// <param name="aliases"> An array of complex objects that can be used to specify alternative spellings or synonyms to the root entity name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomEntity(string name, string description, string type, string subtype, string id, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance, bool? defaultCaseSensitive, bool? defaultAccentSensitive, int? defaultFuzzyEditDistance, IList<CustomEntityAlias> aliases, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CustomEntity(string name, string description, string @type, string subtype, string id, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance, bool? defaultCaseSensitive, bool? defaultAccentSensitive, int? defaultFuzzyEditDistance, IList<CustomEntityAlias> aliases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
-            Type = type;
+            Type = @type;
             Subtype = subtype;
             Id = id;
             CaseSensitive = caseSensitive;
@@ -84,35 +56,43 @@ namespace Azure.Search.Documents.Indexes.Models
             DefaultAccentSensitive = defaultAccentSensitive;
             DefaultFuzzyEditDistance = defaultFuzzyEditDistance;
             Aliases = aliases;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomEntity"/> for deserialization. </summary>
-        internal CustomEntity()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </summary>
         public string Name { get; set; }
+
         /// <summary> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </summary>
         public string Description { get; set; }
+
         /// <summary> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </summary>
         public string Type { get; set; }
+
         /// <summary> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </summary>
         public string Subtype { get; set; }
+
         /// <summary> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </summary>
         public string Id { get; set; }
+
         /// <summary> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to character casing. Sample case insensitive matches of "Microsoft" could be: microsoft, microSoft, MICROSOFT. </summary>
         public bool? CaseSensitive { get; set; }
+
         /// <summary> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to accent. </summary>
         public bool? AccentSensitive { get; set; }
+
         /// <summary> Defaults to 0. Maximum value of 5. Denotes the acceptable number of divergent characters that would still constitute a match with the entity name. The smallest possible fuzziness for any given match is returned. For instance, if the edit distance is set to 3, "Windows10" would still match "Windows", "Windows10" and "Windows 7". When case sensitivity is set to false, case differences do NOT count towards fuzziness tolerance, but otherwise do. </summary>
         public int? FuzzyEditDistance { get; set; }
+
         /// <summary> Changes the default case sensitivity value for this entity. It be used to change the default value of all aliases caseSensitive values. </summary>
         public bool? DefaultCaseSensitive { get; set; }
+
         /// <summary> Changes the default accent sensitivity value for this entity. It be used to change the default value of all aliases accentSensitive values. </summary>
         public bool? DefaultAccentSensitive { get; set; }
+
         /// <summary> Changes the default fuzzy edit distance value for this entity. It can be used to change the default value of all aliases fuzzyEditDistance values. </summary>
         public int? DefaultFuzzyEditDistance { get; set; }
+
+        /// <summary> An array of complex objects that can be used to specify alternative spellings or synonyms to the root entity name. </summary>
+        public IList<CustomEntityAlias> Aliases { get; set; }
     }
 }

@@ -10,80 +10,43 @@ using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Response from a get service statistics request. If successful, it includes service level counters, indexer runtime information, and limits. </summary>
+    /// <summary> Response from a get service statistics request. If successful, it includes service level counters and limits. </summary>
     public partial class SearchServiceStatistics
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceStatistics"/>. </summary>
         /// <param name="counters"> Service level resource counters. </param>
-        /// <param name="indexersRuntime"> Service level indexers runtime information. </param>
         /// <param name="limits"> Service level general limits. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="counters"/>, <paramref name="indexersRuntime"/> or <paramref name="limits"/> is null. </exception>
-        internal SearchServiceStatistics(SearchServiceCounters counters, ServiceIndexersRuntime indexersRuntime, SearchServiceLimits limits)
+        /// <param name="indexersRuntime"> Service level indexer runtime consumption. </param>
+        internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits, ServiceIndexersRuntime indexersRuntime)
         {
-            Argument.AssertNotNull(counters, nameof(counters));
-            Argument.AssertNotNull(indexersRuntime, nameof(indexersRuntime));
-            Argument.AssertNotNull(limits, nameof(limits));
-
             Counters = counters;
-            IndexersRuntime = indexersRuntime;
             Limits = limits;
+            IndexersRuntime = indexersRuntime;
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceStatistics"/>. </summary>
         /// <param name="counters"> Service level resource counters. </param>
-        /// <param name="indexersRuntime"> Service level indexers runtime information. </param>
         /// <param name="limits"> Service level general limits. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceStatistics(SearchServiceCounters counters, ServiceIndexersRuntime indexersRuntime, SearchServiceLimits limits, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="indexersRuntime"> Service level indexer runtime consumption. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits, ServiceIndexersRuntime indexersRuntime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Counters = counters;
-            IndexersRuntime = indexersRuntime;
             Limits = limits;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SearchServiceStatistics"/> for deserialization. </summary>
-        internal SearchServiceStatistics()
-        {
+            IndexersRuntime = indexersRuntime;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Service level resource counters. </summary>
         public SearchServiceCounters Counters { get; }
-        /// <summary> Service level indexers runtime information. </summary>
-        public ServiceIndexersRuntime IndexersRuntime { get; }
+
         /// <summary> Service level general limits. </summary>
         public SearchServiceLimits Limits { get; }
+
+        /// <summary> Service level indexer runtime consumption. </summary>
+        public ServiceIndexersRuntime IndexersRuntime { get; }
     }
 }

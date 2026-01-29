@@ -5,100 +5,282 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Lists the languages supported by the Microsoft language stemming tokenizer. </summary>
-    public enum MicrosoftStemmingTokenizerLanguage
+    public readonly partial struct MicrosoftStemmingTokenizerLanguage : IEquatable<MicrosoftStemmingTokenizerLanguage>
     {
+        private readonly string _value;
         /// <summary> Selects the Microsoft stemming tokenizer for Arabic. </summary>
-        Arabic,
+        private const string ArabicValue = "arabic";
         /// <summary> Selects the Microsoft stemming tokenizer for Bangla. </summary>
-        Bangla,
+        private const string BanglaValue = "bangla";
         /// <summary> Selects the Microsoft stemming tokenizer for Bulgarian. </summary>
-        Bulgarian,
+        private const string BulgarianValue = "bulgarian";
         /// <summary> Selects the Microsoft stemming tokenizer for Catalan. </summary>
-        Catalan,
+        private const string CatalanValue = "catalan";
         /// <summary> Selects the Microsoft stemming tokenizer for Croatian. </summary>
-        Croatian,
+        private const string CroatianValue = "croatian";
         /// <summary> Selects the Microsoft stemming tokenizer for Czech. </summary>
-        Czech,
+        private const string CzechValue = "czech";
         /// <summary> Selects the Microsoft stemming tokenizer for Danish. </summary>
-        Danish,
+        private const string DanishValue = "danish";
         /// <summary> Selects the Microsoft stemming tokenizer for Dutch. </summary>
-        Dutch,
+        private const string DutchValue = "dutch";
         /// <summary> Selects the Microsoft stemming tokenizer for English. </summary>
-        English,
+        private const string EnglishValue = "english";
         /// <summary> Selects the Microsoft stemming tokenizer for Estonian. </summary>
-        Estonian,
+        private const string EstonianValue = "estonian";
         /// <summary> Selects the Microsoft stemming tokenizer for Finnish. </summary>
-        Finnish,
+        private const string FinnishValue = "finnish";
         /// <summary> Selects the Microsoft stemming tokenizer for French. </summary>
-        French,
+        private const string FrenchValue = "french";
         /// <summary> Selects the Microsoft stemming tokenizer for German. </summary>
-        German,
+        private const string GermanValue = "german";
         /// <summary> Selects the Microsoft stemming tokenizer for Greek. </summary>
-        Greek,
+        private const string GreekValue = "greek";
         /// <summary> Selects the Microsoft stemming tokenizer for Gujarati. </summary>
-        Gujarati,
+        private const string GujaratiValue = "gujarati";
         /// <summary> Selects the Microsoft stemming tokenizer for Hebrew. </summary>
-        Hebrew,
+        private const string HebrewValue = "hebrew";
         /// <summary> Selects the Microsoft stemming tokenizer for Hindi. </summary>
-        Hindi,
+        private const string HindiValue = "hindi";
         /// <summary> Selects the Microsoft stemming tokenizer for Hungarian. </summary>
-        Hungarian,
+        private const string HungarianValue = "hungarian";
         /// <summary> Selects the Microsoft stemming tokenizer for Icelandic. </summary>
-        Icelandic,
+        private const string IcelandicValue = "icelandic";
         /// <summary> Selects the Microsoft stemming tokenizer for Indonesian. </summary>
-        Indonesian,
+        private const string IndonesianValue = "indonesian";
         /// <summary> Selects the Microsoft stemming tokenizer for Italian. </summary>
-        Italian,
+        private const string ItalianValue = "italian";
         /// <summary> Selects the Microsoft stemming tokenizer for Kannada. </summary>
-        Kannada,
+        private const string KannadaValue = "kannada";
         /// <summary> Selects the Microsoft stemming tokenizer for Latvian. </summary>
-        Latvian,
+        private const string LatvianValue = "latvian";
         /// <summary> Selects the Microsoft stemming tokenizer for Lithuanian. </summary>
-        Lithuanian,
+        private const string LithuanianValue = "lithuanian";
         /// <summary> Selects the Microsoft stemming tokenizer for Malay. </summary>
-        Malay,
+        private const string MalayValue = "malay";
         /// <summary> Selects the Microsoft stemming tokenizer for Malayalam. </summary>
-        Malayalam,
+        private const string MalayalamValue = "malayalam";
         /// <summary> Selects the Microsoft stemming tokenizer for Marathi. </summary>
-        Marathi,
-        /// <summary> Selects the Microsoft stemming tokenizer for Norwegian (Bokmål). </summary>
-        NorwegianBokmaal,
+        private const string MarathiValue = "marathi";
+        /// <summary> Selects the Microsoft stemming tokenizer for Norwegian (BokmÃ¥l). </summary>
+        private const string NorwegianBokmaalValue = "norwegianBokmaal";
         /// <summary> Selects the Microsoft stemming tokenizer for Polish. </summary>
-        Polish,
+        private const string PolishValue = "polish";
         /// <summary> Selects the Microsoft stemming tokenizer for Portuguese. </summary>
-        Portuguese,
+        private const string PortugueseValue = "portuguese";
         /// <summary> Selects the Microsoft stemming tokenizer for Portuguese (Brazil). </summary>
-        PortugueseBrazilian,
+        private const string PortugueseBrazilianValue = "portugueseBrazilian";
         /// <summary> Selects the Microsoft stemming tokenizer for Punjabi. </summary>
-        Punjabi,
+        private const string PunjabiValue = "punjabi";
         /// <summary> Selects the Microsoft stemming tokenizer for Romanian. </summary>
-        Romanian,
+        private const string RomanianValue = "romanian";
         /// <summary> Selects the Microsoft stemming tokenizer for Russian. </summary>
-        Russian,
+        private const string RussianValue = "russian";
         /// <summary> Selects the Microsoft stemming tokenizer for Serbian (Cyrillic). </summary>
-        SerbianCyrillic,
+        private const string SerbianCyrillicValue = "serbianCyrillic";
         /// <summary> Selects the Microsoft stemming tokenizer for Serbian (Latin). </summary>
-        SerbianLatin,
+        private const string SerbianLatinValue = "serbianLatin";
         /// <summary> Selects the Microsoft stemming tokenizer for Slovak. </summary>
-        Slovak,
+        private const string SlovakValue = "slovak";
         /// <summary> Selects the Microsoft stemming tokenizer for Slovenian. </summary>
-        Slovenian,
+        private const string SlovenianValue = "slovenian";
         /// <summary> Selects the Microsoft stemming tokenizer for Spanish. </summary>
-        Spanish,
+        private const string SpanishValue = "spanish";
         /// <summary> Selects the Microsoft stemming tokenizer for Swedish. </summary>
-        Swedish,
+        private const string SwedishValue = "swedish";
         /// <summary> Selects the Microsoft stemming tokenizer for Tamil. </summary>
-        Tamil,
+        private const string TamilValue = "tamil";
         /// <summary> Selects the Microsoft stemming tokenizer for Telugu. </summary>
-        Telugu,
+        private const string TeluguValue = "telugu";
         /// <summary> Selects the Microsoft stemming tokenizer for Turkish. </summary>
-        Turkish,
+        private const string TurkishValue = "turkish";
         /// <summary> Selects the Microsoft stemming tokenizer for Ukrainian. </summary>
-        Ukrainian,
+        private const string UkrainianValue = "ukrainian";
         /// <summary> Selects the Microsoft stemming tokenizer for Urdu. </summary>
-        Urdu
+        private const string UrduValue = "urdu";
+
+        /// <summary> Initializes a new instance of <see cref="MicrosoftStemmingTokenizerLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MicrosoftStemmingTokenizerLanguage(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Arabic. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Arabic { get; } = new MicrosoftStemmingTokenizerLanguage(ArabicValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Bangla. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Bangla { get; } = new MicrosoftStemmingTokenizerLanguage(BanglaValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Bulgarian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Bulgarian { get; } = new MicrosoftStemmingTokenizerLanguage(BulgarianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Catalan. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Catalan { get; } = new MicrosoftStemmingTokenizerLanguage(CatalanValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Croatian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Croatian { get; } = new MicrosoftStemmingTokenizerLanguage(CroatianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Czech. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Czech { get; } = new MicrosoftStemmingTokenizerLanguage(CzechValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Danish. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Danish { get; } = new MicrosoftStemmingTokenizerLanguage(DanishValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Dutch. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Dutch { get; } = new MicrosoftStemmingTokenizerLanguage(DutchValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for English. </summary>
+        public static MicrosoftStemmingTokenizerLanguage English { get; } = new MicrosoftStemmingTokenizerLanguage(EnglishValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Estonian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Estonian { get; } = new MicrosoftStemmingTokenizerLanguage(EstonianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Finnish. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Finnish { get; } = new MicrosoftStemmingTokenizerLanguage(FinnishValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for French. </summary>
+        public static MicrosoftStemmingTokenizerLanguage French { get; } = new MicrosoftStemmingTokenizerLanguage(FrenchValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for German. </summary>
+        public static MicrosoftStemmingTokenizerLanguage German { get; } = new MicrosoftStemmingTokenizerLanguage(GermanValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Greek. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Greek { get; } = new MicrosoftStemmingTokenizerLanguage(GreekValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Gujarati. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Gujarati { get; } = new MicrosoftStemmingTokenizerLanguage(GujaratiValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Hebrew. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Hebrew { get; } = new MicrosoftStemmingTokenizerLanguage(HebrewValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Hindi. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Hindi { get; } = new MicrosoftStemmingTokenizerLanguage(HindiValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Hungarian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Hungarian { get; } = new MicrosoftStemmingTokenizerLanguage(HungarianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Icelandic. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Icelandic { get; } = new MicrosoftStemmingTokenizerLanguage(IcelandicValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Indonesian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Indonesian { get; } = new MicrosoftStemmingTokenizerLanguage(IndonesianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Italian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Italian { get; } = new MicrosoftStemmingTokenizerLanguage(ItalianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Kannada. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Kannada { get; } = new MicrosoftStemmingTokenizerLanguage(KannadaValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Latvian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Latvian { get; } = new MicrosoftStemmingTokenizerLanguage(LatvianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Lithuanian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Lithuanian { get; } = new MicrosoftStemmingTokenizerLanguage(LithuanianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Malay. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Malay { get; } = new MicrosoftStemmingTokenizerLanguage(MalayValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Malayalam. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Malayalam { get; } = new MicrosoftStemmingTokenizerLanguage(MalayalamValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Marathi. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Marathi { get; } = new MicrosoftStemmingTokenizerLanguage(MarathiValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Norwegian (BokmÃ¥l). </summary>
+        public static MicrosoftStemmingTokenizerLanguage NorwegianBokmaal { get; } = new MicrosoftStemmingTokenizerLanguage(NorwegianBokmaalValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Polish. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Polish { get; } = new MicrosoftStemmingTokenizerLanguage(PolishValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Portuguese. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Portuguese { get; } = new MicrosoftStemmingTokenizerLanguage(PortugueseValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Portuguese (Brazil). </summary>
+        public static MicrosoftStemmingTokenizerLanguage PortugueseBrazilian { get; } = new MicrosoftStemmingTokenizerLanguage(PortugueseBrazilianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Punjabi. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Punjabi { get; } = new MicrosoftStemmingTokenizerLanguage(PunjabiValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Romanian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Romanian { get; } = new MicrosoftStemmingTokenizerLanguage(RomanianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Russian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Russian { get; } = new MicrosoftStemmingTokenizerLanguage(RussianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Serbian (Cyrillic). </summary>
+        public static MicrosoftStemmingTokenizerLanguage SerbianCyrillic { get; } = new MicrosoftStemmingTokenizerLanguage(SerbianCyrillicValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Serbian (Latin). </summary>
+        public static MicrosoftStemmingTokenizerLanguage SerbianLatin { get; } = new MicrosoftStemmingTokenizerLanguage(SerbianLatinValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Slovak. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Slovak { get; } = new MicrosoftStemmingTokenizerLanguage(SlovakValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Slovenian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Slovenian { get; } = new MicrosoftStemmingTokenizerLanguage(SlovenianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Spanish. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Spanish { get; } = new MicrosoftStemmingTokenizerLanguage(SpanishValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Swedish. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Swedish { get; } = new MicrosoftStemmingTokenizerLanguage(SwedishValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Tamil. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Tamil { get; } = new MicrosoftStemmingTokenizerLanguage(TamilValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Telugu. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Telugu { get; } = new MicrosoftStemmingTokenizerLanguage(TeluguValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Turkish. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Turkish { get; } = new MicrosoftStemmingTokenizerLanguage(TurkishValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Ukrainian. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Ukrainian { get; } = new MicrosoftStemmingTokenizerLanguage(UkrainianValue);
+
+        /// <summary> Selects the Microsoft stemming tokenizer for Urdu. </summary>
+        public static MicrosoftStemmingTokenizerLanguage Urdu { get; } = new MicrosoftStemmingTokenizerLanguage(UrduValue);
+
+        /// <summary> Determines if two <see cref="MicrosoftStemmingTokenizerLanguage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(MicrosoftStemmingTokenizerLanguage left, MicrosoftStemmingTokenizerLanguage right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="MicrosoftStemmingTokenizerLanguage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(MicrosoftStemmingTokenizerLanguage left, MicrosoftStemmingTokenizerLanguage right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="MicrosoftStemmingTokenizerLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MicrosoftStemmingTokenizerLanguage(string value) => new MicrosoftStemmingTokenizerLanguage(value);
+
+        /// <summary> Converts a string to a <see cref="MicrosoftStemmingTokenizerLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MicrosoftStemmingTokenizerLanguage?(string value) => value == null ? null : new MicrosoftStemmingTokenizerLanguage(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is MicrosoftStemmingTokenizerLanguage other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(MicrosoftStemmingTokenizerLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

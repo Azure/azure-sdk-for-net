@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Search.Documents.Models
     public readonly partial struct HybridCountAndFacetMode : IEquatable<HybridCountAndFacetMode>
     {
         private readonly string _value;
+        /// <summary> Only include documents that were matched within the 'maxTextRecallSize' retrieval window when computing 'count' and 'facets'. </summary>
+        private const string CountRetrievableResultsValue = "countRetrievableResults";
+        /// <summary> Include all documents that were matched by the search query when computing 'count' and 'facets', regardless of whether or not those documents are within the 'maxTextRecallSize' retrieval window. </summary>
+        private const string CountAllResultsValue = "countAllResults";
 
         /// <summary> Initializes a new instance of <see cref="HybridCountAndFacetMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridCountAndFacetMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CountRetrievableResultsValue = "countRetrievableResults";
-        private const string CountAllResultsValue = "countAllResults";
+            _value = value;
+        }
 
         /// <summary> Only include documents that were matched within the 'maxTextRecallSize' retrieval window when computing 'count' and 'facets'. </summary>
         public static HybridCountAndFacetMode CountRetrievableResults { get; } = new HybridCountAndFacetMode(CountRetrievableResultsValue);
+
         /// <summary> Include all documents that were matched by the search query when computing 'count' and 'facets', regardless of whether or not those documents are within the 'maxTextRecallSize' retrieval window. </summary>
         public static HybridCountAndFacetMode CountAllResults { get; } = new HybridCountAndFacetMode(CountAllResultsValue);
+
         /// <summary> Determines if two <see cref="HybridCountAndFacetMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridCountAndFacetMode left, HybridCountAndFacetMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridCountAndFacetMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridCountAndFacetMode left, HybridCountAndFacetMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridCountAndFacetMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridCountAndFacetMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridCountAndFacetMode(string value) => new HybridCountAndFacetMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridCountAndFacetMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridCountAndFacetMode?(string value) => value == null ? null : new HybridCountAndFacetMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridCountAndFacetMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridCountAndFacetMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

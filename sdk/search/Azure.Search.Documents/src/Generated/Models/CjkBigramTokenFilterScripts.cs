@@ -5,18 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Search.Documents;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Scripts that can be ignored by CjkBigramTokenFilter. </summary>
-    public enum CjkBigramTokenFilterScripts
+    public readonly partial struct CjkBigramTokenFilterScripts : IEquatable<CjkBigramTokenFilterScripts>
     {
+        private readonly string _value;
         /// <summary> Ignore Han script when forming bigrams of CJK terms. </summary>
-        Han,
+        private const string HanValue = "han";
         /// <summary> Ignore Hiragana script when forming bigrams of CJK terms. </summary>
-        Hiragana,
+        private const string HiraganaValue = "hiragana";
         /// <summary> Ignore Katakana script when forming bigrams of CJK terms. </summary>
-        Katakana,
+        private const string KatakanaValue = "katakana";
         /// <summary> Ignore Hangul script when forming bigrams of CJK terms. </summary>
-        Hangul
+        private const string HangulValue = "hangul";
+
+        /// <summary> Initializes a new instance of <see cref="CjkBigramTokenFilterScripts"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CjkBigramTokenFilterScripts(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Ignore Han script when forming bigrams of CJK terms. </summary>
+        public static CjkBigramTokenFilterScripts Han { get; } = new CjkBigramTokenFilterScripts(HanValue);
+
+        /// <summary> Ignore Hiragana script when forming bigrams of CJK terms. </summary>
+        public static CjkBigramTokenFilterScripts Hiragana { get; } = new CjkBigramTokenFilterScripts(HiraganaValue);
+
+        /// <summary> Ignore Katakana script when forming bigrams of CJK terms. </summary>
+        public static CjkBigramTokenFilterScripts Katakana { get; } = new CjkBigramTokenFilterScripts(KatakanaValue);
+
+        /// <summary> Ignore Hangul script when forming bigrams of CJK terms. </summary>
+        public static CjkBigramTokenFilterScripts Hangul { get; } = new CjkBigramTokenFilterScripts(HangulValue);
+
+        /// <summary> Determines if two <see cref="CjkBigramTokenFilterScripts"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(CjkBigramTokenFilterScripts left, CjkBigramTokenFilterScripts right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="CjkBigramTokenFilterScripts"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(CjkBigramTokenFilterScripts left, CjkBigramTokenFilterScripts right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="CjkBigramTokenFilterScripts"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CjkBigramTokenFilterScripts(string value) => new CjkBigramTokenFilterScripts(value);
+
+        /// <summary> Converts a string to a <see cref="CjkBigramTokenFilterScripts"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CjkBigramTokenFilterScripts?(string value) => value == null ? null : new CjkBigramTokenFilterScripts(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is CjkBigramTokenFilterScripts other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(CjkBigramTokenFilterScripts other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

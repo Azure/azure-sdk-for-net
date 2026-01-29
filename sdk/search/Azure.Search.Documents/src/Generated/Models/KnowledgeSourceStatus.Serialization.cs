@@ -9,15 +9,22 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Search.Documents.Models;
+using Azure;
+using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
-    public partial class KnowledgeSourceStatus : IUtf8JsonSerializable, IJsonModel<KnowledgeSourceStatus>
+    /// <summary> Represents the status and synchronization history of a knowledge source. </summary>
+    public partial class KnowledgeSourceStatus : IJsonModel<KnowledgeSourceStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeSourceStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatus"/> for deserialization. </summary>
+        internal KnowledgeSourceStatus()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeSourceStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,71 +36,42 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KnowledgeSourceStatus)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("synchronizationStatus"u8);
             writer.WriteStringValue(SynchronizationStatus.ToString());
             if (Optional.IsDefined(SynchronizationInterval))
             {
-                if (SynchronizationInterval != null)
-                {
-                    writer.WritePropertyName("synchronizationInterval"u8);
-                    writer.WriteStringValue(SynchronizationInterval);
-                }
-                else
-                {
-                    writer.WriteNull("synchronizationInterval");
-                }
+                writer.WritePropertyName("synchronizationInterval"u8);
+                writer.WriteStringValue(SynchronizationInterval);
             }
             if (Optional.IsDefined(CurrentSynchronizationState))
             {
-                if (CurrentSynchronizationState != null)
-                {
-                    writer.WritePropertyName("currentSynchronizationState"u8);
-                    writer.WriteObjectValue(CurrentSynchronizationState, options);
-                }
-                else
-                {
-                    writer.WriteNull("currentSynchronizationState");
-                }
+                writer.WritePropertyName("currentSynchronizationState"u8);
+                writer.WriteObjectValue(CurrentSynchronizationState, options);
             }
             if (Optional.IsDefined(LastSynchronizationState))
             {
-                if (LastSynchronizationState != null)
-                {
-                    writer.WritePropertyName("lastSynchronizationState"u8);
-                    writer.WriteObjectValue(LastSynchronizationState, options);
-                }
-                else
-                {
-                    writer.WriteNull("lastSynchronizationState");
-                }
+                writer.WritePropertyName("lastSynchronizationState"u8);
+                writer.WriteObjectValue(LastSynchronizationState, options);
             }
             if (Optional.IsDefined(Statistics))
             {
-                if (Statistics != null)
-                {
-                    writer.WritePropertyName("statistics"u8);
-                    writer.WriteObjectValue(Statistics, options);
-                }
-                else
-                {
-                    writer.WriteNull("statistics");
-                }
+                writer.WritePropertyName("statistics"u8);
+                writer.WriteObjectValue(Statistics, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -102,22 +80,27 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        KnowledgeSourceStatus IJsonModel<KnowledgeSourceStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeSourceStatus IJsonModel<KnowledgeSourceStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KnowledgeSourceStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KnowledgeSourceStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKnowledgeSourceStatus(document.RootElement, options);
         }
 
-        internal static KnowledgeSourceStatus DeserializeKnowledgeSourceStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KnowledgeSourceStatus DeserializeKnowledgeSourceStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -127,74 +110,75 @@ namespace Azure.Search.Documents.Indexes.Models
             SynchronizationState currentSynchronizationState = default;
             CompletedSynchronizationState lastSynchronizationState = default;
             KnowledgeSourceStatistics statistics = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("synchronizationStatus"u8))
+                if (prop.NameEquals("synchronizationStatus"u8))
                 {
-                    synchronizationStatus = new KnowledgeSourceSynchronizationStatus(property.Value.GetString());
+                    synchronizationStatus = new KnowledgeSourceSynchronizationStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("synchronizationInterval"u8))
+                if (prop.NameEquals("synchronizationInterval"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         synchronizationInterval = null;
                         continue;
                     }
-                    synchronizationInterval = property.Value.GetString();
+                    synchronizationInterval = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentSynchronizationState"u8))
+                if (prop.NameEquals("currentSynchronizationState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         currentSynchronizationState = null;
                         continue;
                     }
-                    currentSynchronizationState = SynchronizationState.DeserializeSynchronizationState(property.Value, options);
+                    currentSynchronizationState = SynchronizationState.DeserializeSynchronizationState(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("lastSynchronizationState"u8))
+                if (prop.NameEquals("lastSynchronizationState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastSynchronizationState = null;
                         continue;
                     }
-                    lastSynchronizationState = CompletedSynchronizationState.DeserializeCompletedSynchronizationState(property.Value, options);
+                    lastSynchronizationState = CompletedSynchronizationState.DeserializeCompletedSynchronizationState(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("statistics"u8))
+                if (prop.NameEquals("statistics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         statistics = null;
                         continue;
                     }
-                    statistics = KnowledgeSourceStatistics.DeserializeKnowledgeSourceStatistics(property.Value, options);
+                    statistics = KnowledgeSourceStatistics.DeserializeKnowledgeSourceStatistics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KnowledgeSourceStatus(
                 synchronizationStatus,
                 synchronizationInterval,
                 currentSynchronizationState,
                 lastSynchronizationState,
                 statistics,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<KnowledgeSourceStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KnowledgeSourceStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -204,15 +188,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        KnowledgeSourceStatus IPersistableModel<KnowledgeSourceStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeSourceStatus IPersistableModel<KnowledgeSourceStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KnowledgeSourceStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKnowledgeSourceStatus(document.RootElement, options);
                     }
                 default:
@@ -220,22 +209,14 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeSourceStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static KnowledgeSourceStatus FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeSourceStatus"/> from. </param>
+        public static explicit operator KnowledgeSourceStatus(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeSourceStatus(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKnowledgeSourceStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

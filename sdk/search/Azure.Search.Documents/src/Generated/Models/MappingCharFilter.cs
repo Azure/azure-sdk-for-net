@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,29 +19,22 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="mappings"> A list of mappings of the following format: "a=&gt;b" (all occurrences of the character "a" will be replaced with character "b"). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mappings"/> is null. </exception>
-        public MappingCharFilter(string name, IEnumerable<string> mappings) : base(name)
+        public MappingCharFilter(string name, IEnumerable<string> mappings) : base("#Microsoft.Azure.Search.MappingCharFilter", name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(mappings, nameof(mappings));
 
             Mappings = mappings.ToList();
-            ODataType = "#Microsoft.Azure.Search.MappingCharFilter";
         }
 
         /// <summary> Initializes a new instance of <see cref="MappingCharFilter"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of char filter. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mappings"> A list of mappings of the following format: "a=&gt;b" (all occurrences of the character "a" will be replaced with character "b"). </param>
-        internal MappingCharFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> mappings) : base(oDataType, name, serializedAdditionalRawData)
+        internal MappingCharFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> mappings) : base(odataType, name, additionalBinaryDataProperties)
         {
             Mappings = mappings;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.MappingCharFilter";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MappingCharFilter"/> for deserialization. </summary>
-        internal MappingCharFilter()
-        {
         }
     }
 }

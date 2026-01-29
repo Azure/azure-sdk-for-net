@@ -8,16 +8,25 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
+    /// <summary>
+    /// Base type for activity records. Tracks execution details, timing, and errors for knowledge base operations.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, and <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeBaseActivityRecord))]
-    public partial class KnowledgeBaseActivityRecord : IUtf8JsonSerializable, IJsonModel<KnowledgeBaseActivityRecord>
+    public abstract partial class KnowledgeBaseActivityRecord : IJsonModel<KnowledgeBaseActivityRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeBaseActivityRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityRecord"/> for deserialization. </summary>
+        internal KnowledgeBaseActivityRecord()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeBaseActivityRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,16 +38,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KnowledgeBaseActivityRecord)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("id"u8);
             writer.WriteNumberValue(Id);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(ElapsedMs))
             {
                 writer.WritePropertyName("elapsedMs"u8);
@@ -49,15 +57,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,49 +74,53 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
         }
 
-        KnowledgeBaseActivityRecord IJsonModel<KnowledgeBaseActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeBaseActivityRecord IJsonModel<KnowledgeBaseActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KnowledgeBaseActivityRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KnowledgeBaseActivityRecord)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKnowledgeBaseActivityRecord(document.RootElement, options);
         }
 
-        internal static KnowledgeBaseActivityRecord DeserializeKnowledgeBaseActivityRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KnowledgeBaseActivityRecord DeserializeKnowledgeBaseActivityRecord(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "agenticReasoning": return KnowledgeBaseAgenticReasoningActivityRecord.DeserializeKnowledgeBaseAgenticReasoningActivityRecord(element, options);
-                    case "azureBlob": return KnowledgeBaseAzureBlobActivityRecord.DeserializeKnowledgeBaseAzureBlobActivityRecord(element, options);
-                    case "indexedOneLake": return KnowledgeBaseIndexedOneLakeActivityRecord.DeserializeKnowledgeBaseIndexedOneLakeActivityRecord(element, options);
-                    case "indexedSharePoint": return KnowledgeBaseIndexedSharePointActivityRecord.DeserializeKnowledgeBaseIndexedSharePointActivityRecord(element, options);
-                    case "KnowledgeBaseRetrievalActivityRecord": return KnowledgeBaseRetrievalActivityRecord.DeserializeKnowledgeBaseRetrievalActivityRecord(element, options);
-                    case "modelAnswerSynthesis": return KnowledgeBaseModelAnswerSynthesisActivityRecord.DeserializeKnowledgeBaseModelAnswerSynthesisActivityRecord(element, options);
-                    case "modelQueryPlanning": return KnowledgeBaseModelQueryPlanningActivityRecord.DeserializeKnowledgeBaseModelQueryPlanningActivityRecord(element, options);
-                    case "remoteSharePoint": return KnowledgeBaseRemoteSharePointActivityRecord.DeserializeKnowledgeBaseRemoteSharePointActivityRecord(element, options);
-                    case "searchIndex": return KnowledgeBaseSearchIndexActivityRecord.DeserializeKnowledgeBaseSearchIndexActivityRecord(element, options);
-                    case "web": return KnowledgeBaseWebActivityRecord.DeserializeKnowledgeBaseWebActivityRecord(element, options);
+                    case "modelQueryPlanning":
+                        return KnowledgeBaseModelQueryPlanningActivityRecord.DeserializeKnowledgeBaseModelQueryPlanningActivityRecord(element, options);
+                    case "modelAnswerSynthesis":
+                        return KnowledgeBaseModelAnswerSynthesisActivityRecord.DeserializeKnowledgeBaseModelAnswerSynthesisActivityRecord(element, options);
+                    case "agenticReasoning":
+                        return KnowledgeBaseAgenticReasoningActivityRecord.DeserializeKnowledgeBaseAgenticReasoningActivityRecord(element, options);
                 }
             }
             return UnknownKnowledgeBaseActivityRecord.DeserializeUnknownKnowledgeBaseActivityRecord(element, options);
         }
 
-        BinaryData IPersistableModel<KnowledgeBaseActivityRecord>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KnowledgeBaseActivityRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -118,15 +130,20 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
         }
 
-        KnowledgeBaseActivityRecord IPersistableModel<KnowledgeBaseActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeBaseActivityRecord IPersistableModel<KnowledgeBaseActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KnowledgeBaseActivityRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKnowledgeBaseActivityRecord(document.RootElement, options);
                     }
                 default:
@@ -134,22 +151,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeBaseActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static KnowledgeBaseActivityRecord FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeBaseActivityRecord(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The kind of vector query being performed. </summary>
-    internal readonly partial struct VectorThresholdKind : IEquatable<VectorThresholdKind>
+    /// <summary> The kind of threshold used to filter vector queries. </summary>
+    public readonly partial struct VectorThresholdKind : IEquatable<VectorThresholdKind>
     {
         private readonly string _value;
+        /// <summary> The results of the vector query will be filtered based on the vector similarity metric. Note this is the canonical definition of similarity metric, not the 'distance' version. The threshold direction (larger or smaller) will be chosen automatically according to the metric used by the field. </summary>
+        private const string VectorSimilarityValue = "vectorSimilarity";
+        /// <summary> The results of the vector query will filter based on the '@search.score' value. Note this is the @search.score returned as part of the search response. The threshold direction will be chosen for higher @search.score. </summary>
+        private const string SearchScoreValue = "searchScore";
 
         /// <summary> Initializes a new instance of <see cref="VectorThresholdKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorThresholdKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VectorSimilarityValue = "vectorSimilarity";
-        private const string SearchScoreValue = "searchScore";
+            _value = value;
+        }
 
         /// <summary> The results of the vector query will be filtered based on the vector similarity metric. Note this is the canonical definition of similarity metric, not the 'distance' version. The threshold direction (larger or smaller) will be chosen automatically according to the metric used by the field. </summary>
         public static VectorThresholdKind VectorSimilarity { get; } = new VectorThresholdKind(VectorSimilarityValue);
+
         /// <summary> The results of the vector query will filter based on the '@search.score' value. Note this is the @search.score returned as part of the search response. The threshold direction will be chosen for higher @search.score. </summary>
         public static VectorThresholdKind SearchScore { get; } = new VectorThresholdKind(SearchScoreValue);
+
         /// <summary> Determines if two <see cref="VectorThresholdKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorThresholdKind left, VectorThresholdKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VectorThresholdKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorThresholdKind left, VectorThresholdKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorThresholdKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VectorThresholdKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VectorThresholdKind(string value) => new VectorThresholdKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VectorThresholdKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VectorThresholdKind?(string value) => value == null ? null : new VectorThresholdKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VectorThresholdKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VectorThresholdKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

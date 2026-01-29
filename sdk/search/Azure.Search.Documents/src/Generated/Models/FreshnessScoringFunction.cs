@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,21 +15,28 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class FreshnessScoringFunction : ScoringFunction
     {
         /// <summary> Initializes a new instance of <see cref="FreshnessScoringFunction"/>. </summary>
-        /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>
+        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
+        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
+        /// <param name="parameters"> Parameter values for the freshness scoring function. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> or <paramref name="parameters"/> is null. </exception>
+        public FreshnessScoringFunction(string fieldName, double boost, FreshnessScoringParameters parameters) : base(fieldName, boost, "freshness")
+        {
+            Argument.AssertNotNull(fieldName, nameof(fieldName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            Parameters = parameters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FreshnessScoringFunction"/>. </summary>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> Type of ScoringFunction. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Parameter values for the freshness scoring function. </param>
-        internal FreshnessScoringFunction(string type, string fieldName, double boost, ScoringFunctionInterpolation? interpolation, IDictionary<string, BinaryData> serializedAdditionalRawData, FreshnessScoringParameters parameters) : base(type, fieldName, boost, interpolation, serializedAdditionalRawData)
+        internal FreshnessScoringFunction(string fieldName, double boost, ScoringFunctionInterpolation? interpolation, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FreshnessScoringParameters parameters) : base(fieldName, boost, interpolation, @type, additionalBinaryDataProperties)
         {
             Parameters = parameters;
-            Type = type ?? "freshness";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FreshnessScoringFunction"/> for deserialization. </summary>
-        internal FreshnessScoringFunction()
-        {
         }
 
         /// <summary> Parameter values for the freshness scoring function. </summary>

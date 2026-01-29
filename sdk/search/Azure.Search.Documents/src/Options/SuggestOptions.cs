@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents
 {
@@ -12,7 +12,7 @@ namespace Azure.Search.Documents
     /// allow specifying filtering, sorting, and other suggestions query
     /// behaviors.
     /// </summary>
-    [CodeGenModel("SuggestRequest")]
+    [CodeGenType("SuggestPostRequest")]
     [CodeGenSuppress(nameof(SuggestOptions), typeof(string), typeof(string))]
     public partial class SuggestOptions
     {
@@ -111,7 +111,19 @@ namespace Azure.Search.Documents
             get => OrderBy.CommaJoin();
             set => throw new InvalidOperationException($"Cannot deserialize {nameof(SuggestOptions)}.");
         }
-        #pragma warning restore CA1822
+#pragma warning restore CA1822
+
+        /// <summary> A value indicating whether to use fuzzy matching for the suggestion query. Default is false. When set to true, the query will find suggestions even if there's a substituted or missing character in the search text. While this provides a better experience in some scenarios, it comes at a performance cost as fuzzy suggestion searches are slower and consume more resources. </summary>
+        public bool? UseFuzzyMatching { get; set; }
+
+        /// <summary> A string tag that is appended to hit highlights. Must be set with highlightPreTag. If omitted, hit highlighting of suggestions is disabled. </summary>
+        public string HighlightPostTag { get; set; }
+
+        /// <summary> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. If omitted, hit highlighting of suggestions is disabled. </summary>
+        public string HighlightPreTag { get; set; }
+
+        /// <summary> A number between 0 and 100 indicating the percentage of the index that must be covered by a suggestion query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 80. </summary>
+        public double? MinimumCoverage { get; set; }
 
         /// <summary>
         /// Creates a shallow copy of the SuggestOptions.
