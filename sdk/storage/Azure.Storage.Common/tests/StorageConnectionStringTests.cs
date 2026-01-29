@@ -712,5 +712,19 @@ namespace Azure.Storage.Test
 
             TestHelper.AssertSequenceEqual(expectedKeyBytes, keyBytes);
         }
+
+        [Test]
+        [Description("Ensuring IPv6 connection strings are parsing AccountName correctly")]
+        public void ParseIPv6ConnectionString_AssertAccountName()
+        {
+            string accountName = "storagesample";
+            string blobEndpoint = "https://" + accountName + "-ipv6.blob.core.windows.net/";
+            string connectionString = string.Format(
+                        "DefaultEndpointsProtocol=https;AccountName={0};AccountKey=123=;BlobEndpoint={1};EndpointSuffix=core.windows.net",
+                        accountName,
+                        blobEndpoint);
+            var storageConnectionString = StorageConnectionString.Parse(connectionString);
+            Assert.AreEqual(accountName, storageConnectionString.AccountName);
+        }
     }
 }

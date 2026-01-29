@@ -44,6 +44,34 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
+        [TestCase("https://myaccount.queue.core.windows.net/")]
+        [TestCase("https://myaccount-secondary.queue.core.windows.net/")]
+        [TestCase("https://myaccount-dualstack.queue.core.windows.net/")]
+        [TestCase("https://myaccount-ipv6.queue.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-dualstack.queue.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-ipv6.queue.core.windows.net/")]
+        public void QueueUriBuilder_Secondary_IPV6_Dualstack(string uriString)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
+            Uri newUri = queueUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", queueUriBuilder.Scheme);
+            Assert.AreEqual("myaccount", queueUriBuilder.AccountName);
+            Assert.AreEqual("", queueUriBuilder.QueueName);
+            Assert.IsFalse(queueUriBuilder.Messages);
+            Assert.AreEqual("", queueUriBuilder.MessageId);
+            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.AreEqual(443, queueUriBuilder.Port);
+            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
         public void QueueUriBuilder_RegularUrl_QueueTest()
         {
             // Arrange

@@ -77,6 +77,40 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [TestCase("https://myaccount.blob.core.windows.net/")]
+        [TestCase("https://myaccount-secondary.blob.core.windows.net/")]
+        [TestCase("https://myaccount-dualstack.blob.core.windows.net/")]
+        [TestCase("https://myaccount-ipv6.blob.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-dualstack.blob.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-ipv6.blob.core.windows.net/")]
+        [TestCase("https://myaccount.dfs.core.windows.net/")]
+        [TestCase("https://myaccount-secondary.dfs.core.windows.net/")]
+        [TestCase("https://myaccount-dualstack.dfs.core.windows.net/")]
+        [TestCase("https://myaccount-ipv6.dfs.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-dualstack.dfs.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-ipv6.dfs.core.windows.net/")]
+        public void DataLakeUriBuilder_Secondary_IPV6_Dualstack(string uriString)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var dataLakeUriBuilder = new DataLakeUriBuilder(originalUri.Uri);
+            Uri newUri = dataLakeUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", dataLakeUriBuilder.Scheme);
+            Assert.AreEqual("myaccount", dataLakeUriBuilder.AccountName);
+            Assert.AreEqual("", dataLakeUriBuilder.FileSystemName);
+            Assert.AreEqual("", dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual("", dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", dataLakeUriBuilder.Snapshot);
+            Assert.IsNull(dataLakeUriBuilder.Sas);
+            Assert.AreEqual(443, dataLakeUriBuilder.Port);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
         public void DataLakeUriBuilder_ListPaths()
         {
             // Arrange
