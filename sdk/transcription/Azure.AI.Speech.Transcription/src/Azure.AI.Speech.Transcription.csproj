@@ -23,8 +23,6 @@
     <NoWarn>$(NoWarn);AZC0034</NoWarn>
     <!-- Ignore Azure-Core-specific client method naming rule -->
     <NoWarn>$(NoWarn);AZC0102</NoWarn>
-    <!-- Ignore System.ClientModel-specific rule -->
-    <NoWarn>$(NoWarn);SCM0005</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
