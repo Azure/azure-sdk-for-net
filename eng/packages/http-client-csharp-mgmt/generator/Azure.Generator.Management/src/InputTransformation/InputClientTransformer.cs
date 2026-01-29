@@ -13,10 +13,14 @@ namespace Azure.Generator.Management.InputTransformation
         {
             foreach (var method in client.Methods)
             {
-                // TODO -- method also has a parameters list. We need to modify that list as well.
-                var operation = method.Operation;
-                SetSubscriptionIdToMethodParameter(operation);
-                RemoveSubscriptionIdFromClient(client);
+                // remove and return the subscriptionId parameter if any
+                var subscriptionIdParameter = RemoveSubscriptionIdFromClient(client);
+                if (subscriptionIdParameter is InputMethodParameter methodParameter)
+                {
+                    // if client has this subscriptionId parameter, we need to add it into the parameter list of the method again
+                    UpdateInputMethodParameters(method, methodParameter);
+                }
+                SetSubscriptionIdToMethodParameter(method.Operation);
             }
 
             return client;
@@ -24,17 +28,31 @@ namespace Azure.Generator.Management.InputTransformation
 
         // Remove subscriptionId from client parameter, this is needed due to MTG.
         // Otherwise, subscriptionId will be added to client constructor
-        private static void RemoveSubscriptionIdFromClient(InputClient client)
+        private static InputParameter? RemoveSubscriptionIdFromClient(InputClient client)
         {
-            var updatedParameters = new List<InputParameter>();
+            var updatedParameters = new List<InputParameter>(client.Parameters.Count);
+            InputParameter? subscriptionIdParameter = null;
             foreach (var parameter in client.Parameters)
             {
                 if (!parameter.SerializedName.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
                 {
                     updatedParameters.Add(parameter);
                 }
+                else
+                {
+                    subscriptionIdParameter = parameter;
+                }
             }
             client.Update(parameters: updatedParameters);
+
+            return subscriptionIdParameter;
+        }
+
+        private static void UpdateInputMethodParameters(InputServiceMethod method, InputMethodParameter subscriptionIdParameter)
+        {
+            subscriptionIdParameter.Update(scope: InputParameterScope.Method);
+            IReadOnlyList<InputMethodParameter> updatedParameters = [subscriptionIdParameter, .. method.Parameters];
+            method.Update(parameters: updatedParameters);
         }
 
         private static void SetSubscriptionIdToMethodParameter(InputOperation operation)
