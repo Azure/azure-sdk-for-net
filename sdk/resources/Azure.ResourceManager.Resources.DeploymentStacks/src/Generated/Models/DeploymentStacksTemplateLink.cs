@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> Entity representing the reference to the template. </summary>
     public partial class DeploymentStacksTemplateLink
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="queryString"> The query string (for example, a SAS token) to be used with the templateLink URI. </param>
         /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentStacksTemplateLink(Uri uri, string id, string relativePath, string queryString, string contentVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentStacksTemplateLink(string uri, string id, string relativePath, string queryString, string contentVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             Id = id;
@@ -68,19 +68,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The URI of the template to deploy. Use either the uri or id property, but not both. </summary>
-        [WirePath("uri")]
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
         /// <summary> The resourceId of a Template Spec. Use either the id or uri property, but not both. </summary>
-        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> The relativePath property can be used to deploy a linked template at a location relative to the parent. If the parent template was linked with a TemplateSpec, this will reference an artifact in the TemplateSpec.  If the parent was linked with a URI, the child deployment will be a combination of the parent and relativePath URIs. </summary>
-        [WirePath("relativePath")]
         public string RelativePath { get; set; }
         /// <summary> The query string (for example, a SAS token) to be used with the templateLink URI. </summary>
-        [WirePath("queryString")]
         public string QueryString { get; set; }
         /// <summary> If included, must match the ContentVersion in the template. </summary>
-        [WirePath("contentVersion")]
         public string ContentVersion { get; set; }
     }
 }

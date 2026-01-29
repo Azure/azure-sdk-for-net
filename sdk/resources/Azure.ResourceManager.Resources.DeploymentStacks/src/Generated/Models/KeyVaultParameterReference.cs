@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> Azure Key Vault parameter reference. </summary>
     public partial class KeyVaultParameterReference
@@ -80,7 +81,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Azure Key Vault reference. </summary>
         internal WritableSubResource KeyVault { get; set; }
         /// <summary> Gets or sets Id. </summary>
-        [WirePath("keyVault.id")]
         public ResourceIdentifier KeyVaultId
         {
             get => KeyVault is null ? default : KeyVault.Id;
@@ -93,10 +93,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Azure Key Vault secret name. </summary>
-        [WirePath("secretName")]
         public string SecretName { get; set; }
         /// <summary> Azure Key Vault secret version. </summary>
-        [WirePath("secretVersion")]
         public string SecretVersion { get; set; }
     }
 }

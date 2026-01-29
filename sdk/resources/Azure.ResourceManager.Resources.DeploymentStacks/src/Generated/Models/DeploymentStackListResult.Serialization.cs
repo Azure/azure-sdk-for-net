@@ -8,12 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     internal partial class DeploymentStackListResult : IUtf8JsonSerializable, IJsonModel<DeploymentStackListResult>
     {
@@ -36,20 +34,17 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new FormatException($"The model {nameof(DeploymentStackListResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,29 +83,29 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            IReadOnlyList<DeploymentStackData> value = default;
-            string nextLink = default;
+            IReadOnlyList<DeploymentStack> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DeploymentStackData> array = new List<DeploymentStackData>();
+                    List<DeploymentStack> array = new List<DeploymentStack>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentStackData.DeserializeDeploymentStackData(item, options));
+                        array.Add(DeploymentStack.DeserializeDeploymentStack(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,68 +114,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentStackListResult(value ?? new ChangeTrackingList<DeploymentStackData>(), nextLink, serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  value: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Value))
-                {
-                    if (Value.Any())
-                    {
-                        builder.Append("  value: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Value)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  value: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nextLink: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NextLink))
-                {
-                    builder.Append("  nextLink: ");
-                    if (NextLink.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NextLink}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NextLink}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
+            return new DeploymentStackListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentStackListResult>.Write(ModelReaderWriterOptions options)
@@ -190,9 +124,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentStackListResult)} does not support writing '{options.Format}' format.");
             }

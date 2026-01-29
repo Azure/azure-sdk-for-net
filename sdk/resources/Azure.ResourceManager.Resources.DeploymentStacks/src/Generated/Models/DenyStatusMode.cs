@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> denyAssignment settings applied to the resource. </summary>
     public readonly partial struct DenyStatusMode : IEquatable<DenyStatusMode>
@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
         private const string DenyWriteAndDeleteValue = "denyWriteAndDelete";
         private const string RemovedBySystemValue = "removedBySystem";
         private const string NoneValue = "none";
+        private const string UnknownValue = "unknown";
 
         /// <summary> Authorized users are able to read and modify the resources, but cannot delete. </summary>
         public static DenyStatusMode DenyDelete { get; } = new DenyStatusMode(DenyDeleteValue);
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.Resources.Models
         public static DenyStatusMode RemovedBySystem { get; } = new DenyStatusMode(RemovedBySystemValue);
         /// <summary> No denyAssignments have been applied. </summary>
         public static DenyStatusMode None { get; } = new DenyStatusMode(NoneValue);
+        /// <summary> The denyAssignment status is unknown. </summary>
+        public static DenyStatusMode Unknown { get; } = new DenyStatusMode(UnknownValue);
         /// <summary> Determines if two <see cref="DenyStatusMode"/> values are the same. </summary>
         public static bool operator ==(DenyStatusMode left, DenyStatusMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DenyStatusMode"/> values are not the same. </summary>

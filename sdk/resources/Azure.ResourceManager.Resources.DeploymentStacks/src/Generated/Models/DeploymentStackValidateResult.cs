@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> The Deployment stack validation result. </summary>
     public partial class DeploymentStackValidateResult : ResourceData
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentStackValidateResult"/>. </summary>
-        public DeploymentStackValidateResult()
+        internal DeploymentStackValidateResult()
         {
         }
 
@@ -57,21 +57,19 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The validation result details. </param>
         /// <param name="error"> The error detail. </param>
+        /// <param name="properties"> The validation result details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentStackValidateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeploymentStackValidateProperties properties, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DeploymentStackValidateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResponseError error, DeploymentStackValidateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             Error = error;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The validation result details. </summary>
-        [WirePath("properties")]
-        public DeploymentStackValidateProperties Properties { get; set; }
         /// <summary> The error detail. </summary>
-        [WirePath("error")]
-        public ResponseError Error { get; set; }
+        public ResponseError Error { get; }
+        /// <summary> The validation result details. </summary>
+        public DeploymentStackValidateProperties Properties { get; }
     }
 }

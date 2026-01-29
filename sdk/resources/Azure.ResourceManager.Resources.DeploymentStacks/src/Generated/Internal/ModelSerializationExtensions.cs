@@ -14,7 +14,7 @@ using System.Text.Json;
 using System.Xml;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.DeploymentStacks
 {
     internal static class ModelSerializationExtensions
     {

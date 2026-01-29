@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.DeploymentStacks
 {
     internal static class ProviderConstants
     {

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
-    /// <summary> List of Deployment stacks. </summary>
+    /// <summary> The response of a DeploymentStack list operation. </summary>
     internal partial class DeploymentStackListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Resources.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentStackListResult"/>. </summary>
-        internal DeploymentStackListResult()
+        /// <param name="value"> The DeploymentStack items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal DeploymentStackListResult(IEnumerable<DeploymentStack> value)
         {
-            Value = new ChangeTrackingList<DeploymentStackData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentStackListResult"/>. </summary>
-        /// <param name="value"> An array of Deployment stacks. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value"> The DeploymentStack items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentStackListResult(IReadOnlyList<DeploymentStackData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentStackListResult(IReadOnlyList<DeploymentStack> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array of Deployment stacks. </summary>
-        public IReadOnlyList<DeploymentStackData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="DeploymentStackListResult"/> for deserialization. </summary>
+        internal DeploymentStackListResult()
+        {
+        }
+
+        /// <summary> The DeploymentStack items on this page. </summary>
+        public IReadOnlyList<DeploymentStack> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

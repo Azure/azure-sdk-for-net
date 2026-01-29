@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> Defines the behavior of resources that are no longer managed after the stack is updated or deleted. </summary>
     public partial class ActionOnUnmanage
@@ -56,12 +56,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="resources"> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </param>
         /// <param name="resourceGroups"> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </param>
         /// <param name="managementGroups"> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </param>
+        /// <param name="resourcesWithoutDeleteSupport"> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActionOnUnmanage(DeploymentStacksDeleteDetachEnum resources, DeploymentStacksDeleteDetachEnum? resourceGroups, DeploymentStacksDeleteDetachEnum? managementGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ActionOnUnmanage(DeploymentStacksDeleteDetachEnum resources, DeploymentStacksDeleteDetachEnum? resourceGroups, DeploymentStacksDeleteDetachEnum? managementGroups, DeploymentStacksResourcesWithoutDeleteSupportEnum? resourcesWithoutDeleteSupport, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Resources = resources;
             ResourceGroups = resourceGroups;
             ManagementGroups = managementGroups;
+            ResourcesWithoutDeleteSupport = resourcesWithoutDeleteSupport;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,13 +73,12 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </summary>
-        [WirePath("resources")]
         public DeploymentStacksDeleteDetachEnum Resources { get; set; }
         /// <summary> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </summary>
-        [WirePath("resourceGroups")]
         public DeploymentStacksDeleteDetachEnum? ResourceGroups { get; set; }
         /// <summary> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </summary>
-        [WirePath("managementGroups")]
         public DeploymentStacksDeleteDetachEnum? ManagementGroups { get; set; }
+        /// <summary> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </summary>
+        public DeploymentStacksResourcesWithoutDeleteSupportEnum? ResourcesWithoutDeleteSupport { get; set; }
     }
 }

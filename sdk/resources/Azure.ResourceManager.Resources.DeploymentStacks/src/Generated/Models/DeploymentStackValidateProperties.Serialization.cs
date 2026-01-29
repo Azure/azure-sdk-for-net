@@ -8,12 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     public partial class DeploymentStackValidateProperties : IUtf8JsonSerializable, IJsonModel<DeploymentStackValidateProperties>
     {
@@ -83,9 +81,24 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidatedResources)
                 {
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DeploymentExtensions))
+            {
+                writer.WritePropertyName("deploymentExtensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in DeploymentExtensions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ValidationLevel))
+            {
+                writer.WritePropertyName("validationLevel"u8);
+                writer.WriteStringValue(ValidationLevel.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,9 +142,11 @@ namespace Azure.ResourceManager.Resources.Models
             DenySettings denySettings = default;
             string deploymentScope = default;
             string description = default;
-            IDictionary<string, DeploymentParameter> parameters = default;
+            IReadOnlyDictionary<string, DeploymentParameterItem> parameters = default;
             DeploymentStacksTemplateLink templateLink = default;
-            IList<SubResource> validatedResources = default;
+            IReadOnlyList<ResourceReference> validatedResources = default;
+            IReadOnlyList<DeploymentExtension> deploymentExtensions = default;
+            ValidationLevel? validationLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,10 +190,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    Dictionary<string, DeploymentParameter> dictionary = new Dictionary<string, DeploymentParameter>();
+                    Dictionary<string, DeploymentParameterItem> dictionary = new Dictionary<string, DeploymentParameterItem>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeploymentParameter.DeserializeDeploymentParameter(property0.Value, options));
+                        dictionary.Add(property0.Name, DeploymentParameterItem.DeserializeDeploymentParameterItem(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -198,12 +213,35 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ResourceReference> array = new List<ResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerResourcesContext.Default));
+                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
                     }
                     validatedResources = array;
+                    continue;
+                }
+                if (property.NameEquals("deploymentExtensions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DeploymentExtension> array = new List<DeploymentExtension>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DeploymentExtension.DeserializeDeploymentExtension(item, options));
+                    }
+                    deploymentExtensions = array;
+                    continue;
+                }
+                if (property.NameEquals("validationLevel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    validationLevel = new ValidationLevel(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -218,186 +256,12 @@ namespace Azure.ResourceManager.Resources.Models
                 denySettings,
                 deploymentScope,
                 description,
-                parameters ?? new ChangeTrackingDictionary<string, DeploymentParameter>(),
+                parameters ?? new ChangeTrackingDictionary<string, DeploymentParameterItem>(),
                 templateLink,
-                validatedResources ?? new ChangeTrackingList<SubResource>(),
+                validatedResources ?? new ChangeTrackingList<ResourceReference>(),
+                deploymentExtensions ?? new ChangeTrackingList<DeploymentExtension>(),
+                validationLevel,
                 serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionOnUnmanage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  actionOnUnmanage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ActionOnUnmanage))
-                {
-                    builder.Append("  actionOnUnmanage: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ActionOnUnmanage, options, 2, false, "  actionOnUnmanage: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorrelationId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  correlationId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CorrelationId))
-                {
-                    builder.Append("  correlationId: ");
-                    if (CorrelationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CorrelationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CorrelationId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DenySettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  denySettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DenySettings))
-                {
-                    builder.Append("  denySettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, DenySettings, options, 2, false, "  denySettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentScope), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  deploymentScope: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeploymentScope))
-                {
-                    builder.Append("  deploymentScope: ");
-                    if (DeploymentScope.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DeploymentScope}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DeploymentScope}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("  description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  parameters: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Parameters))
-                {
-                    if (Parameters.Any())
-                    {
-                        builder.Append("  parameters: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Parameters)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  parameters: ");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateLink), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  templateLink: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TemplateLink))
-                {
-                    builder.Append("  templateLink: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, TemplateLink, options, 2, false, "  templateLink: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidatedResources), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  validatedResources: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ValidatedResources))
-                {
-                    if (ValidatedResources.Any())
-                    {
-                        builder.Append("  validatedResources: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ValidatedResources)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  validatedResources: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<DeploymentStackValidateProperties>.Write(ModelReaderWriterOptions options)
@@ -407,9 +271,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentStackValidateProperties)} does not support writing '{options.Format}' format.");
             }

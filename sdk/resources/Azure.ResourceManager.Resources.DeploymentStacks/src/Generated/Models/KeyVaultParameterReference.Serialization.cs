@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     public partial class KeyVaultParameterReference : IUtf8JsonSerializable, IJsonModel<KeyVaultParameterReference>
     {
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("keyVault"u8))
                 {
-                    keyVault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesContext.Default);
+                    keyVault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                     continue;
                 }
                 if (property.NameEquals("secretName"u8))
@@ -112,85 +113,6 @@ namespace Azure.ResourceManager.Resources.Models
             return new KeyVaultParameterReference(keyVault, secretName, secretVersion, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("KeyVaultId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  keyVault: ");
-                builder.AppendLine("{");
-                builder.Append("    id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyVault))
-                {
-                    builder.Append("  keyVault: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, KeyVault, options, 2, false, "  keyVault: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secretName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecretName))
-                {
-                    builder.Append("  secretName: ");
-                    if (SecretName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecretName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecretName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secretVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecretVersion))
-                {
-                    builder.Append("  secretVersion: ");
-                    if (SecretVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecretVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecretVersion}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<KeyVaultParameterReference>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultParameterReference>)this).GetFormatFromOptions(options) : options.Format;
@@ -198,9 +120,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultParameterReference)} does not support writing '{options.Format}' format.");
             }
