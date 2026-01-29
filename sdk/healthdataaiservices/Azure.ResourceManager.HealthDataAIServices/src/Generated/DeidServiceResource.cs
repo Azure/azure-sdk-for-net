@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             TryGetApiVersion(ResourceType, out string deidServiceApiVersion);
             _deidServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
-            _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion ?? "2024-09-20");
+            _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion ?? "2026-02-01-preview");
             _privateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
-            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion ?? "2024-09-20");
+            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-20. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-20. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-20. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-20. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-20. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-20. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-20. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-20. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
